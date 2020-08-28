@@ -40,7 +40,6 @@ require("./config/auth.js")(passport, app);
 
 // IMPLEMENT ROUTES
 require("./routes/users.js")(app, passport);
-require("./routes/dashboard.js")(app, passport);
 app.get("/*", function(request, response) {
   log("GET REQUEST AT /*");
   response.sendFile(path.join(__dirname, "client", "public", "index.html"));
