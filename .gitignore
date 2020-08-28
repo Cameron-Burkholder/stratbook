@@ -1,0 +1,5 @@
+node_modules
+client/node_modules
+.env
+id_rsa_pub.pem
+id_rsa_priv.pem
