@@ -1,3 +1,6 @@
+/* server.js */
+
+
 // IMPORT PACKAGES
 const express = require("express");           // For use in routing and middleware
 const mongoose = require("mongoose");         // For use in database connections
@@ -18,10 +21,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // SETUP DATABASE
-const URI = require("./config/keys").MONGODB_URI;
+const URI = process.env.MONGODB_URI;
 // Handle error in establishing connection
 try {
-  mongoose.connect(URI, { useNewUrlParser: true});
+  mongoose.connect(URI, { useNewUrlParser: true, useUnifiedTopology: true });
   log("CONNECTION TO DATABASE ESTABLISHED.");
 } catch(error) {
   log("ERROR WHILE CONNECTING TO DATABASE: " + error);
@@ -33,10 +36,11 @@ mongoose.connection.on("error", (error) => {
 
 // IMPLEMENT PASSPORT
 app.use(passport.initialize());
-require("./config/passport")(passport, app);
+require("./config/auth.js")(passport, app);
 
 // IMPLEMENT ROUTES
-require("./routes/users")(app, passport);
+require("./routes/users.js")(app, passport);
+require("./routes/dashboard.js")(app, passport);
 app.get("/*", function(request, response) {
   log("GET REQUEST AT /*");
   response.sendFile(path.join(__dirname, "client", "public", "index.html"));

@@ -1,5 +1,25 @@
+/* validation/login.js */
+
 const Validator = require("validator");
 const isEmpty = require("is-empty");
+
+/*
+  @func: validateLoginInput
+  @desc: check if login information is in a valid format
+  @param request: request object
+  @param response: response object
+  @param done: forwarding function for express middleware
+
+  @inputs:
+    email: String
+    password: String
+
+  @outputs:
+    If inputs are not valid
+      packet: Object (status: INVALID_LOGIN)
+    Else
+      done();
+*/
 
 module.exports = function validateLoginInput(request, response, done) {
 

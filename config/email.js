@@ -1,3 +1,5 @@
+/* config/email.js */
+
 const nodemailer = require("nodemailer");
 
 let transporter = nodemailer.createTransport({
@@ -8,10 +10,18 @@ let transporter = nodemailer.createTransport({
   }
 });
 
-// EMAIL
-// USE: send an email to users
-// PARAMS: userEmail (string), subject (string), (message)
-// RETURN: n/a
+/*
+  @func: email
+  @desc: Send an email to a user
+  @param userEmail: String
+  @param subject: String
+  @param message: String
+
+  @outputs:
+    If an error occurs
+      error: Error
+
+*/
 module.exports = (userEmail, subject, message) => {
   let emailOptions = {
     from: process.env.EMAIL,

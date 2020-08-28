@@ -1,5 +1,27 @@
+/* validation/register.js */
+
 const Validator = require("validator");
 const isEmpty = require("is-empty");
+
+/*
+  @func: validateRegisterInput
+  @desc: check if register information is in a valid format
+  @param request: request object
+  @param response: response object
+  @param done: forwarding function for express middleware
+
+  @inputs:
+    name: String
+    email: String
+    password1: String
+    password2: String
+
+  @outputs:
+    If inputs are not valid
+      packet: Object (status: INVALID_REGISTRATION)
+    Else
+      done();
+*/
 
 module.exports = function validateRegisterInput(request, response, done) {
 
@@ -39,7 +61,7 @@ module.exports = function validateRegisterInput(request, response, done) {
   }
 
   if (!isEmpty(errors)) {
-    packet.status = "INVALID_LOGIN";
+    packet.status = "INVALID_REGISTRATION";
     packet.errors = errors;
     response.json(packet);
     response.end();

@@ -1,7 +1,14 @@
+/* models/User.js */
+
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-// CREATE USER SCHEMA
+/*
+  @schema UserSchema
+  @prop name: String
+  @prop email: String
+  @prop password: String
+*/
 const UserSchema = new Schema({
   name: {
     type: String,

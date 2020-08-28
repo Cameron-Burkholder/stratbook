@@ -1,7 +1,9 @@
+/* routes/users.js */
+
 const bcrypt = require("bcryptjs");
 const email = require("../config/email.js");
 
-const { log, verifyPassword, issueJWT } = require("../config/utilities.js");
+const { log, verifyPassword, hashPassword, issueJWT } = require("../config/utilities.js");
 
 // Load input validation
 const validateRegisterInput = require("../validation/register.js");
@@ -13,6 +15,27 @@ const User = require("../models/User.js");
 
 module.exports = async (app, passport) => {
 
+  /*
+    @route /api/users/login
+    @method: POST
+
+    @inputs:
+      email: String
+      password: String
+
+    @outputs:
+      If input data is invalid
+        packet: Object (status: INVALID_LOGIN, errors: errors)
+
+      If user does not exist in database
+        packet: Object (status: USER_NOT_FOUND)
+
+      If user exists
+        If password is correct
+          packet: Object (status: TOKEN_ISSUED)
+        Else
+          packet: Object (status: INCORRECT_PASSWORD)
+  */
   app.post("/api/users/login", (request, response, done) => {
     log("POST REQUEST AT /api/users/login");
     done();
@@ -24,7 +47,7 @@ module.exports = async (app, passport) => {
 
       if (!user) {
         packet.status = "USER_NOT_FOUND";
-        packet.json(packet);
+        response.json(packet);
       } else {
         const isValidPassword = verifyPassword(request.body.password, user.password);
         if (isValidPassword) {
@@ -41,18 +64,38 @@ module.exports = async (app, passport) => {
     });
   });
 
+  /*
+    @route /api/users/register
+    @method: POST
+
+    @inputs:
+      name: String
+      email: String
+      password1: String
+
+    @outputs:
+      If input data is invalid
+        packet: Object (status: INVALID_REGISTRATION)
+
+      If user already exists in database
+        packet: Object (status: EXISTING_USER)
+
+      If user does not exist in database
+        If user is able to register
+          packet: Object (status: USER_REGISTERED)
+        Else
+          packet: Object (status: UNABLE_TO_REGISTER)
+  */
   app.post("/api/users/register", (request, response, done) => {
     log("POST REQUEST AT /api/users/register");
     done();
-  }, validateRegisterInput,
-  async (request, response, done) => {
+  }, validateRegisterInput, (request, response) => {
     let packet = {
       status: ""
     }
     User.findOne({ email: request.body.email }, function(error, user) {
       if (user) {
         packet.status = "EXISTING_USER";
-        packet.errors = "User already exists.";
         response.json(packet);
       } else {
         const newUser = new User({
@@ -75,15 +118,10 @@ module.exports = async (app, passport) => {
           });
         } else {
           packet.status = "UNABLE_TO_REGISTER";
-          packet.errors = "Unable to register user.";
           response.json(packet);
         }
       }
     });
-  });
-
-  app.post("/api/users/logout", (request, response) => {
-
   });
 
 };

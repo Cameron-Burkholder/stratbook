@@ -1,5 +1,5 @@
 {
-  "name": "MERN JWT-based Auth with React",
+  "name": "MERN-JWT-based-Auth-with-React",
   "version": "1.0.0",
   "description": "A starting point for MERN stack web applications.",
   "main": "server.js",
@@ -29,5 +29,6 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.4"
-  }
+  },
+  "proxy": "http://localhost:5000"
 }
