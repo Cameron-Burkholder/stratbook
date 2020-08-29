@@ -2,11 +2,10 @@
 
 const nodemailer = require("nodemailer");
 const { google } = require("googleapis");
-const OAuth2 = google.auth.OAuth2;
-
+const googleapis = require("googleapis");
 const { log } = require("./utilities.js");
 
-const OAuth2Client = new OAuth2(
+const OAuth2Client = new google.auth.OAuth2(
   process.env.OAUTH_CLIENT_ID,
   process.env.OAUTH_CLIENT_SECRET,
   "https://developers.google.com/oauthplayground"
@@ -51,11 +50,18 @@ module.exports = email = (userEmail, subject, message) => {
   };
 
   log("SENDING EMAIL.");
-  transporter.sendMail(emailOptions, (error, info) => {
-    if (error) {
-      console.log(error);
-    } else {
-      transport.close();
-    }
-  });
+  try {
+    transporter.sendMail(emailOptions, (error, info) => {
+      if (error) {
+        console.log(error);
+        return error;
+      } else {
+        transport.close();
+        return null;
+      }
+    });
+  } catch(error) {
+    console.log(error);
+    return error;
+  }
 };

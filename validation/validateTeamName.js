@@ -1,6 +1,8 @@
 /* validation/createTeam.js */
 
 const Validator = require("validator");
+const Filter = require("bad-words");
+const filter = new Filter();
 const isEmpty = require("is-empty");
 
 /*
@@ -37,7 +39,16 @@ module.exports = function validateTeamInput(request, response, done) {
     packet.errors = errors;
     response.json(packet);
     response.end();
+    return packet;
+  } else if (filter.isProfane(request.body.name)) {
+    packet.status = "PROFANE_TEAM_INPUT";
+    errors.name = "Name may not be inappropriate";
+    packet.errors = errors;
+    response.json(packet);
+    response.end();
+    return packet;
   } else {
     done();
+    return null;
   }
 };

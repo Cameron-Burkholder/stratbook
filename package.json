@@ -4,22 +4,23 @@
   "description": "A starting point for MERN stack web applications.",
   "main": "server.js",
   "scripts": {
-    "test": "node server.js",
+    "test": "npm run unit-tests & npm run functional-tests",
+    "unit-tests": "mocha --ui tdd testing/unit_tests.js",
+    "functional-tests": "mocha --ui tdd testing/functional_tests.js",
     "start": "node server.js",
     "server": "nodemon server.js",
     "client": "cd client && npm run start && cd ..",
-    "scss": "cd client && npm run scss && cd ..",
-    "dev": "npm run client & npm run server"
+    "scss": "cd client && npm run scss && cd .."
   },
   "author": "Cameron Burkholder",
   "license": "ISC",
   "dependencies": {
+    "bad-words": "^3.0.3",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
-    "concurrently": "^5.2.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "googleapis": "^22.2.0",
+    "googleapis": "^59.0.0",
     "is-empty": "^1.2.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.27",
@@ -30,6 +31,7 @@
     "validator": "^13.1.1"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
     "nodemon": "^2.0.4"
   },
   "proxy": "http://localhost:5000"

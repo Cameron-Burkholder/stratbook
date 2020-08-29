@@ -48,7 +48,9 @@ module.exports = function validateLoginInput(request, response, done) {
     packet.errors = errors;
     response.json(packet);
     response.end();
+    return packet;
   } else {
     done();
+    return null;
   }
 };
