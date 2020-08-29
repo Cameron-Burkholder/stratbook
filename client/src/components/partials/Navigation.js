@@ -65,8 +65,15 @@ class Navigation extends React.Component {
               </li>
             )
           }
+          {
+            this.state.loggedIn ? (
+              <li className="nav__item">
+                <Link onClick={this.toggleMenu} className="nav__link" to="/dashboard">Dashboard</Link>
+              </li>
+            ) : ( "" )
+          }
         </ul>
-        <a className="nav__button" onClick={this.toggleMenu}></a>
+        <button className="nav__button" onClick={this.toggleMenu}></button>
       </nav>
     );
   }

@@ -11,10 +11,11 @@ const isEmpty = require("is-empty");
   @param done: forwarding function for express middleware
 
   @inputs:
-    name: String
+    username: String
     email: String
     password1: String
     password2: String
+    platform: String
 
   @outputs:
     If inputs are not valid
@@ -29,14 +30,15 @@ module.exports = function validateRegisterInput(request, response, done) {
   let packet = {};
 
   let errors = {};
-  data.name = !isEmpty(data.name) ? data.name : "";
+  data.username = !isEmpty(data.username) ? data.username : "";
   data.email = !isEmpty(data.email) ? data.email : "";
   data.password1 = !isEmpty(data.password1) ? data.password1 : "";
   data.password2 = !isEmpty(data.password2) ? data.password2 : "";
+  data.platform = !isEmpty(data.platform) ? data.platform.toUpperCase() : "";
 
-  // name checks
-  if (Validator.isEmpty(data.name)) {
-    errors.name = "Name field is required";
+  // Username checks
+  if (Validator.isEmpty(data.username)) {
+    errors.username = "Username field is required";
   }
 
   // Email checks
@@ -58,6 +60,13 @@ module.exports = function validateRegisterInput(request, response, done) {
   }
   if (!Validator.equals(data.password1, data.password2)) {
     errors.password2 = "Passwords must match.";
+  }
+
+  // Platform checks
+  if (Validator.isEmpty(data.platform)) {
+    errors.platform = "Platform field is required.";
+  } else if (data.platform !== "XBOX" && data.platform !== "PC" && data.platform !== "PS4") {
+    errors.platform = "The only platforms accepted are Xbox, PC, or PS4.";
   }
 
   if (!isEmpty(errors)) {

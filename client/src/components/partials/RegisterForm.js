@@ -13,16 +13,18 @@ import Loading from "./Loading.js"
   @prop email: String
   @prop password1: String
   @prop password2: String
+  @prop platform: String
   @prop errors: Object
   @prop loading: Boolean
 */
 const RegisterForm = (props) => {
   return (
     <form className="form" id="register-form" onSubmit={props.onSubmit}>
-      <fieldset className="form-fieldset" id="name-field">
-        <label className="form-label" htmlFor="name">Name</label>
-        <input onChange={props.onChange} className={"form-input" + (props.errors.name == null ? "" : " input-error")} value={props.name} id="name" type="name" required/>
-        <span className="form-error">{props.errors.name}</span>
+      <fieldset className="form-fieldset" id="username-field">
+        <label className="form-label" htmlFor="username">Username</label>
+        <input onChange={props.onChange} className={"form-input" + (props.errors.username == null ? "" : " input-error")} value={props.username} id="username" type="name" required/>
+        <span className="form-description">Must match platform</span>
+        <span className="form-error">{props.errors.username}</span>
       </fieldset>
       <fieldset className="form-fieldset" id="email-field">
         <label className="form-label" htmlFor="email">Email</label>

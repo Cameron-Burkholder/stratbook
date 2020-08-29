@@ -1,6 +1,7 @@
 /* client/components/api/LoginAPI.js */
 
 import React from "react";
+import { Redirect } from "react-router";
 import axios from "axios";
 
 import LoginForm from "../partials/LoginForm.js";
@@ -79,8 +80,9 @@ class LoginAPI extends React.Component {
           break;
         case "TOKEN_ISSUED":
           component.setState({
-            loading: false
-          })
+            loading: false,
+            redirect: "/dashboard"
+          });
           component.props.login(response.data.token, response.data.expiresIn);
           break;
       }
@@ -89,11 +91,15 @@ class LoginAPI extends React.Component {
     });
   }
   render() {
-    return (
-      <div id="LoginAPI">
-        <LoginForm onSubmit={this.onSubmit} onChange={this.onChange} email={this.state.email} password={this.state.password} errors={this.state.errors} loading={this.state.loading}/>
-      </div>
-    )
+    if (this.state.redirect) {
+      return <Redirect to={this.state.redirect}/>
+    } else {
+      return (
+        <div id="LoginAPI">
+          <LoginForm onSubmit={this.onSubmit} onChange={this.onChange} email={this.state.email} password={this.state.password} errors={this.state.errors} loading={this.state.loading}/>
+        </div>
+      )
+    }
   }
 }
 

@@ -1,6 +1,7 @@
 /* client/components/api/RegisterAPI.js */
 
 import React from "react";
+import { Redirect } from "react-router";
 import axios from "axios";
 
 import RegisterForm from "../partials/RegisterForm.js";
@@ -9,10 +10,11 @@ import RegisterForm from "../partials/RegisterForm.js";
   @func: RegisterAPI
   @desc: manage state of register form and register requests to server
   @state:
-    name: String
+    username: String
     email: String
     password1: String
     password2: String
+    platform: String
     errors: Object
     loading: Boolean
 */
@@ -28,6 +30,7 @@ class RegisterAPI extends React.Component {
       email: "",
       password1: "",
       password2: "",
+      platform: "XBOX",
       errors: {}
     }
   }
@@ -84,7 +87,8 @@ class RegisterAPI extends React.Component {
           break;
         case "USER_REGISTERED":
           component.setState({
-            loading: false
+            loading: false,
+            redirect: "/login"
           });
           break;
       }
@@ -93,11 +97,15 @@ class RegisterAPI extends React.Component {
     });
   }
   render() {
-    return (
-      <div id="RegisterAPI">
-        <RegisterForm onSubmit={this.onSubmit} onChange={this.onChange} email={this.state.email} password={this.state.password} errors={this.state.errors} loading={this.state.loading}/>
-      </div>
-    )
+    if (this.state.redirect) {
+      return <Redirect to={this.state.redirect}/>
+    } else {
+      return (
+        <div id="RegisterAPI">
+          <RegisterForm onSubmit={this.onSubmit} onChange={this.onChange} email={this.state.email} password1={this.state.password1} password2={this.state.platform2} platform={this.state.platform} errors={this.state.errors} loading={this.state.loading}/>
+        </div>
+      )
+    }
   }
 }
 

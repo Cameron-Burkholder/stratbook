@@ -1,7 +1,7 @@
 /* client/App.js */
 
 import React from "react";
-import { Route, Link, BrowserRouter as Router, Switch } from "react-router-dom";
+import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import { Redirect } from "react-router";
 import axios from "axios";
 
@@ -10,6 +10,7 @@ import Home from "./components/pages/Home.js";
 import Login from "./components/pages/Login.js";
 import Logout from "./components/pages/Logout.js";
 import Register from "./components/pages/Register.js";
+import Dashboard from "./components/pages/Dashboard.js";
 
 // import presentational components
 import Navigation from "./components/partials/Navigation.js";
@@ -116,6 +117,17 @@ class App extends React.Component {
                   <Header title="Register"/>
                   <Register/>
                 </div>
+                )
+              }
+            </Route>
+            <Route>
+              { this.state.loggedIn ? (
+                <div className="page-wrapper">
+                  <Header title="Dashboard"/>
+                  <Dashboard/>
+                </div>
+              ) : (
+                  <Redirect to="/"/>
                 )
               }
             </Route>

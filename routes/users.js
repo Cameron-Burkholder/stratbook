@@ -3,15 +3,22 @@
 const bcrypt = require("bcryptjs");
 const email = require("../config/email.js");
 
-const { log, verifyPassword, hashPassword, issueJWT } = require("../config/utilities.js");
+const { log, verifyPassword, hashPassword, issueJWT, genVerificationLink } = require("../config/utilities.js");
 
 // Load input validation
 const validateRegisterInput = require("../validation/register.js");
 const validateLoginInput = require("../validation/login.js");
 
+// Prepare user verification
+let host;
+
 // Load User model
 require("../models/User.js");
 const User = require("../models/User.js");
+
+// Load UnverifiedUser model
+require("../models/UnverifiedUser.js");
+const UnverifiedUser = require("../models/UnverifiedUser.js");
 
 module.exports = async (app, passport) => {
 
@@ -69,7 +76,7 @@ module.exports = async (app, passport) => {
     @method: POST
 
     @inputs:
-      name: String
+      username: String
       email: String
       password1: String
 
@@ -99,27 +106,93 @@ module.exports = async (app, passport) => {
         response.json(packet);
       } else {
         const newUser = new User({
-          name: request.body.name,
+          username: request.body.username,
           email: request.body.email,
-          password: request.body.password1
+          password: request.body.password1,
+          platform: request.body.platform,
+          verified: false
         });
         // Hash password before saving in database
         let hashedPassword = hashPassword(request.body.password1);
         if (hashedPassword) {
           newUser.password = hashedPassword;
           newUser.save().then(user => {
-            packet.status = "USER_REGISTERED";
+            host = request.hostname;
+            let newVerificationId = genVerificationLink();
+            let newVerificationLink = "http://" + host + "/api/users/verify?verification_id="+ newVerificationId;
+            const newUnverifiedUser = new UnverifiedUser({
+              user_id: newUser._id,
+              verification_id: newVerificationId
+            });
+            newUnverifiedUser.save().then(user => {
+              packet.status = "USER_REGISTERED";
+              response.json(packet);
+              let registrationEmail = {
+                subject: "R6 Stratbook - Registration Complete!",
+                html: "<div><p>Thank you for registering with R6 Stratbook!<br/><br/>We are glad to have you on our platform. To verify your account so you can create and join teams, click the link below.</p><br/><br/><a href='" + newVerificationLink + "' target='_blank'>Verify Email</a></div>"
+              };
+              email(newUser.email, registrationEmail.subject, registrationEmail.html);
+            }).catch(error => {
+              console.log(error);
+              packet.status = "UNABLE_TO_REGISTER";
+              response.json(packet);
+            })
+          }).catch(error => {
+            console.log(error);
+            packet.status = "UNABLE_TO_REGISTER";
             response.json(packet);
-            let registrationEmail = {
-              subject: "SUBJECT",
-              text: "TEXT"
-            };
-            email(user.email, registrationEmail.subject, registrationEmail.text);
           });
         } else {
+          console.log(error);
           packet.status = "UNABLE_TO_REGISTER";
           response.json(packet);
         }
+      }
+    });
+  });
+
+
+  /*
+    @route /api/users/verify
+    @method: GET
+
+    @inputs:
+      verification_id: String
+
+    @outputs:
+      If verification id isn't in the database
+        redirect: /register
+      Else
+        update verification state for user, delete record from verification database
+        redirect: /login
+  */
+  app.get("/api/users/verify", (request, response) => {
+    log("GET REQUEST AT /api/users/verify");
+    UnverifiedUser.findOne({ verification_id: request.query.verification_id }, function(error, item) {
+      if (error) {
+        console.log(error);
+        response.redirect("/register");
+      }
+      if (!item) {
+        response.redirect("/register");
+      } else {
+        User.findOne({ _id: item.user_id }, function(error, user) {
+          if (error) {
+            console.log(error);
+            response.redirect("/register");
+          }
+          user.verified = true;
+          user.save().then(() => {
+            UnverifiedUser.deleteOne({ user_id: user._id }, (error) => {
+              if (error) {
+                console.log(error);
+                response.redirect("/register");
+              } else {
+                response.redirect("/login");
+              }
+            });
+          })
+        });
       }
     });
   });

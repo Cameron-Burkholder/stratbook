@@ -1,37 +1,61 @@
 /* config/email.js */
 
 const nodemailer = require("nodemailer");
+const { google } = require("googleapis");
+const OAuth2 = google.auth.OAuth2;
 
-let transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: process.env.EMAIL,
-    pass: process.env.EMAIL_PASS
-  }
-});
+const { log } = require("./utilities.js");
+
+const OAuth2Client = new OAuth2(
+  process.env.OAUTH_CLIENT_ID,
+  process.env.OAUTH_CLIENT_SECRET,
+  "https://developers.google.com/oauthplayground"
+);
 
 /*
   @func: email
   @desc: Send an email to a user
   @param userEmail: String
   @param subject: String
-  @param message: String
+  @param html: HTML content to render
 
   @outputs:
     If an error occurs
       error: Error
 
 */
-module.exports = (userEmail, subject, message) => {
+module.exports = email = (userEmail, subject, message) => {
+
+  OAuth2Client.setCredentials({
+    refresh_token: process.env.OAUTH_REFRESH_TOKEN
+  });
+  const accessToken = OAuth2Client.getAccessToken();
+
+  let transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+          type: "OAuth2",
+          user: process.env.EMAIL,
+          clientId: process.env.OAUTH_CLIENT_ID,
+          clientSecret: process.env.OAUTH_CLIENT_SECRET,
+          refreshToken: process.env.OAUTH_REFRESH_TOKEN,
+          accessToken
+      }
+  });
+
   let emailOptions = {
     from: process.env.EMAIL,
     to: userEmail,
     subject: subject,
-    text: message
+    html: message
   };
+
+  log("SENDING EMAIL.");
   transporter.sendMail(emailOptions, (error, info) => {
     if (error) {
       console.log(error);
+    } else {
+      transport.close();
     }
   });
 };
