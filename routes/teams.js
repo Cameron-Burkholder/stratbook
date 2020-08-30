@@ -2,6 +2,7 @@
 
 const email = require("../config/email.js");
 const { log, genJoinCode } = require("../config/utilities.js");
+const mongoose = require("mongoose");
 
 // Load input validation
 const validateTeamInput = require("../validation/validateTeamName.js");
@@ -30,6 +31,199 @@ require("../models/Team.js");
 const Team = require("../models/Team.js");
 
 module.exports = async (app, passport) => {
+
+  /*
+    @route /api/teams/view-join-code
+    @method GET
+
+    @outputs
+      If error occurs at any point
+        packet: Object (status: UNABLE_TO_GET_TEAM_CODE)
+
+      If user is not verified
+        packet: Object (status: USER_NOT_VERIFIED)
+      Else
+        If user does not have a team
+          packet: Object (status: USER_HAS_NO_TEAM)
+        Else
+          If team code from user does not match a team
+            packet: Object (status: TEAM_DOES_NOT_EXIST)
+          ELse
+            If user is not a member of the team
+              packet: Object (status: USER_NOT_MEMBER_OF_TEAM)
+            Else
+              packet: Object (status: TEAM_CODE_FOUND, join_code)
+  */
+  app.get("/api/teams/view-join-code", (request, response, done) => {
+    log("GET REQUEST AT /api/teams/view-join-code");
+    done();
+  }, passport.authenticate("jwt", { session: false }), (request, response) => {
+    let packet = {
+      status: ""
+    };
+    if (request.user.verified) {
+      if (request.user.team_code) {
+        Team.findOne({ join_code: request.user.team_code }).then((team, error) => {
+          if (error) {
+            console.log(error);
+            packet.status = "UNABLE_TO_GET_TEAM_CODE";
+            response.json(packet);
+          }
+
+          if (team) {
+            if (team.members.indexOf(request.user._id) >= 0 || team.editors.indexOf(request.user._id) >= 0 || team.admins.indexOf(request.user._id) >= 0) {
+              packet.status = "TEAM_CODE_FOUND";
+              packet.join_code = team.join_code;
+              response.json(packet);
+            } else {
+              packet.status = "USER_NOT_MEMBER_OF_TEAM";
+              response.json(packet);
+            }
+          } else {
+            packet.status = "TEAM_DOES_NOT_EXIST";
+            response.json(packet);
+          }
+        }).catch(error => {
+          packet.status = "UNABLE_TO_GET_TEAM_CODE";
+          response.json(packet);
+        });
+      } else {
+        packet.status = "USER_HAS_NO_TEAM";
+        response.json(packet);
+      }
+    } else {
+      packet.status = "USER_NOT_VERIFIED";
+      response.json(packet);
+    }
+  });
+
+  /*
+    @route /api/teams/view-team
+    @method POST
+
+    @outputs
+    If error occurs at any point
+      packet: Object (status: UNABLE_TO_GET_TEAM_CODE)
+
+    If user is not verified
+      packet: Object (status: USER_NOT_VERIFIED)
+    Else
+      If user does not have a team
+        packet: Object (status: USER_HAS_NO_TEAM)
+      Else
+        If team code from user does not match a team
+          packet: Object (status: TEAM_DOES_NOT_EXIST)
+        ELse
+          If user is not a member of the team
+            packet: Object (status: USER_NOT_MEMBER_OF_TEAM)
+          Else
+            packet: Object (status: TEAM_FOUND, team_data)
+  */
+  app.get("/api/teams/view-team", (request, response, done) => {
+    log("GET REQUEST AT /api/teams/view-team");
+    done();
+  }, passport.authenticate("jwt", { session: false }), async (request, response) => {
+    let packet = {
+      status: ""
+    };
+    if (request.user.verified) {
+      if (request.user.team_code) {
+        Team.findOne({ join_code: request.user.team_code }).then(async (team, error) => {
+          if (error) {
+            console.log(error);
+            packet.status = "UNABLE_TO_GET_TEAM";
+            response.json(packet);
+          }
+
+          if (team) {
+            if (team.members.indexOf(request.user._id) >= 0 || team.editors.indexOf(request.user._id) >= 0 || team.admins.indexOf(request.user._id) >= 0) {
+              let team_data = {
+                name: team.name,
+                join_code: team.join_code,
+                members: [],
+                editors: [],
+                admins: []
+              };
+
+              let index;
+              index = 0;
+              while (index < team.members.length) {
+                await new Promise((resolve, reject) => {
+                  User.findOne({ _id: mongoose.Types.ObjectId(team.members[index]) }).then(async (user, error) => {
+                    let user_data = {
+                      username: user.username
+                    };
+                    team_data.members.push(user_data);
+                    resolve(true);
+                  }).catch(error => {
+                    console.log(error);
+                    packet.status = "UNABLE_TO_GET_TEAM";
+                    response.json(packet);
+                    reject(false);
+                  })
+                });
+                index++;
+              }
+              index = 0;
+              while (index < team.editors.length) {
+                await new Promise((resolve, reject) => {
+                  User.findOne({ _id: mongoose.Types.ObjectId(team.editors[index]) }).then(async (user, error) => {
+                    let user_data = {
+                      username: user.username
+                    };
+                    team_data.editors.push(user_data);
+                    resolve(true);
+                  }).catch(error => {
+                    console.log(error);
+                    packet.status = "UNABLE_TO_GET_TEAM";
+                    response.json(packet);
+                    reject(false);
+                  })
+                });
+                index++;
+              }
+              index = 0;
+              while (index < team.admins.length) {
+                await new Promise((resolve, reject) => {
+                  User.findOne({ _id: mongoose.Types.ObjectId(team.admins[index]) }).then(async (user, error) => {
+                    let user_data = {
+                      username: user.username
+                    };
+                    team_data.admins.push(user_data);
+                    resolve(true);
+                  }).catch(error => {
+                    console.log(error);
+                    packet.status = "UNABLE_TO_GET_TEAM";
+                    response.json(packet);
+                    reject(false);
+                  })
+                });
+                index++;
+              }
+              packet.status = "TEAM_FOUND";
+              packet.team = team_data;
+              response.json(packet);
+            } else {
+              packet.status = "USER_NOT_MEMBER_OF_TEAM";
+              response.json(packet);
+            }
+          } else {
+            packet.status = "TEAM_DOES_NOT_EXIST";
+            response.json(packet);
+          }
+        }).catch(error => {
+          packet.status = "UNABLE_TO_GET_TEAM";
+          response.json(packet);
+        });
+      } else {
+        packet.status = "USER_HAS_NO_TEAM";
+        response.json(packet);
+      }
+    } else {
+      packet.status = "USER_NOT_VERIFIED";
+      response.json(packet);
+    }
+  });
 
   /*
     @route /api/teams/create-team
@@ -91,7 +285,8 @@ module.exports = async (app, passport) => {
                 editors: [],
                 blocked_users: [],
                 name: request.body.name,
-                strategies_id: newStrategies._id
+                strategies_id: newStrategies._id,
+                platform: request.user.platform.toUpperCase()
               });
               newStrategies.save().then((strategies) => {
                 newTeam.save().then((team) => {
@@ -126,60 +321,92 @@ module.exports = async (app, passport) => {
   });
 
   /*
-    @route /api/teams/view-join-code
-    @method GET
+    @route /api/teams/update-name
+    @method PUT
+
+    @inputs (body)
+      name: String
 
     @outputs
-      If error occurs at any point
-        packet: Object (status: UNABLE_TO_GET_TEAM_CODE)
+      If at any point there is an error
+        packet: Object (status: ERROR_WHILE_UPDATING_TEAM_NAME)
 
       If user is not verified
         packet: Object (status: USER_NOT_VERIFIED)
       Else
-        If user does not have a team
+        If user doesn't have a team code
           packet: Object (status: USER_HAS_NO_TEAM)
         Else
-          If team code from user does not match a team
-            packet: Object (status: TEAM_DOES_NOT_EXIST)
-          ELse
-            If user is not a member of the team
-              packet: Object (status: USER_NOT_MEMBER_OF_TEAM)
+          If user is not an admin
+            packet: Object (status: USER_NOT_QUALIFIED)
+          Else
+            If there is no team with the users join code
+              packet: Object (status: TEAM_DOES_NOT_EXIST)
             Else
-              packet: Object (status: TEAM_CODE_FOUND, join_code)
+              If user is not an admin on that team
+                packet: Object (status: USER_NOT_QUALIFIED)
+              Else
+                packet: Object (status: TEAM_NAME_UPDATED)
+
   */
-  app.get("/api/teams/view-join-code", (request, response, done) => {
-    log("GET REQUEST AT /api/teams/view-join-code");
+  app.put("/api/teams/update-name", (request, response, done) => {
+    log("PUT REQUEST AT /api/teams/update-name");
     done();
-  }, passport.authenticate("jwt", { session: false }), (request, response) => {
+  }, passport.authenticate("jwt", { session: false }), validateTeamInput, async (request, response) => {
     let packet = {
       status: ""
     };
     if (request.user.verified) {
       if (request.user.team_code) {
-        Team.findOne({ join_code: request.user.team_code }).then((team, error) => {
-          if (error) {
-            console.log(error);
-            packet.status = "UNABLE_TO_GET_TEAM_CODE";
-            response.json(packet);
-          }
-
-          if (team) {
-            if (team.members.indexOf(request.user._id) >= 0 || team.editors.indexOf(request.user._id) >= 0 || team.admins.indexOf(request.user._id) >= 0) {
-              packet.status = "TEAM_CODE_FOUND";
-              packet.join_code = team.join_code;
-              response.json(packet);
+        if (request.user.status === ADMIN) {
+          await Team.findOne({ join_code: request.user.team_code }).then((team, error) => {
+            if (team) {
+              if (team.admins.indexOf(String(request.user._id)) < 0) {
+                packet.status = "USER_NOT_QUALIFIED";
+                response.json(packet);
+              } else {
+                Team.findOne({ name: request.body.name }).then((team, error) => {
+                  if (team) {
+                    packet.status = "TEAM_ALREADY_EXISTS";
+                    response.json(packet);
+                  } else {
+                    Team.findOne({ join_code: request.user.team_code }).then((team, error) => {
+                      team.name = request.body.name;
+                      team.save().then(() => {
+                        packet.status = "TEAM_NAME_UPDATED";
+                        response.json(packet);
+                      }).catch(error => {
+                        console.log(error);
+                        packet.status = "ERROR_WHILE_UPDATING_TEAM_NAME";
+                        response.json(packet);
+                      });
+                    }).catch(error => {
+                      console.log(error);
+                      packet.status = "ERROR_WHILE_UPDATING_TEAM_NAME";
+                      response.json(packet);
+                    });
+                  }
+                }).catch(error => {
+                  if (error) {
+                    console.log(error);
+                    packet.status = "ERROR_WHILE_UPDATING_TEAM_NAME";
+                    response.json(packet);
+                  }
+                })
+              }
             } else {
-              packet.status = "USER_NOT_MEMBER_OF_TEAM";
+              packet.status = "TEAM_DOES_NOT_EXIST";
               response.json(packet);
             }
-          } else {
-            packet.status = "TEAM_DOES_NOT_EXIST";
+          }).catch(error => {
+            console.log(error);
+            packet.status = "UNABLE_TO_UPDATE_TEAM_NAME";
             response.json(packet);
-          }
-        }).catch(error => {
-          packet.status = "UNABLE_TO_GET_TEAM_CODE";
+          });
+        } else {
+          packet.status = "USER_NOT_QUALIFIED";
           response.json(packet);
-        });
+        }
       } else {
         packet.status = "USER_HAS_NO_TEAM";
         response.json(packet);
@@ -289,101 +516,4 @@ module.exports = async (app, passport) => {
       response.json(packet);
     }
   });
-
-  /*
-    @route /api/teams/update-name
-    @method PUT
-
-    @inputs (body)
-      name: String
-
-    @outputs
-      If at any point there is an error
-        packet: Object (status: ERROR_WHILE_UPDATING_TEAM_NAME)
-
-      If user is not verified
-        packet: Object (status: USER_NOT_VERIFIED)
-      Else
-        If user doesn't have a team code
-          packet: Object (status: USER_HAS_NO_TEAM)
-        Else
-          If user is not an admin
-            packet: Object (status: USER_NOT_QUALIFIED)
-          Else
-            If there is no team with the users join code
-              packet: Object (status: TEAM_DOES_NOT_EXIST)
-            Else
-              If user is not an admin on that team
-                packet: Object (status: USER_NOT_QUALIFIED)
-              Else
-                packet: Object (status: TEAM_NAME_UPDATED)
-
-  */
-  app.put("/api/teams/update-name", (request, response, done) => {
-    log("PUT REQUEST AT /api/teams/update-name");
-    done();
-  }, passport.authenticate("jwt", { session: false }), validateTeamInput, async (request, response) => {
-    let packet = {
-      status: ""
-    };
-    if (request.user.verified) {
-      if (request.user.team_code) {
-        if (request.user.status === ADMIN) {
-          await Team.findOne({ join_code: request.user.team_code }).then((team, error) => {
-            if (team) {
-              if (team.admins.indexOf(String(request.user._id)) < 0) {
-                packet.status = "USER_NOT_QUALIFIED";
-                response.json(packet);
-              } else {
-                Team.findOne({ name: request.body.name }).then((team, error) => {
-                  if (team) {
-                    packet.status = "TEAM_ALREADY_EXISTS";
-                    response.json(packet);
-                  } else {
-                    Team.findOne({ join_code: request.user.team_code }).then((team, error) => {
-                      team.name = request.body.name;
-                      team.save().then(() => {
-                        packet.status = "TEAM_NAME_UPDATED";
-                        response.json(packet);
-                      }).catch(error => {
-                        console.log(error);
-                        packet.status = "ERROR_WHILE_UPDATING_TEAM_NAME";
-                        response.json(packet);
-                      });
-                    }).catch(error => {
-                      console.log(error);
-                      packet.status = "ERROR_WHILE_UPDATING_TEAM_NAME";
-                      response.json(packet);
-                    });
-                  }
-                }).catch(error => {
-                  if (error) {
-                    console.log(error);
-                    packet.status = "ERROR_WHILE_UPDATING_TEAM_NAME";
-                    response.json(packet);
-                  }
-                })
-              }
-            } else {
-              packet.status = "TEAM_DOES_NOT_EXIST";
-              response.json(packet);
-            }
-          }).catch(error => {
-            console.log(error);
-            packet.status = "UNABLE_TO_UPDATE_TEAM_NAME";
-            response.json(packet);
-          });
-        } else {
-          packet.status = "USER_NOT_QUALIFIED";
-          response.json(packet);
-        }
-      } else {
-        packet.status = "USER_HAS_NO_TEAM";
-        response.json(packet);
-      }
-    } else {
-      packet.status = "USER_NOT_VERIFIED";
-      response.json(packet);
-    }
-  })
 };

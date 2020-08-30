@@ -41,6 +41,10 @@ const TeamSchema = new Schema({
   name: {
     type: String,
     required: true
+  },
+  platform: {
+    type: String,
+    required: true
   }
 });
 
