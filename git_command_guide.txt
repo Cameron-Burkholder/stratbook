@@ -1,0 +1,17 @@
+TO GET CURRENT VERSION OF PROJECT
+Master repository owner: git pull origin master
+Forked branch: git pull cameron-burkholder master
+
+TO ADD FILES
+git add .
+
+TO COMMIT FILES
+git commit -m "MESSAGE"
+
+TO PUSH FILES (to your repository)
+git push -u origin master
+
+Once changes are pushed to your repository, go to it on github.com and create a pull request. Be descriptive so we know what was changed.
+Submit pull request.
+
+Master repository owner merges pull request.
