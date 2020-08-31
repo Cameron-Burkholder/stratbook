@@ -93,6 +93,7 @@ module.exports = async (app, passport) => {
         Else
           packet: Object (status: UNABLE_TO_REGISTER)
   */
+  // TODO: prevent two users from signing up with the same username
   app.post("/api/users/register", (request, response, done) => {
     log("POST REQUEST AT /api/users/register");
     done();

@@ -511,6 +511,51 @@ module.exports = async (app, passport) => {
   });
 
   /*
+    @route /api/teams/remove-user
+    @method PATCH
+
+    @inputs (body):
+      username: String
+
+    @outputs
+
+      If at any point there is an error
+        packet: Object (status: ERROR_WHILE_REMOVING_USER)
+
+      If username is invalid
+        packet: Object (status: INVALID_REMOVE_USER_INPUT)
+      Else
+        If user is not verified
+          packet: Object (status: USER_NOT_VERIFIED)
+        Else
+          If user doesn't have a team code
+            packet: Object (status: USER_HAS_NO_TEAM)
+          Else
+            If user is not an admin
+              packet: Object (status: USER_NOT_QUALIFIED)
+            Else
+              If there is no team with the sent join code
+                packet: Object (status: TEAM_DOES_NOT_EXIST)
+              ELse
+                If user is not an admin on that team
+                  packet: Object (status: USER_NOT_QUALIFIED)
+                Else
+                  If user is attempting to block him/herself
+                    packet: Object (status: CANNOT_REMOVE_SELF)
+                  Else
+                    If user is removing someone that cannot be found
+                      packet: Object (status: USER_NOT_FOUND)
+                    Else
+                      packet: Object (status: USER_BLOCKED)
+  */
+  app.patch("/api/teams/block-user", (request, response, done) => {
+    log("PATCH REQUEST AT /api/teams/remove-user");
+    done();
+  }, passport.authenticate("jwt", { session: false }), validateRemoveUser, async (request, response) => {
+
+  });
+
+  /*
     @route /api/teams/delete-team
     @method DELETE
 
