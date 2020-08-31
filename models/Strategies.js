@@ -17,6 +17,10 @@ const StrategiesSchema = new Schema({
   strategies: {
     type: Array,
     required: true
+  },
+  join_code: {
+    type: String,
+    required: true
   }
 });
 

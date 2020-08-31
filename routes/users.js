@@ -47,7 +47,7 @@ module.exports = async (app, passport) => {
     log("POST REQUEST AT /api/users/login");
     done();
   }, validateLoginInput, (request, response) => {
-    User.findOne({ email: request.body.email }).then((user) => {
+    User.findOne({ email: request.body.email.toLowerCase() }).then((user) => {
       let packet = {
         status: ""
       };
@@ -188,6 +188,7 @@ module.exports = async (app, passport) => {
                 console.log(error);
                 response.redirect("/register");
               } else {
+                email(user.email, "Account Verified", "<h1>Thanks for verifying your account!</h1><br/><p>You can now create or join a team.</p>");
                 response.redirect("/login");
               }
             });

@@ -1,8 +1,9 @@
-/* validation/createTeam.js */
+/* validation/validateTeamName.js */
 
 const Validator = require("validator");
 const Filter = require("bad-words");
 const filter = new Filter();
+filter.addWords("fuckboy", "fuckboys", "penisboy", "penisboys");
 const isEmpty = require("is-empty");
 
 /*
@@ -16,6 +17,9 @@ const isEmpty = require("is-empty");
   @outputs:
     If inputs are not valid
       packet: Object (status: INVALID_TEAM_INPUT)
+
+    If inputs are inappropriate
+      packet: Object (status: PROFANE_TEAM_INPUT)
     Else
       done();
 */

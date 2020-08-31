@@ -50,6 +50,7 @@ module.exports = function validateLoginInput(request, response, done) {
     response.end();
     return packet;
   } else {
+    request.body.email = request.body.email.toLowerCase();
     done();
     return null;
   }

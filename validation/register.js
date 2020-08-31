@@ -86,6 +86,7 @@ module.exports = function validateRegisterInput(request, response, done) {
     response.end();
     return packet;
   } else {
+    request.body.email = request.body.email.toLowerCase();
     done();
     return null;
   }

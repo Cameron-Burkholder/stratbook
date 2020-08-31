@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 
 // Load input validation
 const validateTeamInput = require("../validation/validateTeamName.js");
+const validateJoinCode = require("../validation/validateJoinCode.js");
 
 // Prepare user verification
 let host;
@@ -50,7 +51,7 @@ module.exports = async (app, passport) => {
             packet: Object (status: TEAM_DOES_NOT_EXIST)
           ELse
             If user is not a member of the team
-              packet: Object (status: USER_NOT_MEMBER_OF_TEAM)
+              packet: Object (status: USER_NOT_QUALIFIED)
             Else
               packet: Object (status: TEAM_CODE_FOUND, join_code)
   */
@@ -76,7 +77,7 @@ module.exports = async (app, passport) => {
               packet.join_code = team.join_code;
               response.json(packet);
             } else {
-              packet.status = "USER_NOT_MEMBER_OF_TEAM";
+              packet.status = "USER_NOT_QUALIFIED";
               response.json(packet);
             }
           } else {
@@ -115,7 +116,7 @@ module.exports = async (app, passport) => {
           packet: Object (status: TEAM_DOES_NOT_EXIST)
         ELse
           If user is not a member of the team
-            packet: Object (status: USER_NOT_MEMBER_OF_TEAM)
+            packet: Object (status: USER_NOT_QUALIFIED)
           Else
             packet: Object (status: TEAM_FOUND, team_data)
   */
@@ -204,7 +205,7 @@ module.exports = async (app, passport) => {
               packet.team = team_data;
               response.json(packet);
             } else {
-              packet.status = "USER_NOT_MEMBER_OF_TEAM";
+              packet.status = "USER_NOT_QUALIFIED";
               response.json(packet);
             }
           } else {
@@ -238,6 +239,9 @@ module.exports = async (app, passport) => {
 
       If input data is invalid
         packet: Object (status: INVALID_TEAM_INPUT, errors: errors)
+
+      If input data is inappropriate
+        packet: Object (status: PROFANE_TEAM_INPUT)
 
       If user has not verified their account
         packet: Object (status: USER_NOT_VERIFIED)
@@ -276,7 +280,8 @@ module.exports = async (app, passport) => {
               let admins = [];
               admins.push(request.user._id);
               const newStrategies = new Strategies({
-                strategies: []
+                strategies: [],
+                join_code: join_code
               });
               const newTeam = new Team({
                 join_code: join_code,
@@ -322,12 +327,18 @@ module.exports = async (app, passport) => {
 
   /*
     @route /api/teams/update-name
-    @method PUT
+    @method PATCH
 
     @inputs (body)
       name: String
 
     @outputs
+      If team input is invalid
+        packet: Object (status: INVALID_TEAM_INPUT)
+
+      If team input is inappropriate
+        packet: Object (status: PROFANE_TEAM_INPUT)
+
       If at any point there is an error
         packet: Object (status: ERROR_WHILE_UPDATING_TEAM_NAME)
 
@@ -349,8 +360,8 @@ module.exports = async (app, passport) => {
                 packet: Object (status: TEAM_NAME_UPDATED)
 
   */
-  app.put("/api/teams/update-name", (request, response, done) => {
-    log("PUT REQUEST AT /api/teams/update-name");
+  app.patch("/api/teams/update-name", (request, response, done) => {
+    log("PATCH REQUEST AT /api/teams/update-name");
     done();
   }, passport.authenticate("jwt", { session: false }), validateTeamInput, async (request, response) => {
     let packet = {
@@ -418,6 +429,91 @@ module.exports = async (app, passport) => {
   });
 
   /*
+    @route /api/teams/join-team
+    @method PATCH
+
+    @inputs (body):
+      join_code: String
+
+    @outputs:
+      If join code is invalid
+        packet: Object (status: INVALID_JOIN_CODE)
+
+      If user is not verified
+        packet: Object (status: USER_NOT_VERIFIED)
+      Else
+        If user has a team already
+          packet: Object (status: USER_HAS_TEAM)
+        ELse
+          If an error occurs or the user is blocked from team
+            packet: Object (status: UNABLE_TO_JOIN_TEAM)
+          Else
+            packet: Object (status: TEAM_JOINED)
+  */
+  app.patch("/api/teams/join-team", (request, response, done) => {
+    log("PATCH REQUEST AT /api/teams/join-team");
+    done();
+  }, passport.authenticate("jwt", { session: false }), validateJoinCode, async (request, response) => {
+    let packet = {
+      status: ""
+    };
+    if (request.user.verified) {
+      if (request.user.team_code) {
+        packet.status = "USER_HAS_TEAM";
+        response.json(packet);
+      } else {
+        await new Promise((resolve, reject) => {
+          Team.findOne({ join_code: request.body.join_code }).then((team, error) => {
+            if (team.blocked.indexOf(String(request.user._id)) >= 0) {
+              packet.status = "UNABLE_TO_JOIN_TEAM";
+              response.json(packet);
+            } else {
+              team.members.push(String(request.user._id));
+              team.save().then(() => {
+                packet.status = "TEAM_JOINED";
+                response.json(packet);
+                resolve(true);
+              }).catch(error => {
+                console.log(error);
+                reject(false);
+                return;
+              });
+            }
+          }).catch(error => {
+            console.log(error);
+            packet.status = "UNABLE_TO_JOIN_TEAM";
+            response.json(packet);
+            reject(false);
+            return;
+          });
+        });
+        await new Promise((resolve, reject) => {
+          User.findOne({ _id: mongoose.Types.ObjectId(request.user._id) }).then((user, error) => {
+            user.team_code = request.body.join_code;
+            user.status = MEMBER;
+            user.save().then(() => {
+              resolve(true);
+            }).catch(error => {
+              console.log(error);
+              reject(false);
+              return;
+            });
+          }).catch(error => {
+            console.log(error);
+            packet.status = "UNABLE_TO_JOIN_TEAM";
+            response.json(packet);
+            reject(false);
+            return;
+          });
+        });
+      }
+    } else {
+      packet.status = "USER_NOT_VERIFIED";
+      response.json(packet);
+    }
+  });
+
+  /*
     @route /api/teams/delete-team
     @method DELETE
 
@@ -465,13 +561,70 @@ module.exports = async (app, passport) => {
                   response.json(packet);
                 });
 
+                // delete team strategies
+                await Strategies.deleteOne({ join_code: request.user.team_code }).catch(error => {
+                  console.log(error);
+                  packet.status = "ERROR_WHILE_DELETING_TEAM";
+                  response.json(packet);
+                })
+
                 // update status of all members
                 let index = 0;
-                while (index < members.length) {
+                while (index < team.members.length) {
                   await new Promise((resolve, reject) => {
-                    User.findOne({ _id: members[index] }).then(async (user, error) => {
-                      user.team_code = null;
-                      user.status = null;
+                    User.findOne({ _id: mongoose.Types.ObjectId(team.members[index]) }).then(async (user, error) => {
+                      user.team_code = undefined;
+                      user.status = undefined;
+                      await new Promise((resolve, reject) => {
+                        user.save().then(() => {
+                          resolve(true);
+                        }).catch((error) => {
+                          console.log(error);
+                          reject(false);
+                        })
+                      });
+                      resolve(true);
+                    }).catch(error => {
+                      console.log(error);
+                      packet.status = "ERROR_WHILE_DELETING_TEAM";
+                      response.json(packet);
+                      reject(false);
+                    });
+                  });
+                  index++;
+                }
+
+                index = 0;
+                while (index < team.editors.length) {
+                  await new Promise((resolve, reject) => {
+                    User.findOne({ _id: mongoose.Types.ObjectId(team.editors[index]) }).then(async (user, error) => {
+                      user.team_code = undefined;
+                      user.status = undefined;
+                      await new Promise((resolve, reject) => {
+                        user.save().then(() => {
+                          resolve(true);
+                        }).catch((error) => {
+                          console.log(error);
+                          reject(false);
+                        })
+                      });
+                      resolve(true);
+                    }).catch(error => {
+                      console.log(error);
+                      packet.status = "ERROR_WHILE_DELETING_TEAM";
+                      response.json(packet);
+                      reject(false);
+                    });
+                  });
+                  index++;
+                }
+
+                index = 0;
+                while (index < team.admins.length) {
+                  await new Promise((resolve, reject) => {
+                    User.findOne({ _id: mongoose.Types.ObjectId(team.admins[index]) }).then(async (user, error) => {
+                      user.team_code = undefined;
+                      user.status = undefined;
                       await new Promise((resolve, reject) => {
                         user.save().then(() => {
                           resolve(true);

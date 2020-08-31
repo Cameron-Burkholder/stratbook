@@ -362,6 +362,77 @@ suite("UNIT TESTS", function() {
     })
   });
 
+  suite("Join Code Validation", function() {
+    const validateJoinCode = require("../validation/validateJoinCode.js");
+    let response = {
+      json: function() {},
+      end: function() {}
+    }
+    let done = function() {};
+    test("# Join code field not provded", function() {
+      let request = {
+        body: {}
+      };
+      assert.equal(validateJoinCode(request, response, done).status, "INVALID_JOIN_CODE", "Response should be invalid if join code is not included in request.");
+      assert.equal(validateJoinCode(request, response, done).errors.join_code, "Join code field is required", "Errors should list join code as invalid if not included in request.");
+    });
+    test("# Join code field is empty", function() {
+      let request = {
+        body: { join_code: "" }
+      };
+      assert.equal(validateJoinCode(request, response, done).status, "INVALID_JOIN_CODE", "Response should be invalid if join code is empty in request.");
+      assert.equal(validateJoinCode(request, response, done).errors.join_code, "Join code field is required", "Errors should list join code as invalid if it is empty in request.");
+    });
+    test("# Join code is not 8 digits", function() {
+      let request1 = {
+        body: { join_code: "7777777" }
+      };
+      let request2 = {
+        body: { join_code: "999999999" }
+      }
+      let request3 = {
+        body: { join_code: "88888888" }
+      }
+      assert.equal(validateJoinCode(request1, response, done).status, "INVALID_JOIN_CODE", "Response should be invalid if join code is less than 8 digits.");
+      assert.equal(validateJoinCode(request1, response, done).errors.join_code, "Join code must be exactly 8 digits", "Errors should list join code as invalid if it is less than 8 digits.");
+
+      assert.equal(validateJoinCode(request2, response, done).status, "INVALID_JOIN_CODE", "Response should be invalid if join code is more than 8 digits.");
+      assert.equal(validateJoinCode(request2, response, done).errors.join_code, "Join code must be exactly 8 digits", "Errors should list join code as invalid if it is more than 8 digits.");
+
+      assert.equal(validateJoinCode(request3, response, done), null, "Errors should be empty if join code is valid.");
+    });
+    test("# Join code contains non-numeric digits", function() {
+      let request1 = {
+        body: { join_code: "abcdefgh" }
+      };
+      let request2 = {
+        body: { join_code: "abcd1234" }
+      }
+      let request3 = {
+        body: { join_code: "/.<>^%*&" }
+      }
+      let request4 = {
+        body: { join_code: "abcd!@#$" }
+      }
+      let request5 = {
+        body: { join_code: "12345678" }
+      }
+      assert.equal(validateJoinCode(request1, response, done).status, "INVALID_JOIN_CODE", "Response should be invalid if join code only contains alphabet characters.");
+      assert.equal(validateJoinCode(request1, response, done).errors.join_code, "Join code may not contain non-number characters", "Errors should list join code as invalid if it is only letter characters.");
+
+      assert.equal(validateJoinCode(request2, response, done).status, "INVALID_JOIN_CODE", "Response should be invalid if join code contains any letters.");
+      assert.equal(validateJoinCode(request2, response, done).errors.join_code, "Join code may not contain non-number characters", "Errors should list join code as invalid if it contains any letters.");
+
+      assert.equal(validateJoinCode(request3, response, done).status, "INVALID_JOIN_CODE", "Response should be invalid if join code contains all non-alphanumeric characters.");
+      assert.equal(validateJoinCode(request3, response, done).errors.join_code, "Join code may not contain non-number characters", "Errors should list join code as invalid if it contains all non-alphanumeric characters.");
+
+      assert.equal(validateJoinCode(request4, response, done).status, "INVALID_JOIN_CODE", "Response should be invalid if join code contains any non-alphanumeric characters.");
+      assert.equal(validateJoinCode(request4, response, done).errors.join_code, "Join code may not contain non-number characters", "Errors should list join code as invalid if it contains any non-alphanumeric characters.");
+
+      assert.equal(validateJoinCode(request5, response, done), null, "Response should be valid if join code is 8 numerical digits.");
+    });
+  });
+
   suite("Utility Functions", function() {
     const { verifyPassword, hashPassword, issueJWT, genVerificationLink, genJoinCode } = require("../config/utilities.js");
     // UNIT TEST ACCOUNT
