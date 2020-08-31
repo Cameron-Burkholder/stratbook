@@ -1,6 +1,5 @@
 /* server.js */
 
-
 // IMPORT PACKAGES
 const express = require("express");           // For use in routing and middleware
 const mongoose = require("mongoose");         // For use in database connections
