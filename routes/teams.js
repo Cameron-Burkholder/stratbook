@@ -20,9 +20,6 @@ const EDITOR = "EDITOR";
 require("../models/User.js");
 const User = require("../models/User.js");
 
-// Load _Map model
-const Map = require("../models/Map_.js");
-
 // Load Strategies model
 require("../models/Strategies.js");
 const Strategies = require("../models/Strategies.js");
