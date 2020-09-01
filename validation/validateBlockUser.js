@@ -4,9 +4,8 @@ const Validator = require("validator");
 const isEmpty = require("is-empty");
 
 /*
-  @func: validateRemoveUser
+  @func: validateBlockUser
   @desc: check if username and join_code are valid
-  @param join_code: String
   @param username: String
 
   @inputs:
@@ -20,27 +19,21 @@ const isEmpty = require("is-empty");
       done();
 */
 
-module.exports = function validateRemoveUser(request, response, done) {
+module.exports = function validateBlockUser(request, response, done) {
 
   let data = request.body;
   let packet = {};
 
   let errors = {};
-  data.join_code = !isEmpty(data.join_code) ? data.join_code : "";
   data.username = !isEmpty(data.username) ? data.username : "";
-
-  // Join code checks
-  if (Validator.isEmpty(data.join_code)) {
-    errors.join_code = "Join code field is required";
-  } else if (!Validator.isLength(data.join_code, { min: 8, max: 8 })) {
-    errors.join_code = "Join code must be exactly 8 digits";
-  } else if (!Validator.isNumeric(data.join_code, { no_symbols: true })) {
-    errors.join_code = "Join code may not contain non-number characters";
+  
+  if (Validator.isEmpty(data.username)) {
+    errors.username = "Username field is required";
   }
 
   // Check validation
   if (!isEmpty(errors)) {
-    packet.status = "INVALID_JOIN_CODE";
+    packet.status = "INVALID_BLOCK_USER_INPUT";
     packet.errors = errors;
     response.json(packet);
     response.end();

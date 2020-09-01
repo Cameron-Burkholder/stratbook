@@ -433,6 +433,30 @@ suite("UNIT TESTS", function() {
     });
   });
 
+  suite("Block User Validation", function() {
+    const validateBlockUser = require("../validation/validateBlockUser.js");
+    let response = {
+      json: function() {},
+      end: function() {}
+    }
+    let done = function() {};
+
+    test("# Username field not provided", function() {
+      let request = {
+        body: {}
+      };
+      assert.equal(validateBlockUser(request, response, done).status, "INVALID_BLOCK_USER_INPUT", "Response should be invalid if username is not included in request.");
+      assert.equal(validateBlockUser(request, response, done).errors.username, "Username field is required", "Errors should list username as invalid if not included in request.");
+    });
+    test("# Username field is empty", function() {
+      let request = {
+        body: { username: "" }
+      };
+      assert.equal(validateBlockUser(request, response, done).status, "INVALID_BLOCK_USER_INPUT", "Response should be invalid if username is empty in request.");
+      assert.equal(validateBlockUser(request, response, done).errors.username, "Username field is required", "Errors should list username as invalid if it is empty in request.");
+    })
+  });
+
   suite("Utility Functions", function() {
     const { verifyPassword, hashPassword, issueJWT, genVerificationLink, genJoinCode } = require("../config/utilities.js");
     // UNIT TEST ACCOUNT
