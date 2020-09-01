@@ -298,7 +298,7 @@ module.exports = async (app, passport) => {
                     user.status = ADMIN;
                     user.save().then(() => {
                       packet.status = "TEAM_CREATED";
-                      if (process.env.NODE_ENV === "DEVELOPMENT") {
+                      if (process.env.NODE_ENV === "TESTING") {
                         packet.team_code = newTeam.join_code;
                       }
                       response.json(packet);

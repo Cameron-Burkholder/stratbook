@@ -45,7 +45,9 @@ const PRIV_KEY = fs.readFileSync(pathToKey, "utf8");
 */
 module.exports = {
   log: function(msg) {
-    console.log(new Date() + " --- " + msg);
+    if (process.env.NODE_ENV !== "TESTING") {
+      console.log(new Date() + " --- " + msg);
+    }
   },
   verifyPassword: function(password, hash) {
     let isValidPassword = bcrypt.compareSync(password, hash);

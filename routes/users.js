@@ -39,7 +39,7 @@ module.exports = async (app, passport) => {
 
       If user exists
         If password is correct
-          packet: Object (status: TOKEN_ISSUED)
+          packet: Object (status: TOKEN_ISSUED, user_status: undefined or user_stats)
         Else
           packet: Object (status: INCORRECT_PASSWORD)
   */
@@ -59,7 +59,9 @@ module.exports = async (app, passport) => {
         const isValidPassword = verifyPassword(request.body.password, user.password);
         if (isValidPassword) {
           const tokenObject = issueJWT(user);
+          console.log(user);
           packet.status = "TOKEN_ISSUED";
+          packet.user_status = user.status;
           packet.token = tokenObject.token;
           packet.expiresIn = tokenObject.expires;
           response.json(packet);

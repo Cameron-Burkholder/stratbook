@@ -23,8 +23,8 @@ suite("FUNCTIONAL TESTS", function() {
   */
 
   suite("TEAM MODEL", function() {
-    let dev_team_code;
-    suite("Create a Team", function() {
+    let test_team_code;
+    suite("/api/teams/create-team", function() {
       const test_user = {
         username: "TESTING USER",
         email: "testing@domain.com",
@@ -167,7 +167,7 @@ suite("FUNCTIONAL TESTS", function() {
       });
     });
 
-    suite("View Team Join Code", function() {
+    suite("/api/teams/view-join-code", function() {
       const test_user = {
         username: "TESTING USER",
         email: "testing@domain.com",
@@ -308,7 +308,7 @@ suite("FUNCTIONAL TESTS", function() {
       });
     });
 
-    suite("View Team", function() {
+    suite("/api/teams/view-team", function() {
       const test_user = {
         username: "TESTING USER",
         email: "testing@domain.com",
@@ -449,7 +449,7 @@ suite("FUNCTIONAL TESTS", function() {
       });
     });
 
-    suite("Update Team Name", function() {
+    suite("/api/teams/update-name", function() {
       const test_user = {
         username: "TESTING USER",
         email: "testing@domain.com",
@@ -679,7 +679,7 @@ suite("FUNCTIONAL TESTS", function() {
       });
     });
 
-    suite("Block a User", function() {
+    suite("/api/teams/block-user", function() {
       const invalidJWT = "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1OTg4MTkxMTk3NDQsImV4cCI6MTU5ODgxOTExOTc0NH0.qkun-NSiUKZ-lC0tW6g0eu8VWqUSAxzQZbG4alpfXeSbL3_SPlfS87FHgRMaJeYkNb2qwqq8blq3JjvK5jYYxRhwfecOFvBsCnjzVrr-q4WRUm_PvJMdYW1TDK6iQwmuv8n2PP9vyz558ne9m065Ufqf1fn_3NIdSHNzsGkWf_tJYKX9d8ChxMn2L6pVtnetolD9KHgajJzpS9llbO7VUOSsnbuv8eMxo3N3Jlgw1NViarxYfctNhj7mL_PynlTqxSeRxpXR5vGqbCU7XP7y34gqrj9p7wsNklwsYaqGqr9oVbo0Ai5rtNRukykQ5MDB6rH15WQpcPH1JBi03bZMA407IgHsJXUo0p9Nv9pFDqLqfIuB-LQcA8ALjViPQ9L_v_g2PxU-47DEALtRldTobu4tKTQ8yAOc0mw6Da8SgpML8sysBmC6uCzFlkcw9u9LNrLVmkmcUYSrtJwtJeXOGeUhICumhHl-NsYmguJht4tTa56SRUfkcZZL7i4uxnS36pF66A_V0NU1jqeKWFaWzBhLPLEy7HAuWuSyLOrS5haS40S70Pz6s_Bf6ED1R0lPd6tjtIVIlAJ3JLkGouzR2s1sETySmQlKDSi7fQ9e0Bvfrow10QhcExG7bdkxQ58xDhXh8KnY4jLH1vqhA6TSX7TFOJtgOtxSA2NvDym7uRo";
 
       const test_user = {
@@ -728,7 +728,7 @@ suite("FUNCTIONAL TESTS", function() {
 
     });
 
-    suite("Join a Team", function() {
+    suite("/api/teams/join-team", function() {
       const test_user = {
         username: "TESTING USER",
         email: "testing@domain.com",
@@ -885,7 +885,7 @@ suite("FUNCTIONAL TESTS", function() {
       });
     });
 
-    suite("Delete a Team", function() {
+    suite("/api/teams/delete-team", function() {
       const test_user = {
         username: "TESTING USER",
         email: "testing@domain.com",
@@ -1035,6 +1035,15 @@ suite("FUNCTIONAL TESTS", function() {
             done();
           });
       });
+    });
+  });
+
+  suite("USER MODEL", function() {
+    suite("/api/users/register", function() {
+
+    })
+    suite("/api/users/login", function() {
+
     });
   });
 
