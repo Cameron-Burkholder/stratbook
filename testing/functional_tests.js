@@ -1039,11 +1039,346 @@ suite("FUNCTIONAL TESTS", function() {
   });
 
   suite("USER MODEL", function() {
+    let newUserJWT;
     suite("/api/users/register", function() {
+      test("# Username field not provided", function(done) {
+        chai.request(server)
+          .post("/api/users/register")
+          .send({})
+          .end((error, response) => {
+            if (error) return done(error);
+            assert.equal(response.status, 200, "Response should be 200 if username field not provided.");
+            assert.equal(response.body.status, "INVALID_REGISTRATION", "Response should indicate registration is invalid if username is not in request.");
+            assert.equal(response.body.errors.username, "Username field is required", "Errors should indicate username field is required if username is not in request.");
+            done();
+          });
+      });
+      test("# Username field is empty", function(done) {
+        chai.request(server)
+          .post("/api/users/register")
+          .send({ username: "" })
+          .end((error, response) => {
+            if (error) return done(error);
+            assert.equal(response.status, 200, "Response should be 200 if username field is empty.");
+            assert.equal(response.body.status, "INVALID_REGISTRATION", "Response should indicate registration is invalid if username is empty.");
+            assert.equal(response.body.errors.username, "Username field is required", "Errors should indicate username field is required if username is empty.");
+            done();
+          });
+      });
+      test("# Email field not provided", function(done) {
+        chai.request(server)
+          .post("/api/users/register")
+          .send({})
+          .end((error, response) => {
+            if (error) return done(error);
+            assert.equal(response.status, 200, "Response should be 200 if email field is not in request.");
+            assert.equal(response.body.status, "INVALID_REGISTRATION", "Response should indicate invalid registration if email not in request.");
+            assert.equal(response.body.errors.email, "Email field is required", "Errors should indicate email is required.");
+            done();
+          });
+      });
+      test("# Email field is empty", function(done) {
+        chai.request(server)
+          .post("/api/users/register")
+          .send({ email: "" })
+          .end((error, response) => {
+            if (error) return done(error);
+            assert.equal(response.status, 200, "Response should be 200 if email field is empty.");
+            assert.equal(response.body.status, "INVALID_REGISTRATION", "Response should indicate invalid registration if email is empty.");
+            assert.equal(response.body.errors.email, "Email field is required", "Errors should indicate email is required.");
+            done();
+          });
+      });
+      test("# Email is invalid", function(done) {
+        chai.request(server)
+          .post("/api/users/register")
+          .send({ email: "something_wrong" })
+          .end((error, response) => {
+            if (error) return done(error);
+            assert.equal(response.status, 200, "Response should be 200 if email field is invalid.");
+            assert.equal(response.body.status, "INVALID_REGISTRATION", "Response should indicate invalid registration if email is invalid.");
+            assert.equal(response.body.errors.email, "Email is invalid", "Errors should indicate email is invalid.");
+            done();
+          });
+      });
+      test("# Password field not provided", function(done) {
+        chai.request(server)
+          .post("/api/users/register")
+          .send({})
+          .end((error, response) => {
+            if (error) return done(error);
+            assert.equal(response.status, 200, "Response should be 200 if password field is not in request.");
+            assert.equal(response.body.status, "INVALID_REGISTRATION", "Response should indicate invalid registration if password field is not provided.");
+            assert.equal(response.body.errors.password1, "Password field is required", "Errors should indicate password is required.");
+            done();
+          });
+      });
+      test("# Password field is empty", function(done) {
+        chai.request(server)
+          .post("/api/users/register")
+          .send({ password1: "" })
+          .end((error, response) => {
+            if (error) return done(error);
+            assert.equal(response.status, 200, "Response should be 200 if password field is empty.");
+            assert.equal(response.body.status, "INVALID_REGISTRATION", "Response should indicate invalid registration if password field is empty.");
+            assert.equal(response.body.errors.password1, "Password field is required", "Errors should indicate password is required.");
+            done();
+          });
+      });
+      test("# Password is wrong length", function(done) {
+        chai.request(server)
+          .post("/api/users/register")
+          .send({ password1: "short" })
+          .end((error, response) => {
+            if (error) return done(error);
+            assert.equal(response.status, 200, "Response should be 200 if password is wrong length.");
+            assert.equal(response.body.status, "INVALID_REGISTRATION", "Response should indicate invalid registration if password is wrong length.");
+            assert.equal(response.body.errors.password1, "Password must be at least 6 characters and at most 30", "Errors should indicate password is wrong length.");
+            done();
+          });
+      });
+      test("# Confirm password field not provided", function(done) {
+        chai.request(server)
+          .post("/api/users/register")
+          .send({})
+          .end((error, response) => {
+            if (error) return done(error);
+            assert.equal(response.status, 200, "Response should be 200 if confirm password field not included.");
+            assert.equal(response.body.status, "INVALID_REGISTRATION", "Response should indicate registration is invalid if confirm password not included.");
+            assert.equal(response.body.errors.password2, "Confirm password field is required", "Errors should indicate confirm password field is required.");
+            done();
+          });
+      });
+      test("# Confirm password field is empty", function(done) {
+        chai.request(server)
+          .post("/api/users/register")
+          .send({ password2: "" })
+          .end((error, response) => {
+            if (error) return done(error);
+            assert.equal(response.status, 200, "Response should be 200 if confirm password field is empty.");
+            assert.equal(response.body.status, "INVALID_REGISTRATION", "Response should indicate registration is invalid if confirm password field is empty.");
+            assert.equal(response.body.errors.password2, "Confirm password field is required", "Errors should indicate confirm password field is required.");
+            done();
+          });
+      });
+      test("# Passwords do not match", function(done) {
+        chai.request(server)
+          .post("/api/users/register")
+          .send({ password1: "somethingA", password2: "somethingB" })
+          .end((error, response) => {
+            if (error) return done(error);
+            assert.equal(response.status, 200, "Response should be 200 if passwords do not match.");
+            assert.equal(response.body.status, "INVALID_REGISTRATION", "Response should indicate passwords do not match.");
+            assert.equal(response.body.errors.password2, "Passwords must match", "Errors should indicate passwords do not match.");
+            done();
+          });
+      });
+      test("# Platform field not provided", function(done) {
+        chai.request(server)
+          .post("/api/users/register")
+          .send({})
+          .end((error, response) => {
+            if (error) return done(error);
+            assert.equal(response.status, 200, "Response should be 200 if platform is not provided.");
+            assert.equal(response.body.status, "INVALID_REGISTRATION", "Response should indicate registration is invalid if platform is not required.");
+            assert.equal(response.body.errors.platform, "Platform field is required", "Errors should indicate platform field is required.");
+            done();
+          });
+      });
+      test("# Platform field is empty", function(done) {
+        chai.request(server)
+          .post("/api/users/register")
+          .send({ platform: "" })
+          .end((error, response) => {
+            if (error) return done(error);
+            assert.equal(response.status, 200, "Response should be 200 if platform is empty.");
+            assert.equal(response.body.status, "INVALID_REGISTRATION", "Response should indicate registration is invalid if platform is empty.");
+            assert.equal(response.body.errors.platform, "Platform field is required", "Errors should indicate platform field is required.");
+            done();
+          });
+      });
+      test("# Platform is not valid", function(done) {
+        chai.request(server)
+          .post("/api/users/register")
+          .send({ platform: "INVALID" })
+          .end((error, response) => {
+            if (error) return done(error);
+            assert.equal(response.status, 200, "Response should be 200 if platform is invalid.");
+            assert.equal(response.body.status, "INVALID_REGISTRATION", "Response should indicate registration is invalid if platform is invalid.");
+            assert.equal(response.body.errors.platform, "The only platforms accepted are Xbox, PC, or PS4", "Errors should indicate platform is invalid.");
+            done();
+          });
+      });
+      test("# Email and Username are profane", function(done) {
+        chai.request(server)
+          .post("/api/users/register")
+          .send({ username: "Fuck", email: "fuck@domain.com", platform: "XBOX", password1: "SomePassword", password2: "SomePassword" })
+          .end((error, response) => {
+            if (error) return done(error);
+            assert.equal(response.status, 200, "Response should be 200 if input is profane.");
+            assert.equal(response.body.status, "PROFANE_INPUT", "Response should indicate input is inappropriate.");
+            assert.equal(response.body.errors.email, "Email may not be inappropriate", "Errors should indicate email may not be inappropriate.");
+            assert.equal(response.body.errors.username, "Username may not be inappropriate", "Errors should indicate username may not be inappropriate.");
+            done();
+          });
+      });
+      test("# Existing user email", function(done) {
+        chai.request(server)
+          .post("/api/users/register")
+          .send({ email: "testing@domain.com", username: "ANOTHER ONE", platform: "XBOX", password1: process.env.TESTING_PASSWORD, password2: process.env.TESTING_PASSWORD })
+          .end((error, response) => {
+            if (error) return done(error);
+            assert.equal(response.status, 200, "Response should be 200 if user is duplicate (email).");
+            assert.equal(response.body.status, "EXISTING_USER", "Response should indicate user already exists if email has already been registered.");
+            done();
+          });
+      });
+      test("# Existing username", function(done) {
+        chai.request(server)
+          .post("/api/users/register")
+          .send({ email: "something_new@domain.com", username: "TESTING USER", platform: "PC", password1: process.env.TESTING_PASSWORD, password2: process.env.TESTING_PASSWORD })
+          .end((error, response) => {
+            if (error) return done(error);
+            assert.equal(response.status, 200, "Response should be 200 if user is duplicate (username).");
+            assert.equal(response.body.status, "EXISTING_USER", "Response should indicate user already exists if username has already been registered.");
+            done();
+          });
+      });
+      test("# User registered succesfully", function(done) {
+        let newUser = {
+          email: "new_user@domain.com",
+          username: "NEW USER",
+          platform: "PS4",
+          password1: process.env.TESTING_PASSWORD,
+          password2: process.env.TESTING_PASSWORD,
+        };
+        chai.request(server)
+          .post("/api/users/register")
+          .send(newUser)
+          .end((error, response) => {
+            if (error) return done(error);
+            newUser._id = mongoose.Types.ObjectId(response.body._id);
+            newUserJWT = issueJWT(newUser).token;
+            assert.equal(response.status, 200, "Response should be 200 if registration input is valid.");
+            assert.equal(response.body.status, "USER_REGISTERED", "If user is registered succesfully response should indicate such.");
+            done();
+          });
+      });
 
-    })
+    });
+
     suite("/api/users/login", function() {
+      test("# Email field not provided", function(done) {
+        chai.request(server)
+          .post("/api/users/login")
+          .send({ password: process.env.TESTING_PASSWORD })
+          .end((error, response) => {
+            if (error) return done(error);
+            assert.equal(response.status, 200, "Response should be 200 if email field is not in request.");
+            assert.equal(response.body.status, "INVALID_LOGIN", "Response should indicate invalid login if email not in request.");
+            assert.equal(response.body.errors.email, "Email field is required", "Errors should indicate email is required.");
+            done();
+          });
+      });
+      test("# Email field is empty", function(done) {
+        chai.request(server)
+          .post("/api/users/login")
+          .send({ email: "", password: process.env.TESTING_PASSWORD })
+          .end((error, response) => {
+            if (error) return done(error);
+            assert.equal(response.status, 200, "Response should be 200 if email field is empty.");
+            assert.equal(response.body.status, "INVALID_LOGIN", "Response should indicate invalid login if email is empty.");
+            assert.equal(response.body.errors.email, "Email field is required", "Errors should indicate email is required.");
+            done();
+          });
+      });
+      test("# Email is invalid", function(done) {
+        chai.request(server)
+          .post("/api/users/login")
+          .send({ email: "invalid_email", password: process.env.TESTING_PASSWORD })
+          .end((error, response) => {
+            if (error) return done(error);
+            assert.equal(response.status, 200, "Response should be 200 if email field is invalid.");
+            assert.equal(response.body.status, "INVALID_LOGIN", "Response should indicate invalid login if email is invalid.");
+            assert.equal(response.body.errors.email, "Email is invalid", "Errors should indicate email is invalid.");
+            done();
+          });
+      });
+      test("# Password field not provided", function(done) {
+        chai.request(server)
+          .post("/api/users/login")
+          .send({ email: "testing@domain.com" })
+          .end((error, response) => {
+            if (error) return done(error);
+            assert.equal(response.status, 200, "Response should be 200 if password field is not in request.");
+            assert.equal(response.body.status, "INVALID_LOGIN", "Response should indicate invalid login if password field is not provided.");
+            assert.equal(response.body.errors.password, "Password field is required", "Errors should indicate password is required.");
+            done();
+          });
+      });
+      test("# Password field is empty", function(done) {
+        chai.request(server)
+          .post("/api/users/login")
+          .send({ email: "testing@domain.com", password: "" })
+          .end((error, response) => {
+            if (error) return done(error);
+            assert.equal(response.status, 200, "Response should be 200 if password field is empty.");
+            assert.equal(response.body.status, "INVALID_LOGIN", "Response should indicate invalid login if password field is empty.");
+            assert.equal(response.body.errors.password, "Password field is required", "Errors should indicate password is required.");
+            done();
+          });
+      });
+      test("# User not found", function(done) {
+        chai.request(server)
+          .post("/api/users/login")
+          .send({ email: "not_found_user@domain.com", password: process.env.TESTING_PASSWORD })
+          .end((error, response) => {
+            if (error) return done(error);
+            assert.equal(response.status, 200, "Response should be 200 if user is not found.");
+            assert.equal(response.body.status, "USER_NOT_FOUND", "Response should indicate user not found if user does not exist.");
+            done();
+          });
+      });
+      test("# Incorrect password", function(done) {
+        chai.request(server)
+          .post("/api/users/login")
+          .send({ email: "testing@domain.com", password: "Some Wrong Pass" })
+          .end((error, response) => {
+            if (error) return done(error);
+            assert.equal(response.status, 200, "Response should be 200 if password is incorrect.");
+            assert.equal(response.body.status, "INCORRECT_PASSWORD", "Response should indicate password is incorrect.");
+            done();
+          })
+      });
+      test("# Valid login", function(done) {
+        chai.request(server)
+          .post("/api/users/login")
+          .send({ email: "testing@domain.com", password: process.env.TESTING_PASSWORD })
+          .end((error, response) => {
+            if (error) return done(error);
+            assert.equal(response.status, 200, "Response should be 200 if login is valid.");
+            assert.equal(response.body.status, "TOKEN_ISSUED", "Response should indicate token has been issued if login is valid.");
+            assert.isOk(response.body.token, "Response should issue a token if login is valid.");
+            done();
+          });
+      });
+    });
 
+    suite("/api/users/delete", function() {
+      test("Delete user", function(done) {
+        chai.request(server)
+          .delete("/api/users/delete")
+          .set({ Authorization: newUserJWT })
+          .end((error, response) => {
+            if (error) return done(error);
+            assert.equal(response.status, 200, "Response should be 200 if user is deleted succesfully.");
+            assert.equal(response.body.status, "USER_DELETED", "Response should indicate user has been deleted.");
+            done();
+          });
+      });
+      test("Delete user with a team", function(done) {
+        done();
+      });
     });
   });
 
