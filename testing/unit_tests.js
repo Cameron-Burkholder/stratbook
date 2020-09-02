@@ -5,7 +5,7 @@ const assert = chai.assert;
 
 suite("UNIT TESTS", function() {
 
-  suite("Login Validation", function() {
+  suite("Login", function() {
     const validateLoginInput = require("../validation/login.js");
     let response = {
       json: function() {},
@@ -107,7 +107,7 @@ suite("UNIT TESTS", function() {
 
   });
 
-  suite("Registration Validation", function() {
+  suite("Registration", function() {
     const validateRegisterInput = require("../validation/register.js");
     let response = {
       json: function() {},
@@ -332,7 +332,7 @@ suite("UNIT TESTS", function() {
 
   });
 
-  suite("Team Name Validation", function() {
+  suite("Team Name", function() {
     const validateTeamName = require("../validation/validateTeamName.js");
     let response = {
       json: function() {},
@@ -362,7 +362,7 @@ suite("UNIT TESTS", function() {
     })
   });
 
-  suite("Join Code Validation", function() {
+  suite("Join Code", function() {
     const validateJoinCode = require("../validation/validateJoinCode.js");
     let response = {
       json: function() {},
@@ -433,7 +433,95 @@ suite("UNIT TESTS", function() {
     });
   });
 
-  suite("Block User Validation", function() {
+  suite("Update Platform", function() {
+    const validatePlatformInput = require("../validation/validatePlatformInput.js");
+    let response = {
+      json: function() {},
+      end: function() {}
+    }
+    let done = function() {};
+    test("# Platform field not provided", function() {
+      let request = {
+        body: {}
+      };
+      assert.equal(validatePlatformInput(request, response, done).status, "INVALID_PLATFORM", "Response should be invalid if platform field is not provided in request.");
+      assert.equal(validatePlatformInput(request, response, done).errors.platform, "Platform field is required", "Errors should list platform is required if not provided in request.");
+    });
+    test("# Platform field is empty", function() {
+      let request = {
+        body: { platform: "" }
+      }
+      assert.equal(validatePlatformInput(request, response, done).status, "INVALID_PLATFORM", "Response should be invalid if platform field is empty.");
+      assert.equal(validatePlatformInput(request, response, done).errors.platform, "Platform field is required", "Errors should list platform field as required if it is empty.");
+    });
+    test("# Platform field is invalid", function() {
+      let request1 = {
+        body: { platform: "something" }
+      };
+      let request2 = {
+        body: { platform: "XBOX" }
+      };
+      let request3 = {
+        body: { platform: "PC" }
+      };
+      let request4 = {
+        body: { platform: "PS4" }
+      };
+      let request5 = {
+        body: { platform: "xbox" }
+      };
+      let request6 = {
+        body: { platform: "pc" }
+      };
+      let request7 = {
+        body: { platform: "ps4" }
+      };
+      assert.equal(validatePlatformInput(request1, response, done).status, "INVALID_PLATFORM", "Response should be invalid if platform is not one of the accepted values.");
+      assert.equal(validatePlatformInput(request1, response, done).errors.platform, "The only platforms accepted are Xbox, PC, or PS4", "Errors should list platform as invalid if not one of the accepted values.");
+
+      assert.equal(validatePlatformInput(request2, response, done), null, "XBOX should be an accepted value.");
+      assert.equal(validatePlatformInput(request3, response, done), null, "PC should be an accepted value.");
+      assert.equal(validatePlatformInput(request4, response, done), null, "PS4 should be an accepted value.");
+
+      assert.equal(validatePlatformInput(request5, response, done), null, "xbox should be an accepted value.");
+      assert.equal(validatePlatformInput(request6, response, done), null, "pc should be an accepted value.");
+      assert.equal(validatePlatformInput(request7, response, done), null, "ps4 should be an accepted value.");
+    });
+  });
+
+  suite("Update Username", function() {
+    const validateUsernameInput = require("../validation/validateUsernameInput.js");
+    let response = {
+      json: function() {},
+      end: function() {}
+    }
+    let done = function() {};
+    test("# Username field not provided", function() {
+      let request = {
+        body: {}
+      };
+      assert.equal(validateUsernameInput(request, response, done).status, "INVALID_USERNAME", "Response should be invalid if username field is not provided in request.");
+      assert.equal(validateUsernameInput(request, response, done).errors.username, "Username field is required", "Errors should list username is required if not provided in request.");
+    });
+    test("# Username field is empty", function() {
+      let request = {
+        body: { platform: "" }
+      }
+      assert.equal(validateUsernameInput(request, response, done).status, "INVALID_USERNAME", "Response should be invalid if username field is empty.");
+      assert.equal(validateUsernameInput(request, response, done).errors.username, "Username field is required", "Errors should list username field as required if it is empty.");
+    });
+    test("# Platform field is profane", function() {
+      let request = {
+        body: { username: "something bitch" }
+      };
+
+      assert.equal(validateUsernameInput(request, response, done).status, "PROFANE_INPUT", "Response should be invalid if input is profane.");
+      assert.equal(validateUsernameInput(request, response, done).errors.username, "Username may not be inappropriate", "Errors should indicate username is inappropriate.");
+
+    });
+  });
+
+  suite("Block User", function() {
     const validateBlockUser = require("../validation/validateBlockUser.js");
     let response = {
       json: function() {},

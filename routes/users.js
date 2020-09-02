@@ -10,6 +10,12 @@ const { log, verifyPassword, hashPassword, issueJWT, genVerificationLink } = req
 const validateRegisterInput = require("../validation/register.js");
 const validateLoginInput = require("../validation/login.js");
 
+// Load platform validation
+const validatePlatformInput = require("../validation/validatePlatformInput.js");
+
+// Load username validation
+const validateUsernameInput = require("../validation/validateUsernameInput.js");
+
 // Prepare user verification
 let host;
 
@@ -78,6 +84,9 @@ module.exports = async (app, passport) => {
       password: String
 
     @outputs:
+      If an error occurs at any point
+        packet: Object (status: ERROR_WHILE_LOGGING_IN)
+
       If input data is invalid
         packet: Object (status: INVALID_LOGIN, errors: errors)
 
@@ -116,7 +125,11 @@ module.exports = async (app, passport) => {
           response.json(packet);
         }
       }
-    });
+    }).catch(error => {
+      console.log(error);
+      packet.status = "ERROR_WHILE_LOGGING_IN";
+      response.json(packet);
+    })
   });
 
   /*
@@ -211,6 +224,121 @@ module.exports = async (app, passport) => {
         });
       }
     });
+  });
+
+  /*
+    @route /api/users/update-platform
+    @method PATCH
+
+    @inputs:
+      platform: String
+
+    @outputs:
+      If an error occurs
+        packet: Object (status: ERROR_WHILE_UPDATING_PLATFORM)
+
+      If input is invalid
+        packet: Object (status: INVALID_PLATFORM)
+      Else
+        If user does not exist in database
+          packet: Object (status: USER_NOT_FOUND)
+        Else
+          If user has a team
+            packet: Object (status: USER_HAS_TEAM)
+          Else
+            packet: Object (status: PLATFORM_UPDATED, user_status: undefined or user_stats)
+  */
+  app.patch("/api/users/update-platform", (request, response, done) => {
+    log("PATCH REQUEST AT /api/users/update-platform");
+    done();
+  }, passport.authenticate("jwt", { session: false }), validatePlatformInput, (request, response) => {
+    let packet = {
+      status: ""
+    };
+    User.findOne({ email: request.user.email }).then((user) => {
+      if (!user) {
+        packet.status = "USER_NOT_FOUND";
+        response.json(packet);
+      } else {
+        if (request.user.team_code) {
+          packet.status = "USER_HAS_TEAM";
+          response.json(packet);
+        } else {
+          user.platform = request.body.platform;
+          user.save().then(() => {
+            packet.status = "PLATFORM_UPDATED";
+            response.json(packet);
+          }).catch(error => {
+            console.log(error);
+            packet.status = "ERROR_WHILE_UPDATING_PLATFORM";
+            response.json(packet);
+          });
+        }
+      }
+    }).catch(error => {
+      console.log(error);
+      packet.status = "ERROR_WHILE_UPDATING_PLATFORM";
+      response.json(packet);
+    })
+  });
+
+  /*
+    @route /api/users/update-username
+    @method PATCH
+
+    @inputs:
+      name: String
+
+    @outputs:
+      If an error occurs
+        packet: Object (status: ERROR_WHILE_UPDATING_USERNAME)
+
+      If user does not exist
+        packet: Object (status: USER_NOT_FOUND)
+      Else
+        If user with new name exists
+          packet: Object (status: USERNAME_TAKEN)
+        Else
+          packet: Object (status: USERNAME_UPDATED)
+  */
+  app.patch("/api/users/update-username", (request, response, done) => {
+    log("PATCH REQUEST AT /api/users/update-username");
+    done();
+  }, passport.authenticate("jwt", { session: false }), validateUsernameInput, (request, response) => {
+    let packet = {
+      status: ""
+    };
+    User.findOne({ email: request.user.email }).then((user1) => {
+      if (!user1) {
+        packet.status = "USER_NOT_FOUND";
+        response.json(packet);
+      } else {
+        User.findOne({ username: request.body.username }).then((user2) => {
+          if (user2) {
+            packet.status = "USERNAME_TAKEN";
+            response.json(packet);
+          } else {
+            user1.username = request.body.username;
+            user1.save().then(() => {
+              packet.status = "USERNAME_UPDATED";
+              response.json(packet);
+            }).catch(error => {
+              console.log(error);
+              packet.status = "ERROR_WHILE_UPDATING_USERNAME";
+              response.json(packet);
+            });
+          }
+        }).catch(error => {
+          console.log(error);
+          packet.status = "ERROR_WHILE_UPDATING_USERNAME";
+          response.json(packet);
+        });
+      }
+    }).catch(error => {
+      console.log(error);
+      packet.status = "ERROR_WHILE_UPDATING_USERNAME";
+      response.json(packet);
+    })
   });
 
   /*

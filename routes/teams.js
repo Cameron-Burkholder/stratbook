@@ -446,13 +446,20 @@ module.exports = async (app, passport) => {
       If user is not verified
         packet: Object (status: USER_NOT_VERIFIED)
       Else
-        If user has a team already
-          packet: Object (status: USER_HAS_TEAM)
-        ELse
-          If an error occurs or the user is blocked from team
-            packet: Object (status: UNABLE_TO_JOIN_TEAM)
+        If users's platform is not same as team
+          packet: Object (status: PLATFORM_DOES_NOT_MATCH)
+        Else
+          If team does not exist
+            packet: Object (status: TEAM_DOES_NOT_EXIST)
           Else
-            packet: Object (status: TEAM_JOINED)
+            If user has a team already
+              packet: Object (status: USER_HAS_TEAM)
+            Else
+              If user is blocked from the team
+                packet: Object (status: UNABLE_TO_JOIN_TEAM)
+              Else
+                packet: Object (status: TEAM_JOINED)
+
   */
   app.patch("/api/teams/join-team", (request, response, done) => {
     log("PATCH REQUEST AT /api/teams/join-team");
@@ -466,52 +473,53 @@ module.exports = async (app, passport) => {
         packet.status = "USER_HAS_TEAM";
         response.json(packet);
       } else {
-        await new Promise((resolve, reject) => {
-          Team.findOne({ join_code: request.body.join_code }).then((team, error) => {
-            if (team.blocked_users.indexOf(String(request.user._id)) >= 0) {
-              packet.status = "UNABLE_TO_JOIN_TEAM";
-              response.json(packet);
-            } else {
-              team.members.push(String(request.user._id));
-              team.save().then(() => {
-                packet.status = "TEAM_JOINED";
-                if (process.env.NODE_ENV === "TESTING") {
-                  packet.team_code = team.join_code;
-                }
+        Team.findOne({ join_code: request.body.join_code }).then((team, error) => {
+          if (team) {
+            if (team.platform === request.user.platform.toUpperCase()) {
+              if (team.blocked_users.indexOf(String(request.user._id)) >= 0) {
+                packet.status = "UNABLE_TO_JOIN_TEAM";
                 response.json(packet);
-                resolve(true);
-              }).catch(error => {
-                console.log(error);
-                reject(false);
-                return;
-              });
+              } else {
+                team.members.push(String(request.user._id));
+                team.save().then(() => {
+                  if (process.env.NODE_ENV === "TESTING") {
+                    packet.team_code = team.join_code;
+                  }
+                  User.findOne({ _id: mongoose.Types.ObjectId(request.user._id) }).then((user, error) => {
+                    user.team_code = request.body.join_code;
+                    user.status = MEMBER;
+                    user.save().then(() => {
+                      packet.status = "TEAM_JOINED";
+                      response.json(packet);
+                    }).catch(error => {
+                      console.log(error);
+                      packet.status = "ERROR_WHILE_JOINING_TEAM";
+                      response.json(packet);
+                    });
+                  }).catch(error => {
+                    console.log(error);
+                    packet.status = "ERROR_WHILE_JOINING_TEAM";
+                    response.json(packet);
+                  });
+                }).catch(error => {
+                  console.log(error);
+                  packet.status = "ERROR_WHILE_JOINING_TEAM";
+                  response.json(packet);
+                  return;
+                });
+              }
+            } else {
+              packet.status = "PLATFORM_DOES_NOT_MATCH";
+              response.json(packet);
             }
-          }).catch(error => {
-            console.log(error);
-            packet.status = "ERROR_WHILE_JOINING_TEAM";
+          } else {
+            packet.status = "TEAM_DOES_NOT_EXIST";
             response.json(packet);
-            reject(false);
-            return;
-          });
-        });
-        await new Promise((resolve, reject) => {
-          User.findOne({ _id: mongoose.Types.ObjectId(request.user._id) }).then((user, error) => {
-            user.team_code = request.body.join_code;
-            user.status = MEMBER;
-            user.save().then(() => {
-              resolve(true);
-            }).catch(error => {
-              console.log(error);
-              reject(false);
-              return;
-            });
-          }).catch(error => {
-            console.log(error);
-            packet.status = "ERROR_WHILE_JOINING_TEAM";
-            response.json(packet);
-            reject(false);
-            return;
-          });
+          }
+        }).catch(error => {
+          console.log(error);
+          packet.status = "ERROR_WHILE_JOINING_TEAM";
+          response.json(packet);
         });
       }
     } else {

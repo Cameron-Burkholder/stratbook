@@ -22,6 +22,8 @@ const isEmpty = require("is-empty");
   @outputs:
     If inputs are not valid
       packet: Object (status: INVALID_REGISTRATION)
+    If inputs are profane
+      packet: Object (status: PROFANE_INPUT)
     Else
       done();
 */
@@ -87,6 +89,7 @@ module.exports = function validateRegisterInput(request, response, done) {
     return packet;
   } else {
     request.body.email = request.body.email.toLowerCase();
+    request.body.username = request.body.username.toUpperCase();
     done();
     return null;
   }
