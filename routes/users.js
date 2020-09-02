@@ -166,7 +166,7 @@ module.exports = async (app, passport) => {
               email: request.body.email,
               password: request.body.password1,
               platform: request.body.platform,
-              verified: false
+              verified: process.env.NODE_ENV === "TESTING" ? true : false
             });
             if (process.env.NODE_ENV === "TESTING") {
               packet._id = newUser._id;
@@ -221,7 +221,11 @@ module.exports = async (app, passport) => {
     If at any point there is an error
       packet: Object (status: ERROR_WHILE_DELETING_USER)
 
-    packet: Object (status: USER_DELETED)
+    If user is sole person on team
+      packet: Object (status: USER_AND_TEAM_DELETED)
+
+    If user is deleted (even on a team)
+      packet: Object (status: USER_DELETED)
   */
   app.delete("/api/users/delete", (request, response, done) => {
     log("DELETE REQUEST AT /api/users/delete");
@@ -231,8 +235,78 @@ module.exports = async (app, passport) => {
       status: ""
     };
     if (request.user.team_code) {
-      Team.findOne({ join_code: request.user.team_code }).then((error, team) => {
-
+      Team.findOne({ join_code: request.user.team_code }).then((team, error) => {
+        if (team.members.length === 1 && team.members[0] === String(request.user._id) && team.admins.length === 0 && team.editors.length === 0) {
+          Team.deleteOne({ join_code: request.user.team_code }).then(() => {
+            User.deleteOne({ _id: mongoose.Types.ObjectId(request.user._id) }).then(() => {
+              packet.status = "USER_AND_TEAM_DELETED";
+              response.json(packet);
+            }).catch(error => {
+              console.log(error);
+              packet.status = "ERROR_WHILE_DELETING_USER";
+              response.json(packet);
+            });
+          }).catch(error => {
+            console.log(error);
+            packet.status = "ERROR_WHILE_DELETING_USER";
+            response.json(packet);
+          })
+        } else if (team.editors.length === 1 && team.editors[0] === String(request.user._id) && team.members.length === 0 && team.admins.length === 0) {
+          Team.deleteOne({ join_code: request.user.team_code }).then(() => {
+            User.deleteOne({ _id: mongoose.Types.ObjectId(request.user._id) }).then(() => {
+              packet.status = "USER_AND_TEAM_DELETED";
+              response.json(packet);
+            }).catch(error => {
+              console.log(error);
+              packet.status = "ERROR_WHILE_DELETING_USER";
+              response.json(packet);
+            });
+          }).catch(error => {
+            console.log(error);
+            packet.status = "ERROR_WHILE_DELETING_USER";
+            response.json(packet);
+          })
+        } else if (team.admins.length === 1 && team.admins[0] === String(request.user._id) && team.editors.length === 0 && team.members.length === 0) {
+          Team.deleteOne({ join_code: request.user.team_code }).then(() => {
+            User.deleteOne({ _id: mongoose.Types.ObjectId(request.user._id) }).then(() => {
+              packet.status = "USER_AND_TEAM_DELETED";
+              response.json(packet);
+            }).catch(error => {
+              console.log(error);
+              packet.status = "ERROR_WHILE_DELETING_USER";
+              response.json(packet);
+            });
+          }).catch(error => {
+            console.log(error);
+            packet.status = "ERROR_WHILE_DELETING_USER";
+            response.json(packet);
+          })
+        } else {
+          if (team.members.indexOf(String(request.user._id)) >= 0) {
+            let index = team.members.indexOf(String(request.user._id));
+            team.members = team.members.splice(index, 1);
+          } else if (team.editors.indexOf(String(request.user._id)) >= 0) {
+            let index = team.editors.indexOf(String(request.user._id));
+            team.editors = team.editors.splice(index, 1);
+          } else if (team.admins.indexOf(String(request.user._id)) >= 0) {
+            let index = team.admins.indexOf(String(request.user._id));
+            team.admins = team.admins.splice(index, 1);
+          }
+          team.save().then(() => {
+            User.deleteOne({ _id: mongoose.Types.ObjectId(request.user._id) }).then(() => {
+              packet.status = "USER_DELETED";
+              response.json(packet);
+            }).catch(error => {
+              console.log(error);
+              packet.status = "ERROR_WHILE_DELETING_USER";
+              response.json(packet);
+            });
+          }).catch(error => {
+            console.log(error);
+            packet.status = "ERROR_WHILE_DELETING_USER";
+            response.json(packet);
+          })
+        }
       }).catch(error => {
         console.log(error);
         packet.status = "ERROR_WHILE_DELETING_USER";

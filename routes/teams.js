@@ -475,6 +475,9 @@ module.exports = async (app, passport) => {
               team.members.push(String(request.user._id));
               team.save().then(() => {
                 packet.status = "TEAM_JOINED";
+                if (process.env.NODE_ENV === "TESTING") {
+                  packet.team_code = team.join_code;
+                }
                 response.json(packet);
                 resolve(true);
               }).catch(error => {
