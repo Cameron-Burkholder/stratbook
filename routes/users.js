@@ -241,6 +241,7 @@ module.exports = async (app, passport) => {
             User.deleteOne({ _id: mongoose.Types.ObjectId(request.user._id) }).then(() => {
               packet.status = "USER_AND_TEAM_DELETED";
               response.json(packet);
+              email(request.user.email, "Account Deleted", "<h2>Your account has succesfully been deleted.</h2><br/><br/><p>Thank you for using R6 Stratbook. While we are sad to see you go, your data has been removed from our databases. If you wish to use the platform again, you will have to create a new account.<br/><br/>Thanks.</p>");
             }).catch(error => {
               console.log(error);
               packet.status = "ERROR_WHILE_DELETING_USER";
@@ -256,6 +257,7 @@ module.exports = async (app, passport) => {
             User.deleteOne({ _id: mongoose.Types.ObjectId(request.user._id) }).then(() => {
               packet.status = "USER_AND_TEAM_DELETED";
               response.json(packet);
+              email(request.user.email, "Account Deleted", "<h2>Your account has succesfully been deleted.</h2><br/><br/><p>Thank you for using R6 Stratbook. While we are sad to see you go, your data has been removed from our databases. If you wish to use the platform again, you will have to create a new account.<br/><br/>Thanks.</p>");
             }).catch(error => {
               console.log(error);
               packet.status = "ERROR_WHILE_DELETING_USER";
@@ -271,6 +273,7 @@ module.exports = async (app, passport) => {
             User.deleteOne({ _id: mongoose.Types.ObjectId(request.user._id) }).then(() => {
               packet.status = "USER_AND_TEAM_DELETED";
               response.json(packet);
+              email(request.user.email, "Account Deleted", "<h2>Your account has succesfully been deleted.</h2><br/><br/><p>Thank you for using R6 Stratbook. While we are sad to see you go, your data has been removed from our databases. If you wish to use the platform again, you will have to create a new account.<br/><br/>Thanks.</p>");
             }).catch(error => {
               console.log(error);
               packet.status = "ERROR_WHILE_DELETING_USER";
@@ -296,6 +299,7 @@ module.exports = async (app, passport) => {
             User.deleteOne({ _id: mongoose.Types.ObjectId(request.user._id) }).then(() => {
               packet.status = "USER_DELETED";
               response.json(packet);
+              email(request.user.email, "Account Deleted", "<h2>Your account has succesfully been deleted.</h2><br/><br/><p>Thank you for using R6 Stratbook. While we are sad to see you go, your data has been removed from our databases. If you wish to use the platform again, you will have to create a new account.<br/><br/>Thanks.</p>");
             }).catch(error => {
               console.log(error);
               packet.status = "ERROR_WHILE_DELETING_USER";
