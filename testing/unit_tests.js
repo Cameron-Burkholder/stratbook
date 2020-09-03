@@ -545,6 +545,100 @@ suite("UNIT TESTS", function() {
     })
   });
 
+  suite("Update Email", function() {
+    const validateEmailInput = require("../validation/validateEmailInput.js");
+    let response = {
+      json: function() {},
+      end: function() {}
+    }
+    let done = function() {};
+    test("# Email field not provided", function() {
+      let request = {
+        body: {}
+      };
+      assert.equal(validateEmailInput(request, response, done).status, "INVALID_EMAIL", "Response should be invalid if email field is not provided in request.");
+      assert.equal(validateEmailInput(request, response, done).errors.email, "Email field is required", "Errors should list email is required if not provided in request.");
+    });
+    test("# Email field is empty", function() {
+      let request = {
+        body: { email: "" }
+      }
+      assert.equal(validateEmailInput(request, response, done).status, "INVALID_EMAIL", "Response should be invalid if email field is empty.");
+      assert.equal(validateEmailInput(request, response, done).errors.email, "Email field is required", "Errors should list email field as required if it is empty.");
+    });
+    test("# Email is invalid", function() {
+      let request1 = {
+        body: { email: "just_name" }
+      };
+      let request2 = {
+        body: { email: "name_and@" }
+      };
+      let request3 = {
+        body: { email: "name_and@and" }
+      };
+      let request4 = {
+        body: { email: "name_and@and.com." }
+      };
+      let request5 = {
+        body: { email: "@" }
+      };
+      let request6 = {
+        body: { email: ".com" }
+      }
+      let request7 = {
+        body: { email: ".com." }
+      }
+      let request8 = {
+        body: { email: "@.com" }
+      }
+      let request9 = {
+        body: { email: "@.com." }
+      };
+      let request10 = {
+        body: { email: "valid_email@valid.com" }
+      };
+
+      assert.equal(validateEmailInput(request1, response, done).status, "INVALID_EMAIL", "Response should be invalid if email contains no @ or domain.");
+      assert.equal(validateEmailInput(request1, response, done).errors.email, "Email is invalid", "Errors should inform user that email is invalid when without a @ or domain.");
+
+      assert.equal(validateEmailInput(request2, response, done).status, "INVALID_EMAIL", "Response should be invalid if email contains no domain.");
+      assert.equal(validateEmailInput(request2, response, done).errors.email, "Email is invalid", "Errors should inform user that email is invalid when without a domain.");
+
+      assert.equal(validateEmailInput(request3, response, done).status, "INVALID_EMAIL", "Response should be invalid if email contains no domain specifyer (.com, etch)");
+      assert.equal(validateEmailInput(request3, response, done).errors.email, "Email is invalid", "Errors should inform user that email is invalid when without a domain specifyer (.com, etch)");
+
+      assert.equal(validateEmailInput(request4, response, done).status, "INVALID_EMAIL", "Response should be invalid if email contains extra non-alphanumeric characters after domain.");
+      assert.equal(validateEmailInput(request4, response, done).errors.email, "Email is invalid", "Errors should inform user that email is invalid when there are extra non-alphanumeric characters after domain.");
+
+      assert.equal(validateEmailInput(request5, response, done).status, "INVALID_EMAIL", "Response should be invalid if email contains only @.");
+      assert.equal(validateEmailInput(request5, response, done).errors.email, "Email is invalid", "Errors should inform user that email is invalid when there is only @.");
+
+      assert.equal(validateEmailInput(request6, response, done).status, "INVALID_EMAIL", "Response should be invalid if email contains only domain.");
+      assert.equal(validateEmailInput(request6, response, done).errors.email, "Email is invalid", "Errors should inform user that email is invalid when there is only a domain.");
+
+      assert.equal(validateEmailInput(request7, response, done).status, "INVALID_EMAIL", "Response should be invalid if email contains only domain with extra characters.");
+      assert.equal(validateEmailInput(request7, response, done).errors.email, "Email is invalid", "Errors should inform user that email is invalid when there is only a domain with extra characters.");
+
+      assert.equal(validateEmailInput(request8, response, done).status, "INVALID_EMAIL", "Response should be invalid if email contains only @ and domain.");
+      assert.equal(validateEmailInput(request8, response, done).errors.email, "Email is invalid", "Errors should inform user that email is invalid when it only contains @ and a domain.");
+
+      assert.equal(validateEmailInput(request9, response, done).status, "INVALID_EMAIL", "Response should be invalid if email contains only @ and domain plus extra characters.");
+      assert.equal(validateEmailInput(request9, response, done).errors.email, "Email is invalid", "Errors should inform user that email is invalid when it only contains @ and domain plus extra characters.");
+
+      assert.equal(validateEmailInput(request10, response, done), null, "Packet.errors.email should be null if email is valid.");
+
+    });
+    test("# Email field is profane", function() {
+      let request = {
+        body: { email: "bitch@shit.com" }
+      };
+
+      assert.equal(validateEmailInput(request, response, done).status, "PROFANE_INPUT", "Response should be invalid if input is profane.");
+      assert.equal(validateEmailInput(request, response, done).errors.email, "Email may not be inappropriate", "Errors should indicate email is inappropriate.");
+
+    });
+  });
+
   suite("Utility Functions", function() {
     const { verifyPassword, hashPassword, issueJWT, genVerificationLink, genJoinCode } = require("../config/utilities.js");
     // UNIT TEST ACCOUNT

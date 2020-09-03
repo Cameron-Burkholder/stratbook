@@ -16,6 +16,9 @@ const validatePlatformInput = require("../validation/validatePlatformInput.js");
 // Load username validation
 const validateUsernameInput = require("../validation/validateUsernameInput.js");
 
+// Load email validation
+const validateEmailInput = require("../validation/validateEmailInput.js");
+
 // Prepare user verification
 let host;
 
@@ -246,7 +249,7 @@ module.exports = async (app, passport) => {
           If user has a team
             packet: Object (status: USER_HAS_TEAM)
           Else
-            packet: Object (status: PLATFORM_UPDATED, user_status: undefined or user_stats)
+            packet: Object (status: PLATFORM_UPDATED)
   */
   app.patch("/api/users/update-platform", (request, response, done) => {
     log("PATCH REQUEST AT /api/users/update-platform");
@@ -292,6 +295,12 @@ module.exports = async (app, passport) => {
     @outputs:
       If an error occurs
         packet: Object (status: ERROR_WHILE_UPDATING_USERNAME)
+
+      If email is invalid
+        packet: Object (status: INVALID_EMAIL)
+
+      If email is profane
+        packet: Object (status: PROFANE_INPUT)
 
       If user does not exist
         packet: Object (status: USER_NOT_FOUND)
@@ -339,6 +348,74 @@ module.exports = async (app, passport) => {
       packet.status = "ERROR_WHILE_UPDATING_USERNAME";
       response.json(packet);
     })
+  });
+
+  /*
+    @route /api/users/update-email
+    @method PATCH
+
+    @inputs:
+      email: String
+
+    @outputs:
+      If an error occurs
+        packet: Object (status: ERROR_WHILE_UPDATING_EMAIL)
+
+      If user is not verified
+        packet: Object (status: USER_NOT_VERIFIED)
+
+      If user is not found
+        packet: Object (status: USER_NOT_FOUND)
+
+      If email is in use
+        packet: Object (status: EMAIL_TAKEN)
+
+      If email is updated successfully
+        packet: Object( status: EMAIL_UPDATED)
+  */
+  app.patch("/api/users/update-email", (request, response, done) => {
+    log("PATCH REQUEST AT /api/users/update-email");
+    done();
+  }, passport.authenticate("jwt", { session: false }), validateEmailInput, (request, response) => {
+    let packet = {
+      status: ""
+    };
+    if (request.user.verified) {
+      User.findOne({ email: request.user.email }).then((user1) => {
+        if (!user1) {
+          packet.status = "USER_NOT_FOUND";
+          response.json(packet);
+        } else {
+          User.findOne({ email: request.body.email }).then((user2) => {
+            if (user2) {
+              packet.status = "EMAIL_TAKEN";
+              response.json(packet);
+            } else {
+              user1.email = request.body.email;
+              user1.save().then(() => {
+                packet.status = "EMAIL_UPDATED";
+                response.json(packet);
+              }).catch(error => {
+                console.log(error);
+                packet.status = "ERROR_WHILE_UPDATING_EMAIL";
+                response.json(packet);
+              });
+            }
+          }).catch(error => {
+            console.log(error);
+            packet.status = "ERROR_WHILE_UPDATING_EMAIL";
+            response.json(packet);
+          });
+        }
+      }).catch(error => {
+        console.log(error);
+        packet.status = "ERROR_WHILE_UPDATING_EMAIL";
+        response.json(packet);
+      })
+    } else {
+      packet.status = "USER_NOT_VERIFIED";
+      response.json(packet);
+    }
   });
 
   /*

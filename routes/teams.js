@@ -443,6 +443,9 @@ module.exports = async (app, passport) => {
       If join code is invalid
         packet: Object (status: INVALID_JOIN_CODE)
 
+      If user is not found
+        packet: Object (USER_NOT_FOUND)
+
       If user is not verified
         packet: Object (status: USER_NOT_VERIFIED)
       Else
@@ -486,16 +489,21 @@ module.exports = async (app, passport) => {
                     packet.team_code = team.join_code;
                   }
                   User.findOne({ _id: mongoose.Types.ObjectId(request.user._id) }).then((user, error) => {
-                    user.team_code = request.body.join_code;
-                    user.status = MEMBER;
-                    user.save().then(() => {
-                      packet.status = "TEAM_JOINED";
+                    if (user) {
+                      user.team_code = request.body.join_code;
+                      user.status = MEMBER;
+                      user.save().then(() => {
+                        packet.status = "TEAM_JOINED";
+                        response.json(packet);
+                      }).catch(error => {
+                        console.log(error);
+                        packet.status = "ERROR_WHILE_JOINING_TEAM";
+                        response.json(packet);
+                      });
+                    } else {
+                      packet.status = "USER_NOT_FOUND";
                       response.json(packet);
-                    }).catch(error => {
-                      console.log(error);
-                      packet.status = "ERROR_WHILE_JOINING_TEAM";
-                      response.json(packet);
-                    });
+                    }
                   }).catch(error => {
                     console.log(error);
                     packet.status = "ERROR_WHILE_JOINING_TEAM";
