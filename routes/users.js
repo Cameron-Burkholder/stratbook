@@ -56,23 +56,31 @@ module.exports = async (app, passport) => {
       if (!item) {
         response.redirect("/register");
       } else {
-        User.findOne({ _id: item.user_id }, function(error, user) {
+        User.findOne({ _id: mongoose.Types.ObjectId(item.user_id) }, function(error, user) {
           if (error) {
             console.log(error);
             response.redirect("/register");
+          } else {
+            if (user) {
+              user.verified = true;
+              user.save().then(() => {
+                UnverifiedUser.deleteOne({ user_id: user._id }, (error) => {
+                  if (error) {
+                    console.log(error);
+                    response.redirect("/register");
+                  } else {
+                    email(user.email, "Account Verified", "<h1>Thanks for verifying your account!</h1><br/><p>You can now create or join a team.</p>");
+                    response.redirect("/login");
+                  }
+                }).catch(error => {
+                  console.log(error);
+                  response.redirect("/login");
+                });
+              });
+            } else {
+              response.redirect("/register");
+            }
           }
-          user.verified = true;
-          user.save().then(() => {
-            UnverifiedUser.deleteOne({ user_id: user._id }, (error) => {
-              if (error) {
-                console.log(error);
-                response.redirect("/register");
-              } else {
-                email(user.email, "Account Verified", "<h1>Thanks for verifying your account!</h1><br/><p>You can now create or join a team.</p>");
-                response.redirect("/login");
-              }
-            });
-          })
         });
       }
     });

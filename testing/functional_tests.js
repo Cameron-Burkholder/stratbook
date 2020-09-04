@@ -5,7 +5,7 @@ const chaiHttp = require("chai-http");
 chai.use(chaiHttp);
 const assert = chai.assert;
 
-const { issueJWT } = require("../config/utilities.js");
+const { issueJWT, genVerificationLink } = require("../config/utilities.js");
 const mongoose = require("mongoose");
 
 const server = require("../server.js");
@@ -1313,6 +1313,28 @@ suite("FUNCTIONAL TESTS", function() {
 
     });
 
+    suite("/api/users/verify", function() {
+      test("# User not found in unverified database.", function(done) {
+        chai.request(server)
+          .get("/api/users/verify/" + genVerificationLink() + "")
+          .end((error, response) => {
+            if (error) return done(error);
+            assert.equal(response.status, 200, "Response should be 200 if user not found.");
+            done();
+          });
+      });
+      test("# User found in database.", function(done) {
+        chai.request(server)
+          .get("/api/users/verify/" + "")
+          .end((error, response) => {
+            if (error) return done(error);
+            assert.equal(response.status, 200, "Response should be 200 if user found.");
+            done();
+          });
+      });
+    });
+
+
     suite("/api/users/login", function() {
       test("# Email field not provided", function(done) {
         chai.request(server)
@@ -1650,7 +1672,19 @@ suite("FUNCTIONAL TESTS", function() {
             assert.equal(response.status, 200, "Response should be 200 if email is updated.");
             assert.equal(response.body.status, "EMAIL_UPDATED", "Response should indicate email has been updated.");
             done();
-          })
+          });
+      });
+      test("# Revert email", function(done) {
+        chai.request(server)
+          .patch("/api/users/update-email")
+          .send({ email: "testing@domain.com" })
+          .set({ Authorization: validJWT })
+          .end((error, response) => {
+            if (error) return done(error);
+            assert.equal(response.status, 200, "Response should be 200 if email is reverted.");
+            assert.equal(response.body.status, "EMAIL_UPDATED", "Response should indicate email has been updated.");
+            done();
+          });
       });
     });
 
