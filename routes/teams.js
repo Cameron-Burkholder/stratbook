@@ -536,6 +536,86 @@ module.exports = async (app, passport) => {
     }
   });
 
+
+  /*
+    @route /api/teams/leave-team
+    @method PATCH
+
+    @outputs:
+      If an error occurs:
+        packet: Object (status: ERROR_WHILE_LEAVING_TEAM)
+
+      If user is not verified
+        packet: Object (status: USER_NOT_VERIFIED)
+  */
+  app.patch("/api/teams/leave-team", (request, response, done) => {
+    log("PATCH REQUEST AT /api/teams/leave-team");
+    done();
+  }, passport.authenticate("jwt", { session: false }), (request, response) => {
+    let packet = {
+      status: ""
+    }
+    if (request.user.verified) {
+      if (request.user.team_code) {
+        User.findOne({ _id: mongoose.Types.ObjectId(request.user._id) }).then((user, error) => {
+          if (user) {
+            Team.findOne({ join_code: request.user.team_code }).then((team, error) => {
+              if (team) {
+                user.status = undefined;
+                user.team_code = undefined;
+                user.save().then(() => {
+                  if (team.members.indexOf(String(request.user._id)) >= 0) {
+                    let index = team.members.indexOf(String(request.user._id));
+                    team.members.splice(index, 1);
+                  } else if (team.editors.indexOf(String(request.user._id)) >= 0) {
+                    let index = team.editors.indexOf(String(request.user._id));
+                    team.editors.splice(index, 1);
+                  } else if (team.admins.indexOf(String(request.user._id)) >= 0) {
+                    let index = team.admins.indexOf(String(request.user._id));
+                    team.admins.splice(index, 1);
+                  }
+
+                  team.save().then(() => {
+                    packet.status = "USER_LEFT_TEAM";
+                    response.json(packet);
+                  }).catch(error => {
+                    console.log(error);
+                    packet.status = "ERROR_WHILE_LEAVING_TEAM";
+                    response.json(packet);
+                  });      
+                }).catch(error => {
+                  console.log(error);
+                  packet.status = "ERROR_WHILE_LEAVING_TEAM";
+                  response.json(packet);
+                });
+              } else {
+                packet.status = "TEAM_DOES_NOT_EXIST";
+                response.json(packet);
+              }
+            }).catch(error => {
+              console.log(error);
+              packet.status = "ERROR_WHILE_LEAVING_TEAM";
+              response.json(packet);
+            });
+          } else {
+            packet.status = "USER_NOT_FOUND";
+            response.json(packet);
+          }
+        }).catch(error => {
+          console.log(error);
+          packet.status = "ERROR_WHILE_LEAVING_TEAM";
+          response.json(packet);
+        });
+      } else {
+        packet.status = "USER_HAS_NO_TEAM";
+        response.json(packet);
+      }
+    } else {
+      packet.status = "USER_NOT_VERIFIED";
+      response.json(packet);
+    }
+  });
+
   /*
     @route /api/teams/block-user
     @method PATCH

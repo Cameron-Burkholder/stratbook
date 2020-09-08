@@ -783,6 +783,7 @@ suite("FUNCTIONAL TESTS", function() {
       };
       const notFoundJWT = issueJWT(not_found_user).token;
 
+      // TODO: test for join user 
       test("# JWT is not provided", function(done) {
         chai.request(server)
           .patch("/api/teams/join-team")
@@ -931,7 +932,7 @@ suite("FUNCTIONAL TESTS", function() {
       });
     });
 
-    /* suite("/api/teams/leave-team", function() {
+    suite("/api/teams/leave-team", function() {
       const invalidJWT = "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1OTg4MTkxMTk3NDQsImV4cCI6MTU5ODgxOTExOTc0NH0.qkun-NSiUKZ-lC0tW6g0eu8VWqUSAxzQZbG4alpfXeSbL3_SPlfS87FHgRMaJeYkNb2qwqq8blq3JjvK5jYYxRhwfecOFvBsCnjzVrr-q4WRUm_PvJMdYW1TDK6iQwmuv8n2PP9vyz558ne9m065Ufqf1fn_3NIdSHNzsGkWf_tJYKX9d8ChxMn2L6pVtnetolD9KHgajJzpS9llbO7VUOSsnbuv8eMxo3N3Jlgw1NViarxYfctNhj7mL_PynlTqxSeRxpXR5vGqbCU7XP7y34gqrj9p7wsNklwsYaqGqr9oVbo0Ai5rtNRukykQ5MDB6rH15WQpcPH1JBi03bZMA407IgHsJXUo0p9Nv9pFDqLqfIuB-LQcA8ALjViPQ9L_v_g2PxU-47DEALtRldTobu4tKTQ8yAOc0mw6Da8SgpML8sysBmC6uCzFlkcw9u9LNrLVmkmcUYSrtJwtJeXOGeUhICumhHl-NsYmguJht4tTa56SRUfkcZZL7i4uxnS36pF66A_V0NU1jqeKWFaWzBhLPLEy7HAuWuSyLOrS5haS40S70Pz6s_Bf6ED1R0lPd6tjtIVIlAJ3JLkGouzR2s1sETySmQlKDSi7fQ9e0Bvfrow10QhcExG7bdkxQ58xDhXh8KnY4jLH1vqhA6TSX7TFOJtgOtxSA2NvDym7uRo";
 
       const not_found_user = {
@@ -958,7 +959,7 @@ suite("FUNCTIONAL TESTS", function() {
         password: process.env.TESTING_PASSWORD,
         platform: "PC",
         verified: true,
-        _id: mongoose.Types.ObjectId("5f4c428646ffca6e54af04b6")
+        _id: mongoose.Types.ObjectId("5f4c40a31e8c2816948e5549")
       }
       const noTeamJWT = issueJWT(no_team_user).token;
 
@@ -1004,17 +1005,6 @@ suite("FUNCTIONAL TESTS", function() {
             done();
           });
       });
-      test("# User not found", function(done) {
-        chai.request(server)
-          .patch("/api/teams/leave-team")
-          .set({ Authorization: notFoundJWT })
-          .end((error, response) => {
-            if (error) return done(error);
-            assert.equal(response.status, 401, "Response should be 401 if user is not found.");
-            assert.equal(response.text, "Unauthorized", "Response should indicate unauthorized: user not found.");
-            done();
-          });
-      });
       test("# User has no team", function(done) {
         chai.request(server)
           .patch("/api/teams/leave-team")
@@ -1023,6 +1013,17 @@ suite("FUNCTIONAL TESTS", function() {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if user has no team.");
             assert.equal(response.body.status, "USER_HAS_NO_TEAM", "Response should indicate user has no team.");
+            done();
+          });
+      });
+      test("# User not found", function(done) {
+        chai.request(server)
+          .patch("/api/teams/leave-team")
+          .set({ Authorization: notFoundJWT })
+          .end((error, response) => {
+            if (error) return done(error);
+            assert.equal(response.status, 401, "Response should be 401 if user is not found.");
+            assert.equal(response.text, "Unauthorized", "Response should indicate unauthorized: user not found.");
             done();
           });
       });
@@ -1037,7 +1038,8 @@ suite("FUNCTIONAL TESTS", function() {
             done();
           });
       });
-      test("# User left team", function(done) {
+      // TODO
+      /*test("# User left team", function(done) {
         let joinUserJWT = issueJWT(join_user).token;
         chai.request(server)
           .patch("/api/teams/leave-team")
@@ -1056,8 +1058,8 @@ suite("FUNCTIONAL TESTS", function() {
                 done();
               })
           });
-      });
-    }); */
+      });*/
+    });
 
     suite("/api/teams/delete-team", function() {
       const test_user = {
