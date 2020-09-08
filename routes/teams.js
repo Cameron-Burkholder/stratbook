@@ -547,6 +547,18 @@ module.exports = async (app, passport) => {
 
       If user is not verified
         packet: Object (status: USER_NOT_VERIFIED)
+
+      If user does not have a team code
+        packet: Object (status: USER_HAS_NO_TEAM)
+
+      If user does not exist
+        packet: Object (status: USER_NOT_FOUND)
+
+      If team is not found
+        packet: Object (status: TEAM_DOES_NOT_EXIST)
+
+      If user has left team
+        packet: Object (status: USER_LEFT_TEAM)
   */
   app.patch("/api/teams/leave-team", (request, response, done) => {
     log("PATCH REQUEST AT /api/teams/leave-team");
@@ -582,7 +594,7 @@ module.exports = async (app, passport) => {
                     console.log(error);
                     packet.status = "ERROR_WHILE_LEAVING_TEAM";
                     response.json(packet);
-                  });      
+                  });
                 }).catch(error => {
                   console.log(error);
                   packet.status = "ERROR_WHILE_LEAVING_TEAM";

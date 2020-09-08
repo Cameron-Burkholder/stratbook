@@ -25,6 +25,7 @@ suite("FUNCTIONAL TESTS", function() {
   let newUserJWT;
   let newUserWTeamJWT;
   let onlyUserOnTeamJWT;
+  let joinTeamJWT;
 
   suite("TEAM MODEL", function() {
 
@@ -69,6 +70,7 @@ suite("FUNCTIONAL TESTS", function() {
             assert.equal(response.status, 200, "Response should be 200 if JWT is valid.");
             assert.equal(response.body.status, "TEAM_CREATED", "Response object should be TEAM_CREATED when input is valid.");
             dev_team_code = response.body.team_code;
+            test_team_code = response.body.team_code;
             done();
           });
       });
@@ -774,6 +776,16 @@ suite("FUNCTIONAL TESTS", function() {
       };
       const blockedJWT = issueJWT(blocked_user).token;
 
+      let join_team_user = {
+        username: "JOIN TEAM USER",
+        email: "join_team_user@domain.com",
+        platform: "PC",
+        password: process.env.TESTING_PASSWORD,
+        verified: true,
+        _id: "5f57c7fb0e5f4d303083d1d2"
+      };
+      joinTeamJWT = issueJWT(join_team_user).token;
+
       const not_found_user = {
         username: "NOT FOUND U",
         email: "not_found@domain.com",
@@ -783,7 +795,20 @@ suite("FUNCTIONAL TESTS", function() {
       };
       const notFoundJWT = issueJWT(not_found_user).token;
 
-      // TODO: test for join user 
+      test("# Valid join team", function(done) {
+        chai.request(server)
+          .patch("/api/teams/join-team")
+          .send({ join_code: test_team_code })
+          .set({ Authorization: joinTeamJWT })
+          .end((error, response) => {
+            if (error) return done(error);
+            assert.equal(response.status, 200, "Response should be 200 if user has joined succesfully.");
+            assert.equal(response.body.status, "TEAM_JOINED", "Response should indicate user has joined team.");
+            join_team_user.team_code = response.body.team_code;
+            joinTeamJWT = issueJWT(join_team_user).token;
+            done();
+          });
+      });
       test("# JWT is not provided", function(done) {
         chai.request(server)
           .patch("/api/teams/join-team")
@@ -1038,27 +1063,17 @@ suite("FUNCTIONAL TESTS", function() {
             done();
           });
       });
-      // TODO
-      /*test("# User left team", function(done) {
-        let joinUserJWT = issueJWT(join_user).token;
+      test("# User left team", function(done) {
         chai.request(server)
           .patch("/api/teams/leave-team")
-          .set({ Authorization: joinUserJWT })
+          .set({ Authorization: joinTeamJWT })
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if user has left team.");
             assert.equal(response.body.status, "USER_LEFT_TEAM", "Response should indicate user has left team.");
-            chai.request(server)
-              .delete("/api/users/delete")
-              .set({ Authorization: joinUserJWT })
-              .end((error, response) => {
-                if (error) return done(error);
-                assert.equal(response.status, 200, "Response should be 200.");
-                assert.equal(response.body.status, "USER_DELETED", "Response should indicate user has been deleted.");
-                done();
-              })
+            done();
           });
-      });*/
+      });
     });
 
     suite("/api/teams/delete-team", function() {
