@@ -559,6 +559,8 @@ module.exports = async (app, passport) => {
 
       If user has left team
         packet: Object (status: USER_LEFT_TEAM)
+
+        // Add comments
   */
   app.patch("/api/teams/leave-team", (request, response, done) => {
     log("PATCH REQUEST AT /api/teams/leave-team");
