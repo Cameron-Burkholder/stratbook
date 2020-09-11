@@ -19,6 +19,9 @@ const validateUsernameInput = require("../validation/validateUsernameInput.js");
 // Load email validation
 const validateEmailInput = require("../validation/validateEmailInput.js");
 
+// Load status validation
+const validateStatusInput = require("../validation/validateStatusInput.js");
+
 // Prepare user verification
 let host;
 
@@ -428,6 +431,46 @@ module.exports = async (app, passport) => {
       packet.status = "USER_NOT_VERIFIED";
       response.json(packet);
     }
+  });
+
+  /*
+    @route /api/users/update-user-status
+    @method PATCH
+
+    @inputs
+      username: String
+      status: String
+
+    @outputs
+      If an error occurs
+        packet: Object (status: ERROR_WHILE_UPDATING_USER_STATUS)
+
+      If input is invalid
+        packet: Object (status: INVALID_STATUS_INPUT)
+
+      If requesting user is not verified
+        packet: Object (status: USER_NOT_VERIFIED)
+
+      If requesting user is not an admin
+        packet: Object (status: USER_NOT_QUALIFIED)
+
+      If requested user does not exist
+        packet: Object (status: USER_NOT_FOUND)
+
+      If requested user is an admin
+        packet: Object (status: PERMISSION_DENIED)
+
+      If requested user is not on team
+        packet: Object (status: USER_NOT_QUALIFIED)
+
+      If update has been completed
+        packet: Object (status: USER_STATUS_UPDATED)
+  */
+  app.patch("/api/users/update-user-status", (request, response, done) => {
+    log("PATCH REQUEST AT /api/users/update-user-status");
+    done();
+  }, passport.authenticate("jwt", { session: false }), validateStatusInput, (request, response) => {
+    // TODO
   });
 
   /*
