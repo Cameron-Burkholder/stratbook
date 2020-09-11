@@ -41,17 +41,18 @@ module.exports = async (app, passport) => {
 
       If user is not verified
         packet: Object (status: USER_NOT_VERIFIED)
-      Else
-        If user does not have a team
-          packet: Object (status: USER_HAS_NO_TEAM)
-        Else
-          If team code from user does not match a team
-            packet: Object (status: TEAM_DOES_NOT_EXIST)
-          ELse
-            If user is not a member of the team
-              packet: Object (status: USER_NOT_QUALIFIED)
-            Else
-              packet: Object (status: TEAM_CODE_FOUND, join_code)
+
+      If user does not have a team
+        packet: Object (status: USER_HAS_NO_TEAM)
+
+      If team code from user does not match a team
+        packet: Object (status: TEAM_DOES_NOT_EXIST)
+
+      If user is not a member of the team
+        packet: Object (status: USER_NOT_QUALIFIED)
+
+      If user is allowed to view the join code
+        packet: Object (status: TEAM_CODE_FOUND, join_code)
   */
   app.get("/api/teams/view-join-code", (request, response, done) => {
     log("GET REQUEST AT /api/teams/view-join-code");
@@ -106,17 +107,18 @@ module.exports = async (app, passport) => {
 
     If user is not verified
       packet: Object (status: USER_NOT_VERIFIED)
-    Else
-      If user does not have a team
-        packet: Object (status: USER_HAS_NO_TEAM)
-      Else
-        If team code from user does not match a team
-          packet: Object (status: TEAM_DOES_NOT_EXIST)
-        ELse
-          If user is not a member of the team
-            packet: Object (status: USER_NOT_QUALIFIED)
-          Else
-            packet: Object (status: TEAM_FOUND, team_data)
+
+    If user does not have a team
+      packet: Object (status: USER_HAS_NO_TEAM)
+
+    If team code from user does not match a team
+      packet: Object (status: TEAM_DOES_NOT_EXIST)
+
+    If user is not a member of the team
+      packet: Object (status: USER_NOT_QUALIFIED)
+
+    If user is allowed to view team
+      packet: Object (status: TEAM_FOUND, team_data)
   */
   app.get("/api/teams/view-team", (request, response, done) => {
     log("GET REQUEST AT /api/teams/view-team");
@@ -243,14 +245,15 @@ module.exports = async (app, passport) => {
 
       If user has not verified their account
         packet: Object (status: USER_NOT_VERIFIED)
-      Else
-        If the user already has a team
-          packet: Object (status: USER_HAS_TEAM)
 
-        If a team with the same name already exists
-          packet: Object (status: TEAM_ALREADY_EXISTS)
-        Else
-          packet: Object (status: TEAM_CREATED)
+      If the user already has a team
+        packet: Object (status: USER_HAS_TEAM)
+
+      If a team with the same name already exists
+        packet: Object (status: TEAM_ALREADY_EXISTS)
+
+      If a user is allowed to create a team
+        packet: Object (status: TEAM_CREATED)
   */
   app.post("/api/teams/create-team", (request, response, done) => {
     log("POST REQUEST AT /api/teams/create-team");
@@ -345,20 +348,21 @@ module.exports = async (app, passport) => {
 
       If user is not verified
         packet: Object (status: USER_NOT_VERIFIED)
-      Else
-        If user doesn't have a team code
-          packet: Object (status: USER_HAS_NO_TEAM)
-        Else
-          If user is not an admin
-            packet: Object (status: USER_NOT_QUALIFIED)
-          Else
-            If there is no team with the users join code
-              packet: Object (status: TEAM_DOES_NOT_EXIST)
-            Else
-              If user is not an admin on that team
-                packet: Object (status: USER_NOT_QUALIFIED)
-              Else
-                packet: Object (status: TEAM_NAME_UPDATED)
+
+      If user doesn't have a team code
+        packet: Object (status: USER_HAS_NO_TEAM)
+
+      If user is not an admin
+        packet: Object (status: USER_NOT_QUALIFIED)
+
+      If there is no team with the users join code
+        packet: Object (status: TEAM_DOES_NOT_EXIST)
+
+      If user is not an admin on that team
+        packet: Object (status: USER_NOT_QUALIFIED)
+
+      If user is allowed to update team name
+        packet: Object (status: TEAM_NAME_UPDATED)
 
   */
   app.patch("/api/teams/update-name", (request, response, done) => {
@@ -440,6 +444,7 @@ module.exports = async (app, passport) => {
 
       If at any point an error occurs
         packet: Object (status: ERROR_WHILE_JOINING_TEAM)
+
       If join code is invalid
         packet: Object (status: INVALID_JOIN_CODE)
 
@@ -448,20 +453,21 @@ module.exports = async (app, passport) => {
 
       If user is not verified
         packet: Object (status: USER_NOT_VERIFIED)
-      Else
-        If users's platform is not same as team
-          packet: Object (status: PLATFORM_DOES_NOT_MATCH)
-        Else
-          If team does not exist
-            packet: Object (status: TEAM_DOES_NOT_EXIST)
-          Else
-            If user has a team already
-              packet: Object (status: USER_HAS_TEAM)
-            Else
-              If user is blocked from the team
-                packet: Object (status: UNABLE_TO_JOIN_TEAM)
-              Else
-                packet: Object (status: TEAM_JOINED)
+
+      If users's platform is not same as team
+        packet: Object (status: PLATFORM_DOES_NOT_MATCH)
+
+      If team does not exist
+        packet: Object (status: TEAM_DOES_NOT_EXIST)
+
+      If user has a team already
+        packet: Object (status: USER_HAS_TEAM)
+
+      If user is blocked from the team
+        packet: Object (status: UNABLE_TO_JOIN_TEAM)
+
+      If user is allowed to join team
+        packet: Object (status: TEAM_JOINED)
 
   */
   app.patch("/api/teams/join-team", (request, response, done) => {
@@ -560,7 +566,6 @@ module.exports = async (app, passport) => {
       If user has left team
         packet: Object (status: USER_LEFT_TEAM)
 
-        // Add comments
   */
   app.patch("/api/teams/leave-team", (request, response, done) => {
     log("PATCH REQUEST AT /api/teams/leave-team");
@@ -647,26 +652,27 @@ module.exports = async (app, passport) => {
 
       If username or join_code is invalid
         packet: Object (status: INVALID_BLOCK_USER_INPUT)
-      Else
-        If user is not verified
-          packet: Object (status: USER_NOT_VERIFIED)
-        Else
-          If user doesn't have a team code
-            packet: Object (status: USER_HAS_NO_TEAM)
-          Else
-            If user is not an admin
-              packet: Object (status: USER_NOT_QUALIFIED)
-            Else
-              If there is no team with the sent join code
-                packet: Object (status: TEAM_DOES_NOT_EXIST)
-              ELse
-                If user is not an admin on that team
-                  packet: Object (status: USER_NOT_QUALIFIED)
-                Else
-                  If user is removing someone that cannot be found
-                    packet: Object (status: USER_NOT_FOUND)
-                  Else
-                    packet: Object (status: USER_BLOCKED)
+
+      If user is not verified
+        packet: Object (status: USER_NOT_VERIFIED)
+
+      If user doesn't have a team code
+        packet: Object (status: USER_HAS_NO_TEAM)
+
+      If user is not an admin
+        packet: Object (status: USER_NOT_QUALIFIED)
+
+      If there is no team with the sent join code
+        packet: Object (status: TEAM_DOES_NOT_EXIST)
+
+      If user is not an admin on that team
+        packet: Object (status: USER_NOT_QUALIFIED)
+
+      If user is removing someone that cannot be found
+        packet: Object (status: USER_NOT_FOUND)
+
+      If user is allowed to block a user
+        packet: Object (status: USER_BLOCKED)
   */
   app.patch("/api/teams/block-user", (request, response, done) => {
     log("PATCH REQUEST AT /api/teams/remove-user");
@@ -766,20 +772,21 @@ module.exports = async (app, passport) => {
 
       If user is not verified
         packet: Object (status: USER_NOT_VERIFIED)
-      Else
-        If user doesn't have a team
-          packet: Object (status: USER_HAS_NO_TEAM)
-        Else
-          If user is not an admin
-            packet: Object (status: USER_NOT_QUALIFIED)
-          Else
-            If team cannot be found
-              packet: Object (status: TEAM_DOES_NOT_EXIST)
-            Else
-              If user is not apart of the requested team
-                packet: Object (status: USER_NOT_QUALIFIED)
-              ELse
-                packet: Object (status: TEAM_DELETED)
+
+      If user doesn't have a team
+        packet: Object (status: USER_HAS_NO_TEAM)
+
+      If user is not an admin
+        packet: Object (status: USER_NOT_QUALIFIED)
+
+      If team cannot be found
+        packet: Object (status: TEAM_DOES_NOT_EXIST)
+
+      If user is not apart of the requested team
+        packet: Object (status: USER_NOT_QUALIFIED)
+
+      If user is allowed to delete the team
+        packet: Object (status: TEAM_DELETED)
   */
   app.delete("/api/teams/delete-team", (request, response, done) => {
     log("DELETE REQUEST AT /api/teams/delete-team");

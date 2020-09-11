@@ -104,11 +104,12 @@ module.exports = async (app, passport) => {
       If user does not exist in database
         packet: Object (status: USER_NOT_FOUND)
 
-      If user exists
-        If password is correct
-          packet: Object (status: TOKEN_ISSUED, user_status: undefined or user_stats)
-        Else
-          packet: Object (status: INCORRECT_PASSWORD)
+      If password is incorrect
+        packet: Object (status: INCORRECT_PASSWORD)
+
+      If password is correct
+        packet: Object (status: TOKEN_ISSUED, user_status: undefined or user_stats)
+
   */
   app.post("/api/users/login", (request, response, done) => {
     log("POST REQUEST AT /api/users/login");
@@ -153,6 +154,9 @@ module.exports = async (app, passport) => {
       password1: String
 
     @outputs:
+      If an error occurs
+        packet: Object (status: ERROR_WHILE_REGISTERING)
+
       If input data is invalid
         packet: Object (status: INVALID_REGISTRATION)
 
@@ -162,11 +166,9 @@ module.exports = async (app, passport) => {
       If user already exists in database (email or username)
         packet: Object (status: EXISTING_USER)
 
-      If user does not exist in database
-        If user is able to register
-          packet: Object (status: USER_REGISTERED)
-        Else
-          packet: Object (status: ERROR_WHILE_REGISTERING)
+      If user is able to register
+        packet: Object (status: USER_REGISTERED)
+
   */
   app.post("/api/users/register", (request, response, done) => {
     log("POST REQUEST AT /api/users/register");
@@ -250,14 +252,15 @@ module.exports = async (app, passport) => {
 
       If input is invalid
         packet: Object (status: INVALID_PLATFORM)
-      Else
-        If user does not exist in database
-          packet: Object (status: USER_NOT_FOUND)
-        Else
-          If user has a team
-            packet: Object (status: USER_HAS_TEAM)
-          Else
-            packet: Object (status: PLATFORM_UPDATED)
+
+      If user does not exist in database
+        packet: Object (status: USER_NOT_FOUND)
+
+      If user has a team
+        packet: Object (status: USER_HAS_TEAM)
+
+      If user is allowed to update platofmr
+        packet: Object (status: PLATFORM_UPDATED)
   */
   app.patch("/api/users/update-platform", (request, response, done) => {
     log("PATCH REQUEST AT /api/users/update-platform");
@@ -312,11 +315,12 @@ module.exports = async (app, passport) => {
 
       If user does not exist
         packet: Object (status: USER_NOT_FOUND)
-      Else
-        If user with new name exists
-          packet: Object (status: USERNAME_TAKEN)
-        Else
-          packet: Object (status: USERNAME_UPDATED)
+
+      If user with new name exists
+        packet: Object (status: USERNAME_TAKEN)
+
+      If user is allowed to update username
+        packet: Object (status: USERNAME_UPDATED)
   */
   app.patch("/api/users/update-username", (request, response, done) => {
     log("PATCH REQUEST AT /api/users/update-username");
