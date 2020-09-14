@@ -545,6 +545,57 @@ suite("UNIT TESTS", function() {
     })
   });
 
+  suite("Update User Status", function() {
+    const validateStatusInput = require("../validation/validateStatusInput.js");
+    let response = {
+      json: function() {},
+      end: function() {}
+    }
+    let done = function() {};
+    test("# Username field not provided", function() {
+      let request = {
+        body: {}
+      };
+      assert.equal(validateStatusInput(request, response, done).status, "INVALID_STATUS_INPUT", "Response should be invalid if username field is not provided in request.");
+      assert.equal(validateStatusInput(request, response, done).errors.username, "Username field is required", "Errors should list username is required if not provided in request.");
+    });
+    test("# Username field is empty", function() {
+      let request = {
+        body: { platform: "" }
+      }
+      assert.equal(validateStatusInput(request, response, done).status, "INVALID_STATUS_INPUT", "Response should be invalid if username field is empty.");
+      assert.equal(validateStatusInput(request, response, done).errors.username, "Username field is required", "Errors should list username field as required if it is empty.");
+    });
+    test("# Status field not provided", function() {
+      let request = {
+        body: {}
+      };
+      assert.equal(validateStatusInput(request, response, done).status, "INVALID_STATUS_INPUT", "Response should be invalid if status is not provided.");
+      assert.equal(validateStatusInput(request, response, done).errors.status, "Status field is required", "Response should indiciate status field is required.");
+    });
+    test("# Status field empty", function() {
+      let request = {
+        body: { status: "" }
+      };
+      assert.equal(validateStatusInput(request, response, done).status, "INVALID_STATUS_INPUT", "Response should be invalid if status is not provided.");
+      assert.equal(validateStatusInput(request, response, done).errors.status, "Status field is required", "Response should indiciate status field is required.");
+    });
+    test("# Status field is invalid", function() {
+      let request = {
+        body: { status: "not member" }
+      };
+      assert.equal(validateStatusInput(request, response, done).status, "INVALID_STATUS_INPUT", "Response should indicate status is invalid.");
+      assert.equal(validateStatusInput(request, response, done).errors.status, "Status field invalid", "Response should indiciate status is invalid.");
+    });
+    test("# Valid status update", function() {
+      let request = {
+        body: { status: "ADMIN", username: "something" }
+      };
+      assert.equal(validateStatusInput(request, response, done), null, "Response should be OK if input is valid.");
+    });
+
+  });
+
   suite("Update Email", function() {
     const validateEmailInput = require("../validation/validateEmailInput.js");
     let response = {
