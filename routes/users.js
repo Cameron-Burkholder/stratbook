@@ -454,11 +454,20 @@ module.exports = async (app, passport) => {
       If requesting user is not an admin
         packet: Object (status: USER_NOT_QUALIFIED)
 
+      If requesting user is not found
+        packet: Object (status: USER_NOT_FOUND)
+
+      If requesting user is not on team
+        packet: Object (status: USER_HAS_NO_TEAM)
+
       If requested user does not exist
         packet: Object (status: USER_NOT_FOUND)
 
       If requested user is an admin
         packet: Object (status: PERMISSION_DENIED)
+
+      If requesting users team is not found
+        packet: Object (status: TEAM_DOES_NOT_EXIST)
 
       If requested user is not on team
         packet: Object (status: USER_NOT_QUALIFIED)
@@ -470,7 +479,126 @@ module.exports = async (app, passport) => {
     log("PATCH REQUEST AT /api/users/update-user-status");
     done();
   }, passport.authenticate("jwt", { session: false }), validateStatusInput, (request, response) => {
-    // TODO
+    let packet = {
+      status: ""
+    };
+    if (request.user.verified) {
+      if (request.user.status !== "ADMIN") {
+        packet.status = "USER_NOT_QUALIFIED";
+        response.json(packet);
+      } else {
+        if (request.user.team_code) {
+          User.findOne({ username: request.user.username }).then((rUser) => {
+            if (rUser) {
+              User.findOne({ username: request.body.username }).then((user) => {
+                if (user) {
+                  if (user.status === "ADMIN") {
+                    packet.status = "PERMISSION_DENIED";
+                    response.json(packet);
+                  } else {
+                    Team.findOne({ join_code: request.user.team_code }).then((team) => {
+                      if (team) {
+                        if (team.members.indexOf(String(user._id)) >= 0 || team.editors.indexOf(String(user._id)) >= 0) {
+                          if (team.members.indexOf(String(user._id)) >= 0) {
+                            let index = team.members.indexOf(String(user._id));
+                            team.members.splice(index, 1);
+                          } else {
+                            let index = team.editors.indexOf(String(user._id));
+                            team.editors.splice(index, 1);
+                          }
+                          user.status = request.body.status;
+                          if (request.body.status === "ADMIN") {
+                            team.admins.push(String(user._id));
+                            team.save().then(() => {
+                              user.save().then(() => {
+                                packet.status = "USER_STATUS_UPDATED";
+                                response.json(packet);
+                              }).catch(error => {
+                                console.log(error);
+                                packet.status = "ERROR_WHILE_UPDATING_USER_STATUS";
+                                response.json(packet);
+                              });
+                            }).catch(error => {
+                              console.log(error);
+                              packet.status = "ERROR_WHILE_UPDATING_USER_STATUS";
+                              response.json(packet);
+                            });
+                          } else if (request.body.status === "EDITOR") {
+                            team.editors.push(String(user._id));
+                            team.save().then(() => {
+                              user.save().then(() => {
+                                packet.status = "USER_STATUS_UPDATED";
+                                response.json(packet);
+                              }).catch(error => {
+                                console.log(error);
+                                packet.status = "ERROR_WHILE_UPDATING_USER_STATUS";
+                                response.json(packet);
+                              });
+                            }).catch(error => {
+                              console.log(error);
+                              packet.status = "ERROR_WHILE_UPDATING_USER_STATUS";
+                              response.json(packet);
+                            });
+                          } else if (request.body.status === "MEMBER") {
+                            team.members.push(String(user._id));
+                            team.save().then(() => {
+                              user.save().then(() => {
+                                packet.status = "USER_STATUS_UPDATED";
+                                response.json(packet);
+                              }).catch(error => {
+                                console.log(error);
+                                packet.status = "ERROR_WHILE_UPDATING_USER_STATUS";
+                                response.json(packet);
+                              });
+                            }).catch(error => {
+                              console.log(error);
+                              packet.status = "ERROR_WHILE_UPDATING_USER_STATUS";
+                              response.json(packet);
+                            });
+                          } else {
+                            packet.status = "INVALID_STATUS_INPUT";
+                            packet.errors = {
+                              status: "Status field invalid"
+                            };
+                            response.json(packet);
+                          }
+                        } else {
+                          packet.status = "USER_NOT_QUALIFIED";
+                          response.json(packet);
+                        }
+                      } else {
+                        packet.status = "TEAM_DOES_NOT_EXIST";
+                        response.json(packet);
+                      }
+                    }).catch(error => {
+                      console.log(error);
+                      packet.status = "ERROR_WHILE_UPDATING_USER_STATUS";
+                      response.json(packet);
+                    });
+                  }
+                } else {
+                  packet.status = "USER_NOT_FOUND";
+                  response.json(packet);
+                }
+              }).catch(error => {
+                console.log(error);
+                packet.status = "ERROR_WHILE_UPDATING_USER_STATUS";
+                response.json(packet);
+              });
+            } else {
+              packet.status = "USER_NOT_FOUND";
+              response.json(packet);
+            }
+          });
+        } else {
+          packet.status = "USER_HAS_NO_TEAM";
+          repsonse.json(packet);
+        }
+      }
+    } else {
+      packet.status = "USER_NOT_VERIFIED";
+      response.json(packet);
+    }
   });
 
   /*

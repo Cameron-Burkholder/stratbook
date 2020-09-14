@@ -52,7 +52,7 @@ module.exports = function validateJoinCode(request, response, done) {
     return packet;
   } else {
     request.body.status = request.body.status.toUpperCase();
-    request.body.username = request.body.username.toLowerCase();
+    request.body.username = request.body.username.toUpperCase();
     done();
     return null;
   }

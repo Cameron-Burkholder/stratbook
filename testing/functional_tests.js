@@ -1832,6 +1832,224 @@ suite("FUNCTIONAL TESTS", function() {
       });
     });
 
+    suite("/api/users/update-user-status", function() {
+      const invalidJWT = "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1OTg4MTkxMTk3NDQsImV4cCI6MTU5ODgxOTExOTc0NH0.qkun-NSiUKZ-lC0tW6g0eu8VWqUSAxzQZbG4alpfXeSbL3_SPlfS87FHgRMaJeYkNb2qwqq8blq3JjvK5jYYxRhwfecOFvBsCnjzVrr-q4WRUm_PvJMdYW1TDK6iQwmuv8n2PP9vyz558ne9m065Ufqf1fn_3NIdSHNzsGkWf_tJYKX9d8ChxMn2L6pVtnetolD9KHgajJzpS9llbO7VUOSsnbuv8eMxo3N3Jlgw1NViarxYfctNhj7mL_PynlTqxSeRxpXR5vGqbCU7XP7y34gqrj9p7wsNklwsYaqGqr9oVbo0Ai5rtNRukykQ5MDB6rH15WQpcPH1JBi03bZMA407IgHsJXUo0p9Nv9pFDqLqfIuB-LQcA8ALjViPQ9L_v_g2PxU-47DEALtRldTobu4tKTQ8yAOc0mw6Da8SgpML8sysBmC6uCzFlkcw9u9LNrLVmkmcUYSrtJwtJeXOGeUhICumhHl-NsYmguJht4tTa56SRUfkcZZL7i4uxnS36pF66A_V0NU1jqeKWFaWzBhLPLEy7HAuWuSyLOrS5haS40S70Pz6s_Bf6ED1R0lPd6tjtIVIlAJ3JLkGouzR2s1sETySmQlKDSi7fQ9e0Bvfrow10QhcExG7bdkxQ58xDhXh8KnY4jLH1vqhA6TSX7TFOJtgOtxSA2NvDym7uRo";
+
+      const unverified_user = {
+        user: "UNVERIFIED USER",
+        email: "unverified_user@domain.com",
+        password: process.env.TESTING_PASSWORD,
+        platform: "PC",
+        verified: false,
+        _id: mongoose.Types.ObjectId("5f4c194be2fea45de4399e11")
+      }
+      const unverifiedJWT = issueJWT(unverified_user).token;
+
+      const not_found_user = {
+        username: "NOT FOUND U",
+        email: "not_found@domain.com",
+        password: process.env.TESTING_PASSWORD,
+        platform: "PS4",
+        _id: mongoose.Types.ObjectId("5f500317d66e8d69c0dc57d5")
+      };
+      const notFoundJWT = issueJWT(not_found_user).token;
+
+      const test_user = {
+        username: "TESTING USER",
+        email: "testing@domain.com",
+        password: process.env.TESTING_PASSWORD,
+        platform: "PC",
+        verified: true,
+        _id: mongoose.Types.ObjectId("5f4c0e963e89966b9ce6e170")
+      };
+      const validJWT = issueJWT(test_user).token;
+
+      const no_team_user = {
+        username: "HAS NO TEAM",
+        email: "no_team@domain.com",
+        password: process.env.TESTING_PASSWORD,
+        platform: "PC",
+        verified: true,
+        status: "ADMIN",
+        _id: mongoose.Types.ObjectId("5f4c40a31e8c2816948e5549")
+      }
+      const noTeamJWT = issueJWT(no_team_user).token;
+
+      const not_admin_user = {
+        username: "NOT ADMIN",
+        email: "not_admin_user@domain.com",
+        password: process.env.TESTING_PASSWORD,
+        platform: "PC",
+        verified: true,
+        _id: mongoose.Types.ObjectId("5f4c3bd592e824573ce5be7e")
+      }
+      const notAdminJWT = issueJWT(not_admin_user).token;
+
+      const fake_user = {
+        username: "FAKE TEAM USER",
+        email: "fake_team_user@domain.com",
+        password: process.env.TESTING_PASSWORD,
+        platform: "PC",
+        verified: true,
+        _id: mongoose.Types.ObjectId("5f5fcfc4f0047740049a87f9")
+      }
+      const fakeUserJWT = issueJWT(fake_user).token;
+
+      const fake_user2 = {
+        username: "FAKE TEAM USER2",
+        email: "fake_team_user2@domain.com",
+        password: process.env.TESTING_PASSWORD,
+        platform: "PC",
+        verified: true,
+        _id: mongoose.Types.ObjectId("5f5fde7064bcf20940d5146f")
+      };
+      const fakeUserJWT2 = issueJWT(fake_user2).token;
+
+      test("# JWT not provided", function(done) {
+        chai.request(server)
+          .patch("/api/users/update-user-status")
+          .end((error, response) => {
+            if (error) return done(error);
+            assert.equal(response.status, 401, "Response should be 401 Unauthorized if JWT not provided.");
+            assert.equal(response.text, "Unauthorized", "Response should return unauthorized if JWT not provided.");
+            done();
+          });
+      });
+      test("# JWT is invalid", function(done) {
+        chai.request(server)
+          .patch("/api/users/update-user-status")
+          .set({ Authorization: invalidJWT })
+          .end((error, response) => {
+            if (error) return done(error);
+            assert.equal(response.status, 401, "Response should be 401 Unauthorized if JWT is invalid.");
+            assert.equal(response.text, "Unauthorized", "Response should return unauthorized if JWT is invalid.");
+            done();
+          });
+      });
+      test("# User not verified", function(done) {
+        chai.request(server)
+          .patch("/api/users/update-user-status")
+          .send({ status: "MEMBER", username: "some_user" })
+          .set({ Authorization: unverifiedJWT })
+          .end((error, response) => {
+            if (error) return done(error);
+            assert.equal(response.status, 200, "Response should be 200 if JWT is valid but user is unverified.");
+            assert.equal(response.body.status, "USER_NOT_VERIFIED", "Response should indicate user is not verified if user is not verified.");
+            done();
+          });
+      });
+      test("# Requesting user not found", function(done) {
+        chai.request(server)
+          .patch("/api/users/update-user-status")
+          .send({ status: "MEMBER", username: "some_user" })
+          .set({ Authorization: notFoundJWT })
+          .end((error, response) => {
+            if (error) return done(error);
+            assert.equal(response.status, 401, "Response should be 401 if user is not found.");
+            assert.equal(response.text, "Unauthorized", "Response should indicate unauthorized: user not found.");
+            done();
+          });
+      });
+      test("# Invalid status input", function(done) {
+        chai.request(server)
+          .patch("/api/users/update-user-status")
+          .send({ status: "nonsense", username: "some_user" })
+          .set({ Authorization: validJWT })
+          .end((error, response) => {
+            if (error) return done(error);
+            assert.equal(response.status, 200, "Response should be 200 if input is invalid.");
+            assert.equal(response.body.status, "INVALID_STATUS_INPUT", "Response should indicate status input is invalid.");
+            done();
+          });
+      });
+      test("# Requesting user is not admin", function(done) {
+        chai.request(server)
+          .patch("/api/users/update-user-status")
+          .send({ status: "MEMBER", username: "some_user" })
+          .set({ Authorization: notAdminJWT })
+          .end((error, response) => {
+            if (error) return done(error);
+            assert.equal(response.status, 200, "Response should be 200 if user is not admin.");
+            assert.equal(response.body.status, "USER_NOT_QUALIFIED", "Response should indiciate user is not qualified if not admin.");
+            done();
+          });
+      });
+      test("# Requesting user has no team", function(done) {
+        chai.request(server)
+          .patch("/api/users/update-user-status")
+          .send({ status: "MEMBER", username: "some_user" })
+          .set({ Authorization: noTeamJWT })
+          .end((error, response) => {
+            if (error) return done(error);
+            assert.equal(response.status, 200, "Response should be 200 if user has no team.");
+            assert.equal(response.body.status, "USER_NOT_QUALIFIED", "Response should indicate requesting user has no team.");
+            done();
+          });
+      });
+      test("# Requesting user's team not found", function(done) {
+        chai.request(server)
+          .patch("/api/users/update-user-status")
+          .send({ status: "MEMBER", username: "HAS NO TEAM" })
+          .set({ Authorization: fakeUserJWT })
+          .end((error, response) => {
+            if (error) return done(error);
+            assert.equal(response.status, 200, "Response should be 200 if user is not found.");
+            assert.equal(response.body.status, "TEAM_DOES_NOT_EXIST", "Response should indiciate requested user not found.");
+            done();
+          });
+      });
+      test("# Requested user is not found", function(done) {
+        chai.request(server)
+          .patch("/api/users/update-user-status")
+          .send({ status: "MEMBER", username: "NOT FOUND U" })
+          .set({ Authorization: fakeUserJWT })
+          .end((error, response) => {
+            if (error) return done(error);
+            assert.equal(response.status, 200, "Response should be 200 if user is not found.");
+            assert.equal(response.body.status, "USER_NOT_FOUND", "Response should indiciate requested user not found.");
+            done();
+          });
+      });
+      test("# Requested user is not on team", function(done) {
+        chai.request(server)
+          .patch("/api/users/update-user-status")
+          .send({ status: "MEMBER", username: "NOT ON REQUEST TEAM" })
+          .set({ Authorization: fakeUserJWT2 })
+          .end((error, response) => {
+            if (error) return done(error);
+            assert.equal(response.status, 200, "Response should be 200 if user is not on team.");
+            assert.equal(response.body.status, "USER_NOT_QUALIFIED", "Response should indicate user is not qualified to perform action.");
+            done();
+          });
+      });
+      test("# Requested user is an admin", function(done) {
+        chai.request(server)
+          .patch("/api/users/update-user-status")
+          .send({ status: "MEMBER", username: "FAKE TEAM USER2" })
+          .set({ Authorization: fakeUserJWT2 })
+          .end((error, response) => {
+            if (error) return done(error);
+            assert.equal(response.status, 200, "Response should be 200 if user is not on a team.");
+            assert.equal(response.body.status, "PERMISSION_DENIED", "Response should indicate permission is denied to update status of another admin.");
+            done();
+          });
+      });
+      test("# Update successful", function(done) {
+        chai.request(server)
+          .patch("/api/users/update-user-status")
+          .send({ status: "EDITOR", username: "MEMBER TO EDITOR" })
+          .set({ Authorization: fakeUserJWT2 })
+          .end((error, response) => {
+            if (error) return done(error);
+            assert.equal(response.status, 200, "Response should be 200 if user status has been updated.");
+            assert.equal(response.body.status, "USER_STATUS_UPDATED", "Response should indicate user status has been updated.");
+            done();
+          });
+      });
+
+
+    });
+
     suite("/api/users/delete", function() {
       const invalidJWT = "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1OTg4MTkxMTk3NDQsImV4cCI6MTU5ODgxOTExOTc0NH0.qkun-NSiUKZ-lC0tW6g0eu8VWqUSAxzQZbG4alpfXeSbL3_SPlfS87FHgRMaJeYkNb2qwqq8blq3JjvK5jYYxRhwfecOFvBsCnjzVrr-q4WRUm_PvJMdYW1TDK6iQwmuv8n2PP9vyz558ne9m065Ufqf1fn_3NIdSHNzsGkWf_tJYKX9d8ChxMn2L6pVtnetolD9KHgajJzpS9llbO7VUOSsnbuv8eMxo3N3Jlgw1NViarxYfctNhj7mL_PynlTqxSeRxpXR5vGqbCU7XP7y34gqrj9p7wsNklwsYaqGqr9oVbo0Ai5rtNRukykQ5MDB6rH15WQpcPH1JBi03bZMA407IgHsJXUo0p9Nv9pFDqLqfIuB-LQcA8ALjViPQ9L_v_g2PxU-47DEALtRldTobu4tKTQ8yAOc0mw6Da8SgpML8sysBmC6uCzFlkcw9u9LNrLVmkmcUYSrtJwtJeXOGeUhICumhHl-NsYmguJht4tTa56SRUfkcZZL7i4uxnS36pF66A_V0NU1jqeKWFaWzBhLPLEy7HAuWuSyLOrS5haS40S70Pz6s_Bf6ED1R0lPd6tjtIVIlAJ3JLkGouzR2s1sETySmQlKDSi7fQ9e0Bvfrow10QhcExG7bdkxQ58xDhXh8KnY4jLH1vqhA6TSX7TFOJtgOtxSA2NvDym7uRo";
 
@@ -1856,7 +2074,7 @@ suite("FUNCTIONAL TESTS", function() {
           });
           done();
       });
-      test("Delete user", function(done) {
+      test("# Delete user", function(done) {
         chai.request(server)
           .delete("/api/users/delete")
           .set({ Authorization: newUserJWT })
@@ -1867,7 +2085,7 @@ suite("FUNCTIONAL TESTS", function() {
             done();
           });
       });
-      test("Delete user with a team", function(done) {
+      test("# Delete user with a team", function(done) {
         let newUserWTeam = {
           email: "new_user_w_team@domain.com",
           username: "NEW USER WITH TEAM",
@@ -1941,6 +2159,7 @@ suite("FUNCTIONAL TESTS", function() {
           });
       });
     });
+
   });
 
 });

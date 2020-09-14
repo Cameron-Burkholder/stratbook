@@ -20,7 +20,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // SETUP DATABASE
-const URI = process.env.MONGODB_URI;
+const URI = (process.env.NODE_ENV === "TESTING" ? process.env.TESTING_URI : process.env.MONGODB_URI);
 // Handle error in establishing connection
 try {
   mongoose.connect(URI, { useNewUrlParser: true, useUnifiedTopology: true });
