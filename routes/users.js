@@ -709,6 +709,7 @@ module.exports = async (app, passport) => {
             user.save().then(() => {
               packet.status = "PASSWORD_RESET";
               response.json(packet);
+              email(user.email, "Your password has been reset", "<p>Your password has been reset. If you did not do this, log in to your account immediately and change the password.</p>");
             }).catch(error => {
               console.log(error);
               packet.status = "ERROR_WHILE_RESETTING_PASSWORD";
@@ -729,6 +730,55 @@ module.exports = async (app, passport) => {
       response.json(packet);
     }
 
+  });
+
+  /*
+    @route /api/users/update-password
+    @method PATCH
+
+    @inputs:
+      password: String
+      password1: String
+      password2: String
+
+    @outputs:
+      If there is an error
+        packet: Object (status: ERROR_WHILE_UPDATING_PASSWORD)
+
+      If user is not found
+        packet: Object (status: USER_NOT_FOUND)
+
+      If password has been updated
+        packet: Object (status: PASSWORD_UPDATED)
+
+  */
+  app.patch("/api/users/update-password", (request, response, done) => {
+    log("PATCH REQUEST AT /api/users/update-password");
+    done();
+  }, passport.authenticate("jwt", { session: false }), validatePasswordInput, (request, response) => {
+    let packet = {
+      status: ""
+    };
+    User.findOne({ username: request.user.username }).then((user) => {
+      if (user) {
+        user.password = hashPassword(request.body.password1);
+        user.save().then(() => {
+          packet.status = "PASSWORD_UPDATED";
+          response.json(packet);
+        }).catch(error => {
+          console.log(error);
+          packet.status = "ERROR_WHILE_UPDATING_PASSWORD";
+          response.json(packet);
+        })
+      } else {
+        packet.status = "USER_NOT_FOUND";
+        response.json(packet);
+      }
+    }).catch(error => {
+      console.log(error);
+      packet.status = "ERROR_WHILE_UPDATING_PASSWORD";
+      response.json(packet);
+    })
   });
 
   /*
