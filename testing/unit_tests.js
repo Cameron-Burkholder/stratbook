@@ -690,6 +690,77 @@ suite("UNIT TESTS", function() {
     });
   });
 
+  suite("Update Password", function() {
+    const validatePasswordInput = require("../validation/validatePasswordInput.js");
+    let response = {
+      json: function() {},
+      end: function() {}
+    }
+    let done = function() {};
+
+    test("# Password field not provided", function() {
+      let request = {
+        body: {}
+      }
+      assert.equal(validatePasswordInput(request, response, done).status, "INVALID_PASSWORD_INPUT", "Response should be invalid if password field is not provided in request.");
+      assert.equal(validatePasswordInput(request, response, done).errors.password1, "Password field is required", "Errors should list password as required if not provided in request.");
+    });
+    test("# Password field is empty", function() {
+      let request = {
+        body: { password1: "" }
+      };
+      assert.equal(validatePasswordInput(request, response, done).status, "INVALID_PASSWORD_INPUT", "Response should be invalid if password field is empty.");
+      assert.equal(validatePasswordInput(request, response, done).errors.password1, "Password field is required", "Errors should list password as required if empty in request.");
+    });
+
+    test("# Confirm password field not provided", function() {
+      let request = {
+        body: {}
+      }
+      assert.equal(validatePasswordInput(request, response, done).status, "INVALID_PASSWORD_INPUT", "Response should be invalid if confirm password field is not provided in request.");
+      assert.equal(validatePasswordInput(request, response, done).errors.password2, "Confirm password field is required", "Errors should list confirm password as required if not provided in request.");
+    });
+    test("# Confirm password field is empty", function() {
+      let request = {
+        body: { password2: "" }
+      };
+      assert.equal(validatePasswordInput(request, response, done).status, "INVALID_PASSWORD_INPUT", "Response should be invalid if confirm password field is empty.");
+      assert.equal(validatePasswordInput(request, response, done).errors.password1, "Password field is required", "Errors should list confirm password as required if empty in request.");
+    });
+
+    test("# Password must be at least 6 characters and at most 30", function() {
+      let request1 = {
+        body: { password1: "less" }
+      };
+      let request2 = {
+        body: { password1: "morecharactersthanthirtycharacters "}
+      };
+      let request3 = {
+        body: { password1: "justright" }
+      };
+      assert.equal(validatePasswordInput(request1, response, done).status, "INVALID_PASSWORD_INPUT", "Response should be invalid if password is less than six characters.");
+      assert.equal(validatePasswordInput(request1, response, done).errors.password1, "Password must be at least 6 characters and at most 30", "Errors should list password as too short.");
+
+      assert.equal(validatePasswordInput(request2, response, done).status, "INVALID_PASSWORD_INPUT", "Response should be invalid if password is more than thirty characters.");
+      assert.equal(validatePasswordInput(request2, response, done).errors.password1, "Password must be at least 6 characters and at most 30", "Errors should list password as too long.");
+
+      assert.equal(validatePasswordInput(request3, response, done).errors.password1, null, "If password is in appropriate parameters, errors.password1 should be null.");
+    });
+    test("# Passwords must match", function() {
+      let request1 = {
+        body: { password1: "sixchars", password2: "sevenchars" }
+      }
+      let request2 = {
+        body: { password1: "sixchars", password2: "sixchars" }
+      };
+
+      assert.equal(validatePasswordInput(request1, response, done).status, "INVALID_PASSWORD_INPUT", "Response should be invalid if passwords are not equal.");
+      assert.equal(validatePasswordInput(request1, response, done).errors.password2, "Passwords must match", "Errors should list passwords as not matching if they do not.");
+
+      assert.equal(validatePasswordInput(request2, response, done), null, "If passwords match, password2 should not list any errors.");
+    });
+  })
+
   suite("Utility Functions", function() {
     const { verifyPassword, hashPassword, issueJWT, genVerificationLink, genJoinCode } = require("../config/utilities.js");
     // UNIT TEST ACCOUNT

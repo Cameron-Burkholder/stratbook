@@ -22,6 +22,9 @@ const validateEmailInput = require("../validation/validateEmailInput.js");
 // Load status validation
 const validateStatusInput = require("../validation/validateStatusInput.js");
 
+// Load password validation
+const validatePasswordInput = require("../validation/validatePasswordInput.js");
+
 // Prepare user verification
 let host;
 
@@ -599,6 +602,133 @@ module.exports = async (app, passport) => {
       packet.status = "USER_NOT_VERIFIED";
       response.json(packet);
     }
+  });
+
+  /*
+    @route /api/users/forgot-password
+    @method PATCH
+
+    @inputs
+      email: String
+
+    @outputs
+      If an error occurs
+        packet: Object (status: ERROR_WHILE_GETTING_USER)
+
+      If input is invalid
+        packet: Object (status: INVALID_EMAIL)
+
+      If input is profane
+        packet: Object (status: PROFANE_INPUT)
+
+      If user is not found
+        packet: Object (status: USER_NOT_FOUND)
+
+      If reset link has been generated
+        packet: Object(status: PASSWORD_RESET_LINK_SENT)
+
+  */
+  app.patch("/api/users/forgot-password", (request, response, done) => {
+    log("PATCH REQUEST AT /api/users/forgot-password");
+    done();
+  }, validateEmailInput, (request, response) => {
+    let packet = {
+      status: ""
+    };
+    User.findOne({ email: request.body.email }).then((user) => {
+      if (user) {
+        const reset_token = genVerificationLink();
+        const reset_expiry = Date.now() + 3600000;
+        user.reset_token = reset_token;
+        user.reset_expiry = reset_expiry;
+        const resetLink = "http://" + request.hostname + "/api/users/reset-password?password_token=" + reset_token;
+        user.save().then(() => {
+          packet.status = "PASSWORD_RESET_LINK_SENT";
+          response.json(packet);
+          email(user.email, "Password Reset Link", "<p>You are receiving this because you (or someone else) have requested the reset of the password for your account. Please click on the following link to complete the process</p><br/><br/><a href='" + resetLink + "' target='_blank'>Verify Email</a>");
+        }).catch(error => {
+          console.log(error);
+          packet.status = "ERROR_WHILE_GETTING_USER";
+          response.json(packet);
+        });
+      } else {
+        packet.status = "USER_NOT_FOUND";
+        response.json(packet);
+      }
+    }).catch(error => {
+      console.log(error);
+      packet.status = "ERROR_WHILE_GETTING_USER";
+      response.json(packet);
+    });
+  });
+
+  /*
+    @route /api/users/reset-password
+    @method PATCH
+
+    @inputs:
+      password1: String
+      password2: String
+
+    @outputs:
+      If an error occurs
+        packet: Object (status: ERROR_WHILE_RESETTING_PASSWORD)
+
+      If input is invalid
+        packet: Object (status: INVALID_PASSWORD_INPUT)
+
+      If token is not found
+        packet: Object (status: INVALID_RESET_TOKEN)
+
+      If token is expired
+        packet: Object (status: RESET_TOKEN_EXPIRED)
+
+      If password is reset
+        packet: Object (status: PASSWORD_RESET)
+
+  */
+  app.patch("/api/users/reset-password", (request, response, done) => {
+    log("PATCH REQUEST AT /api/users/reset-password");
+    done();
+  }, validatePasswordInput, (request, response) => {
+    let packet = {
+      status: ""
+    };
+    const reset_token = request.query.password_token;
+    if (reset_token || reset_token !== "") {
+      User.findOne({ reset_token: reset_token }).then((user) => {
+        if (user) {
+          if (Date.now() > new Date(user.reset_expiry)) {
+            packet.status = "RESET_TOKEN_EXPIRED";
+            response.json(packet);
+          } else {
+            const hash = hashPassword(request.body.password1);
+            user.password = hash;
+            user.reset_token = undefined;
+            user.reset_expiry = undefined;
+            user.save().then(() => {
+              packet.status = "PASSWORD_RESET";
+              response.json(packet);
+            }).catch(error => {
+              console.log(error);
+              packet.status = "ERROR_WHILE_RESETTING_PASSWORD";
+              response.json(packet);
+            });
+          }
+        } else {
+          packet.status = "INVALID_RESET_TOKEN";
+          response.json(packet);
+        }
+      }).catch(error => {
+        console.log(error);
+        packet.status = "ERROR_WHILE_RESETTING_PASSWORD";
+        response.json(packet);
+      });
+    } else {
+      packet.status = "INVALID_RESET_TOKEN";
+      response.json(packet);
+    }
+
   });
 
   /*
