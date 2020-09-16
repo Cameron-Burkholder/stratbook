@@ -56,34 +56,19 @@ class LoginAPI extends React.Component {
       password: this.state.password
     }).then((response) => {
       switch (response.data.status) {
-        case "INVALID_LOGIN":
-          component.setState({
-            errors: response.data.errors,
-            loading: false
-          });
-          break;
-        case "USER_NOT_FOUND":
-          component.setState({
-            errors: {
-              user: "User not found."
-            },
-            loading: false
-          });
-          break;
-        case "INCORRECT_PASSWORD":
-          component.setState({
-            errors: {
-              password: "Incorrect password."
-            },
-            loading: false
-          });
-          break;
         case "TOKEN_ISSUED":
           component.setState({
             loading: false,
             redirect: "/dashboard"
           });
           component.props.login(response.data.token, response.data.expiresIn);
+          break;
+        default:
+          component.setState({
+            loading: false,
+            errors: response.data.errors,
+            status: response.data.status
+          });
           break;
       }
     }).catch((error) => {

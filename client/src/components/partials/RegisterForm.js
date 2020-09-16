@@ -32,6 +32,14 @@ const RegisterForm = (props) => {
         <span className="form-error">{props.errors.email}</span>
         <span className="form-error">{props.errors.user}</span>
       </fieldset>
+      <fieldset className="form-fieldset" id="platform-field">
+        <label className="form-label" htmlFor="platform">Platform</label>
+        <select onChange={props.onChange} className={"form-input" + (props.errors.platform == null ? "" : " input-error")} value={props.platform} id="platform" required>
+          <option>Xbox</option>
+          <option>PC</option>
+          <option>PS4</option>
+        </select>
+      </fieldset>
       <fieldset className="form-fieldset" id="password1-field">
         <label className="form-label" htmlFor="password1">Password</label>
         <input onChange={props.onChange} className={"form-input" + (props.errors.password1 == null ? "" : " input-error")} value={props.password1} id="password1" type="password" required/>

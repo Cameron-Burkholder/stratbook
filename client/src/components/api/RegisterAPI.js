@@ -26,7 +26,7 @@ class RegisterAPI extends React.Component {
     this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
-      name: "",
+      username: "",
       email: "",
       password1: "",
       password2: "",
@@ -57,38 +57,24 @@ class RegisterAPI extends React.Component {
       loading: true
     });
     axios.post("/api/users/register", {
-      name: this.state.name,
+      username: this.state.username,
       email: this.state.email,
+      platform: this.state.platform,
       password1: this.state.password1,
       password2: this.state.password2
     }).then((response) => {
       switch (response.data.status) {
-        case "INVALID_REGISTRATION":
-          component.setState({
-            errors: response.data.errors,
-            loading: false
-          });
-          break;
-        case "EXISTING_USER":
-          component.setState({
-            errors: {
-              user: "An account with that email already exists."
-            },
-            loading: false
-          });
-          break;
-        case "UNABLE_TO_REGISTER":
-          component.setState({
-            errors: {
-              user: "Unable to register. Try again later."
-            },
-            loading: false
-          });
-          break;
         case "USER_REGISTERED":
           component.setState({
             loading: false,
             redirect: "/login"
+          });
+          break;
+        default:
+          component.setState({
+            loading: false,
+            errors: response.data.errors,
+            status: response.data.status
           });
           break;
       }
