@@ -86,6 +86,31 @@ class App extends React.Component {
   clearLocalStorage() {
     localStorage.clear();
   }
+  /*
+    @func: componentDidMount
+    @desc: upon loading the page, if the user is logged in, attempt to extend their login
+  */
+  componentDidMount() {
+    if (this.state.loggedIn) {
+      axios.defaults.headers.common["Authorization"] = localStorage.getItem("token");
+      axios.get("/api/users/extend-token")
+        .then((response) => {
+        switch (response.data.status) {
+          case "TOKEN_EXTENDED":
+            const user = response.data.user;
+            this.login(response.data.token, response.data.expiresIn, user);
+            break;
+          default:
+            alert("An error has occurred.");
+            break;
+        }
+      }).catch((error) => {
+        console.log(error);
+        alert("Your login has expired or become invalid.");
+        this.logout();
+      });
+    }
+  }
   render() {
     return (
       <Router>

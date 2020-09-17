@@ -161,6 +161,36 @@ module.exports = async (app, passport) => {
   });
 
   /*
+    @route /api/users/extend-token
+    @method GET
+
+    @outputs
+      If user is invalid
+        404
+      If login is valid
+        packet: Object status: TOKEN_EXTENDED, token: token, expiresIn: Date)
+  */
+  app.get("/api/users/extend-token", (request, response, done) => {
+    log("GET REQUEST AT /api/users/extend-token");
+    done();
+  }, passport.authenticate("jwt", { session: false }), (request, response) => {
+    const tokenObject = issueJWT(request.user);
+    let packet = {
+      token: tokenObject.token,
+      expiresIn: tokenObject.expires,
+      status: "TOKEN_EXTENDED",
+      user: {
+        status: request.user.status,
+        username: request.user.username,
+        email: request.user.email,
+        verified: request.user.verified,
+        platform: request.user.platform
+      }
+    };
+    response.json(packet);
+  });
+
+  /*
     @route /api/users/register
     @method: POST
 
