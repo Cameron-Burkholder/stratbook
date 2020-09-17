@@ -1,7 +1,9 @@
-/* client/components/partials/Navigationjs */
+/* client/components/partials/Navigation.js */
 
 import React from "react";
 import { Link } from "react-router-dom";
+
+import UserDropdown from "./UserDropdown.js";
 
 /*
   @func: Navigation
@@ -48,11 +50,7 @@ class Navigation extends React.Component {
             <Link onClick={this.toggleMenu} className="nav__link" to="/">Home</Link>
           </li>
           {
-            this.state.loggedIn ? (
-              <li className="nav__item">
-                <Link onClick={this.toggleMenu} className="nav__link" to="/logout">Logout</Link>
-              </li>
-            ) : (
+            this.state.loggedIn ? "" : (
               <li className="nav__item">
                 <Link onClick={this.toggleMenu} className="nav__link" to="/login">Login</Link>
               </li>
@@ -67,9 +65,7 @@ class Navigation extends React.Component {
           }
           {
             this.state.loggedIn ? (
-              <li className="nav__item">
-                <Link onClick={this.toggleMenu} className="nav__link" to="/dashboard">Dashboard</Link>
-              </li>
+              <UserDropdown username={this.props.username}/>
             ) : ( "" )
           }
         </ul>

@@ -57,12 +57,24 @@ class LoginAPI extends React.Component {
     }).then((response) => {
       switch (response.data.status) {
         case "TOKEN_ISSUED":
+          const user = {
+            status: response.data.user_status,
+            username: response.data.username,
+            email: response.data.email,
+            verified: response.data.verified,
+            platform: response.data.platform
+          };
           component.setState({
             loading: false,
-            redirect: "/dashboard"
           });
-          component.props.login(response.data.token, response.data.expiresIn);
+          component.props.login(response.data.token, response.data.expiresIn, user);
           break;
+        case "ERROR_WHILE_LOGGING_IN":
+          component.setState({
+            loading: false,
+            errors: {}
+          });
+          alert("An error occurred while logging in. Please try again.");
         default:
           component.setState({
             loading: false,
@@ -73,18 +85,15 @@ class LoginAPI extends React.Component {
       }
     }).catch((error) => {
       console.log(error);
+      alert("An error has occurred. Please try again shortly.");
     });
   }
   render() {
-    if (this.state.redirect) {
-      return <Redirect to={this.state.redirect}/>
-    } else {
-      return (
-        <div id="LoginAPI">
-          <LoginForm onSubmit={this.onSubmit} onChange={this.onChange} email={this.state.email} password={this.state.password} errors={this.state.errors} loading={this.state.loading}/>
-        </div>
-      )
-    }
+    return (
+      <div id="LoginAPI">
+        <LoginForm onSubmit={this.onSubmit} onChange={this.onChange} email={this.state.email} password={this.state.password} errors={this.state.errors} loading={this.state.loading}/>
+      </div>
+    )
   }
 }
 

@@ -11,9 +11,11 @@ import Login from "./components/pages/Login.js";
 import Logout from "./components/pages/Logout.js";
 import Register from "./components/pages/Register.js";
 import Dashboard from "./components/pages/Dashboard.js";
+import NotFound from "./components/pages/NotFound.js";
 
 // import presentational components
 import Navigation from "./components/partials/Navigation.js";
+import MainNavigation from "./components/partials/MainNavigation.js";
 import Header from "./components/partials/Header.js";
 import Footer from "./components/partials/Footer.js";
 
@@ -32,7 +34,8 @@ class App extends React.Component {
     this.clearLocalStorage = this.clearLocalStorage.bind(this);
 
     this.state = {
-      loggedIn: Date.now() < new Date(localStorage.getItem("expires")) ? true : false
+      loggedIn: Date.now() < new Date(localStorage.getItem("expires")) ? true : false,
+      user: JSON.parse(localStorage.getItem("user")),
     }
   }
   /*
@@ -40,9 +43,10 @@ class App extends React.Component {
     @desc: login a user on the client side
     @param token: String
     @param expiresIn: Integer
+    @param user: Object
   */
-  login(token, expiresIn) {
-    this.setLocalStorage(token, expiresIn);
+  login(token, expiresIn, user) {
+    this.setLocalStorage(token, expiresIn, user);
     axios.defaults.headers.common["Authorization"] = this.state.token;
     this.updateState();
   }
@@ -70,9 +74,10 @@ class App extends React.Component {
     @param token: Object
     @param expires: Date.String
   */
-  setLocalStorage(token, expiresIn) {
+  setLocalStorage(token, expiresIn, user) {
     localStorage.setItem("token", token);
     localStorage.setItem("expires", new Date(Date.now() + expiresIn).toDateString());
+    localStorage.setItem("user", JSON.stringify(user));
   }
   /*
     @func: clearLocalStorage
@@ -85,14 +90,132 @@ class App extends React.Component {
     return (
       <Router>
         <div className="container">
-          <Navigation loggedIn={this.state.loggedIn}/>
+          <Navigation loggedIn={this.state.loggedIn} username={this.state.user.username}/>
           <Switch>
+            /* / */
             <Route exact path="/">
-              <div className="page-wrapper">
-                <Header title="Home" subtitle="Subtitle"/>
-                <Home/>
-              </div>
+              { this.state.loggedIn ? ( <Redirect to="/dashboard"/> )
+              : (
+                <div className="page-wrapper">
+                  <Header title="Home" subtitle="Subtitle"/>
+                  <Home/>
+                </div>
+              )}
             </Route>
+            /* /user */
+            <Route exact path="/user">
+              { this.state.loggedIn ? (
+                <div className="page-wrapper">
+                  <Header title={this.state.user.username}/>
+                  <MainNavigation page="USER" user={this.state.user.status}/>
+                  user
+                </div>
+              )
+              : ( <Redirect to="/"/> )
+              }
+            </Route>
+            /* /dashboard */
+            <Route exact path="/dashboard">
+              { this.state.loggedIn ? (
+                <div className="page-wrapper">
+                  <Header title="Dashboard"/>
+                  <MainNavigation page="DASHBOARD" user={this.state.user.status}/>
+                  <Dashboard/>
+                </div>
+              )
+              : ( <Redirect to="/"/> )
+              }
+            </Route>
+            /* /team */
+            <Route exact path="/team">
+              { this.state.loggedIn ? (
+                <div className="page-wrapper">
+                  <Header title="View Team"/>
+                  <MainNavigation page="TEAM" user={this.state.user.stats}/>
+                </div>
+              )
+              : ( <Redirect to="/"/> )
+              }
+            </Route>
+            /* /team/manage */
+            <Route exact path="/team/manage">
+              { this.state.loggedIn && this.state.user.status === "ADMIN" ? (
+                <div className="page-wrapper">
+                  <Header title="Manage Team"/>
+                  <MainNavigation page="TEAM" user={this.state.user.status}/>
+                </div>
+              )
+              : ( <Redirect to="/team"/> )
+              }
+            </Route>
+            /* /strategies */
+            <Route exact path="/strategies">
+              { this.state.loggedIn ? (
+                <div className="page-wrapper">
+                  <Header title="View Strategies"/>
+                  <MainNavigation page="STRATEGIES" user={this.state.user.status}/>
+                </div>
+              )
+              : ( <Redirect to="/"/> )
+              }
+            </Route>
+            /* /strategies/edit */
+            <Route exact path="/strategies/edit">
+              { this.state.loggedIn && (this.state.user.status === "ADMIN" || this.state.user.status === "EDITOR") ? (
+                <div className="page-wrapper">
+                  <Header title="Edit Strategies"/>
+                  <MainNavigation page="USER" user={this.state.user.status}/>
+                  user
+                </div>
+              )
+              : ( <Redirect to="/strategies"/> )
+              }
+            </Route>
+            /* /maps */
+            <Route exact path="/maps">
+              { this.state.loggedIn ? (
+                <div className="page-wrapper">
+                  <Header title="View Maps"/>
+                  <MainNavigation page="MAPS" user={this.state.user.status}/>
+                </div>
+              )
+              : ( <Redirect to="/"/> )
+              }
+            </Route>
+            /* /maps/edit */
+            <Route exact path="/maps/edit">
+              { this.state.loggedIn && (this.state.user.status === "ADMIN" || this.state.user.status === "EDITOR") ? (
+                <div className="page-wrapper">
+                  <Header title="Edit Maps"/>
+                  <MainNavigation page="MAPS" user={this.state.user.status}/>
+                </div>
+              )
+              : ( <Redirect to="/maps"/> )
+              }
+            </Route>
+            /* /chat */
+            <Route exact path="/chat">
+              { this.state.loggedIn ? (
+                <div className="page-wrapper">
+                  <Header title="Chat"/>
+                  <MainNavigation page="CHAT" user={this.state.user.status}/>
+                </div>
+              )
+              : ( <Redirect to="/"/> )
+              }
+            </Route>
+            /* /meta */
+            <Route exact path="/meta">
+              { this.state.loggedIn ? (
+                <div className="page-wrapper">
+                  <Header title="Meta"/>
+                  <MainNavigation page="META" user={this.state.user.status}/>
+                </div>
+              )
+              : ( <Redirect to="/"/> )
+              }
+            </Route>
+            /* /login */
             <Route exact path="/login">
               { this.state.loggedIn ? ( <Redirect to="/"/> )
               : (
@@ -103,6 +226,7 @@ class App extends React.Component {
                 )
               }
             </Route>
+            /* /logout */
             <Route exact path="/logout">
               { this.state.loggedIn ? (
                 <Logout logout={this.logout}/>
@@ -110,6 +234,7 @@ class App extends React.Component {
               : ( <Redirect to="/"/> )
               }
             </Route>
+            /* /register */
             <Route exact path="/register">
               { this.state.loggedIn ? ( <Redirect to="/"/> )
               : (
@@ -120,16 +245,12 @@ class App extends React.Component {
                 )
               }
             </Route>
+            /* /* */
             <Route>
-              { this.state.loggedIn ? (
-                <div className="page-wrapper">
-                  <Header title="Dashboard"/>
-                  <Dashboard/>
-                </div>
-              ) : (
-                  <Redirect to="/"/>
-                )
-              }
+              <div className="page-wrapper">
+                <Header title="Error 404"/>
+                <NotFound/>
+              </div>
             </Route>
           </Switch>
           <Footer/>

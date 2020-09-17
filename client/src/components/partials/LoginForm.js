@@ -19,14 +19,14 @@ const LoginForm = (props) => {
     <form className="form" id="login-form" onSubmit={props.onSubmit}>
       <fieldset className="form-fieldset" id="email-field">
         <label className="form-label" htmlFor="email">Email</label>
-        <input onChange={props.onChange} className={"form-input" + (props.errors.email == null ? "" : " input-error")} value={props.email} id="email" type="email" required/>
-        <span className="form-error">{props.errors.email}</span>
-        <span className="form-error">{props.errors.user}</span>
+        <input onChange={props.onChange} className={"form-input" + (props.errors && props.errors.email == null ? "" : " input-error")} value={props.email} id="email" type="email" required/>
+        <span className="form-error">{(props.errors ? props.errors.email : "")}</span>
+        <span className="form-error">{(props.errors ? props.errors.user : "")}</span>
       </fieldset>
       <fieldset className="form-fieldset" id="password-field">
         <label className="form-label" htmlFor="password">Password</label>
-        <input onChange={props.onChange} className={"form-input" + (props.errors.password == null ? "" : " input-error")} value={props.password} id="password" type="password" required/>
-        <span className="form-error">{props.errors.password}</span>
+        <input onChange={props.onChange} className={"form-input" + (props.errors && props.errors.password == null ? "" : " input-error")} value={props.password} id="password" type="password" required/>
+        <span className="form-error">{(props.errors ? props.errors.password : "")}</span>
       </fieldset>
       { props.loading ? <Loading/> : <button className="form-button" type="submit">Login</button> }
     </form>

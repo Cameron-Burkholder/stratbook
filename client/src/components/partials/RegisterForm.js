@@ -22,33 +22,34 @@ const RegisterForm = (props) => {
     <form className="form" id="register-form" onSubmit={props.onSubmit}>
       <fieldset className="form-fieldset" id="username-field">
         <label className="form-label" htmlFor="username">Username</label>
-        <input onChange={props.onChange} className={"form-input" + (props.errors.username == null ? "" : " input-error")} value={props.username} id="username" type="name" required/>
+        <input onChange={props.onChange} className={"form-input" + (props.errors && props.errors.username == null ? "" : " input-error")} value={props.username} id="username" type="name" required/>
         <span className="form-description">Must match platform</span>
-        <span className="form-error">{props.errors.username}</span>
+        <span className="form-error">{(props.errors ? props.errors.username : "")}</span>
       </fieldset>
       <fieldset className="form-fieldset" id="email-field">
         <label className="form-label" htmlFor="email">Email</label>
-        <input onChange={props.onChange} className={"form-input" + (props.errors.email == null ? "" : " input-error")} value={props.email} id="email" type="email" required/>
-        <span className="form-error">{props.errors.email}</span>
-        <span className="form-error">{props.errors.user}</span>
+        <input onChange={props.onChange} className={"form-input" + (props.errors && props.errors.email == null ? "" : " input-error")} value={props.email} id="email" type="email" required/>
+        <span className="form-error">{(props.errors ? props.errors.email : "")}</span>
+        <span className="form-error">{(props.errors ? props.errors.user : "")}</span>
       </fieldset>
       <fieldset className="form-fieldset" id="platform-field">
         <label className="form-label" htmlFor="platform">Platform</label>
-        <select onChange={props.onChange} className={"form-input" + (props.errors.platform == null ? "" : " input-error")} value={props.platform} id="platform" required>
+        <select onChange={props.onChange} className={"form-input" + (props.errors && props.errors.platform == null ? "" : " input-error")} value={props.platform} id="platform" required>
           <option>Xbox</option>
           <option>PC</option>
           <option>PS4</option>
         </select>
+        <span className="form-error">{(props.errors ? props.errors.platform : "")}</span>
       </fieldset>
       <fieldset className="form-fieldset" id="password1-field">
         <label className="form-label" htmlFor="password1">Password</label>
-        <input onChange={props.onChange} className={"form-input" + (props.errors.password1 == null ? "" : " input-error")} value={props.password1} id="password1" type="password" required/>
-        <span className="form-error">{props.errors.password1}</span>
+        <input onChange={props.onChange} className={"form-input" + (props.errors && props.errors.password1 == null ? "" : " input-error")} value={props.password1} id="password1" type="password" required/>
+        <span className="form-error">{(props.errors ? props.errors.password1 : "")}</span>
       </fieldset>
       <fieldset className="form-fieldset" id="password2-field">
         <label className="form-label" htmlFor="password2">Confirm Password</label>
-        <input onChange={props.onChange} className={"form-input" + (props.errors.password2 == null ? "" : " input-error")} value={props.password2} id="password2" type="password" required/>
-        <span className="form-error">{props.errors.password2}</span>
+        <input onChange={props.onChange} className={"form-input" + (props.errors && props.errors.password2 == null ? "" : " input-error")} value={props.password2} id="password2" type="password" required/>
+        <span className="form-error">{(props.errors ? props.errors.password2 : "")}</span>
       </fieldset>
       { props.loading ? <Loading/> : <button className="form-button" type="submit">Register</button> }
     </form>

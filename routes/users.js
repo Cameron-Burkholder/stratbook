@@ -128,6 +128,9 @@ module.exports = async (app, passport) => {
 
       if (!user) {
         packet.status = "USER_NOT_FOUND";
+        packet.errors = {
+          email: "No user with that email was found."
+        };
         response.json(packet);
       } else {
         const isValidPassword = verifyPassword(request.body.password, user.password);
@@ -135,11 +138,18 @@ module.exports = async (app, passport) => {
           const tokenObject = issueJWT(user);
           packet.status = "TOKEN_ISSUED";
           packet.user_status = user.status;
+          packet.username = user.username;
+          packet.email = user.email;
+          packet.verified = user.verified;
+          packet.platform = user.platform;
           packet.token = tokenObject.token;
           packet.expiresIn = tokenObject.expires;
           response.json(packet);
         } else {
           packet.status = "INCORRECT_PASSWORD";
+          packet.errors = {
+            password: "The password you entered is incorrect."
+          };
           response.json(packet);
         }
       }
@@ -186,11 +196,17 @@ module.exports = async (app, passport) => {
     User.findOne({ email: request.body.email }, function(error, user) {
       if (user) {
         packet.status = "EXISTING_USER";
+        packet.errors = {
+          email: "An account with that email already exists."
+        };
         response.json(packet);
       } else {
         User.findOne({ username: request.body.username }, function(error, user) {
           if (user) {
             packet.status = "EXISTING_USER";
+            packet.errors = {
+              username: "An account with the username already exists."
+            }
             response.json(packet);
           } else {
             const newUser = new User({
