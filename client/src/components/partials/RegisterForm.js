@@ -35,7 +35,7 @@ const RegisterForm = (props) => {
       <fieldset className="form-fieldset" id="platform-field">
         <label className="form-label" htmlFor="platform">Platform</label>
         <select onChange={props.onChange} className={"form-input" + (props.errors && props.errors.platform == null ? "" : " input-error")} value={props.platform} id="platform" required>
-          <option>Xbox</option>
+          <option>XBOX</option>
           <option>PC</option>
           <option>PS4</option>
         </select>

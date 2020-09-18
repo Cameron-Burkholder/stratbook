@@ -10,7 +10,11 @@ import Home from "./components/pages/Home.js";
 import Login from "./components/pages/Login.js";
 import Logout from "./components/pages/Logout.js";
 import Register from "./components/pages/Register.js";
+import User from "./components/pages/User.js";
+import User_UpdatePlatform from "./components/pages/User_UpdatePlatform.js";
+import User_UpdateUsername from "./components/pages/User_UpdateUsername.js";
 import Dashboard from "./components/pages/Dashboard.js";
+import Strategies from "./components/pages/Strategies.js";
 import NotFound from "./components/pages/NotFound.js";
 
 // import presentational components
@@ -32,10 +36,12 @@ class App extends React.Component {
     this.updateState = this.updateState.bind(this);
     this.setLocalStorage = this.setLocalStorage.bind(this);
     this.clearLocalStorage = this.clearLocalStorage.bind(this);
+    this.getAuthToken = this.getAuthToken.bind(this);
+    this.updateAuthToken = this.updateAuthToken.bind(this);
 
     this.state = {
       loggedIn: Date.now() < new Date(localStorage.getItem("expires")) ? true : false,
-      user: JSON.parse(localStorage.getItem("user")),
+      user: JSON.parse(localStorage.getItem("user"))
     }
   }
   /*
@@ -65,7 +71,8 @@ class App extends React.Component {
   */
   updateState() {
     this.setState({
-      loggedIn: Date.now() < new Date(localStorage.getItem("expires")) ? true : false
+      loggedIn: Date.now() < new Date(localStorage.getItem("expires")) ? true : false,
+      user: JSON.parse(localStorage.getItem("user"))
     });
   }
   /*
@@ -90,13 +97,20 @@ class App extends React.Component {
     @func: componentDidMount
     @desc: upon loading the page, if the user is logged in, attempt to extend their login
   */
-  componentDidMount() {
+  getAuthToken() {
+    return localStorage.getItem("token");
+  }
+  /*
+    @func: getAuthToken
+    @desc: update token so user is not logged out or data has been updated
+  */
+  updateAuthToken() {
     if (this.state.loggedIn) {
       axios.defaults.headers.common["Authorization"] = localStorage.getItem("token");
-      axios.get("/api/users/extend-token")
+      axios.get("/api/users/update-token")
         .then((response) => {
         switch (response.data.status) {
-          case "TOKEN_EXTENDED":
+          case "TOKEN_UPDATED":
             const user = response.data.user;
             this.login(response.data.token, response.data.expiresIn, user);
             break;
@@ -111,11 +125,14 @@ class App extends React.Component {
       });
     }
   }
+  componentDidMount() {
+    this.updateAuthToken();
+  }
   render() {
     return (
       <Router>
         <div className="container">
-          <Navigation loggedIn={this.state.loggedIn} username={this.state.user.username}/>
+          <Navigation loggedIn={this.state.loggedIn} username={(this.state.user ? this.state.user.username : "")}/>
           <Switch>
             /* / */
             <Route exact path="/">
@@ -131,9 +148,57 @@ class App extends React.Component {
             <Route exact path="/user">
               { this.state.loggedIn ? (
                 <div className="page-wrapper">
-                  <Header title={this.state.user.username}/>
+                  <Header title="Account"/>
                   <MainNavigation page="USER" user={this.state.user.status}/>
-                  user
+                  <User username={this.state.user.username} email={this.state.user.email} platform={this.state.user.platform}/>
+                </div>
+              )
+              : ( <Redirect to="/"/> )
+              }
+            </Route>
+            /* /user/update-platform */
+            <Route exact path="/user/update-platform">
+              { this.state.loggedIn ? (
+                <div className="page-wrapper">
+                  <Header title="Account" subtitle="Update Platform"/>
+                  <MainNavigation page="USER" active="UPDATE_PLATFORM" user={this.state.user.status}/>
+                  <User_UpdatePlatform getAuthToken={this.getAuthToken} updateAuthToken={this.updateAuthToken} platform={this.state.user.platform}/>
+                </div>
+              )
+              : ( <Redirect to="/"/> )
+              }
+            </Route>
+            /* /user/update-username */
+            <Route exact path="/user/update-username">
+              { this.state.loggedIn ? (
+                <div className="page-wrapper">
+                  <Header title="Account" subtitle="Update Username"/>
+                  <MainNavigation page="USER" active="UPDATE_USERNAME" user={this.state.user.status}/>
+                  <User_UpdateUsername getAuthToken={this.getAuthToken} updateAuthToken={this.updateAuthToken} username={this.state.user.username}/>
+                </div>
+              )
+              : ( <Redirect to="/"/> )
+              }
+            </Route>
+            /* /user/update-email */
+            <Route exact path="/user/update-email">
+              { this.state.loggedIn ? (
+                <div className="page-wrapper">
+                  <Header title="Account" subtitle="Update Email"/>
+                  <MainNavigation page="USER" active="UPDATE_EMAIL" user={this.state.user.status}/>
+                  update email
+                </div>
+              )
+              : ( <Redirect to="/"/> )
+              }
+            </Route>
+            /* /user/update-password */
+            <Route exact path="/user/update-password">
+              { this.state.loggedIn ? (
+                <div className="page-wrapper">
+                  <Header title="Account" subtitle="Update Password"/>
+                  <MainNavigation page="USER" active="UPDATE_PASSWORD" user={this.state.user.status}/>
+                  update password
                 </div>
               )
               : ( <Redirect to="/"/> )
@@ -155,8 +220,8 @@ class App extends React.Component {
             <Route exact path="/team">
               { this.state.loggedIn ? (
                 <div className="page-wrapper">
-                  <Header title="View Team"/>
-                  <MainNavigation page="TEAM" user={this.state.user.stats}/>
+                  <Header title="Team" subtitle="View Team"/>
+                  <MainNavigation page="TEAM" active="VIEW" user={this.state.user.stats}/>
                 </div>
               )
               : ( <Redirect to="/"/> )
@@ -166,8 +231,8 @@ class App extends React.Component {
             <Route exact path="/team/manage">
               { this.state.loggedIn && this.state.user.status === "ADMIN" ? (
                 <div className="page-wrapper">
-                  <Header title="Manage Team"/>
-                  <MainNavigation page="TEAM" user={this.state.user.status}/>
+                  <Header title="Team" subtitle="Manage Team"/>
+                  <MainNavigation page="TEAM" active="MANAGE" user={this.state.user.status}/>
                 </div>
               )
               : ( <Redirect to="/team"/> )
@@ -177,8 +242,9 @@ class App extends React.Component {
             <Route exact path="/strategies">
               { this.state.loggedIn ? (
                 <div className="page-wrapper">
-                  <Header title="View Strategies"/>
-                  <MainNavigation page="STRATEGIES" user={this.state.user.status}/>
+                  <Header title="Strategies" subtitle="View Strategies"/>
+                  <MainNavigation page="STRATEGIES" active="VIEW" user={this.state.user.status}/>
+                  <Strategies team_code={this.state.user.team_code}/>
                 </div>
               )
               : ( <Redirect to="/"/> )
@@ -188,8 +254,8 @@ class App extends React.Component {
             <Route exact path="/strategies/edit">
               { this.state.loggedIn && (this.state.user.status === "ADMIN" || this.state.user.status === "EDITOR") ? (
                 <div className="page-wrapper">
-                  <Header title="Edit Strategies"/>
-                  <MainNavigation page="USER" user={this.state.user.status}/>
+                  <Header title="Strategies" subtitle="View Strategies"/>
+                  <MainNavigation page="USER" active="EDIT" user={this.state.user.status}/>
                   user
                 </div>
               )
@@ -200,8 +266,8 @@ class App extends React.Component {
             <Route exact path="/maps">
               { this.state.loggedIn ? (
                 <div className="page-wrapper">
-                  <Header title="View Maps"/>
-                  <MainNavigation page="MAPS" user={this.state.user.status}/>
+                  <Header title="Maps" subtitle="View Maps"/>
+                  <MainNavigation page="MAPS" active="VIEW" user={this.state.user.status}/>
                 </div>
               )
               : ( <Redirect to="/"/> )
@@ -211,8 +277,8 @@ class App extends React.Component {
             <Route exact path="/maps/edit">
               { this.state.loggedIn && (this.state.user.status === "ADMIN" || this.state.user.status === "EDITOR") ? (
                 <div className="page-wrapper">
-                  <Header title="Edit Maps"/>
-                  <MainNavigation page="MAPS" user={this.state.user.status}/>
+                  <Header title="Maps" subtitle="Edit Maps"/>
+                  <MainNavigation page="MAPS" active="EDIT" user={this.state.user.status}/>
                 </div>
               )
               : ( <Redirect to="/maps"/> )

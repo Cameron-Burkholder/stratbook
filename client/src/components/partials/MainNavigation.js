@@ -16,11 +16,11 @@ const MainNavigation = (props) => {
       contents = (
         <ul className="main-nav-body">
           <li className="main-nav-item">
-            <Link className="main-nav-link" to="/team">View</Link>
+            <Link className={"main-nav-link " + (props.active === "VIEW" ? "active-link" : "")} to="/team">View</Link>
           </li>
           { props.status === "ADMIN" ? (
             <li className="main-nav-item">
-              <Link className="main-nav-link" to="/team/manage">Manage</Link>
+              <Link className={"main-nav-link " + (props.active === "MANAGE" ? "active-link" : "")} to="/team/manage">Manage</Link>
             </li>
           ) : ""
           }
@@ -31,11 +31,11 @@ const MainNavigation = (props) => {
       contents = (
         <ul className="main-nav-body">
           <li className="main-nav-item">
-            <Link className="main-nav-link" to="/strategies">View</Link>
+            <Link className={"main-nav-link " + (props.active === "VIEW" ? "active-link" : "")} to="/strategies">View</Link>
           </li>
           { props.status === "ADMIN" || props.status === "EDITOR" ? (
             <li className="main-nav-item">
-              <Link className="main-nav-link" to="/strategies/edit">Edit</Link>
+              <Link className={"main-nav-link " + (props.active === "EDIT" ? "active-link" : "")} to="/strategies/edit">Edit</Link>
             </li>
           ) : ""
           }
@@ -46,11 +46,11 @@ const MainNavigation = (props) => {
       contents = (
         <ul className="main-nav-body">
           <li className="main-nav-item">
-            <Link className="main-nav-link" to="/maps">View</Link>
+            <Link className={"main-nav-link " + (props.active === "VIEW" ? "active-link" : "")} to="/maps">View</Link>
           </li>
           { props.status === "ADMIN" || props.status === "EDITOR" ? (
             <li className="main-nav-item">
-              <Link className="main-nav-link" to="/maps/edit">Edit</Link>
+              <Link className={"main-nav-link " + (props.active === "EDIT" ? "active-link" : "")} to="/maps/edit">Edit</Link>
             </li>
           ) : ""
           }
@@ -58,6 +58,23 @@ const MainNavigation = (props) => {
       )
       break;
     case "USER":
+      contents = (
+        <ul className="main-nav-body">
+          <li className="main-nav-item">
+            <Link className={"main-nav-link " + (props.active === "UPDATE_PLATFORM" ? "active-link" : "")} to="/user/update-platform">Update Platform</Link>
+          </li>
+          <li className="main-nav-item">
+            <Link className={"main-nav-link " + (props.active === "UPDATE_USERNAME" ? "active-link" : "")} to="/user/update-username">Update Username</Link>
+          </li>
+          <li className="main-nav-item">
+            <Link className={"main-nav-link " + (props.active === "UPDATE_EMAIL" ? "active-link" : "")} to="/user/update-email">Update Email</Link>
+          </li>
+          <li className="main-nav-item">
+            <Link className={"main-nav-link " + (props.active === "UPDATE_PASSWORD" ? "active-link" : "")} to="/user/update-password">Update Password</Link>
+          </li>
+        </ul>
+      );
+      break;
     case "DASHBOARD":
     case "CHAT":
     case "META":

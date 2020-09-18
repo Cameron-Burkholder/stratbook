@@ -161,7 +161,7 @@ module.exports = async (app, passport) => {
   });
 
   /*
-    @route /api/users/extend-token
+    @route /api/users/update-token
     @method GET
 
     @outputs
@@ -170,7 +170,7 @@ module.exports = async (app, passport) => {
       If login is valid
         packet: Object status: TOKEN_EXTENDED, token: token, expiresIn: Date)
   */
-  app.get("/api/users/extend-token", (request, response, done) => {
+  app.get("/api/users/update-token", (request, response, done) => {
     log("GET REQUEST AT /api/users/extend-token");
     done();
   }, passport.authenticate("jwt", { session: false }), (request, response) => {
@@ -178,7 +178,7 @@ module.exports = async (app, passport) => {
     let packet = {
       token: tokenObject.token,
       expiresIn: tokenObject.expires,
-      status: "TOKEN_EXTENDED",
+      status: "TOKEN_UPDATED",
       user: {
         status: request.user.status,
         username: request.user.username,
@@ -353,17 +353,11 @@ module.exports = async (app, passport) => {
     @method PATCH
 
     @inputs:
-      name: String
+      username: String
 
     @outputs:
       If an error occurs
         packet: Object (status: ERROR_WHILE_UPDATING_USERNAME)
-
-      If email is invalid
-        packet: Object (status: INVALID_EMAIL)
-
-      If email is profane
-        packet: Object (status: PROFANE_INPUT)
 
       If user does not exist
         packet: Object (status: USER_NOT_FOUND)
@@ -389,6 +383,9 @@ module.exports = async (app, passport) => {
         User.findOne({ username: request.body.username }).then((user2) => {
           if (user2) {
             packet.status = "USERNAME_TAKEN";
+            packet.errors = {
+              username: "A user with that username already exists"
+            }
             response.json(packet);
           } else {
             user1.username = request.body.username;
@@ -424,6 +421,12 @@ module.exports = async (app, passport) => {
     @outputs:
       If an error occurs
         packet: Object (status: ERROR_WHILE_UPDATING_EMAIL)
+
+      If email is invalid
+        packet: Object (status: INVALID_EMAIL)
+
+      If email is profane
+        packet: Object (status: PROFANE_INPUT)
 
       If user is not verified
         packet: Object (status: USER_NOT_VERIFIED)
