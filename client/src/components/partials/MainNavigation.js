@@ -78,6 +78,7 @@ const MainNavigation = (props) => {
     case "DASHBOARD":
     case "CHAT":
     case "META":
+    default: 
       contents = "";
       break;
   }

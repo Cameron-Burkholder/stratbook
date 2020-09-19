@@ -44,7 +44,7 @@ class Navigation extends React.Component {
   render() {
     return (
       <nav className={"nav " + (this.state.active ? "nav--active" : "nav--inactive")}>
-        <h3 className="nav__heading"></h3>
+        <h3 className="nav__heading">R6 Stratbook</h3>
         <ul className="nav__body">
           <li className="nav__item">
             <Link onClick={this.toggleMenu} className="nav__link" to="/">Home</Link>

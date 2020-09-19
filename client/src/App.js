@@ -13,6 +13,8 @@ import Register from "./components/pages/Register.js";
 import User from "./components/pages/User.js";
 import User_UpdatePlatform from "./components/pages/User_UpdatePlatform.js";
 import User_UpdateUsername from "./components/pages/User_UpdateUsername.js";
+import User_UpdateEmail from "./components/pages/User_UpdateEmail.js";
+import User_UpdatePassword from "./components/pages/User_UpdatePassword.js";
 import Dashboard from "./components/pages/Dashboard.js";
 import Strategies from "./components/pages/Strategies.js";
 import NotFound from "./components/pages/NotFound.js";
@@ -150,7 +152,7 @@ class App extends React.Component {
                 <div className="page-wrapper">
                   <Header title="Account"/>
                   <MainNavigation page="USER" user={this.state.user.status}/>
-                  <User username={this.state.user.username} email={this.state.user.email} platform={this.state.user.platform}/>
+                  <User getAuthToken={this.getAuthToken} logout={this.logout} username={this.state.user.username} email={this.state.user.email} platform={this.state.user.platform}/>
                 </div>
               )
               : ( <Redirect to="/"/> )
@@ -186,7 +188,7 @@ class App extends React.Component {
                 <div className="page-wrapper">
                   <Header title="Account" subtitle="Update Email"/>
                   <MainNavigation page="USER" active="UPDATE_EMAIL" user={this.state.user.status}/>
-                  update email
+                  <User_UpdateEmail getAuthToken={this.getAuthToken} updateAuthToken={this.updateAuthToken} email={this.state.user.email}/>
                 </div>
               )
               : ( <Redirect to="/"/> )
@@ -198,7 +200,7 @@ class App extends React.Component {
                 <div className="page-wrapper">
                   <Header title="Account" subtitle="Update Password"/>
                   <MainNavigation page="USER" active="UPDATE_PASSWORD" user={this.state.user.status}/>
-                  update password
+                  <User_UpdatePassword getAuthToken={this.getAuthToken} updateAuthToken={this.updateAuthToken}/>
                 </div>
               )
               : ( <Redirect to="/"/> )

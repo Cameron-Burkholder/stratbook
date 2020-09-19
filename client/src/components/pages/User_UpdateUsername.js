@@ -9,7 +9,7 @@ import UpdateUsernameAPI from "../api/UpdateUsernameAPI.js";
   @desc: render update platform form
   @prop getAuthToken: function
   @prop updateAuthToken: function
-  @prop platform: String
+  @prop username: String
 */
 const User_UpdateUsername = (props) => {
   return (

@@ -1,20 +1,20 @@
-/* client/components/api/UpdatePlatformAPI.js */
+/* client/components/api/UpdatePasswordAPI.js */
 
 import React from "react";
 import axios from "axios";
 
-import UpdatePlatformForm from "../partials/UpdatePlatformForm.js";
+import UpdatePasswordForm from "../partials/UpdatePasswordForm.js";
 
 /*
-  @func: UpdatePlatformAPI
-  @desc: manage state of update platform form and requests to server
+  @func: UpdatePasswordAPI
+  @desc: manage state of update password form and requests to server
   @prop getAuthToken: function
   @prop updateAuthToken: function
-  @prop platform: String
   @state:
-    platform: String
+    password1: String
+    password2: String
 */
-class UpdatePlatformAPI extends React.Component {
+class UpdatePasswordAPI extends React.Component {
   constructor(props) {
     super(props);
 
@@ -22,7 +22,8 @@ class UpdatePlatformAPI extends React.Component {
     this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
-      platform: this.props.platform,
+      password1: "",
+      password2: "",
       errors: {}
     }
   }
@@ -49,30 +50,25 @@ class UpdatePlatformAPI extends React.Component {
       loading: true
     });
     axios.defaults.headers.common["Authorization"] = this.props.getAuthToken();
-    axios.patch("/api/users/update-platform", {
-      platform: this.state.platform
+    axios.patch("/api/users/update-password", {
+      password1: this.state.password1,
+      password2: this.state.password2
     }).then((response) => {
       switch (response.data.status) {
-        case "PLATFORM_UPDATED":
+        case "PASSWORD_UPDATED":
           component.setState({
             loading: false,
           });
-          alert("Success! Your platform has been updated.");
+          alert("Success! Your password has been updated.");
           this.props.updateAuthToken();
           break;
-        case "USER_HAS_TEAM":
-          component.setState({
-            loading: false
-          });
-          alert("You cannot update your platform if you are on a team. Teams are platform-specific.");
-          break;
-        case "ERROR_WHILE_UPDATING_PLATFORM":
+        case "ERROR_WHILE_UPDATING_PASSWORD":
           component.setState({
             loading: false,
             errors: {}
           });
-          alert("An error occurred while updating platform. Please try again.");
-        case "USER_NOT_FOUND":
+          alert("An error occurred while updating password. Please try again.");
+        case "INVALID_PASSWORD_INPUT":
         default:
           component.setState({
             loading: false,
@@ -88,11 +84,11 @@ class UpdatePlatformAPI extends React.Component {
   }
   render() {
     return (
-      <div id="UpdatePlatformAPI">
-        <UpdatePlatformForm onSubmit={this.onSubmit} onChange={this.onChange} platform={this.state.platform} errors={this.state.errors} loading={this.state.loading}/>
+      <div id="UpdateUsernameAPI">
+        <UpdatePasswordForm onSubmit={this.onSubmit} onChange={this.onChange} errors={this.state.errors} loading={this.state.loading}/>
       </div>
     )
   }
 }
 
-export default UpdatePlatformAPI;
+export default UpdatePasswordAPI;

@@ -456,6 +456,9 @@ module.exports = async (app, passport) => {
           User.findOne({ email: request.body.email }).then((user2) => {
             if (user2) {
               packet.status = "EMAIL_TAKEN";
+              packet.errors = {
+                email: "An account with that email already exists"
+              };
               response.json(packet);
             } else {
               user1.email = request.body.email;
@@ -786,7 +789,6 @@ module.exports = async (app, passport) => {
     @method PATCH
 
     @inputs:
-      password: String
       password1: String
       password2: String
 
@@ -885,7 +887,7 @@ module.exports = async (app, passport) => {
             packet.status = "ERROR_WHILE_DELETING_USER";
             response.json(packet);
           })
-        } else if (team.admins.length === 1 && team.admins[0] === String(request.user._id) && team.editors.length === 0 && team.members.length === 0) {
+        } else if (team.admins.length === 1 && team.admins.indexOf(String(request.user._id)) >= 0) {
           Team.deleteOne({ join_code: request.user.team_code }).then(() => {
             User.deleteOne({ _id: mongoose.Types.ObjectId(request.user._id) }).then(() => {
               packet.status = "USER_AND_TEAM_DELETED";

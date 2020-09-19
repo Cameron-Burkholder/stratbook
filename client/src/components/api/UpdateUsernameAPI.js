@@ -1,7 +1,6 @@
 /* client/components/api/UpdateUsernameAPI.js */
 
 import React from "react";
-import { Redirect } from "react-router";
 import axios from "axios";
 
 import UpdateUsernameForm from "../partials/UpdateUsernameForm.js";
@@ -13,7 +12,7 @@ import UpdateUsernameForm from "../partials/UpdateUsernameForm.js";
   @prop updateAuthToken: function
   @prop username: String
   @state:
-    platform: String
+    username: String
 */
 class UpdateUsernameAPI extends React.Component {
   constructor(props) {
@@ -67,6 +66,7 @@ class UpdateUsernameAPI extends React.Component {
             errors: {}
           });
           alert("An error occurred while updating username. Please try again.");
+        case "USERNAME_TAKEN":
         default:
           component.setState({
             loading: false,
@@ -82,7 +82,7 @@ class UpdateUsernameAPI extends React.Component {
   }
   render() {
     return (
-      <div id="UpdatePlatformAPI">
+      <div id="UpdateUsernameAPI">
         <UpdateUsernameForm onSubmit={this.onSubmit} onChange={this.onChange} username={this.state.username} errors={this.state.errors} loading={this.state.loading}/>
       </div>
     )

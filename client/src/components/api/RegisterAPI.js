@@ -75,6 +75,9 @@ class RegisterAPI extends React.Component {
             loading: false
           });
           alert("An error occurred while registering. Please try again.");
+        case "INVALID_REGISTRATION":
+        case "PROFANE_INPUT":
+        case "EXISTING_USER":
         default:
           component.setState({
             loading: false,
