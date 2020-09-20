@@ -761,6 +761,86 @@ suite("UNIT TESTS", function() {
     });
   })
 
+  suite("Set Attacker Role", function() {
+    let validateAttackerInput = require("../validation/validateAttackerInput.js");
+    let response = {
+      json: function() {},
+      end: function() {}
+    }
+    let done = function() {};
+
+    test("# Role field not provided", function() {
+      let request = {
+        body: {}
+      }
+      assert.equal(validateAttackerInput(request, response, done).status, "INVALID_ATTACKER_ROLE", "Response should be invalid if attacker role field is not present.");
+      assert.equal(validateAttackerInput(request, response, done).errors.role, "Role field is invalid", "Errors should indicate attacker role is required.");
+    });
+
+    test("# Role field is empty", function() {
+      let request = {
+        body: { role: "" }
+      };
+      assert.equal(validateAttackerInput(request, response, done).status, "INVALID_ATTACKER_ROLE", "Response should be invalid if attacker role field is empty.");
+      assert.equal(validateAttackerInput(request, response, done).errors.role, "Role field is invalid", "Errors should indicate attacker role is required.");
+    });
+
+    test("# Role field is invalid", function() {
+      let request = {
+        body: { role: "SOMETHING" }
+      }
+      assert.equal(validateAttackerInput(request, response, done).status, "INVALID_ATTACKER_ROLE", "Response should be invalid if attacker role is invalid.");
+      assert.equal(validateAttackerInput(request, response, done).errors.role, "Role field is invalid", "Errors should indicate attacker role is invalid.");
+    });
+
+    test("# Role field is valid", function() {
+      let request = {
+        body: { role: "HARD BREACH" }
+      }
+      assert.equal(validateAttackerInput(request, response, done), null, "Response should be valid if attacker role is valid.");
+    })
+  });
+
+  suite("Set Attacker Role", function() {
+    let validateDefenderInput = require("../validation/validateDefenderInput.js");
+    let response = {
+      json: function() {},
+      end: function() {}
+    }
+    let done = function() {};
+
+    test("# Role field not provided", function() {
+      let request = {
+        body: {}
+      }
+      assert.equal(validateDefenderInput(request, response, done).status, "INVALID_DEFENDER_ROLE", "Response should be invalid if attacker role field is not present.");
+      assert.equal(validateDefenderInput(request, response, done).errors.role, "Role field is invalid", "Errors should indicate attacker role is required.");
+    });
+
+    test("# Role field is empty", function() {
+      let request = {
+        body: { role: "" }
+      };
+      assert.equal(validateDefenderInput(request, response, done).status, "INVALID_DEFENDER_ROLE", "Response should be invalid if attacker role field is empty.");
+      assert.equal(validateDefenderInput(request, response, done).errors.role, "Role field is invalid", "Errors should indicate attacker role is required.");
+    });
+
+    test("# Role field is invalid", function() {
+      let request = {
+        body: { role: "SOMETHING" }
+      }
+      assert.equal(validateDefenderInput(request, response, done).status, "INVALID_DEFENDER_ROLE", "Response should be invalid if attacker role is invalid.");
+      assert.equal(validateDefenderInput(request, response, done).errors.role, "Role field is invalid", "Errors should indicate attacker role is invalid.");
+    });
+
+    test("# Role field is valid", function() {
+      let request = {
+        body: { role: "HARD BREACH DENIAL" }
+      }
+      assert.equal(validateDefenderInput(request, response, done), null, "Response should be valid if attacker role is valid.");
+    })
+  });
+
   suite("Utility Functions", function() {
     const { verifyPassword, hashPassword, issueJWT, genVerificationLink, genJoinCode } = require("../config/utilities.js");
     // UNIT TEST ACCOUNT

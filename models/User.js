@@ -41,6 +41,14 @@ const UserSchema = new Schema({
   verified: {
     type: Boolean,
     required: true
+  },
+  attacker_role: {
+    type: String,
+    required: false
+  },
+  defender_role: {
+    type: String,
+    required: false
   }
 });
 

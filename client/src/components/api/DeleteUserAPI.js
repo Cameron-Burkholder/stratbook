@@ -57,6 +57,7 @@ class DeleteUserAPI extends React.Component {
               loading: false
             });
             alert("An error occurred while deleting account. Please try again.");
+            break;
           default:
             component.setState({
               loading: false

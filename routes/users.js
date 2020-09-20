@@ -25,6 +25,12 @@ const validateStatusInput = require("../validation/validateStatusInput.js");
 // Load password validation
 const validatePasswordInput = require("../validation/validatePasswordInput.js");
 
+// Load attacker role validation
+const validateAttackerInput = require("../validation/validateAttackerInput.js");
+
+// Load defender role validation
+const validateDefenderInput = require("../validation/validateDefenderInput.js");
+
 // Prepare user verification
 let host;
 
@@ -179,14 +185,9 @@ module.exports = async (app, passport) => {
       token: tokenObject.token,
       expiresIn: tokenObject.expires,
       status: "TOKEN_UPDATED",
-      user: {
-        status: request.user.status,
-        username: request.user.username,
-        email: request.user.email,
-        verified: request.user.verified,
-        platform: request.user.platform
-      }
+      user: request.user
     };
+    packet.user.password = undefined;
     response.json(packet);
   });
 
@@ -244,7 +245,9 @@ module.exports = async (app, passport) => {
               email: request.body.email,
               password: request.body.password1,
               platform: request.body.platform,
-              verified: process.env.NODE_ENV === "TESTING" ? true : false
+              verified: process.env.NODE_ENV === "TESTING" ? true : false,
+              attacker_role: "NONE",
+              defender_role: "NONE"
             });
             if (process.env.NODE_ENV === "TESTING") {
               packet._id = newUser._id;
@@ -830,6 +833,98 @@ module.exports = async (app, passport) => {
       packet.status = "ERROR_WHILE_UPDATING_PASSWORD";
       response.json(packet);
     })
+  });
+
+  /*
+    @route /api/users/set-attacker-role
+    @method PATCH
+
+    @inputs:
+      role: String
+
+    @outputs:
+      If there is an error
+        packet: Object (status: ERROR_WHILE_SETTING_ATTACKER_ROLE)
+
+      If user is not found
+        packet: Object (status: USER_NOT_FOUND)
+
+      If attacker role has been updated
+        packet: Object (status: ATTACKER_ROLE_SET)
+  */
+  app.patch("/api/users/set-attacker-role", (request, response, done) => {
+    log("PATCH REQUEST AT /api/users/set-attacker-role");
+    done();
+  }, passport.authenticate("jwt", { session: false }), validateAttackerInput, (request, response) => {
+    let packet = {
+      status: ""
+    };
+    User.findOne({ username: request.user.username }).then((user) => {
+      if (user) {
+        user.attacker_role = request.body.role;
+        user.save().then(() => {
+          packet.status = "ATTACKER_ROLE_SET";
+          response.json(packet);
+        }).catch(error => {
+          console.log(error);
+          packet.status = "ERROR_WHILE_SETTING_ATTACKER_ROLE";
+          response.json(packet);
+        })
+      } else {
+        packet.status = "USER_NOT_FOUND";
+        response.json(packet);
+      }
+    }).catch(error => {
+      console.log(error);
+      packet.status = "ERROR_WHILE_SETTING_ATTACKER_ROLE";
+      response.json(packet);
+    });
+  });
+
+  /*
+    @route /api/users/set-defender-role
+    @method PATCH
+
+    @inputs:
+      role: String
+
+    @outputs:
+      If there is an error
+        packet: Object (status: ERROR_WHILE_SETTING_DEFENDER_ROLE)
+
+      If user is not found
+        packet: Object (status: USER_NOT_FOUND)
+
+      If defender role has been updated
+        packet: Object (status: DEFENDER_ROLE_SET)
+  */
+  app.patch("/api/users/set-defender-role", (request, response, done) => {
+    log("PATCH REQUEST AT /api/users/set-defender-role");
+    done();
+  }, passport.authenticate("jwt", { session: false }), validateDefenderInput, (request, response) => {
+    let packet = {
+      status: ""
+    };
+    User.findOne({ username: request.user.username }).then((user) => {
+      if (user) {
+        user.defender_role = request.body.role;
+        user.save().then(() => {
+          packet.status = "DEFENDER_ROLE_SET";
+          response.json(packet);
+        }).catch(error => {
+          console.log(error);
+          packet.status = "ERROR_WHILE_SETTING_DEFENDER_ROLE";
+          response.json(packet);
+        })
+      } else {
+        packet.status = "USER_NOT_FOUND";
+        response.json(packet);
+      }
+    }).catch(error => {
+      console.log(error);
+      packet.status = "ERROR_WHILE_SETTING_DEFENDER_ROLE";
+      response.json(packet);
+    });
   });
 
   /*
