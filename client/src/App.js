@@ -51,9 +51,8 @@ class App extends React.Component {
     @param user: Object
   */
   login(token, expiresIn, user) {
-    this.setLocalStorage(token, expiresIn, user);
+    this.setLocalStorage(token, expiresIn, user, this.updateState);
     axios.defaults.headers.common["Authorization"] = this.state.token;
-    this.updateState();
   }
   /*
     @func: logout
@@ -80,10 +79,11 @@ class App extends React.Component {
     @param token: Object
     @param expires: Date.String
   */
-  setLocalStorage(token, expiresIn, user) {
+  setLocalStorage(token, expiresIn, user, callback) {
     localStorage.setItem("token", token);
     localStorage.setItem("expires", new Date(Date.now() + expiresIn).toDateString());
     localStorage.setItem("user", JSON.stringify(user));
+    callback();
   }
   /*
     @func: clearLocalStorage

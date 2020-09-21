@@ -15,6 +15,7 @@ import Loading from "./Loading.js"
 const UpdatePasswordForm = (props) => {
   return (
     <form className="form" id="update-password-form" onSubmit={props.onSubmit}>
+      <p className="form-heading">Update Password</p>
       <fieldset className="form-fieldset" id="password1-field">
         <label className="form-label" htmlFor="password1">New Password</label>
         <input onChange={props.onChange} className={"form-input" + (props.errors && props.errors.password1 == null ? "" : " input-error")} value={props.password1} id="password1" type="password" required/>

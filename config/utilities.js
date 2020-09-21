@@ -43,6 +43,10 @@ const PRIV_KEY = fs.readFileSync(pathToKey, "utf8");
   @func: genVerificationLink
   @desc: generate a long random string for verified users' emails
 */
+/*
+  @func: genJoinCode
+  @desc: generate a unique 8-digit numeric string
+*/
 module.exports = {
   log: function(msg) {
     if (process.env.NODE_ENV !== "TESTING") {
@@ -90,5 +94,5 @@ module.exports = {
       });
     } while (!isUnique);
     return newCode;
-  }
+  },
 };

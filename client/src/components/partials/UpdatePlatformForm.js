@@ -16,6 +16,7 @@ import Loading from "./Loading.js"
 const UpdatePlatformForm = (props) => {
   return (
     <form className="form" id="update-platform-form" onSubmit={props.onSubmit}>
+      <p className="form-heading">Update Platform</p>
       <fieldset className="form-fieldset" id="platform-field">
         <label className="form-label" htmlFor="platform">Platform</label>
         <select onChange={props.onChange} className={"form-input" + (props.errors && props.errors.platform == null ? "" : " input-error")} value={props.platform} id="platform" required>

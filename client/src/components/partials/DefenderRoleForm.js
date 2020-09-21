@@ -15,7 +15,7 @@ import Loading from "./Loading.js"
 */
 const DefenderRoleForm = (props) => {
   return (
-    <form className="form" id="update-email-form" onSubmit={props.onSubmit}>
+    <form className="form" id="set-defender-role-form" onSubmit={props.onSubmit}>
       <fieldset className="form-fieldset" id="defender-role-field">
         <label className="form-label" htmlFor="defender_role">Primary Defender Role</label>
         <select onChange={props.onChange} className={"form-input" + (props.errors && props.errors.role == null ? "" : " input-error")} value={props.defender_role} id="defender_role" required>

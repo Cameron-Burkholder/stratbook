@@ -57,17 +57,10 @@ class LoginAPI extends React.Component {
     }).then((response) => {
       switch (response.data.status) {
         case "TOKEN_ISSUED":
-          const user = {
-            status: response.data.user_status,
-            username: response.data.username,
-            email: response.data.email,
-            verified: response.data.verified,
-            platform: response.data.platform
-          };
           component.setState({
             loading: false,
           });
-          component.props.login(response.data.token, response.data.expiresIn, user);
+          component.props.login(response.data.token, response.data.expiresIn, response.data.user);
           break;
         case "ERROR_WHILE_LOGGING_IN":
           component.setState({

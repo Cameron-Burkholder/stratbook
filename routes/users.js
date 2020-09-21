@@ -143,11 +143,10 @@ module.exports = async (app, passport) => {
         if (isValidPassword) {
           const tokenObject = issueJWT(user);
           packet.status = "TOKEN_ISSUED";
-          packet.user_status = user.status;
-          packet.username = user.username;
-          packet.email = user.email;
-          packet.verified = user.verified;
-          packet.platform = user.platform;
+          packet.user = user;
+          packet.user.password = undefined;
+          packet.user.__v = undefined;
+          packet.user._id = undefined;
           packet.token = tokenObject.token;
           packet.expiresIn = tokenObject.expires;
           response.json(packet);

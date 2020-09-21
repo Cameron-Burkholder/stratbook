@@ -16,6 +16,7 @@ import Loading from "./Loading.js"
 const UpdateUsernameForm = (props) => {
   return (
     <form className="form" id="update-username-form" onSubmit={props.onSubmit}>
+      <p className="form-heading">Update Username</p>
       <fieldset className="form-fieldset" id="username-field">
         <label className="form-label" htmlFor="username">Username</label>
         <input onChange={props.onChange} className={"form-input" + (props.errors && props.errors.username == null ? "" : " input-error")} value={props.username} id="username" type="name" required/>

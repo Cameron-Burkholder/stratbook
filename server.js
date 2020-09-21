@@ -11,7 +11,7 @@ const email = require("./config/email");      // For use in sending emails
 require("dotenv").config();                   // For using environment variables
 
 // IMPORT UTILITY FUNCTIONS
-const { log } = require("./config/utilities");
+const { log, getStats } = require("./config/utilities");
 
 // SETUP EXPRESS
 const app = express();
