@@ -11,7 +11,7 @@ const email = require("./config/email");      // For use in sending emails
 require("dotenv").config();                   // For using environment variables
 
 // IMPORT UTILITY FUNCTIONS
-const { log, getStats } = require("./config/utilities");
+const { log, getGenericStats, getSeasonalStats, getOperatorStats } = require("./config/utilities");
 
 // SETUP EXPRESS
 const app = express();
@@ -53,5 +53,7 @@ const port = process.env.PORT || 5000;
 app.listen(port, () => {
   log("DEPLOY SERVER: Server running on port " + port);
 });
+
+getOperatorStats("battlerifle10", "xbox");
 
 module.exports = app;

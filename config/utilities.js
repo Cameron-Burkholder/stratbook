@@ -6,6 +6,8 @@ const fs = require("fs");
 const path = require("path");
 const randomize = require("randomatic");
 const saltRounds = 10;
+const axios = require("axios");
+require("dotenv").config();
 
 // Load Team model
 require("../models/Team.js");
@@ -46,6 +48,16 @@ const PRIV_KEY = fs.readFileSync(pathToKey, "utf8");
 /*
   @func: genJoinCode
   @desc: generate a unique 8-digit numeric string
+*/
+/*
+  @func: getGenericStats
+  @desc: get data about a player
+
+  @func: getSeasonalStats
+  @desc: get seasonal stats for a player
+
+  @func: getOperatorStats
+  @desc: get operator stats for a player
 */
 module.exports = {
   log: function(msg) {
@@ -95,4 +107,31 @@ module.exports = {
     } while (!isUnique);
     return newCode;
   },
+  getGenericStats: async function(username, platform) {
+    axios.get(`https://api2.r6stats.com/public-api/stats/${username}/${platform}/generic`, {
+      headers: {
+        Authorization: process.env.STATS_API_KEY
+      }
+    }).then(response => {
+      return response.data;
+    })
+  },
+  getSeasonalStats: async function(username, platform) {
+    axios.get(`https://api2.r6stats.com/public-api/stats/${username}/${platform}/seasonal`, {
+      headers: {
+        Authorization: process.env.STATS_API_KEY
+      }
+    }).then(response => {
+      return response.data;
+    });
+  },
+  getOperatorStats: async function(username, platform) {
+    axios.get(`https://api2.r6stats.com/public-api/stats/${username}/${platform}/operators`, {
+      headers: {
+        Authorization: process.env.STATS_API_KEY
+      }
+    }).then(response => {
+      return response.data;
+    })
+  }
 };
