@@ -58,27 +58,10 @@ const MainNavigation = (props) => {
       )
       break;
     case "USER":
-      contents = (
-        <ul className="main-nav-body">
-          <li className="main-nav-item">
-            <Link className={"main-nav-link " + (props.active === "UPDATE_PLATFORM" ? "active-link" : "")} to="/user/update-platform">Update Platform</Link>
-          </li>
-          <li className="main-nav-item">
-            <Link className={"main-nav-link " + (props.active === "UPDATE_USERNAME" ? "active-link" : "")} to="/user/update-username">Update Username</Link>
-          </li>
-          <li className="main-nav-item">
-            <Link className={"main-nav-link " + (props.active === "UPDATE_EMAIL" ? "active-link" : "")} to="/user/update-email">Update Email</Link>
-          </li>
-          <li className="main-nav-item">
-            <Link className={"main-nav-link " + (props.active === "UPDATE_PASSWORD" ? "active-link" : "")} to="/user/update-password">Update Password</Link>
-          </li>
-        </ul>
-      );
-      break;
     case "DASHBOARD":
     case "CHAT":
     case "META":
-    default: 
+    default:
       contents = "";
       break;
   }

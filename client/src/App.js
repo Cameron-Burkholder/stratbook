@@ -11,10 +11,7 @@ import Login from "./components/pages/Login.js";
 import Logout from "./components/pages/Logout.js";
 import Register from "./components/pages/Register.js";
 import User from "./components/pages/User.js";
-import User_UpdatePlatform from "./components/pages/User_UpdatePlatform.js";
-import User_UpdateUsername from "./components/pages/User_UpdateUsername.js";
-import User_UpdateEmail from "./components/pages/User_UpdateEmail.js";
-import User_UpdatePassword from "./components/pages/User_UpdatePassword.js";
+import Team from "./components/pages/Team.js";
 import Dashboard from "./components/pages/Dashboard.js";
 import Strategies from "./components/pages/Strategies.js";
 import NotFound from "./components/pages/NotFound.js";
@@ -158,54 +155,6 @@ class App extends React.Component {
               : ( <Redirect to="/"/> )
               }
             </Route>
-            /* /user/update-platform */
-            <Route exact path="/user/update-platform">
-              { this.state.loggedIn ? (
-                <div className="page-wrapper">
-                  <Header title="Account" subtitle="Update Platform"/>
-                  <MainNavigation page="USER" active="UPDATE_PLATFORM" user={this.state.user.status}/>
-                  <User_UpdatePlatform getAuthToken={this.getAuthToken} updateAuthToken={this.updateAuthToken} platform={this.state.user.platform}/>
-                </div>
-              )
-              : ( <Redirect to="/"/> )
-              }
-            </Route>
-            /* /user/update-username */
-            <Route exact path="/user/update-username">
-              { this.state.loggedIn ? (
-                <div className="page-wrapper">
-                  <Header title="Account" subtitle="Update Username"/>
-                  <MainNavigation page="USER" active="UPDATE_USERNAME" user={this.state.user.status}/>
-                  <User_UpdateUsername getAuthToken={this.getAuthToken} updateAuthToken={this.updateAuthToken} username={this.state.user.username}/>
-                </div>
-              )
-              : ( <Redirect to="/"/> )
-              }
-            </Route>
-            /* /user/update-email */
-            <Route exact path="/user/update-email">
-              { this.state.loggedIn ? (
-                <div className="page-wrapper">
-                  <Header title="Account" subtitle="Update Email"/>
-                  <MainNavigation page="USER" active="UPDATE_EMAIL" user={this.state.user.status}/>
-                  <User_UpdateEmail getAuthToken={this.getAuthToken} updateAuthToken={this.updateAuthToken} email={this.state.user.email}/>
-                </div>
-              )
-              : ( <Redirect to="/"/> )
-              }
-            </Route>
-            /* /user/update-password */
-            <Route exact path="/user/update-password">
-              { this.state.loggedIn ? (
-                <div className="page-wrapper">
-                  <Header title="Account" subtitle="Update Password"/>
-                  <MainNavigation page="USER" active="UPDATE_PASSWORD" user={this.state.user.status}/>
-                  <User_UpdatePassword getAuthToken={this.getAuthToken} updateAuthToken={this.updateAuthToken}/>
-                </div>
-              )
-              : ( <Redirect to="/"/> )
-              }
-            </Route>
             /* /dashboard */
             <Route exact path="/dashboard">
               { this.state.loggedIn ? (
@@ -224,6 +173,7 @@ class App extends React.Component {
                 <div className="page-wrapper">
                   <Header title="Team" subtitle="View Team"/>
                   <MainNavigation page="TEAM" active="VIEW" user={this.state.user.stats}/>
+                  <Team getAuthToken={this.getAuthToken} updateAuthToken={this.updateAuthToken} team_code={this.state.user.team_code}/>
                 </div>
               )
               : ( <Redirect to="/"/> )

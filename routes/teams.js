@@ -32,74 +32,8 @@ const Team = require("../models/Team.js");
 module.exports = async (app, passport) => {
 
   /*
-    @route /api/teams/view-join-code
-    @method GET
-
-    @outputs
-      If error occurs at any point
-        packet: Object (status: ERROR_WHILE_GETTING_TEAM_CODE)
-
-      If user is not verified
-        packet: Object (status: USER_NOT_VERIFIED)
-
-      If user does not have a team
-        packet: Object (status: USER_HAS_NO_TEAM)
-
-      If team code from user does not match a team
-        packet: Object (status: TEAM_DOES_NOT_EXIST)
-
-      If user is not a member of the team
-        packet: Object (status: USER_NOT_QUALIFIED)
-
-      If user is allowed to view the join code
-        packet: Object (status: TEAM_CODE_FOUND, join_code)
-  */
-  app.get("/api/teams/view-join-code", (request, response, done) => {
-    log("GET REQUEST AT /api/teams/view-join-code");
-    done();
-  }, passport.authenticate("jwt", { session: false }), (request, response) => {
-    let packet = {
-      status: ""
-    };
-    if (request.user.verified) {
-      if (request.user.team_code) {
-        Team.findOne({ join_code: request.user.team_code }).then((team, error) => {
-          if (error) {
-            console.log(error);
-            packet.status = "ERROR_WHILE_GETTING_TEAM_CODE";
-            response.json(packet);
-          }
-
-          if (team) {
-            if (team.members.indexOf(request.user._id) >= 0 || team.editors.indexOf(request.user._id) >= 0 || team.admins.indexOf(request.user._id) >= 0) {
-              packet.status = "TEAM_CODE_FOUND";
-              packet.join_code = team.join_code;
-              response.json(packet);
-            } else {
-              packet.status = "USER_NOT_QUALIFIED";
-              response.json(packet);
-            }
-          } else {
-            packet.status = "TEAM_DOES_NOT_EXIST";
-            response.json(packet);
-          }
-        }).catch(error => {
-          packet.status = "ERROR_WHILE_GETTING_TEAM_CODE";
-          response.json(packet);
-        });
-      } else {
-        packet.status = "USER_HAS_NO_TEAM";
-        response.json(packet);
-      }
-    } else {
-      packet.status = "USER_NOT_VERIFIED";
-      response.json(packet);
-    }
-  });
-
-  /*
     @route /api/teams/view-team
-    @method POST
+    @method GET
 
     @outputs
     If error occurs at any point
@@ -141,6 +75,7 @@ module.exports = async (app, passport) => {
               let team_data = {
                 name: team.name,
                 join_code: team.join_code,
+                platform: team.platform,
                 members: [],
                 editors: [],
                 admins: []
@@ -151,9 +86,8 @@ module.exports = async (app, passport) => {
               while (index < team.members.length) {
                 await new Promise((resolve, reject) => {
                   User.findOne({ _id: mongoose.Types.ObjectId(team.members[index]) }).then(async (user, error) => {
-                    let user_data = {
-                      username: user.username
-                    };
+                    let user_data = user;
+                    user_data.password = undefined;
                     team_data.members.push(user_data);
                     resolve(true);
                   }).catch(error => {
@@ -169,9 +103,8 @@ module.exports = async (app, passport) => {
               while (index < team.editors.length) {
                 await new Promise((resolve, reject) => {
                   User.findOne({ _id: mongoose.Types.ObjectId(team.editors[index]) }).then(async (user, error) => {
-                    let user_data = {
-                      username: user.username
-                    };
+                    let user_data = user;
+                    user_data.password = undefined;
                     team_data.editors.push(user_data);
                     resolve(true);
                   }).catch(error => {
@@ -187,9 +120,10 @@ module.exports = async (app, passport) => {
               while (index < team.admins.length) {
                 await new Promise((resolve, reject) => {
                   User.findOne({ _id: mongoose.Types.ObjectId(team.admins[index]) }).then(async (user, error) => {
-                    let user_data = {
-                      username: user.username
-                    };
+                    let user_data = user;
+                    user_data.password = undefined;
+                    user_data.__v = undefined;
+                    user_data._id = undefined;
                     team_data.admins.push(user_data);
                     resolve(true);
                   }).catch(error => {
@@ -275,6 +209,9 @@ module.exports = async (app, passport) => {
           } else {
             if (team) {
               packet.status = "TEAM_ALREADY_EXISTS";
+              packet.errors = {
+                name: "A team with that name already exists"
+              }
               response.json(packet);
             } else {
               const join_code = await genJoinCode();
@@ -570,19 +507,19 @@ module.exports = async (app, passport) => {
   app.patch("/api/teams/leave-team", (request, response, done) => {
     log("PATCH REQUEST AT /api/teams/leave-team");
     done();
-  }, passport.authenticate("jwt", { session: false }), (request, response) => {
+  }, passport.authenticate("jwt", { session: false }), async (request, response) => {
     let packet = {
       status: ""
     }
     if (request.user.verified) {
       if (request.user.team_code) {
-        User.findOne({ _id: mongoose.Types.ObjectId(request.user._id) }).then((user, error) => {
+        User.findOne({ _id: mongoose.Types.ObjectId(request.user._id) }).then(async (user, error) => {
           if (user) {
-            Team.findOne({ join_code: request.user.team_code }).then((team, error) => {
+            Team.findOne({ join_code: request.user.team_code }).then(async (team, error) => {
               if (team) {
                 user.status = undefined;
                 user.team_code = undefined;
-                user.save().then(() => {
+                user.save().then(async () => {
                   if (team.members.indexOf(String(request.user._id)) >= 0) {
                     let index = team.members.indexOf(String(request.user._id));
                     team.members.splice(index, 1);
@@ -594,9 +531,105 @@ module.exports = async (app, passport) => {
                     team.admins.splice(index, 1);
                   }
 
-                  team.save().then(() => {
-                    packet.status = "USER_LEFT_TEAM";
-                    response.json(packet);
+                  team.save().then(async () => {
+                    // Team cannot be managed
+                    if (team.admins.length === 0) {
+                      // delete team
+                      await Team.deleteOne({ join_code: request.user.team_code }).catch(error => {
+                        console.log(error);
+                        packet.status = "ERROR_WHILE_LEAVING_TEAM";
+                        response.json(packet);
+                      });
+
+                      // delete team strategies
+                      await Strategies.deleteOne({ join_code: request.user.team_code }).catch(error => {
+                        console.log(error);
+                        packet.status = "ERROR_WHILE_LEAVING_TEAM";
+                        response.json(packet);
+                      })
+
+                      // update status of all members
+                      let index = 0;
+                      while (index < team.members.length) {
+                        await new Promise((resolve, reject) => {
+                          User.findOne({ _id: mongoose.Types.ObjectId(team.members[index]) }).then(async (user, error) => {
+                            user.team_code = undefined;
+                            user.status = undefined;
+                            await new Promise((resolve, reject) => {
+                              user.save().then(() => {
+                                resolve(true);
+                              }).catch((error) => {
+                                console.log(error);
+                                reject(false);
+                              })
+                            });
+                            resolve(true);
+                          }).catch(error => {
+                            console.log(error);
+                            packet.status = "ERROR_WHILE_LEAVING_TEAM";
+                            response.json(packet);
+                            reject(false);
+                          });
+                        });
+                        index++;
+                      }
+
+                      index = 0;
+                      while (index < team.editors.length) {
+                        await new Promise((resolve, reject) => {
+                          User.findOne({ _id: mongoose.Types.ObjectId(team.editors[index]) }).then(async (user, error) => {
+                            user.team_code = undefined;
+                            user.status = undefined;
+                            await new Promise((resolve, reject) => {
+                              user.save().then(() => {
+                                resolve(true);
+                              }).catch((error) => {
+                                console.log(error);
+                                reject(false);
+                              })
+                            });
+                            resolve(true);
+                          }).catch(error => {
+                            console.log(error);
+                            packet.status = "ERROR_WHILE_LEAVING_TEAM";
+                            response.json(packet);
+                            reject(false);
+                          });
+                        });
+                        index++;
+                      }
+
+                      index = 0;
+                      while (index < team.admins.length) {
+                        await new Promise((resolve, reject) => {
+                          User.findOne({ _id: mongoose.Types.ObjectId(team.admins[index]) }).then(async (user, error) => {
+                            user.team_code = undefined;
+                            user.status = undefined;
+                            await new Promise((resolve, reject) => {
+                              user.save().then(() => {
+                                resolve(true);
+                              }).catch((error) => {
+                                console.log(error);
+                                reject(false);
+                              })
+                            });
+                            resolve(true);
+                          }).catch(error => {
+                            console.log(error);
+                            packet.status = "ERROR_WHILE_LEAVING_TEAM";
+                            response.json(packet);
+                            reject(false);
+                          });
+                        });
+                        index++;
+                      }
+
+                      packet.status = "USER_LEFT_TEAM";
+                      response.json(packet);
+                    } else {
+                      packet.status = "USER_LEFT_TEAM";
+                      response.json(packet);
+                    }
                   }).catch(error => {
                     console.log(error);
                     packet.status = "ERROR_WHILE_LEAVING_TEAM";
