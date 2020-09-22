@@ -50,14 +50,8 @@ const PRIV_KEY = fs.readFileSync(pathToKey, "utf8");
   @desc: generate a unique 8-digit numeric string
 */
 /*
-  @func: getGenericStats
+  @func: getStats
   @desc: get data about a player
-
-  @func: getSeasonalStats
-  @desc: get seasonal stats for a player
-
-  @func: getOperatorStats
-  @desc: get operator stats for a player
 */
 module.exports = {
   log: function(msg) {
@@ -107,31 +101,20 @@ module.exports = {
     } while (!isUnique);
     return newCode;
   },
-  getGenericStats: async function(username, platform) {
-    axios.get(`https://api2.r6stats.com/public-api/stats/${username}/${platform}/generic`, {
-      headers: {
-        Authorization: process.env.STATS_API_KEY
-      }
-    }).then(response => {
-      return response.data;
-    })
-  },
-  getSeasonalStats: async function(username, platform) {
-    axios.get(`https://api2.r6stats.com/public-api/stats/${username}/${platform}/seasonal`, {
-      headers: {
-        Authorization: process.env.STATS_API_KEY
-      }
-    }).then(response => {
-      return response.data;
+  getStats: async function(username, platform, type) {
+    const data = await new Promise((resolve, reject) => {
+      axios.get(`https://api2.r6stats.com/public-api/stats/${username}/${platform}/${type}`, {
+        headers: {
+          Authorization: process.env.STATS_API_KEY
+        }
+      }).then(response => {
+        return resolve(response.data);
+      }).catch(error => {
+        return reject(null);
+      });
+    }).catch(error => {
+      return null;
     });
-  },
-  getOperatorStats: async function(username, platform) {
-    axios.get(`https://api2.r6stats.com/public-api/stats/${username}/${platform}/operators`, {
-      headers: {
-        Authorization: process.env.STATS_API_KEY
-      }
-    }).then(response => {
-      return response.data;
-    })
+    return data;
   }
 };

@@ -7,7 +7,6 @@ import Loading from "./Loading.js"
 /*
   @func: UpdatePlatformForm
   @desc: render update platform form for user to interact with
-  @prop onSubmit: function
   @prop onChange: function
   @prop platform: String
   @prop errors: Object
@@ -26,7 +25,6 @@ const UpdatePlatformForm = (props) => {
         </select>
         <span className="form-error">{(props.errors ? props.errors.platform : "")}</span>
       </fieldset>
-      { props.loading ? <Loading/> : <button className="form-button" type="submit">Save</button> }
     </form>
   )
 }

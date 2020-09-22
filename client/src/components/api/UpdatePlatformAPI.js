@@ -34,15 +34,14 @@ class UpdatePlatformAPI extends React.Component {
   onChange(e) {
     this.setState({
       [e.target.id]: e.target.value
-    });
+    }, this.onSubmit);
   }
   /*
     @func: onSubmit
     @desc: submit form data to server, rerender page depending on response
     @param e: Object.Event
   */
-  onSubmit(e) {
-    e.preventDefault();
+  onSubmit() {
     const component = this;
     this.setState({
       errors: {},
@@ -89,7 +88,7 @@ class UpdatePlatformAPI extends React.Component {
   render() {
     return (
       <div id="UpdatePlatformAPI">
-        <UpdatePlatformForm onSubmit={this.onSubmit} onChange={this.onChange} platform={this.state.platform} errors={this.state.errors} loading={this.state.loading}/>
+        <UpdatePlatformForm onChange={this.onChange} platform={this.state.platform} errors={this.state.errors} loading={this.state.loading}/>
       </div>
     )
   }

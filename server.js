@@ -43,6 +43,7 @@ require("./config/auth.js")(passport, app);
 // IMPLEMENT ROUTES
 require("./routes/users.js")(app, passport);
 require("./routes/teams.js")(app, passport);
+require("./routes/statistics.js")(app, passport);
 app.get("/*", function(request, response) {
   log("GET REQUEST AT /*");
   response.sendFile(path.join(__dirname, "client", "public", "index.html"));
@@ -53,7 +54,5 @@ const port = process.env.PORT || 5000;
 app.listen(port, () => {
   log("DEPLOY SERVER: Server running on port " + port);
 });
-
-getOperatorStats("battlerifle10", "xbox");
 
 module.exports = app;
