@@ -161,7 +161,7 @@ class App extends React.Component {
                 <div className="page-wrapper">
                   <Header title="Dashboard"/>
                   <MainNavigation page="DASHBOARD" user={this.state.user.status}/>
-                  <Dashboard/>
+                  <Dashboard getAuthToken={this.getAuthToken}/>
                 </div>
               )
               : ( <Redirect to="/"/> )
