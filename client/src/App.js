@@ -149,7 +149,7 @@ class App extends React.Component {
                 <div className="page-wrapper">
                   <Header title="Account"/>
                   <MainNavigation page="USER" user={this.state.user.status}/>
-                  <User getAuthToken={this.getAuthToken} updateAuthToken={this.updateAuthToken} logout={this.logout} username={this.state.user.username} email={this.state.user.email} platform={this.state.user.platform} attacker_role={this.state.user.attacker_role} defender_role={this.state.user.defender_role}/>
+                  <User getAuthToken={this.getAuthToken} updateAuthToken={this.updateAuthToken} logout={this.logout} username={this.state.user.username} email={this.state.user.email} platform={this.state.user.platform} attacker_role={this.state.user.attacker_role} attackers={this.state.user.attackers} defenders={this.state.user.defenders} defender_role={this.state.user.defender_role}/>
                 </div>
               )
               : ( <Redirect to="/"/> )

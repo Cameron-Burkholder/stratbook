@@ -44,11 +44,19 @@ const UserSchema = new Schema({
   },
   attacker_role: {
     type: String,
-    required: false
+    required: true
   },
   defender_role: {
     type: String,
-    required: false
+    required: true
+  },
+  attackers: {
+    type: [String],
+    required: true
+  },
+  defenders: {
+    type: [String],
+    required: true
   }
 });
 

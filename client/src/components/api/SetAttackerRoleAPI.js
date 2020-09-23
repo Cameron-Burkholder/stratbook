@@ -67,6 +67,7 @@ class SetAttackerRoleAPI extends React.Component {
           alert("An error occurred while setting attacker role. Please try again.");
           break;
         case "USER_NOT_FOUND":
+        case "INVALID_ATTACKER_ROLE":
         default:
           component.setState({
             loading: false,

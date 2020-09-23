@@ -68,7 +68,9 @@ class OperatorStatisticsAPI extends React.Component {
     let operators = []
     if (this.state.stats) {
       this.state.stats.operators.map((operator, index) => {
-        operators.push(<Operator image={operator.badge_image} name={operator.name} kd={operator.name} kills={operator.kills} deaths={operator.deaths} wl={operator.wl} wins={operator.wins} losses={operator.losses} playtime={operator.playtime} hsp={operator.headshots / operator.kills} key={index}/>)
+        if (!operator.name.includes("Recruit")) {
+          operators.push(<Operator image={operator.badge_image} name={operator.name} kd={operator.kd} kills={operator.kills} deaths={operator.deaths} wl={operator.wl} wins={operator.wins} losses={operator.losses} playtime={operator.playtime} hsp={operator.headshots / operator.kills} key={index}/>)
+        }
       });
     }
     return (

@@ -1,19 +1,20 @@
-/* client/components/api/SetDefenderRoleAPI.js */
+/* client/components/api/SetDefendersAPI.js */
 
 import React from "react";
 import axios from "axios";
 
 import Loading from "../partials/Loading.js";
-import DefenderRoleForm from "../partials/DefenderRoleForm.js";
+import DefendersForm from "../partials/DefendersForm.js";
 
 /*
-  @func: SetDefenderRoleAPI
-  @desc: make a request to server to set attacker role
+  @func: SetDefendersAPI
+  @desc: make a request to server to set defenders
+  @prop defenders: Array
   @prop getAuthToken: function
-  @prop logout: function
+
 
 */
-class SetDefenderRoleAPI extends React.Component {
+class SetDefendersAPI extends React.Component {
   constructor(props) {
     super(props);
 
@@ -22,7 +23,7 @@ class SetDefenderRoleAPI extends React.Component {
 
     this.state = {
       loading: false,
-      defender_role: this.props.defender_role
+      defenders: this.props.defenders
     }
 
   }
@@ -31,48 +32,58 @@ class SetDefenderRoleAPI extends React.Component {
     @desc: update state of platform field
     @param e: Object.Event
   */
-  onChange(e) {
-    this.setState({
-      [e.target.id]: e.target.value
-    }, this.onSubmit);
+  onChange(defender) {
+    const index = this.state.defenders.indexOf(defender);
+    if (index < 0) {
+      this.setState({
+        defenders: [...this.state.defenders, defender]
+      })
+    } else {
+      let new_defenders = [...this.state.defenders];
+      new_defenders.splice(index, 1);
+      this.setState({
+        defenders: new_defenders
+      })
+    }
   }
   /*
     @func: onSubmit
     @desc: submit form data to server, rerender page depending on response
-    @prop defender_role: String
     @prop getAuthToken: function
     @prop updateAuthToken: function
   */
-  onSubmit() {
+  onSubmit(e) {
+    e.preventDefault();
     const component = this;
     this.setState({
       errors: {},
       loading: true
     });
     axios.defaults.headers.common["Authorization"] = this.props.getAuthToken();
-    axios.patch("/api/users/set-defender-role", {
-      role: this.state.defender_role
+    axios.patch("/api/users/set-defenders", {
+      defenders: this.state.defenders
     }).then((response) => {
       switch (response.data.status) {
-        case "DEFENDER_ROLE_SET":
+        case "DEFENDERS_SET":
           component.setState({
             loading: false,
           });
           component.props.updateAuthToken();
           break;
-        case "ERROR_WHILE_SETTING_DEFENDER_ROLE":
+        case "ERROR_WHILE_SETTING_DEFENDERS":
           component.setState({
             loading: false
           });
-          alert("An error occurred while setting defender role. Please try again.");
+          alert("An error occurred while setting preferred defenders. Please try again.");
           break;
         case "USER_NOT_FOUND":
-        case "INVALID_DEFENDER_ROLE":
+        case "INVALID_DEFENDERS":
         default:
           component.setState({
             loading: false,
             errors: response.data.errors
           });
+          alert("An error has occurred.");
           break;
       }
     }).catch((error) => {
@@ -82,15 +93,15 @@ class SetDefenderRoleAPI extends React.Component {
   }
   render() {
     return (
-      <div id="SetDefenderRoleAPI">
+      <div id="SetDefendersAPI">
         { this.state.loading ? (
           <Loading/>
         ) : (
-          <DefenderRoleForm defender_role={this.state.defender_role} onChange={this.onChange} onSubmit={this.onSubmit} errors={this.state.errors}/>
+          <DefendersForm defenders={this.state.defenders} onChange={this.onChange} onSubmit={this.onSubmit} errors={this.state.errors}/>
         )}
       </div>
     )
   }
 }
 
-export default SetDefenderRoleAPI;
+export default SetDefendersAPI;

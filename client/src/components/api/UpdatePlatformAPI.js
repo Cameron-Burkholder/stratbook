@@ -56,7 +56,6 @@ class UpdatePlatformAPI extends React.Component {
           component.setState({
             loading: false,
           });
-          alert("Success! Your platform has been updated.");
           this.props.updateAuthToken();
           break;
         case "USER_HAS_TEAM":

@@ -7,7 +7,9 @@ import UpdateUsernameAPI from "../api/UpdateUsernameAPI.js";
 import UpdateEmailAPI from "../api/UpdateEmailAPI.js";
 import UpdatePasswordAPI from "../api/UpdatePasswordAPI.js";
 import SetAttackerRoleAPI from "../api/SetAttackerRoleAPI.js";
+import SetAttackersAPI from "../api/SetAttackersAPI.js";
 import SetDefenderRoleAPI from "../api/SetDefenderRoleAPI.js";
+import SetDefendersAPI from "../api/SetDefendersAPI.js";
 import DeleteUserAPI from "../api/DeleteUserAPI.js";
 
 /*
@@ -25,7 +27,9 @@ const User = (props) => {
       <div className="account-section">
         <h3>Preferences</h3>
         <SetAttackerRoleAPI getAuthToken={props.getAuthToken} updateAuthToken={props.updateAuthToken} attacker_role={props.attacker_role}/>
+        <SetAttackersAPI getAuthToken={props.getAuthToken} updateAuthToken={props.updateAuthToken} attackers={props.attackers}/>
         <SetDefenderRoleAPI getAuthToken={props.getAuthToken} updateAuthToken={props.updateAuthToken} defender_role={props.defender_role}/>
+        <SetDefendersAPI getAuthToken={props.getAuthToken} updateAuthToken={props.updateAuthToken} defenders={props.defenders}/>
       </div>
       <div className="account-section">
         <h3>Account Information</h3>

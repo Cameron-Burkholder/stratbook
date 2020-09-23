@@ -14,7 +14,6 @@ import OperatorStatisticsAPI from "../api/OperatorStatisticsAPI.js";
 const Dashboard = (props) => {
   return (
     <div className="page" id="dashboard">
-      This is the dashboard page.
       <GeneralStatisticsAPI getAuthToken={props.getAuthToken}/>
       <SeasonalStatisticsAPI getAuthToken={props.getAuthToken}/>
       <OperatorStatisticsAPI getAuthToken={props.getAuthToken}/>

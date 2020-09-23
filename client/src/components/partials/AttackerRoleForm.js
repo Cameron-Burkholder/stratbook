@@ -11,7 +11,6 @@ import Loading from "./Loading.js"
   @prop onChange: function
   @prop role: String
   @prop errors: Object
-  @prop loading: Boolean
 */
 const AttackerRoleForm = (props) => {
   return (

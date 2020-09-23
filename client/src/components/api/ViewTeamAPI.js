@@ -116,6 +116,7 @@ class ViewTeamAPI extends React.Component {
             <h2>{this.state.team.name}</h2>
             <h3>{this.state.team.platform} - {this.state.team.join_code}</h3>
             <div className="roster">
+              <h3>Roster</h3>
               { teamMembers }
             </div>
           </div>

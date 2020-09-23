@@ -31,6 +31,12 @@ const validateAttackerInput = require("../validation/validateAttackerInput.js");
 // Load defender role validation
 const validateDefenderInput = require("../validation/validateDefenderInput.js");
 
+// Load attackers list validation
+const validateAttackersInput = require("../validation/validateAttackersInput.js");
+
+// Load defenders list validation
+const validateDefendersInput = require("../validation/validateDefendersInput.js");
+
 // Prepare user verification
 let host;
 
@@ -246,7 +252,9 @@ module.exports = async (app, passport) => {
               platform: request.body.platform,
               verified: process.env.NODE_ENV === "TESTING" ? true : false,
               attacker_role: "NONE",
-              defender_role: "NONE"
+              defender_role: "NONE",
+              attackers: [],
+              defenders: []
             });
             if (process.env.NODE_ENV === "TESTING") {
               packet._id = newUser._id;
@@ -845,6 +853,9 @@ module.exports = async (app, passport) => {
       If there is an error
         packet: Object (status: ERROR_WHILE_SETTING_ATTACKER_ROLE)
 
+      If input is invalid
+        packet: Object (status: INVALID_ATTACKER_ROLE)
+
       If user is not found
         packet: Object (status: USER_NOT_FOUND)
 
@@ -891,6 +902,9 @@ module.exports = async (app, passport) => {
       If there is an error
         packet: Object (status: ERROR_WHILE_SETTING_DEFENDER_ROLE)
 
+      If input is invalid
+        packet: Object (status: INVALID_DEFENDER_ROLE)
+
       If user is not found
         packet: Object (status: USER_NOT_FOUND)
 
@@ -922,6 +936,100 @@ module.exports = async (app, passport) => {
     }).catch(error => {
       console.log(error);
       packet.status = "ERROR_WHILE_SETTING_DEFENDER_ROLE";
+      response.json(packet);
+    });
+  });
+
+  /*
+    @route /api/users/set-attackers
+    @method PATCH
+
+    @inputs
+      attackers: Array
+
+    @outputs
+      If there is an error
+        packet: Object (status: ERROR_WHILE_SETTING_ATTACKERS)
+
+      If input is invalid
+        packet: Object (status: INVALID_ATTACKERS)
+
+      If user is not found
+        packet: Object (status: USER_NOT_FOUND)
+
+      If attackers are set
+        packet: Object (status: ATTACKERS_SET)
+  */
+  app.patch("/api/users/set-attackers", (request, response, done) => {
+    log("PATCH REQUEST AT /api/users/set-attackers");
+    done();
+  }, passport.authenticate("jwt", { session: false }), validateAttackersInput, (request, response) => {
+    let packet = {
+      status: ""
+    };
+    User.findOne({ username: request.user.username }).then((user) => {
+      if (user) {
+        user.attackers = request.body.attackers;
+        user.save().then(() => {
+          packet.status = "ATTACKERS_SET";
+          response.json(packet);
+        }).catch(error => {
+          console.log(error);
+          packet.status = "ERROR_WHILE_SETTING_ATTACKERS";
+          response.json(packet);
+        })
+      } else {
+        packet.status = "USER_NOT_FOUND";
+        response.json(packet);
+      }
+    }).catch(error => {
+      console.log(error);
+      packet.status = "ERROR_WHILE_SETTING_ATTACKERS";
+      response.json(packet);
+    });
+  });
+
+  /*
+    @route /api/users/set-defenders
+    @method PATCH
+
+    @inputs
+      attackers: Array
+
+    @outputs
+      If there is an error
+        packet: Object (status: ERROR_WHILE_SETTING_DEFENDERS)
+
+      If user is not found
+        packet: Object (status: USER_NOT_FOUND)
+
+      I
+  */
+  app.patch("/api/users/set-defenders", (request, response, done) => {
+    log("PATCH REQUEST AT /api/users/set-defenders");
+    done();
+  }, passport.authenticate("jwt", { session: false }), validateDefendersInput, (request, response) => {
+    let packet = {
+      status: ""
+    };
+    User.findOne({ username: request.user.username }).then((user) => {
+      if (user) {
+        user.defenders = request.body.defenders;
+        user.save().then(() => {
+          packet.status = "DEFENDERS_SET";
+          response.json(packet);
+        }).catch(error => {
+          console.log(error);
+          packet.status = "ERROR_WHILE_SETTING_DEFENDERS";
+          response.json(packet);
+        })
+      } else {
+        packet.status = "USER_NOT_FOUND";
+        response.json(packet);
+      }
+    }).catch(error => {
+      console.log(error);
+      packet.status = "ERROR_WHILE_SETTING_DEFENDERS";
       response.json(packet);
     });
   });
