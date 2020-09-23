@@ -15,7 +15,11 @@ const { log, getGenericStats, getSeasonalStats, getOperatorStats } = require("./
 
 // SETUP EXPRESS
 const app = express();
-app.use(express.static(path.join(__dirname, "client", "public")));
+if (process.env.NODE_ENV === "PRODUCTION") {
+  app.use(express.static(path.join(__dirname, "client", "build")));
+} else {
+  app.use(express.static(path.join(__dirname, "client", "public")));
+}
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -46,7 +50,11 @@ require("./routes/teams.js")(app, passport);
 require("./routes/statistics.js")(app, passport);
 app.get("/*", function(request, response) {
   log("GET REQUEST AT /*");
-  response.sendFile(path.join(__dirname, "client", "public", "index.html"));
+  if (process.env.NODE_ENV === "PRODUCTION") {
+    response.sendFile(path.join(__dirname, "client", "build", "index.html"));
+  } else {
+    response.sendFile(path.join(__dirname, "client", "public", "index.html"));
+  }
 });
 
 // DEFINE PORT AND DEPLOY SERVER
