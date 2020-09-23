@@ -3,6 +3,8 @@
 import React from "react";
 
 import GeneralStatisticsAPI from "../api/GeneralStatisticsAPI.js";
+import SeasonalStatisticsAPI from "../api/SeasonalStatisticsAPI.js";
+import OperatorStatisticsAPI from "../api/OperatorStatisticsAPI.js";
 
 /*
   @func: Dashboard
@@ -14,6 +16,8 @@ const Dashboard = (props) => {
     <div className="page" id="dashboard">
       This is the dashboard page.
       <GeneralStatisticsAPI getAuthToken={props.getAuthToken}/>
+      <SeasonalStatisticsAPI getAuthToken={props.getAuthToken}/>
+      <OperatorStatisticsAPI getAuthToken={props.getAuthToken}/>
     </div>
   )
 }

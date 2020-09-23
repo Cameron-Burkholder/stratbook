@@ -40,7 +40,6 @@ class GeneralStatisticsAPI extends React.Component {
             hasLoaded: true,
             stats: response.data.stats
           });
-          console.log(this.state.stats);
           break;
         case "USER_NOT_FOUND":
         default:
@@ -67,6 +66,7 @@ class GeneralStatisticsAPI extends React.Component {
   render() {
     return (
       <div id="GeneralStatisticsAPI">
+        <h2 className="statistics-title">Overview</h2>
         { this.state.loading ? (
           <Loading/>
         ) : (
