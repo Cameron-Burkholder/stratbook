@@ -42,6 +42,7 @@ class ViewTeamAPI extends React.Component {
             loading: false,
             team: response.data.team
           });
+          console.log(this.state.team);
           break;
         case "ERROR_WHILE_GETTING_TEAM":
           component.setState({
@@ -103,13 +104,13 @@ class ViewTeamAPI extends React.Component {
         let teamMembers = [];
         let index = 0;
         this.state.team.admins.map((admin) => {
-          teamMembers.push(<TeamMember username={admin.username} status={admin.status} attacker_role={admin.attacker_role} defender_role={admin.defender_role} key={index++}/>);
+          teamMembers.push(<TeamMember username={admin.username} status={admin.status} attacker_role={admin.attacker_role} attackers={admin.attackers} defender_role={admin.defender_role} defenders={admin.defenders} key={index++}/>);
         });
         this.state.team.editors.map((editor) => {
-          teamMembers.push(<TeamMember username={editor.username} status={editor.status} attacker_role={editor.attacker_role} defender_role={editor.defender_role} key={index++}/>);
+          teamMembers.push(<TeamMember username={editor.username} status={editor.status} attacker_role={editor.attacker_role} attackers={editor.attackers} defender_role={editor.defender_role} defenders={editor.defenders} key={index++}/>);
         });
         this.state.team.members.map((member) => {
-          teamMembers.push(<TeamMember username={member.username} status={member.status} attacker_role={member.attacker_role} defender_role={member.defender_role} key={index++}/>);
+          teamMembers.push(<TeamMember username={member.username} status={member.status} attacker_role={member.attacker_role} attackers={member.attackers} defender_role={member.defender_role} defenders={member.defenders} key={index++}/>);
         })
         contents = (
           <div className="team">
