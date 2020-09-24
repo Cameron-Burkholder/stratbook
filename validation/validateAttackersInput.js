@@ -32,7 +32,7 @@ module.exports = function validateAttackersInput(request, response, done) {
 
     for (let i = 0; i < data.attackers.length; i++) {
       if (attackers.indexOf(data.attackers[i]) < 0) {
-        errors.attackers = "Attackers list is not valid";
+        errors.attackers = "Attackers list is invalid";
         break;
       }
     }

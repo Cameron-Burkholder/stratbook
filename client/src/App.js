@@ -291,7 +291,7 @@ class App extends React.Component {
             /* /* */
             <Route>
               <div className="page-wrapper">
-                <Header title="Error 404"/>
+                <Header title="Error: 404"/>
                 <NotFound/>
               </div>
             </Route>

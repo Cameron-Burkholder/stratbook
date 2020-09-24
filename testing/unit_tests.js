@@ -801,7 +801,7 @@ suite("UNIT TESTS", function() {
     })
   });
 
-  suite("Set Attacker Role", function() {
+  suite("Set Defender Role", function() {
     let validateDefenderInput = require("../validation/validateDefenderInput.js");
     let response = {
       json: function() {},
@@ -838,6 +838,84 @@ suite("UNIT TESTS", function() {
         body: { role: "HARD BREACH DENIAL" }
       }
       assert.equal(validateDefenderInput(request, response, done), null, "Response should be valid if attacker role is valid.");
+    })
+  });
+
+  suite("Set Attackers", function() {
+    let validateAttackersInput = require("../validation/validateAttackersInput.js");
+    let response = {
+      json: function() {},
+      end: function() {}
+    }
+    let done = function() {};
+    test("# Attackers field not provided", function() {
+      let request = {
+        body: {}
+      }
+      assert.equal(validateAttackersInput(request, response, done).status, "INVALID_ATTACKERS", "Response should be invalid if attackers list not provided in request.");
+      assert.equal(validateAttackersInput(request, response, done).errors.attackers, "Attackers list is required", "Response should indicate attackers list is required if not provided in request.");
+    });
+
+    test("# Attackers field is empty", function() {
+      let request = {
+        body: { attackers: [] }
+      }
+      assert.equal(validateAttackersInput(request, response, done).status, "INVALID_ATTACKERS", "Response should be invalid if attackers list is empty.");
+      assert.equal(validateAttackersInput(request, response, done).errors.attackers, "Attackers list is required", "Response should indiciate attackers list cannot be empty.");
+    });
+
+    test("# Attackers field is invalid", function() {
+      let request = {
+        body: { attackers: ["MARU", "MAVERICKK", "BUUCK"] }
+      }
+      assert.equal(validateAttackersInput(request, response, done).status, "INVALID_ATTACKERS", "Response should be invalid if attackers list is.");
+      assert.equal(validateAttackersInput(request, response, done).errors.attackers, "Attackers list is invalid", "Response should indicate attackers list is invalid.");
+    });
+
+    test("# Attackers list is valid", function() {
+      let request = {
+        body: { attackers: ["MAVERICK"] }
+      }
+      assert.equal(validateAttackersInput(request, response, done), null, "Response should be valid if attackers list is.");
+    })
+  });
+
+  suite("SeteDefenders", function() {
+    let validateDefendersInput = require("../validation/validateDefendersInput.js");
+    let response = {
+      json: function() {},
+      end: function() {}
+    }
+    let done = function() {};
+    test("# Defenders field not provided", function() {
+      let request = {
+        body: {}
+      }
+      assert.equal(validateDefendersInput(request, response, done).status, "INVALID_DEFENDERS", "Response should be invalid if defenders list not provided in request.");
+      assert.equal(validateDefendersInput(request, response, done).errors.defenders, "Defenders list is required", "Response should indicate defenders list is required if not provided in request.");
+    });
+
+    test("# Defenders field is empty", function() {
+      let request = {
+        body: { defenders: [] }
+      }
+      assert.equal(validateDefendersInput(request, response, done).status, "INVALID_DEFENDERS", "Response should be invalid if defenders list is empty.");
+      assert.equal(validateDefendersInput(request, response, done).errors.defenders, "Defenders list is required", "Response should indiciate defenders list cannot be empty.");
+    });
+
+    test("# Defenders field is invalid", function() {
+      let request = {
+        body: { defenders: ["MARU", "MAVERICKK", "BUUCK"] }
+      }
+      assert.equal(validateDefendersInput(request, response, done).status, "INVALID_DEFENDERS", "Response should be invalid if defenders list is.");
+      assert.equal(validateDefendersInput(request, response, done).errors.defenders, "Defenders list is invalid", "Response should indicate defenders list is invalid.");
+    });
+
+    test("# Defenders list is valid", function() {
+      let request = {
+        body: { defenders: ["MUTE"] }
+      }
+      assert.equal(validateDefendersInput(request, response, done), null, "Response should be valid if defenders list is.");
     })
   });
 

@@ -42,7 +42,6 @@ class ViewTeamAPI extends React.Component {
             loading: false,
             team: response.data.team
           });
-          console.log(this.state.team);
           break;
         case "ERROR_WHILE_GETTING_TEAM":
           component.setState({

@@ -2073,6 +2073,168 @@ suite("FUNCTIONAL TESTS", function() {
 
     });
 
+    suite("/api/users/set-attackers", function() {
+      const invalidJWT = "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1OTg4MTkxMTk3NDQsImV4cCI6MTU5ODgxOTExOTc0NH0.qkun-NSiUKZ-lC0tW6g0eu8VWqUSAxzQZbG4alpfXeSbL3_SPlfS87FHgRMaJeYkNb2qwqq8blq3JjvK5jYYxRhwfecOFvBsCnjzVrr-q4WRUm_PvJMdYW1TDK6iQwmuv8n2PP9vyz558ne9m065Ufqf1fn_3NIdSHNzsGkWf_tJYKX9d8ChxMn2L6pVtnetolD9KHgajJzpS9llbO7VUOSsnbuv8eMxo3N3Jlgw1NViarxYfctNhj7mL_PynlTqxSeRxpXR5vGqbCU7XP7y34gqrj9p7wsNklwsYaqGqr9oVbo0Ai5rtNRukykQ5MDB6rH15WQpcPH1JBi03bZMA407IgHsJXUo0p9Nv9pFDqLqfIuB-LQcA8ALjViPQ9L_v_g2PxU-47DEALtRldTobu4tKTQ8yAOc0mw6Da8SgpML8sysBmC6uCzFlkcw9u9LNrLVmkmcUYSrtJwtJeXOGeUhICumhHl-NsYmguJht4tTa56SRUfkcZZL7i4uxnS36pF66A_V0NU1jqeKWFaWzBhLPLEy7HAuWuSyLOrS5haS40S70Pz6s_Bf6ED1R0lPd6tjtIVIlAJ3JLkGouzR2s1sETySmQlKDSi7fQ9e0Bvfrow10QhcExG7bdkxQ58xDhXh8KnY4jLH1vqhA6TSX7TFOJtgOtxSA2NvDym7uRo";
+
+      const not_found_user = {
+        username: "NOT FOUND U",
+        email: "not_found@domain.com",
+        password: process.env.TESTING_PASSWORD,
+        platform: "PS4",
+        _id: mongoose.Types.ObjectId("5f500317d66e8d69c0dc57d5")
+      };
+      const notFoundJWT = issueJWT(not_found_user).token;
+
+      const test_user = {
+        username: "TESTING USER",
+        email: "testing@domain.com",
+        password: process.env.TESTING_PASSWORD,
+        platform: "PC",
+        verified: true,
+        _id: mongoose.Types.ObjectId("5f4c0e963e89966b9ce6e170")
+      };
+      const validJWT = issueJWT(test_user).token;
+
+      test("# JWT not provided", function(done) {
+        chai.request(server)
+          .patch("/api/users/set-attackers")
+          .end((error, response) => {
+            if (error) return done(error);
+            assert.equal(response.status, 401, "Response should be 401 Unauthorized if JWT not provided.");
+            assert.equal(response.text, "Unauthorized", "Response should return unauthorized if JWT not provided.");
+            done();
+          });
+      });
+      test("# JWT is invalid", function(done) {
+        chai.request(server)
+          .patch("/api/users/set-attackers")
+          .set({ Authorization: invalidJWT })
+          .end((error, response) => {
+            if (error) return done(error);
+            assert.equal(response.status, 401, "Response should be 401 Unauthorized if JWT is invalid.");
+            assert.equal(response.text, "Unauthorized", "Response should return unauthorized if JWT is invalid.");
+            done();
+          });
+      });
+      test("# Requesting user not found", function(done) {
+        chai.request(server)
+          .patch("/api/users/set-attackers")
+          .send({ attackers: ["MAVERICK"] })
+          .set({ Authorization: notFoundJWT })
+          .end((error, response) => {
+            if (error) return done(error);
+            assert.equal(response.status, 401, "Response should be 401 if user is not found.");
+            assert.equal(response.text, "Unauthorized", "Response should indicate unauthorized: user not found.");
+            done();
+          });
+      });
+      test("# Invalid attackers list", function(done) {
+        chai.request(server)
+          .patch("/api/users/set-attackers")
+          .send({ attackers: ["MAV"] })
+          .set({ Authorization: validJWT })
+          .end((error, response) => {
+            if (error) return done(error);
+            assert.equal(response.status, 200, "Response should be 200 if input is invalid.");
+            assert.equal(response.body.status, "INVALID_ATTACKERS", "Response should indicate attackers list is invalid.");
+            done();
+          });
+      });
+      test("# Valid attackers set", function(done) {
+        chai.request(server)
+          .patch("/api/users/set-attackers")
+          .send({ attackers: ["THERMITE"] })
+          .set({ Authorization: validJWT })
+          .end((error, response) => {
+            if (error) return done(error);
+            assert.equal(response.status, 200, "Response should be 200 if input is valid.");
+            assert.equal(response.body.status, "ATTACKERS_SET");
+            done();
+          });
+      });
+    });
+
+    suite("/api/users/set-defenders", function() {
+      const invalidJWT = "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1OTg4MTkxMTk3NDQsImV4cCI6MTU5ODgxOTExOTc0NH0.qkun-NSiUKZ-lC0tW6g0eu8VWqUSAxzQZbG4alpfXeSbL3_SPlfS87FHgRMaJeYkNb2qwqq8blq3JjvK5jYYxRhwfecOFvBsCnjzVrr-q4WRUm_PvJMdYW1TDK6iQwmuv8n2PP9vyz558ne9m065Ufqf1fn_3NIdSHNzsGkWf_tJYKX9d8ChxMn2L6pVtnetolD9KHgajJzpS9llbO7VUOSsnbuv8eMxo3N3Jlgw1NViarxYfctNhj7mL_PynlTqxSeRxpXR5vGqbCU7XP7y34gqrj9p7wsNklwsYaqGqr9oVbo0Ai5rtNRukykQ5MDB6rH15WQpcPH1JBi03bZMA407IgHsJXUo0p9Nv9pFDqLqfIuB-LQcA8ALjViPQ9L_v_g2PxU-47DEALtRldTobu4tKTQ8yAOc0mw6Da8SgpML8sysBmC6uCzFlkcw9u9LNrLVmkmcUYSrtJwtJeXOGeUhICumhHl-NsYmguJht4tTa56SRUfkcZZL7i4uxnS36pF66A_V0NU1jqeKWFaWzBhLPLEy7HAuWuSyLOrS5haS40S70Pz6s_Bf6ED1R0lPd6tjtIVIlAJ3JLkGouzR2s1sETySmQlKDSi7fQ9e0Bvfrow10QhcExG7bdkxQ58xDhXh8KnY4jLH1vqhA6TSX7TFOJtgOtxSA2NvDym7uRo";
+
+      const not_found_user = {
+        username: "NOT FOUND U",
+        email: "not_found@domain.com",
+        password: process.env.TESTING_PASSWORD,
+        platform: "PS4",
+        _id: mongoose.Types.ObjectId("5f500317d66e8d69c0dc57d5")
+      };
+      const notFoundJWT = issueJWT(not_found_user).token;
+
+      const test_user = {
+        username: "TESTING USER",
+        email: "testing@domain.com",
+        password: process.env.TESTING_PASSWORD,
+        platform: "PC",
+        verified: true,
+        _id: mongoose.Types.ObjectId("5f4c0e963e89966b9ce6e170")
+      };
+      const validJWT = issueJWT(test_user).token;
+
+      test("# JWT not provided", function(done) {
+        chai.request(server)
+          .patch("/api/users/set-defenders")
+          .end((error, response) => {
+            if (error) return done(error);
+            assert.equal(response.status, 401, "Response should be 401 Unauthorized if JWT not provided.");
+            assert.equal(response.text, "Unauthorized", "Response should return unauthorized if JWT not provided.");
+            done();
+          });
+      });
+      test("# JWT is invalid", function(done) {
+        chai.request(server)
+          .patch("/api/users/set-defenders")
+          .set({ Authorization: invalidJWT })
+          .end((error, response) => {
+            if (error) return done(error);
+            assert.equal(response.status, 401, "Response should be 401 Unauthorized if JWT is invalid.");
+            assert.equal(response.text, "Unauthorized", "Response should return unauthorized if JWT is invalid.");
+            done();
+          });
+      });
+      test("# Requesting user not found", function(done) {
+        chai.request(server)
+          .patch("/api/users/set-defenders")
+          .send({ defenders: ["ROOK"] })
+          .set({ Authorization: notFoundJWT })
+          .end((error, response) => {
+            if (error) return done(error);
+            assert.equal(response.status, 401, "Response should be 401 if user is not found.");
+            assert.equal(response.text, "Unauthorized", "Response should indicate unauthorized: user not found.");
+            done();
+          });
+      });
+      test("# Invalid defenders list", function(done) {
+        chai.request(server)
+          .patch("/api/users/set-defenders")
+          .send({ defenders: ["ROO"] })
+          .set({ Authorization: validJWT })
+          .end((error, response) => {
+            if (error) return done(error);
+            assert.equal(response.status, 200, "Response should be 200 if input is invalid.");
+            assert.equal(response.body.status, "INVALID_DEFENDERS", "Response should indicate defenders list is invalid.");
+            done();
+          });
+      });
+      test("# Valid defenders set", function(done) {
+        chai.request(server)
+          .patch("/api/users/set-defenders")
+          .send({ defenders: ["ROOK"] })
+          .set({ Authorization: validJWT })
+          .end((error, response) => {
+            if (error) return done(error);
+            assert.equal(response.status, 200, "Response should be 200 if input is valid.");
+            assert.equal(response.body.status, "DEFENDERS_SET");
+            done();
+          });
+      });
+    })
+
     suite("/api/users/forgot-password", function() {
       const not_found_user = {
         username: "NOT FOUND U",
@@ -2368,9 +2530,217 @@ suite("FUNCTIONAL TESTS", function() {
             assert.equal(response.status, 200, "Response should be 200 if user is not found in stats api.");
             assert.equal(response.body.status, "USER_NOT_FOUND", "Response should indicate user was not found.");
             done();
-          })
-      })
-    })
-  })
+          });
+      });
+    });
+
+    suite("/api/statistics/seasonal", function() {
+      const invalidJWT = "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1OTg4MTkxMTk3NDQsImV4cCI6MTU5ODgxOTExOTc0NH0.qkun-NSiUKZ-lC0tW6g0eu8VWqUSAxzQZbG4alpfXeSbL3_SPlfS87FHgRMaJeYkNb2qwqq8blq3JjvK5jYYxRhwfecOFvBsCnjzVrr-q4WRUm_PvJMdYW1TDK6iQwmuv8n2PP9vyz558ne9m065Ufqf1fn_3NIdSHNzsGkWf_tJYKX9d8ChxMn2L6pVtnetolD9KHgajJzpS9llbO7VUOSsnbuv8eMxo3N3Jlgw1NViarxYfctNhj7mL_PynlTqxSeRxpXR5vGqbCU7XP7y34gqrj9p7wsNklwsYaqGqr9oVbo0Ai5rtNRukykQ5MDB6rH15WQpcPH1JBi03bZMA407IgHsJXUo0p9Nv9pFDqLqfIuB-LQcA8ALjViPQ9L_v_g2PxU-47DEALtRldTobu4tKTQ8yAOc0mw6Da8SgpML8sysBmC6uCzFlkcw9u9LNrLVmkmcUYSrtJwtJeXOGeUhICumhHl-NsYmguJht4tTa56SRUfkcZZL7i4uxnS36pF66A_V0NU1jqeKWFaWzBhLPLEy7HAuWuSyLOrS5haS40S70Pz6s_Bf6ED1R0lPd6tjtIVIlAJ3JLkGouzR2s1sETySmQlKDSi7fQ9e0Bvfrow10QhcExG7bdkxQ58xDhXh8KnY4jLH1vqhA6TSX7TFOJtgOtxSA2NvDym7uRo";
+
+      const not_found_user = {
+        username: "NOT FOUND U",
+        email: "not_found@domain.com",
+        password: process.env.TESTING_PASSWORD,
+        platform: "PS4",
+        _id: mongoose.Types.ObjectId("5f500317d66e8d69c0dc57d5")
+      };
+      const notFoundJWT = issueJWT(not_found_user).token;
+
+      const test_user = {
+        username: "TESTING USER",
+        email: "testing@domain.com",
+        password: process.env.TESTING_PASSWORD,
+        platform: "PC",
+        verified: true,
+        _id: mongoose.Types.ObjectId("5f4c0e963e89966b9ce6e170")
+      };
+      const validJWT = issueJWT(test_user).token;
+
+      test("# Invalid JWT", function(done) {
+        chai.request(server)
+          .get("/api/statistics/seasonal")
+          .set({ Authorization: invalidJWT })
+          .end((error, response) => {
+            if (error) return done(error);
+            assert.equal(response.status, 401, "Response should be 401 Unauthorized if JWT is invalid.");
+            done();
+          });
+      });
+      test("# User not found", function(done) {
+        chai.request(server)
+          .get("/api/statistics/seasonal")
+          .set({ Authorization: notFoundJWT })
+          .end((error, response) => {
+            if (error) return done(error);
+            assert.equal(response.status, 401, "Response should be 401 if user is not found.");
+            done();
+          });
+      });
+      test("# User not found in stats api", function(done) {
+        chai.request(server)
+          .get("/api/statistics/seasonal")
+          .set({ Authorization: validJWT })
+          .end((error, response) => {
+            if (error) return done(error);
+            assert.equal(response.status, 200, "Response should be 200 if user is not found in stats api.");
+            assert.equal(response.body.status, "USER_NOT_FOUND", "Response should indicate user was not found.");
+            done();
+          });
+      });
+    });
+
+    suite("/api/statistics/operators", function() {
+      const invalidJWT = "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1OTg4MTkxMTk3NDQsImV4cCI6MTU5ODgxOTExOTc0NH0.qkun-NSiUKZ-lC0tW6g0eu8VWqUSAxzQZbG4alpfXeSbL3_SPlfS87FHgRMaJeYkNb2qwqq8blq3JjvK5jYYxRhwfecOFvBsCnjzVrr-q4WRUm_PvJMdYW1TDK6iQwmuv8n2PP9vyz558ne9m065Ufqf1fn_3NIdSHNzsGkWf_tJYKX9d8ChxMn2L6pVtnetolD9KHgajJzpS9llbO7VUOSsnbuv8eMxo3N3Jlgw1NViarxYfctNhj7mL_PynlTqxSeRxpXR5vGqbCU7XP7y34gqrj9p7wsNklwsYaqGqr9oVbo0Ai5rtNRukykQ5MDB6rH15WQpcPH1JBi03bZMA407IgHsJXUo0p9Nv9pFDqLqfIuB-LQcA8ALjViPQ9L_v_g2PxU-47DEALtRldTobu4tKTQ8yAOc0mw6Da8SgpML8sysBmC6uCzFlkcw9u9LNrLVmkmcUYSrtJwtJeXOGeUhICumhHl-NsYmguJht4tTa56SRUfkcZZL7i4uxnS36pF66A_V0NU1jqeKWFaWzBhLPLEy7HAuWuSyLOrS5haS40S70Pz6s_Bf6ED1R0lPd6tjtIVIlAJ3JLkGouzR2s1sETySmQlKDSi7fQ9e0Bvfrow10QhcExG7bdkxQ58xDhXh8KnY4jLH1vqhA6TSX7TFOJtgOtxSA2NvDym7uRo";
+
+      const not_found_user = {
+        username: "NOT FOUND U",
+        email: "not_found@domain.com",
+        password: process.env.TESTING_PASSWORD,
+        platform: "PS4",
+        _id: mongoose.Types.ObjectId("5f500317d66e8d69c0dc57d5")
+      };
+      const notFoundJWT = issueJWT(not_found_user).token;
+
+      const test_user = {
+        username: "TESTING USER",
+        email: "testing@domain.com",
+        password: process.env.TESTING_PASSWORD,
+        platform: "PC",
+        verified: true,
+        _id: mongoose.Types.ObjectId("5f4c0e963e89966b9ce6e170")
+      };
+      const validJWT = issueJWT(test_user).token;
+
+      test("# Invalid JWT", function(done) {
+        chai.request(server)
+          .get("/api/statistics/operators")
+          .set({ Authorization: invalidJWT })
+          .end((error, response) => {
+            if (error) return done(error);
+            assert.equal(response.status, 401, "Response should be 401 Unauthorized if JWT is invalid.");
+            done();
+          });
+      });
+      test("# User not found", function(done) {
+        chai.request(server)
+          .get("/api/statistics/operators")
+          .set({ Authorization: notFoundJWT })
+          .end((error, response) => {
+            if (error) return done(error);
+            assert.equal(response.status, 401, "Response should be 401 if user is not found.");
+            done();
+          });
+      });
+      test("# User not found in stats api", function(done) {
+        chai.request(server)
+          .get("/api/statistics/operators")
+          .set({ Authorization: validJWT })
+          .end((error, response) => {
+            if (error) return done(error);
+            assert.equal(response.status, 200, "Response should be 200 if user is not found in stats api.");
+            assert.equal(response.body.status, "USER_NOT_FOUND", "Response should indicate user was not found.");
+            done();
+          });
+      });
+    });
+
+    suite("/api/statistics/team", function() {
+      const team_not_found_user = {
+        username: "TEAM DOES NOT EXIST",
+        email: "team_not_found@domain.com",
+        password: process.env.TESTING_PASSWORD,
+        platform: "PC",
+        verified: true,
+        _id: mongoose.Types.ObjectId("5f4c428646ffca6e54af04b6")
+      };
+      const teamNotFoundJWT = issueJWT(team_not_found_user).token;
+
+      const not_on_team_user = {
+        username: "NOT ON TEAM",
+        email: "not_on_team_user",
+        password: process.env.TESTING_PASSWORD,
+        platform: "PC",
+        verified: true,
+        _id: mongoose.Types.ObjectId("5f4c3ea6a790f9581cbda208")
+      };
+      const notOnTeamJWT = issueJWT(not_on_team_user).token;
+
+      const test_user = {
+        username: "TESTING USER",
+        email: "testing@domain.com",
+        password: process.env.TESTING_PASSWORD,
+        platform: "PC",
+        verified: true,
+        _id: mongoose.Types.ObjectId("5f4c0e963e89966b9ce6e170")
+      };
+      const validJWT = issueJWT(test_user).token;
+
+      const invalidJWT = "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1OTg4MTkxMTk3NDQsImV4cCI6MTU5ODgxOTExOTc0NH0.qkun-NSiUKZ-lC0tW6g0eu8VWqUSAxzQZbG4alpfXeSbL3_SPlfS87FHgRMaJeYkNb2qwqq8blq3JjvK5jYYxRhwfecOFvBsCnjzVrr-q4WRUm_PvJMdYW1TDK6iQwmuv8n2PP9vyz558ne9m065Ufqf1fn_3NIdSHNzsGkWf_tJYKX9d8ChxMn2L6pVtnetolD9KHgajJzpS9llbO7VUOSsnbuv8eMxo3N3Jlgw1NViarxYfctNhj7mL_PynlTqxSeRxpXR5vGqbCU7XP7y34gqrj9p7wsNklwsYaqGqr9oVbo0Ai5rtNRukykQ5MDB6rH15WQpcPH1JBi03bZMA407IgHsJXUo0p9Nv9pFDqLqfIuB-LQcA8ALjViPQ9L_v_g2PxU-47DEALtRldTobu4tKTQ8yAOc0mw6Da8SgpML8sysBmC6uCzFlkcw9u9LNrLVmkmcUYSrtJwtJeXOGeUhICumhHl-NsYmguJht4tTa56SRUfkcZZL7i4uxnS36pF66A_V0NU1jqeKWFaWzBhLPLEy7HAuWuSyLOrS5haS40S70Pz6s_Bf6ED1R0lPd6tjtIVIlAJ3JLkGouzR2s1sETySmQlKDSi7fQ9e0Bvfrow10QhcExG7bdkxQ58xDhXh8KnY4jLH1vqhA6TSX7TFOJtgOtxSA2NvDym7uRo";
+
+      const not_found_user = {
+        username: "NOT FOUND U",
+        email: "not_found@domain.com",
+        password: process.env.TESTING_PASSWORD,
+        platform: "PS4",
+        _id: mongoose.Types.ObjectId("5f500317d66e8d69c0dc57d5")
+      };
+      const notFoundJWT = issueJWT(not_found_user).token;
+
+
+      test("# Invalid JWT", function(done) {
+        chai.request(server)
+          .get("/api/statistics/team")
+          .set({ Authorization: invalidJWT })
+          .end((error, response) => {
+            if (error) return done(error);
+            assert.equal(response.status, 401, "Response should be 401 Unauthorized if JWT is invalid.");
+            done();
+          });
+      });
+      test("# User not found", function(done) {
+        chai.request(server)
+          .get("/api/statistics/team")
+          .set({ Authorization: notFoundJWT })
+          .end((error, response) => {
+            if (error) return done(error);
+            assert.equal(response.status, 401, "Response should be 401 if user is not found.");
+            done();
+          });
+      });
+      test("# User has no team", function(done) {
+        chai.request(server)
+          .get("/api/statistics/team")
+          .set({ Authorization: validJWT })
+          .end((error, response) => {
+            if (error) return done(error);
+            assert.equal(response.status, 200, "Response should be 200 if user has no team api.");
+            assert.equal(response.body.status, "USER_HAS_NO_TEAM", "Response should indicate user has no team.");
+            done();
+          });
+      });
+      test("# Team not found", function(done) {
+        chai.request(server)
+          .get("/api/statistics/team")
+          .set({ Authorization: teamNotFoundJWT })
+          .end((error, response) => {
+            if (error) return done(error);
+            assert.equal(response.status, 200, "Response should be 200 if team is not found.");
+            assert.equal(response.body.status, "TEAM_DOES_NOT_EXIST", "Response should indiciate team has not been found.");
+            done();
+          });
+      });
+      test("# User not on team", function(done) {
+        chai.request(server)
+          .get("/api/statistics/team")
+          .set({ Authorization: notOnTeamJWT })
+          .end((error, response) => {
+            if (error) return done(error);
+            assert.equal(response.status, 200, "Response should be 200 if user is not on team.");
+            assert.equal(response.body.status, "USER_NOT_QUALIFIED", "Response should indicate user is not qualified.");
+            done();
+          });
+      });
+    });
+  });
 
 });

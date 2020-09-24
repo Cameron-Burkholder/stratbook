@@ -33,7 +33,7 @@ module.exports = function validateDefendersInput(request, response, done) {
 
     for (let i = 0; i < data.defenders.length; i++) {
       if (defenders.indexOf(data.defenders[i]) < 0) {
-        errors.defenders = "Defenders list is not valid";
+        errors.defenders = "Defenders list is invalid";
         break;
       }
     }

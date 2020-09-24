@@ -5,6 +5,7 @@ import React from "react";
 import CreateTeamAPI from "../api/CreateTeamAPI.js";
 import JoinTeamAPI from "../api/JoinTeamAPI.js";
 import ViewTeamAPI from "../api/ViewTeamAPI.js";
+import ViewTeamStatisticsAPI from "../api/ViewTeamStatisticsAPI.js";
 import LeaveTeamAPI from "../api/LeaveTeamAPI.js";
 
 /*
@@ -20,6 +21,7 @@ const Team = (props) => {
       { props.team_code ? (
         <div>
           <ViewTeamAPI getAuthToken={props.getAuthToken} updateAuthToken={props.updateAuthToken}/>
+          <ViewTeamStatisticsAPI getAuthToken={props.getAuthToken} updateAuthToken={props.updateAuthToken}/>
           <LeaveTeamAPI getAuthToken={props.getAuthToken} updateAuthToken={props.updateAuthToken}/>
         </div>
       ) : (
