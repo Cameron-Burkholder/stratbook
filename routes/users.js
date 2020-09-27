@@ -133,11 +133,10 @@ module.exports = async (app, passport) => {
     log("POST REQUEST AT /api/users/login");
     done();
   }, validateLoginInput, (request, response) => {
+    let packet = {
+      status: ""
+    };
     User.findOne({ email: request.body.email.toLowerCase() }).then((user) => {
-      let packet = {
-        status: ""
-      };
-
       if (!user) {
         packet.status = "USER_NOT_FOUND";
         packet.errors = {

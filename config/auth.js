@@ -9,8 +9,7 @@ const path = require("path");
 const fs = require("fs");
 const opts = {};
 
-const pathToKey = path.join(__dirname, "..", "id_rsa_pub.pem");
-const PUB_KEY = fs.readFileSync(pathToKey, "utf8");
+const PUB_KEY = process.env.RSA_PUBLIC_KEY.replace(/\\n/g, "\n");
 
 const options = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),

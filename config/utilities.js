@@ -13,8 +13,7 @@ require("dotenv").config();
 require("../models/Team.js");
 const Team = require("../models/Team.js");
 
-const pathToKey = path.join(__dirname, "..", "./id_rsa_priv.pem");
-const PRIV_KEY = fs.readFileSync(pathToKey, "utf8");
+const PRIV_KEY = process.env.RSA_PRIVATE_KEY.replace(/\\n/g, "\n");
 
 /*
   @func: log
