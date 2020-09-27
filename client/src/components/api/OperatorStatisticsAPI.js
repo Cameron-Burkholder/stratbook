@@ -19,6 +19,7 @@ class OperatorStatisticsAPI extends React.Component {
     super(props);
 
     this.fetchStats = this.fetchStats.bind(this);
+    this.sortOperators = this.sortOperators.bind(this);
 
     this.state = {
       stats: undefined,
@@ -39,7 +40,8 @@ class OperatorStatisticsAPI extends React.Component {
           component.setState({
             loading: false,
             hasLoaded: true,
-            stats: response.data.stats
+            stats: response.data.stats,
+            operators: response.data.stats.operators
           });
           break;
         case "USER_NOT_FOUND":
@@ -59,6 +61,26 @@ class OperatorStatisticsAPI extends React.Component {
       });
     });
   }
+  sortOperators(e) {
+    let operators = [...this.state.stats.operators];
+    switch (e.target.id.toUpperCase()) {
+      case "RELEASE":
+        operators = operators;
+        break;
+      case "NAME":
+        operators = operators.sort((a, b) => { return (a.name > b.name) ? 1 : -1 });
+        break;
+      case "KD":
+        operators = operators.sort((a, b) => { return (a.kd > b.kd) ? -1 : 1 });
+        break;
+      case "PLAYTIME":
+        operators = operators.sort((a, b) => { return (a.playtime > b.playtime) ? -1 : 1 });
+        break;
+    }
+    this.setState({
+      operators: operators
+    });
+  }
   componentDidMount() {
     if (!this.state.hasLoaded) {
       this.fetchStats();
@@ -67,9 +89,9 @@ class OperatorStatisticsAPI extends React.Component {
   render() {
     let operators = []
     if (this.state.stats) {
-      this.state.stats.operators.map((operator, index) => {
+      this.state.operators.map((operator, index) => {
         if (!operator.name.includes("Recruit")) {
-          operators.push(<Operator image={operator.badge_image} name={operator.name} kd={operator.kd} kills={operator.kills} deaths={operator.deaths} wl={operator.wl} wins={operator.wins} losses={operator.losses} playtime={operator.playtime} hsp={operator.headshots / operator.kills} key={index}/>)
+          operators.push(<Operator image={operator.badge_image} name={operator.name} kd={Math.round(operator.kd * 100) / 100} kills={operator.kills} deaths={operator.deaths} wl={Math.round(operator.wl * 100) / 100} wins={operator.wins} losses={operator.losses} playtime={Math.round(operator.playtime * 100) / 100} hsp={Math.round(operator.headshots / operator.kills * 100) / 100} key={index}/>)
         }
       });
     }
@@ -82,6 +104,10 @@ class OperatorStatisticsAPI extends React.Component {
           <div>
           { this.state.stats ? (
             <div className="statistics">
+              <button onClick={this.sortOperators} className="sort-by" id="release">Sort By Release</button>
+              <button onClick={this.sortOperators} className="sort-by" id="name">Sort By Name</button>
+              <button onClick={this.sortOperators} className="sort-by" id="kd">Sort By KD</button>
+              <button onClick={this.sortOperators} className="sort-by" id="playtime">Sort By Playtime</button>
               { operators }
             </div>
           ) : (

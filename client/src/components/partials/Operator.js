@@ -28,8 +28,8 @@ const Operator = (props) => {
         <p className="operator-stat">{props.wl} WL Ratio</p>
         <p className="operator-stat">{props.wins} Wins</p>
         <p className="operator-stat">{props.losses} Losses</p>
-        <p className="operator-stat">{props.playtime / 3600} Hours</p>
-        <p className="operator-stat">{props.hsp} % Headshots</p>
+        <p className="operator-stat">{Math.round(props.playtime / 3600 * 100) / 100} Hours</p>
+        <p className="operator-stat">Headshot Percentage: {Math.round(props.hsp * 100 * 100) / 100}%</p>
       </div>
     </div>
   )
