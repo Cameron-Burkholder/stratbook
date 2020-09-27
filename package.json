@@ -7,7 +7,6 @@
     "test": "npm run unit-tests & npm run functional-tests",
     "unit-tests": "mocha --ui tdd testing/unit_tests.js",
     "functional-tests": "mocha --ui tdd testing/functional_tests.js",
-    "build": "cd client && npm run build && cd ..",
     "start": "node server.js",
     "server": "nodemon server.js",
     "client": "cd client && npm run start && cd ..",
