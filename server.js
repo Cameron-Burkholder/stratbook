@@ -16,7 +16,7 @@ const { log, getGenericStats, getSeasonalStats, getOperatorStats } = require("./
 // SETUP EXPRESS
 const app = express();
 if (process.env.NODE_ENV === "PRODUCTION") {
-  app.use(express.static(path.join(__dirname, "client", "build", "static")));
+  app.use(express.static(path.join(__dirname, "client", "build")));
 } else {
   app.use(express.static(path.join(__dirname, "client", "public")));
 }
@@ -51,7 +51,7 @@ require("./routes/statistics.js")(app, passport);
 app.get("/*", function(request, response) {
   log("GET REQUEST AT /*");
   if (process.env.NODE_ENV === "PRODUCTION") {
-    response.sendFile(path.join(__dirname, "client", "build", "static", "index.html"));
+    response.sendFile(path.join(__dirname, "client", "build", "index.html"));
   } else {
     response.sendFile(path.join(__dirname, "client", "public", "index.html"));
   }
