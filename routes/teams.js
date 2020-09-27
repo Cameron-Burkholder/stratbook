@@ -437,6 +437,16 @@ module.exports = async (app, passport) => {
                       user.status = MEMBER;
                       user.save().then(() => {
                         packet.status = "TEAM_JOINED";
+                        if (process.env.NODE_ENV !== "TESTING") {
+                          let index = 0;
+                          while (index < team.admins.length) {
+                            await new Promise((resolve, reject) => {
+                              email(team.admins[index].email, "User Joined Team", "<h1>A New User joined " + team.name + "</h1><p>" user.username + "Joined your team.</p>");
+                              resolve(true);
+                            });
+                            index++;
+                          }
+                        }
                         response.json(packet);
                       }).catch(error => {
                         console.log(error);
