@@ -419,7 +419,7 @@ module.exports = async (app, passport) => {
         packet.status = "USER_HAS_TEAM";
         response.json(packet);
       } else {
-        Team.findOne({ join_code: request.body.join_code }).then((team, error) => {
+        Team.findOne({ join_code: request.body.join_code }).then(async (team, error) => {
           if (team) {
             if (team.platform === request.user.platform.toUpperCase()) {
               if (team.blocked_users.indexOf(String(request.user._id)) >= 0) {
@@ -427,21 +427,21 @@ module.exports = async (app, passport) => {
                 response.json(packet);
               } else {
                 team.members.push(String(request.user._id));
-                team.save().then(() => {
+                team.save().then(async () => {
                   if (process.env.NODE_ENV === "TESTING") {
                     packet.team_code = team.join_code;
                   }
-                  User.findOne({ _id: mongoose.Types.ObjectId(request.user._id) }).then((user, error) => {
+                  User.findOne({ _id: mongoose.Types.ObjectId(request.user._id) }).then(async (user, error) => {
                     if (user) {
                       user.team_code = request.body.join_code;
                       user.status = MEMBER;
-                      user.save().then(() => {
+                      user.save().then(async () => {
                         packet.status = "TEAM_JOINED";
                         if (process.env.NODE_ENV !== "TESTING") {
                           let index = 0;
                           while (index < team.admins.length) {
                             await new Promise((resolve, reject) => {
-                              email(team.admins[index].email, "User Joined Team", "<h1>A New User joined " + team.name + "</h1><p>" user.username + "Joined your team.</p>");
+                              email(team.admins[index].email, "User Joined Team", "<h1>A New User joined " + team.name + "</h1><p>" + user.username + "Joined your team.</p>");
                               resolve(true);
                             });
                             index++;
