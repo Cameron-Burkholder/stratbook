@@ -1,7 +1,7 @@
 {
-  "name": "MERN-JWT-based-Auth-with-React",
+  "name": "Stratbook",
   "version": "1.0.0",
-  "description": "A starting point for MERN stack web applications.",
+  "description": "A platform for teams to manage their members and strategies.",
   "main": "server.js",
   "scripts": {
     "test": "npm run unit-tests & npm run functional-tests",

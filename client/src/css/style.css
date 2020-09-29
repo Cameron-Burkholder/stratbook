@@ -128,6 +128,138 @@ nav.main-nav {
 div.page {
   padding: calc(16px * 2); }
 
+/* scss/api/_general-statistics.scss */
+div#GeneralStatisticsAPI {
+  background: #15161A;
+  border-radius: 2px;
+  padding: 16px;
+  margin: calc(16px * 2) auto;
+  max-width: 1200px;
+  display: block; }
+  div#GeneralStatisticsAPI h2.statistics-title {
+    font-size: 36pt;
+    text-align: center;
+    color: #fff; }
+  div#GeneralStatisticsAPI div.statistics-container img.user-image {
+    display: block;
+    margin: auto;
+    border-radius: 100%; }
+  div#GeneralStatisticsAPI div.statistics-container h3.stats-grid-heading {
+    color: white;
+    font-size: 20pt; }
+  div#GeneralStatisticsAPI div.statistics-container div.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); }
+    div#GeneralStatisticsAPI div.statistics-container div.stats-grid div.stats-box {
+      border-right: 1px solid rgba(50, 50, 50, 0.4);
+      border-left: 1px solid rgba(50, 50, 50, 0.4);
+      padding: 16px; }
+      div#GeneralStatisticsAPI div.statistics-container div.stats-grid div.stats-box h4.stats-heading {
+        color: #d6d6d6;
+        font-size: 16pt; }
+      div#GeneralStatisticsAPI div.statistics-container div.stats-grid div.stats-box div.stat.main-stat {
+        display: block;
+        width: 100%;
+        text-align: center;
+        padding: 16px; }
+        div#GeneralStatisticsAPI div.statistics-container div.stats-grid div.stats-box div.stat.main-stat p.stat-label {
+          font-size: 16pt;
+          color: #7B7B7F; }
+        div#GeneralStatisticsAPI div.statistics-container div.stats-grid div.stats-box div.stat.main-stat span.stat-value {
+          font-size: 24pt;
+          color: white; }
+      div#GeneralStatisticsAPI div.statistics-container div.stats-grid div.stats-box div.stat {
+        display: flex;
+        justify-content: space-between; }
+        div#GeneralStatisticsAPI div.statistics-container div.stats-grid div.stats-box div.stat p.stat-label {
+          color: #7B7B7F; }
+        div#GeneralStatisticsAPI div.statistics-container div.stats-grid div.stats-box div.stat span.stat-value {
+          color: #d6d6d6; }
+
+/* scss/api/_seasonal-statistics.scss */
+div#SeasonalStatisticsAPI {
+  background: #15161A;
+  border-radius: 2px;
+  padding: 16px;
+  margin: calc(16px * 2) auto;
+  max-width: 1200px;
+  display: block; }
+  div#SeasonalStatisticsAPI h2.statistics-title {
+    font-size: 36pt;
+    text-align: center;
+    color: #fff;
+    margin-bottom: 16px; }
+  div#SeasonalStatisticsAPI div.statistics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); }
+    div#SeasonalStatisticsAPI div.statistics div.stat {
+      border-right: 1px solid rgba(50, 50, 50, 0.4);
+      border-left: 1px solid rgba(50, 50, 50, 0.4);
+      padding: 16px;
+      text-align: center; }
+      div#SeasonalStatisticsAPI div.statistics div.stat p.stat-label {
+        font-size: 16pt;
+        color: #7B7B7F; }
+      div#SeasonalStatisticsAPI div.statistics div.stat h4.stat-value {
+        font-size: 24pt;
+        color: white;
+        margin-bottom: 16px; }
+    div#SeasonalStatisticsAPI div.statistics div.main-stat {
+      display: block;
+      width: 100%;
+      text-align: center;
+      padding: 16px; }
+      div#SeasonalStatisticsAPI div.statistics div.main-stat p.stat-label {
+        font-size: 16pt;
+        color: #7B7B7F; }
+      div#SeasonalStatisticsAPI div.statistics div.main-stat h4.stat-value {
+        font-size: 24pt;
+        color: white; }
+      div#SeasonalStatisticsAPI div.statistics div.main-stat p.label-secondary {
+        font-size: 10pt; }
+
+/* scss/api/_operator-statistics.scss */
+div#OperatorStatisticsAPI {
+  background: #15161A;
+  border-radius: 2px;
+  padding: 16px;
+  margin: calc(16px * 2) auto;
+  max-width: 1200px;
+  display: block; }
+  div#OperatorStatisticsAPI h2.statistics-title {
+    font-size: 36pt;
+    text-align: center;
+    color: #fff;
+    margin-bottom: 16px; }
+  div#OperatorStatisticsAPI div.statistics {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 4px; }
+    div#OperatorStatisticsAPI div.statistics div.operator {
+      grid-column: span 2;
+      padding: calc(16px / 2);
+      background: #2D3038;
+      display: grid;
+      grid-template-columns: 64px 1fr;
+      grid-gap: 4px; }
+      div#OperatorStatisticsAPI div.statistics div.operator div.operator-info img.operator-image {
+        display: block;
+        width: 100%; }
+      div#OperatorStatisticsAPI div.statistics div.operator div.operator-info h3.operator-name {
+        text-align: center;
+        color: #d6d6d6;
+        font-size: 16pt; }
+      div#OperatorStatisticsAPI div.statistics div.operator div.operator-stats {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr); }
+        div#OperatorStatisticsAPI div.statistics div.operator div.operator-stats div.operator-stat {
+          text-align: center;
+          font-size: 10pt; }
+          div#OperatorStatisticsAPI div.statistics div.operator div.operator-stats div.operator-stat p.stat-label {
+            color: #7B7B7F; }
+          div#OperatorStatisticsAPI div.statistics div.operator div.operator-stats div.operator-stat span.stat-value {
+            color: white; }
+
 /* scss/api/_view-team.scss */
 div#ViewTeamAPI div.team h2.team-name {
   color: #fff;

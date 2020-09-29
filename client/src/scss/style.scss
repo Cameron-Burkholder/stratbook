@@ -10,6 +10,9 @@
 @import "./components/_page.scss";
 
 // Import APIs
+@import "./api/_general-statistics.scss";
+@import "./api/_seasonal-statistics.scss";
+@import "./api/_operator-statistics.scss";
 @import "./api/_view-team.scss";
 @import "./api/_view-team-statistics.scss";
 @import "./api/_leave-team.scss";

@@ -1,0 +1,57 @@
+/* scss/api/_operator-statistics.scss */
+
+div#OperatorStatisticsAPI {
+  background: $background-dark;
+  border-radius: $border-radius;
+  padding: $padding;
+  margin: calc(#{$margin} * 2) auto;
+  max-width: 1200px;
+  display: block;
+  h2.statistics-title {
+    font-size: $heading1;
+    text-align: center;
+    color: $heading;
+    margin-bottom: $margin;
+  }
+  div.statistics {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 4px;
+    button.sort-by {
+
+    }
+    div.operator {
+      grid-column: span 2;
+      padding: calc(#{$padding} / 2);
+      background: $background-accent;
+      display: grid;
+      grid-template-columns: 64px 1fr;
+      grid-gap: 4px;
+      div.operator-info {
+        img.operator-image {
+          display: block;
+          width: 100%;
+        }
+        h3.operator-name {
+          text-align: center;
+          color: $subtle-accent;
+          font-size: $text;
+        }
+      }
+      div.operator-stats {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        div.operator-stat {
+          text-align: center;
+          font-size: $small;
+          p.stat-label {
+            color: $light;
+          }
+          span.stat-value {
+            color: $accent;
+          }
+        }
+      }
+    }
+  }
+}

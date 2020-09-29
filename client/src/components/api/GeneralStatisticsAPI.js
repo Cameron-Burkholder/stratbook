@@ -72,28 +72,104 @@ class GeneralStatisticsAPI extends React.Component {
         ) : (
           <div>
           { this.state.stats ? (
-            <div className="statistics">
-              <h3 className="username">{this.state.stats.username}</h3>
+            <div className="statistics-container">
               <img className="user-image" alt="User Image" src={this.state.stats.avatar_url_256}/>
-              <p className="level">Level {this.state.stats.progression.level}</p>
-              <p className="ranked-kd">{this.state.stats.stats.queue.ranked.kd} KD</p>
-              <p className="ranked-kills">{this.state.stats.stats.queue.ranked.kills} Kills</p>
-              <p className="ranked-deaths">{this.state.stats.stats.queue.ranked.deaths} Deaths</p>
-              <p className="ranked-games">{this.state.stats.stats.queue.ranked.games_played} Games Played</p>
-              <p className="ranked-wl">{this.state.stats.stats.queue.ranked.wl} WL Ratio</p>
-              <p className="ranked-wins">{this.state.stats.stats.queue.ranked.wins} Wins</p>
-              <p className="ranked-losses">{this.state.stats.stats.queue.ranked.losses} Losses</p>
-              <p className="ranked-playtime">{Math.floor(this.state.stats.stats.queue.ranked.playtime / 3600)} Hours</p>
-
-              <p className="general-kd">{this.state.stats.stats.general.kd} KD</p>
-              <p className="general-kills">{this.state.stats.stats.general.kills} Kills</p>
-              <p className="general-deaths">{this.state.stats.stats.general.deaths} Deaths</p>
-              <p className="general-games">{this.state.stats.stats.general.games_played} Games Played</p>
-              <p className="general-headshots">{this.state.stats.stats.general.headshots} Headshot</p>
-              <p className="general-playtime">{Math.floor(this.state.stats.stats.general.playtime / 3600)} Hours</p>
-              <p className="general-wl">{this.state.stats.stats.general.wl} WL Ratio</p>
-              <p className="general-wins">{this.state.stats.stats.general.wins} Wins</p>
-              <p className="general-losses">{this.state.stats.stats.general.losses} Losses</p>
+              <h3 className="stats-grid-heading">General</h3>
+              <div className="stats-grid">
+                <div className="stats-box">
+                  <h4 className="stats-heading">Progression</h4>
+                  <div className="stat main-stat">
+                    <p className="stat-label">Level</p>
+                    <span className="stat-value">{this.state.stats.progression.level}</span>
+                  </div>
+                  <div className="stat">
+                    <p className="stat-label">Playtime</p>
+                    <span className="stat-value">{Math.floor(this.state.stats.stats.general.playtime / 3600)} Hrs</span>
+                  </div>
+                  <div className="stat">
+                    <p className="stat-label">Games Played</p>
+                    <span className="stat-value">{this.state.stats.stats.general.games_played}</span>
+                  </div>
+                </div>
+                <div className="stats-box">
+                  <h4 className="stats-heading">Personal Performance</h4>
+                  <div className="stat main-stat">
+                    <p className="stat-label">K/D</p>
+                    <span className="stat-value">{this.state.stats.stats.general.kd}</span>
+                  </div>
+                  <div className="stat">
+                    <p className="stat-label">Kills</p>
+                    <span className="stat-value">{this.state.stats.stats.general.kills}</span>
+                  </div>
+                  <div className="stat">
+                    <p className="stat-label">Deaths</p>
+                    <span className="stat-value">{this.state.stats.stats.general.deaths}</span>
+                  </div>
+                  <div className="stat">
+                    <p className="stat-label">Headshot %</p>
+                    <span className="stat-value">{Math.round((this.state.stats.stats.general.headshots / this.state.stats.stats.general.kills) * 100)}%</span>
+                  </div>
+                </div>
+                <div className="stats-box">
+                  <h4 className="stats-heading">Team Performance</h4>
+                  <div className="stat main-stat">
+                    <p className="stat-label">W/L</p>
+                    <span className="stat-value">{this.state.stats.stats.general.wl}</span>
+                  </div>
+                  <div className="stat">
+                    <p className="stat-label">Wins</p>
+                    <span className="stat-value">{this.state.stats.stats.general.wins}</span>
+                  </div>
+                  <div className="stat">
+                    <p className="stat-label">Losses</p>
+                    <span className="stat-value">{this.state.stats.stats.general.losses}</span>
+                  </div>
+                </div>
+              </div>
+              <h3 className="stats-grid-heading">Competitive</h3>
+              <div className="stats-grid">
+                <div className="stats-box">
+                  <h4 className="stats-heading">Progression</h4>
+                  <div className="stat">
+                    <p className="stat-label">Playtime</p>
+                    <span className="stat-value">{Math.floor(this.state.stats.stats.queue.ranked.playtime / 3600)} Hrs</span>
+                  </div>
+                  <div className="stat">
+                    <p className="stat-label">Games Played</p>
+                    <span className="stat-value">{this.state.stats.stats.queue.ranked.games_played}</span>
+                  </div>
+                </div>
+                <div className="stats-box">
+                  <h4 className="stats-heading">Personal Performance</h4>
+                  <div className="stat main-stat">
+                    <p className="stat-label">K/D</p>
+                    <span className="stat-value">{this.state.stats.stats.queue.ranked.kd}</span>
+                  </div>
+                  <div className="stat">
+                    <p className="stat-label">Kills</p>
+                    <span className="stat-value">{this.state.stats.stats.queue.ranked.kills}</span>
+                  </div>
+                  <div className="stat">
+                    <p className="stat-label">Deaths</p>
+                    <span className="stat-value">{this.state.stats.stats.queue.ranked.deaths}</span>
+                  </div>
+                </div>
+                <div className="stats-box">
+                  <h4 className="stats-heading">Team Performance</h4>
+                  <div className="stat main-stat">
+                    <p className="stat-label">W/L</p>
+                    <span className="stat-value">{this.state.stats.stats.queue.ranked.wl}</span>
+                  </div>
+                  <div className="stat">
+                    <p className="stat-label">Wins</p>
+                    <span className="stat-value">{this.state.stats.stats.queue.ranked.wins}</span>
+                  </div>
+                  <div className="stat">
+                    <p className="stat-label">Losses</p>
+                    <span className="stat-value">{this.state.stats.stats.queue.ranked.losses}</span>
+                  </div>
+                </div>
+              </div>
             </div>
           ) : (
             <p>Unable to load statistics. Make sure your username matches the account for the platform you signed up with.</p>

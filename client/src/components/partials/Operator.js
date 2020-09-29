@@ -19,17 +19,43 @@ import React from "react";
 const Operator = (props) => {
   return (
     <div className="operator">
-      <img className="operator-image" alt="Operator Image" src={props.image}/>
-      <h3 className="operator-name">{props.name}</h3>
+      <div className="operator-info">
+        <img className="operator-image" alt="Operator Image" src={props.image}/>
+        <h3 className="operator-name">{props.name}</h3>
+      </div>
       <div className="operator-stats">
-        <p className="operator-stat">{props.kd} KD</p>
-        <p className="operator-stat">{props.kills} Kills</p>
-        <p className="operator-stat">{props.deaths} Deaths</p>
-        <p className="operator-stat">{props.wl} WL Ratio</p>
-        <p className="operator-stat">{props.wins} Wins</p>
-        <p className="operator-stat">{props.losses} Losses</p>
-        <p className="operator-stat">{Math.round(props.playtime / 3600 * 100) / 100} Hours</p>
-        <p className="operator-stat">Headshot Percentage: {Math.round(props.hsp * 100 * 100) / 100}%</p>
+        <div className="operator-stat">
+          <p className="stat-label">K/D</p>
+          <span className="stat-value">{props.kd}</span>
+        </div>
+        <div className="operator-stat">
+          <p className="stat-label">Kills</p>
+          <span className="stat-value">{props.kills}</span>
+        </div>
+        <div className="operator-stat">
+          <p className="stat-label">Deaths</p>
+          <span className="stat-value">{props.deaths}</span>
+        </div>
+        <div className="operator-stat">
+          <p className="stat-label">W/L</p>
+          <span className="stat-value">{props.wl}</span>
+        </div>
+        <div className="operator-stat">
+          <p className="stat-label">Wins</p>
+          <span className="stat-value">{props.wins}</span>
+        </div>
+        <div className="operator-stat">
+          <p className="stat-label">Losses</p>
+          <span className="stat-value">{props.losses}</span>
+        </div>
+        <div className="operator-stat">
+          <p className="stat-label">Playtime</p>
+          <span className="stat-value">{Math.round(props.playtime / 3600 * 100) / 100}</span>
+        </div>
+        <div className="operator-stat">
+          <p className="stat-label">Headshot %</p>
+          <span className="stat-value">{Math.round(props.hsp * 100 * 100) / 100}%</span>
+        </div>
       </div>
     </div>
   )
