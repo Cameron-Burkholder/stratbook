@@ -1,0 +1,35 @@
+/* client/src/scss/style.scss */
+
+// Import theme
+@import "./_theme.scss";
+
+// Import components
+@import "./components/_navigation.scss";
+@import "./components/_header.scss";
+@import "./components/_main-navigation.scss";
+@import "./components/_page.scss";
+
+// Import APIs
+@import "./api/_view-team.scss";
+@import "./api/_view-team-statistics.scss";
+@import "./api/_leave-team.scss";
+
+// RESET
+* {
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+  min-height: 0;
+  box-sizing: border-box;
+  font-family: $body-font;
+  z-index: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: $title-font;
+}
+
+html, body {
+  background: $background;
+  overflow-x: hidden;
+}

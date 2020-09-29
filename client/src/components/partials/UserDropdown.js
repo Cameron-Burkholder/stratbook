@@ -26,11 +26,11 @@ class UserDropdown extends React.Component {
   render() {
     return (
       <div className={"user-dropdown " + (this.state.active ? "user-dropdown--active" : "user-dropdown--inactive")}>
-        <img className="dropdown-icon" onClick={this.toggleDropdown} alt="User Icon" src=""/>
+        <img className="dropdown-icon" onClick={this.toggleDropdown} alt="User Icon" src="../media/User Icon.png"/>
         <div className="dropdown-body">
           <span id="user-dropdown-title">{this.props.username}</span>
-          <Link className="dropdown-link" to="/user">Account</Link>
-          <Link className="dropdown-link" to="/logout">Logout</Link>
+          <Link onClick={this.toggleDropdown} className="dropdown-link" to="/user">Account</Link>
+          <Link onClick={this.toggleDropdown} className="dropdown-link" to="/logout">Logout</Link>
         </div>
       </div>
     )

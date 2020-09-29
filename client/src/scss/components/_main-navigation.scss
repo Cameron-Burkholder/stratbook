@@ -1,0 +1,51 @@
+/* scss/components/_main-navigation.scss */
+
+nav.main-nav {
+  margin-bottom: $margin;
+  background: $background-medium;
+  ul.main-nav-head {
+    display: block;
+    margin-left: calc(#{$margin} * 4);
+    li.main-nav-item {
+      padding: $padding;
+      display: inline-block;
+      list-style-type: none;
+      a.main-nav-link {
+        color: $nav-link;
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+      a.main-nav-link:hover {
+        color: $nav-link-hover;
+        transition: all 0.3s ease;
+        filter: drop-shadow($nav-link-hover-shadow);
+      }
+    }
+    li.main-nav-item.active-link {
+      background: $background-accent;
+      a.main-nav-link {
+        color: $nav-link-active;
+        font-weight: bold;
+      }
+    }
+  }
+  ul.main-nav-body {
+    background: $background-accent;
+    li.main-nav-item {
+      padding: $padding;
+      display: inline-block;
+      list-style: none;
+      a.main-nav-link {
+        color: $nav-link;
+        text-decoration: none;
+        list-style-type: none;
+        transition: all 0.3s ease;
+      }
+      a.main-nav-link:hover {
+        color: $nav-link-hover;
+        transition: all 0.3s ease;
+        filter: drop-shadow($nav-link-hover-shadow);
+      }
+    }
+  }
+}

@@ -10,9 +10,11 @@ import React from "react";
 */
 const Header = (props) => {
   return (
-    <header className="header">
-      <h1 className="title">{props.title}</h1>
-      <h2 className="subtitle">{props.subtitle}</h2>
+    <header className="header" style={{ background: "url('media/Header Background.jpg')", backgroundSize: "cover", backgroundPosition: "center" }}>
+      <div className="header-overlay">
+        <h1 className="title">{props.title}</h1>
+        <h2 className="subtitle">{props.subtitle}</h2>
+      </div>
     </header>
   )
 }

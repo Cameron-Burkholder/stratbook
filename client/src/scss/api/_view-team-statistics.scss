@@ -1,0 +1,68 @@
+/* scss/api/_view-team-statistics.scss */
+
+div#ViewTeamStatisticsAPI {
+  div.team-statistics {
+    margin-top: calc(#{$margin} * 2);
+    display: flex;
+    flex-direction: column;
+    background: $background-dark;
+    padding: $padding;
+    h3 {
+      color: $heading;
+      font-size: $heading3;
+    }
+    div.overview {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      padding: $padding;
+      border-radius: $border-radius;
+      p.overview-label {
+        color: $accent;
+        grid-column: span 5;
+        text-align: center;
+      }
+      p.team-stat {
+        font-size: $small;
+        color: $light;
+        text-align: center;
+        padding: $padding;
+        span.stat-label {
+          display: block;
+          color: $accent;
+        }
+      }
+    }
+    div.member-statistics {
+      margin-top: $margin;
+      div.team-member-stats-accent {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        padding: $padding;
+        border-radius: $border-radius;
+        color: $accent;
+        text-transform: uppercase;
+        p {
+          text-align: center;
+          font-size: $small;
+        }
+      }
+      div.team-member-stats:nth-child(even) {
+        background: $background-medium;
+      }
+      div.team-member-stats {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        padding: $padding;
+        border-radius: $border-radius;
+        h4.member-username {
+          color: $accent;
+        }
+        p.member-stat {
+          font-size: $small;
+          color: $light;
+          text-align: center;
+        }
+      }
+    }
+  }
+}

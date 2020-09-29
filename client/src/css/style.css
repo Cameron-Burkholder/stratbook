@@ -1,0 +1,278 @@
+/* client/src/scss/style.scss */
+/* scss/_theme.scss */
+/* scss/components/_navigation.scss */
+nav.nav {
+  width: 100%;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: calc(16px * 6);
+  border-bottom: 1px solid rgba(50, 50, 50, 0.4); }
+  nav.nav h3.nav__heading {
+    color: #fff;
+    font-size: 16pt;
+    padding-left: calc(16px * 2);
+    text-shadow: 2px 2px rgba(50, 50, 50, 0.7); }
+  nav.nav ul.nav__body {
+    display: flex;
+    align-items: center;
+    list-style-type: none; }
+    nav.nav ul.nav__body li.nav__item {
+      display: inline;
+      margin: 0 calc(16px * 2); }
+      nav.nav ul.nav__body li.nav__item a.nav__link {
+        color: #d6d6d6;
+        text-decoration: none;
+        font-size: 12pt;
+        transition: all 0.3s ease; }
+      nav.nav ul.nav__body li.nav__item a.nav__link:hover {
+        color: #fafafa;
+        transition: all 0.3s ease;
+        filter: drop-shadow(0px 0px 2px rgba(250, 250, 250, 0.5)); }
+    nav.nav ul.nav__body div.user-dropdown {
+      position: relative;
+      top: 0;
+      left: 0;
+      margin-right: 16px; }
+      nav.nav ul.nav__body div.user-dropdown img.dropdown-icon {
+        width: 24px;
+        filter: invert(1); }
+      nav.nav ul.nav__body div.user-dropdown img.dropdown-icon:hover {
+        cursor: pointer; }
+      nav.nav ul.nav__body div.user-dropdown div.dropdown-body {
+        background: white;
+        padding: 16px;
+        border-radius: 2px;
+        position: absolute;
+        top: calc(16px * 2);
+        left: -200px;
+        width: 200px;
+        box-shadow: 2px 2px 5px rgba(50, 50, 50, 0.7); }
+        nav.nav ul.nav__body div.user-dropdown div.dropdown-body span#user-dropdown-title {
+          display: block;
+          margin-bottom: 16px;
+          text-align: center; }
+        nav.nav ul.nav__body div.user-dropdown div.dropdown-body a.dropdown-link {
+          display: block;
+          text-align: left; }
+    nav.nav ul.nav__body div.user-dropdown--inactive div.dropdown-body {
+      display: none; }
+    nav.nav ul.nav__body div.user-dropdown--active div.dropdown-body {
+      display: block; }
+  nav.nav button.nav__button {
+    display: none; }
+
+/* scss/components/_header.scss */
+header.header {
+  width: 100VW;
+  height: 40VH;
+  border-bottom: 1px solid rgba(50, 50, 50, 0.4); }
+  header.header div.header-overlay {
+    background: rgba(0, 0, 0, 0.6);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; }
+    header.header div.header-overlay h1.title {
+      font-size: 56pt;
+      color: #fff;
+      text-shadow: 2px 2px rgba(50, 50, 50, 0.7); }
+    header.header div.header-overlay h2.subtitle {
+      font-size: 16pt;
+      color: rgba(250, 250, 250, 0.7); }
+
+/* scss/components/_main-navigation.scss */
+nav.main-nav {
+  margin-bottom: 16px;
+  background: #1F242A; }
+  nav.main-nav ul.main-nav-head {
+    display: block;
+    margin-left: calc(16px * 4); }
+    nav.main-nav ul.main-nav-head li.main-nav-item {
+      padding: 16px;
+      display: inline-block;
+      list-style-type: none; }
+      nav.main-nav ul.main-nav-head li.main-nav-item a.main-nav-link {
+        color: #d6d6d6;
+        text-decoration: none;
+        transition: all 0.3s ease; }
+      nav.main-nav ul.main-nav-head li.main-nav-item a.main-nav-link:hover {
+        color: #fafafa;
+        transition: all 0.3s ease;
+        filter: drop-shadow(0px 0px 2px rgba(250, 250, 250, 0.5)); }
+    nav.main-nav ul.main-nav-head li.main-nav-item.active-link {
+      background: #2D3038; }
+      nav.main-nav ul.main-nav-head li.main-nav-item.active-link a.main-nav-link {
+        color: #fafafa;
+        font-weight: bold; }
+  nav.main-nav ul.main-nav-body {
+    background: #2D3038; }
+    nav.main-nav ul.main-nav-body li.main-nav-item {
+      padding: 16px;
+      display: inline-block;
+      list-style: none; }
+      nav.main-nav ul.main-nav-body li.main-nav-item a.main-nav-link {
+        color: #d6d6d6;
+        text-decoration: none;
+        list-style-type: none;
+        transition: all 0.3s ease; }
+      nav.main-nav ul.main-nav-body li.main-nav-item a.main-nav-link:hover {
+        color: #fafafa;
+        transition: all 0.3s ease;
+        filter: drop-shadow(0px 0px 2px rgba(250, 250, 250, 0.5)); }
+
+/* scss/components/_page.scss */
+div.page {
+  padding: calc(16px * 2); }
+
+/* scss/api/_view-team.scss */
+div#ViewTeamAPI div.team h2.team-name {
+  color: #fff;
+  font-size: 36pt;
+  text-align: center; }
+
+div#ViewTeamAPI div.team h3.team-description {
+  color: rgba(250, 250, 250, 0.7);
+  font-size: 24pt;
+  text-align: center; }
+
+div#ViewTeamAPI div.team div.team-member:nth-child(odd) {
+  background: #1F242A; }
+
+div#ViewTeamAPI div.team div.roster {
+  margin-top: calc(16px * 2);
+  display: flex;
+  flex-direction: column;
+  background: #15161A;
+  padding: 16px; }
+  div#ViewTeamAPI div.team div.roster h3 {
+    color: #fff;
+    font-size: 20pt; }
+  div#ViewTeamAPI div.team div.roster div.team-member-accent {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    padding: 16px;
+    border-radius: 2px; }
+    div#ViewTeamAPI div.team div.roster div.team-member-accent h4.member-username {
+      color: white;
+      text-transform: uppercase; }
+    div#ViewTeamAPI div.team div.roster div.team-member-accent p.member-status, div#ViewTeamAPI div.team div.roster div.team-member-accent p.member-quality {
+      font-size: 10pt;
+      color: white;
+      text-align: center;
+      text-transform: uppercase; }
+  div#ViewTeamAPI div.team div.roster div.team-member {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    padding: 16px;
+    border-radius: 2px; }
+    div#ViewTeamAPI div.team div.roster div.team-member h4.member-username {
+      color: white; }
+    div#ViewTeamAPI div.team div.roster div.team-member p.member-status, div#ViewTeamAPI div.team div.roster div.team-member p.member-quality {
+      font-size: 10pt;
+      color: #7B7B7F;
+      text-align: center; }
+    div#ViewTeamAPI div.team div.roster div.team-member div.attackers, div#ViewTeamAPI div.team div.roster div.team-member div.defenders {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      align-items: center;
+      justify-content: center;
+      grid-column: span 2;
+      margin: 16px; }
+      div#ViewTeamAPI div.team div.roster div.team-member div.attackers p, div#ViewTeamAPI div.team div.roster div.team-member div.defenders p {
+        grid-column: span 6;
+        color: #7B7B7F;
+        text-align: center;
+        font-size: 10pt; }
+      div#ViewTeamAPI div.team div.roster div.team-member div.attackers div img, div#ViewTeamAPI div.team div.roster div.team-member div.defenders div img {
+        width: 100%; }
+
+/* scss/api/_view-team-statistics.scss */
+div#ViewTeamStatisticsAPI div.team-statistics {
+  margin-top: calc(16px * 2);
+  display: flex;
+  flex-direction: column;
+  background: #15161A;
+  padding: 16px; }
+  div#ViewTeamStatisticsAPI div.team-statistics h3 {
+    color: #fff;
+    font-size: 20pt; }
+  div#ViewTeamStatisticsAPI div.team-statistics div.overview {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    padding: 16px;
+    border-radius: 2px; }
+    div#ViewTeamStatisticsAPI div.team-statistics div.overview p.overview-label {
+      color: white;
+      grid-column: span 5;
+      text-align: center; }
+    div#ViewTeamStatisticsAPI div.team-statistics div.overview p.team-stat {
+      font-size: 10pt;
+      color: #7B7B7F;
+      text-align: center;
+      padding: 16px; }
+      div#ViewTeamStatisticsAPI div.team-statistics div.overview p.team-stat span.stat-label {
+        display: block;
+        color: white; }
+  div#ViewTeamStatisticsAPI div.team-statistics div.member-statistics {
+    margin-top: 16px; }
+    div#ViewTeamStatisticsAPI div.team-statistics div.member-statistics div.team-member-stats-accent {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      padding: 16px;
+      border-radius: 2px;
+      color: white;
+      text-transform: uppercase; }
+      div#ViewTeamStatisticsAPI div.team-statistics div.member-statistics div.team-member-stats-accent p {
+        text-align: center;
+        font-size: 10pt; }
+    div#ViewTeamStatisticsAPI div.team-statistics div.member-statistics div.team-member-stats:nth-child(even) {
+      background: #1F242A; }
+    div#ViewTeamStatisticsAPI div.team-statistics div.member-statistics div.team-member-stats {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      padding: 16px;
+      border-radius: 2px; }
+      div#ViewTeamStatisticsAPI div.team-statistics div.member-statistics div.team-member-stats h4.member-username {
+        color: white; }
+      div#ViewTeamStatisticsAPI div.team-statistics div.member-statistics div.team-member-stats p.member-stat {
+        font-size: 10pt;
+        color: #7B7B7F;
+        text-align: center; }
+
+/* scss/api/_leave-team.scss */
+div#LeaveTeamAPI {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px; }
+  div#LeaveTeamAPI button {
+    margin-top: calc(16px * 3);
+    background: #1e1e21;
+    color: white;
+    padding: calc(16px / 2) 16px;
+    border: 1px solid white;
+    transition: all 0.3s ease; }
+  div#LeaveTeamAPI button:hover {
+    cursor: pointer;
+    filter: invert(1);
+    transition: all 0.3s ease; }
+
+* {
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+  min-height: 0;
+  box-sizing: border-box;
+  font-family: "Open Sans";
+  z-index: 0; }
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Fira Sans Extra Condensed"; }
+
+html, body {
+  background: #1e1e21;
+  overflow-x: hidden; }

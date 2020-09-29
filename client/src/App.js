@@ -22,6 +22,8 @@ import MainNavigation from "./components/partials/MainNavigation.js";
 import Header from "./components/partials/Header.js";
 import Footer from "./components/partials/Footer.js";
 
+import "./css/style.css";
+
 /*
   @func: App
   @desc: Manage client-side auth and routing

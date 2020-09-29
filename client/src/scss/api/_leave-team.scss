@@ -1,0 +1,21 @@
+/* scss/api/_leave-team.scss */
+
+div#LeaveTeamAPI {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $padding;
+  button {
+    margin-top: calc(#{$margin} * 3);
+    background: $background;
+    color: $accent;
+    padding: calc(#{$padding} / 2) $padding;
+    border: 1px solid $accent;
+    transition: all 0.3s ease;
+  }
+  button:hover {
+    cursor: pointer;
+    filter: invert(1);
+    transition: all 0.3s ease;
+  }
+}

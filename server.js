@@ -15,7 +15,7 @@ const { log, getGenericStats, getSeasonalStats, getOperatorStats } = require("./
 
 // SETUP EXPRESS
 const app = express();
-if (process.env.NODE_ENV === "PRODUCTION") {
+if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "client", "build")));
 } else {
   app.use(express.static(path.join(__dirname, "client", "public")));
@@ -24,7 +24,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // SETUP DATABASE
-const URI = (process.env.NODE_ENV === "TESTING" ? process.env.TESTING_URI : process.env.MONGODB_URI);
+const URI = (process.env.NODE_ENV === "development" ? process.env.TESTING_URI : process.env.MONGODB_URI);
 // Handle error in establishing connection
 try {
   mongoose.connect(URI, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -50,7 +50,7 @@ require("./routes/teams.js")(app, passport);
 require("./routes/statistics.js")(app, passport);
 app.get("/*", function(request, response) {
   log("GET REQUEST AT /*");
-  if (process.env.NODE_ENV === "PRODUCTION") {
+  if (process.env.NODE_ENV === "production") {
     response.sendFile(path.join(__dirname, "client", "build", "index.html"));
   } else {
     response.sendFile(path.join(__dirname, "client", "public", "index.html"));

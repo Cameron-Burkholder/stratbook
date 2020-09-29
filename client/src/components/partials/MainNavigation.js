@@ -68,22 +68,22 @@ const MainNavigation = (props) => {
   return (
     <nav className="main-nav">
       <ul className="main-nav-head">
-        <li className="main-nav-item">
+        <li className={"main-nav-item " + (props.page === "DASHBOARD" ? "active-link" : "")}>
           <Link className="main-nav-link" to="/dashboard">Dashboard</Link>
         </li>
-        <li className="main-nav-item">
+        <li className={"main-nav-item " + (props.page === "TEAM" ? "active-link" : "")}>
           <Link className="main-nav-link" to="/team">Team</Link>
         </li>
-        <li className="main-nav-item">
+        <li className={"main-nav-item " + (props.page === "STRATEGIES" ? "active-link" : "")}>
           <Link className="main-nav-link" to="/strategies">Strategies</Link>
         </li>
-        <li className="main-nav-item">
+        <li className={"main-nav-item " + (props.page === "MAPS" ? "active-link" : "")}>
           <Link className="main-nav-link" to="/maps">Maps</Link>
         </li>
-        <li className="main-nav-item">
+        <li className={"main-nav-item " + (props.page === "CHAT" ? "active-link" : "")}>
           <Link className="main-nav-link" to="/chat">Chat</Link>
         </li>
-        <li className="main-nav-item">
+        <li className={"main-nav-item " + (props.page === "META" ? "active-link" : "")}>
           <Link className="main-nav-link" to="/meta">Meta</Link>
         </li>
       </ul>

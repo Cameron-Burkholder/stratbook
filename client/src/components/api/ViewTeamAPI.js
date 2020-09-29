@@ -113,10 +113,16 @@ class ViewTeamAPI extends React.Component {
         })
         contents = (
           <div className="team">
-            <h2>{this.state.team.name}</h2>
-            <h3>{this.state.team.platform} - {this.state.team.join_code}</h3>
+            <h2 className="team-name">{this.state.team.name}</h2>
+            <h3 className="team-description">{this.state.team.platform} - {this.state.team.join_code}</h3>
             <div className="roster">
               <h3>Roster</h3>
+              <div className="team-member-accent">
+                <h4 className="member-username">Username</h4>
+                <p className="member-status">Status</p>
+                <p className="member-quality">Attacking Role</p>
+                <p className="member-quality">Defending Role</p>
+              </div>
               { teamMembers }
             </div>
           </div>

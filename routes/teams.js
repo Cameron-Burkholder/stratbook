@@ -238,7 +238,7 @@ module.exports = async (app, passport) => {
                     user.status = ADMIN;
                     user.save().then(() => {
                       packet.status = "TEAM_CREATED";
-                      if (process.env.NODE_ENV === "TESTING") {
+                      if (process.env.NODE_ENV === "development") {
                         packet.team_code = newTeam.join_code;
                       }
                       response.json(packet);
@@ -428,7 +428,7 @@ module.exports = async (app, passport) => {
               } else {
                 team.members.push(String(request.user._id));
                 team.save().then(async () => {
-                  if (process.env.NODE_ENV === "TESTING") {
+                  if (process.env.NODE_ENV === "development") {
                     packet.team_code = team.join_code;
                   }
                   User.findOne({ _id: mongoose.Types.ObjectId(request.user._id) }).then(async (user, error) => {
@@ -437,7 +437,7 @@ module.exports = async (app, passport) => {
                       user.status = MEMBER;
                       user.save().then(async () => {
                         packet.status = "TEAM_JOINED";
-                        if (process.env.NODE_ENV !== "TESTING") {
+                        if (process.env.NODE_ENV !== "development") {
                           let index = 0;
                           while (index < team.admins.length) {
                             await new Promise((resolve, reject) => {

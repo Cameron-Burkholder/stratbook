@@ -34,14 +34,19 @@ const TeamMember = (props) => {
       <p className="member-status">{props.status}</p>
       <p className="member-quality">{props.attacker_role}</p>
       <p className="member-quality">{props.defender_role}</p>
-      <div className="attackers">
-        <p className="member-attackers">Preferred Attackers</p>
-        { attackers }
-      </div>
-      <div className="defenders">
-        <p className="member-defenders">Preferred Defenders</p>
-        { defenders }
-      </div>
+      { attackers.length > 0 ? (
+        <div className="attackers">
+          <p className="member-attackers">Preferred Attackers</p>
+          { attackers }
+        </div>
+      ) : "" }
+      { defenders.length > 0 ? (
+        <div className="defenders">
+          <p className="member-defenders">Preferred Defenders</p>
+          { defenders }
+        </div>
+      ) : "" }
+
     </div>
   )
 }

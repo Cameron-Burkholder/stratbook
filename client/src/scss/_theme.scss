@@ -1,0 +1,51 @@
+/* scss/_theme.scss */
+
+// MARGINS AND PADDING
+$padding: 16px;
+$margin: 16px;
+
+// COLORS
+$background: #1e1e21;
+$background-dark: #15161A;
+$background-accent: #2D3038;
+$background-medium: #1F242A;
+$background-light: white;
+$background-white: white;
+$heading: #fff;
+$subtitle-color: rgba(250, 250, 250, 0.7);
+$nav-link: rgb(214, 214, 214);
+$nav-link-hover: rgb(250, 250, 250);
+$nav-link-active: rgb(250, 250, 250);
+$accent: white;
+$light: #7B7B7F;
+
+// BORDERS
+$light-border: 1px solid rgba(50, 50, 50, 0.4);
+
+// BORDER RADIUS
+$border-radius: 2px;
+
+// TEXT SHADOW
+$text-shadow: 2px 2px rgba(50, 50, 50, 0.7);
+$nav-link-hover-shadow: 0px 0px 2px rgba(250, 250, 250, 0.5);
+
+// BOX SHADOW
+$box-shadow: 2px 2px 5px rgba(50, 50, 50, 0.7);
+
+// FONTS
+$body-font: "Open Sans";
+$title-font: "Fira Sans Extra Condensed";
+
+// FONT SIZES
+$title: 56pt;
+$subtitle: 16pt;
+$heading1: 36pt;
+$heading2: 24pt;
+$heading3: 20pt;
+$heading4: 18pt;
+$text: 16pt;
+$small: 10pt;
+$nav-link-size: 12pt;
+
+// SIZES
+$header-height: 40VH;

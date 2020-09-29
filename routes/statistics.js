@@ -83,7 +83,7 @@ module.exports = async (app, passport) => {
         packet: Object (status: OPERATOR_STATS_FOUND, stats)
   */
   app.get("/api/statistics/operators", (request, response, done) => {
-    log("GET REQUEST AT /api/statistics/seasonal");
+    log("GET REQUEST AT /api/statistics/operators");
     done();
   }, passport.authenticate("jwt", { session: false }), async (request, response) => {
     let packet = {

@@ -111,14 +111,22 @@ class ViewTeamStatisticsAPI extends React.Component {
           <div className="team-statistics">
             <h3>Statistics</h3>
             <div className="overview">
-              <p>Team Performance</p>
-              <p className="team-stat">{this.state.stats.kd} KD</p>
-              <p className="team-stat">{this.state.stats.wl} WL</p>
-              <p className="team-stat">{this.state.stats.mmr} MMR</p>
-              <p className="team-stat">{this.state.stats.mmrchange} MMR Change</p>
-              <p className="team-stat">Level {this.state.stats.level}</p>
+              <p className="overview-label">Team Performance</p>
+              <p className="team-stat"><span className="stat-label">Avg K/D</span>{this.state.stats.kd}</p>
+              <p className="team-stat"><span className="stat-label">Avg W/L</span>{this.state.stats.wl}</p>
+              <p className="team-stat"><span className="stat-label">Avg MMR</span>{this.state.stats.mmr}</p>
+              <p className="team-stat"><span className="stat-label">Avg MMR Change</span>{this.state.stats.mmrchange}</p>
+              <p className="team-stat"><span className="stat-label">Avg Level</span>{this.state.stats.level}</p>
             </div>
             <div className="member-statistics">
+              <div className="team-member-stats-accent">
+                <h4 className="member-username">Username</h4>
+                <p className="member-stat">K/D</p>
+                <p className="member-stat">W/L</p>
+                <p className="member-stat">MMR</p>
+                <p className="member-stat">MMR Change</p>
+                <p className="member-stat">Level</p>
+              </div>
               { teamMembers }
             </div>
           </div>

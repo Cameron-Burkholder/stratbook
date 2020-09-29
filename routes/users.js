@@ -249,13 +249,13 @@ module.exports = async (app, passport) => {
               email: request.body.email,
               password: request.body.password1,
               platform: request.body.platform,
-              verified: process.env.NODE_ENV === "TESTING" ? true : false,
+              verified: process.env.NODE_ENV === "development" ? true : false,
               attacker_role: "NONE",
               defender_role: "NONE",
               attackers: [],
               defenders: []
             });
-            if (process.env.NODE_ENV === "TESTING") {
+            if (process.env.NODE_ENV === "development") {
               packet._id = newUser._id;
             }
             // Hash password before saving in database
