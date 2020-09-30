@@ -3,3 +3,9 @@
 div.page {
   padding: calc(#{$padding} * 2);
 }
+
+@media screen and (max-width: #{$phone-max-width}) {
+  div.page {
+    padding: calc(#{$phone-padding} * 2);
+  }
+}

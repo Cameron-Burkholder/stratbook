@@ -61,3 +61,14 @@ div#GeneralStatisticsAPI {
     }
   }
 }
+
+// PHONE
+@media screen and (max-width: #{$phone-max-width}) {
+  div#GeneralStatisticsAPI {
+    div.statistics-container {
+      div.stats-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  }
+}

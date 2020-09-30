@@ -17,8 +17,18 @@ div#OperatorStatisticsAPI {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-gap: 4px;
+    input {
+      grid-column: span 4;
+      max-width: 400px;
+      display: block;
+      margin: $margin auto;
+      padding: calc(#{$padding} / 2) $padding;
+    }
     button.sort-by {
-
+      padding: $padding;
+    }
+    button.sort-by:hover {
+      cursor: pointer;
     }
     div.operator {
       grid-column: span 2;
@@ -49,6 +59,34 @@ div#OperatorStatisticsAPI {
           }
           span.stat-value {
             color: $accent;
+          }
+        }
+      }
+    }
+  }
+}
+
+// PHONE
+@media screen and (max-width: #{$phone-max-width}) {
+  div#OperatorStatisticsAPI {
+    padding: $phone-padding;
+    margin: calc(#{$phone-margin} / 2) auto;
+    div.statistics {
+      button.sort-by {
+        padding: calc(#{$phone-padding} / 2) $phone-padding;
+      }
+      div.operator {
+        grid-column: span 4;
+        padding: calc(#{$phone-padding} / 2);
+        div.operator-info {
+          h3.operator-name {
+            font-size: $phone-text;
+          }
+        }
+        div.operator-stats {
+          grid-template-columns: repeat(3, 1fr);
+          div.operator-stat {
+            font-size: $phone-small;
           }
         }
       }

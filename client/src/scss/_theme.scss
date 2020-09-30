@@ -2,7 +2,9 @@
 
 // MARGINS AND PADDING
 $padding: 16px;
+$phone-padding: 8px;
 $margin: 16px;
+$phone-margin: 8px;
 
 // COLORS
 $background: #1e1e21;
@@ -48,5 +50,11 @@ $text: 16pt;
 $small: 10pt;
 $nav-link-size: 12pt;
 
+$phone-text: 12pt;
+$phone-small: 10pt;
+
 // SIZES
 $header-height: 40VH;
+
+// MEDIA QUERIES
+$phone-max-width: 600px;

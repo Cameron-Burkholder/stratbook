@@ -50,7 +50,7 @@ const Operator = (props) => {
         </div>
         <div className="operator-stat">
           <p className="stat-label">Playtime</p>
-          <span className="stat-value">{Math.round(props.playtime / 3600 * 100) / 100}</span>
+          <span className="stat-value">{Math.round(props.playtime / 3600 * 100) / 100} Hrs</span>
         </div>
         <div className="operator-stat">
           <p className="stat-label">Headshot %</p>

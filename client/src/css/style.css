@@ -128,6 +128,10 @@ nav.main-nav {
 div.page {
   padding: calc(16px * 2); }
 
+@media screen and (max-width: 600px) {
+  div.page {
+    padding: calc(8px * 2); } }
+
 /* scss/api/_general-statistics.scss */
 div#GeneralStatisticsAPI {
   background: #15161A;
@@ -176,6 +180,10 @@ div#GeneralStatisticsAPI {
         div#GeneralStatisticsAPI div.statistics-container div.stats-grid div.stats-box div.stat span.stat-value {
           color: #d6d6d6; }
 
+@media screen and (max-width: 600px) {
+  div#GeneralStatisticsAPI div.statistics-container div.stats-grid {
+    grid-template-columns: 1fr; } }
+
 /* scss/api/_seasonal-statistics.scss */
 div#SeasonalStatisticsAPI {
   background: #15161A;
@@ -218,6 +226,17 @@ div#SeasonalStatisticsAPI {
       div#SeasonalStatisticsAPI div.statistics div.main-stat p.label-secondary {
         font-size: 10pt; }
 
+@media screen and (max-width: 600px) {
+  div#SeasonalStatisticsAPI {
+    padding: 8px;
+    margin: calc(8px / 2) auto; }
+    div#SeasonalStatisticsAPI div.statistics {
+      grid-template-columns: 1fr; }
+      div#SeasonalStatisticsAPI div.statistics div.stat {
+        border: none;
+        border-top: 1px solid rgba(50, 50, 50, 0.4);
+        border-bottom: 1px solid rgba(50, 50, 50, 0.4); } }
+
 /* scss/api/_operator-statistics.scss */
 div#OperatorStatisticsAPI {
   background: #15161A;
@@ -235,6 +254,16 @@ div#OperatorStatisticsAPI {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-gap: 4px; }
+    div#OperatorStatisticsAPI div.statistics input {
+      grid-column: span 4;
+      max-width: 400px;
+      display: block;
+      margin: 16px auto;
+      padding: calc(16px / 2) 16px; }
+    div#OperatorStatisticsAPI div.statistics button.sort-by {
+      padding: 16px; }
+    div#OperatorStatisticsAPI div.statistics button.sort-by:hover {
+      cursor: pointer; }
     div#OperatorStatisticsAPI div.statistics div.operator {
       grid-column: span 2;
       padding: calc(16px / 2);
@@ -259,6 +288,22 @@ div#OperatorStatisticsAPI {
             color: #7B7B7F; }
           div#OperatorStatisticsAPI div.statistics div.operator div.operator-stats div.operator-stat span.stat-value {
             color: white; }
+
+@media screen and (max-width: 600px) {
+  div#OperatorStatisticsAPI {
+    padding: 8px;
+    margin: calc(8px / 2) auto; }
+    div#OperatorStatisticsAPI div.statistics button.sort-by {
+      padding: calc(8px / 2) 8px; }
+    div#OperatorStatisticsAPI div.statistics div.operator {
+      grid-column: span 4;
+      padding: calc(8px / 2); }
+      div#OperatorStatisticsAPI div.statistics div.operator div.operator-info h3.operator-name {
+        font-size: 12pt; }
+      div#OperatorStatisticsAPI div.statistics div.operator div.operator-stats {
+        grid-template-columns: repeat(3, 1fr); }
+        div#OperatorStatisticsAPI div.statistics div.operator div.operator-stats div.operator-stat {
+          font-size: 10pt; } }
 
 /* scss/api/_view-team.scss */
 div#ViewTeamAPI div.team h2.team-name {

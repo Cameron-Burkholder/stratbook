@@ -20,11 +20,13 @@ class OperatorStatisticsAPI extends React.Component {
 
     this.fetchStats = this.fetchStats.bind(this);
     this.sortOperators = this.sortOperators.bind(this);
+    this.searchOperators = this.searchOperators.bind(this);
 
     this.state = {
       stats: undefined,
       loading: true,
-      hasLoaded: false
+      hasLoaded: false,
+      search: ""
     }
   }
   fetchStats() {
@@ -81,6 +83,12 @@ class OperatorStatisticsAPI extends React.Component {
       operators: operators
     });
   }
+  searchOperators(e) {
+    e.preventDefault();
+    this.setState({
+      search: e.target.value
+    });
+  }
   componentDidMount() {
     if (!this.state.hasLoaded) {
       this.fetchStats();
@@ -90,7 +98,7 @@ class OperatorStatisticsAPI extends React.Component {
     let operators = []
     if (this.state.stats) {
       this.state.operators.map((operator, index) => {
-        if (!operator.name.includes("Recruit")) {
+        if (!operator.name.includes("Recruit") && (this.state.search === "" || operator.name.toUpperCase().includes(this.state.search.toUpperCase()))) {
           operators.push(<Operator image={operator.badge_image} name={operator.name} kd={Math.round(operator.kd * 100) / 100} kills={operator.kills} deaths={operator.deaths} wl={Math.round(operator.wl * 100) / 100} wins={operator.wins} losses={operator.losses} playtime={Math.round(operator.playtime * 100) / 100} hsp={Math.round(operator.headshots / operator.kills * 100) / 100} key={index}/>)
         }
       });
@@ -104,6 +112,7 @@ class OperatorStatisticsAPI extends React.Component {
           <div>
           { this.state.stats ? (
             <div className="statistics">
+              <input onChange={this.searchOperators} className="search-by" value={this.state.search} placeholder="Search By Name"/>
               <button onClick={this.sortOperators} className="sort-by" id="release">Sort By Release</button>
               <button onClick={this.sortOperators} className="sort-by" id="name">Sort By Name</button>
               <button onClick={this.sortOperators} className="sort-by" id="kd">Sort By KD</button>

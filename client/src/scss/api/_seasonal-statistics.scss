@@ -50,3 +50,19 @@ div#SeasonalStatisticsAPI {
     }
   }
 }
+
+// PHONE
+@media screen and (max-width: #{$phone-max-width}) {
+  div#SeasonalStatisticsAPI {
+    padding: $phone-padding;
+    margin: calc(#{$phone-margin} / 2) auto;
+    div.statistics {
+      grid-template-columns: 1fr;
+      div.stat {
+        border: none;
+        border-top: $light-border;
+        border-bottom: $light-border;
+      }
+    }
+  }
+}
