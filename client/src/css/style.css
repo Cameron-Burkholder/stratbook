@@ -367,6 +367,19 @@ div#ViewTeamAPI div.team div.roster {
       div#ViewTeamAPI div.team div.roster div.team-member div.attackers div img, div#ViewTeamAPI div.team div.roster div.team-member div.defenders div img {
         width: 100%; }
 
+@media screen and (max-width: 600px) {
+  div#ViewTeamAPI div.team div.roster div.team-member-accent {
+    grid-template-columns: repeat(2, 1fr); }
+    div#ViewTeamAPI div.team div.roster div.team-member-accent p.member-status, div#ViewTeamAPI div.team div.roster div.team-member-accent p.member-quality {
+      text-align: left; }
+  div#ViewTeamAPI div.team div.roster div.team-member {
+    grid-template-columns: repeat(2, 1fr); }
+    div#ViewTeamAPI div.team div.roster div.team-member p.member-status, div#ViewTeamAPI div.team div.roster div.team-member p.member-quality {
+      text-align: left; }
+    div#ViewTeamAPI div.team div.roster div.team-member div.attackers, div#ViewTeamAPI div.team div.roster div.team-member div.defenders {
+      padding: 8px;
+      margin: 0; } }
+
 /* scss/api/_view-team-statistics.scss */
 div#ViewTeamStatisticsAPI div.team-statistics {
   margin-top: calc(16px * 2);
@@ -419,6 +432,16 @@ div#ViewTeamStatisticsAPI div.team-statistics {
         font-size: 10pt;
         color: #7B7B7F;
         text-align: center; }
+
+@media screen and (max-width: 600px) {
+  div#ViewTeamStatisticsAPI div.team-statistics div.overview p.team-stat {
+    font-size: 10pt; }
+  div#ViewTeamStatisticsAPI div.team-statistics div.member-statistics {
+    padding: 8px; }
+    div#ViewTeamStatisticsAPI div.team-statistics div.member-statistics div.team-member-stats, div#ViewTeamStatisticsAPI div.team-statistics div.member-statistics div.team-member-stats-accent {
+      grid-template-columns: 108px repeat(2, 1fr); }
+      div#ViewTeamStatisticsAPI div.team-statistics div.member-statistics div.team-member-stats p.member-stat, div#ViewTeamStatisticsAPI div.team-statistics div.member-statistics div.team-member-stats-accent p.member-stat {
+        text-align: left; } }
 
 /* scss/api/_leave-team.scss */
 div#LeaveTeamAPI {

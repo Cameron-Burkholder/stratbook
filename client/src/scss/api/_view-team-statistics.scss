@@ -66,3 +66,25 @@ div#ViewTeamStatisticsAPI {
     }
   }
 }
+
+// PHONE
+@media screen and (max-width: #{$phone-max-width}) {
+  div#ViewTeamStatisticsAPI {
+    div.team-statistics {
+      div.overview {
+        p.team-stat {
+          font-size: $phone-small;
+        }
+      }
+      div.member-statistics {
+        padding: $phone-padding;
+        div.team-member-stats, div.team-member-stats-accent {
+          grid-template-columns: 108px repeat(2, 1fr);
+          p.member-stat {
+            text-align: left;
+          }
+        }
+      }
+    }
+  }
+}

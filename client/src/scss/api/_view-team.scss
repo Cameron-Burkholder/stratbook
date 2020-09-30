@@ -75,3 +75,28 @@ div#ViewTeamAPI {
     }
   }
 }
+
+@media screen and (max-width: #{$phone-max-width}) {
+  div#ViewTeamAPI {
+    div.team {
+      div.roster {
+        div.team-member-accent {
+          grid-template-columns: repeat(2, 1fr);
+          p.member-status, p.member-quality {
+            text-align: left;
+          }
+        }
+        div.team-member {
+          grid-template-columns: repeat(2, 1fr);
+          p.member-status, p.member-quality {
+            text-align: left;
+          }
+          div.attackers, div.defenders {
+            padding: $phone-padding;
+            margin: 0;
+          }
+        }
+      }
+    }
+  }
+}
