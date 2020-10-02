@@ -1,0 +1,38 @@
+/* scss/api/_set-attacker-roles.scss */
+
+div#SetAttackerRoleAPI {
+  form.form#set-attacker-role-form {
+    fieldset.form-fieldset {
+      border: none;
+      label.form-label {
+        color: $light;
+        font-size: $small;
+        width: 100%;
+        padding: calc(#{$padding} / 2);
+      }
+      select.form-input {
+        margin-left: auto;
+        margin-right: 0;
+        float: right;
+        font-size: $small;
+        padding: calc(#{$padding} / 2);
+      }
+    }
+  }
+}
+
+@media screen and (max-width: #{$phone-max-width}) {
+  div#SetAttackerRoleAPI {
+    margin-bottom: $phone-margin;
+    fieldset.form-fieldset {
+      label.form-label {
+        width: 100%;
+      }
+      select.form-input {
+        float: left;
+        width: 100%;
+        display: block;
+      }
+    }
+  }
+}

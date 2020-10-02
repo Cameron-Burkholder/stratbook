@@ -124,6 +124,31 @@ nav.main-nav {
         transition: all 0.3s ease;
         filter: drop-shadow(0px 0px 2px rgba(250, 250, 250, 0.5)); }
 
+/* scss/components/_user.scss */
+div#user p.user-property {
+  color: #d6d6d6;
+  text-align: center; }
+
+div#user div.account-section h3 {
+  font-size: 24pt;
+  color: white;
+  margin: 16px 0; }
+
+div#user div.account-section div.role {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 4px;
+  background: #15161A;
+  border-radius: 2px;
+  padding: 16px;
+  margin: calc(16px * 2) auto;
+  max-width: 1200px; }
+
+@media screen and (max-width: 600px) {
+  div#user div.account-section div.role {
+    padding: 8px;
+    grid-template-columns: 1fr; } }
+
 /* scss/components/_page.scss */
 div.page {
   padding: calc(16px * 2); }
@@ -460,6 +485,180 @@ div#LeaveTeamAPI {
     cursor: pointer;
     filter: invert(1);
     transition: all 0.3s ease; }
+
+/* scss/api/_set-attacker-roles.scss */
+div#SetAttackerRoleAPI form.form#set-attacker-role-form fieldset.form-fieldset {
+  border: none; }
+  div#SetAttackerRoleAPI form.form#set-attacker-role-form fieldset.form-fieldset label.form-label {
+    color: #7B7B7F;
+    font-size: 10pt;
+    width: 100%;
+    padding: calc(16px / 2); }
+  div#SetAttackerRoleAPI form.form#set-attacker-role-form fieldset.form-fieldset select.form-input {
+    margin-left: auto;
+    margin-right: 0;
+    float: right;
+    font-size: 10pt;
+    padding: calc(16px / 2); }
+
+@media screen and (max-width: 600px) {
+  div#SetAttackerRoleAPI {
+    margin-bottom: 8px; }
+    div#SetAttackerRoleAPI fieldset.form-fieldset label.form-label {
+      width: 100%; }
+    div#SetAttackerRoleAPI fieldset.form-fieldset select.form-input {
+      float: left;
+      width: 100%;
+      display: block; } }
+
+/* scss/api/_set-defender-role.scss */
+div#SetDefenderRoleAPI form.form#set-defender-role-form fieldset.form-fieldset {
+  border: none; }
+  div#SetDefenderRoleAPI form.form#set-defender-role-form fieldset.form-fieldset label.form-label {
+    color: #7B7B7F;
+    font-size: 10pt;
+    width: 100%;
+    padding: calc(16px / 2); }
+  div#SetDefenderRoleAPI form.form#set-defender-role-form fieldset.form-fieldset select.form-input {
+    margin-left: auto;
+    margin-right: 0;
+    float: right;
+    font-size: 10pt;
+    padding: calc(16px / 2); }
+
+@media screen and (max-width: 600px) {
+  div#SetDefenderRoleAPI {
+    margin-bottom: 8px; }
+    div#SetDefenderRoleAPI fieldset.form-fieldset label.form-label {
+      width: 100%; }
+    div#SetDefenderRoleAPI fieldset.form-fieldset select.form-input {
+      float: left;
+      width: 100%;
+      display: block; } }
+
+/* scss/api/_set-attackers.scss */
+div#SetAttackersAPI {
+  background: #15161A;
+  border-radius: 2px;
+  padding: 16px;
+  margin: calc(16px * 2) auto;
+  max-width: 1200px; }
+  div#SetAttackersAPI form.form#set-attackers-form {
+    color: #7B7B7F;
+    font-size: 10pt; }
+    div#SetAttackersAPI form.form#set-attackers-form fieldset.form-fieldset {
+      border: none;
+      padding: 16px; }
+      div#SetAttackersAPI form.form#set-attackers-form fieldset.form-fieldset > div {
+        display: grid;
+        grid-template-columns: repeat(10, 1fr); }
+        div#SetAttackersAPI form.form#set-attackers-form fieldset.form-fieldset > div p {
+          grid-column: span 10; }
+        div#SetAttackersAPI form.form#set-attackers-form fieldset.form-fieldset > div div.attacker input {
+          display: none; }
+        div#SetAttackersAPI form.form#set-attackers-form fieldset.form-fieldset > div div.attacker input.checked-input + label > img {
+          width: 80%;
+          border: 3px solid blue;
+          transition: all 0.3s ease; }
+        div#SetAttackersAPI form.form#set-attackers-form fieldset.form-fieldset > div div.attacker label {
+          display: flex;
+          width: 100%;
+          height: 100%;
+          align-items: center;
+          justify-content: center; }
+        div#SetAttackersAPI form.form#set-attackers-form fieldset.form-fieldset > div div.attacker label img {
+          width: 100%;
+          display: block;
+          margin: auto;
+          transition: all 0.3s ease; }
+        div#SetAttackersAPI form.form#set-attackers-form fieldset.form-fieldset > div div.attacker label img:hover {
+          cursor: pointer; }
+        div#SetAttackersAPI form.form#set-attackers-form fieldset.form-fieldset > div span.form-error {
+          grid-column: span 10; }
+        div#SetAttackersAPI form.form#set-attackers-form fieldset.form-fieldset > div button {
+          grid-column: span 10;
+          max-width: 200px;
+          display: block;
+          margin: 16px auto;
+          padding: calc(16px / 2) 16px; }
+
+@media screen and (max-width: 600px) {
+  div#SetAttackersAPI {
+    padding: 8px; }
+    div#SetAttackersAPI form.form#set-attackers-form fieldset.form-fieldset {
+      border: none;
+      padding: 8px; }
+      div#SetAttackersAPI form.form#set-attackers-form fieldset.form-fieldset > div {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr); }
+        div#SetAttackersAPI form.form#set-attackers-form fieldset.form-fieldset > div p {
+          grid-column: span 4; }
+        div#SetAttackersAPI form.form#set-attackers-form fieldset.form-fieldset > div span.form-error {
+          grid-column: span 4; }
+        div#SetAttackersAPI form.form#set-attackers-form fieldset.form-fieldset > div button {
+          grid-column: span 4; } }
+
+/* scss/api/_set-defenders.scss */
+div#SetDefendersAPI {
+  background: #15161A;
+  border-radius: 2px;
+  padding: 16px;
+  margin: calc(16px * 2) auto;
+  max-width: 1200px; }
+  div#SetDefendersAPI form.form#set-defenders-form {
+    color: #7B7B7F;
+    font-size: 10pt; }
+    div#SetDefendersAPI form.form#set-defenders-form fieldset.form-fieldset {
+      border: none;
+      padding: 16px; }
+      div#SetDefendersAPI form.form#set-defenders-form fieldset.form-fieldset > div {
+        display: grid;
+        grid-template-columns: repeat(10, 1fr); }
+        div#SetDefendersAPI form.form#set-defenders-form fieldset.form-fieldset > div p {
+          grid-column: span 10; }
+        div#SetDefendersAPI form.form#set-defenders-form fieldset.form-fieldset > div div.defender input {
+          display: none; }
+        div#SetDefendersAPI form.form#set-defenders-form fieldset.form-fieldset > div div.defender input.checked-input + label > img {
+          width: 80%;
+          border: 3px solid blue;
+          transition: all 0.3s ease; }
+        div#SetDefendersAPI form.form#set-defenders-form fieldset.form-fieldset > div div.defender label {
+          display: flex;
+          width: 100%;
+          height: 100%;
+          align-items: center;
+          justify-content: center; }
+        div#SetDefendersAPI form.form#set-defenders-form fieldset.form-fieldset > div div.defender label img {
+          width: 100%;
+          display: block;
+          margin: auto;
+          transition: all 0.3s ease; }
+        div#SetDefendersAPI form.form#set-defenders-form fieldset.form-fieldset > div div.defender label img:hover {
+          cursor: pointer; }
+        div#SetDefendersAPI form.form#set-defenders-form fieldset.form-fieldset > div span.form-error {
+          grid-column: span 8; }
+        div#SetDefendersAPI form.form#set-defenders-form fieldset.form-fieldset > div button {
+          grid-column: span 10;
+          max-width: 200px;
+          display: block;
+          margin: 16px auto;
+          padding: calc(16px / 2) 16px; }
+
+@media screen and (max-width: 600px) {
+  div#SetDefendersAPI {
+    padding: 8px; }
+    div#SetDefendersAPI form.form#set-defenders-form fieldset.form-fieldset {
+      border: none;
+      padding: 8px; }
+      div#SetDefendersAPI form.form#set-defenders-form fieldset.form-fieldset > div {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr); }
+        div#SetDefendersAPI form.form#set-defenders-form fieldset.form-fieldset > div p {
+          grid-column: span 4; }
+        div#SetDefendersAPI form.form#set-defenders-form fieldset.form-fieldset > div span.form-error {
+          grid-column: span 4; }
+        div#SetDefendersAPI form.form#set-defenders-form fieldset.form-fieldset > div button {
+          grid-column: span 4; } }
 
 * {
   padding: 0;

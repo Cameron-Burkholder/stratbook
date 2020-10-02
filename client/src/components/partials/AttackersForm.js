@@ -15,23 +15,27 @@ const attackers = ["SLEDGE", "THATCHER", "ASH", "THERMITE", "TWITCH", "MONTAGNE"
   @prop loading: Boolean
 */
 const AttackerRoleForm = (props) => {
+  console.log(props);
   const attacker_buttons = attackers.map((attacker, index) => {
     return (
       <div className="attacker" key={index}>
-        <input onChange={() => { props.onChange(attacker); } } className="form-input" type="checkbox" id={"attacker-" + attacker.toLowerCase()} checked={props.attackers.indexOf(attacker) >= 0}/>
+        <input onChange={() => { props.onChange(attacker); } } className={"form-input " + (props.attackers.indexOf(attacker) >= 0 ? "checked-input" : "")} type="checkbox" id={"attacker-" + attacker.toLowerCase()} checked={props.attackers.indexOf(attacker) >= 0} key={index}/>
         <label className="form-label" htmlFor={"attacker-" + attacker.toLowerCase()}>
           <img className="form-image" alt={attacker + " Image"} src={"https://cdn.r6stats.com/badges/" + attacker.toLowerCase() + "_badge.png"}/>
         </label>
       </div>
     )
   });
+  console.log(attacker_buttons);
   return (
     <form className="form" id="set-attackers-form" onSubmit={props.onSubmit}>
       <fieldset className="form-fieldset" id="attackers-field">
-        <p className="form-label">Preferred Attackers</p>
-          { attacker_buttons }
-        <span className="form-error">{(props.errors ? props.errors.attackers : "")}</span>
-        <button className="form-submit" type="submit">Save</button>
+        <div>
+          <p className="form-label">Preferred Attackers</p>
+            { attacker_buttons }
+          <span className="form-error">{(props.errors ? props.errors.attackers : "")}</span>
+          <button className="form-submit" type="submit">Save</button>
+        </div>
       </fieldset>
     </form>
   )

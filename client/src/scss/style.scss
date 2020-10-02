@@ -7,15 +7,23 @@
 @import "./components/_navigation.scss";
 @import "./components/_header.scss";
 @import "./components/_main-navigation.scss";
+@import "./components/_user.scss";
 @import "./components/_page.scss";
 
 // Import APIs
+// Dashboard
 @import "./api/_general-statistics.scss";
 @import "./api/_seasonal-statistics.scss";
 @import "./api/_operator-statistics.scss";
+// Team
 @import "./api/_view-team.scss";
 @import "./api/_view-team-statistics.scss";
 @import "./api/_leave-team.scss";
+// Account
+@import "./api/_set-attacker-role.scss";
+@import "./api/_set-defender-role.scss";
+@import "./api/_set-attackers.scss";
+@import "./api/_set-defenders.scss";
 
 // RESET
 * {

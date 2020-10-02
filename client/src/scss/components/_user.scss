@@ -1,0 +1,36 @@
+/* scss/components/_user.scss */
+
+div#user {
+  p.user-property {
+    color: $subtle-accent;
+    text-align: center;
+  }
+  div.account-section {
+    h3 {
+      font-size: $heading2;
+      color: $accent;
+      margin: $margin 0;
+    }
+    div.role {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-gap: 4px;
+      background: $background-dark;
+      border-radius: $border-radius;
+      padding: $padding;
+      margin: calc(#{$margin} * 2) auto;
+      max-width: 1200px;
+    }
+  }
+}
+
+@media screen and (max-width: #{$phone-max-width}) {
+  div#user {
+    div.account-section {
+      div.role {
+        padding: $phone-padding;
+        grid-template-columns: 1fr;
+      }
+    }
+  }
+}
