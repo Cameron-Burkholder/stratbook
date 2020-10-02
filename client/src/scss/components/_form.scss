@@ -1,0 +1,33 @@
+/* scss/components/_form.scss */
+
+form.form {
+  margin: calc(#{$margin} * 2) 0;
+  p.form-heading {
+    color: $subtle-accent;
+    font-size: $text;
+  }
+  fieldset.form-fieldset {
+    border: none;
+    margin-bottom: $margin;
+    label.form-label {
+      color: $light;
+      font-size: $small;
+      display: block;
+    }
+    select.form-input, input.form-input {
+      padding: calc(#{$padding} / 2) $padding;
+    }
+    input.form-input {
+      max-width: 200px;
+    }
+    span.form-error {
+      color: $theme-error;
+    }
+  }
+  button.form-button {
+    padding: calc(#{$padding} / 2) $padding;
+  }
+  button.form-button:hover {
+    cursor: pointer;
+  }
+}

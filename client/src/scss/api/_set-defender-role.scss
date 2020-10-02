@@ -5,6 +5,7 @@ div#SetDefenderRoleAPI {
     fieldset.form-fieldset {
       border: none;
       label.form-label {
+        display: inline;
         color: $light;
         font-size: $small;
         width: 100%;

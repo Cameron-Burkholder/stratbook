@@ -9,6 +9,7 @@
 @import "./components/_main-navigation.scss";
 @import "./components/_user.scss";
 @import "./components/_page.scss";
+@import "./components/_form.scss";
 
 // Import APIs
 // Dashboard
@@ -24,6 +25,7 @@
 @import "./api/_set-defender-role.scss";
 @import "./api/_set-attackers.scss";
 @import "./api/_set-defenders.scss";
+@import "./api/_delete-user.scss";
 
 // RESET
 * {

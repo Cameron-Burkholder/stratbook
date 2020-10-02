@@ -17,7 +17,7 @@ const UpdatePlatformForm = (props) => {
     <form className="form" id="update-platform-form" onSubmit={props.onSubmit}>
       <p className="form-heading">Update Platform</p>
       <fieldset className="form-fieldset" id="platform-field">
-        <label className="form-label" htmlFor="platform">Platform</label>
+        <label className="form-label">Platform</label>
         <select onChange={props.onChange} className={"form-input" + (props.errors && props.errors.platform == null ? "" : " input-error")} value={props.platform} id="platform" required>
           <option>XBOX</option>
           <option>PC</option>
