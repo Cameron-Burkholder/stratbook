@@ -30,7 +30,7 @@ div#OperatorStatisticsAPI {
     button.sort-by:hover {
       cursor: pointer;
     }
-    div.operator {
+    div.operator-statistics {
       grid-column: span 2;
       padding: calc(#{$padding} / 2);
       background: $background-accent;

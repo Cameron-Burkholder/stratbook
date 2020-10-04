@@ -6,11 +6,13 @@ import axios from "axios";
 
 import LoadingModal from "../partials/LoadingModal.js";
 import Pagination from "../partials/Pagination.js";
+import Strategy from "../partials/Strategy.js";
 
 /*
   @func: ViewStrategiesAPI
   @desc: manage state of strategies page and make requests to server
   @prop team_code: String
+  @prop getAuthToken: function
   @state:
     strategies: Object
     index: Int
@@ -20,32 +22,115 @@ class ViewStrategiesAPI extends React.Component {
   constructor(props) {
     super(props);
 
+    this.fetchStrategies = this.fetchStrategies.bind(this);
+    this.selectStrategy = this.selectStrategy.bind(this);
+    this.exitStrategy = this.exitStrategy.bind(this);
+    this.onChange = this.onChange.bind(this);
+
     this.state = {
       strategies: [],
       index: 0,
-      loading: false
+      loading: true,
+      hasLoaded: false,
+      listView: true,
+      search: ""
     }
   }
   /*
-    @func increment
-    @desc increment strategy index
+    @func selectStrategy
+    @desc choose a strategy
   */
-  increment() {
-    if (this.state.index + 1 < this.state.strategies.length) {
-      this.setState({
-        index: this.state.index + 1
-      });
-    }
+  selectStrategy(index) {
+    this.setState({
+      index: index,
+      listView: false
+    });
   }
   /*
-    @func decrement
-    @desc decrement strategy index
+    @func exitStrategy
+    @desc go back to list view
   */
-  decrement() {
-    if (this.state.index - 1 >= 0) {
-      this.setState({
-        index: this.state.index - 1
+  exitStrategy() {
+    this.setState({
+      listView: true
+    })
+  }
+  /*
+
+  */
+  onChange(e) {
+    this.setState({
+      search: e.target.value
+    });
+  }
+  /*
+    @func fetchStrategies
+    @desc get strategies from server
+  */
+  fetchStrategies() {
+    const component = this;
+    this.setState({
+      loading: true
+    });
+    axios.defaults.headers.common["Authorization"] = this.props.getAuthToken();
+    axios.get("/api/strategies/view")
+      .then((response) => {
+      switch (response.data.status) {
+        case "STRATEGIES_FOUND":
+          component.setState({
+            loading: false,
+            hasLoaded: true,
+            strategies: response.data.strategies
+          });
+          break;
+        case "ERROR_WHILE_GETTING_STRATEGIES":
+          component.setState({
+            loading: false,
+            error: true
+          });
+          break;
+        case "USER_NOT_VERIFIED":
+          component.setState({
+            loading: false
+          });
+          alert("You have not verified your account. You must verify your account in order to view strategies.");
+          break;
+        case "USER_HAS_NO_TEAM":
+          component.setState({
+            loading: false
+          });
+          alert("You do not have a team. You must have a team to view strategies.");
+          break;
+        case "TEAM_DOES_NOT_EXIST":
+          component.setState({
+            loading: false
+          });
+          alert("The team you requested to view strategies for does not exist.");
+          break;
+        case "USER_NOT_QUALIFIED":
+          component.setState({
+            loading: false
+          });
+          alert("You are not qualified to view the strategies you have requested.");
+          break;
+        default:
+          component.setState({
+            loading: false,
+            error: true
+          });
+          break;
+      }
+    }).catch((error) => {
+      console.log(error);
+      alert("An error has occurred. Please try again shortly.");
+      component.setState({
+        loading: false
       });
+    });
+  }
+  componentDidMount() {
+    if (!this.state.hasLoaded) {
+      this.fetchStrategies();
     }
   }
   render() {
@@ -55,10 +140,23 @@ class ViewStrategiesAPI extends React.Component {
     } else {
       if (this.props.team_code && this.props.team_code !== "") {
         if (this.state.strategies.length > 0) {
-          contents = (
-            <div className="contents">
-              <Pagination title="Strategy" index={this.state.index} increment={this.increment} decrement={this.decrement}/>
+          const strats = this.state.strategies.map((strat, index) => {
+            if (this.state.search === "" || strat.name.toUpperCase().includes(this.state.search.toUpperCase())) {
+              return (
+                <div className="strategy-preview" key={index}>
+                  <h3 className="strategy-preview-heading" onClick={() => { this.selectStrategy(index) }}>{strat.name}</h3>
+                  <p className="strategy-preview-type">{strat.type}</p>
+                </div>
+              )
+            }
+          });
+          contents = (this.state.listView) ? (
+            <div className="strategy-list">
+              <input className="strategy-search" onChange={this.onChange} value={this.state.search} type="text" placeholder="Search Strategies"/>
+              { strats }
             </div>
+          ) : (
+            <Strategy strategy={this.state.strategies[this.state.index]} exitStrategy={this.exitStrategy}/>
           )
         } else {
           contents = <p>Your team does not currently have any strategies.</p>

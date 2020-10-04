@@ -46,6 +46,10 @@ nav.main-nav {
         transition: all 0.3s ease;
         filter: drop-shadow($nav-link-hover-shadow);
       }
+      a.main-nav-link.active-link {
+        color: $nav-link-hover;
+        filter: drop-shadow($nav-link-hover-shadow);
+      }
     }
   }
 }

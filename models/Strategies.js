@@ -12,7 +12,7 @@ const Schema = mongoose.Schema;
 */
 const StrategiesSchema = new Schema({
   strategies: {
-    type: Object,
+    type: Array,
     required: true
   },
   maps: {

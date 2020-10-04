@@ -4,7 +4,7 @@ import React from "react";
 import axios from "axios";
 
 import Loading from "../partials/Loading.js";
-import Operator from "../partials/Operator.js";
+import OperatorStatistics from "../partials/OperatorStatistics.js";
 
 /*
   @func: OperatorStatisticsAPI
@@ -99,7 +99,7 @@ class OperatorStatisticsAPI extends React.Component {
     if (this.state.stats) {
       this.state.operators.map((operator, index) => {
         if (!operator.name.includes("Recruit") && (this.state.search === "" || operator.name.toUpperCase().includes(this.state.search.toUpperCase()))) {
-          operators.push(<Operator image={operator.badge_image} name={operator.name} kd={Math.round(operator.kd * 100) / 100} kills={operator.kills} deaths={operator.deaths} wl={Math.round(operator.wl * 100) / 100} wins={operator.wins} losses={operator.losses} playtime={Math.round(operator.playtime * 100) / 100} hsp={Math.round(operator.headshots / operator.kills * 100) / 100} key={index}/>)
+          operators.push(<OperatorStatistics image={operator.badge_image} name={operator.name} kd={Math.round(operator.kd * 100) / 100} kills={operator.kills} deaths={operator.deaths} wl={Math.round(operator.wl * 100) / 100} wins={operator.wins} losses={operator.losses} playtime={Math.round(operator.playtime * 100) / 100} hsp={Math.round(operator.headshots / operator.kills * 100) / 100} key={index}/>)
         }
       });
     }

@@ -198,7 +198,7 @@ class App extends React.Component {
                 <div className="page-wrapper">
                   <Header title="Strategies" subtitle="View Strategies"/>
                   <MainNavigation page="STRATEGIES" active="VIEW" status={this.state.user.status}/>
-                  <Strategies team_code={this.state.user.team_code}/>
+                  <Strategies team_code={this.state.user.team_code} getAuthToken={this.getAuthToken}/>
                 </div>
               )
               : ( <Redirect to="/"/> )
