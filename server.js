@@ -11,7 +11,7 @@ const email = require("./config/email");      // For use in sending emails
 require("dotenv").config();                   // For using environment variables
 
 // IMPORT UTILITY FUNCTIONS
-const { log, getGenericStats, getSeasonalStats, getOperatorStats } = require("./config/utilities");
+const { log } = require("./config/utilities");
 
 // SETUP EXPRESS
 const app = express();
@@ -48,6 +48,7 @@ require("./config/auth.js")(passport, app);
 require("./routes/users.js")(app, passport);
 require("./routes/teams.js")(app, passport);
 require("./routes/statistics.js")(app, passport);
+require("./routes/strategies.js")(app, passport);
 app.get("/*", function(request, response) {
   log("GET REQUEST AT /*");
   if (process.env.NODE_ENV === "production") {

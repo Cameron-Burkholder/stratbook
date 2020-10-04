@@ -218,7 +218,8 @@ module.exports = async (app, passport) => {
               let admins = [];
               admins.push(request.user._id);
               const newStrategies = new Strategies({
-                strategies: [],
+                strategies: {},
+                maps: {},
                 join_code: join_code
               });
               const newTeam = new Team({

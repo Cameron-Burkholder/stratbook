@@ -150,7 +150,7 @@ class App extends React.Component {
               { this.state.loggedIn ? (
                 <div className="page-wrapper">
                   <Header title="Account"/>
-                  <MainNavigation page="USER" user={this.state.user.status}/>
+                  <MainNavigation page="USER" status={this.state.user.status}/>
                   <User getAuthToken={this.getAuthToken} updateAuthToken={this.updateAuthToken} logout={this.logout} username={this.state.user.username} email={this.state.user.email} platform={this.state.user.platform} attacker_role={this.state.user.attacker_role} attackers={this.state.user.attackers} defenders={this.state.user.defenders} defender_role={this.state.user.defender_role}/>
                 </div>
               )
@@ -162,7 +162,7 @@ class App extends React.Component {
               { this.state.loggedIn ? (
                 <div className="page-wrapper">
                   <Header title="Dashboard"/>
-                  <MainNavigation page="DASHBOARD" user={this.state.user.status}/>
+                  <MainNavigation page="DASHBOARD" status={this.state.user.status}/>
                   <Dashboard getAuthToken={this.getAuthToken}/>
                 </div>
               )
@@ -174,7 +174,7 @@ class App extends React.Component {
               { this.state.loggedIn ? (
                 <div className="page-wrapper">
                   <Header title="Team" subtitle="View Team"/>
-                  <MainNavigation page="TEAM" active="VIEW" user={this.state.user.stats}/>
+                  <MainNavigation page="TEAM" active="VIEW" status={this.state.user.status}/>
                   <Team getAuthToken={this.getAuthToken} updateAuthToken={this.updateAuthToken} team_code={this.state.user.team_code}/>
                 </div>
               )
@@ -186,7 +186,7 @@ class App extends React.Component {
               { this.state.loggedIn && this.state.user.status === "ADMIN" ? (
                 <div className="page-wrapper">
                   <Header title="Team" subtitle="Manage Team"/>
-                  <MainNavigation page="TEAM" active="MANAGE" user={this.state.user.status}/>
+                  <MainNavigation page="TEAM" active="MANAGE" status={this.state.user.status}/>
                 </div>
               )
               : ( <Redirect to="/team"/> )
@@ -197,7 +197,7 @@ class App extends React.Component {
               { this.state.loggedIn ? (
                 <div className="page-wrapper">
                   <Header title="Strategies" subtitle="View Strategies"/>
-                  <MainNavigation page="STRATEGIES" active="VIEW" user={this.state.user.status}/>
+                  <MainNavigation page="STRATEGIES" active="VIEW" status={this.state.user.status}/>
                   <Strategies team_code={this.state.user.team_code}/>
                 </div>
               )
@@ -209,7 +209,7 @@ class App extends React.Component {
               { this.state.loggedIn && (this.state.user.status === "ADMIN" || this.state.user.status === "EDITOR") ? (
                 <div className="page-wrapper">
                   <Header title="Strategies" subtitle="View Strategies"/>
-                  <MainNavigation page="USER" active="EDIT" user={this.state.user.status}/>
+                  <MainNavigation page="USER" active="EDIT" status={this.state.user.status}/>
                   user
                 </div>
               )
@@ -221,7 +221,7 @@ class App extends React.Component {
               { this.state.loggedIn ? (
                 <div className="page-wrapper">
                   <Header title="Maps" subtitle="View Maps"/>
-                  <MainNavigation page="MAPS" active="VIEW" user={this.state.user.status}/>
+                  <MainNavigation page="MAPS" active="VIEW" status={this.state.user.status}/>
                 </div>
               )
               : ( <Redirect to="/"/> )
@@ -232,7 +232,7 @@ class App extends React.Component {
               { this.state.loggedIn && (this.state.user.status === "ADMIN" || this.state.user.status === "EDITOR") ? (
                 <div className="page-wrapper">
                   <Header title="Maps" subtitle="Edit Maps"/>
-                  <MainNavigation page="MAPS" active="EDIT" user={this.state.user.status}/>
+                  <MainNavigation page="MAPS" active="EDIT" status={this.state.user.status}/>
                 </div>
               )
               : ( <Redirect to="/maps"/> )

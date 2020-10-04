@@ -54,7 +54,7 @@ const PRIV_KEY = process.env.RSA_PRIVATE_KEY.replace(/\\n/g, "\n");
 */
 module.exports = {
   log: function(msg) {
-    if (process.env.NODE_ENV !== "TESTING") {
+    if (process.env.NODE_ENV !== "development") {
       console.log(new Date() + " --- " + msg);
     }
   },
