@@ -1,0 +1,9 @@
+/* client/src/scss/api/_delete-team.scss */
+
+div#DeleteTeamAPI {
+  display: flex;
+  justify-content: center;
+  button {
+    padding: calc(#{$padding} / 2) $padding;
+  }
+}

@@ -1,0 +1,24 @@
+/* client/src/scss/api/_update-team-name.scss */
+
+div#UpdateTeamNameAPI {
+  padding: $padding;
+  h2.current-name {
+    color: $accent;
+    margin: auto;
+    text-align: center;
+  }
+  div#update-name-group {
+    display: block;
+    margin: $margin auto;
+    display: flex;
+    justify-content: center;
+    input.team-name-input {
+      padding: calc(#{$padding} / 2) $padding;
+    }
+    button.team-name-button {
+      padding: calc(#{$padding} / 2) $padding;
+      display: inline-block;
+    }
+  }
+
+}

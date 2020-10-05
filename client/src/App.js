@@ -12,6 +12,7 @@ import Logout from "./components/pages/Logout.js";
 import Register from "./components/pages/Register.js";
 import User from "./components/pages/User.js";
 import Team from "./components/pages/Team.js";
+import ManageTeam from "./components/pages/ManageTeam.js";
 import Dashboard from "./components/pages/Dashboard.js";
 import Strategies from "./components/pages/Strategies.js";
 import NotFound from "./components/pages/NotFound.js";
@@ -187,6 +188,7 @@ class App extends React.Component {
                 <div className="page-wrapper">
                   <Header title="Team" subtitle="Manage Team"/>
                   <MainNavigation page="TEAM" active="MANAGE" status={this.state.user.status}/>
+                  <ManageTeam getAuthToken={this.getAuthToken} updateAuthToken={this.updateAuthToken}/>
                 </div>
               )
               : ( <Redirect to="/team"/> )

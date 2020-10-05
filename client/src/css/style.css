@@ -513,6 +513,31 @@ div#LeaveTeamAPI {
     filter: invert(1);
     transition: all 0.3s ease; }
 
+/* client/src/scss/api/_update-team-name.scss */
+div#UpdateTeamNameAPI {
+  padding: 16px; }
+  div#UpdateTeamNameAPI h2.current-name {
+    color: white;
+    margin: auto;
+    text-align: center; }
+  div#UpdateTeamNameAPI div#update-name-group {
+    display: block;
+    margin: 16px auto;
+    display: flex;
+    justify-content: center; }
+    div#UpdateTeamNameAPI div#update-name-group input.team-name-input {
+      padding: calc(16px / 2) 16px; }
+    div#UpdateTeamNameAPI div#update-name-group button.team-name-button {
+      padding: calc(16px / 2) 16px;
+      display: inline-block; }
+
+/* client/src/scss/api/_delete-team.scss */
+div#DeleteTeamAPI {
+  display: flex;
+  justify-content: center; }
+  div#DeleteTeamAPI button {
+    padding: calc(16px / 2) 16px; }
+
 /* scss/api/_set-attacker-roles.scss */
 div#SetAttackerRoleAPI form.form#set-attacker-role-form fieldset.form-fieldset {
   border: none; }
