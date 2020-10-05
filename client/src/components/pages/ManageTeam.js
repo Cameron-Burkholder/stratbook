@@ -3,6 +3,7 @@
 import React from "react";
 
 import UpdateTeamNameAPI from "../api/UpdateTeamNameAPI.js";
+import ManageTeamAPI from "../api/ManageTeamAPI.js";
 import DeleteTeamAPI from "../api/DeleteTeamAPI.js";
 
 /*
@@ -14,8 +15,7 @@ const ManageTeam = (props) => {
   return (
     <div className="page" id="manage-team">
       <UpdateTeamNameAPI getAuthToken={props.getAuthToken}/>
-      // Block users
-      // Update user status
+      <ManageTeamAPI getAuthToken={props.getAuthToken} updateAuthToken={props.updateAuthToken}/>
       <DeleteTeamAPI getAuthToken={props.getAuthToken} updateAuthToken={props.updateAuthToken}/>
     </div>
   )

@@ -531,6 +531,37 @@ div#UpdateTeamNameAPI {
       padding: calc(16px / 2) 16px;
       display: inline-block; }
 
+/* client/src/scss/api/_manage-team.scss */
+div#ManageTeamAPI {
+  background: #15161A;
+  max-width: 1200px;
+  display: block;
+  margin: auto;
+  color: white; }
+  div#ManageTeamAPI div.manage-team-member {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    text-align: center;
+    padding: 16px;
+    border-radius: 2px; }
+    div#ManageTeamAPI div.manage-team-member h4.member-username {
+      color: white; }
+    div#ManageTeamAPI div.manage-team-member p.member-status {
+      font-size: 10pt;
+      color: #7B7B7F;
+      text-align: center;
+      padding: calc(16px / 2) 16px;
+      text-align: center; }
+    div#ManageTeamAPI div.manage-team-member select.member-update-status {
+      padding: calc(16px / 2) 16px;
+      text-align: center;
+      display: block;
+      margin: auto; }
+    div#ManageTeamAPI div.manage-team-member button {
+      display: block;
+      margin: auto;
+      padding: calc(16px / 2) 16px; }
+
 /* client/src/scss/api/_delete-team.scss */
 div#DeleteTeamAPI {
   display: flex;
