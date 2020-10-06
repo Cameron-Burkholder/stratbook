@@ -114,7 +114,7 @@ module.exports = async (app, passport) => {
 
     @outputs:
       If an error occurs at any point
-        packet: Object (status: ERROR_WHILE_LOGGING_IN)
+        packet: Object (status: ERROR)
 
       If input data is invalid
         packet: Object (status: INVALID_LOGIN, errors: errors)

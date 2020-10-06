@@ -26,8 +26,7 @@ import Footer from "./components/partials/Footer.js";
 import "./css/style.css";
 
 /*
-  @func: App
-  @desc: Manage client-side auth and routing
+  App: root component, used to manage client-side auth and routing
 */
 class App extends React.Component {
   constructor(props) {
@@ -48,19 +47,18 @@ class App extends React.Component {
     }
   }
   /*
-    @func: login
-    @desc: login a user on the client side
-    @param token: String
-    @param expiresIn: Integer
-    @param user: Object
+    login: login a user on the client side
+
+    token {String}: JWT
+    expiresIn {Int}: expiry time for JWT
+    user {Object}: user data object to store in localStorage
   */
   login(token, expiresIn, user) {
     this.setLocalStorage(token, expiresIn, user, this.updateState);
     axios.defaults.headers.common["Authorization"] = this.state.token;
   }
   /*
-    @func: logout
-    @desc: logout a user on the client side
+    logout: logout a user on the client side
   */
   logout() {
     this.clearLocalStorage();
@@ -68,8 +66,7 @@ class App extends React.Component {
     this.updateState();
   }
   /*
-    @func: updateState
-    @desc: refresh application state of client-side authentication
+    updateState: refresh application state of client-side authentication
   */
   updateState() {
     this.setState({
@@ -78,10 +75,12 @@ class App extends React.Component {
     });
   }
   /*
-    @func: setLocalStorage
-    @desc: store token and expiration date in local storage
-    @param token: Object
-    @param expires: Date.String
+    setLocalStorage: store token and expiration date in local storage
+
+    token {String}: JWT
+    expiresIn {Int}: expiry time for JWT
+    user {Object}: user data object
+    callback {function}: function to call after local storage set
   */
   setLocalStorage(token, expiresIn, user, callback) {
     localStorage.setItem("token", token);
@@ -90,22 +89,19 @@ class App extends React.Component {
     callback();
   }
   /*
-    @func: clearLocalStorage
-    @desc: clear token and expiration date in local storage
+    clearLocalStorage: clear token and expiration date in local storage
   */
   clearLocalStorage() {
     localStorage.clear();
   }
   /*
-    @func: componentDidMount
-    @desc: upon loading the page, if the user is logged in, attempt to extend their login
+    getAuthToken: get the auth token stored in localStorage
   */
   getAuthToken() {
     return localStorage.getItem("token");
   }
   /*
-    @func: getAuthToken
-    @desc: update token so user is not logged out or data has been updated
+    updateAuthToken: update the state of client-side auth and data
   */
   updateAuthToken() {
     if (this.state.loggedIn) {
@@ -129,8 +125,9 @@ class App extends React.Component {
     }
   }
   /*
-    @func: alert
-    @desc: write a message to the screen
+    alert: write a message to the screen
+
+    msg {String}: msg to display
   */
   alert(msg) {
     console.log(msg);
