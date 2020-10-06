@@ -138,36 +138,40 @@ module.exports = async (app, passport) => {
     };
     User.findOne({ email: request.body.email.toLowerCase() }).then((user) => {
       if (!user) {
-        packet.status = "USER_NOT_FOUND";
-        packet.errors = {
-          email: "No user with that email was found."
-        };
-        response.json(packet);
+        response.json({
+          status: "USER_NOT_FOUND",
+          errors: {
+            email: "No user with that email was found."
+          }
+        });
       } else {
         const isValidPassword = verifyPassword(request.body.password, user.password);
         if (isValidPassword) {
           const tokenObject = issueJWT(user);
-          packet.status = "TOKEN_ISSUED";
-          packet.user = user;
-          packet.user.password = undefined;
-          packet.user.__v = undefined;
-          packet.user._id = undefined;
-          packet.token = tokenObject.token;
-          packet.expiresIn = tokenObject.expires;
-          response.json(packet);
+          user.password = undefined;
+          user._id = undefined;
+          response.json({
+            status: "TOKEN_ISSUED",
+            user: user,
+            token: tokenObject.token,
+            expiresIn: tokenObject.expires
+          });
         } else {
-          packet.status = "INCORRECT_PASSWORD";
-          packet.errors = {
-            password: "The password you entered is incorrect."
-          };
-          response.json(packet);
+          response.json({
+            status: "INCORRECT_PASSWORD",
+            errors: {
+              password: "The password you entered is incorrect."
+            }
+          })
         }
       }
     }).catch(error => {
       console.log(error);
-      packet.status = "ERROR_WHILE_LOGGING_IN";
-      response.json(packet);
-    })
+      response.json({
+        status: "ERROR",
+        message: "There was an error while attemping to login."
+      });
+    });
   });
 
   /*
@@ -178,21 +182,21 @@ module.exports = async (app, passport) => {
       If user is invalid
         404
       If login is valid
-        packet: Object status: TOKEN_EXTENDED, token: token, expiresIn: Date)
+        packet: Object (status: TOKEN_EXTENDED, token: token, expiresIn: Date)
   */
   app.get("/api/users/update-token", (request, response, done) => {
     log("GET REQUEST AT /api/users/extend-token");
     done();
   }, passport.authenticate("jwt", { session: false }), (request, response) => {
     const tokenObject = issueJWT(request.user);
-    let packet = {
+    request.user.password = undefined;
+    request.user._id = undefined;
+    response.json({
       token: tokenObject.token,
       expiresIn: tokenObject.expires,
       status: "TOKEN_UPDATED",
       user: request.user
-    };
-    packet.user.password = undefined;
-    response.json(packet);
+    });
   });
 
   /*
@@ -206,7 +210,7 @@ module.exports = async (app, passport) => {
 
     @outputs:
       If an error occurs
-        packet: Object (status: ERROR_WHILE_REGISTERING)
+        packet: Object (status: ERROR)
 
       If input data is invalid
         packet: Object (status: INVALID_REGISTRATION)
@@ -230,19 +234,19 @@ module.exports = async (app, passport) => {
     }
     User.findOne({ email: request.body.email }, function(error, user) {
       if (user) {
-        packet.status = "EXISTING_USER";
-        packet.errors = {
-          email: "An account with that email already exists."
-        };
-        response.json(packet);
+        response.json({
+          status: "EXISTING_USER",
+          errors: {
+            email: "An account with that email already exists."
+          }
+        });
       } else {
         User.findOne({ username: request.body.username }, function(error, user) {
           if (user) {
-            packet.status = "EXISTING_USER";
-            packet.errors = {
-              username: "An account with the username already exists."
-            }
-            response.json(packet);
+            response.json({
+              status: "EXISTING_USER",
+              message: "An account with that username already exists."
+            });
           } else {
             const newUser = new User({
               username: request.body.username,
@@ -271,9 +275,10 @@ module.exports = async (app, passport) => {
                   verification_id: newVerificationId
                 });
                 newUnverifiedUser.save().then(user => {
-                  packet.status = "USER_REGISTERED";
-
-                  response.json(packet);
+                  response.json({
+                    status: "USER_REGISTERED",
+                    _id: (process.env.NODE_ENV === "development" ? newUser._id : undefined)
+                  });
                   let registrationEmail = {
                     subject: "R6 Stratbook - Registration Complete!",
                     html: "<div><p>Thank you for registering with R6 Stratbook!<br/><br/>We are glad to have you on our platform. To verify your account so you can create and join teams, click the link below.</p><br/><br/><a href='" + newVerificationLink + "' target='_blank'>Verify Email</a></div>"
@@ -281,18 +286,24 @@ module.exports = async (app, passport) => {
                   email(newUser.email, registrationEmail.subject, registrationEmail.html);
                 }).catch(error => {
                   console.log(error);
-                  packet.status = "ERROR_WHILE_REGISTERING";
-                  response.json(packet);
-                })
+                  response.json({
+                    status: "ERROR",
+                    message: "An error occurred while attempting to register user."
+                  });
+                });
               }).catch(error => {
                 console.log(error);
-                packet.status = "ERROR_WHILE_REGISTERING";
-                response.json(packet);
+                response.json({
+                  status: "ERROR",
+                  message: "An error occurred while attempting to register user."
+                });
               });
             } else {
               console.log(error);
-              packet.status = "ERROR_WHILE_REGISTERING";
-              response.json(packet);
+              response.json({
+                status: "ERROR",
+                message: "An error occurred while attempting to register user."
+              });
             }
           }
         });
