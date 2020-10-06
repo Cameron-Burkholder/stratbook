@@ -6,36 +6,11 @@ const email = require("../config/email.js");
 
 const { log, verifyPassword, hashPassword, issueJWT, genVerificationLink } = require("../config/utilities.js");
 
-// Load input validation
-const validateRegisterInput = require("../validation/register.js");
-const validateLoginInput = require("../validation/login.js");
+// Load validation
+const validation = require("../validation.js");
 
-// Load platform validation
-const validatePlatformInput = require("../validation/validatePlatformInput.js");
-
-// Load username validation
-const validateUsernameInput = require("../validation/validateUsernameInput.js");
-
-// Load email validation
-const validateEmailInput = require("../validation/validateEmailInput.js");
-
-// Load status validation
-const validateStatusInput = require("../validation/validateStatusInput.js");
-
-// Load password validation
-const validatePasswordInput = require("../validation/validatePasswordInput.js");
-
-// Load attacker role validation
-const validateAttackerInput = require("../validation/validateAttackerInput.js");
-
-// Load defender role validation
-const validateDefenderInput = require("../validation/validateDefenderInput.js");
-
-// Load attackers list validation
-const validateAttackersInput = require("../validation/validateAttackersInput.js");
-
-// Load defenders list validation
-const validateDefendersInput = require("../validation/validateDefendersInput.js");
+// Load middleware
+const middleware = require("../middleware.js");
 
 // Prepare user verification
 let host;
@@ -132,7 +107,7 @@ module.exports = async (app, passport) => {
   app.post("/api/users/login", (request, response, done) => {
     log("POST REQUEST AT /api/users/login");
     done();
-  }, validateLoginInput, (request, response) => {
+  }, validation.validateLoginInput, (request, response) => {
     let packet = {
       status: ""
     };
@@ -228,7 +203,7 @@ module.exports = async (app, passport) => {
   app.post("/api/users/register", (request, response, done) => {
     log("POST REQUEST AT /api/users/register");
     done();
-  }, validateRegisterInput, (request, response) => {
+  }, validation.validateRegisterInput, (request, response) => {
     let packet = {
       status: ""
     }
@@ -337,7 +312,7 @@ module.exports = async (app, passport) => {
   app.patch("/api/users/update-platform", (request, response, done) => {
     log("PATCH REQUEST AT /api/users/update-platform");
     done();
-  }, passport.authenticate("jwt", { session: false }), validatePlatformInput, (request, response) => {
+  }, passport.authenticate("jwt", { session: false }), validation.validatePlatformInput, (request, response) => {
     let packet = {
       status: ""
     };
@@ -391,7 +366,7 @@ module.exports = async (app, passport) => {
   app.patch("/api/users/update-username", (request, response, done) => {
     log("PATCH REQUEST AT /api/users/update-username");
     done();
-  }, passport.authenticate("jwt", { session: false }), validateUsernameInput, (request, response) => {
+  }, passport.authenticate("jwt", { session: false }), validation.validateUsernameInput, (request, response) => {
     let packet = {
       status: ""
     };
@@ -463,7 +438,7 @@ module.exports = async (app, passport) => {
   app.patch("/api/users/update-email", (request, response, done) => {
     log("PATCH REQUEST AT /api/users/update-email");
     done();
-  }, passport.authenticate("jwt", { session: false }), validateEmailInput, (request, response) => {
+  }, passport.authenticate("jwt", { session: false }), validation.validateEmailInput, (request, response) => {
     let packet = {
       status: ""
     };
@@ -553,7 +528,7 @@ module.exports = async (app, passport) => {
   app.patch("/api/users/update-user-status", (request, response, done) => {
     log("PATCH REQUEST AT /api/users/update-user-status");
     done();
-  }, passport.authenticate("jwt", { session: false }), validateStatusInput, (request, response) => {
+  }, passport.authenticate("jwt", { session: false }), validation.validateStatusInput, (request, response) => {
     let packet = {
       status: ""
     };
@@ -703,7 +678,7 @@ module.exports = async (app, passport) => {
   app.patch("/api/users/forgot-password", (request, response, done) => {
     log("PATCH REQUEST AT /api/users/forgot-password");
     done();
-  }, validateEmailInput, (request, response) => {
+  }, validation.validateEmailInput, (request, response) => {
     let packet = {
       status: ""
     };
@@ -762,7 +737,7 @@ module.exports = async (app, passport) => {
   app.patch("/api/users/reset-password", (request, response, done) => {
     log("PATCH REQUEST AT /api/users/reset-password");
     done();
-  }, validatePasswordInput, (request, response) => {
+  }, validation.validatePasswordInput, (request, response) => {
     let packet = {
       status: ""
     };
@@ -826,7 +801,7 @@ module.exports = async (app, passport) => {
   app.patch("/api/users/update-password", (request, response, done) => {
     log("PATCH REQUEST AT /api/users/update-password");
     done();
-  }, passport.authenticate("jwt", { session: false }), validatePasswordInput, (request, response) => {
+  }, passport.authenticate("jwt", { session: false }), validation.validatePasswordInput, (request, response) => {
     let packet = {
       status: ""
     };
@@ -875,7 +850,7 @@ module.exports = async (app, passport) => {
   app.patch("/api/users/set-attacker-role", (request, response, done) => {
     log("PATCH REQUEST AT /api/users/set-attacker-role");
     done();
-  }, passport.authenticate("jwt", { session: false }), validateAttackerInput, (request, response) => {
+  }, passport.authenticate("jwt", { session: false }), validation.validateAttackerRole, (request, response) => {
     let packet = {
       status: ""
     };
@@ -924,7 +899,7 @@ module.exports = async (app, passport) => {
   app.patch("/api/users/set-defender-role", (request, response, done) => {
     log("PATCH REQUEST AT /api/users/set-defender-role");
     done();
-  }, passport.authenticate("jwt", { session: false }), validateDefenderInput, (request, response) => {
+  }, passport.authenticate("jwt", { session: false }), validation.validateDefenderRole, (request, response) => {
     let packet = {
       status: ""
     };
@@ -973,7 +948,7 @@ module.exports = async (app, passport) => {
   app.patch("/api/users/set-attackers", (request, response, done) => {
     log("PATCH REQUEST AT /api/users/set-attackers");
     done();
-  }, passport.authenticate("jwt", { session: false }), validateAttackersInput, (request, response) => {
+  }, passport.authenticate("jwt", { session: false }), validation.validateAttackersInput, (request, response) => {
     let packet = {
       status: ""
     };
@@ -1018,7 +993,7 @@ module.exports = async (app, passport) => {
   app.patch("/api/users/set-defenders", (request, response, done) => {
     log("PATCH REQUEST AT /api/users/set-defenders");
     done();
-  }, passport.authenticate("jwt", { session: false }), validateDefendersInput, (request, response) => {
+  }, passport.authenticate("jwt", { session: false }), validation.validateDefendersInput, (request, response) => {
     let packet = {
       status: ""
     };

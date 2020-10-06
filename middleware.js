@@ -1,4 +1,4 @@
-/* middleware/userHasTeam.js */
+/* middleware.js */
 
 const mongoose = require("mongoose");
 

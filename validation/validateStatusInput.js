@@ -1,4 +1,4 @@
-/* validation/validateStatusInput.js */
+
 
 const Validator = require("validator");
 const Filter = require("bad-words");

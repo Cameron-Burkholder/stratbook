@@ -1,4 +1,4 @@
-/* validation/validateTeamName.js */
+
 
 const Validator = require("validator");
 const Filter = require("bad-words");

@@ -114,12 +114,12 @@ class App extends React.Component {
             this.login(response.data.token, response.data.expiresIn, user);
             break;
           default:
-            alert("An error has occurred.");
+            this.alert("An error has occurred.");
             break;
         }
       }).catch((error) => {
         console.log(error);
-        alert("Your login has expired or become invalid.");
+        this.alert("Your login has expired or become invalid.");
         this.logout();
       });
     }

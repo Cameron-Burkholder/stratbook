@@ -1,4 +1,4 @@
-/* validation/validateRemoveUser.js */
+
 
 const Validator = require("validator");
 const isEmpty = require("is-empty");
@@ -26,7 +26,7 @@ module.exports = function validateBlockUser(request, response, done) {
 
   let errors = {};
   data.username = !isEmpty(data.username) ? data.username : "";
-  
+
   if (Validator.isEmpty(data.username)) {
     errors.username = "Username field is required";
   }

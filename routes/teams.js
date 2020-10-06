@@ -4,10 +4,10 @@ const email = require("../config/email.js");
 const { log, genJoinCode } = require("../config/utilities.js");
 const mongoose = require("mongoose");
 
-// Load input validation
-const validateTeamInput = require("../validation/validateTeamName.js");
-const validateJoinCode = require("../validation/validateJoinCode.js");
-const validateBlockUser = require("../validation/validateBlockUser");
+// Load validation
+const validation = require("../validation.js");
+// Load middleware
+const middleware = require("../middleware.js");
 
 // Prepare user verification
 let host;
@@ -192,7 +192,7 @@ module.exports = async (app, passport) => {
   app.post("/api/teams/create-team", (request, response, done) => {
     log("POST REQUEST AT /api/teams/create-team");
     done();
-  }, passport.authenticate("jwt", { session: false }), validateTeamInput, async (request, response) => {
+  }, passport.authenticate("jwt", { session: false }), validation.validateTeamInput, async (request, response) => {
     let packet = {
       status: ""
     };
@@ -306,7 +306,7 @@ module.exports = async (app, passport) => {
   app.patch("/api/teams/update-name", (request, response, done) => {
     log("PATCH REQUEST AT /api/teams/update-name");
     done();
-  }, passport.authenticate("jwt", { session: false }), validateTeamInput, async (request, response) => {
+  }, passport.authenticate("jwt", { session: false }), validation.validateTeamInput, async (request, response) => {
     let packet = {
       status: ""
     };
@@ -411,7 +411,7 @@ module.exports = async (app, passport) => {
   app.patch("/api/teams/join-team", (request, response, done) => {
     log("PATCH REQUEST AT /api/teams/join-team");
     done();
-  }, passport.authenticate("jwt", { session: false }), validateJoinCode, async (request, response) => {
+  }, passport.authenticate("jwt", { session: false }), validation.validateJoinCode, async (request, response) => {
     let packet = {
       status: ""
     };
@@ -721,7 +721,7 @@ module.exports = async (app, passport) => {
   app.patch("/api/teams/block-user", (request, response, done) => {
     log("PATCH REQUEST AT /api/teams/remove-user");
     done();
-  }, passport.authenticate("jwt", { session: false }), validateBlockUser, async (request, response) => {
+  }, passport.authenticate("jwt", { session: false }), validation.validateBlockUser, async (request, response) => {
     let packet = {
       status: ""
     };

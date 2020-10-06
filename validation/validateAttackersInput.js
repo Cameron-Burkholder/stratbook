@@ -1,4 +1,4 @@
-/* validation/validateAttackersInput.js */
+
 
 const Validator = require("validator");
 const isEmpty = require("is-empty");
