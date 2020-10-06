@@ -1,4 +1,4 @@
-/* client/components/pages/Logout.js */
+/* client/src/components/pages/Logout.js */
 
 import React from "react";
 

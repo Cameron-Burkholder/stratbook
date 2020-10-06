@@ -1,4 +1,4 @@
-/* client/components/pages/ManageTeam.js */
+/* client/src/components/pages/ManageTeam.js */
 
 import React from "react";
 
@@ -10,6 +10,8 @@ import DeleteTeamAPI from "../api/DeleteTeamAPI.js";
   @func: ManageTeam
   @desc: render manage team page
   @prop getAuthToken: function
+  @prop updateAuthToken: function
+  @prop alert: function
 */
 const ManageTeam = (props) => {
   return (

@@ -1,4 +1,4 @@
-/* client/components/pages/User.js */
+/* client/src/components/pages/User.js */
 
 import React from "react";
 
@@ -16,7 +16,17 @@ import DeleteUserAPI from "../api/DeleteUserAPI.js";
   @func: User
   @desc: render user page
   @prop getAuthToken: function
+  @prop updateAuthToken: function
   @prop logout: function
+  @prop username: String
+  @prop email: String
+  @prop platform: String
+  @prop attacker_role: String
+  @prop attackers: Array
+  @prop defenders: Array
+  @prop defender_role: String
+  @prop alert: function
+
 */
 const User = (props) => {
   return (

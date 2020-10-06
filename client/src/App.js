@@ -1,4 +1,4 @@
-/* client/App.js */
+/* client/src/App.js */
 
 import React from "react";
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
@@ -40,6 +40,7 @@ class App extends React.Component {
     this.clearLocalStorage = this.clearLocalStorage.bind(this);
     this.getAuthToken = this.getAuthToken.bind(this);
     this.updateAuthToken = this.updateAuthToken.bind(this);
+    this.alert = this.alert.bind(this);
 
     this.state = {
       loggedIn: Date.now() < new Date(localStorage.getItem("expires")) ? true : false,
@@ -127,6 +128,13 @@ class App extends React.Component {
       });
     }
   }
+  /*
+    @func: alert
+    @desc: write a message to the screen
+  */
+  alert(msg) {
+    console.log(msg);
+  }
   componentDidMount() {
     this.updateAuthToken();
   }
@@ -152,7 +160,11 @@ class App extends React.Component {
                 <div className="page-wrapper">
                   <Header title="Account"/>
                   <MainNavigation page="USER" status={this.state.user.status}/>
-                  <User getAuthToken={this.getAuthToken} updateAuthToken={this.updateAuthToken} logout={this.logout} username={this.state.user.username} email={this.state.user.email} platform={this.state.user.platform} attacker_role={this.state.user.attacker_role} attackers={this.state.user.attackers} defenders={this.state.user.defenders} defender_role={this.state.user.defender_role}/>
+                  <User getAuthToken={this.getAuthToken} updateAuthToken={this.updateAuthToken}
+                        logout={this.logout} username={this.state.user.username} email={this.state.user.email}
+                        platform={this.state.user.platform} attacker_role={this.state.user.attacker_role}
+                        attackers={this.state.user.attackers} defenders={this.state.user.defenders}
+                        defender_role={this.state.user.defender_role} alert={this.alert}/>
                 </div>
               )
               : ( <Redirect to="/"/> )
@@ -164,7 +176,7 @@ class App extends React.Component {
                 <div className="page-wrapper">
                   <Header title="Dashboard"/>
                   <MainNavigation page="DASHBOARD" status={this.state.user.status}/>
-                  <Dashboard getAuthToken={this.getAuthToken}/>
+                  <Dashboard getAuthToken={this.getAuthToken} alert={this.alert}/>
                 </div>
               )
               : ( <Redirect to="/"/> )
@@ -176,7 +188,8 @@ class App extends React.Component {
                 <div className="page-wrapper">
                   <Header title="Team" subtitle="View Team"/>
                   <MainNavigation page="TEAM" active="VIEW" status={this.state.user.status}/>
-                  <Team getAuthToken={this.getAuthToken} updateAuthToken={this.updateAuthToken} team_code={this.state.user.team_code}/>
+                  <Team getAuthToken={this.getAuthToken} updateAuthToken={this.updateAuthToken}
+                        team_code={this.state.user.team_code} alert={this.alert}/>
                 </div>
               )
               : ( <Redirect to="/"/> )
@@ -188,7 +201,7 @@ class App extends React.Component {
                 <div className="page-wrapper">
                   <Header title="Team" subtitle="Manage Team"/>
                   <MainNavigation page="TEAM" active="MANAGE" status={this.state.user.status}/>
-                  <ManageTeam getAuthToken={this.getAuthToken} updateAuthToken={this.updateAuthToken}/>
+                  <ManageTeam getAuthToken={this.getAuthToken} updateAuthToken={this.updateAuthToken} alert={this.alert}/>
                 </div>
               )
               : ( <Redirect to="/team"/> )
@@ -200,7 +213,7 @@ class App extends React.Component {
                 <div className="page-wrapper">
                   <Header title="Strategies" subtitle="View Strategies"/>
                   <MainNavigation page="STRATEGIES" active="VIEW" status={this.state.user.status}/>
-                  <Strategies team_code={this.state.user.team_code} getAuthToken={this.getAuthToken}/>
+                  <Strategies team_code={this.state.user.team_code} getAuthToken={this.getAuthToken} alert={this.alert}/>
                 </div>
               )
               : ( <Redirect to="/"/> )
@@ -268,7 +281,7 @@ class App extends React.Component {
               : (
                 <div className="page-wrapper">
                   <Header title="Login"/>
-                  <Login login={this.login}/>
+                  <Login login={this.login} alert={this.alert}/>
                 </div>
                 )
               }
@@ -287,7 +300,7 @@ class App extends React.Component {
               : (
                 <div className="page-wrapper">
                   <Header title="Register"/>
-                  <Register/>
+                  <Register alert={this.alert}/>
                 </div>
                 )
               }

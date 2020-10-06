@@ -1,4 +1,4 @@
-/* client/components/pages/Strategies.js */
+/* client/src/components/pages/Strategies.js */
 
 import React from "react";
 
@@ -9,6 +9,7 @@ import ViewStrategiesAPI from "../api/ViewStrategiesAPI.js";
   @desc: render strategies page
   @prop team_code: String
   @prop getAuthToken: function
+  @prop alert: function
 */
 const Strategies = (props) => {
   return (

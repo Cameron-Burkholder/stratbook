@@ -1,4 +1,4 @@
-/* client/components/pages/Register.js */
+/* client/src/components/pages/Register.js */
 
 import React from "react";
 
@@ -7,6 +7,7 @@ import RegisterAPI from "../api/RegisterAPI.js";
 /*
   @func: Register
   @desc: render register page
+  @prop alert: function
 */
 const Register = () => {
   return (

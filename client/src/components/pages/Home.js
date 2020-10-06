@@ -1,4 +1,4 @@
-/* client/components/pages/Home.js */
+/* client/src/components/pages/Home.js */
 
 import React from "react";
 

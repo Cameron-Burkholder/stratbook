@@ -1,4 +1,4 @@
-/* client/components/pages/Team.js */
+/* client/src/components/pages/Team.js */
 
 import React from "react";
 
@@ -14,6 +14,7 @@ import LeaveTeamAPI from "../api/LeaveTeamAPI.js";
   @prop getAuthToken: function
   @prop updateAuthToken: function
   @prop team_code: String
+  @prop alert: function
 */
 const Team = (props) => {
   return (
