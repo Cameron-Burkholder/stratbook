@@ -308,7 +308,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
               assert.equal(response.status, 200, "Response should be 200 if JWT is valid but team does not exist.");
-              assert.equal(response.body.status, "TEAM_DOES_NOT_EXIST", "Response should indicate team does not exist if it does not.");
+              assert.equal(response.body.status, "TEAM_NOT_FOUND", "Response should indicate team does not exist if it does not.");
             done();
           });
       });
@@ -526,7 +526,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
               assert.equal(response.status, 200, "Response should be 200 if JWT is valid but team does not exist.");
-              assert.equal(response.body.status, "TEAM_DOES_NOT_EXIST", "Response should indicate team does not exist if it does not.");
+              assert.equal(response.body.status, "TEAM_NOT_FOUND", "Response should indicate team does not exist if it does not.");
             done();
           });
       });
@@ -918,7 +918,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if team is not found.");
-            assert.equal(response.body.status, "TEAM_DOES_NOT_EXIST", "Response should indicate team is not found.");
+            assert.equal(response.body.status, "TEAM_NOT_FOUND", "Response should indicate team is not found.");
             done();
           });
       });
@@ -1081,7 +1081,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
               assert.equal(response.status, 200, "Response should be 200 if JWT is valid but team does not exist.");
-              assert.equal(response.body.status, "TEAM_DOES_NOT_EXIST", "Response should indicate team does not exist if it does not.");
+              assert.equal(response.body.status, "TEAM_NOT_FOUND", "Response should indicate team does not exist if it does not.");
             done();
           });
       });
@@ -1853,7 +1853,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if user is not found.");
-            assert.equal(response.body.status, "TEAM_DOES_NOT_EXIST", "Response should indiciate requested user not found.");
+            assert.equal(response.body.status, "TEAM_NOT_FOUND", "Response should indiciate requested user not found.");
             done();
           });
       });
@@ -2725,7 +2725,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if team is not found.");
-            assert.equal(response.body.status, "TEAM_DOES_NOT_EXIST", "Response should indiciate team has not been found.");
+            assert.equal(response.body.status, "TEAM_NOT_FOUND", "Response should indiciate team has not been found.");
             done();
           });
       });
@@ -2857,7 +2857,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if team does not exist.");
-            assert.equal(response.body.status, "TEAM_DOES_NOT_EXIST", "Response should indicate that team does not exist.");
+            assert.equal(response.body.status, "TEAM_NOT_FOUND", "Response should indicate that team does not exist.");
             done();
           });
       });

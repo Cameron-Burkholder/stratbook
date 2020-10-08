@@ -169,79 +169,71 @@ module.exports = async (app, passport) => {
   app.post("/api/teams/create-team", (request, response, done) => {
     log("POST REQUEST AT /api/teams/create-team");
     done();
-  }, passport.authenticate("jwt", { session: false }), validation.validateTeamInput, async (request, response) => {
-    let packet = {
-      status: ""
-    };
-    if (request.user.verified) {
-      if (request.user.team_code) {
-        packet.status = "USER_HAS_TEAM";
-        response.json(packet);
-      } else {
-        Team.findOne({ name: request.body.name }).then(async function(team, error) {
-          if (error) {
-            console.log("error" + error);
-            packet.status = "ERROR_WHILE_CREATING_TEAM";
-            response.json(packet);
-          } else {
-            if (team) {
-              packet.status = "TEAM_ALREADY_EXISTS";
-              packet.errors = {
-                name: "A team with that name already exists"
-              }
-              response.json(packet);
-            } else {
-              const join_code = await genJoinCode();
-              let admins = [];
-              admins.push(request.user._id);
-              const newStrategies = new Strategies({
-                strategies: {},
-                maps: {},
-                join_code: join_code
-              });
-              const newTeam = new Team({
-                join_code: join_code,
-                members: [],
-                admins: admins,
-                editors: [],
-                blocked_users: [],
-                name: request.body.name,
-                strategies_id: newStrategies._id,
-                platform: request.user.platform.toUpperCase()
-              });
-              newStrategies.save().then((strategies) => {
-                newTeam.save().then((team) => {
-                  User.findOne({ _id: request.user._id }).then((user, error) => {
-                    user.team_code = newTeam.join_code;
-                    user.status = ADMIN;
-                    user.save().then(() => {
-                      packet.status = "TEAM_CREATED";
-                      if (process.env.NODE_ENV === "development") {
-                        packet.team_code = newTeam.join_code;
-                      }
-                      response.json(packet);
-                    });
-                  }).catch(error => {
-                    console.log(error);
-                  });
-                }).catch(error => {
-                  console.log(error);
-                  packet.status = "ERROR_WHILE_CREATING_TEAM";
+  }, passport.authenticate("jwt", { session: false }), validation.validateTeamInput, middleware.userIsVerified, middleware.userHasNoTeam, async (request, response) => {
+    let packet = {};
+    Team.findOne({ name: request.body.name }).then(async (team) => {
+        if (team) {
+          packet.status = "TEAM_ALREADY_EXISTS";
+          packet.errors = {
+            name: "A team with that name already exists"
+          }
+          response.json(packet);
+        } else {
+          const join_code = await genJoinCode();
+          let admins = [];
+          admins.push(request.user._id);
+          const newStrategies = new Strategies({
+            strategies: [],
+            maps: {},
+            join_code: join_code
+          });
+          const newTeam = new Team({
+            join_code: join_code,
+            members: [],
+            admins: admins,
+            editors: [],
+            blocked_users: [],
+            name: request.body.name,
+            strategies_id: newStrategies._id,
+            platform: request.user.platform.toUpperCase()
+          });
+          newStrategies.save().then((strategies) => {
+            newTeam.save().then((team) => {
+              User.findOne({ _id: request.user._id }).then((user, error) => {
+                user.team_code = newTeam.join_code;
+                user.status = ADMIN;
+                user.save().then(() => {
+                  packet.status = "TEAM_CREATED";
+                  if (process.env.NODE_ENV === "development") {
+                    packet.team_code = newTeam.join_code;
+                  }
                   response.json(packet);
                 });
               }).catch(error => {
                 console.log(error);
-                packet.status = "ERROR_WHILE_CREATING_TEAM";
+                packet.status = "ERROR";
+                packet.message = "An error occurred while attempting to create team.";
                 response.json(packet);
               });
-            }
-          }
-        });
-      }
-    } else {
-      packet.status = "USER_NOT_VERIFIED";
+            }).catch(error => {
+              console.log(error);
+              packet.status = "ERROR";
+              packet.message = "An error occurred while attempting to create team.";
+              response.json(packet);
+            });
+          }).catch(error => {
+            console.log(error);
+            packet.status = "ERROR";
+            packet.message = "An error occurred while attempting to create team.";
+            response.json(packet);
+          });
+        }
+    }).catch(error => {
+      console.log(error);
+      packet.status = "ERROR";
+      packet.message = "An error occurred while attempting to create team.";
       response.json(packet);
-    }
+    });
   });
 
   /*
@@ -271,7 +263,7 @@ module.exports = async (app, passport) => {
         packet: Object (status: USER_NOT_QUALIFIED)
 
       If there is no team with the users join code
-        packet: Object (status: TEAM_DOES_NOT_EXIST)
+        packet: Object (status: TEAM_NOT_FOUND)
 
       If user is not an admin on that team
         packet: Object (status: USER_NOT_QUALIFIED)
@@ -283,69 +275,51 @@ module.exports = async (app, passport) => {
   app.patch("/api/teams/update-name", (request, response, done) => {
     log("PATCH REQUEST AT /api/teams/update-name");
     done();
-  }, passport.authenticate("jwt", { session: false }), validation.validateTeamInput, async (request, response) => {
-    let packet = {
-      status: ""
-    };
-    if (request.user.verified) {
-      if (request.user.team_code) {
-        if (request.user.status === ADMIN) {
-          await Team.findOne({ join_code: request.user.team_code }).then((team, error) => {
-            if (team) {
-              if (team.admins.indexOf(String(request.user._id)) < 0) {
-                packet.status = "USER_NOT_QUALIFIED";
-                response.json(packet);
-              } else {
-                Team.findOne({ name: request.body.name }).then((team, error) => {
-                  if (team) {
-                    packet.status = "TEAM_ALREADY_EXISTS";
-                    response.json(packet);
-                  } else {
-                    Team.findOne({ join_code: request.user.team_code }).then((team, error) => {
-                      team.name = request.body.name;
-                      team.save().then(() => {
-                        packet.status = "TEAM_NAME_UPDATED";
-                        response.json(packet);
-                      }).catch(error => {
-                        console.log(error);
-                        packet.status = "ERROR_WHILE_UPDATING_TEAM_NAME";
-                        response.json(packet);
-                      });
-                    }).catch(error => {
-                      console.log(error);
-                      packet.status = "ERROR_WHILE_UPDATING_TEAM_NAME";
-                      response.json(packet);
-                    });
-                  }
-                }).catch(error => {
-                  if (error) {
-                    console.log(error);
-                    packet.status = "ERROR_WHILE_UPDATING_TEAM_NAME";
-                    response.json(packet);
-                  }
-                })
-              }
-            } else {
-              packet.status = "TEAM_DOES_NOT_EXIST";
-              response.json(packet);
-            }
-          }).catch(error => {
-            console.log(error);
-            packet.status = "UNABLE_TO_UPDATE_TEAM_NAME";
-            response.json(packet);
-          });
-        } else {
-          packet.status = "USER_NOT_QUALIFIED";
-          response.json(packet);
-        }
-      } else {
-        packet.status = "USER_HAS_NO_TEAM";
+  }, passport.authenticate("jwt", { session: false }), validation.validateTeamInput, middleware.userIsVerified, middleware.userIsAdmin, middleware.userHasTeam, async (request, response) => {
+    let packet = {};
+    Team.findOne({ _id: request.team._id }).then(team => {
+      if (team.admins.indexOf(String(request.user._id)) < 0) {
+        packet.status = "USER_NOT_QUALIFIED";
         response.json(packet);
+      } else {
+        Team.findOne({ name: request.body.name }).then((team, error) => {
+          if (team) {
+            packet.status = "TEAM_ALREADY_EXISTS";
+            response.json(packet);
+          } else {
+            Team.findOne({ join_code: request.user.team_code }).then((team, error) => {
+              team.name = request.body.name;
+              team.save().then(() => {
+                packet.status = "TEAM_NAME_UPDATED";
+                response.json(packet);
+              }).catch(error => {
+                console.log(error);
+                packet.status = "ERROR";
+                packet.message = "An error occurred while attempting to update team name.";
+                response.json(packet);
+              });
+            }).catch(error => {
+              console.log(error);
+              packet.status = "ERROR";
+              packet.message = "An error occurred while attempting to update team name.";
+              response.json(packet);
+            });
+          }
+        }).catch(error => {
+          if (error) {
+            console.log(error);
+            packet.status = "ERROR";
+            packet.message = "An error occurred while attempting to update team name.";
+            response.json(packet);
+          }
+        })
       }
-    } else {
-      packet.status = "USER_NOT_VERIFIED";
+    }).catch(error => {
+      console.log(error);
+      packet.status = "ERROR";
+      packet.message = "An error occurred while attempting to update team name."
       response.json(packet);
-    }
+    });
   });
 
   /*
@@ -388,83 +362,77 @@ module.exports = async (app, passport) => {
   app.patch("/api/teams/join-team", (request, response, done) => {
     log("PATCH REQUEST AT /api/teams/join-team");
     done();
-  }, passport.authenticate("jwt", { session: false }), validation.validateJoinCode, async (request, response) => {
-    let packet = {
-      status: ""
-    };
-    if (request.user.verified) {
-      if (request.user.team_code) {
-        packet.status = "USER_HAS_TEAM";
-        response.json(packet);
-      } else {
-        Team.findOne({ join_code: request.body.join_code }).then(async (team, error) => {
-          if (team) {
-            if (team.platform === request.user.platform.toUpperCase()) {
-              if (team.blocked_users.indexOf(String(request.user._id)) >= 0) {
-                packet.status = "UNABLE_TO_JOIN_TEAM";
-                response.json(packet);
-              } else {
-                team.members.push(String(request.user._id));
-                team.save().then(async () => {
-                  if (process.env.NODE_ENV === "development") {
-                    packet.team_code = team.join_code;
-                  }
-                  User.findOne({ _id: mongoose.Types.ObjectId(request.user._id) }).then(async (user, error) => {
-                    if (user) {
-                      user.team_code = request.body.join_code;
-                      user.status = MEMBER;
-                      user.save().then(async () => {
-                        packet.status = "TEAM_JOINED";
-                        if (process.env.NODE_ENV !== "development") {
-                          let index = 0;
-                          while (index < team.admins.length) {
-                            await new Promise((resolve, reject) => {
-                              email(team.admins[index].email, "User Joined Team", "<h1>A New User joined " + team.name + "</h1><p>" + user.username + "Joined your team.</p>");
-                              resolve(true);
-                            });
-                            index++;
-                          }
-                        }
-                        response.json(packet);
-                      }).catch(error => {
-                        console.log(error);
-                        packet.status = "ERROR_WHILE_JOINING_TEAM";
-                        response.json(packet);
-                      });
-                    } else {
-                      packet.status = "USER_NOT_FOUND";
-                      response.json(packet);
+  }, passport.authenticate("jwt", { session: false }), validation.validateJoinCode, middleware.userIsVerified, middleware.userHasNoTeam, async (request, response) => {
+    let packet = {};
+    Team.findOne({ join_code: request.body.join_code }).then(async (team, error) => {
+      if (team) {
+        if (team.platform === request.user.platform.toUpperCase()) {
+          if (team.blocked_users.indexOf(String(request.user._id)) >= 0) {
+            packet.status = "UNABLE_TO_JOIN_TEAM";
+            response.json(packet);
+          } else {
+            team.members.push(String(request.user._id));
+            team.save().then(async () => {
+              if (process.env.NODE_ENV === "development") {
+                packet.team_code = team.join_code;
+              }
+              User.findOne({ _id: mongoose.Types.ObjectId(request.user._id) }).then(async (user, error) => {
+                if (user) {
+                  user.team_code = request.body.join_code;
+                  user.status = MEMBER;
+                  user.save().then(async () => {
+                    packet.status = "TEAM_JOINED";
+                    if (process.env.NODE_ENV !== "development") {
+                      let index = 0;
+                      while (index < team.admins.length) {
+                        await new Promise((resolve, reject) => {
+                          email(team.admins[index].email, "User Joined Team", "<h1>A New User joined " + team.name + "</h1><p>" + user.username + "Joined your team.</p>");
+                          resolve(true);
+                        });
+                        index++;
+                      }
                     }
+                    response.json(packet);
                   }).catch(error => {
                     console.log(error);
-                    packet.status = "ERROR_WHILE_JOINING_TEAM";
+                    packet.status = "ERROR";
+                    packet.message = "An error occurred while attempting to join team.";
                     response.json(packet);
                   });
-                }).catch(error => {
-                  console.log(error);
-                  packet.status = "ERROR_WHILE_JOINING_TEAM";
+                } else {
+                  packet.status = "USER_NOT_FOUND";
                   response.json(packet);
-                  return;
-                });
-              }
-            } else {
-              packet.status = "PLATFORM_DOES_NOT_MATCH";
+                }
+              }).catch(error => {
+                console.log(error);
+                packet.status = "ERROR";
+                packet.message = "An error occurred while attempting to join team.";
+                response.json(packet);
+              });
+            }).catch(error => {
+              console.log(error);
+              packet.status = "ERROR";
+              packet.message = "An error occurred while attempting to join team.";
               response.json(packet);
-            }
-          } else {
-            packet.status = "TEAM_DOES_NOT_EXIST";
-            response.json(packet);
+              return;
+            });
           }
-        }).catch(error => {
-          console.log(error);
-          packet.status = "ERROR_WHILE_JOINING_TEAM";
+        } else {
+          packet.status = "PLATFORM_DOES_NOT_MATCH";
+          packet.message = "The platform of the team you requested to join does not match the platform associated with your account.";
           response.json(packet);
-        });
+        }
+      } else {
+        packet.status = "TEAM_NOT_FOUND";
+        packet.message = "The team requested was not found.";
+        response.json(packet);
       }
-    } else {
-      packet.status = "USER_NOT_VERIFIED";
+    }).catch(error => {
+      console.log(error);
+      packet.status = "ERROR";
+      packet.message = "An error occurred while attempting to join team.";
       response.json(packet);
-    }
+    });
   });
 
 
@@ -495,165 +463,151 @@ module.exports = async (app, passport) => {
   app.patch("/api/teams/leave-team", (request, response, done) => {
     log("PATCH REQUEST AT /api/teams/leave-team");
     done();
-  }, passport.authenticate("jwt", { session: false }), async (request, response) => {
-    let packet = {
-      status: ""
-    }
-    if (request.user.verified) {
-      if (request.user.team_code) {
-        User.findOne({ _id: mongoose.Types.ObjectId(request.user._id) }).then(async (user, error) => {
-          if (user) {
-            Team.findOne({ join_code: request.user.team_code }).then(async (team, error) => {
-              if (team) {
-                user.status = undefined;
-                user.team_code = undefined;
-                user.save().then(async () => {
-                  if (team.members.indexOf(String(request.user._id)) >= 0) {
-                    let index = team.members.indexOf(String(request.user._id));
-                    team.members.splice(index, 1);
-                  } else if (team.editors.indexOf(String(request.user._id)) >= 0) {
-                    let index = team.editors.indexOf(String(request.user._id));
-                    team.editors.splice(index, 1);
-                  } else if (team.admins.indexOf(String(request.user._id)) >= 0) {
-                    let index = team.admins.indexOf(String(request.user._id));
-                    team.admins.splice(index, 1);
-                  }
+  }, passport.authenticate("jwt", { session: false }), middleware.userIsVerified, middleware.userHasTeam, async (request, response) => {
+    let packet = {};
+    User.findOne({ _id: mongoose.Types.ObjectId(request.user._id) }).then(async (user) => {
+      Team.findOne({ _id: request.team._id }).then(async (team) => {
+        user.status = undefined;
+        user.team_code = undefined;
+        user.save().then(async () => {
+          if (team.members.indexOf(String(request.user._id)) >= 0) {
+            let index = team.members.indexOf(String(request.user._id));
+            team.members.splice(index, 1);
+          } else if (team.editors.indexOf(String(request.user._id)) >= 0) {
+            let index = team.editors.indexOf(String(request.user._id));
+            team.editors.splice(index, 1);
+          } else if (team.admins.indexOf(String(request.user._id)) >= 0) {
+            let index = team.admins.indexOf(String(request.user._id));
+            team.admins.splice(index, 1);
+          }
 
-                  team.save().then(async () => {
-                    // Team cannot be managed
-                    if (team.admins.length === 0) {
-                      // delete team
-                      await Team.deleteOne({ join_code: request.user.team_code }).catch(error => {
-                        console.log(error);
-                        packet.status = "ERROR_WHILE_LEAVING_TEAM";
-                        response.json(packet);
-                      });
+          team.save().then(async () => {
+            // Team cannot be managed
+            if (team.admins.length === 0) {
+              // delete team
+              await Team.deleteOne({ join_code: request.user.team_code }).catch(error => {
+                console.log(error);
+                packet.status = "ERROR";
+                packet.message = "An error occurred while attempting to leave team.";
+                response.json(packet);
+              });
 
-                      // delete team strategies
-                      await Strategies.deleteOne({ join_code: request.user.team_code }).catch(error => {
+              // delete team strategies
+              await Strategies.deleteOne({ join_code: request.user.team_code }).catch(error => {
+                console.log(error);
+                packet.status = "ERROR";
+                packet.message = "An error occurred while attempting to leave team.";
+                response.json(packet);
+              })
+
+              // update status of all members
+              let index = 0;
+              while (index < team.members.length) {
+                await new Promise((resolve, reject) => {
+                  User.findOne({ _id: mongoose.Types.ObjectId(team.members[index]) }).then(async (user, error) => {
+                    user.team_code = undefined;
+                    user.status = undefined;
+                    await new Promise((resolve, reject) => {
+                      user.save().then(() => {
+                        resolve(true);
+                      }).catch((error) => {
                         console.log(error);
-                        packet.status = "ERROR_WHILE_LEAVING_TEAM";
-                        response.json(packet);
+                        reject(false);
                       })
-
-                      // update status of all members
-                      let index = 0;
-                      while (index < team.members.length) {
-                        await new Promise((resolve, reject) => {
-                          User.findOne({ _id: mongoose.Types.ObjectId(team.members[index]) }).then(async (user, error) => {
-                            user.team_code = undefined;
-                            user.status = undefined;
-                            await new Promise((resolve, reject) => {
-                              user.save().then(() => {
-                                resolve(true);
-                              }).catch((error) => {
-                                console.log(error);
-                                reject(false);
-                              })
-                            });
-                            resolve(true);
-                          }).catch(error => {
-                            console.log(error);
-                            packet.status = "ERROR_WHILE_LEAVING_TEAM";
-                            response.json(packet);
-                            reject(false);
-                          });
-                        });
-                        index++;
-                      }
-
-                      index = 0;
-                      while (index < team.editors.length) {
-                        await new Promise((resolve, reject) => {
-                          User.findOne({ _id: mongoose.Types.ObjectId(team.editors[index]) }).then(async (user, error) => {
-                            user.team_code = undefined;
-                            user.status = undefined;
-                            await new Promise((resolve, reject) => {
-                              user.save().then(() => {
-                                resolve(true);
-                              }).catch((error) => {
-                                console.log(error);
-                                reject(false);
-                              })
-                            });
-                            resolve(true);
-                          }).catch(error => {
-                            console.log(error);
-                            packet.status = "ERROR_WHILE_LEAVING_TEAM";
-                            response.json(packet);
-                            reject(false);
-                          });
-                        });
-                        index++;
-                      }
-
-                      index = 0;
-                      while (index < team.admins.length) {
-                        await new Promise((resolve, reject) => {
-                          User.findOne({ _id: mongoose.Types.ObjectId(team.admins[index]) }).then(async (user, error) => {
-                            user.team_code = undefined;
-                            user.status = undefined;
-                            await new Promise((resolve, reject) => {
-                              user.save().then(() => {
-                                resolve(true);
-                              }).catch((error) => {
-                                console.log(error);
-                                reject(false);
-                              })
-                            });
-                            resolve(true);
-                          }).catch(error => {
-                            console.log(error);
-                            packet.status = "ERROR_WHILE_LEAVING_TEAM";
-                            response.json(packet);
-                            reject(false);
-                          });
-                        });
-                        index++;
-                      }
-
-                      packet.status = "USER_LEFT_TEAM";
-                      response.json(packet);
-                    } else {
-                      packet.status = "USER_LEFT_TEAM";
-                      response.json(packet);
-                    }
+                    });
+                    resolve(true);
                   }).catch(error => {
                     console.log(error);
-                    packet.status = "ERROR_WHILE_LEAVING_TEAM";
+                    packet.status = "ERROR";
+                    packet.message = "An error occurred while attempting to leave team.";
                     response.json(packet);
+                    reject(false);
                   });
-                }).catch(error => {
-                  console.log(error);
-                  packet.status = "ERROR_WHILE_LEAVING_TEAM";
-                  response.json(packet);
                 });
-              } else {
-                packet.status = "TEAM_DOES_NOT_EXIST";
-                response.json(packet);
+                index++;
               }
-            }).catch(error => {
-              console.log(error);
-              packet.status = "ERROR_WHILE_LEAVING_TEAM";
+
+              index = 0;
+              while (index < team.editors.length) {
+                await new Promise((resolve, reject) => {
+                  User.findOne({ _id: mongoose.Types.ObjectId(team.editors[index]) }).then(async (user, error) => {
+                    user.team_code = undefined;
+                    user.status = undefined;
+                    await new Promise((resolve, reject) => {
+                      user.save().then(() => {
+                        resolve(true);
+                      }).catch((error) => {
+                        console.log(error);
+                        reject(false);
+                      })
+                    });
+                    resolve(true);
+                  }).catch(error => {
+                    console.log(error);
+                    packet.status = "ERROR";
+                    packet.message = "An error occurred while attempting to leave team.";
+                    response.json(packet);
+                    reject(false);
+                  });
+                });
+                index++;
+              }
+
+              index = 0;
+              while (index < team.admins.length) {
+                await new Promise((resolve, reject) => {
+                  User.findOne({ _id: mongoose.Types.ObjectId(team.admins[index]) }).then(async (user, error) => {
+                    user.team_code = undefined;
+                    user.status = undefined;
+                    await new Promise((resolve, reject) => {
+                      user.save().then(() => {
+                        resolve(true);
+                      }).catch((error) => {
+                        console.log(error);
+                        reject(false);
+                      })
+                    });
+                    resolve(true);
+                  }).catch(error => {
+                    console.log(error);
+                    packet.status = "ERROR";
+                    packet.message = "An error occurred while attempting to leave team.";
+                    response.json(packet);
+                    reject(false);
+                  });
+                });
+                index++;
+              }
+              packet.status = "USER_LEFT_TEAM";
               response.json(packet);
-            });
-          } else {
-            packet.status = "USER_NOT_FOUND";
+            } else {
+              packet.status = "USER_LEFT_TEAM";
+              response.json(packet);
+            }
+          }).catch(error => {
+            console.log(error);
+            packet.status = "ERROR";
+            packet.message = "An error occurred while attempting to leave team.";
             response.json(packet);
-          }
+          });
         }).catch(error => {
           console.log(error);
-          packet.status = "ERROR_WHILE_LEAVING_TEAM";
+          packet.status = "ERROR";
+          packet.message = "An error occurred while attempting to leave team.";
           response.json(packet);
         });
-      } else {
-        packet.status = "USER_HAS_NO_TEAM";
+      }).catch(error => {
+        console.log(error);
+        packet.status = "ERROR";
+        packet.message = "An error occurred while attempting to leave team.";
         response.json(packet);
-      }
-    } else {
-      packet.status = "USER_NOT_VERIFIED";
+      });
+    }).catch(error => {
+      console.log(error);
+      packet.status = "ERROR";
+      packet.message = "An error occurred while attempting to leave team.";
       response.json(packet);
-    }
+    });
   });
 
   /*
@@ -698,89 +652,61 @@ module.exports = async (app, passport) => {
   app.patch("/api/teams/block-user", (request, response, done) => {
     log("PATCH REQUEST AT /api/teams/remove-user");
     done();
-  }, passport.authenticate("jwt", { session: false }), validation.validateBlockUser, async (request, response) => {
-    let packet = {
-      status: ""
-    };
-    if (request.body.username === request.user.username) {
-      packet.status = "CANNOT_REMOVE_SELF";
-      response.json(packet);
-    } else {
-      if (request.user.verified) {
-        if (request.user.team_code) {
-          if (request.user.status === ADMIN) {
-            Team.findOne({ join_code: request.user.team_code }).then((team, error) => {
-              if (team) {
-                if (team.admins.indexOf(String(request.user._id)) >= 0) {
-                  User.findOne({ username: request.body.username }).then((user, error) => {
-                    if (user) {
-                      team.blocked_users.push(String(user._id));
-                      if (team.members.indexOf(String(user._id)) >= 0) {
-                        let index = team.members.indexOf(String(user._id));
-                        team.members.splice(index, 1);
-                        user.team_code = undefined;
-                        user.status = undefined;
-                      } else if (team.editors.indexOf(String(user._id)) >= 0) {
-                        let index = team.editors.indexOf(String(user._id));
-                        team.editors.splice(index, 1);
-                        user.team_code = undefined;
-                        user.status = undefined;
-                      } else if (team.admins.indexOf(String(user._id)) >= 0) {
-                        let index = team.admins.indexOf(String(user._id));
-                        team.admins.splice(index, 1);
-                        user.team_code = undefined;
-                        user.status = undefined;
-                      }
+  }, passport.authenticate("jwt", { session: false }), validation.validateBlockUser, middleware.userIsVerified, middleware.userHasTeam, middleware.userIsAdmin, async (request, response) => {
+    let packet = {};
+    Team.findOne({ join_code: request.team.join_code }).then((team, error) => {
+      if (team.admins.indexOf(String(request.user._id)) >= 0) {
+        User.findOne({ username: request.body.username }).then((user, error) => {
+          team.blocked_users.push(String(user._id));
+          if (team.members.indexOf(String(user._id)) >= 0) {
+            let index = team.members.indexOf(String(user._id));
+            team.members.splice(index, 1);
+            user.team_code = undefined;
+            user.status = undefined;
+          } else if (team.editors.indexOf(String(user._id)) >= 0) {
+            let index = team.editors.indexOf(String(user._id));
+            team.editors.splice(index, 1);
+            user.team_code = undefined;
+            user.status = undefined;
+          } else if (team.admins.indexOf(String(user._id)) >= 0) {
+            let index = team.admins.indexOf(String(user._id));
+            team.admins.splice(index, 1);
+            user.team_code = undefined;
+            user.status = undefined;
+          }
 
-                      team.save().then(() => {
-                        user.save().then(() => {
-                          packet.status = "USER_BLOCKED";
-                          response.json(packet);
-                        }).catch(error => {
-                          console.log(error);
-                          packet.status = "ERROR_WHILE_BLOCKING_USER";
-                          response.json(packet);
-                        });
-                      }).catch(error => {
-                        console.log(error);
-                        packet.status = "ERROR_WHILE_BLOCKING_USER";
-                        response.json(packet);
-                      });
-                    } else {
-                      packet.status = "USER_NOT_FOUND";
-                      response.json(packet);
-                    }
-                  }).catch(error => {
-                    console.log(error);
-                    packet.status = "ERROR_WHILE_BLOCKING_USER";
-                    response.json(packet);
-                  });
-                } else {
-                  packet.status = "USER_NOT_QUALIFIED";
-                  response.json(packet);
-                }
-              } else {
-                packet.status = "TEAM_DOES_NOT_EXIST";
-                response.json(packet);
-              }
+          team.save().then(() => {
+            user.save().then(() => {
+              packet.status = "USER_BLOCKED";
+              response.json(packet);
             }).catch(error => {
               console.log(error);
               packet.status = "ERROR_WHILE_BLOCKING_USER";
               response.json(packet);
             });
-          } else {
-            packet.status = "USER_NOT_QUALIFIED";
+          }).catch(error => {
+            console.log(error);
+            packet.status = "ERROR";
+            packet.message = "An error occurred while attempting to block user.";
             response.json(packet);
-          }
-        } else {
-          packet.status = "USER_HAS_NO_TEAM";
+          });
+        }).catch(error => {
+          console.log(error);
+          packet.status = "ERROR";
+          packet.message = "An error occurred while attempting to block user.";
           response.json(packet);
-        }
+        });
       } else {
-        packet.status = "USER_NOT_VERIFIED";
+        packet.status = "USER_NOT_QUALIFIED";
+        packet.message = "User not admin on team. Only admins can block users.";
         response.json(packet);
       }
-    }
+    }).catch(error => {
+      console.log(error);
+      packet.status = "ERROR";
+      packet.message = "An error occurred while attempting to block user.";
+      response.json(packet);
+    });
   });
 
   /*
@@ -812,132 +738,118 @@ module.exports = async (app, passport) => {
   app.delete("/api/teams/delete-team", (request, response, done) => {
     log("DELETE REQUEST AT /api/teams/delete-team");
     done();
-  }, passport.authenticate("jwt", { session: false }), async (request, response) => {
-    let packet = {
-      status: ""
-    };
-    if (request.user.verified) {
-      if (request.user.team_code) {
-        if (request.user.status === ADMIN) {
-          await Team.findOne({ join_code: request.user.team_code }).then(async (team, error) => {
-            if (team) {
-              if (team.admins.indexOf(String(request.user._id)) < 0) {
-                packet.status = "USER_NOT_QUALIFIED";
-                response.json(packet);
-              } else {
-                // delete team
-                await Team.deleteOne({ join_code: request.user.team_code }).catch(error => {
-                  console.log(error);
-                  packet.status = "ERROR_WHILE_DELETING_TEAM";
-                  response.json(packet);
-                });
-
-                // delete team strategies
-                await Strategies.deleteOne({ join_code: request.user.team_code }).catch(error => {
-                  console.log(error);
-                  packet.status = "ERROR_WHILE_DELETING_TEAM";
-                  response.json(packet);
-                })
-
-                // update status of all members
-                let index = 0;
-                while (index < team.members.length) {
-                  await new Promise((resolve, reject) => {
-                    User.findOne({ _id: mongoose.Types.ObjectId(team.members[index]) }).then(async (user, error) => {
-                      user.team_code = undefined;
-                      user.status = undefined;
-                      await new Promise((resolve, reject) => {
-                        user.save().then(() => {
-                          resolve(true);
-                        }).catch((error) => {
-                          console.log(error);
-                          reject(false);
-                        })
-                      });
-                      resolve(true);
-                    }).catch(error => {
-                      console.log(error);
-                      packet.status = "ERROR_WHILE_DELETING_TEAM";
-                      response.json(packet);
-                      reject(false);
-                    });
-                  });
-                  index++;
-                }
-
-                index = 0;
-                while (index < team.editors.length) {
-                  await new Promise((resolve, reject) => {
-                    User.findOne({ _id: mongoose.Types.ObjectId(team.editors[index]) }).then(async (user, error) => {
-                      user.team_code = undefined;
-                      user.status = undefined;
-                      await new Promise((resolve, reject) => {
-                        user.save().then(() => {
-                          resolve(true);
-                        }).catch((error) => {
-                          console.log(error);
-                          reject(false);
-                        })
-                      });
-                      resolve(true);
-                    }).catch(error => {
-                      console.log(error);
-                      packet.status = "ERROR_WHILE_DELETING_TEAM";
-                      response.json(packet);
-                      reject(false);
-                    });
-                  });
-                  index++;
-                }
-
-                index = 0;
-                while (index < team.admins.length) {
-                  await new Promise((resolve, reject) => {
-                    User.findOne({ _id: mongoose.Types.ObjectId(team.admins[index]) }).then(async (user, error) => {
-                      user.team_code = undefined;
-                      user.status = undefined;
-                      await new Promise((resolve, reject) => {
-                        user.save().then(() => {
-                          resolve(true);
-                        }).catch((error) => {
-                          console.log(error);
-                          reject(false);
-                        })
-                      });
-                      resolve(true);
-                    }).catch(error => {
-                      console.log(error);
-                      packet.status = "ERROR_WHILE_DELETING_TEAM";
-                      response.json(packet);
-                      reject(false);
-                    });
-                  });
-                  index++;
-                }
-
-                packet.status = "TEAM_DELETED";
-                response.json(packet);
-              }
-            } else {
-              packet.status = "TEAM_DOES_NOT_EXIST";
-              response.json(packet);
-            }
-          }).catch(error => {
-            console.log(error);
-            packet.status = "UNABLE_TO_DELETE_TEAM";
-            response.json(packet);
-          });
-        } else {
-          packet.status = "USER_NOT_QUALIFIED";
-          response.json(packet);
-        }
+  }, passport.authenticate("jwt", { session: false }), middleware.userIsVerified, middleware.userIsAdmin, middleware.userHasTeam, async (request, response) => {
+    let packet = {};
+    await Team.findOne({ _id: request.team._id }).then(async (team, error) => {
+      if (team.admins.indexOf(String(request.user._id)) < 0) {
+        packet.status = "USER_NOT_QUALIFIED";
+        packet.message = "User must be an admin on team to delete team.";
+        response.json(packet);
       } else {
-        packet.status = "USER_HAS_NO_TEAM";
+        // delete team
+        await Team.deleteOne({ join_code: request.user.team_code }).catch(error => {
+          console.log(error);
+          packet.status = "ERROR";
+          packet.message = "An error occurred while attempting to delete team.";
+          response.json(packet);
+        });
+
+        // delete team strategies
+        await Strategies.deleteOne({ join_code: request.user.team_code }).catch(error => {
+          console.log(error);
+          packet.status = "ERROR";
+          packet.message = "An error occurred while attempting to delete team.";
+          response.json(packet);
+        })
+
+        // update status of all members
+        let index = 0;
+        while (index < team.members.length) {
+          await new Promise((resolve, reject) => {
+            User.findOne({ _id: mongoose.Types.ObjectId(team.members[index]) }).then(async (user, error) => {
+              user.team_code = undefined;
+              user.status = undefined;
+              await new Promise((resolve, reject) => {
+                user.save().then(() => {
+                  resolve(true);
+                }).catch((error) => {
+                  console.log(error);
+                  reject(false);
+                })
+              });
+              resolve(true);
+            }).catch(error => {
+              console.log(error);
+              packet.status = "ERROR";
+              packet.message = "An error occurred while attempting to delete team.";
+              response.json(packet);
+              reject(false);
+            });
+          });
+          index++;
+        }
+
+        index = 0;
+        while (index < team.editors.length) {
+          await new Promise((resolve, reject) => {
+            User.findOne({ _id: mongoose.Types.ObjectId(team.editors[index]) }).then(async (user, error) => {
+              user.team_code = undefined;
+              user.status = undefined;
+              await new Promise((resolve, reject) => {
+                user.save().then(() => {
+                  resolve(true);
+                }).catch((error) => {
+                  console.log(error);
+                  reject(false);
+                })
+              });
+              resolve(true);
+            }).catch(error => {
+              console.log(error);
+              packet.status = "ERROR";
+              packet.message = "An error occurred while attempting to delete team.";
+              response.json(packet);
+              reject(false);
+            });
+          });
+          index++;
+        }
+
+        index = 0;
+        while (index < team.admins.length) {
+          await new Promise((resolve, reject) => {
+            User.findOne({ _id: mongoose.Types.ObjectId(team.admins[index]) }).then(async (user, error) => {
+              user.team_code = undefined;
+              user.status = undefined;
+              await new Promise((resolve, reject) => {
+                user.save().then(() => {
+                  resolve(true);
+                }).catch((error) => {
+                  console.log(error);
+                  reject(false);
+                })
+              });
+              resolve(true);
+            }).catch(error => {
+              console.log(error);
+              packet.status = "ERROR";
+              packet.message = "An error occurred while attempting to delete team.";
+              response.json(packet);
+              reject(false);
+            });
+          });
+          index++;
+        }
+
+        packet.status = "TEAM_DELETED";
+        packet.message = "The team was successfully deleted.";
         response.json(packet);
       }
-    } else {
-      packet.status = "USER_NOT_VERIFIED";
+    }).catch(error => {
+      console.log(error);
+      packet.status = "ERROR";
+      packet.message = "An error occurred while attempting to delete team.";
       response.json(packet);
-    }
+    });
   });
 };

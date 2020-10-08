@@ -192,8 +192,16 @@ module.exports = validation = {
       response.end();
       return packet;
     } else {
-      done();
-      return null;
+      if (request.body.username === request.user.username) {
+        packet.status = "CANNOT_REMOVE_SELF";
+        packet.message = "User cannot block himself/herself.";
+        response.json(packet);
+        response.end();
+        return packet;
+      } else {
+        done();
+        return null;
+      }
     }
   },
   validateDefenderRole: function(request, response, done) {
