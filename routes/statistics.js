@@ -25,16 +25,14 @@ module.exports = async (app, passport) => {
     done();
   }, passport.authenticate("jwt", { session: false }), async (request, response) => {
     const generalStats = await getStats(request.user.username.toLowerCase(), request.user.platform.toLowerCase(), "generic");
+    let packet = {};
     if (generalStats) {
-      response.json({
-        status: "GENERAL_STATS_FOUND",
-        stats: generalStats
-      });
+      packet.status = "GENERAL_STATS_FOUND";
+      packet.stats = generalStats;
     } else {
-      response.json({
-        status: "USER_NOT_FOUND"
-      });
+      packet.status = "USER_NOT_FOUND";
     }
+    response.json(packet);
   });
 
   /*
@@ -55,20 +53,15 @@ module.exports = async (app, passport) => {
     log("GET REQUEST AT /api/statistics/seasonal");
     done();
   }, passport.authenticate("jwt", { session: false }), async (request, response) => {
-    let packet = {
-      status: ""
-    };
     const seasonalStats = await getStats(request.user.username.toLowerCase(), request.user.platform.toLowerCase(), "seasonal");
+    let packet = {};
     if (seasonalStats) {
-      response.json({
-        status: "SEASONAL_STATS_FOUND",
-        stats: seasonalStats
-      });
+      packet.status = "SEASONAL_STATS_FOUND";
+      packet.stats = seasonalStats;
     } else {
-      response.json({
-        status: "USER_NOT_FOUND"
-      });
+      packet.status = "USER_NOT_FOUND";
     }
+    response.json(packet);
   });
 
   /*
@@ -90,16 +83,14 @@ module.exports = async (app, passport) => {
     done();
   }, passport.authenticate("jwt", { session: false }), async (request, response) => {
     const operatorStats = await getStats(request.user.username.toLowerCase(), request.user.platform.toLowerCase(), "operators");
+    let packet = {};
     if (operatorStats) {
-      response.json({
-        status: "OPERATOR_STATS_FOUND",
-        stats: operatorStats
-      });
+      packet.status = "OPERATOR_STATS_FOUND";
+      packet.stats = operatorStats;
     } else {
-      response.json({
-        status: "USER_NOT_FOUND"
-      });
+      packet.status = "USER_NOT_FOUND";
     }
+    response.json(packet);
   });
 
   /*
@@ -126,6 +117,7 @@ module.exports = async (app, passport) => {
     log("GET REQUEST AT /api/statistics/team");
     done();
   }, passport.authenticate("jwt", { session: false }), middleware.userHasTeam, async (request, response) => {
+    let packet = {};
     if (request.team.members.indexOf(String(request.user._id)) >= 0 || request.team.editors.indexOf(String(request.user._id)) >= 0 || request.team.admins.indexOf(String(request.user._id)) >= 0) {
       let size = 0;
       let kd = 0;
@@ -166,10 +158,9 @@ module.exports = async (app, passport) => {
             }
           }).catch(error => {
             console.log(error);
-            response.json({
-              status: "ERROR",
-              message: "An error occurred while getting statistics for a member of the team."
-            });
+            packet.status = "ERROR";
+            packet.message = "An error occurred while getting team statistics.";
+            response.json(packet);
             return reject(false);
           })
         });
@@ -208,10 +199,9 @@ module.exports = async (app, passport) => {
             }
           }).catch(error => {
             console.log(error);
-            response.json({
-              status: "ERROR",
-              message: "An error occurred while getting statistics for a member of the team."
-            });
+            packet.status = "ERROR";
+            packet.message = "An error occurred while getting team statistics.";
+            response.json(packet);
             return reject(false);
           })
         });
@@ -250,10 +240,9 @@ module.exports = async (app, passport) => {
             }
           }).catch(error => {
             console.log(error);
-            response.json({
-              status: "ERROR",
-              message: "An error occurred while getting statistics for a member of the team."
-            });
+            packet.status = "ERROR";
+            packet.message = "An error occurred while getting team statistics.";
+            response.json(packet);
             return reject(false);
           })
         });
@@ -266,20 +255,18 @@ module.exports = async (app, passport) => {
       mmr = Math.round((mmr / size) * 100) / 100;
       mmrchange = Math.round((mmrchange / size) * 100) / 100;
       level = Math.round((level / size) * 100) / 100;
-      response.json({
-        team: members,
-        status: "TEAM_STATS_FOUND",
-        kd: kd,
-        wl: wl,
-        mmr: mmr,
-        mmrchange: mmrchange,
-        level: level
-      });
+      packet.status = "TEAM_STATS_FOUND";
+      packet.team = members;
+      packet.kd = kd;
+      packet.wl = wl;
+      packet.mmr = mmr;
+      packet.mmrchange = mmrchange;
+      packet.level = level;
+      response.json(packet);
     } else {
-      response.json({
-        status: "USER_NOT_QUALIFIED",
-        message: "The user is not on the requested team."
-      });
+      packet.status = "USER_NOT_QUALIFIED";
+      packet.message = "User is not on the requested team.";
+      response.json(packet);
     }
   });
 }

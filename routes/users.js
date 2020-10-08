@@ -108,44 +108,38 @@ module.exports = async (app, passport) => {
     log("POST REQUEST AT /api/users/login");
     done();
   }, validation.validateLoginInput, (request, response) => {
-    let packet = {
-      status: ""
-    };
+    let packet = {};
     User.findOne({ email: request.body.email.toLowerCase() }).then((user) => {
       if (!user) {
-        response.json({
-          status: "USER_NOT_FOUND",
-          errors: {
-            email: "No user with that email was found."
-          }
-        });
+        packet.status = "USER_NOT_FOUND";
+        packet.errors = {
+          email: "No user with that email was found."
+        }
+        response.json(packet);
       } else {
         const isValidPassword = verifyPassword(request.body.password, user.password);
         if (isValidPassword) {
           const tokenObject = issueJWT(user);
           user.password = undefined;
           user._id = undefined;
-          response.json({
-            status: "TOKEN_ISSUED",
-            user: user,
-            token: tokenObject.token,
-            expiresIn: tokenObject.expires
-          });
+          packet.status = "TOKEN_ISSUED";
+          packet.user = user;
+          packet.token = tokenObject.token;
+          packet.expiresIn = tokenObject.expires;
+          response.json(packet);
         } else {
-          response.json({
-            status: "INCORRECT_PASSWORD",
-            errors: {
-              password: "The password you entered is incorrect."
-            }
-          })
+          packet.status = "INCORRECT_PASSWORD";
+          packet.errors = {
+            password: "The password you entered is incorrect."
+          };
+          response.json(packet);
         }
       }
     }).catch(error => {
       console.log(error);
-      response.json({
-        status: "ERROR",
-        message: "There was an error while attemping to login."
-      });
+      packet.status = "ERROR";
+      packet.message = "There was an error while attempting to login.";
+      response.json(packet);
     });
   });
 
@@ -163,15 +157,15 @@ module.exports = async (app, passport) => {
     log("GET REQUEST AT /api/users/extend-token");
     done();
   }, passport.authenticate("jwt", { session: false }), (request, response) => {
+    let packet = {};
     const tokenObject = issueJWT(request.user);
     request.user.password = undefined;
     request.user._id = undefined;
-    response.json({
-      token: tokenObject.token,
-      expiresIn: tokenObject.expires,
-      status: "TOKEN_UPDATED",
-      user: request.user
-    });
+    packet.status = "TOKEN_UPDATED";
+    packet.user = request.user;
+    packet.token = tokenObject.token;
+    packet.expiresIn = tokenObject.expires;
+    response.json(packet);
   });
 
   /*
@@ -204,24 +198,20 @@ module.exports = async (app, passport) => {
     log("POST REQUEST AT /api/users/register");
     done();
   }, validation.validateRegisterInput, (request, response) => {
-    let packet = {
-      status: ""
-    }
+    let packet = {}
     User.findOne({ email: request.body.email }, function(error, user) {
       if (user) {
-        response.json({
-          status: "EXISTING_USER",
-          errors: {
-            email: "An account with that email already exists."
-          }
-        });
+        packet.status = "EXISTING_USER";
+        packet.errors = {
+          email: "An account with that email already exists."
+        };
+        response.json(packet);
       } else {
         User.findOne({ username: request.body.username }, function(error, user) {
           if (user) {
-            response.json({
-              status: "EXISTING_USER",
-              message: "An account with that username already exists."
-            });
+            packet.status = "EXISTING_USER";
+            packet.message = "An account with that username already exists.";
+            response.json(packet);
           } else {
             const newUser = new User({
               username: request.body.username,
@@ -250,10 +240,8 @@ module.exports = async (app, passport) => {
                   verification_id: newVerificationId
                 });
                 newUnverifiedUser.save().then(user => {
-                  response.json({
-                    status: "USER_REGISTERED",
-                    _id: (process.env.NODE_ENV === "development" ? newUser._id : undefined)
-                  });
+                  packet.status = "USER_REGISTERED";
+                  response.json(packet);
                   let registrationEmail = {
                     subject: "R6 Stratbook - Registration Complete!",
                     html: "<div><p>Thank you for registering with R6 Stratbook!<br/><br/>We are glad to have you on our platform. To verify your account so you can create and join teams, click the link below.</p><br/><br/><a href='" + newVerificationLink + "' target='_blank'>Verify Email</a></div>"
@@ -261,24 +249,21 @@ module.exports = async (app, passport) => {
                   email(newUser.email, registrationEmail.subject, registrationEmail.html);
                 }).catch(error => {
                   console.log(error);
-                  response.json({
-                    status: "ERROR",
-                    message: "An error occurred while attempting to register user."
-                  });
+                  packet.status = "ERROR";
+                  packet.message = "An error occurred while attempting to register user.";
+                  response.json(packet);
                 });
               }).catch(error => {
                 console.log(error);
-                response.json({
-                  status: "ERROR",
-                  message: "An error occurred while attempting to register user."
-                });
+                packet.status = "ERROR";
+                packet.message = "An error occurred while attempting to register user.";
+                response.json(packet);
               });
             } else {
               console.log(error);
-              response.json({
-                status: "ERROR",
-                message: "An error occurred while attempting to register user."
-              });
+              packet.status = "ERROR";
+              packet.message = "An error occurred while attempting to register user.";
+              response.json(packet);
             }
           }
         });
@@ -312,35 +297,25 @@ module.exports = async (app, passport) => {
   app.patch("/api/users/update-platform", (request, response, done) => {
     log("PATCH REQUEST AT /api/users/update-platform");
     done();
-  }, passport.authenticate("jwt", { session: false }), validation.validatePlatformInput, (request, response) => {
-    let packet = {
-      status: ""
-    };
-    User.findOne({ email: request.user.email }).then((user) => {
-      if (!user) {
-        packet.status = "USER_NOT_FOUND";
+  }, passport.authenticate("jwt", { session: false }), validation.validatePlatformInput, middleware.userIsVerified, middleware.userHasNoTeam, (request, response) => {
+    let packet = {};
+    User.findOne({ _id: request.user._id }).then(user => {
+      user.platform = request.body.platform;
+      user.save().then(() => {
+        packet.status = "PLATFORM_UPDATED";
         response.json(packet);
-      } else {
-        if (request.user.team_code) {
-          packet.status = "USER_HAS_TEAM";
-          response.json(packet);
-        } else {
-          user.platform = request.body.platform;
-          user.save().then(() => {
-            packet.status = "PLATFORM_UPDATED";
-            response.json(packet);
-          }).catch(error => {
-            console.log(error);
-            packet.status = "ERROR_WHILE_UPDATING_PLATFORM";
-            response.json(packet);
-          });
-        }
-      }
+      }).catch(error => {
+        console.log(error);
+        packet.status = "ERROR";
+        packet.message = "An error occurred while attempting to update platform.";
+        response.json(packet);
+      })
     }).catch(error => {
       console.log(error);
-      packet.status = "ERROR_WHILE_UPDATING_PLATFORM";
+      packet.status = "ERROR";
+      packet.message = "An error occurred while attempting to update platform.";
       response.json(packet);
-    })
+    });
   });
 
   /*
@@ -367,43 +342,37 @@ module.exports = async (app, passport) => {
     log("PATCH REQUEST AT /api/users/update-username");
     done();
   }, passport.authenticate("jwt", { session: false }), validation.validateUsernameInput, (request, response) => {
-    let packet = {
-      status: ""
-    };
-    User.findOne({ email: request.user.email }).then((user1) => {
-      if (!user1) {
-        packet.status = "USER_NOT_FOUND";
-        response.json(packet);
-      } else {
-        User.findOne({ username: request.body.username }).then((user2) => {
-          if (user2) {
-            packet.status = "USERNAME_TAKEN";
-            packet.errors = {
-              username: "A user with that username already exists"
-            }
-            response.json(packet);
-          } else {
-            user1.username = request.body.username;
-            user1.save().then(() => {
+    let packet = {};
+      User.findOne({ username: request.body.username }).then((existing_user) => {
+        if (existing_user) {
+          packet.status = "USERNAME_TAKEN";
+          packet.errors = {
+            username: "A user with that username already exists"
+          }
+          response.json(packet);
+        } else {
+          User.findOne({ _id: request.user._id }).then(user => {
+            user.username = request.body.username;
+            user.save().then(() => {
               packet.status = "USERNAME_UPDATED";
               response.json(packet);
             }).catch(error => {
               console.log(error);
-              packet.status = "ERROR_WHILE_UPDATING_USERNAME";
-              response.json(packet);
-            });
-          }
-        }).catch(error => {
-          console.log(error);
-          packet.status = "ERROR_WHILE_UPDATING_USERNAME";
-          response.json(packet);
-        });
-      }
-    }).catch(error => {
-      console.log(error);
-      packet.status = "ERROR_WHILE_UPDATING_USERNAME";
-      response.json(packet);
-    })
+              packet.status = "ERROR";
+              packet.message = "An error occurred while attempting to update username.";
+            })
+          }).catch(error => {
+            console.log(error);
+            packet.status = "ERROR";
+            packet.message = "An error occurred while attempting to update username.";
+          })
+        }
+      }).catch(error => {
+        console.log(error);
+        packet.status = "ERROR";
+        packet.message = "An error occurred while attempting to update username.";
+        response.json(packet);
+      });
   });
 
   /*
@@ -438,49 +407,44 @@ module.exports = async (app, passport) => {
   app.patch("/api/users/update-email", (request, response, done) => {
     log("PATCH REQUEST AT /api/users/update-email");
     done();
-  }, passport.authenticate("jwt", { session: false }), validation.validateEmailInput, (request, response) => {
+  }, passport.authenticate("jwt", { session: false }), validation.validateEmailInput, middleware.userIsVerified, (request, response) => {
     let packet = {
       status: ""
     };
-    if (request.user.verified) {
-      User.findOne({ email: request.user.email }).then((user1) => {
-        if (!user1) {
-          packet.status = "USER_NOT_FOUND";
-          response.json(packet);
-        } else {
-          User.findOne({ email: request.body.email }).then((user2) => {
-            if (user2) {
-              packet.status = "EMAIL_TAKEN";
-              packet.errors = {
-                email: "An account with that email already exists"
-              };
-              response.json(packet);
-            } else {
-              user1.email = request.body.email;
-              user1.save().then(() => {
-                packet.status = "EMAIL_UPDATED";
-                response.json(packet);
-              }).catch(error => {
-                console.log(error);
-                packet.status = "ERROR_WHILE_UPDATING_EMAIL";
-                response.json(packet);
-              });
-            }
-          }).catch(error => {
-            console.log(error);
-            packet.status = "ERROR_WHILE_UPDATING_EMAIL";
-            response.json(packet);
-          });
-        }
-      }).catch(error => {
-        console.log(error);
-        packet.status = "ERROR_WHILE_UPDATING_EMAIL";
+    User.findOne({ email: request.user.email }).then((user1) => {
+      if (!user1) {
+        packet.status = "USER_NOT_FOUND";
         response.json(packet);
-      })
-    } else {
-      packet.status = "USER_NOT_VERIFIED";
+      } else {
+        User.findOne({ email: request.body.email }).then((user2) => {
+          if (user2) {
+            packet.status = "EMAIL_TAKEN";
+            packet.errors = {
+              email: "An account with that email already exists"
+            };
+            response.json(packet);
+          } else {
+            user1.email = request.body.email;
+            user1.save().then(() => {
+              packet.status = "EMAIL_UPDATED";
+              response.json(packet);
+            }).catch(error => {
+              console.log(error);
+              packet.status = "ERROR_WHILE_UPDATING_EMAIL";
+              response.json(packet);
+            });
+          }
+        }).catch(error => {
+          console.log(error);
+          packet.status = "ERROR_WHILE_UPDATING_EMAIL";
+          response.json(packet);
+        });
+      }
+    }).catch(error => {
+      console.log(error);
+      packet.status = "ERROR_WHILE_UPDATING_EMAIL";
       response.json(packet);
-    }
+    });
   });
 
   /*
@@ -528,127 +492,120 @@ module.exports = async (app, passport) => {
   app.patch("/api/users/update-user-status", (request, response, done) => {
     log("PATCH REQUEST AT /api/users/update-user-status");
     done();
-  }, passport.authenticate("jwt", { session: false }), validation.validateStatusInput, (request, response) => {
+  }, passport.authenticate("jwt", { session: false }), validation.validateStatusInput, middleware.userIsVerified, middleware.userIsAdmin, middleware.userHasTeam, (request, response) => {
     let packet = {
       status: ""
     };
-    if (request.user.verified) {
-      if (request.user.status !== "ADMIN") {
-        packet.status = "USER_NOT_QUALIFIED";
-        response.json(packet);
-      } else {
-        if (request.user.team_code) {
-          User.findOne({ username: request.user.username }).then((rUser) => {
-            if (rUser) {
-              User.findOne({ username: request.body.username }).then((user) => {
-                if (user) {
-                  if (user.status === "ADMIN") {
-                    packet.status = "PERMISSION_DENIED";
-                    response.json(packet);
-                  } else {
-                    Team.findOne({ join_code: request.user.team_code }).then((team) => {
-                      if (team) {
-                        if (team.members.indexOf(String(user._id)) >= 0 || team.editors.indexOf(String(user._id)) >= 0) {
-                          if (team.members.indexOf(String(user._id)) >= 0) {
-                            let index = team.members.indexOf(String(user._id));
-                            team.members.splice(index, 1);
-                          } else {
-                            let index = team.editors.indexOf(String(user._id));
-                            team.editors.splice(index, 1);
-                          }
-                          user.status = request.body.status;
-                          if (request.body.status === "ADMIN") {
-                            team.admins.push(String(user._id));
-                            team.save().then(() => {
-                              user.save().then(() => {
-                                packet.status = "USER_STATUS_UPDATED";
-                                response.json(packet);
-                              }).catch(error => {
-                                console.log(error);
-                                packet.status = "ERROR_WHILE_UPDATING_USER_STATUS";
-                                response.json(packet);
-                              });
-                            }).catch(error => {
-                              console.log(error);
-                              packet.status = "ERROR_WHILE_UPDATING_USER_STATUS";
-                              response.json(packet);
-                            });
-                          } else if (request.body.status === "EDITOR") {
-                            team.editors.push(String(user._id));
-                            team.save().then(() => {
-                              user.save().then(() => {
-                                packet.status = "USER_STATUS_UPDATED";
-                                response.json(packet);
-                              }).catch(error => {
-                                console.log(error);
-                                packet.status = "ERROR_WHILE_UPDATING_USER_STATUS";
-                                response.json(packet);
-                              });
-                            }).catch(error => {
-                              console.log(error);
-                              packet.status = "ERROR_WHILE_UPDATING_USER_STATUS";
-                              response.json(packet);
-                            });
-                          } else if (request.body.status === "MEMBER") {
-                            team.members.push(String(user._id));
-                            team.save().then(() => {
-                              user.save().then(() => {
-                                packet.status = "USER_STATUS_UPDATED";
-                                response.json(packet);
-                              }).catch(error => {
-                                console.log(error);
-                                packet.status = "ERROR_WHILE_UPDATING_USER_STATUS";
-                                response.json(packet);
-                              });
-                            }).catch(error => {
-                              console.log(error);
-                              packet.status = "ERROR_WHILE_UPDATING_USER_STATUS";
-                              response.json(packet);
-                            });
-                          } else {
-                            packet.status = "INVALID_STATUS_INPUT";
-                            packet.errors = {
-                              status: "Status field invalid"
-                            };
-                            response.json(packet);
-                          }
-                        } else {
-                          packet.status = "USER_NOT_QUALIFIED";
-                          response.json(packet);
-                        }
+    User.findOne({ username: request.user.username }).then((rUser) => {
+        if (rUser) {
+          User.findOne({ username: request.body.username }).then((user) => {
+            if (user) {
+              if (user.status === "ADMIN") {
+                packet.status = "PERMISSION_DENIED";
+                response.json(packet);
+              } else {
+                Team.findOne({ join_code: request.user.team_code }).then((team) => {
+                  if (team) {
+                    if (team.members.indexOf(String(user._id)) >= 0 || team.editors.indexOf(String(user._id)) >= 0) {
+                      if (team.members.indexOf(String(user._id)) >= 0) {
+                        let index = team.members.indexOf(String(user._id));
+                        team.members.splice(index, 1);
                       } else {
-                        packet.status = "TEAM_DOES_NOT_EXIST";
+                        let index = team.editors.indexOf(String(user._id));
+                        team.editors.splice(index, 1);
+                      }
+                      user.status = request.body.status;
+                      if (request.body.status === "ADMIN") {
+                        team.admins.push(String(user._id));
+                        team.save().then(() => {
+                          user.save().then(() => {
+                            packet.status = "USER_STATUS_UPDATED";
+                            response.json(packet);
+                          }).catch(error => {
+                            console.log(error);
+                            packet.status = "ERROR";
+                            packet.message = "An error occurred while attempting to update user status.";
+                            response.json(packet);
+                          });
+                        }).catch(error => {
+                          console.log(error);
+                          packet.status = "ERROR";
+                          packet.message = "An error occurred while attempting to update user status.";
+                          response.json(packet);
+                        });
+                      } else if (request.body.status === "EDITOR") {
+                        team.editors.push(String(user._id));
+                        team.save().then(() => {
+                          user.save().then(() => {
+                            packet.status = "USER_STATUS_UPDATED";
+                            response.json(packet);
+                          }).catch(error => {
+                            console.log(error);
+                            packet.status = "ERROR";
+                            packet.message = "An error occurred while attempting to update user status.";
+                            response.json(packet);
+                          });
+                        }).catch(error => {
+                          console.log(error);
+                          packet.status = "ERROR";
+                          packet.message = "An error occurred while attempting to update user status.";
+                          response.json(packet);
+                        });
+                      } else if (request.body.status === "MEMBER") {
+                        team.members.push(String(user._id));
+                        team.save().then(() => {
+                          user.save().then(() => {
+                            packet.status = "USER_STATUS_UPDATED";
+                            response.json(packet);
+                          }).catch(error => {
+                            console.log(error);
+                            packet.status = "ERROR";
+                            packet.message = "An error occurred while attempting to update user status.";
+                            response.json(packet);
+                          });
+                        }).catch(error => {
+                          console.log(error);
+                          packet.status = "ERROR";
+                          packet.message = "An error occurred while attempting to update user status.";
+                          response.json(packet);
+                        });
+                      } else {
+                        packet.status = "INVALID_STATUS_INPUT";
+                        packet.errors = {
+                          status: "Status field invalid"
+                        };
                         response.json(packet);
                       }
-                    }).catch(error => {
-                      console.log(error);
-                      packet.status = "ERROR_WHILE_UPDATING_USER_STATUS";
+                    } else {
+                      packet.status = "USER_NOT_QUALIFIED";
                       response.json(packet);
-                    });
+                    }
+                  } else {
+                    packet.status = "TEAM_NOT_FOUND";
+                    response.json(packet);
                   }
-                } else {
-                  packet.status = "USER_NOT_FOUND";
+                }).catch(error => {
+                  console.log(error);
+                  packet.status = "ERROR";
+                  packet.message = "An error occurred while attempting to update user status.";
                   response.json(packet);
-                }
-              }).catch(error => {
-                console.log(error);
-                packet.status = "ERROR_WHILE_UPDATING_USER_STATUS";
-                response.json(packet);
-              });
+                });
+              }
             } else {
               packet.status = "USER_NOT_FOUND";
               response.json(packet);
             }
+          }).catch(error => {
+            console.log(error);
+            packet.status = "ERROR";
+            packet.message = "An error occurred while attempting to update user status.";
+            response.json(packet);
           });
         } else {
-          packet.status = "USER_HAS_NO_TEAM";
-          repsonse.json(packet);
+          packet.status = "USER_NOT_FOUND";
+          response.json(packet);
         }
-      }
-    } else {
-      packet.status = "USER_NOT_VERIFIED";
-      response.json(packet);
-    }
+      });
   });
 
   /*
@@ -695,7 +652,8 @@ module.exports = async (app, passport) => {
           email(user.email, "Password Reset Link", "<p>You are receiving this because you (or someone else) have requested the reset of the password for your account. Please click on the following link to complete the process</p><br/><br/><a href='" + resetLink + "' target='_blank'>Verify Email</a>");
         }).catch(error => {
           console.log(error);
-          packet.status = "ERROR_WHILE_GETTING_USER";
+          packet.status = "ERROR";
+          packet.message = "An error occurred while sending password reset link.";
           response.json(packet);
         });
       } else {
@@ -704,7 +662,8 @@ module.exports = async (app, passport) => {
       }
     }).catch(error => {
       console.log(error);
-      packet.status = "ERROR_WHILE_GETTING_USER";
+      packet.status = "ERROR";
+      packet.message = "An error occurred while sending password reset link.";
       response.json(packet);
     });
   });
@@ -759,7 +718,8 @@ module.exports = async (app, passport) => {
               email(user.email, "Your password has been reset", "<p>Your password has been reset. If you did not do this, log in to your account immediately and change the password.</p>");
             }).catch(error => {
               console.log(error);
-              packet.status = "ERROR_WHILE_RESETTING_PASSWORD";
+              packet.status = "ERROR";
+              packet.message = "An error occurred while resetting the user's password.";
               response.json(packet);
             });
           }
@@ -769,7 +729,8 @@ module.exports = async (app, passport) => {
         }
       }).catch(error => {
         console.log(error);
-        packet.status = "ERROR_WHILE_RESETTING_PASSWORD";
+        packet.status = "ERROR";
+        packet.message = "An error occurred while resetting the user's password.";
         response.json(packet);
       });
     } else {
@@ -806,23 +767,20 @@ module.exports = async (app, passport) => {
       status: ""
     };
     User.findOne({ username: request.user.username }).then((user) => {
-      if (user) {
-        user.password = hashPassword(request.body.password1);
-        user.save().then(() => {
-          packet.status = "PASSWORD_UPDATED";
-          response.json(packet);
-        }).catch(error => {
-          console.log(error);
-          packet.status = "ERROR_WHILE_UPDATING_PASSWORD";
-          response.json(packet);
-        })
-      } else {
-        packet.status = "USER_NOT_FOUND";
+      user.password = hashPassword(request.body.password1);
+      user.save().then(() => {
+        packet.status = "PASSWORD_UPDATED";
         response.json(packet);
-      }
+      }).catch(error => {
+        console.log(error);
+        packet.status = "ERROR";
+        packet.message = "An error occurred while updating password.";
+        response.json(packet);
+      });
     }).catch(error => {
       console.log(error);
-      packet.status = "ERROR_WHILE_UPDATING_PASSWORD";
+      packet.status = "ERROR";
+      packet.message = "An error occurred while updating password.";
       response.json(packet);
     })
   });
@@ -855,23 +813,20 @@ module.exports = async (app, passport) => {
       status: ""
     };
     User.findOne({ username: request.user.username }).then((user) => {
-      if (user) {
-        user.attacker_role = request.body.role;
-        user.save().then(() => {
-          packet.status = "ATTACKER_ROLE_SET";
-          response.json(packet);
-        }).catch(error => {
-          console.log(error);
-          packet.status = "ERROR_WHILE_SETTING_ATTACKER_ROLE";
-          response.json(packet);
-        })
-      } else {
-        packet.status = "USER_NOT_FOUND";
+      user.attacker_role = request.body.role;
+      user.save().then(() => {
+        packet.status = "ATTACKER_ROLE_SET";
         response.json(packet);
-      }
+      }).catch(error => {
+        console.log(error);
+        packet.status = "ERROR";
+        packet.message = "An error occurred while attempting to set user's attacker role.";
+        response.json(packet);
+      })
     }).catch(error => {
       console.log(error);
-      packet.status = "ERROR_WHILE_SETTING_ATTACKER_ROLE";
+      packet.status = "ERROR";
+      packet.message = "An error occurred while attempting to set user's attacker role.";
       response.json(packet);
     });
   });
@@ -904,23 +859,20 @@ module.exports = async (app, passport) => {
       status: ""
     };
     User.findOne({ username: request.user.username }).then((user) => {
-      if (user) {
-        user.defender_role = request.body.role;
-        user.save().then(() => {
-          packet.status = "DEFENDER_ROLE_SET";
-          response.json(packet);
-        }).catch(error => {
-          console.log(error);
-          packet.status = "ERROR_WHILE_SETTING_DEFENDER_ROLE";
-          response.json(packet);
-        })
-      } else {
-        packet.status = "USER_NOT_FOUND";
+      user.defender_role = request.body.role;
+      user.save().then(() => {
+        packet.status = "DEFENDER_ROLE_SET";
         response.json(packet);
-      }
+      }).catch(error => {
+        console.log(error);
+        packet.status = "ERROR";
+        packet.message = "An error occurred while setting user's defender role.";
+        response.json(packet);
+      })
     }).catch(error => {
       console.log(error);
-      packet.status = "ERROR_WHILE_SETTING_DEFENDER_ROLE";
+      packet.status = "ERROR";
+      packet.message = "An error occurred while setting user's defender role.";
       response.json(packet);
     });
   });
@@ -953,23 +905,20 @@ module.exports = async (app, passport) => {
       status: ""
     };
     User.findOne({ username: request.user.username }).then((user) => {
-      if (user) {
-        user.attackers = request.body.attackers;
-        user.save().then(() => {
-          packet.status = "ATTACKERS_SET";
-          response.json(packet);
-        }).catch(error => {
-          console.log(error);
-          packet.status = "ERROR_WHILE_SETTING_ATTACKERS";
-          response.json(packet);
-        })
-      } else {
-        packet.status = "USER_NOT_FOUND";
+      user.attackers = request.body.attackers;
+      user.save().then(() => {
+        packet.status = "ATTACKERS_SET";
         response.json(packet);
-      }
+      }).catch(error => {
+        console.log(error);
+        packet.status = "ERROR";
+        packet.message = "An error occurred while attempting to set user's preferred attackers.";
+        response.json(packet);
+      });
     }).catch(error => {
       console.log(error);
-      packet.status = "ERROR_WHILE_SETTING_ATTACKERS";
+      packet.status = "ERROR";
+      packet.message = "An error occurred while attempting to set user's preferred attackers.";
       response.json(packet);
     });
   });
@@ -998,23 +947,20 @@ module.exports = async (app, passport) => {
       status: ""
     };
     User.findOne({ username: request.user.username }).then((user) => {
-      if (user) {
-        user.defenders = request.body.defenders;
-        user.save().then(() => {
-          packet.status = "DEFENDERS_SET";
-          response.json(packet);
-        }).catch(error => {
-          console.log(error);
-          packet.status = "ERROR_WHILE_SETTING_DEFENDERS";
-          response.json(packet);
-        })
-      } else {
-        packet.status = "USER_NOT_FOUND";
+      user.defenders = request.body.defenders;
+      user.save().then(() => {
+        packet.status = "DEFENDERS_SET";
         response.json(packet);
-      }
+      }).catch(error => {
+        console.log(error);
+        packet.status = "ERROR";
+        packet.message = "An error occurred while attempting to set user's defender role.";
+        response.json(packet);
+      });
     }).catch(error => {
       console.log(error);
-      packet.status = "ERROR_WHILE_SETTING_DEFENDERS";
+      packet.status = "ERROR";
+      packet.message = "An error occurred while attempting to set user's defender role.";
       response.json(packet);
     });
   });
@@ -1055,7 +1001,8 @@ module.exports = async (app, passport) => {
             });
           }).catch(error => {
             console.log(error);
-            packet.status = "ERROR_WHILE_DELETING_USER";
+            packet.status = "ERROR";
+            packet.message = "An error occurred while attempting to delete user's account.";
             response.json(packet);
           })
         } else if (team.editors.length === 1 && team.editors[0] === String(request.user._id) && team.members.length === 0 && team.admins.length === 0) {
@@ -1066,12 +1013,14 @@ module.exports = async (app, passport) => {
               email(request.user.email, "Account Deleted", "<h2>Your account has succesfully been deleted.</h2><br/><br/><p>Thank you for using R6 Stratbook. While we are sad to see you go, your data has been removed from our databases. If you wish to use the platform again, you will have to create a new account.<br/><br/>Thanks.</p>");
             }).catch(error => {
               console.log(error);
-              packet.status = "ERROR_WHILE_DELETING_USER";
+              packet.status = "ERROR";
+              packet.message = "An error occurred while attempting to delete user's account.";
               response.json(packet);
             });
           }).catch(error => {
             console.log(error);
-            packet.status = "ERROR_WHILE_DELETING_USER";
+            packet.status = "ERROR";
+            packet.message = "An error occurred while attempting to delete user's account.";
             response.json(packet);
           })
         } else if (team.admins.length === 1 && team.admins.indexOf(String(request.user._id)) >= 0) {
@@ -1082,12 +1031,14 @@ module.exports = async (app, passport) => {
               email(request.user.email, "Account Deleted", "<h2>Your account has succesfully been deleted.</h2><br/><br/><p>Thank you for using R6 Stratbook. While we are sad to see you go, your data has been removed from our databases. If you wish to use the platform again, you will have to create a new account.<br/><br/>Thanks.</p>");
             }).catch(error => {
               console.log(error);
-              packet.status = "ERROR_WHILE_DELETING_USER";
+              packet.status = "ERROR";
+              packet.message = "An error occurred while attempting to delete user's account.";
               response.json(packet);
             });
           }).catch(error => {
             console.log(error);
-            packet.status = "ERROR_WHILE_DELETING_USER";
+            packet.status = "ERROR";
+            packet.message = "An error occurred while attempting to delete user's account.";
             response.json(packet);
           })
         } else {
@@ -1108,18 +1059,21 @@ module.exports = async (app, passport) => {
               email(request.user.email, "Account Deleted", "<h2>Your account has succesfully been deleted.</h2><br/><br/><p>Thank you for using R6 Stratbook. While we are sad to see you go, your data has been removed from our databases. If you wish to use the platform again, you will have to create a new account.<br/><br/>Thanks.</p>");
             }).catch(error => {
               console.log(error);
-              packet.status = "ERROR_WHILE_DELETING_USER";
+              packet.status = "ERROR";
+              packet.message = "An error occurred while attempting to delete user's account.";
               response.json(packet);
             });
           }).catch(error => {
             console.log(error);
-            packet.status = "ERROR_WHILE_DELETING_USER";
+            packet.status = "ERROR";
+            packet.message = "An error occurred while attempting to delete user's account.";
             response.json(packet);
           })
         }
       }).catch(error => {
         console.log(error);
-        packet.status = "ERROR_WHILE_DELETING_USER";
+        packet.status = "ERROR";
+        packet.message = "An error occurred while attempting to delete user's account.";
         response.json(packet);
       });
     } else {
@@ -1128,7 +1082,8 @@ module.exports = async (app, passport) => {
         response.json(packet);
       }).catch(error => {
         console.log(error);
-        packet.status = "ERROR_WHILE_DELETING_USER";
+        packet.status = "ERROR";
+        packet.message = "An error occurred while attempting to delete user's account.";
         response.json(packet);
       });
     }

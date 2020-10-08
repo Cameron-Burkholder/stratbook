@@ -5,7 +5,10 @@ const { log, genJoinCode } = require("../config/utilities.js");
 const mongoose = require("mongoose");
 
 // Load input validation
+const validation = require("../validation.js");
 
+// Load middleware
+const middleware = require("../middleware.js");
 
 // Define roles
 const ADMIN = "ADMIN";
@@ -52,43 +55,22 @@ module.exports = async (app, passport) => {
   app.get("/api/strategies/view", (request, response, done) => {
     log("GET REQUEST AT /api/strategies/view");
     done();
-  }, passport.authenticate("jwt", { session: false }), (request, response, done) => {
-    let packet = {
-      status: ""
-    };
-    if (request.user.verified) {
-      if (request.user.team_code) {
-        Team.findOne({ join_code: request.user.team_code }).then((team) => {
-          if (team) {
-            if (team.members.indexOf(String(request.user._id)) >= 0 || team.editors.indexOf(String(request.user._id)) >= 0 || team.admins.indexOf(String(request.user._id)) >= 0) {
-              Strategies.findOne({ join_code: request.user.team_code }).then((strategies) => {
-                packet.status = "STRATEGIES_FOUND";
-                packet.strategies = strategies.strategies;
-                response.json(packet);
-              }).catch(error => {
-                console.log(error);
-                packet.status = "ERROR_WHILE_GETTING_STRATEGIES";
-                response.json(packet);
-              })
-            } else {
-              packet.status = "USER_NOT_QUALIFIED";
-              response.json(packet);
-            }
-          } else {
-            packet.status = "TEAM_DOES_NOT_EXIST";
-            response.json(packet);
-          }
-        }).catch(error => {
-          console.log(error);
-          packet.status = "ERROR_WHILE_GETTING_STRATEGIES";
-          response.json(packet);
-        })
-      } else {
-        packet.status = "USER_HAS_NO_TEAM";
+  }, passport.authenticate("jwt", { session: false }), middleware.userIsVerified, middleware.userHasTeam, (request, response, done) => {
+    let packet = {};
+    if (request.team.members.indexOf(String(request.user._id)) >= 0 || request.team.editors.indexOf(String(request.user._id)) >= 0 || request.team.admins.indexOf(String(request.user._id)) >= 0) {
+      Strategies.findOne({ join_code: request.user.team_code }).then((strategies) => {
+        packet.status = "STRATEGIES_FOUND";
+        packet.strategies = strategies.strategies;
         response.json(packet);
-      }
+      }).catch(error => {
+        console.log(error);
+        packet.status = "ERROR";
+        packet.message = "An error occurred while attempting to get strategies for the requested team.";
+        response.json(packet);
+      })
     } else {
-      packet.status = "USER_NOT_VERIFIED";
+      packet.status = "USER_NOT_QUALIFIED";
+      packet.message = "User is not on requested team.";
       response.json(packet);
     }
   });
