@@ -57,105 +57,82 @@ module.exports = async (app, passport) => {
   app.get("/api/teams/view-team", (request, response, done) => {
     log("GET REQUEST AT /api/teams/view-team");
     done();
-  }, passport.authenticate("jwt", { session: false }), async (request, response) => {
+  }, passport.authenticate("jwt", { session: false }), middleware.userIsVerified, middleware.userHasTeam, async (request, response) => {
     let packet = {
       status: ""
     };
-    if (request.user.verified) {
-      if (request.user.team_code) {
-        Team.findOne({ join_code: request.user.team_code }).then(async (team, error) => {
-          if (error) {
+    if (request.team.members.indexOf(request.user._id) >= 0 || request.team.editors.indexOf(request.user._id) >= 0 || request.team.admins.indexOf(request.user._id) >= 0) {
+      let team_data = {
+        name: request.team.name,
+        join_code: request.team.join_code,
+        platform: request.team.platform,
+        members: [],
+        editors: [],
+        admins: []
+      };
+
+      let index;
+      index = 0;
+      while (index < request.team.members.length) {
+        await new Promise((resolve, reject) => {
+          User.findOne({ _id: mongoose.Types.ObjectId(request.team.members[index]) }).then(async (user, error) => {
+            let user_data = user;
+            user_data.password = undefined;
+            team_data.members.push(user_data);
+            resolve(true);
+          }).catch(error => {
             console.log(error);
-            packet.status = "ERROR_WHILE_GETTING_TEAM";
+            packet.status = "ERROR";
+            packet.message = "An error occurred while getting team data.";
             response.json(packet);
-          }
-
-          if (team) {
-            if (team.members.indexOf(request.user._id) >= 0 || team.editors.indexOf(request.user._id) >= 0 || team.admins.indexOf(request.user._id) >= 0) {
-              let team_data = {
-                name: team.name,
-                join_code: team.join_code,
-                platform: team.platform,
-                members: [],
-                editors: [],
-                admins: []
-              };
-
-              let index;
-              index = 0;
-              while (index < team.members.length) {
-                await new Promise((resolve, reject) => {
-                  User.findOne({ _id: mongoose.Types.ObjectId(team.members[index]) }).then(async (user, error) => {
-                    let user_data = user;
-                    user_data.password = undefined;
-                    team_data.members.push(user_data);
-                    resolve(true);
-                  }).catch(error => {
-                    console.log(error);
-                    packet.status = "ERROR_WHILE_GETTING_TEAM";
-                    response.json(packet);
-                    reject(false);
-                  })
-                });
-                index++;
-              }
-              index = 0;
-              while (index < team.editors.length) {
-                await new Promise((resolve, reject) => {
-                  User.findOne({ _id: mongoose.Types.ObjectId(team.editors[index]) }).then(async (user, error) => {
-                    let user_data = user;
-                    user_data.password = undefined;
-                    team_data.editors.push(user_data);
-                    resolve(true);
-                  }).catch(error => {
-                    console.log(error);
-                    packet.status = "ERROR_WHILE_GETTING_TEAM";
-                    response.json(packet);
-                    reject(false);
-                  })
-                });
-                index++;
-              }
-              index = 0;
-              while (index < team.admins.length) {
-                await new Promise((resolve, reject) => {
-                  User.findOne({ _id: mongoose.Types.ObjectId(team.admins[index]) }).then(async (user, error) => {
-                    let user_data = user;
-                    user_data.password = undefined;
-                    user_data.__v = undefined;
-                    user_data._id = undefined;
-                    team_data.admins.push(user_data);
-                    resolve(true);
-                  }).catch(error => {
-                    console.log(error);
-                    packet.status = "ERROR_WHILE_GETTING_TEAM";
-                    response.json(packet);
-                    reject(false);
-                  })
-                });
-                index++;
-              }
-              packet.status = "TEAM_FOUND";
-              packet.team = team_data;
-              response.json(packet);
-            } else {
-              packet.status = "USER_NOT_QUALIFIED";
-              response.json(packet);
-            }
-          } else {
-            packet.status = "TEAM_DOES_NOT_EXIST";
-            response.json(packet);
-          }
-        }).catch(error => {
-          packet.status = "ERROR_WHILE_GETTING_TEAM";
-          response.json(packet);
+            reject(false);
+          })
         });
-      } else {
-        packet.status = "USER_HAS_NO_TEAM";
-        response.json(packet);
+        index++;
       }
+      index = 0;
+      while (index < request.team.editors.length) {
+        await new Promise((resolve, reject) => {
+          User.findOne({ _id: mongoose.Types.ObjectId(request.team.editors[index]) }).then(async (user, error) => {
+            let user_data = user;
+            user_data.password = undefined;
+            team_data.editors.push(user_data);
+            resolve(true);
+          }).catch(error => {
+            console.log(error);
+            packet.status = "ERROR";
+            packet.message = "An error occurred while getting team data.";
+            response.json(packet);
+            reject(false);
+          })
+        });
+        index++;
+      }
+      index = 0;
+      while (index < request.team.admins.length) {
+        await new Promise((resolve, reject) => {
+          User.findOne({ _id: mongoose.Types.ObjectId(request.team.admins[index]) }).then(async (user, error) => {
+            let user_data = user;
+            user_data.password = undefined;
+            user_data.__v = undefined;
+            user_data._id = undefined;
+            team_data.admins.push(user_data);
+            resolve(true);
+          }).catch(error => {
+            console.log(error);
+            packet.status = "ERROR";
+            packet.message = "An error occurred while getting team data.";
+            response.json(packet);
+            reject(false);
+          })
+        });
+        index++;
+      }
+      packet.status = "TEAM_FOUND";
+      packet.team = team_data;
+      response.json(packet);
     } else {
-      packet.status = "USER_NOT_VERIFIED";
+      packet.status = "USER_NOT_QUALIFIED";
       response.json(packet);
     }
   });
