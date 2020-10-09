@@ -5,5 +5,7 @@ div#DeleteTeamAPI {
   justify-content: center;
   button {
     padding: calc(#{$padding} / 2) $padding;
+    margin-top: calc(#{$margin} * 2);
+    color: $theme-dark;
   }
 }

@@ -17,6 +17,9 @@ form.form {
     select.form__input, input.form__input {
       padding: calc(#{$padding} / 2) $padding;
       color: $theme-dark;
+      * {
+        color: $theme-dark;
+      }
     }
     input.form__input {
       max-width: 200px;

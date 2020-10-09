@@ -34,13 +34,15 @@ div#GeneralStatisticsAPI {
           font-size: $text;
         }
         div.stat--main {
-          display: block;
+          display: flex;
+          flex-direction: column;
           width: 100%;
           text-align: center;
           padding: $padding;
           p.stat__label {
             font-size: $text;
             color: $light;
+            text-align: center;
           }
           span.stat__value {
             font-size: $heading2;

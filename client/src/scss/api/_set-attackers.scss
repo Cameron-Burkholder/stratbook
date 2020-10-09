@@ -64,21 +64,22 @@ div#SetAttackersAPI {
   div#SetAttackersAPI {
     padding: $phone-padding;
     form.form#set-attackers-form {
-      fieldset.form-fieldset {
+      fieldset.form__fieldset {
         border: none;
         padding: $phone-padding;
         > div {
-          p {
+          p.form__label {
             grid-column: span 4;
           }
           display: grid;
           grid-template-columns: repeat(4, 1fr);
-          div.attacker {
+          div.attackers-form__attacker {
+
           }
-          span.form-error {
+          span.form__error {
             grid-column: span 4;
           }
-          button {
+          button.form__button {
             grid-column: span 4;
           }
         }

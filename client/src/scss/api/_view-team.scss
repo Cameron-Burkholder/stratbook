@@ -80,15 +80,21 @@ div#ViewTeamAPI {
   div#ViewTeamAPI {
     div.team {
       div.roster {
-        div.team-member-accent {
+        div.team-member--accent {
           grid-template-columns: repeat(2, 1fr);
-          p.member-status, p.member-quality {
+          h4.team-member__username {
+            font-size: $text;
+          }
+          p.team-member__status, p.team-member__quality {
             text-align: left;
           }
         }
         div.team-member {
+          h4.team-member__username {
+            font-size: $text;
+          }
           grid-template-columns: repeat(2, 1fr);
-          p.member-status, p.member-quality {
+          p.team-member__status, p.team-member__quality {
             text-align: left;
           }
           div.attackers, div.defenders {

@@ -112,7 +112,7 @@ class OperatorStatisticsAPI extends React.Component {
           <div>
           { this.state.stats ? (
             <div className="statistics">
-              <input onChange={this.searchOperators} className="search-by" value={this.state.search} placeholder="Search By Name"/>
+              <input onChange={this.searchOperators} className="form__input" value={this.state.search} placeholder="Search By Name"/>
               <button onClick={this.sortOperators} className="statistics__button" id="release">Sort By Release</button>
               <button onClick={this.sortOperators} className="statistics__button" id="name">Sort By Name</button>
               <button onClick={this.sortOperators} className="statistics__button" id="kd">Sort By KD</button>

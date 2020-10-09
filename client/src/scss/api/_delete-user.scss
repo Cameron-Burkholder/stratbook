@@ -9,6 +9,7 @@ div#DeleteUserAPI {
     button {
       padding: calc(#{$padding} / 2) $padding;
       margin-top: $margin;
+      color: $theme-dark;
     }
   }
 }

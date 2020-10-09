@@ -14,10 +14,12 @@ div#UpdateTeamNameAPI {
     justify-content: center;
     input.team-name-input {
       padding: calc(#{$padding} / 2) $padding;
+      color: $theme-dark;
     }
     button.team-name-button {
       padding: calc(#{$padding} / 2) $padding;
       display: inline-block;
+      color: $theme-dark;
     }
   }
 

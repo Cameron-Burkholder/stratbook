@@ -9,6 +9,7 @@ div#ManageTeamAPI {
   div.manage-team-member {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+    align-items: center;
     text-align: center;
     padding: $padding;
     border-radius: $border-radius;
@@ -32,6 +33,18 @@ div#ManageTeamAPI {
       display: block;
       margin: auto;
       padding: calc(#{$padding} / 2) $padding;
+    }
+  }
+}
+
+@media screen and (max-width: #{$phone-max-width}) {
+  div#ManageTeamAPI {
+    div.manage-team-member {
+      align-items: center;
+      h4.manage-team-member__username {
+        color: $accent;
+        font-size: $text;
+      }
     }
   }
 }

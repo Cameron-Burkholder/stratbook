@@ -23,6 +23,7 @@ div#OperatorStatisticsAPI {
       display: block;
       margin: $margin auto;
       padding: calc(#{$padding} / 2) $padding;
+      color: $theme-dark;
     }
     button.statistics__button {
       padding: $padding;
@@ -73,10 +74,11 @@ div#OperatorStatisticsAPI {
     padding: $phone-padding;
     margin: calc(#{$phone-margin} / 2) auto;
     div.statistics {
-      button.sort-by {
+      button.statistics__button {
         padding: calc(#{$phone-padding} / 2) $phone-padding;
+        grid-column: span 2;
       }
-      div.operator {
+      div.operator-statistics {
         grid-column: span 4;
         padding: calc(#{$phone-padding} / 2);
         div.operator-info {
@@ -86,7 +88,7 @@ div#OperatorStatisticsAPI {
         }
         div.operator-stats {
           grid-template-columns: repeat(3, 1fr);
-          div.operator-stat {
+          div.operator-stats__stat {
             font-size: $phone-small;
           }
         }

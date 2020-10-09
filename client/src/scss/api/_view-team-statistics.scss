@@ -78,9 +78,12 @@ div#ViewTeamStatisticsAPI {
       }
       div.member-statistics {
         padding: $phone-padding;
-        div.team-member-stats, div.team-member-stats-accent {
+        div.team-member-stats, div.team-member-stats--accent {
           grid-template-columns: 108px repeat(2, 1fr);
-          p.member-stat {
+          h4.team-member-stats__username {
+            font-size: $text;
+          }
+          p.team-member-stats__stat {
             text-align: left;
           }
         }
