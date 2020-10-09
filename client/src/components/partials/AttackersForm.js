@@ -14,31 +14,29 @@ const attackers = ["SLEDGE", "THATCHER", "ASH", "THERMITE", "TWITCH", "MONTAGNE"
   @prop errors: Object
   @prop loading: Boolean
 */
-const AttackerRoleForm = (props) => {
-  console.log(props);
+const AttackersForm = (props) => {
   const attacker_buttons = attackers.map((attacker, index) => {
     return (
-      <div className="attacker" key={index}>
-        <input onChange={() => { props.onChange(attacker); } } className={"form-input " + (props.attackers.indexOf(attacker) >= 0 ? "checked-input" : "")} type="checkbox" id={"attacker-" + attacker.toLowerCase()} checked={props.attackers.indexOf(attacker) >= 0} key={index}/>
-        <label className="form-label" htmlFor={"attacker-" + attacker.toLowerCase()}>
-          <img className="form-image" alt={attacker + " Image"} src={"https://cdn.r6stats.com/badges/" + attacker.toLowerCase() + "_badge.png"}/>
+      <div className="attackers-form__attacker" key={index}>
+        <input onChange={() => { props.onChange(attacker); } } className={"attackers-form__input " + (props.attackers.indexOf(attacker) >= 0 ? "attackers-form__input--checked" : "")} type="checkbox" id={"attackers-form__input--" + attacker.toLowerCase()} checked={props.attackers.indexOf(attacker) >= 0} key={index}/>
+        <label className="attackers-form__label" htmlFor={"attackers-form__input--" + attacker.toLowerCase()}>
+          <img className="attackers-form__image" alt={attacker + " Image"} src={"https://cdn.r6stats.com/badges/" + attacker.toLowerCase() + "_badge.png"}/>
         </label>
       </div>
     )
   });
-  console.log(attacker_buttons);
   return (
     <form className="form" id="set-attackers-form" onSubmit={props.onSubmit}>
-      <fieldset className="form-fieldset" id="attackers-field">
+      <fieldset className="form__fieldset" id="attackers-field">
         <div>
-          <p className="form-label">Preferred Attackers</p>
+          <p className="form__label">Preferred Attackers</p>
             { attacker_buttons }
-          <span className="form-error">{(props.errors ? props.errors.attackers : "")}</span>
-          <button className="form-submit" type="submit">Save</button>
+          <span className="form__error">{(props.errors ? props.errors.attackers : "")}</span>
+          <button className="form__button form__button--submit" type="submit">Save</button>
         </div>
       </fieldset>
     </form>
   )
 }
 
-export default AttackerRoleForm;
+export default AttackersForm;

@@ -15,15 +15,15 @@ import Loading from "./Loading.js"
 const UpdatePlatformForm = (props) => {
   return (
     <form className="form" id="update-platform-form" onSubmit={props.onSubmit}>
-      <p className="form-heading">Update Platform</p>
-      <fieldset className="form-fieldset" id="platform-field">
-        <label className="form-label">Platform</label>
-        <select onChange={props.onChange} className={"form-input" + (props.errors && props.errors.platform == null ? "" : " input-error")} value={props.platform} id="platform" required>
+      <p className="form__heading">Update Platform</p>
+      <fieldset className="form__fieldset" id="platform-field">
+        <label className="form__label">Platform</label>
+        <select onChange={props.onChange} className={"form__input" + (props.errors && props.errors.platform == null ? "" : " form__input--error")} value={props.platform} id="platform" required>
           <option>XBOX</option>
           <option>PC</option>
           <option>PS4</option>
         </select>
-        <span className="form-error">{(props.errors ? props.errors.platform : "")}</span>
+        <span className="form__error">{(props.errors ? props.errors.platform : "")}</span>
       </fieldset>
     </form>
   )

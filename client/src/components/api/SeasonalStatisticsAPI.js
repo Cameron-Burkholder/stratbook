@@ -73,22 +73,22 @@ class SeasonalStatisticsAPI extends React.Component {
           <div>
           { this.state.stats ? (
             <div className="statistics">
-              <div className="stat main-stat">
-                <p className="stat-label">{this.state.stats.seasons.shadow_legacy.regions.ncsa[0].mmr} MMR</p>
-                <h4 className="stat-value">{this.state.stats.seasons.shadow_legacy.regions.ncsa[0].rank_text}</h4>
-                <p className="stat-label label-secondary">MMR Change: {this.state.stats.seasons.shadow_legacy.regions.ncsa[0].last_match_mmr_change}</p>
+              <div className="stat stat--main">
+                <p className="stat__label">{this.state.stats.seasons.shadow_legacy.regions.ncsa[0].mmr} MMR</p>
+                <h4 className="stat__value">{this.state.stats.seasons.shadow_legacy.regions.ncsa[0].rank_text}</h4>
+                <p className="stat__label stat__label--secondary">MMR Change: {this.state.stats.seasons.shadow_legacy.regions.ncsa[0].last_match_mmr_change}</p>
               </div>
               <div className="stat">
-                <p className="stat-label">Kills</p>
-                <h4 className="stat-value">{this.state.stats.seasons.shadow_legacy.regions.ncsa[0].kills}</h4>
-                <p className="stat-label">Deaths</p>
-                <h4 className="stat-value">{this.state.stats.seasons.shadow_legacy.regions.ncsa[0].deaths}</h4>
+                <p className="stat__label">Kills</p>
+                <h4 className="stat__value">{this.state.stats.seasons.shadow_legacy.regions.ncsa[0].kills}</h4>
+                <p className="stat__label">Deaths</p>
+                <h4 className="stat__value">{this.state.stats.seasons.shadow_legacy.regions.ncsa[0].deaths}</h4>
               </div>
               <div className="stat">
-                <p className="stat-label">Wins</p>
-                <h4 className="stat-value">{this.state.stats.seasons.shadow_legacy.regions.ncsa[0].wins}</h4>
-                <p className="stat-label">Losses</p>
-                <h4 className="stat-value">{this.state.stats.seasons.shadow_legacy.regions.ncsa[0].losses}</h4>
+                <p className="stat__label">Wins</p>
+                <h4 className="stat__value">{this.state.stats.seasons.shadow_legacy.regions.ncsa[0].wins}</h4>
+                <p className="stat__label">Losses</p>
+                <h4 className="stat__value">{this.state.stats.seasons.shadow_legacy.regions.ncsa[0].losses}</h4>
               </div>
             </div>
           ) : (

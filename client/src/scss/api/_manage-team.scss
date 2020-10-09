@@ -1,7 +1,7 @@
 /* client/src/scss/api/_manage-team.scss */
 
 div#ManageTeamAPI {
-  background: $background-dark;
+  background: $theme-dark;
   max-width: 1200px;
   display: block;
   margin: auto;
@@ -12,23 +12,23 @@ div#ManageTeamAPI {
     text-align: center;
     padding: $padding;
     border-radius: $border-radius;
-    h4.member-username {
+    h4.manage-team-member__username {
       color: $accent;
     }
-    p.member-status {
+    p.manage-team-member__status {
       font-size: $small;
       color: $light;
       text-align: center;
       padding: calc(#{$padding} / 2) $padding;
       text-align: center;
     }
-    select.member-update-status {
+    select.manage-team-member__update-status {
       padding: calc(#{$padding} / 2) $padding;
       text-align: center;
       display: block;
       margin: auto;
     }
-    button {
+    button.manage-team-member__button {
       display: block;
       margin: auto;
       padding: calc(#{$padding} / 2) $padding;

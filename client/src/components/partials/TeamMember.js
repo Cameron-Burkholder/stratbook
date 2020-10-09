@@ -17,32 +17,32 @@ const TeamMember = (props) => {
   const attackers = props.attackers.map((attacker, index) => {
     return (
       <div className="attacker" key={index}>
-        <img className="attacker-image" alt={attacker} src={"https://cdn.r6stats.com/badges/" + attacker.toLowerCase() + "_badge.png"}/>
+        <img className="attacker__image" alt={attacker} src={"https://cdn.r6stats.com/badges/" + attacker.toLowerCase() + "_badge.png"}/>
       </div>
     )
   });
   const defenders = props.defenders.map((defender, index) => {
     return (
       <div className="defender" key={index}>
-        <img className="defender-image" alt={defender} src={"https://cdn.r6stats.com/badges/" + defender.toLowerCase() + "_badge.png"}/>
+        <img className="defender__image" alt={defender} src={"https://cdn.r6stats.com/badges/" + defender.toLowerCase() + "_badge.png"}/>
       </div>
     )
   });
   return (
     <div className="team-member">
-      <h4 className="member-username">{props.username}</h4>
-      <p className="member-status">{props.status}</p>
-      <p className="member-quality">{props.attacker_role}</p>
-      <p className="member-quality">{props.defender_role}</p>
+      <h4 className="team-member__username">{props.username}</h4>
+      <p className="team-member__status">{props.status}</p>
+      <p className="team-member__quality">{props.attacker_role}</p>
+      <p className="team-member__quality">{props.defender_role}</p>
       { attackers.length > 0 ? (
         <div className="attackers">
-          <p className="member-attackers">Preferred Attackers</p>
+          <p className="team-member__attackers">Preferred Attackers</p>
           { attackers }
         </div>
       ) : "" }
       { defenders.length > 0 ? (
         <div className="defenders">
-          <p className="member-defenders">Preferred Defenders</p>
+          <p className="team-member__defenders">Preferred Defenders</p>
           { defenders }
         </div>
       ) : "" }

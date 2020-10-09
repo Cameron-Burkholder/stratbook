@@ -52,7 +52,7 @@ const User = (props) => {
         <UpdateEmailAPI getAuthToken={props.getAuthToken} updateAuthToken={props.updateAuthToken} email={props.email}/>
         <UpdatePasswordAPI getAuthToken={props.getAuthToken} updateAuthToken={props.updateAuthToken}/>
       </div>
-      <div className="account-section" id="danger">
+      <div className="account-section account-section--danger">
         <h3>Manage Account</h3>
         <DeleteUserAPI getAuthToken={props.getAuthToken} logout={props.logout}/>
       </div>

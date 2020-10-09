@@ -16,13 +16,13 @@ import Loading from "./Loading.js"
 const UpdateEmailForm = (props) => {
   return (
     <form className="form" id="update-email-form" onSubmit={props.onSubmit}>
-      <p className="form-heading">Update Email</p>
-      <fieldset className="form-fieldset" id="email-field">
-        <label className="form-label" htmlFor="email">Email</label>
-        <input onChange={props.onChange} className={"form-input" + (props.errors && props.errors.email == null ? "" : " input-error")} value={props.email} id="email" type="email" required/>
-        <span className="form-error">{(props.errors ? props.errors.email : "")}</span>
+      <p className="form__heading">Update Email</p>
+      <fieldset className="form__fieldset" id="email-field">
+        <label className="form__label" htmlFor="email">Email</label>
+        <input onChange={props.onChange} className={"form__input" + (props.errors && props.errors.email == null ? "" : " form__input--error")} value={props.email} id="email" type="email" required/>
+        <span className="form__error">{(props.errors ? props.errors.email : "")}</span>
       </fieldset>
-      { props.loading ? <Loading/> : <button className="form-button" type="submit">Save</button> }
+      { props.loading ? <Loading/> : <button className="form__button form__button--submit" type="submit">Save</button> }
     </form>
   )
 }

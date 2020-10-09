@@ -2,16 +2,16 @@
 
 div#SetDefenderRoleAPI {
   form.form#set-defender-role-form {
-    fieldset.form-fieldset {
+    fieldset.form__fieldset {
       border: none;
-      label.form-label {
+      label.form__label {
         display: inline;
         color: $light;
         font-size: $small;
         width: 100%;
         padding: calc(#{$padding} / 2);
       }
-      select.form-input {
+      select.form__input {
         margin-left: auto;
         margin-right: 0;
         float: right;
@@ -25,11 +25,11 @@ div#SetDefenderRoleAPI {
 @media screen and (max-width: #{$phone-max-width}) {
   div#SetDefenderRoleAPI {
     margin-bottom: $phone-margin;
-    fieldset.form-fieldset {
-      label.form-label {
+    fieldset.form__fieldset {
+      label.form__label {
         width: 100%;
       }
-      select.form-input {
+      select.form__input {
         float: left;
         width: 100%;
         display: block;

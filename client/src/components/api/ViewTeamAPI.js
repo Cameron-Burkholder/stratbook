@@ -117,11 +117,11 @@ class ViewTeamAPI extends React.Component {
             <h3 className="team-description">{this.state.team.platform} - {this.state.team.join_code}</h3>
             <div className="roster">
               <h3>Roster</h3>
-              <div className="team-member-accent">
-                <h4 className="member-username">Username</h4>
-                <p className="member-status">Status</p>
-                <p className="member-quality">Attacking Role</p>
-                <p className="member-quality">Defending Role</p>
+              <div className="team-member--accent">
+                <h4 className="team-member__username">Username</h4>
+                <p className="team-member__status">Status</p>
+                <p className="team-member__quality">Attacking Role</p>
+                <p className="team-member__quality">Defending Role</p>
               </div>
               { teamMembers }
             </div>

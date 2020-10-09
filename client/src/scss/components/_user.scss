@@ -6,7 +6,7 @@ div#user {
     text-align: center;
   }
   div.account-section {
-    background: $background-dark;
+    background: $theme-dark;
     border-radius: $border-radius;
     padding: $padding;
     margin: calc(#{$margin} * 2) auto;
@@ -21,6 +21,9 @@ div#user {
       grid-template-columns: repeat(2, 1fr);
       grid-gap: 4px;
     }
+  }
+  div.account-section--danger {
+    border: 2px solid $theme-error;
   }
 }
 

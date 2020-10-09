@@ -206,7 +206,7 @@ class App extends React.Component {
             </Route>
             /* /strategies */
             <Route exact path="/strategies">
-              { this.state.loggedIn ? (
+              { this.state.loggedIn && this.state.user.team_code ? (
                 <div className="page-wrapper">
                   <Header title="Strategies" subtitle="View Strategies"/>
                   <MainNavigation page="STRATEGIES" active="VIEW" status={this.state.user.status}/>
@@ -230,7 +230,7 @@ class App extends React.Component {
             </Route>
             /* /maps */
             <Route exact path="/maps">
-              { this.state.loggedIn ? (
+              { this.state.loggedIn && this.state.user.team_code ? (
                 <div className="page-wrapper">
                   <Header title="Maps" subtitle="View Maps"/>
                   <MainNavigation page="MAPS" active="VIEW" status={this.state.user.status}/>
@@ -252,10 +252,10 @@ class App extends React.Component {
             </Route>
             /* /chat */
             <Route exact path="/chat">
-              { this.state.loggedIn ? (
+              { this.state.loggedIn && this.state.user.team_code ? (
                 <div className="page-wrapper">
                   <Header title="Chat"/>
-                  <MainNavigation page="CHAT" user={this.state.user.status}/>
+                  <MainNavigation page="CHAT" status={this.state.user.status}/>
                 </div>
               )
               : ( <Redirect to="/"/> )

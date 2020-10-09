@@ -80,7 +80,7 @@ class DeleteUserAPI extends React.Component {
         ) : (
           <div>
             <p>Warning: this action is permanent and cannot be undone.</p>
-            <button id="deleteAccount" onClick={this.onSubmit}>Delete Account</button>
+            <button id="deleteAccount" className="form__button form__button--submit" onClick={this.onSubmit}>Delete Account</button>
           </div>
         )}
       </div>

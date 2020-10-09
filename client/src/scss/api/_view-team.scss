@@ -13,28 +13,28 @@ div#ViewTeamAPI {
       text-align: center;
     }
     div.team-member:nth-child(odd) {
-      background: $background-medium;
+      background: $theme-medium;
     }
     div.roster {
       margin-top: calc(#{$margin} * 2);
       display: flex;
       flex-direction: column;
-      background: $background-dark;
+      background: $theme-dark;
       padding: $padding;
       h3 {
         color: $heading;
         font-size: $heading3;
       }
-      div.team-member-accent {
+      div.team-member--accent {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
         padding: $padding;
         border-radius: $border-radius;
-        h4.member-username {
+        h4.team-member__username {
           color: $accent;
           text-transform: uppercase;
         }
-        p.member-status, p.member-quality {
+        p.team-member__status, p.team-member__quality {
           font-size: $small;
           color: $accent;
           text-align: center;
@@ -46,10 +46,10 @@ div#ViewTeamAPI {
         grid-template-columns: repeat(4, 1fr);
         padding: $padding;
         border-radius: $border-radius;
-        h4.member-username {
+        h4.team-member__username {
           color: $accent;
         }
-        p.member-status, p.member-quality {
+        p.team-member__status, p.team-member__quality {
           font-size: $small;
           color: $light;
           text-align: center;

@@ -74,99 +74,99 @@ class GeneralStatisticsAPI extends React.Component {
           { this.state.stats ? (
             <div className="statistics-container">
               <img className="user-image" alt="User Image" src={this.state.stats.avatar_url_256}/>
-              <h3 className="stats-grid-heading">General</h3>
+              <h3 className="stats-grid__heading">General</h3>
               <div className="stats-grid">
                 <div className="stats-box">
-                  <h4 className="stats-heading">Progression</h4>
-                  <div className="stat main-stat">
-                    <p className="stat-label">Level</p>
-                    <span className="stat-value">{this.state.stats.progression.level}</span>
+                  <h4 className="stats__heading">Progression</h4>
+                  <div className="stat stat--main">
+                    <p className="stat__label">Level</p>
+                    <span className="stat__value">{this.state.stats.progression.level}</span>
                   </div>
                   <div className="stat">
-                    <p className="stat-label">Playtime</p>
-                    <span className="stat-value">{Math.floor(this.state.stats.stats.general.playtime / 3600)} Hrs</span>
+                    <p className="stat__label">Playtime</p>
+                    <span className="stat__value">{Math.floor(this.state.stats.stats.general.playtime / 3600)} Hrs</span>
                   </div>
                   <div className="stat">
-                    <p className="stat-label">Games Played</p>
-                    <span className="stat-value">{this.state.stats.stats.general.games_played}</span>
+                    <p className="stat__label">Games Played</p>
+                    <span className="stat__value">{this.state.stats.stats.general.games_played}</span>
                   </div>
                 </div>
                 <div className="stats-box">
-                  <h4 className="stats-heading">Personal Performance</h4>
-                  <div className="stat main-stat">
-                    <p className="stat-label">K/D</p>
-                    <span className="stat-value">{this.state.stats.stats.general.kd}</span>
+                  <h4 className="stats__heading">Personal Performance</h4>
+                  <div className="stat stat--main">
+                    <p className="stat__label">K/D</p>
+                    <span className="stat__value">{this.state.stats.stats.general.kd}</span>
                   </div>
                   <div className="stat">
-                    <p className="stat-label">Kills</p>
-                    <span className="stat-value">{this.state.stats.stats.general.kills}</span>
+                    <p className="stat__label">Kills</p>
+                    <span className="stat__value">{this.state.stats.stats.general.kills}</span>
                   </div>
                   <div className="stat">
-                    <p className="stat-label">Deaths</p>
-                    <span className="stat-value">{this.state.stats.stats.general.deaths}</span>
+                    <p className="stat__label">Deaths</p>
+                    <span className="stat-__alue">{this.state.stats.stats.general.deaths}</span>
                   </div>
                   <div className="stat">
-                    <p className="stat-label">Headshot %</p>
-                    <span className="stat-value">{Math.round((this.state.stats.stats.general.headshots / this.state.stats.stats.general.kills) * 100)}%</span>
+                    <p className="stat__label">Headshot %</p>
+                    <span className="stat__value">{Math.round((this.state.stats.stats.general.headshots / this.state.stats.stats.general.kills) * 100)}%</span>
                   </div>
                 </div>
                 <div className="stats-box">
-                  <h4 className="stats-heading">Team Performance</h4>
-                  <div className="stat main-stat">
-                    <p className="stat-label">W/L</p>
-                    <span className="stat-value">{this.state.stats.stats.general.wl}</span>
+                  <h4 className="stats__heading">Team Performance</h4>
+                  <div className="stat stat--main">
+                    <p className="stat__label">W/L</p>
+                    <span className="stat__value">{this.state.stats.stats.general.wl}</span>
                   </div>
                   <div className="stat">
-                    <p className="stat-label">Wins</p>
-                    <span className="stat-value">{this.state.stats.stats.general.wins}</span>
+                    <p className="stat__label">Wins</p>
+                    <span className="stat__value">{this.state.stats.stats.general.wins}</span>
                   </div>
                   <div className="stat">
-                    <p className="stat-label">Losses</p>
-                    <span className="stat-value">{this.state.stats.stats.general.losses}</span>
+                    <p className="stat__label">Losses</p>
+                    <span className="stat__value">{this.state.stats.stats.general.losses}</span>
                   </div>
                 </div>
               </div>
               <h3 className="stats-grid-heading">Competitive</h3>
               <div className="stats-grid">
                 <div className="stats-box">
-                  <h4 className="stats-heading">Progression</h4>
+                  <h4 className="stats__heading">Progression</h4>
                   <div className="stat">
-                    <p className="stat-label">Playtime</p>
-                    <span className="stat-value">{Math.floor(this.state.stats.stats.queue.ranked.playtime / 3600)} Hrs</span>
+                    <p className="stat__label">Playtime</p>
+                    <span className="stat__value">{Math.floor(this.state.stats.stats.queue.ranked.playtime / 3600)} Hrs</span>
                   </div>
                   <div className="stat">
-                    <p className="stat-label">Games Played</p>
-                    <span className="stat-value">{this.state.stats.stats.queue.ranked.games_played}</span>
+                    <p className="stat__label">Games Played</p>
+                    <span className="stat__value">{this.state.stats.stats.queue.ranked.games_played}</span>
                   </div>
                 </div>
                 <div className="stats-box">
                   <h4 className="stats-heading">Personal Performance</h4>
-                  <div className="stat main-stat">
-                    <p className="stat-label">K/D</p>
-                    <span className="stat-value">{this.state.stats.stats.queue.ranked.kd}</span>
+                  <div className="stat stat--main">
+                    <p className="stat__label">K/D</p>
+                    <span className="stat__value">{this.state.stats.stats.queue.ranked.kd}</span>
                   </div>
                   <div className="stat">
-                    <p className="stat-label">Kills</p>
-                    <span className="stat-value">{this.state.stats.stats.queue.ranked.kills}</span>
+                    <p className="stat__label">Kills</p>
+                    <span className="stat__value">{this.state.stats.stats.queue.ranked.kills}</span>
                   </div>
                   <div className="stat">
-                    <p className="stat-label">Deaths</p>
-                    <span className="stat-value">{this.state.stats.stats.queue.ranked.deaths}</span>
+                    <p className="stat__label">Deaths</p>
+                    <span className="stat__value">{this.state.stats.stats.queue.ranked.deaths}</span>
                   </div>
                 </div>
                 <div className="stats-box">
                   <h4 className="stats-heading">Team Performance</h4>
-                  <div className="stat main-stat">
-                    <p className="stat-label">W/L</p>
-                    <span className="stat-value">{this.state.stats.stats.queue.ranked.wl}</span>
+                  <div className="stat stat--main">
+                    <p className="stat__label">W/L</p>
+                    <span className="stat__value">{this.state.stats.stats.queue.ranked.wl}</span>
                   </div>
                   <div className="stat">
-                    <p className="stat-label">Wins</p>
-                    <span className="stat-value">{this.state.stats.stats.queue.ranked.wins}</span>
+                    <p className="stat__label">Wins</p>
+                    <span className="stat__value">{this.state.stats.stats.queue.ranked.wins}</span>
                   </div>
                   <div className="stat">
-                    <p className="stat-label">Losses</p>
-                    <span className="stat-value">{this.state.stats.stats.queue.ranked.losses}</span>
+                    <p className="stat__label">Losses</p>
+                    <span className="stat__value">{this.state.stats.stats.queue.ranked.losses}</span>
                   </div>
                 </div>
               </div>

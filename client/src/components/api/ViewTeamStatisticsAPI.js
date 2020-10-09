@@ -119,13 +119,13 @@ class ViewTeamStatisticsAPI extends React.Component {
               <p className="team-stat"><span className="stat-label">Avg Level</span>{this.state.stats.level}</p>
             </div>
             <div className="member-statistics">
-              <div className="team-member-stats-accent">
-                <h4 className="member-username">Username</h4>
-                <p className="member-stat">K/D</p>
-                <p className="member-stat">W/L</p>
-                <p className="member-stat">MMR</p>
-                <p className="member-stat">MMR Change</p>
-                <p className="member-stat">Level</p>
+              <div className="team-member-stats--accent">
+                <h4 className="team-member-stats__username">Username</h4>
+                <p className="team-member-stats__stat">K/D</p>
+                <p className="team-member-stats__stat">W/L</p>
+                <p className="team-member-stats__stat">MMR</p>
+                <p className="team-member-stats__stat">MMR Change</p>
+                <p className="team-member-stats__stat">Level</p>
               </div>
               { teamMembers }
             </div>

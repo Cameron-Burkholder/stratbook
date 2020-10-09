@@ -2,32 +2,37 @@
 
 form.form {
   margin: calc(#{$margin} * 2) 0;
-  p.form-heading {
+  p.form__heading {
     color: $subtle-accent;
     font-size: $text;
   }
-  fieldset.form-fieldset {
+  fieldset.form__fieldset {
     border: none;
     margin-bottom: $margin;
-    label.form-label {
+    label.form__label {
       color: $light;
       font-size: $small;
       display: block;
     }
-    select.form-input, input.form-input {
+    select.form__input, input.form__input {
       padding: calc(#{$padding} / 2) $padding;
+      color: $theme-dark;
     }
-    input.form-input {
+    input.form__input {
       max-width: 200px;
     }
-    span.form-error {
+    span.form__error {
       color: $theme-error;
     }
   }
-  button.form-button {
+  button.form__button {
     padding: calc(#{$padding} / 2) $padding;
+    color: $theme-dark;
   }
-  button.form-button:hover {
+  button.form__button:hover {
     cursor: pointer;
+  }
+  button.form__button--submit {
+
   }
 }

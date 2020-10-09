@@ -9,9 +9,9 @@ import React from "react";
 const Pagination = (props) => {
   return (
     <div className="pagination">
-      <button className="pagination-button" onClick={props.decrement}> &lt; </button>
-      <p className="pagination-title">{props.title} {props.index + 1}</p>
-      <button className="pagination-button" onClick={props.increment}> &gt; </button>
+      <button className="pagination__button" onClick={props.decrement}> &lt; </button>
+      <p className="pagination__title">{props.title} {props.index + 1}</p>
+      <button className="pagination__button" onClick={props.increment}> &gt; </button>
     </div>
   )
 }

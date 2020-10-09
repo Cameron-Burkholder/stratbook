@@ -113,10 +113,10 @@ class OperatorStatisticsAPI extends React.Component {
           { this.state.stats ? (
             <div className="statistics">
               <input onChange={this.searchOperators} className="search-by" value={this.state.search} placeholder="Search By Name"/>
-              <button onClick={this.sortOperators} className="sort-by" id="release">Sort By Release</button>
-              <button onClick={this.sortOperators} className="sort-by" id="name">Sort By Name</button>
-              <button onClick={this.sortOperators} className="sort-by" id="kd">Sort By KD</button>
-              <button onClick={this.sortOperators} className="sort-by" id="playtime">Sort By Playtime</button>
+              <button onClick={this.sortOperators} className="statistics__button" id="release">Sort By Release</button>
+              <button onClick={this.sortOperators} className="statistics__button" id="name">Sort By Name</button>
+              <button onClick={this.sortOperators} className="statistics__button" id="kd">Sort By KD</button>
+              <button onClick={this.sortOperators} className="statistics__button" id="playtime">Sort By Playtime</button>
               { operators }
             </div>
           ) : (

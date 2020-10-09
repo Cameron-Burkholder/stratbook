@@ -16,7 +16,7 @@ div#ViewStrategiesAPI {
     }
     div.strategy-preview {
       width: 100%;
-      background: $background-dark;
+      background: $theme-dark;
       padding: $padding;
       border-radius: $border-radius;
       display: flex;
@@ -35,52 +35,52 @@ div#ViewStrategiesAPI {
   }
   div.strategy {
     padding: $padding;
-    background: $background-dark;
-    p.exit-strategy {
+    background: $theme-dark;
+    p.strategy__link {
       color: $subtle-accent;
       text-decoration: underline;
       font-size: $small;
       margin-bottom: $margin;
     }
-    p.exit-strategy:hover {
+    p.strategy__link:hover {
       cursor: pointer;
     }
-    h3.strategy-name {
+    h3.strategy__name {
       text-align: center;
       color: $accent;
       font-size: $heading2;
     }
-    h4.strategy-heading {
+    h4.strategy__heading {
       color: $subtle-accent;
       font-size: $heading3;
       margin-top: $margin;
     }
-    h5.strategy-type {
+    h5.strategy__type {
       text-align: center;
       color: $light;
       font-size: $small;
     }
-    ul.strategy-objectives {
+    ul.strategy__objectives {
       padding: $padding;
-      li.strategy-objective {
+      li.strategy__objective {
         color: $subtle-accent;
       }
     }
-    div.strategy-lineup {
+    div.strategy__lineup {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
       grid-gap: 8px;
       div.operator {
-        img.operator-image {
+        img.operator__image {
           width: 100%;
         }
-        p.operator-name {
+        p.operator__name {
           text-align: center;
           color: $light;
         }
       }
     }
-    p.strategy-text {
+    p.strategy__text {
       color: $subtle-accent;
     }
   }
@@ -89,11 +89,11 @@ div#ViewStrategiesAPI {
 @media screen and (max-width: #{$phone-max-width}) {
   div#ViewStrategiesAPI {
     padding: $phone-padding;
-    div.strategy-list {
+    div.strategy__list {
       grid-template-columns: 1fr;
     }
     div.strategy {
-      div.strategy-lineup {
+      div.strategy__lineup {
         grid-template-columns: repeat(3, 1fr);
         grid-row-gap: $padding;
       }

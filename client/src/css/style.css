@@ -1,5 +1,40 @@
 /* client/src/scss/style.scss */
 /* scss/_theme.scss */
+* {
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+  min-height: 0;
+  box-sizing: border-box;
+  font-family: "Open Sans";
+  font-size: 12pt;
+  color: #d6d6d6;
+  z-index: 0; }
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Fira Sans Extra Condensed";
+  color: white; }
+
+h1 {
+  font-size: 36pt; }
+
+h2 {
+  font-size: 24pt; }
+
+h3 {
+  font-size: 20pt; }
+
+h4 {
+  font-size: 18pt; }
+
+html, body {
+  background: #1e1e21;
+  overflow-x: hidden; }
+
+p {
+  color: #d6d6d6;
+  font-size: 12pt; }
+
 /* scss/components/_navigation.scss */
 nav.nav {
   width: 100%;
@@ -35,12 +70,12 @@ nav.nav {
       top: 0;
       left: 0;
       margin-right: 16px; }
-      nav.nav ul.nav__body div.user-dropdown img.dropdown-icon {
+      nav.nav ul.nav__body div.user-dropdown img.user-dropdown__icon {
         width: 24px;
         filter: invert(1); }
-      nav.nav ul.nav__body div.user-dropdown img.dropdown-icon:hover {
+      nav.nav ul.nav__body div.user-dropdown img.user-dropdown__icon:hover {
         cursor: pointer; }
-      nav.nav ul.nav__body div.user-dropdown div.dropdown-body {
+      nav.nav ul.nav__body div.user-dropdown div.user-dropdown__body {
         background: white;
         padding: 16px;
         border-radius: 2px;
@@ -49,16 +84,18 @@ nav.nav {
         left: -200px;
         width: 200px;
         box-shadow: 2px 2px 5px rgba(50, 50, 50, 0.7); }
-        nav.nav ul.nav__body div.user-dropdown div.dropdown-body span#user-dropdown-title {
+        nav.nav ul.nav__body div.user-dropdown div.user-dropdown__body span#user-dropdown-title {
           display: block;
           margin-bottom: 16px;
-          text-align: center; }
-        nav.nav ul.nav__body div.user-dropdown div.dropdown-body a.dropdown-link {
+          text-align: center;
+          color: #15161A; }
+        nav.nav ul.nav__body div.user-dropdown div.user-dropdown__body a.user-dropdown__link {
           display: block;
-          text-align: left; }
-    nav.nav ul.nav__body div.user-dropdown--inactive div.dropdown-body {
+          text-align: left;
+          color: #15161A; }
+    nav.nav ul.nav__body div.user-dropdown--inactive div.user-dropdown__body {
       display: none; }
-    nav.nav ul.nav__body div.user-dropdown--active div.dropdown-body {
+    nav.nav ul.nav__body div.user-dropdown--active div.user-dropdown__body {
       display: block; }
   nav.nav button.nav__button {
     display: none; }
@@ -68,7 +105,7 @@ header.header {
   width: 100VW;
   height: 40VH;
   border-bottom: 1px solid rgba(50, 50, 50, 0.4); }
-  header.header div.header-overlay {
+  header.header div.header__overlay {
     background: rgba(0, 0, 0, 0.6);
     width: 100%;
     height: 100%;
@@ -76,11 +113,11 @@ header.header {
     flex-direction: column;
     align-items: center;
     justify-content: center; }
-    header.header div.header-overlay h1.title {
+    header.header div.header__overlay h1.header__title {
       font-size: 56pt;
       color: #fff;
       text-shadow: 2px 2px rgba(50, 50, 50, 0.7); }
-    header.header div.header-overlay h2.subtitle {
+    header.header div.header__overlay h2.header__subtitle {
       font-size: 16pt;
       color: rgba(250, 250, 250, 0.7); }
 
@@ -88,42 +125,42 @@ header.header {
 nav.main-nav {
   margin-bottom: 16px;
   background: #1F242A; }
-  nav.main-nav ul.main-nav-head {
+  nav.main-nav ul.main-nav__head {
     display: block;
     margin-left: calc(16px * 4); }
-    nav.main-nav ul.main-nav-head li.main-nav-item {
+    nav.main-nav ul.main-nav__head li.main-nav__item {
       padding: 16px;
       display: inline-block;
       list-style-type: none; }
-      nav.main-nav ul.main-nav-head li.main-nav-item a.main-nav-link {
+      nav.main-nav ul.main-nav__head li.main-nav__item a.main-nav__link {
         color: #d6d6d6;
         text-decoration: none;
         transition: all 0.3s ease; }
-      nav.main-nav ul.main-nav-head li.main-nav-item a.main-nav-link:hover {
+      nav.main-nav ul.main-nav__head li.main-nav__item a.main-nav__link:hover {
         color: #fafafa;
         transition: all 0.3s ease;
         filter: drop-shadow(0px 0px 2px rgba(250, 250, 250, 0.5)); }
-    nav.main-nav ul.main-nav-head li.main-nav-item.active-link {
+    nav.main-nav ul.main-nav__head li.main-nav__item--active {
       background: #2D3038; }
-      nav.main-nav ul.main-nav-head li.main-nav-item.active-link a.main-nav-link {
+      nav.main-nav ul.main-nav__head li.main-nav__item--active a.main-nav__link {
         color: #fafafa;
         font-weight: bold; }
-  nav.main-nav ul.main-nav-body {
+  nav.main-nav ul.main-nav__body {
     background: #2D3038; }
-    nav.main-nav ul.main-nav-body li.main-nav-item {
+    nav.main-nav ul.main-nav__body li.main-nav__item {
       padding: 16px;
       display: inline-block;
       list-style: none; }
-      nav.main-nav ul.main-nav-body li.main-nav-item a.main-nav-link {
+      nav.main-nav ul.main-nav__body li.main-nav__item a.main-nav__link {
         color: #d6d6d6;
         text-decoration: none;
         list-style-type: none;
         transition: all 0.3s ease; }
-      nav.main-nav ul.main-nav-body li.main-nav-item a.main-nav-link:hover {
+      nav.main-nav ul.main-nav__body li.main-nav__item a.main-nav__link:hover {
         color: #fafafa;
         transition: all 0.3s ease;
         filter: drop-shadow(0px 0px 2px rgba(250, 250, 250, 0.5)); }
-      nav.main-nav ul.main-nav-body li.main-nav-item a.main-nav-link.active-link {
+      nav.main-nav ul.main-nav__body li.main-nav__item a.main-nav__link--active {
         color: #fafafa;
         filter: drop-shadow(0px 0px 2px rgba(250, 250, 250, 0.5)); }
 
@@ -147,6 +184,9 @@ div#user div.account-section {
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 4px; }
 
+div#user div.account-section--danger {
+  border: 2px solid red; }
+
 @media screen and (max-width: 600px) {
   div#user div.account-section div.role {
     padding: 8px;
@@ -163,25 +203,27 @@ div.page {
 /* scss/components/_form.scss */
 form.form {
   margin: calc(16px * 2) 0; }
-  form.form p.form-heading {
+  form.form p.form__heading {
     color: #d6d6d6;
-    font-size: 16pt; }
-  form.form fieldset.form-fieldset {
+    font-size: 12pt; }
+  form.form fieldset.form__fieldset {
     border: none;
     margin-bottom: 16px; }
-    form.form fieldset.form-fieldset label.form-label {
+    form.form fieldset.form__fieldset label.form__label {
       color: #7B7B7F;
       font-size: 10pt;
       display: block; }
-    form.form fieldset.form-fieldset select.form-input, form.form fieldset.form-fieldset input.form-input {
-      padding: calc(16px / 2) 16px; }
-    form.form fieldset.form-fieldset input.form-input {
+    form.form fieldset.form__fieldset select.form__input, form.form fieldset.form__fieldset input.form__input {
+      padding: calc(16px / 2) 16px;
+      color: #15161A; }
+    form.form fieldset.form__fieldset input.form__input {
       max-width: 200px; }
-    form.form fieldset.form-fieldset span.form-error {
+    form.form fieldset.form__fieldset span.form__error {
       color: red; }
-  form.form button.form-button {
-    padding: calc(16px / 2) 16px; }
-  form.form button.form-button:hover {
+  form.form button.form__button {
+    padding: calc(16px / 2) 16px;
+    color: #15161A; }
+  form.form button.form__button:hover {
     cursor: pointer; }
 
 /* scss/api/_general-statistics.scss */
@@ -200,7 +242,7 @@ div#GeneralStatisticsAPI {
     display: block;
     margin: auto;
     border-radius: 100%; }
-  div#GeneralStatisticsAPI div.statistics-container h3.stats-grid-heading {
+  div#GeneralStatisticsAPI div.statistics-container h3.stats-grid__heading {
     color: white;
     font-size: 20pt; }
   div#GeneralStatisticsAPI div.statistics-container div.stats-grid {
@@ -210,26 +252,26 @@ div#GeneralStatisticsAPI {
       border-right: 1px solid rgba(50, 50, 50, 0.4);
       border-left: 1px solid rgba(50, 50, 50, 0.4);
       padding: 16px; }
-      div#GeneralStatisticsAPI div.statistics-container div.stats-grid div.stats-box h4.stats-heading {
+      div#GeneralStatisticsAPI div.statistics-container div.stats-grid div.stats-box h4.stats__heading {
         color: #d6d6d6;
-        font-size: 16pt; }
-      div#GeneralStatisticsAPI div.statistics-container div.stats-grid div.stats-box div.stat.main-stat {
+        font-size: 12pt; }
+      div#GeneralStatisticsAPI div.statistics-container div.stats-grid div.stats-box div.stat--main {
         display: block;
         width: 100%;
         text-align: center;
         padding: 16px; }
-        div#GeneralStatisticsAPI div.statistics-container div.stats-grid div.stats-box div.stat.main-stat p.stat-label {
-          font-size: 16pt;
+        div#GeneralStatisticsAPI div.statistics-container div.stats-grid div.stats-box div.stat--main p.stat__label {
+          font-size: 12pt;
           color: #7B7B7F; }
-        div#GeneralStatisticsAPI div.statistics-container div.stats-grid div.stats-box div.stat.main-stat span.stat-value {
+        div#GeneralStatisticsAPI div.statistics-container div.stats-grid div.stats-box div.stat--main span.stat__value {
           font-size: 24pt;
           color: white; }
       div#GeneralStatisticsAPI div.statistics-container div.stats-grid div.stats-box div.stat {
         display: flex;
         justify-content: space-between; }
-        div#GeneralStatisticsAPI div.statistics-container div.stats-grid div.stats-box div.stat p.stat-label {
+        div#GeneralStatisticsAPI div.statistics-container div.stats-grid div.stats-box div.stat p.stat__label {
           color: #7B7B7F; }
-        div#GeneralStatisticsAPI div.statistics-container div.stats-grid div.stats-box div.stat span.stat-value {
+        div#GeneralStatisticsAPI div.statistics-container div.stats-grid div.stats-box div.stat span.stat__value {
           color: #d6d6d6; }
 
 @media screen and (max-width: 600px) {
@@ -257,25 +299,25 @@ div#SeasonalStatisticsAPI {
       border-left: 1px solid rgba(50, 50, 50, 0.4);
       padding: 16px;
       text-align: center; }
-      div#SeasonalStatisticsAPI div.statistics div.stat p.stat-label {
-        font-size: 16pt;
+      div#SeasonalStatisticsAPI div.statistics div.stat p.stat__label {
+        font-size: 12pt;
         color: #7B7B7F; }
-      div#SeasonalStatisticsAPI div.statistics div.stat h4.stat-value {
+      div#SeasonalStatisticsAPI div.statistics div.stat h4.stat__value {
         font-size: 24pt;
         color: white;
         margin-bottom: 16px; }
-    div#SeasonalStatisticsAPI div.statistics div.main-stat {
+    div#SeasonalStatisticsAPI div.statistics div.stat--main {
       display: block;
       width: 100%;
       text-align: center;
       padding: 16px; }
-      div#SeasonalStatisticsAPI div.statistics div.main-stat p.stat-label {
-        font-size: 16pt;
+      div#SeasonalStatisticsAPI div.statistics div.stat--main p.stat__label {
+        font-size: 12pt;
         color: #7B7B7F; }
-      div#SeasonalStatisticsAPI div.statistics div.main-stat h4.stat-value {
+      div#SeasonalStatisticsAPI div.statistics div.stat--main h4.stat__value {
         font-size: 24pt;
         color: white; }
-      div#SeasonalStatisticsAPI div.statistics div.main-stat p.label-secondary {
+      div#SeasonalStatisticsAPI div.statistics div.stat--main p.stat__label--secondary {
         font-size: 10pt; }
 
 @media screen and (max-width: 600px) {
@@ -312,9 +354,10 @@ div#OperatorStatisticsAPI {
       display: block;
       margin: 16px auto;
       padding: calc(16px / 2) 16px; }
-    div#OperatorStatisticsAPI div.statistics button.sort-by {
-      padding: 16px; }
-    div#OperatorStatisticsAPI div.statistics button.sort-by:hover {
+    div#OperatorStatisticsAPI div.statistics button.statistics__button {
+      padding: 16px;
+      color: #15161A; }
+    div#OperatorStatisticsAPI div.statistics button.statistics__button:hover {
       cursor: pointer; }
     div#OperatorStatisticsAPI div.statistics div.operator-statistics {
       grid-column: span 2;
@@ -323,22 +366,22 @@ div#OperatorStatisticsAPI {
       display: grid;
       grid-template-columns: 64px 1fr;
       grid-gap: 4px; }
-      div#OperatorStatisticsAPI div.statistics div.operator-statistics div.operator-info img.operator-image {
+      div#OperatorStatisticsAPI div.statistics div.operator-statistics div.operator-info img.operator-info__image {
         display: block;
         width: 100%; }
-      div#OperatorStatisticsAPI div.statistics div.operator-statistics div.operator-info h3.operator-name {
+      div#OperatorStatisticsAPI div.statistics div.operator-statistics div.operator-info h3.operator-info__name {
         text-align: center;
         color: #d6d6d6;
-        font-size: 16pt; }
+        font-size: 12pt; }
       div#OperatorStatisticsAPI div.statistics div.operator-statistics div.operator-stats {
         display: grid;
         grid-template-columns: repeat(4, 1fr); }
-        div#OperatorStatisticsAPI div.statistics div.operator-statistics div.operator-stats div.operator-stat {
+        div#OperatorStatisticsAPI div.statistics div.operator-statistics div.operator-stats div.operator-stats__stat {
           text-align: center;
           font-size: 10pt; }
-          div#OperatorStatisticsAPI div.statistics div.operator-statistics div.operator-stats div.operator-stat p.stat-label {
+          div#OperatorStatisticsAPI div.statistics div.operator-statistics div.operator-stats div.operator-stats__stat p.operator-stats__label {
             color: #7B7B7F; }
-          div#OperatorStatisticsAPI div.statistics div.operator-statistics div.operator-stats div.operator-stat span.stat-value {
+          div#OperatorStatisticsAPI div.statistics div.operator-statistics div.operator-stats div.operator-stats__stat span.operator-stats__value {
             color: white; }
 
 @media screen and (max-width: 600px) {
@@ -380,15 +423,15 @@ div#ViewTeamAPI div.team div.roster {
   div#ViewTeamAPI div.team div.roster h3 {
     color: #fff;
     font-size: 20pt; }
-  div#ViewTeamAPI div.team div.roster div.team-member-accent {
+  div#ViewTeamAPI div.team div.roster div.team-member--accent {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     padding: 16px;
     border-radius: 2px; }
-    div#ViewTeamAPI div.team div.roster div.team-member-accent h4.member-username {
+    div#ViewTeamAPI div.team div.roster div.team-member--accent h4.team-member__username {
       color: white;
       text-transform: uppercase; }
-    div#ViewTeamAPI div.team div.roster div.team-member-accent p.member-status, div#ViewTeamAPI div.team div.roster div.team-member-accent p.member-quality {
+    div#ViewTeamAPI div.team div.roster div.team-member--accent p.team-member__status, div#ViewTeamAPI div.team div.roster div.team-member--accent p.team-member__quality {
       font-size: 10pt;
       color: white;
       text-align: center;
@@ -398,9 +441,9 @@ div#ViewTeamAPI div.team div.roster {
     grid-template-columns: repeat(4, 1fr);
     padding: 16px;
     border-radius: 2px; }
-    div#ViewTeamAPI div.team div.roster div.team-member h4.member-username {
+    div#ViewTeamAPI div.team div.roster div.team-member h4.team-member__username {
       color: white; }
-    div#ViewTeamAPI div.team div.roster div.team-member p.member-status, div#ViewTeamAPI div.team div.roster div.team-member p.member-quality {
+    div#ViewTeamAPI div.team div.roster div.team-member p.team-member__status, div#ViewTeamAPI div.team div.roster div.team-member p.team-member__quality {
       font-size: 10pt;
       color: #7B7B7F;
       text-align: center; }
@@ -461,14 +504,14 @@ div#ViewTeamStatisticsAPI div.team-statistics {
         color: white; }
   div#ViewTeamStatisticsAPI div.team-statistics div.member-statistics {
     margin-top: 16px; }
-    div#ViewTeamStatisticsAPI div.team-statistics div.member-statistics div.team-member-stats-accent {
+    div#ViewTeamStatisticsAPI div.team-statistics div.member-statistics div.team-member-stats--accent {
       display: grid;
       grid-template-columns: repeat(6, 1fr);
       padding: 16px;
       border-radius: 2px;
       color: white;
       text-transform: uppercase; }
-      div#ViewTeamStatisticsAPI div.team-statistics div.member-statistics div.team-member-stats-accent p {
+      div#ViewTeamStatisticsAPI div.team-statistics div.member-statistics div.team-member-stats--accent p {
         text-align: center;
         font-size: 10pt; }
     div#ViewTeamStatisticsAPI div.team-statistics div.member-statistics div.team-member-stats:nth-child(even) {
@@ -478,9 +521,9 @@ div#ViewTeamStatisticsAPI div.team-statistics {
       grid-template-columns: repeat(6, 1fr);
       padding: 16px;
       border-radius: 2px; }
-      div#ViewTeamStatisticsAPI div.team-statistics div.member-statistics div.team-member-stats h4.member-username {
+      div#ViewTeamStatisticsAPI div.team-statistics div.member-statistics div.team-member-stats h4.team-member-stats__username {
         color: white; }
-      div#ViewTeamStatisticsAPI div.team-statistics div.member-statistics div.team-member-stats p.member-stat {
+      div#ViewTeamStatisticsAPI div.team-statistics div.member-statistics div.team-member-stats p.team-member-stats__stat {
         font-size: 10pt;
         color: #7B7B7F;
         text-align: center; }
@@ -544,20 +587,20 @@ div#ManageTeamAPI {
     text-align: center;
     padding: 16px;
     border-radius: 2px; }
-    div#ManageTeamAPI div.manage-team-member h4.member-username {
+    div#ManageTeamAPI div.manage-team-member h4.manage-team-member__username {
       color: white; }
-    div#ManageTeamAPI div.manage-team-member p.member-status {
+    div#ManageTeamAPI div.manage-team-member p.manage-team-member__status {
       font-size: 10pt;
       color: #7B7B7F;
       text-align: center;
       padding: calc(16px / 2) 16px;
       text-align: center; }
-    div#ManageTeamAPI div.manage-team-member select.member-update-status {
+    div#ManageTeamAPI div.manage-team-member select.manage-team-member__update-status {
       padding: calc(16px / 2) 16px;
       text-align: center;
       display: block;
       margin: auto; }
-    div#ManageTeamAPI div.manage-team-member button {
+    div#ManageTeamAPI div.manage-team-member button.manage-team-member__button {
       display: block;
       margin: auto;
       padding: calc(16px / 2) 16px; }
@@ -570,15 +613,15 @@ div#DeleteTeamAPI {
     padding: calc(16px / 2) 16px; }
 
 /* scss/api/_set-attacker-roles.scss */
-div#SetAttackerRoleAPI form.form#set-attacker-role-form fieldset.form-fieldset {
+div#SetAttackerRoleAPI form.form#set-attacker-role-form fieldset.form__fieldset {
   border: none; }
-  div#SetAttackerRoleAPI form.form#set-attacker-role-form fieldset.form-fieldset label.form-label {
+  div#SetAttackerRoleAPI form.form#set-attacker-role-form fieldset.form__fieldset label.form__label {
     display: inline;
     color: #7B7B7F;
     font-size: 10pt;
     width: 100%;
     padding: calc(16px / 2); }
-  div#SetAttackerRoleAPI form.form#set-attacker-role-form fieldset.form-fieldset select.form-input {
+  div#SetAttackerRoleAPI form.form#set-attacker-role-form fieldset.form__fieldset select.form__input {
     margin-left: auto;
     margin-right: 0;
     float: right;
@@ -588,23 +631,23 @@ div#SetAttackerRoleAPI form.form#set-attacker-role-form fieldset.form-fieldset {
 @media screen and (max-width: 600px) {
   div#SetAttackerRoleAPI {
     margin-bottom: 8px; }
-    div#SetAttackerRoleAPI fieldset.form-fieldset label.form-label {
+    div#SetAttackerRoleAPI fieldset.form__fieldset label.form__label {
       width: 100%; }
-    div#SetAttackerRoleAPI fieldset.form-fieldset select.form-input {
+    div#SetAttackerRoleAPI fieldset.form__fieldset select.form__input {
       float: left;
       width: 100%;
       display: block; } }
 
 /* scss/api/_set-defender-role.scss */
-div#SetDefenderRoleAPI form.form#set-defender-role-form fieldset.form-fieldset {
+div#SetDefenderRoleAPI form.form#set-defender-role-form fieldset.form__fieldset {
   border: none; }
-  div#SetDefenderRoleAPI form.form#set-defender-role-form fieldset.form-fieldset label.form-label {
+  div#SetDefenderRoleAPI form.form#set-defender-role-form fieldset.form__fieldset label.form__label {
     display: inline;
     color: #7B7B7F;
     font-size: 10pt;
     width: 100%;
     padding: calc(16px / 2); }
-  div#SetDefenderRoleAPI form.form#set-defender-role-form fieldset.form-fieldset select.form-input {
+  div#SetDefenderRoleAPI form.form#set-defender-role-form fieldset.form__fieldset select.form__input {
     margin-left: auto;
     margin-right: 0;
     float: right;
@@ -614,9 +657,9 @@ div#SetDefenderRoleAPI form.form#set-defender-role-form fieldset.form-fieldset {
 @media screen and (max-width: 600px) {
   div#SetDefenderRoleAPI {
     margin-bottom: 8px; }
-    div#SetDefenderRoleAPI fieldset.form-fieldset label.form-label {
+    div#SetDefenderRoleAPI fieldset.form__fieldset label.form__label {
       width: 100%; }
-    div#SetDefenderRoleAPI fieldset.form-fieldset select.form-input {
+    div#SetDefenderRoleAPI fieldset.form__fieldset select.form__input {
       float: left;
       width: 100%;
       display: block; } }
@@ -631,36 +674,37 @@ div#SetAttackersAPI {
   div#SetAttackersAPI form.form#set-attackers-form {
     color: #7B7B7F;
     font-size: 10pt; }
-    div#SetAttackersAPI form.form#set-attackers-form fieldset.form-fieldset {
+    div#SetAttackersAPI form.form#set-attackers-form fieldset.form__fieldset {
       border: none;
       padding: 16px; }
-      div#SetAttackersAPI form.form#set-attackers-form fieldset.form-fieldset > div {
+      div#SetAttackersAPI form.form#set-attackers-form fieldset.form__fieldset > div {
         display: grid;
-        grid-template-columns: repeat(10, 1fr); }
-        div#SetAttackersAPI form.form#set-attackers-form fieldset.form-fieldset > div p {
+        grid-template-columns: repeat(10, 1fr);
+        grid-gap: 4px; }
+        div#SetAttackersAPI form.form#set-attackers-form fieldset.form__fieldset > div p.form__label {
           grid-column: span 10; }
-        div#SetAttackersAPI form.form#set-attackers-form fieldset.form-fieldset > div div.attacker input {
+        div#SetAttackersAPI form.form#set-attackers-form fieldset.form__fieldset > div div.attackers-form__attacker input.attackers-form__input {
           display: none; }
-        div#SetAttackersAPI form.form#set-attackers-form fieldset.form-fieldset > div div.attacker input.checked-input + label > img {
+        div#SetAttackersAPI form.form#set-attackers-form fieldset.form__fieldset > div div.attackers-form__attacker input.attackers-form__input--checked + label > img {
           width: 80%;
           border: 3px solid #757BEB;
           transition: all 0.3s ease; }
-        div#SetAttackersAPI form.form#set-attackers-form fieldset.form-fieldset > div div.attacker label {
+        div#SetAttackersAPI form.form#set-attackers-form fieldset.form__fieldset > div div.attackers-form__attacker label.attackers-form__label {
           display: flex;
           width: 100%;
           height: 100%;
           align-items: center;
           justify-content: center; }
-        div#SetAttackersAPI form.form#set-attackers-form fieldset.form-fieldset > div div.attacker label img {
+        div#SetAttackersAPI form.form#set-attackers-form fieldset.form__fieldset > div div.attackers-form__attacker label.attackers-form__label img.attackers-form__image {
           width: 100%;
           display: block;
           margin: auto;
           transition: all 0.3s ease; }
-        div#SetAttackersAPI form.form#set-attackers-form fieldset.form-fieldset > div div.attacker label img:hover {
+        div#SetAttackersAPI form.form#set-attackers-form fieldset.form__fieldset > div div.attackers-form__attacker label.attackers-form__label img.attackers-form__image:hover {
           cursor: pointer; }
-        div#SetAttackersAPI form.form#set-attackers-form fieldset.form-fieldset > div span.form-error {
+        div#SetAttackersAPI form.form#set-attackers-form fieldset.form__fieldset > div span.form__error {
           grid-column: span 10; }
-        div#SetAttackersAPI form.form#set-attackers-form fieldset.form-fieldset > div button {
+        div#SetAttackersAPI form.form#set-attackers-form fieldset.form__fieldset > div button.form__button {
           grid-column: span 10;
           max-width: 200px;
           display: block;
@@ -693,36 +737,37 @@ div#SetDefendersAPI {
   div#SetDefendersAPI form.form#set-defenders-form {
     color: #7B7B7F;
     font-size: 10pt; }
-    div#SetDefendersAPI form.form#set-defenders-form fieldset.form-fieldset {
+    div#SetDefendersAPI form.form#set-defenders-form fieldset.form__fieldset {
       border: none;
       padding: 16px; }
-      div#SetDefendersAPI form.form#set-defenders-form fieldset.form-fieldset > div {
+      div#SetDefendersAPI form.form#set-defenders-form fieldset.form__fieldset > div {
         display: grid;
-        grid-template-columns: repeat(10, 1fr); }
-        div#SetDefendersAPI form.form#set-defenders-form fieldset.form-fieldset > div p {
+        grid-template-columns: repeat(10, 1fr);
+        grid-gap: 4px; }
+        div#SetDefendersAPI form.form#set-defenders-form fieldset.form__fieldset > div p {
           grid-column: span 10; }
-        div#SetDefendersAPI form.form#set-defenders-form fieldset.form-fieldset > div div.defender input {
+        div#SetDefendersAPI form.form#set-defenders-form fieldset.form__fieldset > div div.defenders-form__defender input.defenders-form__input {
           display: none; }
-        div#SetDefendersAPI form.form#set-defenders-form fieldset.form-fieldset > div div.defender input.checked-input + label > img {
+        div#SetDefendersAPI form.form#set-defenders-form fieldset.form__fieldset > div div.defenders-form__defender input.defenders-form__input--checked + label > img {
           width: 80%;
           border: 3px solid #757BEB;
           transition: all 0.3s ease; }
-        div#SetDefendersAPI form.form#set-defenders-form fieldset.form-fieldset > div div.defender label {
+        div#SetDefendersAPI form.form#set-defenders-form fieldset.form__fieldset > div div.defenders-form__defender label.defenders-form__label {
           display: flex;
           width: 100%;
           height: 100%;
           align-items: center;
           justify-content: center; }
-        div#SetDefendersAPI form.form#set-defenders-form fieldset.form-fieldset > div div.defender label img {
+        div#SetDefendersAPI form.form#set-defenders-form fieldset.form__fieldset > div div.defenders-form__defender label.defenders-form__label img.defenders-form__image {
           width: 100%;
           display: block;
           margin: auto;
           transition: all 0.3s ease; }
-        div#SetDefendersAPI form.form#set-defenders-form fieldset.form-fieldset > div div.defender label img:hover {
+        div#SetDefendersAPI form.form#set-defenders-form fieldset.form__fieldset > div div.defenders-form__defender label.defenders-form__label img.defenders-form__image:hover {
           cursor: pointer; }
-        div#SetDefendersAPI form.form#set-defenders-form fieldset.form-fieldset > div span.form-error {
+        div#SetDefendersAPI form.form#set-defenders-form fieldset.form__fieldset > div span.form__error {
           grid-column: span 8; }
-        div#SetDefendersAPI form.form#set-defenders-form fieldset.form-fieldset > div button {
+        div#SetDefendersAPI form.form#set-defenders-form fieldset.form__fieldset > div button.form__button {
           grid-column: span 10;
           max-width: 200px;
           display: block;
@@ -732,17 +777,17 @@ div#SetDefendersAPI {
 @media screen and (max-width: 600px) {
   div#SetDefendersAPI {
     padding: 8px; }
-    div#SetDefendersAPI form.form#set-defenders-form fieldset.form-fieldset {
+    div#SetDefendersAPI form.form#set-defenders-form fieldset.form__fieldset {
       border: none;
       padding: 8px; }
-      div#SetDefendersAPI form.form#set-defenders-form fieldset.form-fieldset > div {
+      div#SetDefendersAPI form.form#set-defenders-form fieldset.form__fieldset > div {
         display: grid;
         grid-template-columns: repeat(4, 1fr); }
-        div#SetDefendersAPI form.form#set-defenders-form fieldset.form-fieldset > div p {
+        div#SetDefendersAPI form.form#set-defenders-form fieldset.form__fieldset > div p {
           grid-column: span 4; }
-        div#SetDefendersAPI form.form#set-defenders-form fieldset.form-fieldset > div span.form-error {
+        div#SetDefendersAPI form.form#set-defenders-form fieldset.form__fieldset > div span.form__error {
           grid-column: span 4; }
-        div#SetDefendersAPI form.form#set-defenders-form fieldset.form-fieldset > div button {
+        div#SetDefendersAPI form.form#set-defenders-form fieldset.form__fieldset > div button.form__button {
           grid-column: span 4; } }
 
 /* scss/api/_delete-user.scss */
@@ -785,62 +830,46 @@ div#ViewStrategiesAPI {
   div#ViewStrategiesAPI div.strategy {
     padding: 16px;
     background: #15161A; }
-    div#ViewStrategiesAPI div.strategy p.exit-strategy {
+    div#ViewStrategiesAPI div.strategy p.strategy__link {
       color: #d6d6d6;
       text-decoration: underline;
       font-size: 10pt;
       margin-bottom: 16px; }
-    div#ViewStrategiesAPI div.strategy p.exit-strategy:hover {
+    div#ViewStrategiesAPI div.strategy p.strategy__link:hover {
       cursor: pointer; }
-    div#ViewStrategiesAPI div.strategy h3.strategy-name {
+    div#ViewStrategiesAPI div.strategy h3.strategy__name {
       text-align: center;
       color: white;
       font-size: 24pt; }
-    div#ViewStrategiesAPI div.strategy h4.strategy-heading {
+    div#ViewStrategiesAPI div.strategy h4.strategy__heading {
       color: #d6d6d6;
       font-size: 20pt;
       margin-top: 16px; }
-    div#ViewStrategiesAPI div.strategy h5.strategy-type {
+    div#ViewStrategiesAPI div.strategy h5.strategy__type {
       text-align: center;
       color: #7B7B7F;
       font-size: 10pt; }
-    div#ViewStrategiesAPI div.strategy ul.strategy-objectives {
+    div#ViewStrategiesAPI div.strategy ul.strategy__objectives {
       padding: 16px; }
-      div#ViewStrategiesAPI div.strategy ul.strategy-objectives li.strategy-objective {
+      div#ViewStrategiesAPI div.strategy ul.strategy__objectives li.strategy__objective {
         color: #d6d6d6; }
-    div#ViewStrategiesAPI div.strategy div.strategy-lineup {
+    div#ViewStrategiesAPI div.strategy div.strategy__lineup {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
       grid-gap: 8px; }
-      div#ViewStrategiesAPI div.strategy div.strategy-lineup div.operator img.operator-image {
+      div#ViewStrategiesAPI div.strategy div.strategy__lineup div.operator img.operator__image {
         width: 100%; }
-      div#ViewStrategiesAPI div.strategy div.strategy-lineup div.operator p.operator-name {
+      div#ViewStrategiesAPI div.strategy div.strategy__lineup div.operator p.operator__name {
         text-align: center;
         color: #7B7B7F; }
-    div#ViewStrategiesAPI div.strategy p.strategy-text {
+    div#ViewStrategiesAPI div.strategy p.strategy__text {
       color: #d6d6d6; }
 
 @media screen and (max-width: 600px) {
   div#ViewStrategiesAPI {
     padding: 8px; }
-    div#ViewStrategiesAPI div.strategy-list {
+    div#ViewStrategiesAPI div.strategy__list {
       grid-template-columns: 1fr; }
-    div#ViewStrategiesAPI div.strategy div.strategy-lineup {
+    div#ViewStrategiesAPI div.strategy div.strategy__lineup {
       grid-template-columns: repeat(3, 1fr);
       grid-row-gap: 16px; } }
-
-* {
-  padding: 0;
-  margin: 0;
-  min-width: 0;
-  min-height: 0;
-  box-sizing: border-box;
-  font-family: "Open Sans";
-  z-index: 0; }
-
-h1, h2, h3, h4, h5, h6 {
-  font-family: "Fira Sans Extra Condensed"; }
-
-html, body {
-  background: #1e1e21;
-  overflow-x: hidden; }

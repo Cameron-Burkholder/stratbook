@@ -1,7 +1,7 @@
 /* scss/api/_seasonal-statistics.scss */
 
 div#SeasonalStatisticsAPI {
-  background: $background-dark;
+  background: $theme-dark;
   border-radius: $border-radius;
   padding: $padding;
   margin: calc(#{$margin} * 2) auto;
@@ -21,30 +21,30 @@ div#SeasonalStatisticsAPI {
       border-left: $light-border;
       padding: $padding;
       text-align: center;
-      p.stat-label {
+      p.stat__label {
         font-size: $text;
         color: $light;
       }
-      h4.stat-value {
+      h4.stat__value {
         font-size: $heading2;
         color: $accent;
         margin-bottom: $margin;
       }
     }
-    div.main-stat {
+    div.stat--main {
       display: block;
       width: 100%;
       text-align: center;
       padding: $padding;
-      p.stat-label {
+      p.stat__label {
         font-size: $text;
         color: $light;
       }
-      h4.stat-value {
+      h4.stat__value {
         font-size: $heading2;
         color: $accent;
       }
-      p.label-secondary {
+      p.stat__label--secondary {
         font-size: $small;
       }
     }

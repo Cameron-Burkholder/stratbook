@@ -16,12 +16,12 @@ import React from "react";
 const TeamMemberStats = (props) => {
   return (
     <div className="team-member-stats">
-      <h4 className="member-username">{props.username}</h4>
-      <p className="member-stat">{props.kd}</p>
-      <p className="member-stat">{props.wl}</p>
-      <p className="member-stat">{props.mmr}</p>
-      <p className="member-stat">{props.mmrchange}</p>
-      <p className="member-stat">{props.level}</p>
+      <h4 className="team-member-stats__username">{props.username}</h4>
+      <p className="team-member-stats__stat">{props.kd}</p>
+      <p className="team-member-stats__stat">{props.wl}</p>
+      <p className="team-member-stats__stat">{props.mmr}</p>
+      <p className="team-member-stats__stat">{props.mmrchange}</p>
+      <p className="team-member-stats__stat">{props.level}</p>
     </div>
   )
 }

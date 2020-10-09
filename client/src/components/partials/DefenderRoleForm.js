@@ -16,9 +16,9 @@ import Loading from "./Loading.js"
 const DefenderRoleForm = (props) => {
   return (
     <form className="form" id="set-defender-role-form" onSubmit={props.onSubmit}>
-      <fieldset className="form-fieldset" id="defender-role-field">
-        <label className="form-label" htmlFor="defender_role">Primary Defender Role</label>
-        <select onChange={props.onChange} className={"form-input" + (props.errors && props.errors.role == null ? "" : " input-error")} value={props.defender_role} id="defender_role" required>
+      <fieldset className="form__fieldset" id="defender-role-field">
+        <label className="form__label" htmlFor="defender_role">Primary Defender Role</label>
+        <select onChange={props.onChange} className={"form__input" + (props.errors && props.errors.role == null ? "" : " form__input--error")} value={props.defender_role} id="defender_role" required>
           <option>NONE</option>
           <option>HARD BREACH DENIAL</option>
           <option>INTEL DENIAL</option>
@@ -29,7 +29,7 @@ const DefenderRoleForm = (props) => {
           <option>SUPPORT</option>
           <option>ROAM</option>
         </select>
-        <span className="form-error">{(props.errors ? props.errors.role : "")}</span>
+        <span className="form__error">{(props.errors ? props.errors.role : "")}</span>
       </fieldset>
     </form>
   )

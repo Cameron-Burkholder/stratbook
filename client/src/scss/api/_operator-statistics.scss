@@ -1,7 +1,7 @@
 /* scss/api/_operator-statistics.scss */
 
 div#OperatorStatisticsAPI {
-  background: $background-dark;
+  background: $theme-dark;
   border-radius: $border-radius;
   padding: $padding;
   margin: calc(#{$margin} * 2) auto;
@@ -24,25 +24,26 @@ div#OperatorStatisticsAPI {
       margin: $margin auto;
       padding: calc(#{$padding} / 2) $padding;
     }
-    button.sort-by {
+    button.statistics__button {
       padding: $padding;
+      color: $theme-dark;
     }
-    button.sort-by:hover {
+    button.statistics__button:hover {
       cursor: pointer;
     }
     div.operator-statistics {
       grid-column: span 2;
       padding: calc(#{$padding} / 2);
-      background: $background-accent;
+      background: $theme-accent;
       display: grid;
       grid-template-columns: 64px 1fr;
       grid-gap: 4px;
       div.operator-info {
-        img.operator-image {
+        img.operator-info__image {
           display: block;
           width: 100%;
         }
-        h3.operator-name {
+        h3.operator-info__name {
           text-align: center;
           color: $subtle-accent;
           font-size: $text;
@@ -51,13 +52,13 @@ div#OperatorStatisticsAPI {
       div.operator-stats {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
-        div.operator-stat {
+        div.operator-stats__stat {
           text-align: center;
           font-size: $small;
-          p.stat-label {
+          p.operator-stats__label {
             color: $light;
           }
-          span.stat-value {
+          span.operator-stats__value {
             color: $accent;
           }
         }

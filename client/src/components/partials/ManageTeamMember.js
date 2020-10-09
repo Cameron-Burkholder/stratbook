@@ -16,18 +16,18 @@ import React from "react";
 const ManageTeamMember = (props) => {
   return (
     <div className="manage-team-member">
-      <h4 className="member-username">{props.username}</h4>
+      <h4 className="manage-team-member__username">{props.username}</h4>
       { props.status === "ADMIN" ? (
-        <p className="member-status">{props.status}</p>
+        <p className="manage-team-member__status">{props.status}</p>
       ) : (
-        <select className="member-update-status" onChange={(e) => { props.updateUserStatus(props.username, e.target.value) }}>
+        <select className="manage-team-member__input" onChange={(e) => { props.updateUserStatus(props.username, e.target.value) }}>
           <option>MEMBER</option>
           <option>EDITOR</option>
           <option>ADMIN</option>
         </select>
       )}
       { props.status === "ADMIN" ? ("") : (
-        <button onClick={() => { props.blockUser(props.username) }} className="block-member">Block User</button>
+        <button onClick={() => { props.blockUser(props.username) }} className="manage-team-member__button">Block User</button>
       )}
     </div>
   )

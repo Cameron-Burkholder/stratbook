@@ -2,51 +2,51 @@
 
 nav.main-nav {
   margin-bottom: $margin;
-  background: $background-medium;
-  ul.main-nav-head {
+  background: $theme-medium;
+  ul.main-nav__head {
     display: block;
     margin-left: calc(#{$margin} * 4);
-    li.main-nav-item {
+    li.main-nav__item {
       padding: $padding;
       display: inline-block;
       list-style-type: none;
-      a.main-nav-link {
+      a.main-nav__link {
         color: $nav-link;
         text-decoration: none;
         transition: all 0.3s ease;
       }
-      a.main-nav-link:hover {
+      a.main-nav__link:hover {
         color: $nav-link-hover;
         transition: all 0.3s ease;
         filter: drop-shadow($nav-link-hover-shadow);
       }
     }
-    li.main-nav-item.active-link {
-      background: $background-accent;
-      a.main-nav-link {
+    li.main-nav__item--active {
+      background: $theme-accent;
+      a.main-nav__link {
         color: $nav-link-active;
         font-weight: bold;
       }
     }
   }
-  ul.main-nav-body {
-    background: $background-accent;
-    li.main-nav-item {
+  ul.main-nav__body {
+    background: $theme-accent;
+    li.main-nav__item {
       padding: $padding;
       display: inline-block;
       list-style: none;
-      a.main-nav-link {
+      a.main-nav__link {
         color: $nav-link;
         text-decoration: none;
         list-style-type: none;
         transition: all 0.3s ease;
       }
-      a.main-nav-link:hover {
+      a.main-nav__link:hover {
         color: $nav-link-hover;
         transition: all 0.3s ease;
         filter: drop-shadow($nav-link-hover-shadow);
       }
-      a.main-nav-link.active-link {
+      a.main-nav__link--active {
         color: $nav-link-hover;
         filter: drop-shadow($nav-link-hover-shadow);
       }

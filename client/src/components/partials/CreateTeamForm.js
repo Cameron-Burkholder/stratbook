@@ -16,12 +16,12 @@ import Loading from "./Loading.js"
 const CreateTeamForm = (props) => {
   return (
     <form className="form" id="create-team-form" onSubmit={props.onSubmit}>
-      <fieldset className="form-fieldset" id="name-field">
-        <label className="form-label" htmlFor="name">Team Name</label>
-        <input onChange={props.onChange} className={"form-input" + (props.errors && props.errors.name == null ? "" : " input-error")} value={props.name} id="name" type="text" required/>
-        <span className="form-error">{(props.errors ? props.errors.name : "")}</span>
+      <fieldset className="form__fieldset" id="name-field">
+        <label className="form__label" htmlFor="name">Team Name</label>
+        <input onChange={props.onChange} className={"form__input" + (props.errors && props.errors.name == null ? "" : " form__input--error")} value={props.name} id="name" type="text" required/>
+        <span className="form__error">{(props.errors ? props.errors.name : "")}</span>
       </fieldset>
-      { props.loading ? <Loading/> : <button className="form-button" type="submit">Create Team</button> }
+      { props.loading ? <Loading/> : <button className="form__button form__button--submit" type="submit">Create Team</button> }
     </form>
   )
 }

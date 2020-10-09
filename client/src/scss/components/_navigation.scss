@@ -38,15 +38,15 @@ nav.nav {
       top: 0;
       left: 0;
       margin-right: $margin;
-      img.dropdown-icon {
+      img.user-dropdown__icon {
         width: 24px;
         filter: invert(1);
       }
-      img.dropdown-icon:hover {
+      img.user-dropdown__icon:hover {
         cursor: pointer;
       }
-      div.dropdown-body {
-        background: $background-white;
+      div.user-dropdown__body {
+        background: $theme-white;
         padding: $padding;
         border-radius: $border-radius;
         position: absolute;
@@ -58,20 +58,22 @@ nav.nav {
           display: block;
           margin-bottom: $margin;
           text-align: center;
+          color: $theme-dark;
         }
-        a.dropdown-link {
+        a.user-dropdown__link {
           display: block;
           text-align: left;
+          color: $theme-dark;
         }
       }
     }
     div.user-dropdown--inactive {
-      div.dropdown-body {
+      div.user-dropdown__body {
         display: none;
       }
     }
     div.user-dropdown--active {
-      div.dropdown-body {
+      div.user-dropdown__body {
         display: block;
       }
     }

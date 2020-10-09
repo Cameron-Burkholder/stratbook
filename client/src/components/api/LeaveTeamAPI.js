@@ -91,7 +91,7 @@ class LeaveTeamAPI extends React.Component {
   render() {
     return (
       <div id="LeaveTeamAPI">
-        <button onClick={this.onSubmit}>Leave Team</button>
+        <button onClick={this.onSubmit} className="form__button form__button--submit">Leave Team</button>
       </div>
     )
   }

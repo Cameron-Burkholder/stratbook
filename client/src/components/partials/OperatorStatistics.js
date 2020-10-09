@@ -20,41 +20,41 @@ const OperatorStatistics = (props) => {
   return (
     <div className="operator-statistics">
       <div className="operator-info">
-        <img className="operator-image" alt="Operator Image" src={props.image}/>
-        <h3 className="operator-name">{props.name}</h3>
+        <img className="operator-info__image" alt="Operator" src={props.image}/>
+        <h3 className="operator-info__name">{props.name}</h3>
       </div>
       <div className="operator-stats">
-        <div className="operator-stat">
-          <p className="stat-label">K/D</p>
-          <span className="stat-value">{props.kd}</span>
+        <div className="operator-stats__stat">
+          <p className="operator-stats__label">K/D</p>
+          <span className="operator-stats__value">{props.kd}</span>
         </div>
-        <div className="operator-stat">
-          <p className="stat-label">Kills</p>
-          <span className="stat-value">{props.kills}</span>
+        <div className="operator-stats__stat">
+          <p className="operator-stats__label">Kills</p>
+          <span className="operator-stats__value">{props.kills}</span>
         </div>
-        <div className="operator-stat">
-          <p className="stat-label">Deaths</p>
-          <span className="stat-value">{props.deaths}</span>
+        <div className="operator-stats__stat">
+          <p className="operator-stats__label">Deaths</p>
+          <span className="operator-stats__value">{props.deaths}</span>
         </div>
-        <div className="operator-stat">
-          <p className="stat-label">W/L</p>
-          <span className="stat-value">{props.wl}</span>
+        <div className="operator-stats__stat">
+          <p className="operator-stats__label">W/L</p>
+          <span className="operator-stats__value">{props.wl}</span>
         </div>
-        <div className="operator-stat">
-          <p className="stat-label">Wins</p>
-          <span className="stat-value">{props.wins}</span>
+        <div className="operator-stats__stat">
+          <p className="operator-stats__label">Wins</p>
+          <span className="operator-stats__value">{props.wins}</span>
         </div>
-        <div className="operator-stat">
-          <p className="stat-label">Losses</p>
-          <span className="stat-value">{props.losses}</span>
+        <div className="operator-stats__stat">
+          <p className="operator-stats__label">Losses</p>
+          <span className="operator-stats__value">{props.losses}</span>
         </div>
-        <div className="operator-stat">
-          <p className="stat-label">Playtime</p>
-          <span className="stat-value">{Math.round(props.playtime / 3600 * 100) / 100} Hrs</span>
+        <div className="operator-stats__stat">
+          <p className="operator-stats__label">Playtime</p>
+          <span className="operator-stats__value">{Math.round(props.playtime / 3600 * 100) / 100} Hrs</span>
         </div>
-        <div className="operator-stat">
-          <p className="stat-label">Headshot %</p>
-          <span className="stat-value">{Math.round(props.hsp * 100 * 100) / 100}%</span>
+        <div className="operator-stats__stat">
+          <p className="operator-stats__label">Headshot %</p>
+          <span className="operator-stats__value">{Math.round(props.hsp * 100 * 100) / 100}%</span>
         </div>
       </div>
     </div>
