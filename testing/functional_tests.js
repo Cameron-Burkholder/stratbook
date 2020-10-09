@@ -1841,7 +1841,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if user has no team.");
-            assert.equal(response.body.status, "USER_NOT_QUALIFIED", "Response should indicate requesting user has no team.");
+            assert.equal(response.body.status, "USER_HAS_NO_TEAM", "Response should indicate requesting user has no team.");
             done();
           });
       });
@@ -1854,18 +1854,6 @@ suite("FUNCTIONAL TESTS", function() {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if user is not found.");
             assert.equal(response.body.status, "TEAM_NOT_FOUND", "Response should indiciate requested user not found.");
-            done();
-          });
-      });
-      test("# Requested user is not found", function(done) {
-        chai.request(server)
-          .patch("/api/users/update-user-status")
-          .send({ status: "MEMBER", username: "NOT FOUND U" })
-          .set({ Authorization: fakeUserJWT })
-          .end((error, response) => {
-            if (error) return done(error);
-            assert.equal(response.status, 200, "Response should be 200 if user is not found.");
-            assert.equal(response.body.status, "USER_NOT_FOUND", "Response should indiciate requested user not found.");
             done();
           });
       });
@@ -2459,9 +2447,6 @@ suite("FUNCTIONAL TESTS", function() {
                 if (error) return done(error);
                 assert.equal(response.status, 200);
                 assert.equal(response.body.status, "TEAM_CREATED");
-
-                onlyUserOnTeam.team_code = response.body.team_code;
-                onlyUserOnTeamJWT = issueJWT(onlyUserOnTeam).token;
                 chai.request(server)
                   .delete("/api/users/delete")
                   .set({ Authorization: onlyUserOnTeamJWT })

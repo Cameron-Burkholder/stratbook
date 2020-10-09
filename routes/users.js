@@ -504,7 +504,7 @@ module.exports = async (app, passport) => {
                 packet.status = "PERMISSION_DENIED";
                 response.json(packet);
               } else {
-                Team.findOne({ join_code: request.user.team_code }).then((team) => {
+                Team.findOne({ _id: request.team._id }).then((team) => {
                   if (team) {
                     if (team.members.indexOf(String(user._id)) >= 0 || team.editors.indexOf(String(user._id)) >= 0) {
                       if (team.members.indexOf(String(user._id)) >= 0) {
