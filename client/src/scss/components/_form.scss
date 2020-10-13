@@ -13,6 +13,7 @@ form.form {
       color: $light;
       font-size: $small;
       display: block;
+      margin-bottom: calc(#{$margin} / 4);
     }
     select.form__input, input.form__input {
       padding: calc(#{$padding} / 2) $padding;

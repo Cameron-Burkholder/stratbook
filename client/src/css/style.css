@@ -212,7 +212,8 @@ form.form {
     form.form fieldset.form__fieldset label.form__label {
       color: #7B7B7F;
       font-size: 10pt;
-      display: block; }
+      display: block;
+      margin-bottom: calc(16px / 4); }
     form.form fieldset.form__fieldset select.form__input, form.form fieldset.form__fieldset input.form__input {
       padding: calc(16px / 2) 16px;
       color: #15161A; }

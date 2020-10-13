@@ -11,10 +11,11 @@ import Login from "./components/pages/Login.js";
 import Logout from "./components/pages/Logout.js";
 import Register from "./components/pages/Register.js";
 import User from "./components/pages/User.js";
+import Dashboard from "./components/pages/Dashboard.js";
 import Team from "./components/pages/Team.js";
 import ManageTeam from "./components/pages/ManageTeam.js";
-import Dashboard from "./components/pages/Dashboard.js";
 import Strategies from "./components/pages/Strategies.js";
+import EditStrategies from "./components/pages/EditStrategies.js";
 import NotFound from "./components/pages/NotFound.js";
 
 // import presentational components
@@ -221,8 +222,8 @@ class App extends React.Component {
               { this.state.loggedIn && (this.state.user.status === "ADMIN" || this.state.user.status === "EDITOR") ? (
                 <div className="page-wrapper">
                   <Header title="Strategies" subtitle="View Strategies"/>
-                  <MainNavigation page="USER" active="EDIT" status={this.state.user.status}/>
-                  user
+                  <MainNavigation page="STRATEGIES" active="EDIT" status={this.state.user.status}/>
+                  <EditStrategies getAuthToken={this.getAuthToken} alert={this.alert}/>
                 </div>
               )
               : ( <Redirect to="/strategies"/> )
