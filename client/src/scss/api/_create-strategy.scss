@@ -1,0 +1,62 @@
+/* client/src/scss/api/_create-strategy.scss */
+
+div#CreateStrategiesAPI {
+  background: $theme-white;
+  padding: $padding;
+  h3 {
+    color: $theme-dark;
+  }
+  form.form#create-strategy-form {
+    input#newObjective {
+      width: 400px;
+      max-width: 400px;
+    }
+    * {
+      color: $theme-dark;
+    }
+    ul.objectives {
+      padding: $padding;
+      padding-left: calc(#{$padding} * 2);
+      width: 400px;
+      li.objectives__item {
+        margin-bottom: $margin;
+        width: 100%;
+        span.objectives__value {
+          float: left;
+        }
+        button.objectives__button {
+          margin-left: $margin;
+          padding: calc(#{$padding} / 4) calc(#{$padding} / 2);
+          float: right;
+        }
+      }
+    }
+    div.attacker-linup-form {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      div.attacker-lineup-form__role {
+        width: 100%;
+        p.attacker-lineup-form__heading {
+          text-align: center;
+        }
+        select.attacker-lineup-form__input {
+          width: 100%;
+          padding-left: calc(#{$padding} / 4);
+        }
+        div.attacker-form {
+          width: 100%;
+          select.attacker-form__input {
+            width: 100%;
+            padding-left: calc(#{$padding} / 4);
+          }
+          img.attacker-form__image {
+            width: 100%;
+          }
+        }
+      }
+    }
+    textarea.form__input {
+      height: 156px;
+    }
+  }
+}

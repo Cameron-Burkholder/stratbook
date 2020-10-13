@@ -29,7 +29,7 @@ class CreateStrategiesAPI extends React.Component {
       newObjective: "",
       objectives: [],
       execution: "",
-      roles: ["NONE", "NONE", "NONE", "NONE", "NONE"],
+      roles: ["ANY", "ANY", "ANY", "ANY", "ANY"],
       operators: [],
       errors: {},
       loading: false
@@ -37,8 +37,9 @@ class CreateStrategiesAPI extends React.Component {
   }
   /*
     @func: onChange
-    @desc: update state of platform field
+    @desc: update state of strategy field
     @param e: Object.Event
+    @param index: Int
   */
   onChange(e, index) {
     if (e.target.id !== "objectives") {
@@ -64,6 +65,12 @@ class CreateStrategiesAPI extends React.Component {
       }
     }
   }
+  /*
+    @func onKeyPress
+    @desc: check to see if a user hit enter to create a new li
+    @param e: Object.Event
+    @param component: React.Component
+  */
   onKeyPress(e, component) {
     if (e.key === "Enter") {
       let newObjectives = [...component.state.objectives];
@@ -76,6 +83,10 @@ class CreateStrategiesAPI extends React.Component {
       }, 100);
     }
   }
+  /*
+    @func: getComponent
+    @desc: return access to root component
+  */
   getComponent() {
     return this;
   }
@@ -99,11 +110,13 @@ class CreateStrategiesAPI extends React.Component {
   onSubmit(e) {
     e.preventDefault();
     const component = this;
+    alert("submit");
     this.setState({
       errors: {},
       loading: true
     });
     axios.defaults.headers.common["Authorization"] = this.props.getAuthToken();
+    /*
     axios.post("/api/teams/create-team", {
       name: this.state.name
     }).then((response) => {
@@ -148,7 +161,7 @@ class CreateStrategiesAPI extends React.Component {
     }).catch((error) => {
       console.log(error);
       alert("An error has occurred. Please try again shortly.");
-    });
+    });*/
   }
   render() {
     return (

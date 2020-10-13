@@ -19,7 +19,7 @@ const AttackerLineupForm = (props) => {
       <div className="attacker-lineup-form__role" key={index}>
         <p className="attacker-lineup-form__heading">Operator {index + 1}</p>
         <select onChange={(e) => { props.onChange(e, index)} } className="attacker-lineup-form__input form__input" value={props.roles[index]} id={`attacker-role-${index}`}>
-          <option>NONE</option>
+          <option>ANY</option>
           <option>HARD BREACH</option>
           <option>SOFT BREACH</option>
           <option>ENTRY FRAG</option>
@@ -29,7 +29,7 @@ const AttackerLineupForm = (props) => {
           <option>SUPPORT</option>
           <option>ROAM CLEAR</option>
         </select>
-        { props.roles[index] !== "NONE" ? (
+        { props.roles[index] !== "ANY" ? (
           <AttackerForm onChange={props.onChange} operators={props.operators} role={props.roles[index]} index={index}/>
         ) : ""}
       </div>

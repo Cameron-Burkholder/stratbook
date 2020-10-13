@@ -52,6 +52,7 @@ const CreateStrategyForm = (props) => {
         <label className="form__label" htmlFor="execution">Execution</label>
         <textarea onChange={props.onChange} className={"form__input" + (props.errors && props.errors.execution == null ? "" : " form__input--error")} id="execution" value={props.execution} required></textarea>
       </fieldset>
+      <button onClick={props.onSubmit} className="form__button form__button--submit">Create</button>
     </form>
   )
 }

@@ -217,6 +217,8 @@ form.form {
     form.form fieldset.form__fieldset select.form__input, form.form fieldset.form__fieldset input.form__input, form.form fieldset.form__fieldset textarea.form__input {
       padding: calc(16px / 2) 16px;
       color: #15161A; }
+      form.form fieldset.form__fieldset select.form__input option, form.form fieldset.form__fieldset input.form__input option, form.form fieldset.form__fieldset textarea.form__input option {
+        padding: 16px; }
       form.form fieldset.form__fieldset select.form__input *, form.form fieldset.form__fieldset input.form__input *, form.form fieldset.form__fieldset textarea.form__input * {
         color: #15161A; }
     form.form fieldset.form__fieldset textarea.form__input {
@@ -901,3 +903,47 @@ div#ViewStrategiesAPI {
     div#ViewStrategiesAPI div.strategy div.strategy__lineup {
       grid-template-columns: repeat(3, 1fr);
       grid-row-gap: 16px; } }
+
+/* client/src/scss/api/_create-strategy.scss */
+div#CreateStrategiesAPI {
+  background: white;
+  padding: 16px; }
+  div#CreateStrategiesAPI h3 {
+    color: #15161A; }
+  div#CreateStrategiesAPI form.form#create-strategy-form input#newObjective {
+    width: 400px;
+    max-width: 400px; }
+  div#CreateStrategiesAPI form.form#create-strategy-form * {
+    color: #15161A; }
+  div#CreateStrategiesAPI form.form#create-strategy-form ul.objectives {
+    padding: 16px;
+    padding-left: calc(16px * 2);
+    width: 400px; }
+    div#CreateStrategiesAPI form.form#create-strategy-form ul.objectives li.objectives__item {
+      margin-bottom: 16px;
+      width: 100%; }
+      div#CreateStrategiesAPI form.form#create-strategy-form ul.objectives li.objectives__item span.objectives__value {
+        float: left; }
+      div#CreateStrategiesAPI form.form#create-strategy-form ul.objectives li.objectives__item button.objectives__button {
+        margin-left: 16px;
+        padding: calc(16px / 4) calc(16px / 2);
+        float: right; }
+  div#CreateStrategiesAPI form.form#create-strategy-form div.attacker-linup-form {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); }
+    div#CreateStrategiesAPI form.form#create-strategy-form div.attacker-linup-form div.attacker-lineup-form__role {
+      width: 100%; }
+      div#CreateStrategiesAPI form.form#create-strategy-form div.attacker-linup-form div.attacker-lineup-form__role p.attacker-lineup-form__heading {
+        text-align: center; }
+      div#CreateStrategiesAPI form.form#create-strategy-form div.attacker-linup-form div.attacker-lineup-form__role select.attacker-lineup-form__input {
+        width: 100%;
+        padding-left: calc(16px / 4); }
+      div#CreateStrategiesAPI form.form#create-strategy-form div.attacker-linup-form div.attacker-lineup-form__role div.attacker-form {
+        width: 100%; }
+        div#CreateStrategiesAPI form.form#create-strategy-form div.attacker-linup-form div.attacker-lineup-form__role div.attacker-form select.attacker-form__input {
+          width: 100%;
+          padding-left: calc(16px / 4); }
+        div#CreateStrategiesAPI form.form#create-strategy-form div.attacker-linup-form div.attacker-lineup-form__role div.attacker-form img.attacker-form__image {
+          width: 100%; }
+  div#CreateStrategiesAPI form.form#create-strategy-form textarea.form__input {
+    height: 156px; }

@@ -18,6 +18,9 @@ form.form {
     select.form__input, input.form__input, textarea.form__input {
       padding: calc(#{$padding} / 2) $padding;
       color: $theme-dark;
+      option {
+        padding: $padding;
+      }
       * {
         color: $theme-dark;
       }

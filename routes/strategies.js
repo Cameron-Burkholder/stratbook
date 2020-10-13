@@ -35,7 +35,7 @@ module.exports = async (app, passport) => {
 
     @outputs
       If there is an error
-        packet: Object (status: ERROR_WHILE_GETTING_STRATEGIES)
+        packet: Object (status: ERROR)
 
       If user is not verified
         packet: Object (status: USER_NOT_VERIFIED)
@@ -44,7 +44,7 @@ module.exports = async (app, passport) => {
         packet: Object (status: USER_HAS_NO_TEAM)
 
       If team does not exist
-        packet: Object (status: TEAM_DOES_NOT_EXIST)
+        packet: Object (status: TEAM_NOT_FOUND)
 
       If user is not on team
         packet: Object (status: USER_NOT_QUALIFIED)
@@ -71,6 +71,50 @@ module.exports = async (app, passport) => {
     } else {
       packet.status = "USER_NOT_QUALIFIED";
       packet.message = "User is not on requested team.";
+      response.json(packet);
+    }
+  });
+
+  /*
+    @route /api/strategies/create
+    @method POST
+
+    @outputs
+      If there is an error
+        packet: Object (status: ERROR)
+
+      If user is not verified
+        packet: Object (status: USER_NOT_VERIFIED)
+
+      If user has no team
+        packet: Object (status: USER_HAS_NO_TEAM)
+
+      If team does not exist
+        packet: Object (status: TEAM_NOT_FOUND)
+
+      If user is not on team
+        packet: Object (status: USER_NOT_QUALIFIED)
+
+      If strategy is created
+        packet: Object (status: STRATEGY_CREATED)
+  */
+  app.post("/api/strategies/create", (request, response, done) => {
+    log("POST REQUEST AT /api/strategies/create");
+    done();
+  }, passport.authenticate("jwt", { session: false }), middleware.userIsVerified, middleware.userHasTeam, (request, response, done) => {
+    let packet = {};
+    if (request.team.editors.indexOf(String(request.user._id)) >= 0 || request.team.admins.indexOf(String(request.user._id)) >= 0) {
+      Strategies.findOne({ join_code: request.user.team_code }).then((strategies) => {
+        
+      }).catch(error => {
+        console.log(error);
+        packet.status = "ERROR";
+        packet.message = "An error occurred while attempting to create a strategy.";
+        response.json(packet);
+      })
+    } else {
+      packet.status = "USER_NOT_QUALIFIED";
+      packet.message = "User is not and editor or admin on requested team.";
       response.json(packet);
     }
   });

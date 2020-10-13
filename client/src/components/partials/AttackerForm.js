@@ -17,8 +17,8 @@ const operators = {
   "ENTRY FRAG": ["AMARU", "ASH", "BLITZ", "FINKA", "IANA", "IQ", "MONTAGNE", "NOKK", "TWITCH", "ZOFIA"],
   "AREA DENIAL/FLANK WATCH": ["CAPITAO", "GRIDLOCK", "NOMAD", "ZERO"],
   "INTEL": ["DOKKAEBI", "IANA", "IQ", "LION", "MONTAGNE", "TWITCH", "ZERO"],
-  "UTILITY CLEAR": ["ASH", "FUZE", "KALI", "MAVERICK", "SLEDGE", "THATCHER"],
-  "SUPPORT": ["ACE", "BLACKBEARD", "CAPITAO", "DOKKAEBI", "FINKA", "GLAZ", "LION", "MONTAGNE", "YING", "ZERO"],
+  "UTILITY CLEAR": ["ASH", "FUZE", "KALI", "MAVERICK", "SLEDGE", "THATCHER", "TWITCH"],
+  "SUPPORT": ["ACE", "BLACKBEARD", "CAPITAO", "DOKKAEBI", "FINKA", "GLAZ", "IANA", "LION", "MAVERICK", "MONTAGNE", "YING", "ZERO"],
   "ROAM CLEAR": ["DOKKAEBI", "JACKAL", "LION", "NOKK", "SLEDGE", "TWITCH", "ZOFIA"]
 };
 const AttackerForm = (props) => {
@@ -33,6 +33,9 @@ const AttackerForm = (props) => {
         <option>ANY</option>
         { options }
       </select>
+      { props.operators[props.index] !== "ANY" && props.operators[props.index] !== "" ? (
+        <img className="attacker-form__image" alt="Attacker" src={`../media/${props.operators[props.index].toLowerCase()}.webp`}/>
+      ) : "" }
     </div>
   )
 }
