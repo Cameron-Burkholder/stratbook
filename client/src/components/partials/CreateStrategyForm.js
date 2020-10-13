@@ -2,6 +2,8 @@
 
 import React from "react";
 
+import AttackerLineupForm from "./AttackerLineupForm.js";
+
 /*
   @func: CreateStrategyForm
   @desc: render create strategy form
@@ -31,13 +33,24 @@ const CreateStrategyForm = (props) => {
           <option>DEFENSE</option>
         </select>
       </fieldset>
-      <h4 className="form__heading">Objectives</h4>
       <fieldset className="form__fieldset" id="objectives">
-        <label className="form__label">New Objective</label>
-        <input onChange={props.onChange} onKeyPress={(e) => { props.onKeyPress(e, props.getComponent()) }} className={"form__input" + (props.errors && props.errors.objectives == null ? "" : " form__input--error")} value={props.newObjective} id="newObjective" required/>
+        <label className="form__label">Objectives</label>
+        <input onChange={props.onChange} onKeyPress={(e) => { props.onKeyPress(e, props.getComponent()) }} className={"form__input" + (props.errors && props.errors.objectives == null ? "" : " form__input--error")} value={props.newObjective} id="newObjective" placeholder="New Objective" required/>
         <ul className="objectives">
           { objectiveList }
         </ul>
+      </fieldset>
+      <fieldset className="form__fieldset" id="lineup">
+        <label className="form__label">Lineup</label>
+        { props.type === "ATTACK" ? (
+          <AttackerLineupForm onChange={props.onChange} operators={props.operators} roles={props.roles}/>
+        ) : (
+          <div>def</div>
+        )}
+      </fieldset>
+      <fieldset className="form__fieldset">
+        <label className="form__label" htmlFor="execution">Execution</label>
+        <textarea onChange={props.onChange} className={"form__input" + (props.errors && props.errors.execution == null ? "" : " form__input--error")} id="execution" value={props.execution} required></textarea>
       </fieldset>
     </form>
   )

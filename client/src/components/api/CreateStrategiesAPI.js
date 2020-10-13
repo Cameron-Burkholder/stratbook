@@ -28,6 +28,9 @@ class CreateStrategiesAPI extends React.Component {
       type: "ATTACK",
       newObjective: "",
       objectives: [],
+      execution: "",
+      roles: ["NONE", "NONE", "NONE", "NONE", "NONE"],
+      operators: [],
       errors: {},
       loading: false
     }
@@ -37,21 +40,40 @@ class CreateStrategiesAPI extends React.Component {
     @desc: update state of platform field
     @param e: Object.Event
   */
-  onChange(e) {
+  onChange(e, index) {
     if (e.target.id !== "objectives") {
-      this.setState({
-        [e.target.id]: e.target.value
-      });
+      if (e.target.id.includes("attacker-role") || e.target.id.includes("defender-role")) {
+        let newRoles = [...this.state.roles];
+        let newOperators = [...this.state.operators];
+        newRoles[index] = e.target.value;
+        newOperators[index] = "";
+        this.setState({
+          roles: newRoles,
+          operators: newOperators
+        });
+      } else if (e.target.id.includes("attacker-form") || e.target.id.includes("defender-form")) {
+        let newOperators = [...this.state.operators];
+        newOperators[index] = e.target.value;
+        this.setState({
+          operators: newOperators
+        });
+      } else {
+        this.setState({
+          [e.target.id]: e.target.value
+        });
+      }
     }
   }
   onKeyPress(e, component) {
     if (e.key === "Enter") {
       let newObjectives = [...component.state.objectives];
       newObjectives.push(component.state.newObjective);
-      component.setState({
-        objectives: newObjectives,
-        newObjective: ""
-      });
+      setTimeout(() => {
+        component.setState({
+          objectives: newObjectives,
+          newObjective: ""
+        });
+      }, 100);
     }
   }
   getComponent() {
@@ -129,7 +151,6 @@ class CreateStrategiesAPI extends React.Component {
     });
   }
   render() {
-    console.log(this.state);
     return (
       <div id="CreateStrategiesAPI">
         <h3>Create a Strategy</h3>
@@ -138,7 +159,8 @@ class CreateStrategiesAPI extends React.Component {
         ) : (
           <CreateStrategyForm onChange={this.onChange} onSubmit={this.onSubmit} name={this.state.name} type={this.state.type}
                               newObjective={this.state.newObjective} objectives={this.state.objectives} removeObjective={this.removeObjective}
-                              onKeyPress={this.onKeyPress} getComponent={this.getComponent}/>
+                              onKeyPress={this.onKeyPress} getComponent={this.getComponent} execution={this.state.execution}
+                              roles={this.state.roles} operators={this.state.operators}/>
         )}
       </div>
     )

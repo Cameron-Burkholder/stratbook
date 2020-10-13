@@ -15,12 +15,15 @@ form.form {
       display: block;
       margin-bottom: calc(#{$margin} / 4);
     }
-    select.form__input, input.form__input {
+    select.form__input, input.form__input, textarea.form__input {
       padding: calc(#{$padding} / 2) $padding;
       color: $theme-dark;
       * {
         color: $theme-dark;
       }
+    }
+    textarea.form__input {
+      min-width: 100%;
     }
     input.form__input {
       max-width: 200px;

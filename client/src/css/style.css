@@ -214,11 +214,13 @@ form.form {
       font-size: 10pt;
       display: block;
       margin-bottom: calc(16px / 4); }
-    form.form fieldset.form__fieldset select.form__input, form.form fieldset.form__fieldset input.form__input {
+    form.form fieldset.form__fieldset select.form__input, form.form fieldset.form__fieldset input.form__input, form.form fieldset.form__fieldset textarea.form__input {
       padding: calc(16px / 2) 16px;
       color: #15161A; }
-      form.form fieldset.form__fieldset select.form__input *, form.form fieldset.form__fieldset input.form__input * {
+      form.form fieldset.form__fieldset select.form__input *, form.form fieldset.form__fieldset input.form__input *, form.form fieldset.form__fieldset textarea.form__input * {
         color: #15161A; }
+    form.form fieldset.form__fieldset textarea.form__input {
+      min-width: 100%; }
     form.form fieldset.form__fieldset input.form__input {
       max-width: 200px; }
     form.form fieldset.form__fieldset span.form__error {
