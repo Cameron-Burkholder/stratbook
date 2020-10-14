@@ -70,24 +70,17 @@ class RegisterAPI extends React.Component {
             redirect: "/login"
           });
           break;
-        case "ERROR_WHILE_REGISTERING":
-          component.setState({
-            loading: false
-          });
-          alert("An error occurred while registering. Please try again.");
-        case "INVALID_REGISTRATION":
-        case "PROFANE_INPUT":
-        case "EXISTING_USER":
         default:
           component.setState({
             loading: false,
             errors: response.data.errors,
           });
+          component.props.alert(response.data.message, response.data.status);
           break;
       }
     }).catch((error) => {
       console.log(error);
-      alert("An error has occurred. Please try again shortly.");
+      component.props.alert("An error has occurred while attempting to register.", "ERROR");
     });
   }
   render() {

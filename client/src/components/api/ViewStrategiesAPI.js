@@ -83,49 +83,19 @@ class ViewStrategiesAPI extends React.Component {
             strategies: response.data.strategies
           });
           break;
-        case "ERROR_WHILE_GETTING_STRATEGIES":
-          component.setState({
-            loading: false,
-            error: true
-          });
-          break;
-        case "USER_NOT_VERIFIED":
+          default:
           component.setState({
             loading: false
           });
-          alert("You have not verified your account. You must verify your account in order to view strategies.");
-          break;
-        case "USER_HAS_NO_TEAM":
-          component.setState({
-            loading: false
-          });
-          alert("You do not have a team. You must have a team to view strategies.");
-          break;
-        case "TEAM_DOES_NOT_EXIST":
-          component.setState({
-            loading: false
-          });
-          alert("The team you requested to view strategies for does not exist.");
-          break;
-        case "USER_NOT_QUALIFIED":
-          component.setState({
-            loading: false
-          });
-          alert("You are not qualified to view the strategies you have requested.");
-          break;
-        default:
-          component.setState({
-            loading: false,
-            error: true
-          });
+          component.props.alert(response.data.message, response.data.status);
           break;
       }
     }).catch((error) => {
       console.log(error);
-      alert("An error has occurred. Please try again shortly.");
       component.setState({
         loading: false
       });
+      component.props.alert("An error has occurred while attempting to get strategies.", "ERROR");
     });
   }
   componentDidMount() {

@@ -56,32 +56,20 @@ class UpdatePlatformAPI extends React.Component {
           component.setState({
             loading: false,
           });
+          component.props.alert("Success! Your platform has been updated.");
           this.props.updateAuthToken();
           break;
-        case "USER_HAS_TEAM":
-          component.setState({
-            loading: false
-          });
-          alert("You cannot update your platform if you are on a team. Teams are platform-specific.");
-          break;
-        case "ERROR_WHILE_UPDATING_PLATFORM":
-          component.setState({
-            loading: false,
-            errors: {}
-          });
-          alert("An error occurred while updating platform. Please try again.");
-        case "USER_NOT_FOUND":
         default:
           component.setState({
             loading: false,
-            errors: response.data.errors,
-            status: response.data.status
+            errors: response.data.errors
           });
+          component.props.alert(response.data.message, response.data.status);
           break;
       }
     }).catch((error) => {
       console.log(error);
-      alert("An error has occurred. Please try again shortly.");
+      component.props.alert("An error has occurred while attempting to update platform.", "ERROR");
     });
   }
   render() {

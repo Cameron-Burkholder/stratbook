@@ -535,6 +535,24 @@ module.exports = validation = {
       if (data.operators.length !== 5) {
         errors.operators = "Operators field is invalid";
       }
+
+      // Utility checks
+      if (data.utility.length !== 5) {
+        errors.utility = "Utility field is invalid";
+      } else {
+        let utilityList;
+        if (data.type === "ATTACK") {
+          utilityList = ["BREACH CHARGES", "CLAYMORE", "FRAG GRENADES", "HARD BREACH CHARGE", "SMOKE GRENADES", "STUN GRENADES"];
+        } else {
+          utilityList = ["BARBED WIRE", "BULLETPROOF CAMERA", "DEPLOYABLE SHIELD", "IMPACT GRENADES", "NITRO CELL", "PROXIMITY ALARMS"];
+        }
+        data.utility.map((utility) => {
+          if (utilityList.indexOf(utility) < 0) {
+            errors.utility = "Invalid utility list";
+          }
+        });
+      }
+
     } else {
       errors.name = "Strategies not provided";
     }

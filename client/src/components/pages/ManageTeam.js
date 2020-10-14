@@ -17,8 +17,8 @@ const ManageTeam = (props) => {
   return (
     <div className="page" id="manage-team">
       <UpdateTeamNameAPI getAuthToken={props.getAuthToken}/>
-      <ManageTeamAPI getAuthToken={props.getAuthToken} updateAuthToken={props.updateAuthToken}/>
-      <DeleteTeamAPI getAuthToken={props.getAuthToken} updateAuthToken={props.updateAuthToken}/>
+      <ManageTeamAPI getAuthToken={props.getAuthToken} updateAuthToken={props.updateAuthToken} alert={props.alert}/>
+      <DeleteTeamAPI getAuthToken={props.getAuthToken} updateAuthToken={props.updateAuthToken} alert={props.alert}/>
     </div>
   )
 }

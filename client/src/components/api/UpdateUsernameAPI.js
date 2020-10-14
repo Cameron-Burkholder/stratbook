@@ -57,27 +57,20 @@ class UpdateUsernameAPI extends React.Component {
           component.setState({
             loading: false,
           });
-          alert("Success! Your username has been updated.");
+          component.props.alert("Success! Your username has been updated.");
           this.props.updateAuthToken();
           break;
-        case "ERROR_WHILE_UPDATING_USERNAME":
-          component.setState({
-            loading: false,
-            errors: {}
-          });
-          alert("An error occurred while updating username. Please try again.");
-        case "USERNAME_TAKEN":
         default:
           component.setState({
             loading: false,
-            errors: response.data.errors,
-            status: response.data.status
+            errors: response.data.errors
           });
+          component.props.alert(response.data.message, response.data.status);
           break;
       }
     }).catch((error) => {
       console.log(error);
-      alert("An error has occurred. Please try again shortly.");
+      component.props.alert("An error has occurred while attempting to update username.", "ERROR");
     });
   }
   render() {

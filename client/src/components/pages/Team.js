@@ -21,16 +21,16 @@ const Team = (props) => {
     <div className="page" id="team">
       { props.team_code ? (
         <div>
-          <ViewTeamAPI getAuthToken={props.getAuthToken} updateAuthToken={props.updateAuthToken}/>
-          <ViewTeamStatisticsAPI getAuthToken={props.getAuthToken} updateAuthToken={props.updateAuthToken}/>
-          <LeaveTeamAPI getAuthToken={props.getAuthToken} updateAuthToken={props.updateAuthToken}/>
+          <ViewTeamAPI getAuthToken={props.getAuthToken} updateAuthToken={props.updateAuthToken} alert={props.alert}/>
+          <ViewTeamStatisticsAPI getAuthToken={props.getAuthToken} updateAuthToken={props.updateAuthToken} alert={props.alert}/>
+          <LeaveTeamAPI getAuthToken={props.getAuthToken} updateAuthToken={props.updateAuthToken} alert={props.alert}/>
         </div>
       ) : (
         <div>
           <h2>You do not have a team</h2>
           It appears that you do not belong to a team. In order to use all the features of Stratbook, make or join one here.
-          <CreateTeamAPI getAuthToken={props.getAuthToken} updateAuthToken={props.updateAuthToken} name={props.name}/>
-          <JoinTeamAPI getAuthToken={props.getAuthToken} updateAuthToken={props.updateAuthToken}/>
+          <CreateTeamAPI getAuthToken={props.getAuthToken} updateAuthToken={props.updateAuthToken} name={props.name} alert={props.alert}/>
+          <JoinTeamAPI getAuthToken={props.getAuthToken} updateAuthToken={props.updateAuthToken} alert={props.alert}/>
         </div>
       )}
     </div>

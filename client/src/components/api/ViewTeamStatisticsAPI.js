@@ -50,44 +50,19 @@ class ViewTeamStatisticsAPI extends React.Component {
             }
           });
           break;
-        case "ERROR_WHILE_GETTING_TEAM_STATS":
-          component.setState({
-            loading: false,
-          });
-          alert("An error occurred while getting team statistics.");
-          break;
-        case "USER_HAS_NO_TEAM":
-          component.setState({
-            loading: false
-          });
-          alert("You do not have a team. You must have a team to view statistics.");
-          break;
-        case "USER_HAS_NO_TEAM":
-          component.setState({
-            loading: false
-          });
-          alert("You do not have a team. You must have a team to view team.");
-          break;
-        case "TEAM_DOES_NOT_EXIST":
-          component.setState({
-            loading: false
-          });
-          alert("The team you requested to view does not exist.");
-          break;
         default:
           component.setState({
-            loading: false,
-            error: true
+            loading: false
           });
-          alert("An unknown error has occurred.");
+          component.props.alert(response.data.message, response.data.status);
           break;
       }
     }).catch((error) => {
       console.log(error);
-      alert("An error has occurred. Please try again shortly.");
       component.setState({
         loading: false
       });
+      component.props.alert("An error has occurred while attempting to view team statistics.", "ERROR");
     });
   }
   componentDidMount() {
@@ -102,35 +77,39 @@ class ViewTeamStatisticsAPI extends React.Component {
         contents = <p>An error occurred while fetching the team statistics. Please try again in a bit.</p>;
       } else {
         let index = 0;
-        const teamMembers = this.state.stats.team.map((member) => {
-          return (
-            <TeamMemberStats username={member.username} kd={member.kd} wl={member.wl} mmr={member.mmr} mmrchange={member.mmrchange} level={member.level}/>
-          )
-        });
-        contents = (
-          <div className="team-statistics">
-            <h3>Statistics</h3>
-            <div className="overview">
-              <p className="overview-label">Team Performance</p>
-              <p className="team-stat"><span className="stat-label">Avg K/D</span>{this.state.stats.kd}</p>
-              <p className="team-stat"><span className="stat-label">Avg W/L</span>{this.state.stats.wl}</p>
-              <p className="team-stat"><span className="stat-label">Avg MMR</span>{this.state.stats.mmr}</p>
-              <p className="team-stat"><span className="stat-label">Avg MMR Change</span>{this.state.stats.mmrchange}</p>
-              <p className="team-stat"><span className="stat-label">Avg Level</span>{this.state.stats.level}</p>
-            </div>
-            <div className="member-statistics">
-              <div className="team-member-stats--accent">
-                <h4 className="team-member-stats__username">Username</h4>
-                <p className="team-member-stats__stat">K/D</p>
-                <p className="team-member-stats__stat">W/L</p>
-                <p className="team-member-stats__stat">MMR</p>
-                <p className="team-member-stats__stat">MMR Change</p>
-                <p className="team-member-stats__stat">Level</p>
+        if (this.state.stats.team) {
+          const teamMembers = this.state.stats.team.map((member) => {
+            return (
+              <TeamMemberStats username={member.username} kd={member.kd} wl={member.wl} mmr={member.mmr} mmrchange={member.mmrchange} level={member.level}/>
+            )
+          });
+          contents = (
+            <div className="team-statistics">
+              <h3>Statistics</h3>
+              <div className="overview">
+                <p className="overview-label">Team Performance</p>
+                <p className="team-stat"><span className="stat-label">Avg K/D</span>{this.state.stats.kd}</p>
+                <p className="team-stat"><span className="stat-label">Avg W/L</span>{this.state.stats.wl}</p>
+                <p className="team-stat"><span className="stat-label">Avg MMR</span>{this.state.stats.mmr}</p>
+                <p className="team-stat"><span className="stat-label">Avg MMR Change</span>{this.state.stats.mmrchange}</p>
+                <p className="team-stat"><span className="stat-label">Avg Level</span>{this.state.stats.level}</p>
               </div>
-              { teamMembers }
+              <div className="member-statistics">
+                <div className="team-member-stats--accent">
+                  <h4 className="team-member-stats__username">Username</h4>
+                  <p className="team-member-stats__stat">K/D</p>
+                  <p className="team-member-stats__stat">W/L</p>
+                  <p className="team-member-stats__stat">MMR</p>
+                  <p className="team-member-stats__stat">MMR Change</p>
+                  <p className="team-member-stats__stat">Level</p>
+                </div>
+                { teamMembers }
+              </div>
             </div>
-          </div>
-        );
+          );
+        } else {
+          contents = <p>An error has occurred</p>
+        }
       }
     }
     return (

@@ -3,6 +3,7 @@
 import React from "react";
 
 import DefenderForm from "./DefenderForm.js";
+import UtilityForm from "./UtilityForm.js";
 
 /*
   @func: DefenderLineupForm
@@ -32,6 +33,8 @@ const DefenderLineupForm = (props) => {
         { props.roles[index] !== "ANY" ? (
           <DefenderForm onChange={props.onChange} operators={props.operators} role={props.roles[index]} index={index}/>
         ) : ""}
+        <label className="defender-lineup-form__label form__label">Utility</label>
+        <UtilityForm onChange={props.onChange} type="DEFENSE" operator={props.operators[index]} index={index} utility={props.utility[index]}/>
       </div>
     )
   });

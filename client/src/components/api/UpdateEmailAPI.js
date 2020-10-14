@@ -57,36 +57,20 @@ class UpdateEmailAPI extends React.Component {
           component.setState({
             loading: false,
           });
-          alert("Success! Your email has been updated.");
+          component.props.alert("Success! Your email has been updated.");
           this.props.updateAuthToken();
           break;
-        case "USER_NOT_VERIFIED":
-          component.setState({
-            loading: false
-          });
-          alert("You must verify your email before you can change it.");
-          break;
-        case "ERROR_WHILE_UPDATING_EMAIL":
-          component.setState({
-            loading: false,
-            errors: {}
-          });
-          alert("An error occurred while updating email. Please try again.");
-        case "INVALID_EMAIL":
-        case "PROFANE_INPUT":
-        case "EMAIL_TAKEN":
-        case "USER_NOT_FOUND":
         default:
           component.setState({
             loading: false,
-            errors: response.data.errors,
-            status: response.data.status
+            errors: response.data.errors
           });
+          component.props.alert(response.data.message, response.data.status);
           break;
       }
     }).catch((error) => {
       console.log(error);
-      alert("An error has occurred. Please try again shortly.");
+      component.props.alert("An error has occurred while attempting to update email.", "ERROR");
     });
   }
   render() {

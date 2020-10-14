@@ -41,21 +41,21 @@ class GeneralStatisticsAPI extends React.Component {
             stats: response.data.stats
           });
           break;
-        case "USER_NOT_FOUND":
         default:
           component.setState({
             loading: false,
             hasLoaded: true
           });
+          component.props.alert(response.data.message, response.data.status);
           break;
       }
     }).catch((error) => {
       console.log(error);
-      alert("An error has occurred. Please try again shortly.");
       component.setState({
         loading: false,
         hasLoaded: true
       });
+      component.props.alert("An error has occurred while attempting to get general statistics", "ERROR");
     });
   }
   componentDidMount() {

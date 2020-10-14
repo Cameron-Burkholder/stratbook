@@ -107,10 +107,6 @@ module.exports = async (app, passport) => {
       Strategies.findOne({ join_code: request.team.join_code }).then((strategies) => {
         let uniqueStrategy = true;
         strategies.strategies.map((strat) => {
-          console.log(strategies.strategies);
-          console.log("strat" + strat);
-          console.log(strat.name.toUpperCase());
-          console.log(request.body.strategy.name.toUpperCase());
           if (strat.name.toUpperCase() === request.body.strategy.name.toUpperCase()) {
             uniqueStrategy = false;
           }

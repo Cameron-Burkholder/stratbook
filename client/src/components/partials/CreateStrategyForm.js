@@ -46,9 +46,9 @@ const CreateStrategyForm = (props) => {
       <fieldset className="form__fieldset" id="lineup">
         <label className="form__label">Lineup</label>
         { props.type === "ATTACK" ? (
-          <AttackerLineupForm onChange={props.onChange} operators={props.operators} roles={props.roles}/>
+          <AttackerLineupForm onChange={props.onChange} operators={props.operators} roles={props.roles} utility={props.utility}/>
         ) : (
-          <DefenderLineupForm onChange={props.onChange} operators={props.operators} roles={props.roles}/>
+          <DefenderLineupForm onChange={props.onChange} operators={props.operators} roles={props.roles} utility={props.utility}/>
         )}
       </fieldset>
       <fieldset className="form__fieldset">

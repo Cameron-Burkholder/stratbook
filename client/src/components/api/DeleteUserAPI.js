@@ -45,30 +45,16 @@ class DeleteUserAPI extends React.Component {
             alert("Your account and associated team have been deleted.");
             this.props.logout();
             break;
-          case "USER_DELETED":
+          default:
             component.setState({
               loading: false,
             });
-            alert("Your account has been deleted.");
-            this.props.logout();
-            break;
-          case "ERROR_WHILE_DELETING_USER":
-            component.setState({
-              loading: false
-            });
-            alert("An error occurred while deleting account. Please try again.");
-            break;
-          default:
-            component.setState({
-              loading: false
-            });
-            alert("An unknown error has occurred. Please try logging in and trying again.");
-            this.props.logout();
+            component.props.alert(response.data.message, response.data.status);
             break;
         }
       }).catch((error) => {
         console.log(error);
-        alert("An error has occurred. Please try again shortly.");
+        component.props.alert("An error has occurred while attempting to delete user.", "ERROR");
       });
     }
   }

@@ -59,39 +59,17 @@ class CreateTeamAPI extends React.Component {
           alert("Success! Your team has been created.");
           this.props.updateAuthToken();
           break;
-        case "ERROR_WHILE_CREATING_TEAM":
-          component.setState({
-            loading: false,
-            errors: {}
-          });
-          alert("An error occurred while creating your team. Please try again.");
-          break;
-        case "USER_NOT_VERIFIED":
-          component.setState({
-            loading: false
-          });
-          alert("You have not verified your account. You must verify your account in order to create a team.");
-          break;
-        case "USER_HAS_TEAM":
-          component.setState({
-            loading: false
-          });
-          alert("You already have a team. You cannot create a team if you already belong to one.");
-          break;
-        case "INVALID_TEAM_INPUT":
-        case "PROFANE_TEAM_INPUT":
-        case "TEAM_ALREADY_EXISTS":
         default:
           component.setState({
             loading: false,
-            errors: response.data.errors,
-            status: response.data.status
+            errors: response.data.errors
           });
+          component.props.alert(response.data.message, response.data.status);
           break;
       }
     }).catch((error) => {
       console.log(error);
-      alert("An error has occurred. Please try again shortly.");
+      component.props.alert("An error has occurred while attempting to create team.", "ERROR");
     });
   }
   render() {

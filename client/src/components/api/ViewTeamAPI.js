@@ -43,50 +43,19 @@ class ViewTeamAPI extends React.Component {
             team: response.data.team
           });
           break;
-        case "ERROR_WHILE_GETTING_TEAM":
-          component.setState({
-            loading: false,
-            team: {},
-            error: true
-          });
-          break;
-        case "USER_NOT_VERIFIED":
-          component.setState({
-            loading: false
-          });
-          alert("You have not verified your account. You must verify your account in order to view team.");
-          break;
-        case "USER_HAS_NO_TEAM":
-          component.setState({
-            loading: false
-          });
-          alert("You do not have a team. You must have a team to view team.");
-          break;
-        case "TEAM_DOES_NOT_EXIST":
-          component.setState({
-            loading: false
-          });
-          alert("The team you requested to view does not exist.");
-          break;
-        case "USER_NOT_QUALIFIED":
-          component.setState({
-            loading: false
-          });
-          alert("You are not qualified to view the team you have requested.");
-          break;
         default:
           component.setState({
-            loading: false,
-            error: true
+            loading: false
           });
+          component.props.alert(response.data.message, response.data.status);
           break;
       }
     }).catch((error) => {
       console.log(error);
-      alert("An error has occurred. Please try again shortly.");
       component.setState({
         loading: false
       });
+      component.props.alert("An error has occurred while attempting to view team.", "ERROR");
     });
   }
   componentDidMount() {
@@ -102,31 +71,35 @@ class ViewTeamAPI extends React.Component {
       } else {
         let teamMembers = [];
         let index = 0;
-        this.state.team.admins.map((admin) => {
-          teamMembers.push(<TeamMember username={admin.username} status={admin.status} attacker_role={admin.attacker_role} attackers={admin.attackers} defender_role={admin.defender_role} defenders={admin.defenders} key={index++}/>);
-        });
-        this.state.team.editors.map((editor) => {
-          teamMembers.push(<TeamMember username={editor.username} status={editor.status} attacker_role={editor.attacker_role} attackers={editor.attackers} defender_role={editor.defender_role} defenders={editor.defenders} key={index++}/>);
-        });
-        this.state.team.members.map((member) => {
-          teamMembers.push(<TeamMember username={member.username} status={member.status} attacker_role={member.attacker_role} attackers={member.attackers} defender_role={member.defender_role} defenders={member.defenders} key={index++}/>);
-        })
-        contents = (
-          <div className="team">
-            <h2 className="team-name">{this.state.team.name}</h2>
-            <h3 className="team-description">{this.state.team.platform} - {this.state.team.join_code}</h3>
-            <div className="roster">
-              <h3>Roster</h3>
-              <div className="team-member--accent">
-                <h4 className="team-member__username">Username</h4>
-                <p className="team-member__status">Status</p>
-                <p className="team-member__quality">Attacking Role</p>
-                <p className="team-member__quality">Defending Role</p>
+        if (this.state.team) {
+          this.state.team.admins.map((admin) => {
+            teamMembers.push(<TeamMember username={admin.username} status={admin.status} attacker_role={admin.attacker_role} attackers={admin.attackers} defender_role={admin.defender_role} defenders={admin.defenders} key={index++}/>);
+          });
+          this.state.team.editors.map((editor) => {
+            teamMembers.push(<TeamMember username={editor.username} status={editor.status} attacker_role={editor.attacker_role} attackers={editor.attackers} defender_role={editor.defender_role} defenders={editor.defenders} key={index++}/>);
+          });
+          this.state.team.members.map((member) => {
+            teamMembers.push(<TeamMember username={member.username} status={member.status} attacker_role={member.attacker_role} attackers={member.attackers} defender_role={member.defender_role} defenders={member.defenders} key={index++}/>);
+          })
+          contents = (
+            <div className="team">
+              <h2 className="team-name">{this.state.team.name}</h2>
+              <h3 className="team-description">{this.state.team.platform} - {this.state.team.join_code}</h3>
+              <div className="roster">
+                <h3>Roster</h3>
+                <div className="team-member--accent">
+                  <h4 className="team-member__username">Username</h4>
+                  <p className="team-member__status">Status</p>
+                  <p className="team-member__quality">Attacking Role</p>
+                  <p className="team-member__quality">Defending Role</p>
+                </div>
+                { teamMembers }
               </div>
-              { teamMembers }
             </div>
-          </div>
-        );
+          );
+        } else {
+          contents = <p>An error has occurred</p>
+        }
       }
     }
     return (

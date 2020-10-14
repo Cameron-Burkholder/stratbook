@@ -130,7 +130,7 @@ class App extends React.Component {
 
     msg {String}: msg to display
   */
-  alert(msg) {
+  alert(msg, status) {
     console.log(msg);
   }
   componentDidMount() {

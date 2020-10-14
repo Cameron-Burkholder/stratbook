@@ -14,7 +14,7 @@ import ViewStrategiesAPI from "../api/ViewStrategiesAPI.js";
 const Strategies = (props) => {
   return (
     <div className="page" id="strategies">
-      <ViewStrategiesAPI team_code={props.team_code} getAuthToken={props.getAuthToken}/>
+      <ViewStrategiesAPI team_code={props.team_code} getAuthToken={props.getAuthToken} alert={props.alert}/>
     </div>
   )
 }

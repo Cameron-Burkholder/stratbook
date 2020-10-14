@@ -70,25 +70,17 @@ class SetDefendersAPI extends React.Component {
           });
           component.props.updateAuthToken();
           break;
-        case "ERROR_WHILE_SETTING_DEFENDERS":
-          component.setState({
-            loading: false
-          });
-          alert("An error occurred while setting preferred defenders. Please try again.");
-          break;
-        case "USER_NOT_FOUND":
-        case "INVALID_DEFENDERS":
         default:
           component.setState({
             loading: false,
             errors: response.data.errors
           });
-          alert("An error has occurred.");
+          component.props.alert(response.data.message, response.data.status);
           break;
       }
     }).catch((error) => {
       console.log(error);
-      alert("An error has occurred. Please try again shortly.");
+      component.props.alert("An error has occurred while attempting to set defenders.", "ERROR");
     });
   }
   render() {

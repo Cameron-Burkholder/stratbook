@@ -60,24 +60,17 @@ class SetAttackerRoleAPI extends React.Component {
           });
           component.props.updateAuthToken();
           break;
-        case "ERROR_WHILE_SETTING_ATTACKER_ROLE":
-          component.setState({
-            loading: false
-          });
-          alert("An error occurred while setting attacker role. Please try again.");
-          break;
-        case "USER_NOT_FOUND":
-        case "INVALID_ATTACKER_ROLE":
         default:
           component.setState({
             loading: false,
             errors: response.data.errors
           });
+          component.props.alert(response.data.message, response.data.status);
           break;
       }
     }).catch((error) => {
       console.log(error);
-      alert("An error has occurred. Please try again shortly.");
+      component.props.alert("An error has occured while attempting to set attacker role.", "ERROR");
     });
   }
   render() {

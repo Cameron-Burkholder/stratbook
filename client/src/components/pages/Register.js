@@ -9,10 +9,10 @@ import RegisterAPI from "../api/RegisterAPI.js";
   @desc: render register page
   @prop alert: function
 */
-const Register = () => {
+const Register = (props) => {
   return (
     <div className="page" id="register">
-      <RegisterAPI/>
+      <RegisterAPI alert={props.alert}/>
     </div>
   )
 }

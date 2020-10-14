@@ -60,24 +60,17 @@ class SetDefenderRoleAPI extends React.Component {
           });
           component.props.updateAuthToken();
           break;
-        case "ERROR_WHILE_SETTING_DEFENDER_ROLE":
-          component.setState({
-            loading: false
-          });
-          alert("An error occurred while setting defender role. Please try again.");
-          break;
-        case "USER_NOT_FOUND":
-        case "INVALID_DEFENDER_ROLE":
         default:
           component.setState({
             loading: false,
             errors: response.data.errors
           });
+          component.props.alert(response.data.message, response.data.status);
           break;
       }
     }).catch((error) => {
       console.log(error);
-      alert("An error has occurred. Please try again shortly.");
+      component.props.alert("An error has occurred while attempting to set defender role.", "ERROR");
     });
   }
   render() {

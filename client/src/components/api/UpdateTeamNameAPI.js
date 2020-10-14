@@ -30,50 +30,19 @@ class UpdateTeamNameAPI extends React.Component {
             currentName: response.data.team.name
           });
           break;
-        case "ERROR_WHILE_GETTING_TEAM":
-          component.setState({
-            loading: false,
-            team: {},
-            error: true
-          });
-          break;
-        case "USER_NOT_VERIFIED":
-          component.setState({
-            loading: false
-          });
-          alert("You have not verified your account. You must verify your account in order to view team.");
-          break;
-        case "USER_HAS_NO_TEAM":
-          component.setState({
-            loading: false
-          });
-          alert("You do not have a team. You must have a team to view team.");
-          break;
-        case "TEAM_DOES_NOT_EXIST":
-          component.setState({
-            loading: false
-          });
-          alert("The team you requested to view does not exist.");
-          break;
-        case "USER_NOT_QUALIFIED":
-          component.setState({
-            loading: false
-          });
-          alert("You are not qualified to view the team you have requested.");
-          break;
         default:
           component.setState({
-            loading: false,
-            error: true
+            loading: false
           });
+          component.props.alert(response.data.message, response.data.status);
           break;
       }
     }).catch((error) => {
       console.log(error);
-      alert("An error has occurred. Please try again shortly.");
       component.setState({
         loading: false
       });
+      component.props.alert("An error has occurred while attempting to get current team name.", "ERROR");
     });
   }
   onChange(e) {
@@ -96,51 +65,19 @@ class UpdateTeamNameAPI extends React.Component {
             currentName: component.state.newName
           });
           break;
-        case "ERROR_WHILE_UPDATING_TEAM_NAME":
-          component.setState({
-            loading: false,
-          });
-          alert("An error occurred while updating the team name.");
-          break;
-        case "USER_NOT_VERIFIED":
-          component.setState({
-            loading: false
-          });
-          alert("You have not verified your account. You must verify your account in order to change the team name.");
-          break;
-        case "USER_HAS_NO_TEAM":
-          component.setState({
-            loading: false
-          });
-          alert("You do not have a team. You must have a team to change the team name.");
-          break;
-        case "TEAM_DOES_NOT_EXIST":
-          component.setState({
-            loading: false
-          });
-          alert("The team you requested to update does not exist.");
-          break;
-        case "USER_NOT_QUALIFIED":
-          component.setState({
-            loading: false
-          });
-          alert("You are not qualified to update the team name.");
-          break;
-        case "INVALID_TEAM_INPUT":
-        case "PROFANE_TEAM_INPUT":
         default:
           component.setState({
-            loading: false,
+            loading: false
           });
-          alert("The name input is invalid or inappropriate.");
+          component.props.alert(response.data.message, response.data.status);
           break;
       }
     }).catch((error) => {
       console.log(error);
-      alert("An error has occurred. Please try again shortly.");
       component.setState({
         loading: false
       });
+      component.props.alert("An error has occurred while attempting to update team name.", "ERROR");
     });
   }
   componentDidMount() {

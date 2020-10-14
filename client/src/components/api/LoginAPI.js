@@ -62,26 +62,17 @@ class LoginAPI extends React.Component {
           });
           component.props.login(response.data.token, response.data.expiresIn, response.data.user);
           break;
-        case "ERROR_WHILE_LOGGING_IN":
-          component.setState({
-            loading: false,
-            errors: {}
-          });
-          alert("An error occurred while logging in. Please try again.");
-        case "INVALID_LOGIN":
-        case "USER_NOT_FOUND":
-        case "INCORRECT_PASSWORD":
         default:
           component.setState({
             loading: false,
-            errors: response.data.errors,
-            status: response.data.status
+            errors: response.data.errors
           });
+          component.props.alert(response.message.status, response.data.status);
           break;
       }
     }).catch((error) => {
       console.log(error);
-      alert("An error has occurred. Please try again shortly.");
+      component.props.alert("An error has occurred while attempting to log in.", "ERROR");
     });
   }
   render() {

@@ -46,7 +46,6 @@ class OperatorStatisticsAPI extends React.Component {
             operators: response.data.stats.operators
           });
           break;
-        case "USER_NOT_FOUND":
         default:
           component.setState({
             loading: false,
@@ -56,11 +55,11 @@ class OperatorStatisticsAPI extends React.Component {
       }
     }).catch((error) => {
       console.log(error);
-      alert("An error has occurred. Please try again shortly.");
       component.setState({
         loading: false,
         hasLoaded: true
       });
+      component.props.alert("An error has occurred while attempting to get operator statistics.", "ERROR");
     });
   }
   sortOperators(e) {

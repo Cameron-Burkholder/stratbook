@@ -31,6 +31,7 @@ class CreateStrategiesAPI extends React.Component {
       execution: "",
       roles: ["ANY", "ANY", "ANY", "ANY", "ANY"],
       operators: ["", "", "" , "", ""],
+      utility: ["ANY", "ANY", "ANY", "ANY", "ANY"],
       errors: {},
       loading: false
     }
@@ -46,11 +47,14 @@ class CreateStrategiesAPI extends React.Component {
       if (e.target.id.includes("attacker-role") || e.target.id.includes("defender-role")) {
         let newRoles = [...this.state.roles];
         let newOperators = [...this.state.operators];
+        let newUtility = [...this.state.utility];
         newRoles[index] = e.target.value;
         newOperators[index] = "";
+        newUtility[index] = "ANY";
         this.setState({
           roles: newRoles,
-          operators: newOperators
+          operators: newOperators,
+          utility: newUtility
         });
       } else if (e.target.id.includes("attacker-form") || e.target.id.includes("defender-form")) {
         let newOperators = [...this.state.operators];
@@ -62,7 +66,13 @@ class CreateStrategiesAPI extends React.Component {
         this.setState({
           [e.target.id]: e.target.value,
           roles: ["ANY", "ANY", "ANY", "ANY", "ANY"],
-          operators: []
+          operators: ["", "", "", "", ""]
+        });
+      } else if (e.target.id.includes("utility-form")) {
+        let newUtility = [...this.state.utility];
+        newUtility[index] = e.target.value;
+        this.setState({
+          utility: newUtility
         });
       } else {
         this.setState({
@@ -127,6 +137,7 @@ class CreateStrategiesAPI extends React.Component {
         type: component.state.type,
         objectives: component.state.objectives,
         roles: component.state.roles,
+        utility: component.state.utility,
         operators: component.state.operators,
         execution: component.state.execution
       }
@@ -148,7 +159,7 @@ class CreateStrategiesAPI extends React.Component {
       }
     }).catch((error) => {
       console.log(error);
-      component.props.alert("An error has occurred. Please try again shortly.");
+      component.props.alert("An error has occurred while attempting to create strategy.", "ERROR");
     });
   }
   render() {
@@ -161,7 +172,7 @@ class CreateStrategiesAPI extends React.Component {
           <CreateStrategyForm onChange={this.onChange} onSubmit={this.onSubmit} name={this.state.name} type={this.state.type}
                               newObjective={this.state.newObjective} objectives={this.state.objectives} removeObjective={this.removeObjective}
                               onKeyPress={this.onKeyPress} getComponent={this.getComponent} execution={this.state.execution}
-                              roles={this.state.roles} operators={this.state.operators} errors={this.state.errors}/>
+                              roles={this.state.roles} operators={this.state.operators} errors={this.state.errors} utility={this.state.utility}/>
         )}
       </div>
     )
