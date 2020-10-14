@@ -101,12 +101,16 @@ module.exports = async (app, passport) => {
   app.post("/api/strategies/create", (request, response, done) => {
     log("POST REQUEST AT /api/strategies/create");
     done();
-  }, passport.authenticate("jwt", { session: false }), validation.validateStrategyInput, middleware.userIsVerified, middleware.userHasTeam, (request, response, done) => {
+  }, passport.authenticate("jwt", { session: false }), middleware.userIsVerified, middleware.userHasTeam, validation.validateStrategyInput, (request, response, done) => {
     let packet = {};
     if (request.team.editors.indexOf(String(request.user._id)) >= 0 || request.team.admins.indexOf(String(request.user._id)) >= 0) {
-      Strategies.findOne({ join_code: request.user.team_code }).then((strategies) => {
+      Strategies.findOne({ join_code: request.team.join_code }).then((strategies) => {
         let uniqueStrategy = true;
-        strategies.strategies.forEach((strat) => {
+        strategies.strategies.map((strat) => {
+          console.log(strategies.strategies);
+          console.log("strat" + strat);
+          console.log(strat.name.toUpperCase());
+          console.log(request.body.strategy.name.toUpperCase());
           if (strat.name.toUpperCase() === request.body.strategy.name.toUpperCase()) {
             uniqueStrategy = false;
           }

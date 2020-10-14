@@ -2,11 +2,12 @@
 
 const chai = require("chai");
 const assert = chai.assert;
+const validation = require("../validation.js");
 
 suite("UNIT TESTS", function() {
 
   suite("Login", function() {
-    const validateLoginInput = require("../validation/login.js");
+    const validateLoginInput = validation.validateLoginInput;
     let response = {
       json: function() {},
       end: function() {}
@@ -108,7 +109,7 @@ suite("UNIT TESTS", function() {
   });
 
   suite("Registration", function() {
-    const validateRegisterInput = require("../validation/register.js");
+    const validateRegisterInput = validation.validateRegisterInput;
     let response = {
       json: function() {},
       end: function() {}
@@ -333,7 +334,7 @@ suite("UNIT TESTS", function() {
   });
 
   suite("Team Name", function() {
-    const validateTeamName = require("../validation/validateTeamName.js");
+    const validateTeamName = validation.validateTeamInput;
     let response = {
       json: function() {},
       end: function() {}
@@ -363,7 +364,7 @@ suite("UNIT TESTS", function() {
   });
 
   suite("Join Code", function() {
-    const validateJoinCode = require("../validation/validateJoinCode.js");
+    const validateJoinCode = validation.validateJoinCode;
     let response = {
       json: function() {},
       end: function() {}
@@ -434,7 +435,7 @@ suite("UNIT TESTS", function() {
   });
 
   suite("Update Platform", function() {
-    const validatePlatformInput = require("../validation/validatePlatformInput.js");
+    const validatePlatformInput = validation.validatePlatformInput;
     let response = {
       json: function() {},
       end: function() {}
@@ -490,7 +491,7 @@ suite("UNIT TESTS", function() {
   });
 
   suite("Update Username", function() {
-    const validateUsernameInput = require("../validation/validateUsernameInput.js");
+    const validateUsernameInput = validation.validateUsernameInput;
     let response = {
       json: function() {},
       end: function() {}
@@ -522,7 +523,7 @@ suite("UNIT TESTS", function() {
   });
 
   suite("Block User", function() {
-    const validateBlockUser = require("../validation/validateBlockUser.js");
+    const validateBlockUser = validation.validateBlockUser;
     let response = {
       json: function() {},
       end: function() {}
@@ -546,7 +547,7 @@ suite("UNIT TESTS", function() {
   });
 
   suite("Update User Status", function() {
-    const validateStatusInput = require("../validation/validateStatusInput.js");
+    const validateStatusInput = validation.validateStatusInput;
     let response = {
       json: function() {},
       end: function() {}
@@ -597,7 +598,7 @@ suite("UNIT TESTS", function() {
   });
 
   suite("Update Email", function() {
-    const validateEmailInput = require("../validation/validateEmailInput.js");
+    const validateEmailInput = validation.validateEmailInput;
     let response = {
       json: function() {},
       end: function() {}
@@ -691,7 +692,7 @@ suite("UNIT TESTS", function() {
   });
 
   suite("Update Password", function() {
-    const validatePasswordInput = require("../validation/validatePasswordInput.js");
+    const validatePasswordInput = validation.validatePasswordInput;
     let response = {
       json: function() {},
       end: function() {}
@@ -762,7 +763,7 @@ suite("UNIT TESTS", function() {
   })
 
   suite("Set Attacker Role", function() {
-    let validateAttackerInput = require("../validation/validateAttackerInput.js");
+    let validateAttackerInput = validation.validateAttackerRole;
     let response = {
       json: function() {},
       end: function() {}
@@ -802,7 +803,7 @@ suite("UNIT TESTS", function() {
   });
 
   suite("Set Defender Role", function() {
-    let validateDefenderInput = require("../validation/validateDefenderInput.js");
+    let validateDefenderInput = validation.validateDefenderRole;
     let response = {
       json: function() {},
       end: function() {}
@@ -842,7 +843,7 @@ suite("UNIT TESTS", function() {
   });
 
   suite("Set Attackers", function() {
-    let validateAttackersInput = require("../validation/validateAttackersInput.js");
+    let validateAttackersInput = validation.validateAttackersInput;
     let response = {
       json: function() {},
       end: function() {}
@@ -880,8 +881,8 @@ suite("UNIT TESTS", function() {
     })
   });
 
-  suite("SeteDefenders", function() {
-    let validateDefendersInput = require("../validation/validateDefendersInput.js");
+  suite("Set Defenders", function() {
+    let validateDefendersInput = validation.validateDefendersInput;
     let response = {
       json: function() {},
       end: function() {}
@@ -917,6 +918,36 @@ suite("UNIT TESTS", function() {
       }
       assert.equal(validateDefendersInput(request, response, done), null, "Response should be valid if defenders list is.");
     })
+  });
+
+  suite("Create Strategy", function() {
+    let validateStrategyInput = validation.validateStrategyInput;
+    let response = {
+      json: function() {},
+      end: function() {}
+    }
+    let done = function() {};
+
+    test("# Invalid input", function() {
+      let request = {
+        body: {
+          strategy: {
+            name: "",
+            type: "",
+            objectives: [],
+            roles: [],
+            operators: [],
+            execution: ""
+          }
+        }
+      }
+      assert.equal(validateStrategyInput(request, response, done).status, "INVALID_STRATEGY", "Response should indicate invalid strategy.");
+      assert.equal(validateStrategyInput(request, response, done).errors.name, "Name field is required");
+      assert.equal(validateStrategyInput(request, response, done).errors.type, "Type field is required");
+      assert.equal(validateStrategyInput(request, response, done).errors.execution, "Execution field is required");
+      assert.equal(validateStrategyInput(request, response, done).errors.roles, "Roles field is invalid");
+      assert.equal(validateStrategyInput(request, response, done).errors.operators, "Operators field is invalid");
+    });
   });
 
   suite("Utility Functions", function() {

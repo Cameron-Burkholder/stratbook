@@ -3,7 +3,7 @@
 import React from "react";
 
 import Loading from "./Loading.js"
-const defenders = ["MUTE", "SMOKE", "CASTLE", "PULSE", "DOC", "ROOK", "JAGER", "BANDIT", "KAPKAN", "TACHANKA", "FROST", "VALKYRIE", "CAVEIRA", "ECHO", "MIRA", "LESION", "ELA", "VIGIL", "CLASH", "KAID", "WARDEN", "GOYO", "WAMAI", "ORYX", "MELUSI"];
+const defenders = ["SMOKE", "MUTE", "CASTLE", "PULSE", "DOC", "ROOK", "KAPKAN", "TACHANKA", "JAGER", "BANDIT", "FROST", "VALKYRIE", "CAVEIRA", "ECHO", "MIRA", "LESION", "ELA", "VIGIL", "MAESTRO", "ALIBI", "CLASH", "KAID", "MOZZIE", "WARDEN", "GOYO", "WAMAI", "ORYX", "MELUSI"];
 
 /*
   @func: DefendersForm

@@ -9,7 +9,7 @@ import DefenderLineupForm from "./DefenderLineupForm.js";
   @func: CreateStrategyForm
   @desc: render create strategy form
   @prop onSubmit: function
-
+  @prop errors: Object
 */
 const CreateStrategyForm = (props) => {
   const objectiveList = props.objectives.map((objective, index) => {
@@ -33,6 +33,7 @@ const CreateStrategyForm = (props) => {
           <option>ATTACK</option>
           <option>DEFENSE</option>
         </select>
+        <span className="form__error">{(props.errors ? props.errors.type : "")}</span>
       </fieldset>
       <fieldset className="form__fieldset" id="objectives">
         <label className="form__label">Objectives</label>
@@ -40,6 +41,7 @@ const CreateStrategyForm = (props) => {
         <ul className="objectives">
           { objectiveList }
         </ul>
+        <span className="form__error">{(props.errors ? props.errors.objectives : "")}</span>
       </fieldset>
       <fieldset className="form__fieldset" id="lineup">
         <label className="form__label">Lineup</label>
@@ -52,6 +54,7 @@ const CreateStrategyForm = (props) => {
       <fieldset className="form__fieldset">
         <label className="form__label" htmlFor="execution">Execution</label>
         <textarea onChange={props.onChange} className={"form__input" + (props.errors && props.errors.execution == null ? "" : " form__input--error")} id="execution" value={props.execution} required></textarea>
+        <span className="form__error">{(props.errors ? props.errors.execution : "")}</span>
       </fieldset>
       <button onClick={props.onSubmit} className="form__button form__button--submit" type="button">Create</button>
     </form>

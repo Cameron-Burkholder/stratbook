@@ -496,43 +496,47 @@ module.exports = validation = {
     let packet = {};
 
     let errors = {};
-    data.name = !isEmpty(data.name) ? data.name : "";
-    data.type = !isEmpty(data.type) ? data.type : "";
-    data.objectives = !isEmpty(data.objectives) ? data.objectives : "";
-    data.execution = !isEmpty(data.execution) ? data.execution : "";
-    data.roles = !isEmpty(data.roles) ? data.roles : "";
-    data.operators = !isEmpty(data.operators) ? data.operators : "";
 
-    // Name checks
-    if (Validator.isEmpty(data.name)) {
-      errors.name = "Name field is required";
-    }
+    if (data) {
+      data.name = !isEmpty(data.name) ? data.name : "";
+      data.type = !isEmpty(data.type) ? data.type : "";
+      data.objectives = !isEmpty(data.objectives) ? data.objectives : "";
+      data.execution = !isEmpty(data.execution) ? data.execution : "";
+      data.roles = !isEmpty(data.roles) ? data.roles : "";
+      data.operators = !isEmpty(data.operators) ? data.operators : "";
+      // Name checks
+      if (Validator.isEmpty(data.name)) {
+        errors.name = "Name field is required";
+      }
 
-    // Type checks
-    if (Validator.isEmpty(data.type)) {
-      errors.type = "Type field is required";
-    } else if (data.type !== "ATTACK" && data.type !== "DEFENSE") {
-      errors.type = "Type field is invalid";
-    }
+      // Type checks
+      if (Validator.isEmpty(data.type)) {
+        errors.type = "Type field is required";
+      } else if (data.type !== "ATTACK" && data.type !== "DEFENSE") {
+        errors.type = "Type field is invalid";
+      }
 
-    // Execution checks
-    if (Validator.isEmpty(data.execution)) {
-      errors.execution = "Execution field is required";
-    }
+      // Execution checks
+      if (Validator.isEmpty(data.execution)) {
+        errors.execution = "Execution field is required";
+      }
 
-    // Objectives check
-    if (data.objectives.length < 0) {
-      errors.objectives = "Objectives field is invalid";
-    }
+      // Objectives check
+      if (data.objectives.length < 0) {
+        errors.objectives = "Objectives field is invalid";
+      }
 
-    // Roles checks
-    if (data.roles.length !== 5) {
-      errors.roles = "Roles field is invalid";
-    }
+      // Roles checks
+      if (data.roles.length !== 5) {
+        errors.roles = "Roles field is invalid";
+      }
 
-    // Operators checks
-    if (data.operators.length !== 5) {
-      errors.operators = "Operators field is invalid";
+      // Operators checks
+      if (data.operators.length !== 5) {
+        errors.operators = "Operators field is invalid";
+      }
+    } else {
+      errors.name = "Strategies not provided";
     }
 
     if (!isEmpty(errors)) {

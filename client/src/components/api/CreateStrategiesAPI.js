@@ -161,7 +161,7 @@ class CreateStrategiesAPI extends React.Component {
           <CreateStrategyForm onChange={this.onChange} onSubmit={this.onSubmit} name={this.state.name} type={this.state.type}
                               newObjective={this.state.newObjective} objectives={this.state.objectives} removeObjective={this.removeObjective}
                               onKeyPress={this.onKeyPress} getComponent={this.getComponent} execution={this.state.execution}
-                              roles={this.state.roles} operators={this.state.operators}/>
+                              roles={this.state.roles} operators={this.state.operators} errors={this.state.errors}/>
         )}
       </div>
     )

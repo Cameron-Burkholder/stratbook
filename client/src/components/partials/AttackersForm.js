@@ -3,7 +3,7 @@
 import React from "react";
 
 import Loading from "./Loading.js"
-const attackers = ["SLEDGE", "THATCHER", "ASH", "THERMITE", "TWITCH", "MONTAGNE", "BLITZ", "IQ", "GLAZ", "FUZE", "BUCK", "BLACKBEARD", "CAPITAO", "HIBANA", "JACKAL", "YING", "ZOFIA", "DOKKAEBI", "FINKA", "MAVERICK", "NOMAD", "NOKK", "AMARU", "KALI", "IANA", "ACE", "ZERO"];
+const attackers = ["SLEDGE", "THATCHER", "ASH", "THERMITE", "TWITCH", "MONTAGNE", "GLAZ", "FUZE", "BLITZ", "IQ", "BUCK", "BLACKBEARD", "CAPITAO", "HIBANA", "JACKAL", "YING", "ZOFIA", "DOKKAEBI", "LION", "FINKA", "MAVERICK", "NOMAD", "GRIDLOCK", "NOKK", "AMARU", "KALI", "IANA", "ACE", "ZERO"];
 
 /*
   @func: AttackersForm

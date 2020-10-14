@@ -915,6 +915,8 @@ div#CreateStrategiesAPI {
     max-width: 400px; }
   div#CreateStrategiesAPI form.form#create-strategy-form * {
     color: #15161A; }
+  div#CreateStrategiesAPI form.form#create-strategy-form span.form__error {
+    color: red; }
   div#CreateStrategiesAPI form.form#create-strategy-form ul.objectives {
     padding: 16px;
     padding-left: calc(16px * 2);
