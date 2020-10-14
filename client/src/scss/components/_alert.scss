@@ -1,0 +1,43 @@
+/* client/src/scss/components/_alert.scss */
+
+div.alert-container {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  padding: $padding;
+  div.alert {
+    background-color: $theme-white;
+    padding: $padding;
+    position: relative;
+    border-width: 2px;
+    border-style: solid;
+    border-color: $theme-warning;
+    border-radius: $border-radius;
+    margin-bottom: $margin;
+    h5.alert__type {
+      text-align: left;
+      color: $theme-warning;
+    }
+    p.alert__message {
+      color: $theme-dark;
+    }
+    button.alert__button {
+      position: absolute;
+      top: calc(#{$padding} / 2);
+      right: calc(#{$padding} / 2);
+      color: $theme-dark;
+      border: none;
+      background: none;
+    }
+    button.alert__button:hover {
+      cursor: pointer;
+    }
+  }
+  div.alert--error {
+    border-color: $theme-error;
+    h5.alert__type {
+      text-align: left;
+      color: $theme-error;
+    }
+  }
+}

@@ -233,6 +233,41 @@ form.form {
   form.form button.form__button:hover {
     cursor: pointer; }
 
+/* client/src/scss/components/_alert.scss */
+div.alert-container {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  padding: 16px; }
+  div.alert-container div.alert {
+    background-color: white;
+    padding: 16px;
+    position: relative;
+    border-width: 2px;
+    border-style: solid;
+    border-color: orange;
+    border-radius: 2px;
+    margin-bottom: 16px; }
+    div.alert-container div.alert h5.alert__type {
+      text-align: left;
+      color: orange; }
+    div.alert-container div.alert p.alert__message {
+      color: #15161A; }
+    div.alert-container div.alert button.alert__button {
+      position: absolute;
+      top: calc(16px / 2);
+      right: calc(16px / 2);
+      color: #15161A;
+      border: none;
+      background: none; }
+    div.alert-container div.alert button.alert__button:hover {
+      cursor: pointer; }
+  div.alert-container div.alert--error {
+    border-color: red; }
+    div.alert-container div.alert--error h5.alert__type {
+      text-align: left;
+      color: red; }
+
 /* scss/api/_general-statistics.scss */
 div#GeneralStatisticsAPI {
   background: #15161A;

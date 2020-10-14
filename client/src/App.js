@@ -21,6 +21,7 @@ import NotFound from "./components/pages/NotFound.js";
 // import presentational components
 import Navigation from "./components/partials/Navigation.js";
 import MainNavigation from "./components/partials/MainNavigation.js";
+import Alert from "./components/partials/Alert.js";
 import Header from "./components/partials/Header.js";
 import Footer from "./components/partials/Footer.js";
 
@@ -41,10 +42,12 @@ class App extends React.Component {
     this.getAuthToken = this.getAuthToken.bind(this);
     this.updateAuthToken = this.updateAuthToken.bind(this);
     this.alert = this.alert.bind(this);
+    this.clearAlert = this.clearAlert.bind(this);
 
     this.state = {
       loggedIn: Date.now() < new Date(localStorage.getItem("expires")) ? true : false,
-      user: JSON.parse(localStorage.getItem("user"))
+      user: JSON.parse(localStorage.getItem("user")),
+      alerts: []
     }
   }
   /*
@@ -131,12 +134,30 @@ class App extends React.Component {
     msg {String}: msg to display
   */
   alert(msg, status) {
-    console.log(msg);
+    let newAlerts = [...this.state.alerts];
+    newAlerts.push({ message: msg, status: status });
+    this.setState({
+      alerts: newAlerts
+    });
+  }
+  /*
+    clearAlert: clear an alert from the screen
+    index {Int}: index of alert to clear
+  */
+  clearAlert(index) {
+    let newAlerts = [...this.state.alerts];
+    newAlerts.splice(index, 1);
+    this.setState({
+      alerts: newAlerts
+    });
   }
   componentDidMount() {
     this.updateAuthToken();
   }
   render() {
+    const alerts = this.state.alerts.map((alert, index) => {
+      return <Alert clearAlert={this.clearAlert} index={index} message={alert.message} status={alert.status}/>
+    });
     return (
       <Router>
         <div className="container">
@@ -312,6 +333,9 @@ class App extends React.Component {
             </Route>
           </Switch>
           <Footer/>
+          <div className="alert-container">
+            { alerts }
+          </div>
         </div>
       </Router>
     )
