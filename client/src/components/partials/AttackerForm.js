@@ -24,7 +24,7 @@ const operators = {
 const AttackerForm = (props) => {
   const options = operators[props.role].map((operator, index) => {
     if (props.operators.indexOf(operator) < 0 || props.operators.indexOf(operator) === props.index) {
-      return <option>{operator.toUpperCase()}</option>
+      return <option key={index}>{operator.toUpperCase()}</option>
     }
   });
   return (

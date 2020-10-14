@@ -3,6 +3,7 @@
 import React from "react";
 
 import AttackerLineupForm from "./AttackerLineupForm.js";
+import DefenderLineupForm from "./DefenderLineupForm.js";
 
 /*
   @func: CreateStrategyForm
@@ -20,7 +21,7 @@ const CreateStrategyForm = (props) => {
     )
   })
   return (
-    <form className="form" id="create-strategy-form" onSubmit={props.onSubmit}>
+    <form className="form" id="create-strategy-form">
       <fieldset className="form__fieldset" id="name">
         <label className="form__label" htmlFor="name">Strategy Name</label>
         <input onChange={props.onChange} className={"form__input" + (props.errors && props.errors.name == null ? "" : " form__input--error")} value={props.name} id="name" type="text" required/>
@@ -45,14 +46,14 @@ const CreateStrategyForm = (props) => {
         { props.type === "ATTACK" ? (
           <AttackerLineupForm onChange={props.onChange} operators={props.operators} roles={props.roles}/>
         ) : (
-          <div>def</div>
+          <DefenderLineupForm onChange={props.onChange} operators={props.operators} roles={props.roles}/>
         )}
       </fieldset>
       <fieldset className="form__fieldset">
         <label className="form__label" htmlFor="execution">Execution</label>
         <textarea onChange={props.onChange} className={"form__input" + (props.errors && props.errors.execution == null ? "" : " form__input--error")} id="execution" value={props.execution} required></textarea>
       </fieldset>
-      <button onClick={props.onSubmit} className="form__button form__button--submit">Create</button>
+      <button onClick={props.onSubmit} className="form__button form__button--submit" type="button">Create</button>
     </form>
   )
 }

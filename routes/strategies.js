@@ -101,11 +101,34 @@ module.exports = async (app, passport) => {
   app.post("/api/strategies/create", (request, response, done) => {
     log("POST REQUEST AT /api/strategies/create");
     done();
-  }, passport.authenticate("jwt", { session: false }), middleware.userIsVerified, middleware.userHasTeam, (request, response, done) => {
+  }, passport.authenticate("jwt", { session: false }), validation.validateStrategyInput, middleware.userIsVerified, middleware.userHasTeam, (request, response, done) => {
     let packet = {};
     if (request.team.editors.indexOf(String(request.user._id)) >= 0 || request.team.admins.indexOf(String(request.user._id)) >= 0) {
       Strategies.findOne({ join_code: request.user.team_code }).then((strategies) => {
-        
+        let uniqueStrategy = true;
+        strategies.strategies.map((strat) => {
+          if (strat.name.toUpperCase() === request.body.strategy.name.toUpperCase()) {
+            uniqueStrategy = false;
+            break;
+          }
+        });
+        if (uniqueStrategy) {
+          strategies.strategies.push(request.body.strategy);
+          strategies.save().then(() => {
+            packet.status = "STRATEGY_CREATED";
+            response.json(packet);
+          }).catch(error => {
+            console.log(error);
+            packet.status = "ERROR";
+            packet.message = "An error occurred while attempting to create a strategy.";
+            response.json(packet);
+          });
+        } else {
+          packet.status = "NOT_UNIQUE_STRATEGY";
+          packet.message = "A strategy with that name already exists.";
+          response.json(packet);
+        }
+
       }).catch(error => {
         console.log(error);
         packet.status = "ERROR";

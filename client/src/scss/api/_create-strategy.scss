@@ -31,25 +31,25 @@ div#CreateStrategiesAPI {
         }
       }
     }
-    div.attacker-linup-form {
+    div.attacker-linup-form, div.defender-linup-form {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
-      div.attacker-lineup-form__role {
+      div.attacker-lineup-form__role, div.defender-lineup-form__role {
         width: 100%;
-        p.attacker-lineup-form__heading {
+        p.attacker-lineup-form__heading, p.defender-lineup-form__heading {
           text-align: center;
         }
-        select.attacker-lineup-form__input {
+        select.attacker-lineup-form__input, select.defender-lineup-form__input {
           width: 100%;
           padding-left: calc(#{$padding} / 4);
         }
-        div.attacker-form {
+        div.attacker-form, div.defender-form {
           width: 100%;
-          select.attacker-form__input {
+          select.attacker-form__input, select.defender-form__input {
             width: 100%;
             padding-left: calc(#{$padding} / 4);
           }
-          img.attacker-form__image {
+          img.attacker-form__image, img.defender-form__image {
             width: 100%;
           }
         }

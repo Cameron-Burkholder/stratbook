@@ -7,8 +7,16 @@ const Strategy = (props) => {
   const objectives = props.strategy.objectives.map((obj, index) => {
     return <li className="strategy__objective" key={index}>{obj}</li>;
   });
-  const lineup = props.strategy.lineup.map((op, index) => {
-    return <Operator operator={op.name} key={index}/>
+  const lineup = props.strategy.roles.map((role, index) => {
+    return (
+      <div key={index}>
+        <p className="strategy__role">{role}</p>
+        { props.strategy.operators[index] !== "" ? (
+          <Operator operator={props.strategy.operators[index]}/>
+        ) : ""}
+
+      </div>
+    )
   });
   return (
     <div className="strategy">
@@ -25,8 +33,6 @@ const Strategy = (props) => {
       </div>
       <h4 className="strategy__heading">Execution</h4>
       <p className="strategy__text">{ props.strategy.execution }</p>
-      <h4 className="strategy__heading">Backup Plan</h4>
-      <p className="strategy__text">{ props.strategy.backup_plan }</p>
     </div>
   )
 }
