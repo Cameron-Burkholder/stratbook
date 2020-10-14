@@ -106,10 +106,9 @@ module.exports = async (app, passport) => {
     if (request.team.editors.indexOf(String(request.user._id)) >= 0 || request.team.admins.indexOf(String(request.user._id)) >= 0) {
       Strategies.findOne({ join_code: request.user.team_code }).then((strategies) => {
         let uniqueStrategy = true;
-        strategies.strategies.map((strat) => {
+        strategies.strategies.forEach((strat) => {
           if (strat.name.toUpperCase() === request.body.strategy.name.toUpperCase()) {
             uniqueStrategy = false;
-            break;
           }
         });
         if (uniqueStrategy) {
