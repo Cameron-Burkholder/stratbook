@@ -25,7 +25,7 @@ class DeleteTeamAPI extends React.Component {
             component.setState({
               loading: false
             });
-            alert("Success! Your team has been deleted.");
+            component.props.alert("Your team has been deleted.", "SUCCESS");
             component.props.updateAuthToken();
             break;
           default:

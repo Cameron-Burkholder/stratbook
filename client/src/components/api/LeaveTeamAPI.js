@@ -41,7 +41,7 @@ class LeaveTeamAPI extends React.Component {
             component.setState({
               loading: false,
             });
-            component.props.alert("Success! You have left the team.");
+            component.props.alert("You have left the team.", "SUCCESS");
             this.props.updateAuthToken();
             break;
           default:

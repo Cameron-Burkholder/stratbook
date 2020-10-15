@@ -38,11 +38,17 @@ class DeleteUserAPI extends React.Component {
       axios.delete("/api/users/delete")
         .then((response) => {
         switch (response.data.status) {
+          case "USER_DELETED":
+            component.setState({
+              loading: false
+            });
+            component.props.alert("Your account has been deleted.", "SUCCESS");
+            this.props.logout();
           case "USER_AND_TEAM_DELETED":
             component.setState({
               loading: false,
             });
-            alert("Your account and associated team have been deleted.");
+            component.props.alert("Your account and associated team have been deleted.", "SUCCESS");
             this.props.logout();
             break;
           default:

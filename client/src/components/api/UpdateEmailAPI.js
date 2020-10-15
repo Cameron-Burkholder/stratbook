@@ -57,7 +57,7 @@ class UpdateEmailAPI extends React.Component {
           component.setState({
             loading: false,
           });
-          component.props.alert("Success! Your email has been updated.");
+          component.props.alert("Your email has been updated.", "SUCCESS");
           this.props.updateAuthToken();
           break;
         default:

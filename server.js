@@ -7,6 +7,7 @@ const bodyParser = require("body-parser");    // For use in parsing incoming req
 const passport = require("passport");         // For use in authentication
 const path = require("path");                 // For use in directory management
 const email = require("./config/email");      // For use in sending emails
+const morgan = require("morgan");             // For use in loggin requests
 
 require("dotenv").config();                   // For using environment variables
 
@@ -22,6 +23,10 @@ if (process.env.NODE_ENV === "production") {
 }
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+if (process.env.NODE_ENV === "production") {
+  app.use(morgan("combined"));
+}
+
 
 // SETUP DATABASE
 const URI = (process.env.NODE_ENV === "development" ? process.env.TESTING_URI : process.env.MONGODB_URI);

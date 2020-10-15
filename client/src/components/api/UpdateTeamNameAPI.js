@@ -64,6 +64,7 @@ class UpdateTeamNameAPI extends React.Component {
             loading: false,
             currentName: component.state.newName
           });
+          component.props.alert("Team name has been updated.", "SUCCESS");
           break;
         default:
           component.setState({

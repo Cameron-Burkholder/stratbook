@@ -1,12 +1,17 @@
 /* client/src/scss/api/_create-strategy.scss */
 
 div#CreateStrategiesAPI {
-  background: $theme-white;
-  padding: $padding;
-  h3 {
+  width: 100%;
+  h4.create-strategy-heading {
     color: $theme-dark;
+    text-decoration: underline;
+    text-align: left;
+    cursor: pointer;
   }
   form.form#create-strategy-form {
+    padding: $padding;
+    border: 1px solid $theme-dark;
+    border-radius: $border-radius;
     input#newObjective {
       width: 400px;
       max-width: 400px;

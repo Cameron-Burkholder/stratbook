@@ -11,6 +11,7 @@ import CreateStrategyForm from "../partials/CreateStrategyForm.js";
   @desc: manage state of new strategies and make requests to server
   @prop getAuthToken: function
   @prop alert: function
+  @prop fetchStrategies: function
   @state:
     name: String
 */
@@ -18,6 +19,7 @@ class CreateStrategiesAPI extends React.Component {
   constructor(props) {
     super(props);
 
+    this.toggleForm = this.toggleForm.bind(this);
     this.onChange = this.onChange.bind(this);
     this.removeObjective = this.removeObjective.bind(this);
     this.getComponent = this.getComponent.bind(this);
@@ -25,6 +27,7 @@ class CreateStrategiesAPI extends React.Component {
 
     this.state = {
       name: "",
+      form: false,
       type: "ATTACK",
       newObjective: "",
       objectives: [],
@@ -35,6 +38,15 @@ class CreateStrategiesAPI extends React.Component {
       errors: {},
       loading: false
     }
+  }
+  /*
+    @func: toggleForm
+    @desc: toggle state of form
+  */
+  toggleForm() {
+    this.setState({
+      form: !this.state.form
+    });
   }
   /*
     @func: onChange
@@ -147,7 +159,8 @@ class CreateStrategiesAPI extends React.Component {
           component.setState({
             loading: false,
           });
-          alert("Success! Your team has been created.");
+          component.props.alert("Your strategy has been created.", "SUCCESS");
+          component.props.fetchStrategies();
           break;
         default:
           component.setState({
@@ -165,14 +178,19 @@ class CreateStrategiesAPI extends React.Component {
   render() {
     return (
       <div id="CreateStrategiesAPI">
-        <h3>Create a Strategy</h3>
+        <h4 className="create-strategy-heading" onClick={this.toggleForm}>Create a Strategy</h4>
         { this.state.loading ? (
           <Loading/>
         ) : (
-          <CreateStrategyForm onChange={this.onChange} onSubmit={this.onSubmit} name={this.state.name} type={this.state.type}
-                              newObjective={this.state.newObjective} objectives={this.state.objectives} removeObjective={this.removeObjective}
-                              onKeyPress={this.onKeyPress} getComponent={this.getComponent} execution={this.state.execution}
-                              roles={this.state.roles} operators={this.state.operators} errors={this.state.errors} utility={this.state.utility}/>
+          <div>
+            { this.state.form ? (
+              <CreateStrategyForm onChange={this.onChange} onSubmit={this.onSubmit} name={this.state.name} type={this.state.type}
+                                  newObjective={this.state.newObjective} objectives={this.state.objectives} removeObjective={this.removeObjective}
+                                  onKeyPress={this.onKeyPress} getComponent={this.getComponent} execution={this.state.execution}
+                                  roles={this.state.roles} operators={this.state.operators} errors={this.state.errors} utility={this.state.utility}/>
+
+            ) : "" }
+          </div>
         )}
       </div>
     )

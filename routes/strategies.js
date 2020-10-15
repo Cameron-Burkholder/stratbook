@@ -112,7 +112,9 @@ module.exports = async (app, passport) => {
           }
         });
         if (uniqueStrategy) {
-          strategies.strategies.push(request.body.strategy);
+          let newStrategies = [...strategies.strategies];
+          newStrategies.push(request.body.strategy);
+          strategies.strategies = newStrategies;
           strategies.save().then(() => {
             packet.status = "STRATEGY_CREATED";
             response.json(packet);
@@ -136,9 +138,135 @@ module.exports = async (app, passport) => {
       })
     } else {
       packet.status = "USER_NOT_QUALIFIED";
-      packet.message = "User is not and editor or admin on requested team.";
+      packet.message = "User is not an editor or admin on requested team.";
       response.json(packet);
     }
   });
 
+  /*
+    @route /api/strategies/update
+    @method PATCH
+
+    @outputs
+      If there is an error
+        packet: Object (status: ERROR)
+
+      If user is not verified
+        packet: Object (status: USER_NOT_VERIFIED)
+
+      If user has no team
+        packet: Object (status: USER_HAS_NO_TEAM)
+
+      If team does not exist
+        packet: Object (status: TEAM_NOT_FOUND)
+
+      If user is not on team
+        packet: Object (status: USER_NOT_QUALIFIED)
+
+      If strategy is created
+        packet: Object (status: STRATEGY_UPDATED)
+  */
+  app.patch("/api/strategies/update", (request, response, done) => {
+    log("PATCH REQUEST AT /api/strategies/update");
+    done();
+  }, passport.authenticate("jwt", { session: false }), middleware.userIsVerified, middleware.userHasTeam, validation.validateStrategyInput, validation.validateStrategyIndex, (request, response, done) => {
+    let packet = {};
+    if (request.team.editors.indexOf(String(request.user._id)) >= 0 || request.team.admins.indexOf(String(request.user._id)) >= 0) {
+      Strategies.findOne({ join_code: request.team.join_code }).then((strategies) => {
+
+        if (request.body.index < strategies.strategies.length && request.body.index >= 0) {
+          let newStrategies = [...strategies.strategies];
+          newStrategies[request.body.index] = request.body.strategy;
+          strategies.strategies = newStrategies;
+          strategies.save().then(() => {
+            packet.status = "STRATEGY_UPDATED";
+            response.json(packet);
+          }).catch(error => {
+            console.log(error);
+            packet.status = "ERROR";
+            packet.message = "An error occurred while attempting to update strategy.";
+          })
+        } else {
+          packet.status = "INVALID_STRATEGY_UPDATE";
+          packet.message = "User attempted to update strategy outside of bounds.";
+          response.json(packet);
+        }
+
+      }).catch(error => {
+        console.log(error);
+        packet.status = "ERROR";
+        packet.message = "An error occurred while attempting to delete strategy.";
+        response.json(packet);
+      })
+    } else {
+      packet.status = "USER_NOT_QUALIFIED";
+      packet.message = "User is not an editor or admin on requested team.";
+      response.json(packet);
+    }
+  });
+
+  /*
+    @route /api/strategies/delete
+    @method DELETE
+
+    @outputs
+      If there is an error
+        packet: Object (status: ERROR)
+
+      If user is not verified
+        packet: Object (status: USER_NOT_VERIFIED)
+
+      If user has no team
+        packet: Object (status: USER_HAS_NO_TEAM)
+
+      If team does not exist
+        packet: Object (status: TEAM_NOT_FOUND)
+
+      If user is not on team
+        packet: Object (status: USER_NOT_QUALIFIED)
+
+      If provided index is invalid
+        packet: Object (status: INVALID_STRATEGY_DELETION)
+
+      If strategy is created
+        packet: Object (status: STRATEGY_DELETED)
+  */
+  app.delete("/api/strategies/delete", (request, response, done) => {
+    log("DELETE REQUEST AT /api/strategies/delete");
+    done();
+  }, passport.authenticate("jwt", { session: false }), middleware.userIsVerified, middleware.userHasTeam, validation.validateStrategyIndex, (request, response) => {
+    let packet = {};
+    if (request.team.editors.indexOf(String(request.user._id)) >= 0 || request.team.admins.indexOf(String(request.user._id)) >= 0) {
+      Strategies.findOne({ join_code: request.team.join_code }).then((strategies) => {
+
+        if (request.body.index < strategies.strategies.length && request.body.index >= 0) {
+          let newStrategies = [...strategies.strategies];
+          newStrategies.splice(request.body.index, 1);
+          strategies.strategies = newStrategies;
+          strategies.save().then(() => {
+            packet.status = "STRATEGY_DELETED";
+            response.json(packet);
+          }).catch(error => {
+            console.log(error);
+            packet.status = "ERROR";
+            packet.message = "An error occurred while attempting to delete strategy.";
+          })
+        } else {
+          packet.status = "INVALID_STRATEGY_DELETION";
+          packet.message = "User attempted to delete strategy outside of bounds.";
+          response.json(packet);
+        }
+
+      }).catch(error => {
+        console.log(error);
+        packet.status = "ERROR";
+        packet.message = "An error occurred while attempting to delete strategy.";
+        response.json(packet);
+      })
+    } else {
+      packet.status = "USER_NOT_QUALIFIED";
+      packet.message = "User is not an editor or admin on requested team.";
+      response.json(packet);
+    }
+  });
 };

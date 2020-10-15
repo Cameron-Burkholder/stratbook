@@ -16,7 +16,7 @@ import DeleteTeamAPI from "../api/DeleteTeamAPI.js";
 const ManageTeam = (props) => {
   return (
     <div className="page" id="manage-team">
-      <UpdateTeamNameAPI getAuthToken={props.getAuthToken}/>
+      <UpdateTeamNameAPI getAuthToken={props.getAuthToken} alert={props.alert}/>
       <ManageTeamAPI getAuthToken={props.getAuthToken} updateAuthToken={props.updateAuthToken} alert={props.alert}/>
       <DeleteTeamAPI getAuthToken={props.getAuthToken} updateAuthToken={props.updateAuthToken} alert={props.alert}/>
     </div>

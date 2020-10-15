@@ -59,7 +59,7 @@ class UpdatePasswordAPI extends React.Component {
           component.setState({
             loading: false,
           });
-          component.props.alert("Success! Your password has been updated.");
+          component.props.alert("Your password has been updated.", "SUCCESS");
           this.props.updateAuthToken();
           break;
         default:

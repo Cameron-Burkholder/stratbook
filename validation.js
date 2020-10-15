@@ -504,6 +504,7 @@ module.exports = validation = {
       data.execution = !isEmpty(data.execution) ? data.execution : "";
       data.roles = !isEmpty(data.roles) ? data.roles : "";
       data.operators = !isEmpty(data.operators) ? data.operators : "";
+      data.utility = !isEmpty(data.utility) ? data.utility : "";
       // Name checks
       if (Validator.isEmpty(data.name)) {
         errors.name = "Name field is required";
@@ -542,9 +543,9 @@ module.exports = validation = {
       } else {
         let utilityList;
         if (data.type === "ATTACK") {
-          utilityList = ["BREACH CHARGES", "CLAYMORE", "FRAG GRENADES", "HARD BREACH CHARGE", "SMOKE GRENADES", "STUN GRENADES"];
+          utilityList = ["ANY", "BREACH CHARGES", "CLAYMORE", "FRAG GRENADES", "HARD BREACH CHARGE", "SMOKE GRENADES", "STUN GRENADES"];
         } else {
-          utilityList = ["BARBED WIRE", "BULLETPROOF CAMERA", "DEPLOYABLE SHIELD", "IMPACT GRENADES", "NITRO CELL", "PROXIMITY ALARMS"];
+          utilityList = ["ANY", "BARBED WIRE", "BULLETPROOF CAMERA", "DEPLOYABLE SHIELD", "IMPACT GRENADES", "NITRO CELL", "PROXIMITY ALARMS"];
         }
         data.utility.map((utility) => {
           if (utilityList.indexOf(utility) < 0) {
@@ -566,6 +567,21 @@ module.exports = validation = {
     } else {
       done();
       return null;
+    }
+  },
+  validateStrategyIndex: function(request, response, done) {
+    let data = request.body;
+    let packet = {};
+
+    if (typeof request.body.index !== "undefined") {
+      done();
+      return null;
+    } else {
+      packet.status = "INVALID_STRATEGY_INDEX";
+      packet.message = "Index of strategy to update/delete not provided.";
+      response.json(packet);
+      response.end();
+      return packet;
     }
   }
 }

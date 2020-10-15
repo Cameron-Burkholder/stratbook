@@ -2,7 +2,7 @@
 
 import React from "react";
 
-import CreateStrategiesAPI from "../api/CreateStrategiesAPI.js";
+import EditStrategiesAPI from "../api/EditStrategiesAPI.js";
 
 /*
   @func: EditStrategies
@@ -13,7 +13,7 @@ import CreateStrategiesAPI from "../api/CreateStrategiesAPI.js";
 const EditStrategies = (props) => {
   return (
     <div className="page" id="manage-team">
-      <CreateStrategiesAPI getAuthToken={props.getAuthToken} alert={props.alert}/>
+      <EditStrategiesAPI getAuthToken={props.getAuthToken} alert={props.alert}/>
     </div>
   )
 }

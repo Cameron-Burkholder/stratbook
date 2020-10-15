@@ -56,7 +56,7 @@ class JoinTeamAPI extends React.Component {
           component.setState({
             loading: false,
           });
-          component.props.alert("Success! You have joined the team.");
+          component.props.alert("You have joined the team.", "SUCCESS");
           this.props.updateAuthToken();
           break;
         default:

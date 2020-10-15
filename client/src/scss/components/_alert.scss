@@ -14,6 +14,7 @@ div.alert-container {
     border-color: $theme-warning;
     border-radius: $border-radius;
     margin-bottom: $margin;
+    width: 300px;
     h5.alert__type {
       text-align: left;
       color: $theme-warning;
@@ -38,6 +39,13 @@ div.alert-container {
     h5.alert__type {
       text-align: left;
       color: $theme-error;
+    }
+  }
+  div.alert--sucess {
+    border-color: $theme-success;
+    h5.alert__type {
+      text-align: left;
+      color: $theme-success;
     }
   }
 }

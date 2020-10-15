@@ -56,7 +56,7 @@ class CreateTeamAPI extends React.Component {
           component.setState({
             loading: false,
           });
-          alert("Success! Your team has been created.");
+          component.props.alert("Your team has been created.", "SUCCESS");
           this.props.updateAuthToken();
           break;
         default:
