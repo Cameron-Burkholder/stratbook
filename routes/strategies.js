@@ -207,7 +207,7 @@ module.exports = async (app, passport) => {
 
   /*
     @route /api/strategies/delete
-    @method DELETE
+    @method PATCH
 
     @outputs
       If there is an error
@@ -231,7 +231,7 @@ module.exports = async (app, passport) => {
       If strategy is created
         packet: Object (status: STRATEGY_DELETED)
   */
-  app.delete("/api/strategies/delete", (request, response, done) => {
+  app.patch("/api/strategies/delete", (request, response, done) => {
     log("DELETE REQUEST AT /api/strategies/delete");
     done();
   }, passport.authenticate("jwt", { session: false }), middleware.userIsVerified, middleware.userHasTeam, validation.validateStrategyIndex, (request, response) => {

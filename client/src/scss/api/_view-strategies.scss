@@ -20,6 +20,7 @@ div#ViewStrategiesAPI {
       padding: $padding;
       border-radius: $border-radius;
       display: flex;
+      align-items: center;
       h3.strategy-preview-heading {
         margin-right: $margin;
         color: $subtle-accent;

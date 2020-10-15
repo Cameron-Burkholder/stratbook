@@ -889,7 +889,8 @@ div#ViewStrategiesAPI {
       background: #15161A;
       padding: 16px;
       border-radius: 2px;
-      display: flex; }
+      display: flex;
+      align-items: center; }
       div#ViewStrategiesAPI div.strategy-list div.strategy-preview h3.strategy-preview-heading {
         margin-right: 16px;
         color: #d6d6d6;
@@ -947,12 +948,14 @@ div#ViewStrategiesAPI {
 
 /* client/src/scss/api/_create-strategy.scss */
 div#CreateStrategiesAPI {
-  width: 100%; }
+  width: 100%;
+  margin-bottom: 16px; }
   div#CreateStrategiesAPI h4.create-strategy-heading {
     color: #15161A;
     text-decoration: underline;
     text-align: left;
-    cursor: pointer; }
+    cursor: pointer;
+    display: inline; }
   div#CreateStrategiesAPI form.form#create-strategy-form {
     padding: 16px;
     border: 1px solid #15161A;
@@ -982,6 +985,8 @@ div#CreateStrategiesAPI {
       grid-template-columns: repeat(5, 1fr); }
       div#CreateStrategiesAPI form.form#create-strategy-form div.attacker-linup-form div.attacker-lineup-form__role, div#CreateStrategiesAPI form.form#create-strategy-form div.attacker-linup-form div.defender-lineup-form__role, div#CreateStrategiesAPI form.form#create-strategy-form div.defender-linup-form div.attacker-lineup-form__role, div#CreateStrategiesAPI form.form#create-strategy-form div.defender-linup-form div.defender-lineup-form__role {
         width: 100%; }
+        div#CreateStrategiesAPI form.form#create-strategy-form div.attacker-linup-form div.attacker-lineup-form__role *, div#CreateStrategiesAPI form.form#create-strategy-form div.attacker-linup-form div.defender-lineup-form__role *, div#CreateStrategiesAPI form.form#create-strategy-form div.defender-linup-form div.attacker-lineup-form__role *, div#CreateStrategiesAPI form.form#create-strategy-form div.defender-linup-form div.defender-lineup-form__role * {
+          width: 100%; }
         div#CreateStrategiesAPI form.form#create-strategy-form div.attacker-linup-form div.attacker-lineup-form__role p.attacker-lineup-form__heading, div#CreateStrategiesAPI form.form#create-strategy-form div.attacker-linup-form div.attacker-lineup-form__role p.defender-lineup-form__heading, div#CreateStrategiesAPI form.form#create-strategy-form div.attacker-linup-form div.defender-lineup-form__role p.attacker-lineup-form__heading, div#CreateStrategiesAPI form.form#create-strategy-form div.attacker-linup-form div.defender-lineup-form__role p.defender-lineup-form__heading, div#CreateStrategiesAPI form.form#create-strategy-form div.defender-linup-form div.attacker-lineup-form__role p.attacker-lineup-form__heading, div#CreateStrategiesAPI form.form#create-strategy-form div.defender-linup-form div.attacker-lineup-form__role p.defender-lineup-form__heading, div#CreateStrategiesAPI form.form#create-strategy-form div.defender-linup-form div.defender-lineup-form__role p.attacker-lineup-form__heading, div#CreateStrategiesAPI form.form#create-strategy-form div.defender-linup-form div.defender-lineup-form__role p.defender-lineup-form__heading {
           text-align: center; }
         div#CreateStrategiesAPI form.form#create-strategy-form div.attacker-linup-form div.attacker-lineup-form__role select.attacker-lineup-form__input, div#CreateStrategiesAPI form.form#create-strategy-form div.attacker-linup-form div.attacker-lineup-form__role select.defender-lineup-form__input, div#CreateStrategiesAPI form.form#create-strategy-form div.attacker-linup-form div.defender-lineup-form__role select.attacker-lineup-form__input, div#CreateStrategiesAPI form.form#create-strategy-form div.attacker-linup-form div.defender-lineup-form__role select.defender-lineup-form__input, div#CreateStrategiesAPI form.form#create-strategy-form div.defender-linup-form div.attacker-lineup-form__role select.attacker-lineup-form__input, div#CreateStrategiesAPI form.form#create-strategy-form div.defender-linup-form div.attacker-lineup-form__role select.defender-lineup-form__input, div#CreateStrategiesAPI form.form#create-strategy-form div.defender-linup-form div.defender-lineup-form__role select.attacker-lineup-form__input, div#CreateStrategiesAPI form.form#create-strategy-form div.defender-linup-form div.defender-lineup-form__role select.defender-lineup-form__input {
@@ -1001,7 +1006,88 @@ div#CreateStrategiesAPI {
 div#EditStrategiesAPI {
   background: white;
   padding: 16px;
-  margin-top: 16px; }
+  margin: 16px auto;
+  max-width: 1200px; }
   div#EditStrategiesAPI h3 {
     color: #15161A;
     text-align: center; }
+  div#EditStrategiesAPI p {
+    color: #15161A; }
+  div#EditStrategiesAPI div.strategy-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 4px; }
+    div#EditStrategiesAPI div.strategy-list input.strategy-search {
+      padding: calc(16px / 2) 16px;
+      grid-column: span 2;
+      display: block;
+      margin: 16px 0;
+      color: #15161A; }
+    div#EditStrategiesAPI div.strategy-list div.strategy-preview {
+      width: 100%;
+      background: #15161A;
+      padding: 16px;
+      border-radius: 2px;
+      display: flex;
+      align-items: center; }
+      div#EditStrategiesAPI div.strategy-list div.strategy-preview h3.strategy-preview-heading {
+        margin-right: 16px;
+        color: #d6d6d6;
+        text-decoration: underline; }
+      div#EditStrategiesAPI div.strategy-list div.strategy-preview h3.strategy-preview-heading:hover {
+        cursor: pointer; }
+      div#EditStrategiesAPI div.strategy-list div.strategy-preview p.strategy-preview-type {
+        color: #7B7B7F; }
+      div#EditStrategiesAPI div.strategy-list div.strategy-preview button.strategy-preview-button {
+        margin-left: auto;
+        padding: calc(16px / 2) 16px;
+        color: #15161A; }
+  div#EditStrategiesAPI form.form#update-strategy-form {
+    padding: 16px;
+    border: 1px solid #15161A;
+    border-radius: 2px; }
+    div#EditStrategiesAPI form.form#update-strategy-form p.strategy__link {
+      text-decoration: underline;
+      cursor: pointer;
+      margin-bottom: 16px; }
+    div#EditStrategiesAPI form.form#update-strategy-form input#newObjective {
+      width: 400px;
+      max-width: 400px; }
+    div#EditStrategiesAPI form.form#update-strategy-form * {
+      color: #15161A; }
+    div#EditStrategiesAPI form.form#update-strategy-form span.form__error {
+      color: red; }
+    div#EditStrategiesAPI form.form#update-strategy-form ul.objectives {
+      padding: 16px;
+      padding-left: calc(16px * 2);
+      width: 400px; }
+      div#EditStrategiesAPI form.form#update-strategy-form ul.objectives li.objectives__item {
+        margin-bottom: 16px;
+        width: 100%; }
+        div#EditStrategiesAPI form.form#update-strategy-form ul.objectives li.objectives__item span.objectives__value {
+          float: left; }
+        div#EditStrategiesAPI form.form#update-strategy-form ul.objectives li.objectives__item button.objectives__button {
+          margin-left: 16px;
+          padding: calc(16px / 4) calc(16px / 2);
+          float: right; }
+    div#EditStrategiesAPI form.form#update-strategy-form div.attacker-linup-form, div#EditStrategiesAPI form.form#update-strategy-form div.defender-linup-form {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr); }
+      div#EditStrategiesAPI form.form#update-strategy-form div.attacker-linup-form div.attacker-lineup-form__role, div#EditStrategiesAPI form.form#update-strategy-form div.attacker-linup-form div.defender-lineup-form__role, div#EditStrategiesAPI form.form#update-strategy-form div.defender-linup-form div.attacker-lineup-form__role, div#EditStrategiesAPI form.form#update-strategy-form div.defender-linup-form div.defender-lineup-form__role {
+        width: 100%; }
+        div#EditStrategiesAPI form.form#update-strategy-form div.attacker-linup-form div.attacker-lineup-form__role *, div#EditStrategiesAPI form.form#update-strategy-form div.attacker-linup-form div.defender-lineup-form__role *, div#EditStrategiesAPI form.form#update-strategy-form div.defender-linup-form div.attacker-lineup-form__role *, div#EditStrategiesAPI form.form#update-strategy-form div.defender-linup-form div.defender-lineup-form__role * {
+          width: 100%; }
+        div#EditStrategiesAPI form.form#update-strategy-form div.attacker-linup-form div.attacker-lineup-form__role p.attacker-lineup-form__heading, div#EditStrategiesAPI form.form#update-strategy-form div.attacker-linup-form div.attacker-lineup-form__role p.defender-lineup-form__heading, div#EditStrategiesAPI form.form#update-strategy-form div.attacker-linup-form div.defender-lineup-form__role p.attacker-lineup-form__heading, div#EditStrategiesAPI form.form#update-strategy-form div.attacker-linup-form div.defender-lineup-form__role p.defender-lineup-form__heading, div#EditStrategiesAPI form.form#update-strategy-form div.defender-linup-form div.attacker-lineup-form__role p.attacker-lineup-form__heading, div#EditStrategiesAPI form.form#update-strategy-form div.defender-linup-form div.attacker-lineup-form__role p.defender-lineup-form__heading, div#EditStrategiesAPI form.form#update-strategy-form div.defender-linup-form div.defender-lineup-form__role p.attacker-lineup-form__heading, div#EditStrategiesAPI form.form#update-strategy-form div.defender-linup-form div.defender-lineup-form__role p.defender-lineup-form__heading {
+          text-align: center; }
+        div#EditStrategiesAPI form.form#update-strategy-form div.attacker-linup-form div.attacker-lineup-form__role select.attacker-lineup-form__input, div#EditStrategiesAPI form.form#update-strategy-form div.attacker-linup-form div.attacker-lineup-form__role select.defender-lineup-form__input, div#EditStrategiesAPI form.form#update-strategy-form div.attacker-linup-form div.defender-lineup-form__role select.attacker-lineup-form__input, div#EditStrategiesAPI form.form#update-strategy-form div.attacker-linup-form div.defender-lineup-form__role select.defender-lineup-form__input, div#EditStrategiesAPI form.form#update-strategy-form div.defender-linup-form div.attacker-lineup-form__role select.attacker-lineup-form__input, div#EditStrategiesAPI form.form#update-strategy-form div.defender-linup-form div.attacker-lineup-form__role select.defender-lineup-form__input, div#EditStrategiesAPI form.form#update-strategy-form div.defender-linup-form div.defender-lineup-form__role select.attacker-lineup-form__input, div#EditStrategiesAPI form.form#update-strategy-form div.defender-linup-form div.defender-lineup-form__role select.defender-lineup-form__input {
+          width: 100%;
+          padding-left: calc(16px / 4); }
+        div#EditStrategiesAPI form.form#update-strategy-form div.attacker-linup-form div.attacker-lineup-form__role div.attacker-form, div#EditStrategiesAPI form.form#update-strategy-form div.attacker-linup-form div.attacker-lineup-form__role div.defender-form, div#EditStrategiesAPI form.form#update-strategy-form div.attacker-linup-form div.defender-lineup-form__role div.attacker-form, div#EditStrategiesAPI form.form#update-strategy-form div.attacker-linup-form div.defender-lineup-form__role div.defender-form, div#EditStrategiesAPI form.form#update-strategy-form div.defender-linup-form div.attacker-lineup-form__role div.attacker-form, div#EditStrategiesAPI form.form#update-strategy-form div.defender-linup-form div.attacker-lineup-form__role div.defender-form, div#EditStrategiesAPI form.form#update-strategy-form div.defender-linup-form div.defender-lineup-form__role div.attacker-form, div#EditStrategiesAPI form.form#update-strategy-form div.defender-linup-form div.defender-lineup-form__role div.defender-form {
+          width: 100%; }
+          div#EditStrategiesAPI form.form#update-strategy-form div.attacker-linup-form div.attacker-lineup-form__role div.attacker-form select.attacker-form__input, div#EditStrategiesAPI form.form#update-strategy-form div.attacker-linup-form div.attacker-lineup-form__role div.attacker-form select.defender-form__input, div#EditStrategiesAPI form.form#update-strategy-form div.attacker-linup-form div.attacker-lineup-form__role div.defender-form select.attacker-form__input, div#EditStrategiesAPI form.form#update-strategy-form div.attacker-linup-form div.attacker-lineup-form__role div.defender-form select.defender-form__input, div#EditStrategiesAPI form.form#update-strategy-form div.attacker-linup-form div.defender-lineup-form__role div.attacker-form select.attacker-form__input, div#EditStrategiesAPI form.form#update-strategy-form div.attacker-linup-form div.defender-lineup-form__role div.attacker-form select.defender-form__input, div#EditStrategiesAPI form.form#update-strategy-form div.attacker-linup-form div.defender-lineup-form__role div.defender-form select.attacker-form__input, div#EditStrategiesAPI form.form#update-strategy-form div.attacker-linup-form div.defender-lineup-form__role div.defender-form select.defender-form__input, div#EditStrategiesAPI form.form#update-strategy-form div.defender-linup-form div.attacker-lineup-form__role div.attacker-form select.attacker-form__input, div#EditStrategiesAPI form.form#update-strategy-form div.defender-linup-form div.attacker-lineup-form__role div.attacker-form select.defender-form__input, div#EditStrategiesAPI form.form#update-strategy-form div.defender-linup-form div.attacker-lineup-form__role div.defender-form select.attacker-form__input, div#EditStrategiesAPI form.form#update-strategy-form div.defender-linup-form div.attacker-lineup-form__role div.defender-form select.defender-form__input, div#EditStrategiesAPI form.form#update-strategy-form div.defender-linup-form div.defender-lineup-form__role div.attacker-form select.attacker-form__input, div#EditStrategiesAPI form.form#update-strategy-form div.defender-linup-form div.defender-lineup-form__role div.attacker-form select.defender-form__input, div#EditStrategiesAPI form.form#update-strategy-form div.defender-linup-form div.defender-lineup-form__role div.defender-form select.attacker-form__input, div#EditStrategiesAPI form.form#update-strategy-form div.defender-linup-form div.defender-lineup-form__role div.defender-form select.defender-form__input {
+            width: 100%;
+            padding-left: calc(16px / 4); }
+          div#EditStrategiesAPI form.form#update-strategy-form div.attacker-linup-form div.attacker-lineup-form__role div.attacker-form img.attacker-form__image, div#EditStrategiesAPI form.form#update-strategy-form div.attacker-linup-form div.attacker-lineup-form__role div.attacker-form img.defender-form__image, div#EditStrategiesAPI form.form#update-strategy-form div.attacker-linup-form div.attacker-lineup-form__role div.defender-form img.attacker-form__image, div#EditStrategiesAPI form.form#update-strategy-form div.attacker-linup-form div.attacker-lineup-form__role div.defender-form img.defender-form__image, div#EditStrategiesAPI form.form#update-strategy-form div.attacker-linup-form div.defender-lineup-form__role div.attacker-form img.attacker-form__image, div#EditStrategiesAPI form.form#update-strategy-form div.attacker-linup-form div.defender-lineup-form__role div.attacker-form img.defender-form__image, div#EditStrategiesAPI form.form#update-strategy-form div.attacker-linup-form div.defender-lineup-form__role div.defender-form img.attacker-form__image, div#EditStrategiesAPI form.form#update-strategy-form div.attacker-linup-form div.defender-lineup-form__role div.defender-form img.defender-form__image, div#EditStrategiesAPI form.form#update-strategy-form div.defender-linup-form div.attacker-lineup-form__role div.attacker-form img.attacker-form__image, div#EditStrategiesAPI form.form#update-strategy-form div.defender-linup-form div.attacker-lineup-form__role div.attacker-form img.defender-form__image, div#EditStrategiesAPI form.form#update-strategy-form div.defender-linup-form div.attacker-lineup-form__role div.defender-form img.attacker-form__image, div#EditStrategiesAPI form.form#update-strategy-form div.defender-linup-form div.attacker-lineup-form__role div.defender-form img.defender-form__image, div#EditStrategiesAPI form.form#update-strategy-form div.defender-linup-form div.defender-lineup-form__role div.attacker-form img.attacker-form__image, div#EditStrategiesAPI form.form#update-strategy-form div.defender-linup-form div.defender-lineup-form__role div.attacker-form img.defender-form__image, div#EditStrategiesAPI form.form#update-strategy-form div.defender-linup-form div.defender-lineup-form__role div.defender-form img.attacker-form__image, div#EditStrategiesAPI form.form#update-strategy-form div.defender-linup-form div.defender-lineup-form__role div.defender-form img.defender-form__image {
+            width: 100%; }
+    div#EditStrategiesAPI form.form#update-strategy-form textarea.form__input {
+      height: 156px; }

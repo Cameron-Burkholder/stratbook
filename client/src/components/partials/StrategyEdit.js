@@ -1,17 +1,12 @@
-/* client/components/partials/CreateStrategyForm.js */
+/* client/components/partials/Strategy.js */
 
 import React from "react";
+import Operator from "./Operator.js";
 
 import AttackerLineupForm from "./AttackerLineupForm.js";
 import DefenderLineupForm from "./DefenderLineupForm.js";
 
-/*
-  @func: CreateStrategyForm
-  @desc: render create strategy form
-  @prop onSubmit: function
-  @prop errors: Object
-*/
-const CreateStrategyForm = (props) => {
+const StrategyEdit = (props) => {
   const objectiveList = props.objectives.map((objective, index) => {
     return (
       <li className="objectives__item" key={index}>
@@ -22,6 +17,7 @@ const CreateStrategyForm = (props) => {
   })
   return (
     <form className="form" id="update-strategy-form">
+      <p className="strategy__link" onClick={props.exitStrategy}>Back to Strategies</p>
       <fieldset className="form__fieldset" id="name">
         <label className="form__label" htmlFor="name">Strategy Name</label>
         <input onChange={props.onChange} className={"form__input" + (props.errors && props.errors.name == null ? "" : " form__input--error")} value={props.name} id="name" type="text" required/>
@@ -56,9 +52,9 @@ const CreateStrategyForm = (props) => {
         <textarea onChange={props.onChange} className={"form__input" + (props.errors && props.errors.execution == null ? "" : " form__input--error")} id="execution" value={props.execution} required></textarea>
         <span className="form__error">{(props.errors ? props.errors.execution : "")}</span>
       </fieldset>
-      <button onClick={props.onSubmit} className="form__button form__button--submit" type="button">Create</button>
+      <button onClick={(e) => { props.onSubmit(e, props.index) }} className="form__button form__button--submit" type="button">Save</button>
     </form>
   )
 }
 
-export default CreateStrategyForm;
+export default StrategyEdit;

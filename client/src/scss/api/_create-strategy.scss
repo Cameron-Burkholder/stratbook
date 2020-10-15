@@ -2,11 +2,13 @@
 
 div#CreateStrategiesAPI {
   width: 100%;
+  margin-bottom: $margin;
   h4.create-strategy-heading {
     color: $theme-dark;
     text-decoration: underline;
     text-align: left;
     cursor: pointer;
+    display: inline;
   }
   form.form#create-strategy-form {
     padding: $padding;
@@ -44,6 +46,9 @@ div#CreateStrategiesAPI {
       grid-template-columns: repeat(5, 1fr);
       div.attacker-lineup-form__role, div.defender-lineup-form__role {
         width: 100%;
+        * {
+          width: 100%;
+        }
         p.attacker-lineup-form__heading, p.defender-lineup-form__heading {
           text-align: center;
         }

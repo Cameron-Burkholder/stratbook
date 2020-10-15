@@ -3261,7 +3261,7 @@ suite("FUNCTIONAL TESTS", function() {
 
       test("# JWT not provided", function(done) {
         chai.request(server)
-          .delete("/api/strategies/delete")
+          .patch("/api/strategies/delete")
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 401, "Response should be 401 Unauthorized if JWT not provided.");
@@ -3271,7 +3271,7 @@ suite("FUNCTIONAL TESTS", function() {
       });
       test("# JWT is invalid", function(done) {
         chai.request(server)
-          .delete("/api/strategies/delete")
+          .patch("/api/strategies/delete")
           .set({ Authorization: invalidJWT })
           .end((error, response) => {
             if (error) return done(error);
@@ -3282,7 +3282,7 @@ suite("FUNCTIONAL TESTS", function() {
       });
       test("# User not verified", function(done) {
         chai.request(server)
-          .delete("/api/strategies/delete")
+          .patch("/api/strategies/delete")
           .set({ Authorization: unverifiedJWT })
           .end((error, response) => {
             if (error) return done(error);
@@ -3293,7 +3293,7 @@ suite("FUNCTIONAL TESTS", function() {
       });
       test("# User has no team", function(done) {
         chai.request(server)
-          .delete("/api/strategies/delete")
+          .patch("/api/strategies/delete")
           .set({ Authorization: noTeamJWT })
           .end((error, response) => {
             if (error) return done(error);
@@ -3304,7 +3304,7 @@ suite("FUNCTIONAL TESTS", function() {
       });
       test("# Team does not exist", function(done) {
         chai.request(server)
-          .delete("/api/strategies/delete")
+          .patch("/api/strategies/delete")
           .set({ Authorization: teamNotFoundJWT })
           .end((error, response) => {
             if (error) return done(error);
@@ -3315,7 +3315,7 @@ suite("FUNCTIONAL TESTS", function() {
       });
       test("# User not on team", function(done) {
         chai.request(server)
-          .delete("/api/strategies/delete")
+          .patch("/api/strategies/delete")
           .set({ Authorization: notOnTeamJWT })
           .send({ index: 0 })
           .end((error, response) => {
@@ -3327,7 +3327,7 @@ suite("FUNCTIONAL TESTS", function() {
       });
       test("# Strategy deleted", function(done) {
         chai.request(server)
-          .delete("/api/strategies/delete")
+          .patch("/api/strategies/delete")
           .set({ Authorization: fakeUserJWT2 })
           .send({ index: 0 })
           .end((error, response) => {

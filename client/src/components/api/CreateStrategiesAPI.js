@@ -167,9 +167,11 @@ class CreateStrategiesAPI extends React.Component {
             loading: false,
             errors: response.data.errors
           });
-          component.props.alert(response.data.message);
+          component.props.alert(response.data.message, response.data.status);
+          component.props.fetchStrategies();
           break;
       }
+      component.toggleForm();
     }).catch((error) => {
       console.log(error);
       component.props.alert("An error has occurred while attempting to create strategy.", "ERROR");

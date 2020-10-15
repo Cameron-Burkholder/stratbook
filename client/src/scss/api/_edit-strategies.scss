@@ -3,9 +3,116 @@
 div#EditStrategiesAPI {
   background: $theme-white;
   padding: $padding;
-  margin-top: $margin;
+  margin: $margin auto;
+  max-width: 1200px;
   h3 {
     color: $theme-dark;
     text-align: center;
+  }
+  p {
+    color: $theme-dark;
+  }
+  div.strategy-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 4px;
+    input.strategy-search {
+      padding: calc(#{$padding} / 2) $padding;
+      grid-column: span 2;
+      display: block;
+      margin: $margin 0;
+      color: $theme-dark;
+    }
+    div.strategy-preview {
+      width: 100%;
+      background: $theme-dark;
+      padding: $padding;
+      border-radius: $border-radius;
+      display: flex;
+      align-items: center;
+      h3.strategy-preview-heading {
+        margin-right: $margin;
+        color: $subtle-accent;
+        text-decoration: underline;
+      }
+      h3.strategy-preview-heading:hover {
+        cursor: pointer;
+      }
+      p.strategy-preview-type {
+        color: $light;
+      }
+      button.strategy-preview-button {
+        margin-left: auto;
+        padding: calc(#{$padding} / 2) $padding;
+        color: $theme-dark;
+      }
+    }
+  }
+  form.form#update-strategy-form {
+    padding: $padding;
+    border: 1px solid $theme-dark;
+    border-radius: $border-radius;
+    p.strategy__link {
+      text-decoration: underline;
+      cursor: pointer;
+      margin-bottom: $margin;
+    }
+    input#newObjective {
+      width: 400px;
+      max-width: 400px;
+    }
+    * {
+      color: $theme-dark;
+    }
+    span.form__error {
+      color: $theme-error;
+    }
+    ul.objectives {
+      padding: $padding;
+      padding-left: calc(#{$padding} * 2);
+      width: 400px;
+      li.objectives__item {
+        margin-bottom: $margin;
+        width: 100%;
+        span.objectives__value {
+          float: left;
+        }
+        button.objectives__button {
+          margin-left: $margin;
+          padding: calc(#{$padding} / 4) calc(#{$padding} / 2);
+          float: right;
+        }
+      }
+    }
+    div.attacker-linup-form, div.defender-linup-form {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      div.attacker-lineup-form__role, div.defender-lineup-form__role {
+        width: 100%;
+        * {
+          width: 100%;
+        }
+        p.attacker-lineup-form__heading, p.defender-lineup-form__heading {
+          text-align: center;
+        }
+        select.attacker-lineup-form__input, select.defender-lineup-form__input {
+          width: 100%;
+          padding-left: calc(#{$padding} / 4);
+        }
+        div.attacker-form, div.defender-form {
+          width: 100%;
+          select.attacker-form__input, select.defender-form__input {
+            width: 100%;
+            padding-left: calc(#{$padding} / 4);
+          }
+          img.attacker-form__image, img.defender-form__image {
+            width: 100%;
+          }
+        }
+      }
+    }
+    textarea.form__input {
+      height: 156px;
+    }
   }
 }
