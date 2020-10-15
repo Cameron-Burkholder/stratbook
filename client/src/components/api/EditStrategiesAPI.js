@@ -234,7 +234,7 @@ class EditStrategiesAPI extends React.Component {
             errors: response.data.errors
           });
           component.props.alert(response.data.message, response.data.status);
-          component.props.fetchStrategies();
+          component.fetchStrategies();
           break;
       }
     }).catch((error) => {
