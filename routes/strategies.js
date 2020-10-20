@@ -60,7 +60,7 @@ module.exports = async (app, passport) => {
     if (request.team.members.indexOf(String(request.user._id)) >= 0 || request.team.editors.indexOf(String(request.user._id)) >= 0 || request.team.admins.indexOf(String(request.user._id)) >= 0) {
       Strategies.findOne({ join_code: request.user.team_code }).then((strategies) => {
         packet.status = "STRATEGIES_FOUND";
-        packet.strategies = strategies.strategies;
+        packet.strategies = strategies;
         response.json(packet);
       }).catch(error => {
         console.log(error);

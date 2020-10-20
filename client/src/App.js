@@ -163,7 +163,6 @@ class App extends React.Component {
         <div className="container">
           <Navigation loggedIn={this.state.loggedIn} username={(this.state.user ? this.state.user.username : "")}/>
           <Switch>
-            /* / */
             <Route exact path="/">
               { this.state.loggedIn ? ( <Redirect to="/dashboard"/> )
               : (
@@ -173,7 +172,6 @@ class App extends React.Component {
                 </div>
               )}
             </Route>
-            /* /user */
             <Route exact path="/user">
               { this.state.loggedIn ? (
                 <div className="page-wrapper">
@@ -189,7 +187,6 @@ class App extends React.Component {
               : ( <Redirect to="/"/> )
               }
             </Route>
-            /* /dashboard */
             <Route exact path="/dashboard">
               { this.state.loggedIn ? (
                 <div className="page-wrapper">
@@ -201,7 +198,6 @@ class App extends React.Component {
               : ( <Redirect to="/"/> )
               }
             </Route>
-            /* /team */
             <Route exact path="/team">
               { this.state.loggedIn ? (
                 <div className="page-wrapper">
@@ -214,7 +210,6 @@ class App extends React.Component {
               : ( <Redirect to="/"/> )
               }
             </Route>
-            /* /team/manage */
             <Route exact path="/team/manage">
               { this.state.loggedIn && this.state.user.status === "ADMIN" ? (
                 <div className="page-wrapper">
@@ -226,7 +221,6 @@ class App extends React.Component {
               : ( <Redirect to="/team"/> )
               }
             </Route>
-            /* /strategies */
             <Route exact path="/strategies">
               { this.state.loggedIn && this.state.user.team_code ? (
                 <div className="page-wrapper">
@@ -238,7 +232,6 @@ class App extends React.Component {
               : ( <Redirect to="/"/> )
               }
             </Route>
-            /* /strategies/edit */
             <Route exact path="/strategies/edit">
               { this.state.loggedIn && (this.state.user.status === "ADMIN" || this.state.user.status === "EDITOR") ? (
                 <div className="page-wrapper">
@@ -250,29 +243,6 @@ class App extends React.Component {
               : ( <Redirect to="/strategies"/> )
               }
             </Route>
-            /* /maps */
-            <Route exact path="/maps">
-              { this.state.loggedIn && this.state.user.team_code ? (
-                <div className="page-wrapper">
-                  <Header title="Maps" subtitle="View Maps"/>
-                  <MainNavigation page="MAPS" active="VIEW" status={this.state.user.status}/>
-                </div>
-              )
-              : ( <Redirect to="/"/> )
-              }
-            </Route>
-            /* /maps/edit */
-            <Route exact path="/maps/edit">
-              { this.state.loggedIn && (this.state.user.status === "ADMIN" || this.state.user.status === "EDITOR") ? (
-                <div className="page-wrapper">
-                  <Header title="Maps" subtitle="Edit Maps"/>
-                  <MainNavigation page="MAPS" active="EDIT" status={this.state.user.status}/>
-                </div>
-              )
-              : ( <Redirect to="/maps"/> )
-              }
-            </Route>
-            /* /chat */
             <Route exact path="/chat">
               { this.state.loggedIn && this.state.user.team_code ? (
                 <div className="page-wrapper">
@@ -283,7 +253,6 @@ class App extends React.Component {
               : ( <Redirect to="/"/> )
               }
             </Route>
-            /* /meta */
             <Route exact path="/meta">
               { this.state.loggedIn ? (
                 <div className="page-wrapper">
@@ -294,7 +263,6 @@ class App extends React.Component {
               : ( <Redirect to="/"/> )
               }
             </Route>
-            /* /login */
             <Route exact path="/login">
               { this.state.loggedIn ? ( <Redirect to="/"/> )
               : (
@@ -305,7 +273,6 @@ class App extends React.Component {
                 )
               }
             </Route>
-            /* /logout */
             <Route exact path="/logout">
               { this.state.loggedIn ? (
                 <Logout logout={this.logout}/>
@@ -313,7 +280,6 @@ class App extends React.Component {
               : ( <Redirect to="/"/> )
               }
             </Route>
-            /* /register */
             <Route exact path="/register">
               { this.state.loggedIn ? ( <Redirect to="/"/> )
               : (
@@ -324,7 +290,6 @@ class App extends React.Component {
                 )
               }
             </Route>
-            /* /* */
             <Route>
               <div className="page-wrapper">
                 <Header title="Error: 404"/>

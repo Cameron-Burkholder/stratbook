@@ -5,8 +5,7 @@ import { Redirect } from "react-router";
 import axios from "axios";
 
 import LoadingModal from "../partials/LoadingModal.js";
-import Pagination from "../partials/Pagination.js";
-import Strategy from "../partials/Strategy.js";
+import Map from "../partials/Map.js";
 
 /*
   @func: ViewStrategiesAPI
@@ -18,6 +17,7 @@ import Strategy from "../partials/Strategy.js";
     index: Int
     loading: Boolean
 */
+const MAP_NAMES = ["BANK", "BORDER", "CHALET", "CLUBHOUSE", "COASTLINE", "CONSULATE", "KAFE DOSTOYEVSKY", "KANAL", "OREGON", "OUTBACK", "THEME PARK", "VILLA"];
 class ViewStrategiesAPI extends React.Component {
   constructor(props) {
     super(props);
@@ -28,7 +28,7 @@ class ViewStrategiesAPI extends React.Component {
     this.onChange = this.onChange.bind(this);
 
     this.state = {
-      strategies: [],
+      strategies: {},
       index: 0,
       loading: true,
       hasLoaded: false,
@@ -77,10 +77,12 @@ class ViewStrategiesAPI extends React.Component {
       .then((response) => {
       switch (response.data.status) {
         case "STRATEGIES_FOUND":
+          const maps = Object.keys(response.data.strategies).filter((map) => MAP_NAMES.indexOf(map) >= 0);
           component.setState({
             loading: false,
             hasLoaded: true,
-            strategies: response.data.strategies
+            strategies: response.data.strategies,
+            maps: maps
           });
           break;
           default:
@@ -126,7 +128,7 @@ class ViewStrategiesAPI extends React.Component {
               { strats }
             </div>
           ) : (
-            <Strategy strategy={this.state.strategies[this.state.index]} exitStrategy={this.exitStrategy}/>
+            <Map strategy={this.state.strategies[this.state.index]} exitStrategy={this.exitStrategy}/>
           )
         } else {
           contents = <p>Your team does not currently have any strategies.</p>

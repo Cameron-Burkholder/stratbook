@@ -7,17 +7,20 @@ import axios from "axios";
 import CreateStrategiesAPI from "./CreateStrategiesAPI";
 import LoadingModal from "../partials/LoadingModal.js";
 import StrategyEdit from "../partials/StrategyEdit.js";
+import EditMap from "../partials/EditMap.js";
 
 /*
   @prop getAuthToken: function
   @prop alert: function
 */
-
+const MAP_NAMES = ["BANK", "BORDER", "CHALET", "CLUBHOUSE", "COASTLINE", "CONSULATE", "KAFE DOSTOYEVSKY", "KANAL", "OREGON", "OUTBACK", "THEME PARK", "VILLA"];
 class EditStrategiesAPI extends React.Component {
   constructor(props) {
     super(props);
 
     this.fetchStrategies = this.fetchStrategies.bind(this);
+    this.updateStrategy = this.updateStrategy.bind(this);
+    this.deleteStrategy = this.deleteStrategy.bind(this);
     this.selectStrategy = this.selectStrategy.bind(this);
     this.exitStrategy = this.exitStrategy.bind(this);
     this.onSearchChange = this.onSearchChange.bind(this);
@@ -25,7 +28,7 @@ class EditStrategiesAPI extends React.Component {
     this.removeObjective = this.removeObjective.bind(this);
     this.getComponent = this.getComponent.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-    this.deleteStrategy = this.deleteStrategy.bind(this);
+
 
     this.state = {
       strategies: [],
@@ -33,7 +36,6 @@ class EditStrategiesAPI extends React.Component {
       loading: true,
       hasLoaded: false,
       listView: true,
-      search: "",
       name: "",
       type: "ATTACK",
       newObjective: "",
@@ -92,10 +94,12 @@ class EditStrategiesAPI extends React.Component {
       .then((response) => {
       switch (response.data.status) {
         case "STRATEGIES_FOUND":
+          const maps = Object.keys(response.data.strategies).filter((map) => MAP_NAMES.indexOf(map) >= 0);
           component.setState({
             loading: false,
             hasLoaded: true,
-            strategies: response.data.strategies
+            strategies: response.data.strategies,
+            maps: maps
           });
           break;
           default:
@@ -112,6 +116,52 @@ class EditStrategiesAPI extends React.Component {
       });
       component.props.alert("An error has occurred while attempting to get strategies.", "ERROR");
     });
+  }
+  /*
+    @func: updateStrategy
+    @desc: update strategy
+  */
+  updateStrategy() {
+
+  }
+  /*
+    @func: deleteStrategy
+    @desc: delete a strategy
+    @pararm index: Int
+  */
+  deleteStrategy(index) {
+    if (window.confirm("Please confirm that you would like to delete this strategy. This cannot be undone.")) {
+      const component = this;
+      this.setState({
+        errors: {},
+        loading: true
+      });
+      axios.defaults.headers.common["Authorization"] = this.props.getAuthToken();
+      axios.patch("/api/strategies/delete", {
+        index: index
+      }).then((response) => {
+        switch (response.data.status) {
+          case "STRATEGY_DELETED":
+            component.setState({
+              loading: false,
+            });
+            component.props.alert("Your strategy has been deleted.", "SUCCESS");
+            component.fetchStrategies();
+            break;
+          default:
+            component.setState({
+              loading: false,
+              errors: response.data.errors
+            });
+            component.props.alert(response.data.message, response.data.status);
+            component.props.fetchStrategies();
+            break;
+        }
+      }).catch((error) => {
+        console.log(error);
+        component.props.alert("An error has occurred while attempting to delete strategy.", "ERROR");
+      });
+    }
   }
   /*
     @func: onChange
@@ -242,45 +292,6 @@ class EditStrategiesAPI extends React.Component {
       component.props.alert("An error has occurred while attempting to update strategy.", "ERROR");
     });
   }
-  /*
-    @func: deleteStrategy
-    @desc: delete a strategy
-    @pararm index: Int
-  */
-  deleteStrategy(index) {
-    if (window.confirm("Please confirm that you would like to delete this strategy. This cannot be undone.")) {
-      const component = this;
-      this.setState({
-        errors: {},
-        loading: true
-      });
-      axios.defaults.headers.common["Authorization"] = this.props.getAuthToken();
-      axios.patch("/api/strategies/delete", {
-        index: index
-      }).then((response) => {
-        switch (response.data.status) {
-          case "STRATEGY_DELETED":
-            component.setState({
-              loading: false,
-            });
-            component.props.alert("Your strategy has been deleted.", "SUCCESS");
-            component.fetchStrategies();
-            break;
-          default:
-            component.setState({
-              loading: false,
-              errors: response.data.errors
-            });
-            component.props.alert(response.data.message, response.data.status);
-            component.props.fetchStrategies();
-            break;
-        }
-      }).catch((error) => {
-        console.log(error);
-        component.props.alert("An error has occurred while attempting to delete strategy.", "ERROR");
-      });
-    }
-  }
   componentDidMount() {
     if (!this.state.hasLoaded) {
       this.fetchStrategies();
@@ -291,29 +302,25 @@ class EditStrategiesAPI extends React.Component {
     if (this.state.loading) {
       contents = "";
     } else {
-        if (this.state.strategies.length > 0) {
-          const strats = this.state.strategies.map((strat, index) => {
-            if (this.state.search === "" || strat.name.toUpperCase().includes(this.state.search.toUpperCase())) {
-              return (
-                <div className="strategy-preview" key={index}>
-                  <h3 className="strategy-preview-heading" onClick={() => { this.selectStrategy(index) }}>{strat.name}</h3>
-                  <p className="strategy-preview-type">{strat.type}</p>
-                  <button className="strategy-preview-button" onClick={() => { this.deleteStrategy(index) }}>Delete</button>
-                </div>
-              )
-            }
+        if (this.state.maps.length > 0) {
+          const maps = this.state.maps.map((map, index) => {
+            return (
+              <div className="strategy-preview" key={index}>
+
+              </div>
+            )
           });
           contents = (this.state.listView) ? (
             <div className="strategy-list">
-              <input className="strategy-search" onChange={this.onSearchChange} value={this.state.search} type="text" placeholder="Search Strategies"/>
-              { strats }
+              { maps }
             </div>
           ) : (
-            <StrategyEdit onChange={this.onChange} onSubmit={this.onSubmit} name={this.state.name} type={this.state.type}
+            <EditMap/>
+            /*<StrategyEdit onChange={this.onChange} onSubmit={this.onSubmit} name={this.state.name} type={this.state.type}
                           newObjective={this.state.newObjective} objectives={this.state.objectives} removeObjective={this.removeObjective}
                           onKeyPress={this.onKeyPress} getComponent={this.getComponent} execution={this.state.execution}
                           roles={this.state.roles} operators={this.state.operators} errors={this.state.errors} utility={this.state.utility}
-                          index={this.state.index} exitStrategy={this.exitStrategy}/>
+                          index={this.state.index} exitStrategy={this.exitStrategy}/>*/
           )
         } else {
           contents = <p>Your team does not currently have any strategies.</p>
@@ -322,7 +329,7 @@ class EditStrategiesAPI extends React.Component {
     return (
       <div id="EditStrategiesAPI">
         <h3>Edit Strategies</h3>
-        <CreateStrategiesAPI getAuthToken={this.props.getAuthToken} alert={this.props.alert} fetchStrategies={this.fetchStrategies}/>
+        <CreateStrategiesAPI getAuthToken={this.props.getAuthToken} alert={this.props.alert} fetchStrategies={this.fetchStrategies} maps={this.state.maps}/>
         { this.state.loading ? <LoadingModal/> : (
           <div>
             { contents }

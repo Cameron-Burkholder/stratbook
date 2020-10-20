@@ -2,15 +2,6 @@
 
 import React from "react";
 
-/*
-  @func: UtilityForm
-  @desc: render utility form
-  @prop type: String
-  @prop onChange: function
-  @prop operator: String
-  @prop utility: String
-  @prop index: Int
-*/
 const utility_guide = {
   attack: {
     "": ["BREACH CHARGES", "CLAYMORE", "FRAG GRENADES", "HARD BREACH CHARGE", "SMOKE GRENADES", "STUN GRENADES"],
@@ -78,21 +69,29 @@ const utility_guide = {
 };
 
 const UtilityForm = (props) => {
-  let options;
-  if (props.type === "ATTACK") {
-    options = utility_guide.attack[props.operator].map((gadget, index) => {
-      return <option key={index}>{gadget}</option>
-    });
-  } else {
-    options = utility_guide.defense[props.operator].map((gadget, index) => {
-      return <option key={index}>{gadget}</option>
-    });
-  }
+  const utility = props.utility.map((utility, index) => {
+    const options = (props.type === "ATTACK" ? (
+      utility_guide.attack[props.operators[index]].map((gadget, index) => {
+        return <option key={index}>{gadget}</option>
+      })
+    ) : (
+      utility_guide.defense[props.operators[index]].map((gadget, index) => {
+        return <option key={index}>{gadget}</option>
+      })
+    ));
+    return (
+      <div className="utility-form__utility" key={index}>
+        <select className="utility-form__input" onChange={(e) => { props.onChange(e, index) }} value={props.utility[index]}>
+          <option>ANY</option>
+          { options }
+        </select>
+      </div>
+    )
+  })
   return (
-    <select onChange={(e) => { props.onChange(e, props.index) }} className="utility-form form__input" value={props.utility} id={`utility-form-${props.index}`}>
-      <option>ANY</option>
-      { options }
-    </select>
+    <div className="utility-form">
+      { utility }
+    </div>
   )
 }
 

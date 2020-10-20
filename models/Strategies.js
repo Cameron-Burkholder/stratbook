@@ -11,14 +11,6 @@ const Schema = mongoose.Schema;
   @prop join_code: String
 */
 const StrategiesSchema = new Schema({
-  strategies: {
-    type: Array,
-    required: true
-  },
-  maps: {
-    type: Object,
-    required: true
-  },
   join_code: {
     type: String,
     required: true

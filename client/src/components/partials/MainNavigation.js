@@ -33,24 +33,9 @@ const MainNavigation = (props) => {
           <li className="main-nav__item">
             <Link className={"main-nav__link " + (props.active === "VIEW" ? "main-nav__link--active" : "")} to="/strategies">View</Link>
           </li>
-          { props.status === "ADMIN" || props.status === "EDITOR" ? (
+          { props.status === "ADMIN" ? (
             <li className="main-nav__item">
               <Link className={"main-nav__link " + (props.active === "EDIT" ? "main-nav__link--active" : "")} to="/strategies/edit">Edit</Link>
-            </li>
-          ) : ""
-          }
-        </ul>
-      )
-      break;
-    case "MAPS":
-      contents = (
-        <ul className="main-nav__body">
-          <li className="main-nav__item">
-            <Link className={"main-nav__link " + (props.active === "VIEW" ? "main-nav__link--active" : "")} to="/maps">View</Link>
-          </li>
-          { props.status === "ADMIN" || props.status === "EDITOR" ? (
-            <li className="main-nav__item">
-              <Link className={"main-nav__link " + (props.active === "EDIT" ? "main-nav__link--active" : "")} to="/maps/edit">Edit</Link>
             </li>
           ) : ""
           }
@@ -77,11 +62,6 @@ const MainNavigation = (props) => {
         { props.status ? (
           <li className={"main-nav__item " + (props.page === "STRATEGIES" ? "main-nav__item--active" : "")}>
             <Link className="main-nav__link" to="/strategies">Strategies</Link>
-          </li>
-        ) : "" }
-        { props.status ? (
-          <li className={"main-nav__item " + (props.page === "MAPS" ? "main-nav__item--active" : "")}>
-            <Link className="main-nav__link" to="/maps">Maps</Link>
           </li>
         ) : "" }
         { props.status ? (
