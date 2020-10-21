@@ -1,8 +1,10 @@
 /* client/src/scss/api/_create-strategy.scss */
 
 div#CreateStrategiesAPI {
-  width: 100%;
   margin-bottom: $margin;
+  width: 100%;
+  min-width: 1000px;
+  overflow-x: visible;
   h4.create-strategy-heading {
     color: $theme-dark;
     text-decoration: underline;
@@ -10,66 +12,125 @@ div#CreateStrategiesAPI {
     cursor: pointer;
     display: inline;
   }
-  form.form#create-strategy-form {
-    padding: $padding;
+  div.add-map {
     border: 1px solid $theme-dark;
-    border-radius: $border-radius;
-    input#newObjective {
-      width: 400px;
-      max-width: 400px;
-    }
-    * {
-      color: $theme-dark;
-    }
-    span.form__error {
-      color: $theme-error;
-    }
-    ul.objectives {
-      padding: $padding;
-      padding-left: calc(#{$padding} * 2);
-      width: 400px;
-      li.objectives__item {
-        margin-bottom: $margin;
-        width: 100%;
-        span.objectives__value {
-          float: left;
-        }
-        button.objectives__button {
-          margin-left: $margin;
-          padding: calc(#{$padding} / 4) calc(#{$padding} / 2);
-          float: right;
-        }
-      }
-    }
-    div.attacker-linup-form, div.defender-linup-form {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      div.attacker-lineup-form__role, div.defender-lineup-form__role {
-        width: 100%;
+    padding: $padding;
+    margin-top: $margin;
+    div.map-selector {
+      select.map-selector__input {
+        padding: calc(#{$padding} / 2) $padding;
+        color: $theme-dark;
         * {
-          width: 100%;
+          color: $theme-dark;
         }
-        p.attacker-lineup-form__heading, p.defender-lineup-form__heading {
-          text-align: center;
+      }
+    }
+    h2.add-map__heading {
+      text-align: center;
+      color: $theme-dark;
+      margin: $margin auto;
+    }
+    div.type-selector {
+      select.type-selector__input {
+        display: block;
+        margin: auto;
+        margin-bottom: $margin;
+        color: $theme-dark;
+        padding: calc(#{$padding} / 2) $padding;
+        width: 128px;
+        * {
+          color: $theme-dark;
         }
-        select.attacker-lineup-form__input, select.defender-lineup-form__input {
-          width: 100%;
-          padding-left: calc(#{$padding} / 4);
-        }
-        div.attacker-form, div.defender-form {
-          width: 100%;
-          select.attacker-form__input, select.defender-form__input {
+      }
+    }
+    div.add-map__header {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-gap: 16px;
+      > div:nth-child(1) {
+        padding: $padding;
+        div.site-selector {
+          select.site-selector__input {
+            padding: calc(#{$padding} / 2) $padding;
             width: 100%;
-            padding-left: calc(#{$padding} / 4);
+            display: block;
+            margin: auto;
+            color: $theme-dark;
+            * {
+              color: $theme-dark;
+            }
           }
-          img.attacker-form__image, img.defender-form__image {
+        }
+        div.pagination {
+          display: flex;
+          margin-top: $margin;
+          width: 100%;
+          color: $theme-dark;
+          justify-content: space-between;
+          align-items: center;
+          border: 1px solid $theme-dark;
+          button.pagination__button {
+            padding: calc(#{$padding} / 2) $padding;
+            border: none;
+            background: none;
+            color: $theme-dark;
+          }
+          button.pagination__button:hover {
+            cursor: pointer;
+          }
+        }
+        input.add-map__name-input {
+          margin-top: $margin;
+          padding: calc(#{$padding} / 2) $padding;
+          color: $theme-dark;
+          width: 100%;
+        }
+        div.add-map__strategy-buttons {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          grid-gap: 4px;
+          margin-top: $margin;
+          button.add-map__strategy-button {
+            padding: calc(#{$padding} / 2) $padding;
+            color: $theme-dark;
+            background: none;
+            border: 1px solid $theme-dark;
+          }
+          button.add-map__strategy-button:hover {
+            cursor: pointer;
+          }
+        }
+      }
+      > div:nth-child(2) {
+        grid-column: span 2;
+      }
+      div.lineup {
+        padding: calc(#{$padding} / 2);
+        border: 1px solid $theme-dark;
+        h4.lineup__heading {
+          color: $theme-dark;
+          text-align: center;
+          margin-bottom: $margin;
+        }
+        div.role-form, div.operator-form, div.utility-form, div.operator-images {
+          width: 100%;
+          display: grid;
+          grid-template-columns: repeat(5, 1fr);
+          margin-bottom: calc(#{$margin} / 2);
+          grid-gap: 4px;
+          select.role-form__input, select.operator-form__input, select.utility-form__input {
+            width: 100%;
+            color: $theme-dark;
+            padding: calc(#{$padding} / 4);
+            * {
+              color: $theme-dark;
+            }
+          }
+          img.operator-images__operator {
             width: 100%;
           }
         }
       }
-    }
-    textarea.form__input {
-      height: 156px;
     }
   }
 }

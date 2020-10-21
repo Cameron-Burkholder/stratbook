@@ -4,9 +4,9 @@ import React from "react";
 
 const OperatorForm = (props) => {
   const roles = (props.type === "ATTACK" ? (
-    ["ANY", "HARD BREACH", "SOFT BREACH", "INTEL", "AREA DENIAL/FLANK WATCH", "UTILITY CLEAR", "SUPPORT", "ENTRY FRAG"]
+    ["OPERATOR", "HARD BREACH", "SOFT BREACH", "INTEL", "AREA DENIAL/FLANK WATCH", "UTILITY CLEAR", "SUPPORT", "ENTRY FRAG"]
   ) : (
-    ["ANY", "HARD BREACH DENIAL", "INTEL DENIAL", "INTEL", "AREA DENIAL", "TRAPS", "UTILITY SOAK", "SUPPORT", "ROAM"]
+    ["OPERATOR", "HARD BREACH DENIAL", "INTEL DENIAL", "INTEL", "AREA DENIAL", "TRAPS", "UTILITY SOAK", "SUPPORT", "ROAM"]
   ));
   const operators = (props.type === "ATTACK" ? (
     {
@@ -32,17 +32,18 @@ const OperatorForm = (props) => {
     }
   ));
   const operatorList = props.operators.map((operator, index) => {
-
-    const operatorOptions = (props.roles[index] !== "ANY" ? (
+    const i = index;
+    const operatorOptions = (props.roles[index] !== "ROLE" ? (
       operators[props.roles[index]].map((operator, index) => {
-        if (props.operators.indexOf(operator) < 0 || props.operators.indexOf(operator) === props.index) {
+        if (props.operators.indexOf(operator) < 0 || props.operators.indexOf(operator) === i) {
           return <option key={index}>{operator.toUpperCase()}</option>
         }
       })
     ) : "");
     return (
       <div className="operator-form__operator" key={index}>
-        <select className="operator-form__input" onChange={(e) => { props.onChange(e, index) }} value={props.operators[index]} disabled={props.roles[index] === "ANY"}>
+        <select className="operator-form__input" onChange={(e) => { props.onChange(e, index) }} value={props.operators[index]} disabled={props.roles[index] === "ROLE"}>
+          <option>OPERATOR</option>
           { operatorOptions }
         </select>
       </div>

@@ -4,7 +4,7 @@ import React from "react";
 
 const utility_guide = {
   attack: {
-    "": ["BREACH CHARGES", "CLAYMORE", "FRAG GRENADES", "HARD BREACH CHARGE", "SMOKE GRENADES", "STUN GRENADES"],
+    "OPERATOR": ["BREACH CHARGES", "CLAYMORE", "FRAG GRENADES", "HARD BREACH CHARGE", "SMOKE GRENADES", "STUN GRENADES"],
     "SLEDGE": ["FRAG GRENADES", "STUN GRENADES"],
     "THATCHER": ["BREACH CHARGES", "CLAYMORE"],
     "ASH": ["BREACH CHARGES", "STUN GRENADES"],
@@ -36,7 +36,7 @@ const utility_guide = {
     "ZERO": ["CLAYMORE", "FRAG GRENADES"]
   },
   defense: {
-    "": ["BARBED WIRE", "BULLETPROOF CAMERA", "DEPLOYABLE SHIELD", "IMPACT GRENADES", "NITRO CELL", "PROXIMITY ALARMS"],
+    "OPERATOR": ["BARBED WIRE", "BULLETPROOF CAMERA", "DEPLOYABLE SHIELD", "IMPACT GRENADES", "NITRO CELL", "PROXIMITY ALARMS"],
     "SMOKE": ["BARBED WIRE", "DEPLOYABLE SHIELD"],
     "MUTE": ["BULLETPROOF CAMERA", "NITRO CELL"],
     "CASTLE": ["BULLETPROOF CAMERA", "PROXIMITY ALARMS"],
@@ -82,7 +82,7 @@ const UtilityForm = (props) => {
     return (
       <div className="utility-form__utility" key={index}>
         <select className="utility-form__input" onChange={(e) => { props.onChange(e, index) }} value={props.utility[index]}>
-          <option>ANY</option>
+          <option>UTILITY</option>
           { options }
         </select>
       </div>

@@ -2,8 +2,8 @@
 
 import React from "react";
 
-const attackRoles = ["ANY", "HARD BREACH", "SOFT BREACH", "INTEL", "AREA DENIAL/FLANK WATCH", "UTILITY CLEAR", "SUPPORT", "ENTRY FRAG"];
-const defenderRoles = ["ANY", "HARD BREACH DENIAL", "INTEL DENIAL", "INTEL", "AREA DENIAL", "TRAPS", "UTILITY SOAK", "SUPPORT", "ROAM"];
+const attackRoles = ["ROLE", "HARD BREACH", "SOFT BREACH", "INTEL", "AREA DENIAL/FLANK WATCH", "UTILITY CLEAR", "SUPPORT", "ENTRY FRAG"];
+const defenderRoles = ["ROLE", "HARD BREACH DENIAL", "INTEL DENIAL", "INTEL", "AREA DENIAL", "TRAPS", "UTILITY SOAK", "SUPPORT", "ROAM"];
 const RoleForm = (props) => {
   const roleOptions = (props.type === "ATTACK" ? (
     attackRoles.map((option, index) => {

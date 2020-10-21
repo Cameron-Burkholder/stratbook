@@ -4,7 +4,8 @@ div#EditStrategiesAPI {
   background: $theme-white;
   padding: $padding;
   margin: $margin auto;
-  max-width: 1200px;
+  max-width: 1500px;
+  overflow-x: auto;
   h3 {
     color: $theme-dark;
     text-align: center;

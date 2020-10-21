@@ -10,7 +10,7 @@ const MapSelector = (props) => {
   return (
     <div className="map-selector">
       <select className="map-selector__input" onChange={props.selectMap}>
-        <option></option>
+        <option>MAP</option>
         { options }
       </select>
     </div>

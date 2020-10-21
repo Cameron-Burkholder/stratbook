@@ -21,10 +21,32 @@ import LineupForm from "../partials/LineupForm.js";
 */
 const MAP_NAMES = ["BANK", "BORDER", "CHALET", "CLUBHOUSE", "COASTLINE", "CONSULATE", "KAFE DOSTOYEVSKY", "KANAL", "OREGON", "OUTBACK", "THEME PARK", "VILLA"];
 const SITES = {
-  "BANK": ["B Lockers/B CCTV Room", "2F Executive Lounge/2F CEO Office", "1F Teller's Office/1F Archives", "1F Staff Room/1F Open Area"]
+  "BANK": ["B Lockers/B CCTV Room", "1F Teller's Office/1F Archives", "1F Staff Room/1F Open Area", "2F Executive Lounge/2F CEO Office"],
+  "BORDER": ["1F Customs Inspection/1F Supply Room", "1F Ventilation Room/1F Workshop", "1F Bathroom/1F Tellers", "2F Armory Lockers/2F Archives"],
+  "CHALET": ["B Wine Cellar/B Snowmobile Garage", "1F Bar/1F Gaming Room", "1F Dining Room/1F Kitchen", "2F Master Bedroom/2F Office"],
+  "CLUBHOUSE": ["B Church/B Armory", "1F Bar/1F Stock Room", "2F Cash Room/2F CCTV", "2F Gym/2F Master Bedroom"],
+  "COASTLINE": ["1F Kitchen/1F Service Entrace", "1F Sunrise Bar/1F Blue Bar", "2F Hookah Lounge/2F Billiards Room", "2F Penthouse/2F Theater"],
+  "CONSULATE": ["B Garage/B Cafeteria", "B Archives/1F Tellers", "1F Lobby/1F Press Room", "2F Consul Office/2F Meeting Room"],
+  "KAFE DOSTOYEVSKY": ["1F Kitchen Cooking/1F Kitchen Service", "2F Fireplace Hall/2F Mining Room", "2F Fireplace Hall/2F Reading Room", "3F Cocktail Bar/3F Bar"],
+  "KANAL": ["B Supply Room/B Kayaks", "1F Coast Guard Meeting Room/1F Lounge", "1F Security Room/1F Maps Room", "2F Radar Room/2F Server Room"],
+  "OREGON": ["B Laundry/B Supply Room", "1F Kitchen/1F Dining Room", "1F Kitchen/1F Meeting Room", "2F Kid's Dorm/2F Dorms Main Hall"],
+  "OUTBACK": ["1F Compressor Room/1F Gear Store", "1F Nature Room/1F Bushranger Room", "2F Office/2F Party Room", "2F Laundry Room/2F Games Room"],
+  "THEME PARK": ["1F Armory Room/1F Throne Room", "1F Lab/1F Storage", "2F Office/2F Initiation Room", "2F Bunk/2F Day Care"],
+  "VILLA": ["1F Living Room/1F Library", "1F Kitchen/1F Dining Room", "2F Trophy Room/2F Statuary Room", "2F Aviator Room/2F Games Room"]
 };
 const FLOORS = {
-  "BANK": ["Basement", "First Floor", "Second Floor"]
+  "BANK": ["Basement", "First Floor", "Second Floor"],
+  "BORDER": ["First Floor", "Second Floor"],
+  "CHALET": ["Basement", "First Floor", "Second Floor"],
+  "CLUBHOUSE": ["Basement", "First Floor", "Second Floor"],
+  "COASTLINE": ["First Floor", "Second Floor"],
+  "CONSULATE": ["Basement", "First Floor", "Second Floor"],
+  "KAFE DOSTOYEVSKY": ["First Floor", "Second Floor", "Third Floor"],
+  "KANAL": ["Basement", "First Floor", "Second Floor"],
+  "OREGON": ["Basement", "First Floor", "Second Floor"],
+  "OUTBACK": ["First Floor", "Second Floor"],
+  "THEME PARK": ["First Floor", "Second Floor"],
+  "VILLA": ["Basement", "First Floor", "Second Floor"]
 };
 class CreateStrategiesAPI extends React.Component {
   constructor(props) {
@@ -36,9 +58,12 @@ class CreateStrategiesAPI extends React.Component {
     this.updateType = this.updateType.bind(this);
     this.decrementStrategy = this.decrementStrategy.bind(this);
     this.incrementStrategy = this.incrementStrategy.bind(this);
+    this.addStrategy = this.addStrategy.bind(this);
+    this.removeStrategy = this.removeStrategy.bind(this);
     this.updateRoles = this.updateRoles.bind(this);
     this.updateOperators = this.updateOperators.bind(this);
     this.updateUtility = this.updateUtility.bind(this);
+    this.updateName = this.updateName.bind(this);
 
     this.state = {
       form: false,
@@ -61,9 +86,9 @@ class CreateStrategiesAPI extends React.Component {
       };
       let attackStrategy = {
         name: "",
-        roles: ["ANY", "ANY", "ANY", "ANY", "ANY"],
-        operators: ["", "", "", "", ""],
-        utility: ["ANY", "ANY", "ANY", "ANY", "ANY"],
+        roles: ["ROLE", "ROLE", "ROLE", "ROLE", "ROLE"],
+        operators: ["OPERATOR", "OPERATOR", "OPERATOR", "OPERATOR", "OPERATOR"],
+        utility: ["UTILITY", "UTILITY", "UTILITY", "UTILITY", "UTILITY"],
         gadgets: ["", "", "", "", ""]
       };
       SITES[e.target.value].map((site) => {
@@ -83,9 +108,9 @@ class CreateStrategiesAPI extends React.Component {
         defenseStrategy[site] = [
           {
             name: "",
-            roles: ["ANY", "ANY", "ANY", "ANY", "ANY"],
-            operators: ["", "", "", "", ""],
-            utility: ["ANY", "ANY", "ANY", "ANY", "ANY"],
+            roles: ["ROLE", "ROLE", "ROLE", "ROLE", "ROLE"],
+            operators: ["OPERATOR", "OPERATOR", "OPERATOR", "OPERATOR", "OPERATOR"],
+            utility: ["UTILITY", "UTILITY", "UTILITY", "UTILITY", "UTILITY"],
             gadgets: ["", "", "", "", ""],
             scenes: [
               {
@@ -117,7 +142,8 @@ class CreateStrategiesAPI extends React.Component {
   }
   selectSite(e) {
     this.setState({
-      site: e.target.value
+      site: e.target.value,
+      siteIndex: this.state.sites.indexOf(e.target.value)
     });
   }
   updateType(e) {
@@ -159,14 +185,118 @@ class CreateStrategiesAPI extends React.Component {
       });
     }
   }
+  addStrategy() {
+    let map = this.state.map;
+    let newStrategies;
+    if (this.state.type === "ATTACK") {
+      let attackStrategy = {
+        name: "",
+        roles: ["ROLE", "ROLE", "ROLE", "ROLE", "ROLE"],
+        operators: ["OPERATOR", "OPERATOR", "OPERATOR", "OPERATOR", "OPERATOR"],
+        utility: ["UTILITY", "UTILITY", "UTILITY", "UTILITY", "UTILITY"],
+        gadgets: ["", "", "", "", ""]
+      };
+      SITES[this.state.map.name].map((site) => {
+        attackStrategy[site] = [
+          {
+            objectives: [],
+            utilityPositions: [{x: null, y: null}, {x: null, y: null}, {x: null, y: null}, {x: null, y: null}, {x: null, y: null}],
+            gadgetPositions: [{x: null, y: null}, {x: null, y: null}, {x: null, y: null}, {x: null, y: null}, {x: null, y: null}],
+            operatorPositions: [{x: null, y: null}, {x: null, y: null}, {x: null, y: null}, {x: null, y: null}, {x: null, y: null}],
+            execution: ""
+          }
+        ]
+      });
+      map.attack.push(attackStrategy);
+      newStrategies = map.attack;
+    } else {
+      let defenseStrategy = {
+        name: "",
+        roles: ["ROLE", "ROLE", "ROLE", "ROLE", "ROLE"],
+        operators: ["OPERATOR", "OPERATOR", "OPERATOR", "OPERATOR", "OPERATOR"],
+        utility: ["UTILITY", "UTILITY", "UTILITY", "UTILITY", "UTILITY"],
+        gadgets: ["", "", "", "", ""],
+        scenes: [
+          {
+            objectives: [],
+            utilityPositions: [{x: null, y: null}, {x: null, y: null}, {x: null, y: null}, {x: null, y: null}, {x: null, y: null}],
+            gadgetPositions: [{x: null, y: null}, {x: null, y: null}, {x: null, y: null}, {x: null, y: null}, {x: null, y: null}],
+            operatorPositions: [{x: null, y: null}, {x: null, y: null}, {x: null, y: null}, {x: null, y: null}, {x: null, y: null}],
+            execution: ""
+          }
+        ]
+      };
+      map.defense[this.state.sites[this.state.siteIndex]].push(defenseStrategy);
+      newStrategies = map.defense[this.state.sites[this.state.siteIndex]];
+    }
+    this.setState({
+      map: map,
+      strategies: newStrategies,
+      strategyIndex: this.state.strategyIndex + 1
+    });
+  }
+  removeStrategy() {
+    if (this.state.strategies.length === 1) {
+      this.props.alert("User cannot delete only strategy in map.");
+    } else {
+      let newStrategies = [...this.state.strategies];
+      newStrategies.splice(this.state.strategyIndex, 1);
+      let map = this.state.map;
+      if (this.state.type === "ATTACK") {
+        map.attack = newStrategies;
+      } else {
+        map.defense[this.state.sites[this.state.siteIndex]] = newStrategies;
+      }
+      this.setState({
+        map: map,
+        strategyIndex: this.state.strategyIndex - 1,
+        strategies: newStrategies,
+      });
+    }
+  }
   updateRoles(e, index) {
-
+    let map = this.state.map;
+    if (this.state.type === "ATTACK") {
+      map.attack[this.state.strategyIndex].roles[index] = e.target.value;
+    } else {
+      map.defense[this.state.site][this.state.strategyIndex].roles[index] = e.target.value;
+    }
+    this.setState({
+      map: map
+    });
   }
   updateOperators(e, index) {
-
+    let map = this.state.map;
+    if (this.state.type === "ATTACK") {
+      map.attack[this.state.strategyIndex].operators[index] = e.target.value;
+    } else {
+      map.defense[this.state.site][this.state.strategyIndex].operators[index] = e.target.value;
+    }
+    this.setState({
+      map: map
+    });
   }
   updateUtility(e, index) {
-
+    let map = this.state.map;
+    if (this.state.type === "ATTACK") {
+      map.attack[this.state.strategyIndex].utility[index] = e.target.value;
+    } else {
+      map.defense[this.state.site][this.state.strategyIndex].utility[index] = e.target.value;
+    }
+    this.setState({
+      map: map
+    });
+  }
+  updateName(e) {
+    let map = this.state.map;
+    if (this.state.type === "ATTACK") {
+      map.attack[this.state.strategyIndex].name = e.target.value;
+    } else {
+      map.defense[this.state.site][this.state.strategyIndex].name = e.target.value;
+    }
+    this.setState({
+      map: map
+    });
   }
   render() {
     console.log(this.state);
@@ -190,7 +320,15 @@ class CreateStrategiesAPI extends React.Component {
                         <SiteSelector selectSite={this.selectSite} map={this.state.map.name} site={this.state.site}/>
                         <Pagination index={this.state.strategyIndex} title="Strategy"
                           decrement={this.decrementStrategy} increment={this.incrementStrategy}/>
-                        <h3 className="add-map__strategy-heading"></h3>
+                        <div className="add-map__strategy-buttons">
+                          <button onClick={this.addStrategy} className="add-map__strategy-button">Add Strategy</button>
+                          <button onClick={this.removeStrategy} className="add-map__strategy-button">Remove Strategy</button>
+                        </div>
+                        <input onChange={this.updateName} className="add-map__name-input" type="text"
+                          value={(this.state.type === "ATTACK" ? (
+                            this.state.map.attack[this.state.strategyIndex].name
+                          ) : (this.state.map.defense[this.state.site][this.state.strategyIndex].name))}
+                          placeholder="Strategy Name"/>
                       </div>
                       <div>
                         <LineupForm type={this.state.type}
