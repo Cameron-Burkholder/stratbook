@@ -6,7 +6,7 @@ const OperatorImages = (props) => {
   const operators = props.operators.map((operator, index) => {
     return (
       <img className="operator-images__operator" alt="Operator"
-      src={(operator !== "OPERATOR" ? `./media/${operator.charAt(0) + operator.slice(1).toLowerCase()}.webp` : "")}
+      src={(operator !== "OPERATOR" ? `../media/${operator.charAt(0) + operator.slice(1).toLowerCase()}.webp` : "")}
       key={index}/>
     )
   });

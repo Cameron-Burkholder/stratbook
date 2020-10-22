@@ -9,6 +9,8 @@ import SiteSelector from "../partials/SiteSelector.js";
 import TypeSelector from "../partials/TypeSelector.js";
 import Pagination from "../partials/Pagination.js";
 import LineupForm from "../partials/LineupForm.js";
+import BlueprintForm from "../partials/BlueprintForm.js";
+import FloorSelector from "../partials/FloorSelector.js";
 
 /*
   @func: CreateStrategiesAPI
@@ -43,7 +45,7 @@ const FLOORS = {
   "CONSULATE": ["Basement", "First Floor", "Second Floor"],
   "KAFE DOSTOYEVSKY": ["First Floor", "Second Floor", "Third Floor"],
   "KANAL": ["Basement", "First Floor", "Second Floor"],
-  "OREGON": ["Basement", "First Floor", "Second Floor"],
+  "OREGON": ["Basement", "First Floor", "Second Floor", "Third Floor"],
   "OUTBACK": ["First Floor", "Second Floor"],
   "THEME PARK": ["First Floor", "Second Floor"],
   "VILLA": ["Basement", "First Floor", "Second Floor"]
@@ -64,6 +66,11 @@ class CreateStrategiesAPI extends React.Component {
     this.updateOperators = this.updateOperators.bind(this);
     this.updateUtility = this.updateUtility.bind(this);
     this.updateName = this.updateName.bind(this);
+    this.updateFloor = this.updateFloor.bind(this);
+    this.incrementScene = this.incrementScene.bind(this);
+    this.decrementScene = this.decrementScene.bind(this);
+    this.addScene = this.addScene.bind(this);
+    this.removeScene = this.removeScene.bind(this);
 
     this.state = {
       form: false,
@@ -118,7 +125,9 @@ class CreateStrategiesAPI extends React.Component {
                 utilityPositions: [{x: null, y: null}, {x: null, y: null}, {x: null, y: null}, {x: null, y: null}, {x: null, y: null}],
                 gadgetPositions: [{x: null, y: null}, {x: null, y: null}, {x: null, y: null}, {x: null, y: null}, {x: null, y: null}],
                 operatorPositions: [{x: null, y: null}, {x: null, y: null}, {x: null, y: null}, {x: null, y: null}, {x: null, y: null}],
-                execution: ""
+                execution: "",
+                reinforcements: [{x: null, y: null}, {x: null, y: null}, {x: null, y: null}, {x: null, y: null}, {x: null, y: null}, {x: null, y: null}, {x: null, y: null}, {x: null, y: null}, {x: null, y: null}, {x: null, y: null}],
+                rotates: [{x: null, y: null}]
               }
             ]
           }
@@ -298,6 +307,77 @@ class CreateStrategiesAPI extends React.Component {
       map: map
     });
   }
+  updateFloor(e) {
+    this.setState({
+      floorIndex: this.state.floors.indexOf(e.target.value)
+    });
+  }
+  incrementScene() {
+    if (this.state.sceneIndex + 1 < this.state.scenes.length) {
+      this.setState({
+        sceneIndex: this.state.sceneIndex + 1
+      });
+    }
+  }
+  decrementScene() {
+    if (this.state.sceneIndex - 1 >= 0) {
+      this.setState({
+        sceneIndex: this.state.sceneIndex - 1
+      });
+    }
+  }
+  addScene() {
+    let scenes;
+    let map = this.state.map;
+    if (this.state.type === "ATTACK") {
+      scenes = map.attack[this.state.strategyIndex][this.state.site];
+      scenes.push({
+        objectives: [],
+        utilityPositions: [{x: null, y: null}, {x: null, y: null}, {x: null, y: null}, {x: null, y: null}, {x: null, y: null}],
+        gadgetPositions: [{x: null, y: null}, {x: null, y: null}, {x: null, y: null}, {x: null, y: null}, {x: null, y: null}],
+        operatorPositions: [{x: null, y: null}, {x: null, y: null}, {x: null, y: null}, {x: null, y: null}, {x: null, y: null}],
+        execution: ""
+      });
+      map.attack[this.state.strategyIndex][this.state.site] = scenes;
+    } else {
+      scenes = map.defense[this.state.site][this.state.strategyIndex].scenes;
+      scenes.push({
+        objectives: [],
+        utilityPositions: [{x: null, y: null}, {x: null, y: null}, {x: null, y: null}, {x: null, y: null}, {x: null, y: null}],
+        gadgetPositions: [{x: null, y: null}, {x: null, y: null}, {x: null, y: null}, {x: null, y: null}, {x: null, y: null}],
+        operatorPositions: [{x: null, y: null}, {x: null, y: null}, {x: null, y: null}, {x: null, y: null}, {x: null, y: null}],
+        execution: "",
+        reinforcements: [{x: null, y: null}, {x: null, y: null}, {x: null, y: null}, {x: null, y: null}, {x: null, y: null}, {x: null, y: null}, {x: null, y: null}, {x: null, y: null}, {x: null, y: null}, {x: null, y: null}],
+        rotates: [{x: null, y: null}]
+      });
+      map.defense[this.state.site][this.state.strategyIndex].scenes = scenes;
+    }
+    this.setState({
+      scenes: scenes,
+      map: map,
+      sceneIndex: this.state.sceneIndex + 1
+    });
+  }
+  removeScene() {
+    if (this.state.sceneIndex - 1 >= 0) {
+      let scenes;
+      let map = this.state.map;
+      if (this.state.type === "ATTACK") {
+        scenes = [...map.attack[this.state.strategyIndex][this.state.site]];
+        scenes.splice(this.state.sceneIndex, 1);
+        map.attack[this.state.strategyIndex][this.state.site] = scenes;
+      } else {
+        scenes = [...map.defense[this.state.site][this.state.strategyIndex].scenes];
+        scenes.splice(this.state.sceneIndex, 1);
+        map.defense[this.state.site][this.state.strategyIndex].scenes = scenes;
+      }
+      this.setState({
+        scenes: scenes,
+        map: map,
+        sceneIndex: this.state.sceneIndex - 1
+      });
+    }
+  }
   render() {
     console.log(this.state);
     return (
@@ -345,8 +425,40 @@ class CreateStrategiesAPI extends React.Component {
                       </div>
                     </div>
                     <div className="add-map__body">
-                      {/* <Blueprint/> */
-                      /* <Toolbar/> */}
+                      <main className="canvas">
+                        <div className="canvas__controls">
+                          <FloorSelector onChange={this.updateFloor} floors={this.state.floors} floor={this.state.floors[this.state.floorIndex]}/>
+                          <Pagination title="Scene" index={this.state.sceneIndex} increment={this.incrementScene} decrement={this.decrementScene}/>
+                          <div className="scene-controls">
+                            <a onClick={this.addScene}>+</a>
+                            <a onClick={this.removeScene}>-</a>
+                          </div>
+                        </div>
+                        <BlueprintForm type={this.state.type}
+                        operators={(this.state.type === "ATTACK" ? (
+                          this.state.map.attack[this.state.strategyIndex].operators
+                        ) : (this.state.map.defense[this.state.site][this.state.strategyIndex].operators))}
+                        operatorPositions={(this.state.type === "ATTACK" ? (
+                          this.state.map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].operatorPositions) : (
+                          this.state.map.defense[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].operatorPositions
+                        ))}
+                        gadgets={(this.state.type === "ATTACK" ? (
+                          this.state.map.attack[this.state.strategyIndex].gadgets
+                        ) : (this.state.map.defense[this.state.site][this.state.strategyIndex].gadgets))}
+                        gadgetPositions={(this.state.type === "ATTACK" ? (
+                          this.state.map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].gadgetPositions) : (
+                          this.state.map.defense[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].gadgetPositions
+                        ))}
+                        utility={(this.state.type === "ATTACK" ? (
+                          this.state.map.attack[this.state.strategyIndex].utility
+                        ) : (this.state.map.defense[this.state.site][this.state.strategyIndex].operators))}
+                        utilityPositions={(this.state.type === "ATTACK" ? (
+                          this.state.map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].utilityPositions) : (
+                          this.state.map.defense[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].utilityPositions
+                        ))}
+                        map={this.state.map.name} site={this.state.site} floor={this.state.floors[this.state.floorIndex]}/>
+                      </main>
+                      {/* <Toolbar/> */}
                     </div>
                     {/* <Objectives/> */
                     /* <Execution/> */}

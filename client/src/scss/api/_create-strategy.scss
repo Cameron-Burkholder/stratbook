@@ -62,22 +62,7 @@ div#CreateStrategiesAPI {
           }
         }
         div.pagination {
-          display: flex;
           margin-top: $margin;
-          width: 100%;
-          color: $theme-dark;
-          justify-content: space-between;
-          align-items: center;
-          border: 1px solid $theme-dark;
-          button.pagination__button {
-            padding: calc(#{$padding} / 2) $padding;
-            border: none;
-            background: none;
-            color: $theme-dark;
-          }
-          button.pagination__button:hover {
-            cursor: pointer;
-          }
         }
         input.add-map__name-input {
           margin-top: $margin;
@@ -128,7 +113,59 @@ div#CreateStrategiesAPI {
           }
           img.operator-images__operator {
             width: 100%;
+            height: 144px;
+            overflow: hidden;
+            object-fit: cover;
+            object-position: 50% -32px;
           }
+        }
+      }
+    }
+    div.add-map__body {
+      margin-top: $margin;
+      width: 100%;
+      main.canvas {
+        width: 933px;
+        min-height: 700px;
+        border: 1px solid $theme-dark;
+        div.canvas__controls {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr) 156px;
+          select.floor-selector {
+            padding: calc(#{$padding} / 2) $padding;
+            border: none;
+            border-right: 1px solid $theme-dark;
+            color: $theme-dark;
+            * {
+              color: $theme-dark;
+            }
+          }
+          div.pagination {
+            border: none;
+          }
+          div.scene-controls {
+            display: flex;
+            width: 80%;
+            margin: auto;
+            color: $theme-dark;
+            justify-content: space-around;
+            align-items: center;
+            a {
+              color: $theme-dark;
+              font-size: 22px;
+              padding: calc(#{$padding} / 2) $padding;
+            }
+            a:hover {
+              cursor: pointer;
+            }
+          }
+        }
+        div.blueprint-form {
+          width: 100%;
+          height: 700px;
+          position: relative;
+          background-position: center;
+          background-size: cover;
         }
       }
     }
