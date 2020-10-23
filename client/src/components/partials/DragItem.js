@@ -10,17 +10,16 @@ class DragItem extends React.Component {
     }
   }
   render() {
-    const url = `https://cdn.r6stats.com/badges/${this.props.name.toLowerCase()}_badge.png`;
     return (
-      <div style={{ top: (this.props.y ? this.props.y : 0), left: (this.props.x ? this.props.x : 0), background: `url(${url})`, backgroundSize: "cover", backgroundPosition: "center" }}
-      className={"drag-item" + (this.props.drag ? " drag" : "")}
+      <div style={{ top: (this.props.y ? this.props.y : 0), left: (this.props.x ? this.props.x : 0), backgroundImage: `url(${this.props.url})`, backgroundSize: "cover", backgroundPosition: "center" }}
+      className={"drag-item" + (this.props.drag ? " drag" : "") + ` DRAG-${this.props.type}`}
         onMouseDown={() => {
           this.setState({
             drag: true
           }, () => {
             this.props.selectElement(this.props.index);
           });
-        }}>
+        }} data-type={this.props.type}>
       </div>
     )
   }
