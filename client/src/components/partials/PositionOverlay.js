@@ -81,7 +81,7 @@ class PositionOverlay extends React.Component {
         if (this.props.type === "OPERATOR") {
           url = `https://cdn.r6stats.com/badges/${this.props.names[index].toLowerCase()}_badge.png`;
         } else if (this.props.type === "GADGET") {
-
+          
         } else if (this.props.type === "UTILITY") {
 
         } else if (this.props.type === "DRONE") {

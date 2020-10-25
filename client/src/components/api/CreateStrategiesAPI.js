@@ -741,10 +741,10 @@ class CreateStrategiesAPI extends React.Component {
                         drones={(this.state.type === "ATTACK" ? (
                           this.state.map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].drones
                         ) : undefined)}
-                        rotates={(this.state.stype === "ATTACK" ? (
+                        rotates={(this.state.type === "ATTACK" ? (
                           undefined
                         ) : this.state.map.defense[this.state.site][this.state.strategyIndex].rotates)}
-                        reinforcements={(this.state.types === "ATTACK" ? (
+                        reinforcements={(this.state.type === "ATTACK" ? (
                           undefined
                         ) : this.state.map.defense[this.state.site][this.state.strategyIndex].reinforcements)}
                         map={this.state.map.name} site={this.state.site} floorIndex={this.state.floorIndex}
