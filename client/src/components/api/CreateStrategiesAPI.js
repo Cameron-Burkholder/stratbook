@@ -447,9 +447,10 @@ class CreateStrategiesAPI extends React.Component {
         attackStrategy[site] = [
           {
             objectives: [],
-            utilityPositions: [{x: null, y: null}, {x: null, y: null}, {x: null, y: null}, {x: null, y: null}, {x: null, y: null}],
-            gadgetPositions: [{x: null, y: null}, {x: null, y: null}, {x: null, y: null}, {x: null, y: null}, {x: null, y: null}],
-            operatorPositions: [{x: null, y: null}, {x: null, y: null}, {x: null, y: null}, {x: null, y: null}, {x: null, y: null}],
+            utilityPositions: [{x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}],
+            gadgetPositions: [{x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}],
+            operatorPositions: [{x: 0, y: 0, floor: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}],
+            drones: [],
             execution: ""
           }
         ]
@@ -463,11 +464,13 @@ class CreateStrategiesAPI extends React.Component {
         operators: ["OPERATOR", "OPERATOR", "OPERATOR", "OPERATOR", "OPERATOR"],
         utility: ["UTILITY", "UTILITY", "UTILITY", "UTILITY", "UTILITY"],
         gadgets: ["", "", "", "", ""],
+        reinforcements: [],
+        rotates: [],
+        utilityPositions: [{x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y:0}, {x: 0, y: 0}, {x: 0, y: 0}],
+        gadgetPositions: [{x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}],
         scenes: [
           {
             objectives: [],
-            utilityPositions: [{x: null, y: null}, {x: null, y: null}, {x: null, y: null}, {x: null, y: null}, {x: null, y: null}],
-            gadgetPositions: [{x: null, y: null}, {x: null, y: null}, {x: null, y: null}, {x: null, y: null}, {x: null, y: null}],
             operatorPositions: [{x: null, y: null}, {x: null, y: null}, {x: null, y: null}, {x: null, y: null}, {x: null, y: null}],
             execution: ""
           }
@@ -581,9 +584,9 @@ class CreateStrategiesAPI extends React.Component {
       scenes = map.attack[this.state.strategyIndex][this.state.site];
       scenes.push({
         objectives: [],
-        utilityPositions: [{x: null, y: null}, {x: null, y: null}, {x: null, y: null}, {x: null, y: null}, {x: null, y: null}],
-        gadgetPositions: [{x: null, y: null}, {x: null, y: null}, {x: null, y: null}, {x: null, y: null}, {x: null, y: null}],
-        operatorPositions: [{x: null, y: null}, {x: null, y: null}, {x: null, y: null}, {x: null, y: null}, {x: null, y: null}],
+        utilityPositions: [{x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}],
+        gadgetPositions: [{x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}],
+        operatorPositions: [{x: 0, y: 0, floor: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}],
         drones: [],
         execution: ""
       });
@@ -592,7 +595,7 @@ class CreateStrategiesAPI extends React.Component {
       scenes = map.defense[this.state.site][this.state.strategyIndex].scenes;
       scenes.push({
         objectives: [],
-        operatorPositions: [{x: null, y: null}, {x: null, y: null}, {x: null, y: null}, {x: null, y: null}, {x: null, y: null}],
+        operatorPositions: [{x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: null}, {x: 0, y: 0}, {x: 0, y: 0}],
         execution: "",
       });
       map.defense[this.state.site][this.state.strategyIndex].scenes = scenes;
@@ -625,13 +628,21 @@ class CreateStrategiesAPI extends React.Component {
   }
   updateOperatorPositions(positions) {
     let map = this.state.map;
+    let scenes;
+    let strategies;
     if (this.state.type === "ATTACK") {
       map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].operatorPositions = positions;
+      scenes = map.attack[this.state.strategyIndex][this.state.site];
+      strategies = map.attack;
     } else {
       map.defense[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].operatorPositions = positions;
+      scenes = map.defense[this.state.site][this.state.strategyIndex].scenes;
+      strategies = map.defense[this.state.site];
     }
     this.setState({
-      map: map
+      map: map,
+      scenes: scenes,
+      strategies: strategies
     });
   }
   updateGadgetPositions(positions) {
@@ -650,6 +661,7 @@ class CreateStrategiesAPI extends React.Component {
 
   }
   render() {
+    console.log(this.state);
     return (
       <div id="CreateStrategiesAPI">
         <h4 className="create-strategy-heading" onClick={this.toggleForm}>Create a Strategy</h4>
@@ -730,6 +742,9 @@ class CreateStrategiesAPI extends React.Component {
                           this.state.map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].drones
                         ) : undefined)}
                         rotates={(this.state.stype === "ATTACK" ? (
+                          undefined
+                        ) : this.state.map.defense[this.state.site][this.state.strategyIndex].rotates)}
+                        reinforcements={(this.state.types === "ATTACK" ? (
                           undefined
                         ) : this.state.map.defense[this.state.site][this.state.strategyIndex].reinforcements)}
                         map={this.state.map.name} site={this.state.site} floorIndex={this.state.floorIndex}

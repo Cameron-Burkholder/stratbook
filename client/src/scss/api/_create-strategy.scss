@@ -167,13 +167,27 @@ div#CreateStrategiesAPI {
           background-position: center;
           background-size: cover;
           z-index: 0;
-          div.drag-item {
-            width: 50px;
-            height: 50px;
-            position: absolute;
-            z-index: 1;
-            background-size: cover;
-            background-position: center;
+          div.position-overlay {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            div.drag-item {
+              width: 60px;
+              height: 60px;
+              position: absolute;
+              z-index: 1;
+              background-size: cover;
+              background-position: center;
+              transition: all 0.3s ease;
+            }
+            div.drag-item.drag {
+              transition: all 0.05s ease;
+              width: 45px;
+              height: 45px;
+            }
+            div.drag-item:hover {
+              cursor: pointer;
+            }
           }
         }
       }
