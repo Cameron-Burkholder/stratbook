@@ -7,7 +7,7 @@ const OperatorImages = (props) => {
     return (
       <img className="operator-images__operator" alt="Operator"
       src={(operator !== "OPERATOR" ? `../media/${operator.charAt(0) + operator.slice(1).toLowerCase()}.webp` : "")}
-      key={index}/>
+      key={index} onClick={() => { props.selectOperator(index) }}/>
     )
   });
   return (

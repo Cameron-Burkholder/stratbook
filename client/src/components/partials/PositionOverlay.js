@@ -33,7 +33,7 @@ class PositionOverlay extends React.Component {
     let height = 60;
     let newPositions = [...this.state.positions];
     let newX = e.pageX - this.state.bounds.left - (width / 2);
-    let newY = e.pageY - this.state.bounds.top - (height * 2.75);
+    let newY = e.pageY - this.state.bounds.top - (height);
     if (newX < 0) {
       newX = 0;
     } else if (newX > this.state.bounds.width - width) {
@@ -81,7 +81,7 @@ class PositionOverlay extends React.Component {
         if (this.props.type === "OPERATOR") {
           url = `https://cdn.r6stats.com/badges/${this.props.names[index].toLowerCase()}_badge.png`;
         } else if (this.props.type === "GADGET") {
-          
+
         } else if (this.props.type === "UTILITY") {
 
         } else if (this.props.type === "DRONE") {

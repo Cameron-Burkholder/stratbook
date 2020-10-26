@@ -117,6 +117,13 @@ div#CreateStrategiesAPI {
             overflow: hidden;
             object-fit: cover;
             object-position: 50% -32px;
+            transition: all 0.1s ease;
+          }
+          img.operator-images__operator:hover {
+            cursor: pointer;
+            transform: scale(1.02);
+            box-shadow: 1px 1px 3px rgba(50, 50, 50, 0.4);
+            transition: all 0.1s ease;
           }
         }
       }
@@ -124,6 +131,9 @@ div#CreateStrategiesAPI {
     div.add-map__body {
       margin-top: $margin;
       width: 100%;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      grid-gap: $margin;
       main.canvas {
         width: 933px;
         min-height: 700px;
@@ -186,6 +196,26 @@ div#CreateStrategiesAPI {
             }
             div.drag-item:hover {
               cursor: pointer;
+            }
+          }
+        }
+      }
+      aside.aside {
+        div.toolbar {
+          padding: $padding;
+          border: 1px solid $theme-dark;
+          div.manage {
+            h3 {
+              text-align: left;
+              margin-top: $margin;
+            }
+            img {
+              width: 250px;
+              height: 150px;
+              object-fit: cover;
+              object-position: 50% 20%;
+              display: block;
+              margin: auto;
             }
           }
         }

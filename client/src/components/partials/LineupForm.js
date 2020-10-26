@@ -14,7 +14,7 @@ const LineupForm = (props) => {
       <RoleForm onChange={props.updateRoles} roles={props.roles} type={props.type}/>
       <OperatorForm onChange={props.updateOperators} roles={props.roles} operators={props.operators} type={props.type}/>
       <UtilityForm onChange={props.updateUtility} operators={props.operators} utility={props.utility}type={props.type}/>
-      <OperatorImages operators={props.operators}/>
+      <OperatorImages operators={props.operators} selectOperator={props.selectOperator}/>
     </div>
   )
 }

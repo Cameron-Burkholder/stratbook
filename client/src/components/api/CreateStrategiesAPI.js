@@ -308,9 +308,13 @@ class CreateStrategiesAPI extends React.Component {
     this.updateDronePositions = this.updateDronePositions.bind(this);
     this.updateReinforcementPositions = this.updateReinforcementPositions.bind(this);
     this.updateRotatePositions = this.updateRotatePositions.bind(this);
+    this.selectOperator = this.selectOperator.bind(this);
+    this.insertOperator = this.insertOperator.bind(this);
+    this.removeOperator = this.removeOperator.bind(this);
 
     this.state = {
       form: false,
+      activeOperator: 0
     }
   }
   /*
@@ -341,7 +345,7 @@ class CreateStrategiesAPI extends React.Component {
             objectives: [],
             utilityPositions: [{x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}],
             gadgetPositions: [{x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}],
-            operatorPositions: [{x: 0, y: 0, floor: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}],
+            operatorPositions: [{x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}],
             drones: [],
             execution: ""
           }
@@ -660,6 +664,33 @@ class CreateStrategiesAPI extends React.Component {
   updateRotatePositions(positions) {
 
   }
+  selectOperator(index) {
+    this.setState({
+      activeOperator: index
+    });
+  }
+  insertOperator(index) {
+    let map = this.state.map;
+    if (this.state.type === "ATTACK") {
+      map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].operatorPositions[index].floor = this.state.floorIndex;
+    } else {
+      map.defense[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].operatorPositions[index].floor = this.state.floorIndex;
+    }
+    this.setState({
+      map: map
+    });
+  }
+  removeOperator(index) {
+    let map = this.state.map;
+    if (this.state.type === "ATTACK") {
+      map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].operatorPositions[index].floor = undefined;
+    } else {
+      map.defense[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].operatorPositions[index].floor = undefined;
+    }
+    this.setState({
+      map: map
+    });
+  }
   render() {
     console.log(this.state);
     return (
@@ -702,8 +733,9 @@ class CreateStrategiesAPI extends React.Component {
                           ) : (this.state.map.defense[this.state.site][this.state.strategyIndex].operators))}
                           utility={(this.state.type === "ATTACK" ? (
                             this.state.map.attack[this.state.strategyIndex].utility
-                          ) : (this.state.map.defense[this.state.site][this.state.strategyIndex].operators))}
-                          updateRoles={this.updateRoles} updateOperators={this.updateOperators} updateUtility={this.updateUtility}/>
+                          ) : (this.state.map.defense[this.state.site][this.state.strategyIndex].utility))}
+                          updateRoles={this.updateRoles} updateOperators={this.updateOperators} updateUtility={this.updateUtility}
+                          selectOperator={this.selectOperator}/>
                       </div>
                     </div>
                     <div className="add-map__body">
@@ -758,9 +790,19 @@ class CreateStrategiesAPI extends React.Component {
                       </main>
                       <aside className="aside">
                         <Toolbar type={this.state.type}
+                          operators={(this.state.type === "ATTACK" ? (
+                            this.state.map.attack[this.state.strategyIndex].operators
+                          ) : (this.state.map.defense[this.state.site][this.state.strategyIndex].operators))}
+                          insertOperator={this.insertOperator} removeOperator={this.removeOperator}
+                          utility={(this.state.type === "ATTACK" ? (
+                            this.state.map.attack[this.state.strategyIndex].utility
+                          ) : (this.state.map.defense[this.state.site][this.state.strategyIndex].utility))}
+                          gadgets={(this.state.type === "ATTACK" ? (
+                            this.state.map.attack[this.state.strategyIndex].gadgets
+                          ) : (this.state.map.defense[this.state.site][this.state.strategyIndex].gadgets))}
                           drones={this.state.type === "ATTACK" ? (
                             this.state.map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].drones) : undefined}
-                          />
+                          activeOperator={this.state.activeOperator}/>
                       </aside>
                     </div>
                     {/* <Objectives/> */

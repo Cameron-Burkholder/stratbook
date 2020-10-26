@@ -1055,10 +1055,19 @@ div#CreateStrategiesAPI {
             height: 144px;
             overflow: hidden;
             object-fit: cover;
-            object-position: 50% -32px; }
+            object-position: 50% -32px;
+            transition: all 0.1s ease; }
+          div#CreateStrategiesAPI div.add-map div.add-map__header div.lineup div.role-form img.operator-images__operator:hover, div#CreateStrategiesAPI div.add-map div.add-map__header div.lineup div.operator-form img.operator-images__operator:hover, div#CreateStrategiesAPI div.add-map div.add-map__header div.lineup div.utility-form img.operator-images__operator:hover, div#CreateStrategiesAPI div.add-map div.add-map__header div.lineup div.operator-images img.operator-images__operator:hover {
+            cursor: pointer;
+            transform: scale(1.02);
+            box-shadow: 1px 1px 3px rgba(50, 50, 50, 0.4);
+            transition: all 0.1s ease; }
     div#CreateStrategiesAPI div.add-map div.add-map__body {
       margin-top: 16px;
-      width: 100%; }
+      width: 100%;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      grid-gap: 16px; }
       div#CreateStrategiesAPI div.add-map div.add-map__body main.canvas {
         width: 933px;
         min-height: 700px;
@@ -1112,6 +1121,19 @@ div#CreateStrategiesAPI {
               transform: scale(0.8); }
             div#CreateStrategiesAPI div.add-map div.add-map__body main.canvas div.blueprint-form div.position-overlay div.drag-item:hover {
               cursor: pointer; }
+      div#CreateStrategiesAPI div.add-map div.add-map__body aside.aside div.toolbar {
+        padding: 16px;
+        border: 1px solid #15161A; }
+        div#CreateStrategiesAPI div.add-map div.add-map__body aside.aside div.toolbar div.manage h3 {
+          text-align: left;
+          margin-top: 16px; }
+        div#CreateStrategiesAPI div.add-map div.add-map__body aside.aside div.toolbar div.manage img {
+          width: 250px;
+          height: 150px;
+          object-fit: cover;
+          object-position: 50% 20%;
+          display: block;
+          margin: auto; }
 
 /* client/src/scss/api/_edit-strategies.scss */
 div#EditStrategiesAPI {
