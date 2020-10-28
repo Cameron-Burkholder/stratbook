@@ -205,9 +205,10 @@ div#CreateStrategiesAPI {
           padding: $padding;
           border: 1px solid $theme-dark;
           div.manage {
-            h3 {
+            h3, h4 {
               text-align: left;
               margin-top: $margin;
+              color: $theme-dark;
             }
             img {
               width: 250px;

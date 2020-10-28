@@ -1124,9 +1124,10 @@ div#CreateStrategiesAPI {
       div#CreateStrategiesAPI div.add-map div.add-map__body aside.aside div.toolbar {
         padding: 16px;
         border: 1px solid #15161A; }
-        div#CreateStrategiesAPI div.add-map div.add-map__body aside.aside div.toolbar div.manage h3 {
+        div#CreateStrategiesAPI div.add-map div.add-map__body aside.aside div.toolbar div.manage h3, div#CreateStrategiesAPI div.add-map div.add-map__body aside.aside div.toolbar div.manage h4 {
           text-align: left;
-          margin-top: 16px; }
+          margin-top: 16px;
+          color: #15161A; }
         div#CreateStrategiesAPI div.add-map div.add-map__body aside.aside div.toolbar div.manage img {
           width: 250px;
           height: 150px;
