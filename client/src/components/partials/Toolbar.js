@@ -7,7 +7,6 @@ class Toolbar extends React.Component {
     super(props);
   }
   render() {
-    console.log(this.props);
     return (
       <div className="toolbar">
         { this.props.operators[this.props.activeOperator] !== "OPERATOR" ? (

@@ -13,12 +13,23 @@ const BlueprintForm = (props) => {
     }
     return (
       <div className="blueprint-form" style={style}>
-        <PositionOverlay type="OPERATOR" updatePositions={props.updateOperatorPositions}
-            names={props.operators} positions={props.operatorPositions}
-            floorIndex={props.floorIndex}/>
-        <PositionOverlay type="DRONE" updatePositions={props.updateDronePositions}
-            positions={props.drones}
-            floorIndex={props.floorIndex}/>
+        <PositionOverlay
+          operators={props.operators}
+          operatorPositions={props.operatorPositions}
+          gadgets={props.gadgets}
+          gadgetPositions={props.gadgetPositions}
+          utility={props.utility}
+          utilityPositions={props.utilityPositions}
+          drones={props.drones}
+          rotates={props.rotates}
+          reinforcements={props.reinforcements}
+          floorIndex={props.floorIndex}
+          updateOperatorPositions={props.updateOperatorPositions}
+          updateGadgetPositions={props.updateGadgetPositions}
+          updateDronePositions={props.updateDronePositions}
+          updateUtilityPositions={props.updateUtilityPositions}
+          updateRotatePositions={props.updateRotatePositions}
+          updateReinforcementPositions={props.updateReinforcementPositions}/>
       </div>
     )
 }
