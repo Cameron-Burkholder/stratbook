@@ -32,6 +32,15 @@ class Toolbar extends React.Component {
             </div>
           </div>
         ) : ""}
+        { this.props.type === "ATTACK" ? (
+          <div className="manage">
+            <h3>Drones</h3>
+            <button onClick={this.props.insertDrone}>Insert</button>
+            <button onClick={this.props.removeDrone}>Remove</button>
+          </div>
+        ) : (
+          "defense"
+        )}
       </div>
     )
   }

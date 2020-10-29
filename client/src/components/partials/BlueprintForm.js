@@ -16,6 +16,9 @@ const BlueprintForm = (props) => {
         <PositionOverlay type="OPERATOR" updatePositions={props.updateOperatorPositions}
             names={props.operators} positions={props.operatorPositions}
             floorIndex={props.floorIndex}/>
+        <PositionOverlay type="DRONE" updatePositions={props.updateDronePositions}
+            positions={props.drones}
+            floorIndex={props.floorIndex}/>
       </div>
     )
 }

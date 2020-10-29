@@ -289,28 +289,46 @@ class CreateStrategiesAPI extends React.Component {
     this.selectMap = this.selectMap.bind(this);
     this.selectSite = this.selectSite.bind(this);
     this.updateType = this.updateType.bind(this);
+    this.updateRoles = this.updateRoles.bind(this);
+    this.updateName = this.updateName.bind(this);
+    this.updateFloor = this.updateFloor.bind(this);
+
+    // Strategies
     this.decrementStrategy = this.decrementStrategy.bind(this);
     this.incrementStrategy = this.incrementStrategy.bind(this);
     this.addStrategy = this.addStrategy.bind(this);
     this.removeStrategy = this.removeStrategy.bind(this);
-    this.updateRoles = this.updateRoles.bind(this);
-    this.updateOperators = this.updateOperators.bind(this);
-    this.updateUtility = this.updateUtility.bind(this);
-    this.updateName = this.updateName.bind(this);
-    this.updateFloor = this.updateFloor.bind(this);
+
+    // Scenes
     this.incrementScene = this.incrementScene.bind(this);
     this.decrementScene = this.decrementScene.bind(this);
     this.addScene = this.addScene.bind(this);
     this.removeScene = this.removeScene.bind(this);
+
+    // Operators
+    this.updateOperators = this.updateOperators.bind(this);
     this.updateOperatorPositions = this.updateOperatorPositions.bind(this);
-    this.updateGadgetPositions = this.updateGadgetPositions.bind(this);
-    this.updateUtilityPositions = this.updateUtilityPositions.bind(this);
-    this.updateDronePositions = this.updateDronePositions.bind(this);
-    this.updateReinforcementPositions = this.updateReinforcementPositions.bind(this);
-    this.updateRotatePositions = this.updateRotatePositions.bind(this);
     this.selectOperator = this.selectOperator.bind(this);
     this.insertOperator = this.insertOperator.bind(this);
     this.removeOperator = this.removeOperator.bind(this);
+
+    // Drones
+    this.updateDronePositions = this.updateDronePositions.bind(this);
+    this.insertDrone = this.insertDrone.bind(this);
+    this.removeDrone = this.removeDrone.bind(this);
+
+    // Gadgets
+    this.updateGadgetPositions = this.updateGadgetPositions.bind(this);
+
+    // Utility
+    this.updateUtility = this.updateUtility.bind(this);
+    this.updateUtilityPositions = this.updateUtilityPositions.bind(this);
+
+    // Rotates
+    this.updateRotatePositions = this.updateRotatePositions.bind(this);
+
+    // Reinforcements
+    this.updateReinforcementPositions = this.updateReinforcementPositions.bind(this);
 
     this.state = {
       form: false,
@@ -656,7 +674,17 @@ class CreateStrategiesAPI extends React.Component {
 
   }
   updateDronePositions(positions) {
-
+    let map = this.state.map;
+    let scenes;
+    let strategies;
+    map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].drones = positions;
+    scenes = map.attack[this.state.strategyIndex][this.state.site];
+    strategies = map.attack;
+    this.setState({
+      map: map,
+      scenes: scenes,
+      strategies: strategies
+    });
   }
   updateReinforcementPositions(positions) {
 
@@ -690,6 +718,29 @@ class CreateStrategiesAPI extends React.Component {
     this.setState({
       map: map
     });
+  }
+  insertDrone() {
+    if (this.state.map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].drones.length + 1 <= 10) {
+      let drone = {
+        x: 0,
+        y: 0,
+        floor: this.state.floorIndex
+      };
+      let map = this.state.map;
+      map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].drones.push(drone);
+      this.setState({
+        map: map
+      });
+    }
+  }
+  removeDrone() {
+    if (this.state.map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].drones.length - 1 >= 0) {
+      let map = this.state.map;
+      map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].drones.pop();
+      this.setState({
+        map: map
+      });
+    }
   }
   render() {
     console.log(this.state);
@@ -802,6 +853,8 @@ class CreateStrategiesAPI extends React.Component {
                           ) : (this.state.map.defense[this.state.site][this.state.strategyIndex].gadgets))}
                           drones={this.state.type === "ATTACK" ? (
                             this.state.map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].drones) : undefined}
+                          insertDrone={this.insertDrone}
+                          removeDrone={this.removeDrone}
                           rotates={this.state.type === "ATTACK"? (
                             undefined
                           ) : (this.state.map.defense[this.state.site][this.state.strategyIndex].rotates)}

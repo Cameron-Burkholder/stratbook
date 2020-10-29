@@ -85,7 +85,7 @@ class PositionOverlay extends React.Component {
         } else if (this.props.type === "UTILITY") {
 
         } else if (this.props.type === "DRONE") {
-
+          url = "https://external-preview.redd.it/mYPEnvxN9kDjubOi6dDM6IO1Z5Ando9V8Vzi1VS2qnM.png?auto=webp&s=0a1d4f3a875a6fc968ec22e68c9a7d868b342281";
         } else if (this.props.type === "ROTATE") {
 
         } else if (this.props.type === "REINFORCEMENT") {
