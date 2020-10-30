@@ -7,6 +7,7 @@ class Toolbar extends React.Component {
     super(props);
   }
   render() {
+    console.log(this.props);
     return (
       <div className="toolbar">
         { this.props.operators[this.props.activeOperator] !== "OPERATOR" ? (
@@ -24,6 +25,14 @@ class Toolbar extends React.Component {
             <div className="manage">
               <h4>Gadget</h4>
               <p>{this.props.gadgets[this.props.activeOperator].gadget}</p>
+              { this.props.gadgets[this.props.activeOperator].count !== 0 ? (
+                <div>
+                  { this.props.gadgetPositions[this.props.activeOperator].length < this.props.gadgets[this.props.activeOperator].count ? (
+                    <button onClick={() => { this.props.insertGadget(this.props.activeOperator) }}>Insert</button>
+                  ) : ""}
+                  <button onClick={() => { this.props.removeGadget(this.props.activeOperator) }}>Remove</button>
+                </div>
+              ) : ""}
             </div>
             <div className="manage">
               <h4>Utility</h4>

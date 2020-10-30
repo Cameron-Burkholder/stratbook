@@ -17,7 +17,11 @@ class DragItem extends React.Component {
           this.setState({
             drag: true
           }, () => {
-            this.props.selectElement(this.props.index, this.props.type);
+            if (this.props.type === "GADGET") {
+              this.props.selectElement(this.props.index, this.props.type, this.props.gindex);
+            } else {
+              this.props.selectElement(this.props.index, this.props.type);
+            }
           });
         }} data-type={this.props.type}>
       </div>

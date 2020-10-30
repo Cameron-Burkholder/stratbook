@@ -25,11 +25,12 @@ class PositionOverlay extends React.Component {
       reinforcements: this.props.reinforcements
     }
   }
-  selectElement(index, type) {
+  selectElement(index, type, gi) {
     this.setState({
       index: index,
       drag: true,
-      type: type
+      type: type,
+      gi: gi
     }, () => {
       document.addEventListener("mousemove", this.onMouseMove);
       document.addEventListener("mouseup", this.onMouseUp);
@@ -46,6 +47,10 @@ class PositionOverlay extends React.Component {
       case "DRONE":
         newPositions = [...this.state.drones];
         break;
+
+      case "GADGET":
+        newPositions = [...this.state.gadgetPositions][this.state.index];
+        break;
     }
     let newX = e.pageX - this.state.bounds.left - (width / 2);
     let newY = e.pageY - this.state.bounds.top - (height);
@@ -59,8 +64,13 @@ class PositionOverlay extends React.Component {
     } else if (newY > this.state.bounds.height - height) {
       newY = this.state.bounds.height - height;
     }
-    newPositions[this.state.index].x = newX;
-    newPositions[this.state.index].y = newY;
+    if (this.state.type === "GADGET") {
+      newPositions[this.state.gi].x = newX;
+      newPositions[this.state.gi].y = newY;
+    } else {
+      newPositions[this.state.index].x = newX;
+      newPositions[this.state.index].y = newY;
+    }
     switch (this.state.type) {
       case "OPERATOR":
         this.setState({
@@ -71,6 +81,13 @@ class PositionOverlay extends React.Component {
         this.setState({
           drones: newPositions
         });
+      case "GADGET":
+        let positions = [...this.state.gadgetPositions];
+        positions[this.state.index] = newPositions;
+        this.setState({
+          gadgetPositions: positions
+        });
+        break;
     }
   }
   onMouseUp(e) {
@@ -86,9 +103,13 @@ class PositionOverlay extends React.Component {
         case "DRONE":
           this.props.updateDronePositions(this.state.drones);
           break;
+        case "GADGET":
+          this.props.updateGadgetPositions(this.state.gadgetPositions);
+          break;
       }
       this.setState({
-        type: undefined
+        type: undefined,
+        gi: undefined
       });
     });
   }
@@ -133,10 +154,25 @@ class PositionOverlay extends React.Component {
         return "";
       }
     });
+    let gadgets = [];
+    this.state.gadgetPositions.map((pos, index) => {
+      pos.forEach((g, gindex) => {
+        if (g.floor === this.props.floorIndex) {
+          let url = "https://i.redd.it/r90417o3mq411.jpg";
+          gadgets.push(
+            <DragItem url={url}
+            x={g.x} y={g.y}
+            selectElement={this.selectElement} index={index} gindex={gindex} key={index} drag={this.state.drag}
+            type="GADGET"/>
+          );
+        }
+      });
+    });
     return (
       <div className="position-overlay" ref={this.selector}>
         { operators }
         { drones }
+        { gadgets }
       </div>
     )
   }
