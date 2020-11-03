@@ -56,6 +56,9 @@ class PositionOverlay extends React.Component {
       case "ROTATE":
         newPositions = [...this.state.rotates];
         break;
+      case "REINFORCEMENT":
+        newPositions = [...this.state.reinforcements];
+        break;
     }
     let newX = e.pageX - this.state.bounds.left - (width / 2);
     let newY = e.pageY - this.state.bounds.top - (height);
@@ -107,6 +110,11 @@ class PositionOverlay extends React.Component {
           rotates: newPositions
         });
         break;
+      case "REINFORCEMENT":
+        this.setState({
+          reinforcements: newPositions
+        });
+        break;
     }
   }
   onMouseUp(e) {
@@ -130,6 +138,9 @@ class PositionOverlay extends React.Component {
           break;
         case "ROTATE":
           this.props.updateRotatePositions(this.state.rotates);
+          break;
+        case "REINFORCEMENT":
+          this.props.updateReinforcementPositions(this.state.reinforcements);
           break;
       }
       this.setState({
@@ -237,6 +248,21 @@ class PositionOverlay extends React.Component {
       });
     }
 
+    let reinforcements = [];
+    if (this.state.reinforcements && this.props.type === "DEFENSE") {
+      this.state.reinforcements.map((pos, index) => {
+        if (pos.floor === this.props.floorIndex) {
+          let url = "https://pm1.narvii.com/6859/4e921e8569aa49248d84d4deb2a31968c37d5533v2_hq.jpg";
+          reinforcements.push(
+            <DragItem url={url}
+              x={pos.x} y={pos.y}
+              selectElement={this.selectElement} index={index} key={index} drag={this.state.drag}
+              type="REINFORCEMENT"/>
+          )
+        }
+      });
+    }
+
     return (
       <div className="position-overlay" ref={this.selector}>
         { operators }
@@ -244,6 +270,7 @@ class PositionOverlay extends React.Component {
         { rotates }
         { gadgets }
         { utility }
+        { reinforcements }
       </div>
     )
   }

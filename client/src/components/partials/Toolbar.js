@@ -64,6 +64,13 @@ class Toolbar extends React.Component {
               <button onClick={this.props.insertRotate}>Insert</button>
               <button onClick={this.props.removeRotate}>Remove</button>
             </div>
+            <div className="manage">
+              <h3>Reinforcements</h3>
+              { this.props.reinforcements.length < 10 ? (
+                <button onClick={this.props.insertReinforcement}>Insert</button>
+              ) : ""}
+              <button onClick={this.props.removeReinforcement}>Remove</button>
+            </div>
           </div>
         )}
       </div>

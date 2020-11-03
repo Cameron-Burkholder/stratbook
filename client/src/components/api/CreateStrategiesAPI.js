@@ -78,6 +78,8 @@ class CreateStrategiesAPI extends React.Component {
 
     // Reinforcements
     this.updateReinforcementPositions = this.updateReinforcementPositions.bind(this);
+    this.insertReinforcement = this.insertReinforcement.bind(this);
+    this.removeReinforcement = this.removeReinforcement.bind(this);
 
     this.state = {
       form: false,
@@ -617,7 +619,33 @@ class CreateStrategiesAPI extends React.Component {
 
   // Reinforcements
   updateReinforcementPositions(positions) {
-
+    let map = this.state.map;
+    let strategies;
+    map.defense[this.state.site][this.state.strategyIndex].reinforcements = positions;
+    strategies = map.defense[this.state.site];
+    this.setState({
+      map: map,
+      strategies: strategies
+    });
+  }
+  insertReinforcement() {
+    let map = this.state.map;
+    let reinforcement = {
+      x: 0,
+      y: 0,
+      floor: this.state.floorIndex
+    };
+    map.defense[this.state.site][this.state.strategyIndex].reinforcements.push(reinforcement);
+    this.setState({
+      map: map
+    });
+  }
+  removeReinforcement() {
+    let map = this.state.map;
+    map.defense[this.state.site][this.state.strategyIndex].reinforcements.pop();
+    this.setState({
+      map: map
+    });
   }
 
   render() {
@@ -753,6 +781,8 @@ class CreateStrategiesAPI extends React.Component {
                           reinforcements={this.state.type === "ATTACK" ? (
                             undefined
                           ) : (this.state.map.defense[this.state.site][this.state.strategyIndex].reinforcements)}
+                          insertReinforcement={this.insertReinforcement}
+                          removeReinforcement={this.removeReinforcement}
                           activeOperator={this.state.activeOperator}/>
                       </aside>
                     </div>
