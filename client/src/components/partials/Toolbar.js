@@ -56,6 +56,11 @@ class Toolbar extends React.Component {
               <button onClick={this.props.insertDrone}>Insert</button>
               <button onClick={this.props.removeDrone}>Remove</button>
             </div>
+            <div className="manage">
+              <h3>Breaches</h3>
+              <button onClick={this.props.insertBreach}>Insert</button>
+              <button onClick={this.props.removeBreach}>Remove</button>
+            </div>
           </div>
         ) : (
           <div>

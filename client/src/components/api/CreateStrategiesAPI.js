@@ -81,6 +81,11 @@ class CreateStrategiesAPI extends React.Component {
     this.insertReinforcement = this.insertReinforcement.bind(this);
     this.removeReinforcement = this.removeReinforcement.bind(this);
 
+    // Breaches
+    this.updateBreachPositions = this.updateBreachPositions.bind(this);
+    this.insertBreach = this.insertBreach.bind(this);
+    this.removeBreach = this.removeBreach.bind(this);
+
     this.state = {
       form: false,
       activeOperator: 0
@@ -114,6 +119,7 @@ class CreateStrategiesAPI extends React.Component {
             objectives: [],
             utilityPositions: [[], [], [], [], []],
             gadgetPositions: [[], [], [], [], []],
+            breaches: [],
             operatorPositions: [{x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}],
             drones: [],
             execution: ""
@@ -248,6 +254,7 @@ class CreateStrategiesAPI extends React.Component {
             objectives: [],
             utilityPositions: [[], [], [], [], []],
             gadgetPositions: [[], [], [], [], []],
+            breaches: [],
             operatorPositions: [{x: 0, y: 0, floor: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}],
             drones: [],
             execution: ""
@@ -328,6 +335,7 @@ class CreateStrategiesAPI extends React.Component {
         objectives: [],
         utilityPositions: [[], [], [], [], []],
         gadgetPositions: [[], [], [], [], []],
+        breaches: [],
         operatorPositions: [{x: 0, y: 0, floor: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}],
         drones: [],
         execution: ""
@@ -648,6 +656,44 @@ class CreateStrategiesAPI extends React.Component {
     });
   }
 
+  // Breaches
+  updateBreachPositions(positions) {
+    let map = this.state.map;
+    let scenes;
+    let strategies;
+    map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].breaches = positions;
+    scenes = map.attack[this.state.strategyIndex][this.state.site];
+    strategies = map.attack;
+    this.setState({
+      map: map,
+      scenes: scenes,
+      strategies: strategies
+    });
+  }
+  insertBreach() {
+    if (this.state.map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].breaches.length + 1 <= 10) {
+      let breach = {
+        x: 0,
+        y: 0,
+        floor: this.state.floorIndex
+      };
+      let map = this.state.map;
+      map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].breaches.push(breach);
+      this.setState({
+        map: map
+      });
+    }
+  }
+  removeBreach() {
+    if (this.state.map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].breaches.length - 1 >= 0) {
+      let map = this.state.map;
+      map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].breaches.pop();
+      this.setState({
+        map: map
+      });
+    }
+  }
+
   render() {
     console.log(this.state);
     return (
@@ -737,13 +783,17 @@ class CreateStrategiesAPI extends React.Component {
                             undefined
                           ) : this.state.map.defense[this.state.site][this.state.strategyIndex].reinforcements)}
                           map={this.state.map.name} site={this.state.site} floorIndex={this.state.floorIndex}
+                          breaches={(this.state.type === "ATTACK" ? (
+                            this.state.map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].breaches
+                          ) : undefined)}
                           floor={this.state.floors[this.state.floorIndex]}
                           updateOperatorPositions={this.updateOperatorPositions}
                           updateGadgetPositions={this.updateGadgetPositions}
                           updateDronePositions={this.updateDronePositions}
                           updateUtilityPositions={this.updateUtilityPositions}
                           updateRotatePositions={this.updateRotatePositions}
-                          updateReinforcementPositions={this.updateReinforcementPositions}/>
+                          updateReinforcementPositions={this.updateReinforcementPositions}
+                          updateBreachPositions={this.updateBreachPositions}/>
                       </main>
                       <aside className="aside">
                         <Toolbar type={this.state.type}
@@ -783,6 +833,11 @@ class CreateStrategiesAPI extends React.Component {
                           ) : (this.state.map.defense[this.state.site][this.state.strategyIndex].reinforcements)}
                           insertReinforcement={this.insertReinforcement}
                           removeReinforcement={this.removeReinforcement}
+                          breaches={(this.state.type === "ATTACK" ? (
+                            this.state.map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].breaches
+                          ) : undefined)}
+                          insertBreach={this.insertBreach}
+                          removeBreach={this.removeBreach}
                           activeOperator={this.state.activeOperator}/>
                       </aside>
                     </div>

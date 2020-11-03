@@ -22,7 +22,8 @@ class PositionOverlay extends React.Component {
       utilityPositions: this.props.utilityPositions,
       drones: this.props.drones,
       rotates: this.props.rotates,
-      reinforcements: this.props.reinforcements
+      reinforcements: this.props.reinforcements,
+      breaches: this.props.breaches
     }
   }
   selectElement(index, type, gi) {
@@ -58,6 +59,9 @@ class PositionOverlay extends React.Component {
         break;
       case "REINFORCEMENT":
         newPositions = [...this.state.reinforcements];
+        break;
+      case "BREACH":
+        newPositions = [...this.state.breaches];
         break;
     }
     let newX = e.pageX - this.state.bounds.left - (width / 2);
@@ -115,6 +119,11 @@ class PositionOverlay extends React.Component {
           reinforcements: newPositions
         });
         break;
+      case "BREACH":
+        this.setState({
+          breaches: newPositions
+        });
+        break;
     }
   }
   onMouseUp(e) {
@@ -142,6 +151,9 @@ class PositionOverlay extends React.Component {
         case "REINFORCEMENT":
           this.props.updateReinforcementPositions(this.state.reinforcements);
           break;
+        case "BREACH":
+          this.props.updateBreachPositions(this.state.breaches);
+          break;
       }
       this.setState({
         type: undefined,
@@ -166,12 +178,12 @@ class PositionOverlay extends React.Component {
         utilityPositions: this.props.utilityPositions,
         drones: this.props.drones,
         rotates: this.props.rotates,
-        reinforcements: this.props.reinforcements
+        reinforcements: this.props.reinforcements,
+        breaches: this.props.breaches
       });
     }
   }
   render() {
-    console.log(this.props);
     const operators = this.state.operatorPositions.map((pos, index) => {
       if (pos.floor === this.props.floorIndex) {
         let url = `https://cdn.r6stats.com/badges/${this.props.operators[index].toLowerCase()}_badge.png`;
@@ -263,6 +275,21 @@ class PositionOverlay extends React.Component {
       });
     }
 
+    let breaches = [];
+    if (this.state.breaches && this.props.type === "ATTACK") {
+      this.state.breaches.map((pos, index) => {
+        if (pos.floor === this.props.floorIndex) {
+          let url = "https://img.favpng.com/11/9/20/explosion-cartoon-comics-bomb-png-favpng-uuPp7vCWSNnrUGy9QDQ0xyib8.jpg";
+          breaches.push(
+            <DragItem url={url}
+              x={pos.x} y={pos.y}
+              selectElement={this.selectElement} index={index} key={index} drag={this.state.drag}
+              type="BREACH"/>
+          )
+        }
+      });
+    }
+
     return (
       <div className="position-overlay" ref={this.selector}>
         { operators }
@@ -271,6 +298,7 @@ class PositionOverlay extends React.Component {
         { gadgets }
         { utility }
         { reinforcements }
+        { breaches }
       </div>
     )
   }
