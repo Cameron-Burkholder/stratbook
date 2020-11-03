@@ -1,12 +1,14 @@
 /* client/src/components/partials/Toolbar.js */
 
 import React from "react";
+import { UTILITY_GUIDE } from "../../data.js";
 
 class Toolbar extends React.Component {
   constructor(props) {
     super(props);
   }
   render() {
+    console.log(this.props);
     return (
       <div className="toolbar">
         { this.props.operators[this.props.activeOperator] !== "OPERATOR" ? (
@@ -36,6 +38,14 @@ class Toolbar extends React.Component {
             <div className="manage">
               <h4>Utility</h4>
               <p>{this.props.utility[this.props.activeOperator]}</p>
+              { this.props.utility[this.props.activeOperator] !== "UTILITY" ? (
+                <div>
+                  { this.props.utilityPositions[this.props.activeOperator].length < UTILITY_GUIDE[this.props.utility[this.props.activeOperator]] ? (
+                    <button onClick={() => { this.props.insertUtility(this.props.activeOperator) }}>Insert</button>
+                  ) : ""}
+                  <button onClick={() => { this.props.removeUtility(this.props.activeOperator) }}>Remove</button>
+                </div>
+              ) : ""}
             </div>
           </div>
         ) : ""}

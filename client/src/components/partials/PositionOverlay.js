@@ -50,6 +50,9 @@ class PositionOverlay extends React.Component {
       case "GADGET":
         newPositions = [...this.state.gadgetPositions][this.state.index];
         break;
+      case "UTILITY":
+        newPositions = [...this.state.utilityPositions][this.state.index];
+        break;
       case "ROTATE":
         newPositions = [...this.state.rotates];
         break;
@@ -66,13 +69,14 @@ class PositionOverlay extends React.Component {
     } else if (newY > this.state.bounds.height - height) {
       newY = this.state.bounds.height - height;
     }
-    if (this.state.type === "GADGET") {
+    if (this.state.type === "GADGET" || this.state.type === "UTILITY") {
       newPositions[this.state.gi].x = newX;
       newPositions[this.state.gi].y = newY;
     } else {
       newPositions[this.state.index].x = newX;
       newPositions[this.state.index].y = newY;
     }
+    let positions;
     switch (this.state.type) {
       case "OPERATOR":
         this.setState({
@@ -85,10 +89,17 @@ class PositionOverlay extends React.Component {
         });
         break;
       case "GADGET":
-        let positions = [...this.state.gadgetPositions];
+        positions = [...this.state.gadgetPositions];
         positions[this.state.index] = newPositions;
         this.setState({
           gadgetPositions: positions
+        });
+        break;
+      case "UTILITY":
+        positions = [...this.state.utilityPositions];
+        positions[this.state.index] = newPositions;
+        this.setState({
+          utilityPositions: positions
         });
         break;
       case "ROTATE":
@@ -113,6 +124,9 @@ class PositionOverlay extends React.Component {
           break;
         case "GADGET":
           this.props.updateGadgetPositions(this.state.gadgetPositions);
+          break;
+        case "UTILITY":
+          this.props.updateUtilityPositions(this.state.utilityPositions);
           break;
         case "ROTATE":
           this.props.updateRotatePositions(this.state.rotates);
@@ -186,8 +200,23 @@ class PositionOverlay extends React.Component {
           gadgets.push(
             <DragItem url={url}
             x={g.x} y={g.y}
-            selectElement={this.selectElement} index={index} gindex={gindex * index + gindex} key={index} drag={this.state.drag}
+            selectElement={this.selectElement} index={index} gindex={gindex} key={gindex * index + gindex} drag={this.state.drag}
             type="GADGET"/>
+          );
+        }
+      });
+    });
+
+    let utility = [];
+    this.state.utilityPositions.map((pos, index) => {
+      pos.forEach((u, uindex) => {
+        if (u.floor === this.props.floorIndex) {
+          let url = "https://liquipedia.net/commons/images/thumb/3/34/Barbed_Wire_R6S.jpg/256px-Barbed_Wire_R6S.jpg";
+          utility.push(
+            <DragItem url={url}
+            x={u.x} y={u.y}
+            selectElement={this.selectElement} index={index} uindex={uindex} key={uindex * index + uindex} drag={this.state.drag}
+            type="UTILITY"/>
           );
         }
       });
@@ -214,6 +243,7 @@ class PositionOverlay extends React.Component {
         { drones }
         { rotates }
         { gadgets }
+        { utility }
       </div>
     )
   }

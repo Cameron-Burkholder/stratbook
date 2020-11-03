@@ -349,5 +349,19 @@ module.exports = {
       "ORYX": ["BARBED WIRE", "PROXIMITY ALARMS"],
       "MELUSI": ["IMPACT GRENADES", "NITRO CELL"]
     }
+  },
+  UTILITY_GUIDE: {
+    "BREACH CHARGES": 3,
+    "CLAYMORE": 1,
+    "FRAG GRENADES": 2,
+    "HARD BREACH CHARGE": 1,
+    "SMOKE GRENADES": 2,
+    "STUN GRENADES": 3,
+    "BARBED WIRE": 2,
+    "BULLETPROOF CAMERA": 1,
+    "DEPLOYABLE SHIELD": 1,
+    "IMPACT GRENADES": 2,
+    "NITRO CELL": 1,
+    "PROXIMITY ALARMS": 2
   }
 }
