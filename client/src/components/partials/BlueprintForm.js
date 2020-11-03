@@ -29,7 +29,8 @@ const BlueprintForm = (props) => {
           updateDronePositions={props.updateDronePositions}
           updateUtilityPositions={props.updateUtilityPositions}
           updateRotatePositions={props.updateRotatePositions}
-          updateReinforcementPositions={props.updateReinforcementPositions}/>
+          updateReinforcementPositions={props.updateReinforcementPositions}
+          type={props.type}/>
       </div>
     )
 }

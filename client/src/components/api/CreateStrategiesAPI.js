@@ -71,6 +71,8 @@ class CreateStrategiesAPI extends React.Component {
 
     // Rotates
     this.updateRotatePositions = this.updateRotatePositions.bind(this);
+    this.insertRotate = this.insertRotate.bind(this);
+    this.removeRotate = this.removeRotate.bind(this);
 
     // Reinforcements
     this.updateReinforcementPositions = this.updateReinforcementPositions.bind(this);
@@ -451,7 +453,14 @@ class CreateStrategiesAPI extends React.Component {
 
   }
   updateRotatePositions(positions) {
-
+    let map = this.state.map;
+    let strategies;
+    map.defense[this.state.site][this.state.strategyIndex].rotates = positions;
+    strategies = map.defense[this.state.site];
+    this.setState({
+      map: map,
+      strategies: strategies
+    });
   }
   selectOperator(index) {
     this.setState({
@@ -526,6 +535,25 @@ class CreateStrategiesAPI extends React.Component {
     } else {
       map.defense[this.state.site][this.state.strategyIndex].gadgetPositions[index].pop();
     }
+    this.setState({
+      map: map
+    });
+  }
+  insertRotate() {
+    let map = this.state.map;
+    let rotate = {
+      x: 0,
+      y: 0,
+      floor: this.state.floorIndex
+    };
+    map.defense[this.state.site][this.state.strategyIndex].rotates.push(rotate);
+    this.setState({
+      map: map
+    });
+  }
+  removeRotate() {
+    let map = this.state.map;
+    map.defense[this.state.site][this.state.strategyIndex].rotates.pop();
     this.setState({
       map: map
     });
@@ -652,6 +680,8 @@ class CreateStrategiesAPI extends React.Component {
                           rotates={this.state.type === "ATTACK"? (
                             undefined
                           ) : (this.state.map.defense[this.state.site][this.state.strategyIndex].rotates)}
+                          insertRotate={this.insertRotate}
+                          removeRotate={this.removeRotate}
                           reinforcements={this.state.type === "ATTACK" ? (
                             undefined
                           ) : (this.state.map.defense[this.state.site][this.state.strategyIndex].reinforcements)}

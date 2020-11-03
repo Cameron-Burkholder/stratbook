@@ -47,9 +47,11 @@ class PositionOverlay extends React.Component {
       case "DRONE":
         newPositions = [...this.state.drones];
         break;
-
       case "GADGET":
         newPositions = [...this.state.gadgetPositions][this.state.index];
+        break;
+      case "ROTATE":
+        newPositions = [...this.state.rotates];
         break;
     }
     let newX = e.pageX - this.state.bounds.left - (width / 2);
@@ -81,11 +83,17 @@ class PositionOverlay extends React.Component {
         this.setState({
           drones: newPositions
         });
+        break;
       case "GADGET":
         let positions = [...this.state.gadgetPositions];
         positions[this.state.index] = newPositions;
         this.setState({
           gadgetPositions: positions
+        });
+        break;
+      case "ROTATE":
+        this.setState({
+          rotates: newPositions
         });
         break;
     }
@@ -106,6 +114,9 @@ class PositionOverlay extends React.Component {
         case "GADGET":
           this.props.updateGadgetPositions(this.state.gadgetPositions);
           break;
+        case "ROTATE":
+          this.props.updateRotatePositions(this.state.rotates);
+          break;
       }
       this.setState({
         type: undefined,
@@ -121,13 +132,21 @@ class PositionOverlay extends React.Component {
     }
   }
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.positions !== this.props.positions) {
+    if (prevProps.type !== this.props.type) {
       this.setState({
-        positions: this.props.positions
+        index: 0,
+        type: "",
+        operatorPositions: this.props.operatorPositions,
+        gadgetPositions: this.props.gadgetPositions,
+        utilityPositions: this.props.utilityPositions,
+        drones: this.props.drones,
+        rotates: this.props.rotates,
+        reinforcements: this.props.reinforcements
       });
     }
   }
   render() {
+    console.log(this.props);
     const operators = this.state.operatorPositions.map((pos, index) => {
       if (pos.floor === this.props.floorIndex) {
         let url = `https://cdn.r6stats.com/badges/${this.props.operators[index].toLowerCase()}_badge.png`;
@@ -141,19 +160,24 @@ class PositionOverlay extends React.Component {
         return "";
       }
     });
-    const drones = this.state.drones.map((pos, index) => {
-      if (pos.floor === this.props.floorIndex) {
-        let url = "https://external-preview.redd.it/mYPEnvxN9kDjubOi6dDM6IO1Z5Ando9V8Vzi1VS2qnM.png?auto=webp&s=0a1d4f3a875a6fc968ec22e68c9a7d868b342281";
-        return (
-          <DragItem url={url}
-            x={pos.x} y={pos.y}
-            selectElement={this.selectElement} index={index} key={index} drag={this.state.drag}
-            type="DRONE"/>
-        )
-      } else {
-        return "";
-      }
-    });
+
+    let drones = [];
+    if (this.state.drones && this.props.type === "ATTACK") {
+      this.state.drones.map((pos, index) => {
+        if (pos.floor === this.props.floorIndex) {
+          let url = "https://external-preview.redd.it/mYPEnvxN9kDjubOi6dDM6IO1Z5Ando9V8Vzi1VS2qnM.png?auto=webp&s=0a1d4f3a875a6fc968ec22e68c9a7d868b342281";
+          drones.push(
+            <DragItem url={url}
+              x={pos.x} y={pos.y}
+              selectElement={this.selectElement} index={index} key={index} drag={this.state.drag}
+              type="DRONE"/>
+          )
+        } else {
+          return "";
+        }
+      });
+    }
+
     let gadgets = [];
     this.state.gadgetPositions.map((pos, index) => {
       pos.forEach((g, gindex) => {
@@ -162,16 +186,33 @@ class PositionOverlay extends React.Component {
           gadgets.push(
             <DragItem url={url}
             x={g.x} y={g.y}
-            selectElement={this.selectElement} index={index} gindex={gindex} key={index} drag={this.state.drag}
+            selectElement={this.selectElement} index={index} gindex={gindex * index + gindex} key={index} drag={this.state.drag}
             type="GADGET"/>
           );
         }
       });
     });
+
+    let rotates = [];
+    if (this.state.rotates && this.props.type === "DEFENSE") {
+      this.state.rotates.map((pos, index) => {
+        if (pos.floor === this.props.floorIndex) {
+          let url = "https://img.favpng.com/11/9/20/explosion-cartoon-comics-bomb-png-favpng-uuPp7vCWSNnrUGy9QDQ0xyib8.jpg";
+          rotates.push(
+            <DragItem url={url}
+              x={pos.x} y={pos.y}
+              selectElement={this.selectElement} index={index} key={index} drag={this.state.drag}
+              type="ROTATE"/>
+          )
+        }
+      });
+    }
+
     return (
       <div className="position-overlay" ref={this.selector}>
         { operators }
         { drones }
+        { rotates }
         { gadgets }
       </div>
     )

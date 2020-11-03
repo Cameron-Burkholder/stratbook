@@ -7,7 +7,6 @@ class Toolbar extends React.Component {
     super(props);
   }
   render() {
-    console.log(this.props);
     return (
       <div className="toolbar">
         { this.props.operators[this.props.activeOperator] !== "OPERATOR" ? (
@@ -41,13 +40,21 @@ class Toolbar extends React.Component {
           </div>
         ) : ""}
         { this.props.type === "ATTACK" ? (
-          <div className="manage">
-            <h3>Drones</h3>
-            <button onClick={this.props.insertDrone}>Insert</button>
-            <button onClick={this.props.removeDrone}>Remove</button>
+          <div>
+            <div className="manage">
+              <h3>Drones</h3>
+              <button onClick={this.props.insertDrone}>Insert</button>
+              <button onClick={this.props.removeDrone}>Remove</button>
+            </div>
           </div>
         ) : (
-          "defense"
+          <div>
+            <div className="manage">
+              <h3>Rotates</h3>
+              <button onClick={this.props.insertRotate}>Insert</button>
+              <button onClick={this.props.removeRotate}>Remove</button>
+            </div>
+          </div>
         )}
       </div>
     )
