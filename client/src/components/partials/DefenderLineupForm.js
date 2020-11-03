@@ -4,6 +4,7 @@ import React from "react";
 
 import DefenderForm from "./DefenderForm.js";
 import UtilityForm from "./UtilityForm.js";
+import { DEFENDER_ROLES } from "../../data.js";
 
 /*
   @func: DefenderLineupForm
@@ -12,7 +13,6 @@ import UtilityForm from "./UtilityForm.js";
   @prop operators: Array
   @prop onChange: function
 */
-const roles = ["NONE", "HARD BREACH DENIAL", "INTEL DENIAL", "INTEL", "AREA DENIAL", "TRAPS", "UTILITY SOAK", "SUPPORT", "ROAM"];
 
 const DefenderLineupForm = (props) => {
   const defenderRoles = props.roles.map((role, index) => {

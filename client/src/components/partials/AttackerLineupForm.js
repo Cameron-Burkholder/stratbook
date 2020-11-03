@@ -4,6 +4,7 @@ import React from "react";
 
 import AttackerForm from "./AttackerForm.js";
 import UtilityForm from "./UtilityForm.js";
+import { ATTACKER_ROLES } from "../../data.js";
 
 /*
   @func: AttackerLineupForm
@@ -13,7 +14,6 @@ import UtilityForm from "./UtilityForm.js";
   @prop onChange: function
   @prop utility: Array
 */
-const roles = ["NONE", "HARD BREACH", "SOFT BREACH", "ENTRY FRAG", "AREA DENIAL/FLANK WATCH", "INTEL", "UTILITY CLEAR", "SUPPORT", "ROAM CLEAR"];
 
 const AttackerLineupForm = (props) => {
   const attackerRoles = props.roles.map((role, index) => {

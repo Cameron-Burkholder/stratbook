@@ -1,9 +1,10 @@
 /* client/src/components/partials/RoleForm.js */
 
 import React from "react";
+import { ATTACKER_ROLES, DEFENDER_ROLES } from "../../data.js";
 
-const attackRoles = ["ROLE", "HARD BREACH", "SOFT BREACH", "INTEL", "AREA DENIAL/FLANK WATCH", "UTILITY CLEAR", "SUPPORT", "ENTRY FRAG"];
-const defenderRoles = ["ROLE", "HARD BREACH DENIAL", "INTEL DENIAL", "INTEL", "AREA DENIAL", "TRAPS", "UTILITY SOAK", "SUPPORT", "ROAM"];
+const attackRoles = ATTACKER_ROLES;
+const defenderRoles = DEFENDER_ROLES;
 const RoleForm = (props) => {
   const roleOptions = (props.type === "ATTACK" ? (
     attackRoles.map((option, index) => {

@@ -6,6 +6,7 @@ import axios from "axios";
 
 import LoadingModal from "../partials/LoadingModal.js";
 import Map from "../partials/Map.js";
+import { MAP_NAMES } from "../../data.js";
 
 /*
   @func: ViewStrategiesAPI
@@ -17,7 +18,6 @@ import Map from "../partials/Map.js";
     index: Int
     loading: Boolean
 */
-const MAP_NAMES = ["BANK", "BORDER", "CHALET", "CLUBHOUSE", "COASTLINE", "CONSULATE", "KAFE DOSTOYEVSKY", "KANAL", "OREGON", "OUTBACK", "THEME PARK", "VILLA"];
 class ViewStrategiesAPI extends React.Component {
   constructor(props) {
     super(props);

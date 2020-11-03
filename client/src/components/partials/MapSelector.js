@@ -1,8 +1,8 @@
 /* client/src/components/partials/MapSelector.js */
 
 import React from "react";
+import { MAPS } from "../../data.js";
 
-const MAPS = ["BANK", "BORDER", "CHALET", "CLUBHOUSE", "COASTLINE", "CONSULATE", "KAFE DOSTOYEVSKY", "KANAL", "OREGON", "OUTBACK", "THEME PARK", "VILLA"];
 const MapSelector = (props) => {
   const options = MAPS.filter((map) => props.maps.indexOf(map) < 0).map((map, index) => {
     return <option key={index}>{map}</option>

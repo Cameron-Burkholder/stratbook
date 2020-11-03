@@ -3,7 +3,7 @@
 import React from "react";
 
 import Loading from "./Loading.js"
-const attackers = ["SLEDGE", "THATCHER", "ASH", "THERMITE", "TWITCH", "MONTAGNE", "GLAZ", "FUZE", "BLITZ", "IQ", "BUCK", "BLACKBEARD", "CAPITAO", "HIBANA", "JACKAL", "YING", "ZOFIA", "DOKKAEBI", "LION", "FINKA", "MAVERICK", "NOMAD", "GRIDLOCK", "NOKK", "AMARU", "KALI", "IANA", "ACE", "ZERO"];
+import { ATTACKERS } from "../../data.js";
 
 /*
   @func: AttackersForm
@@ -15,7 +15,7 @@ const attackers = ["SLEDGE", "THATCHER", "ASH", "THERMITE", "TWITCH", "MONTAGNE"
   @prop loading: Boolean
 */
 const AttackersForm = (props) => {
-  const attacker_buttons = attackers.map((attacker, index) => {
+  const attacker_buttons = ATTACKERS.map((attacker, index) => {
     return (
       <div className="attackers-form__attacker" key={index}>
         <input onChange={() => { props.onChange(attacker); } } className={"attackers-form__input " + (props.attackers.indexOf(attacker) >= 0 ? "attackers-form__input--checked" : "")} type="checkbox" id={"attackers-form__input--" + attacker.toLowerCase()} checked={props.attackers.indexOf(attacker) >= 0} key={index}/>
