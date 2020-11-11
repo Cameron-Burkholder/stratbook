@@ -20,7 +20,6 @@ import NotFound from "./components/pages/NotFound.js";
 
 // import presentational components
 import Navigation from "./components/partials/Navigation.js";
-import MainNavigation from "./components/partials/MainNavigation.js";
 import Alert from "./components/partials/Alert.js";
 import Header from "./components/partials/Header.js";
 import Footer from "./components/partials/Footer.js";
@@ -161,13 +160,12 @@ class App extends React.Component {
     return (
       <Router>
         <div className="container">
-          <Navigation loggedIn={this.state.loggedIn} username={(this.state.user ? this.state.user.username : "")}/>
+          <Navigation loggedIn={this.state.loggedIn} username={(this.state.user ? this.state.user.username : "")} status={this.state.user.status}/>
           <Switch>
             <Route exact path="/">
               { this.state.loggedIn ? ( <Redirect to="/dashboard"/> )
               : (
                 <div className="page-wrapper">
-                  <Header title="Home" subtitle="Subtitle"/>
                   <Home/>
                 </div>
               )}
@@ -175,8 +173,6 @@ class App extends React.Component {
             <Route exact path="/user">
               { this.state.loggedIn ? (
                 <div className="page-wrapper">
-                  <Header title="Account"/>
-                  <MainNavigation page="USER" status={this.state.user.status}/>
                   <User getAuthToken={this.getAuthToken} updateAuthToken={this.updateAuthToken}
                         logout={this.logout} username={this.state.user.username} email={this.state.user.email}
                         platform={this.state.user.platform} attacker_role={this.state.user.attacker_role}
@@ -190,8 +186,6 @@ class App extends React.Component {
             <Route exact path="/dashboard">
               { this.state.loggedIn ? (
                 <div className="page-wrapper">
-                  <Header title="Dashboard"/>
-                  <MainNavigation page="DASHBOARD" status={this.state.user.status}/>
                   <Dashboard getAuthToken={this.getAuthToken} alert={this.alert}/>
                 </div>
               )
@@ -201,8 +195,6 @@ class App extends React.Component {
             <Route exact path="/team">
               { this.state.loggedIn ? (
                 <div className="page-wrapper">
-                  <Header title="Team" subtitle="View Team"/>
-                  <MainNavigation page="TEAM" active="VIEW" status={this.state.user.status}/>
                   <Team getAuthToken={this.getAuthToken} updateAuthToken={this.updateAuthToken}
                         team_code={this.state.user.team_code} alert={this.alert}/>
                 </div>
@@ -213,8 +205,6 @@ class App extends React.Component {
             <Route exact path="/team/manage">
               { this.state.loggedIn && this.state.user.status === "ADMIN" ? (
                 <div className="page-wrapper">
-                  <Header title="Team" subtitle="Manage Team"/>
-                  <MainNavigation page="TEAM" active="MANAGE" status={this.state.user.status}/>
                   <ManageTeam getAuthToken={this.getAuthToken} updateAuthToken={this.updateAuthToken} alert={this.alert}/>
                 </div>
               )
@@ -224,8 +214,6 @@ class App extends React.Component {
             <Route exact path="/strategies">
               { this.state.loggedIn && this.state.user.team_code ? (
                 <div className="page-wrapper">
-                  <Header title="Strategies" subtitle="View Strategies"/>
-                  <MainNavigation page="STRATEGIES" active="VIEW" status={this.state.user.status}/>
                   <Strategies team_code={this.state.user.team_code} getAuthToken={this.getAuthToken} alert={this.alert}/>
                 </div>
               )
@@ -235,8 +223,6 @@ class App extends React.Component {
             <Route exact path="/strategies/edit">
               { this.state.loggedIn && (this.state.user.status === "ADMIN" || this.state.user.status === "EDITOR") ? (
                 <div className="page-wrapper">
-                  <Header title="Strategies" subtitle="View Strategies"/>
-                  <MainNavigation page="STRATEGIES" active="EDIT" status={this.state.user.status}/>
                   <EditStrategies getAuthToken={this.getAuthToken} alert={this.alert}/>
                 </div>
               )
@@ -246,8 +232,6 @@ class App extends React.Component {
             <Route exact path="/chat">
               { this.state.loggedIn && this.state.user.team_code ? (
                 <div className="page-wrapper">
-                  <Header title="Chat"/>
-                  <MainNavigation page="CHAT" status={this.state.user.status}/>
                 </div>
               )
               : ( <Redirect to="/"/> )
@@ -256,8 +240,6 @@ class App extends React.Component {
             <Route exact path="/meta">
               { this.state.loggedIn ? (
                 <div className="page-wrapper">
-                  <Header title="Meta"/>
-                  <MainNavigation page="META" user={this.state.user.status}/>
                 </div>
               )
               : ( <Redirect to="/"/> )
@@ -267,7 +249,6 @@ class App extends React.Component {
               { this.state.loggedIn ? ( <Redirect to="/"/> )
               : (
                 <div className="page-wrapper">
-                  <Header title="Login"/>
                   <Login login={this.login} alert={this.alert}/>
                 </div>
                 )
@@ -284,7 +265,6 @@ class App extends React.Component {
               { this.state.loggedIn ? ( <Redirect to="/"/> )
               : (
                 <div className="page-wrapper">
-                  <Header title="Register"/>
                   <Register alert={this.alert}/>
                 </div>
                 )

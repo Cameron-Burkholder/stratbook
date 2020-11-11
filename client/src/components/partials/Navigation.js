@@ -44,10 +44,13 @@ class Navigation extends React.Component {
   render() {
     return (
       <nav className={"nav " + (this.state.active ? "nav--active" : "nav--inactive")}>
-        <h3 className="nav__heading">R6 Stratbook</h3>
+        <ul className="nav__head">
+          <img className="nav__image" alt="Logo" src=""/>
+          <h3 className="nav__heading">Stratbook</h3>
+        </ul>
         <ul className="nav__body">
           <li className="nav__item">
-            <Link onClick={this.toggleMenu} className="nav__link" to="/">Home</Link>
+            <Link onClick={this.toggleMenu} className="nav__link" to="/">{this.state.loggedIn ? "Dashboard" : "Home"}</Link>
           </li>
           {
             this.state.loggedIn ? "" : (
@@ -62,6 +65,27 @@ class Navigation extends React.Component {
                 <Link onClick={this.toggleMenu} className="nav__link" to="/register">Register</Link>
               </li>
             )
+          }
+          {
+            this.state.loggedIn ? (
+              <li className="nav__item">
+                <Link onClick={this.toggleMenu} className="nav__link" to="/team">Team</Link>
+              </li>
+            ) : ( "" )
+          }
+          {
+            this.state.loggedIn ? (
+              <li className="nav__item">
+                <Link onClick={this.toggleMenu} className="nav__link" to="/strategies">Strategies</Link>
+              </li>
+            ) : ( "" )
+          }
+          {
+            this.state.loggedIn ? (
+              <li className="nav__item">
+                <Link onClick={this.toggleMenu} className="nav__link" to="/chat">Chat</Link>
+              </li>
+            ) : ( "" )
           }
           {
             this.state.loggedIn ? (

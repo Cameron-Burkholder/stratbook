@@ -10,14 +10,14 @@
   min-width: 0;
   min-height: 0;
   box-sizing: border-box;
-  font-family: $body-font;
+  font-family: $primary-font;
   font-size: $text;
   color: $subtle-accent;
   z-index: 0;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: $title-font;
+  font-family: $primary-font;
   color: $accent;
 }
 h1 {
