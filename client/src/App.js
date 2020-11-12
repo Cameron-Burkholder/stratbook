@@ -160,7 +160,7 @@ class App extends React.Component {
     return (
       <Router>
         <div className="container">
-          <Navigation loggedIn={this.state.loggedIn} username={(this.state.user ? this.state.user.username : "")} status={this.state.user.status}/>
+          <Navigation loggedIn={this.state.loggedIn} username={(this.state.user ? this.state.user.username : "")} status={this.state.user ? this.state.user.status : ""}/>
           <Switch>
             <Route exact path="/">
               { this.state.loggedIn ? ( <Redirect to="/dashboard"/> )
