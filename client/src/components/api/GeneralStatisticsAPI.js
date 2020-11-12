@@ -126,7 +126,7 @@ class GeneralStatisticsAPI extends React.Component {
                   </div>
                 </div>
               </div>
-              <h3 className="stats-grid-heading">Competitive</h3>
+              <h3 className="stats-grid__heading">Competitive</h3>
               <div className="stats-grid">
                 <div className="stats-box">
                   <h4 className="stats__heading">Progression</h4>
@@ -140,7 +140,7 @@ class GeneralStatisticsAPI extends React.Component {
                   </div>
                 </div>
                 <div className="stats-box">
-                  <h4 className="stats-heading">Personal Performance</h4>
+                  <h4 className="stats__heading">Personal Performance</h4>
                   <div className="stat stat--main">
                     <p className="stat__label">K/D</p>
                     <span className="stat__value">{this.state.stats.stats.queue.ranked.kd}</span>
@@ -155,7 +155,7 @@ class GeneralStatisticsAPI extends React.Component {
                   </div>
                 </div>
                 <div className="stats-box">
-                  <h4 className="stats-heading">Team Performance</h4>
+                  <h4 className="stats__heading">Team Performance</h4>
                   <div className="stat stat--main">
                     <p className="stat__label">W/L</p>
                     <span className="stat__value">{this.state.stats.stats.queue.ranked.wl}</span>

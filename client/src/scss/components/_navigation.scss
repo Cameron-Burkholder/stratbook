@@ -7,7 +7,7 @@ nav.nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid #dedede;
+  border-bottom: $border-primary;
   background: $background;
 }
 ul.nav__head {
@@ -49,24 +49,22 @@ img.user-dropdown__icon:hover {
   cursor: pointer;
 }
 div.user-dropdown__body {
-  background: $theme-white;
   padding: $padding;
   border-radius: $border-radius;
   position: absolute;
   top: calc(#{$padding} * 2);
   left: -200px;
   width: 200px;
-  box-shadow: $box-shadow;
+  box-shadow: $box-shadow-secondary;
+  background-color: white;
   span#user-dropdown-title {
     display: block;
     margin-bottom: $margin;
     text-align: center;
-    color: $theme-dark;
   }
   a.user-dropdown__link {
     display: block;
     text-align: left;
-    color: $theme-dark;
   }
 }
 div.user-dropdown--inactive {

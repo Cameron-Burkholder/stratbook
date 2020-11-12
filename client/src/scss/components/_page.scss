@@ -1,11 +1,12 @@
 /* scss/components/_page.scss */
 
 div.page {
-  padding: calc(#{$padding} * 2);
+  background: $color-primary;
 }
 
-@media screen and (max-width: #{$phone-max-width}) {
-  div.page {
-    padding: calc(#{$phone-padding} * 2);
-  }
+div.page#dashboard {
+  padding: calc(#{$padding} * 9);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: calc(#{$padding} * 6);
 }

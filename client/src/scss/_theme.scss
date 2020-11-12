@@ -9,38 +9,21 @@ $phone-margin: 8px;
 // COLORS
 $background: white;
 $text-primary: #212121;
-
-// OLD
-$theme-dark: #15161A;
-$theme-accent: #2D3038;
-$theme-medium: #1F242A;
-$theme-light: white;
-$theme-white: white;
-$theme-primary: #757BEB;
-$theme-error: red;
-$theme-warning: orange;
-$theme-success: green;
-$heading: #fff;
-$subtitle-color: rgba(250, 250, 250, 0.7);
-$nav-link: rgb(214, 214, 214);
-$nav-link-hover: rgb(250, 250, 250);
-$nav-link-active: rgb(250, 250, 250);
-$accent: white;
-$subtle-accent: rgb(214, 214, 214);
-$light: #7B7B7F;
+$text-secondary: #4d4d4d;
+$text-tertiary: #707070;
+$color-primary: #1565c0;
+$color-secondary: orange;
 
 // BORDERS
-$light-border: 1px solid rgba(50, 50, 50, 0.4);
+$border-primary: 1px solid #dedede;
 
 // BORDER RADIUS
-$border-radius: 2px;
-
-// TEXT SHADOW
-$text-shadow: 2px 2px rgba(50, 50, 50, 0.7);
-$nav-link-hover-shadow: 0px 0px 2px rgba(250, 250, 250, 0.5);
+$border-radius: 4px;
 
 // BOX SHADOW
-$box-shadow: 0px 2px 5px rgba(50, 50, 50, 0.3);
+$box-shadow-primary: 0px 0px 3px rgba(50, 50, 50, 0.3);
+$box-shadow-secondary: 0px 0px 3px rgba(50, 50, 50, 0.3);
+$box-shadow-tertiary: 0px 2px 5px rgba(50, 50, 50, 0.3);
 
 // FONTS
 $primary-font: "Lato";
@@ -48,18 +31,12 @@ $primary-font: "Lato";
 // FONT SIZES
 $title: 56pt;
 $subtitle: 16pt;
-$heading1: 36px;
-$heading2: 24px;
-$heading3: 20px;
-$heading4: 18px;
+$heading1: 42px;
+$heading2: 36px;
+$heading3: 24px;
+$heading4: 20px;
 $text: 16px;
 $small: 14px;
-
-$phone-text: 12pt;
-$phone-small: 10pt;
-
-// SIZES
-$header-height: 40VH;
 
 // MEDIA QUERIES
 $phone-max-width: 600px;

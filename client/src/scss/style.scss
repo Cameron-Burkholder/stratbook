@@ -11,14 +11,16 @@
   min-height: 0;
   box-sizing: border-box;
   font-family: $primary-font;
+  font-weight: 400;
   font-size: $text;
-  color: $subtle-accent;
+  color: $text-secondary;
   z-index: 0;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: $primary-font;
-  color: $accent;
+  font-weight: 500;
+  color: $text-primary;
 }
 h1 {
   font-size: $heading1;
@@ -38,14 +40,12 @@ html, body {
   overflow-x: hidden;
 }
 p {
-  color: $subtle-accent;
+  color: $text-secondary;
   font-size: $text;
 }
 
 // Import components
 @import "./components/_navigation.scss";
-@import "./components/_header.scss";
-@import "./components/_main-navigation.scss";
 @import "./components/_user.scss";
 @import "./components/_page.scss";
 @import "./components/_form.scss";
@@ -53,26 +53,4 @@ p {
 @import "./components/_pagination.scss";
 
 // Import APIs
-// Dashboard
-@import "./api/_general-statistics.scss";
-@import "./api/_seasonal-statistics.scss";
-@import "./api/_operator-statistics.scss";
-// Team
-@import "./api/_view-team.scss";
-@import "./api/_view-team-statistics.scss";
-@import "./api/_leave-team.scss";
-// Manage Team
-@import "./api/_update-team-name.scss";
-@import "./api/_manage-team.scss";
-@import "./api/_delete-team.scss";
-// Account
-@import "./api/_set-attacker-role.scss";
-@import "./api/_set-defender-role.scss";
-@import "./api/_set-attackers.scss";
-@import "./api/_set-defenders.scss";
-@import "./api/_delete-user.scss";
-// Strategies
-@import "./api/_view-strategies.scss";
-// Edit Strategies
-@import "./api/_create-strategy.scss";
-@import "./api/_edit-strategies.scss";
+@import "./api/_statistics-api.scss";

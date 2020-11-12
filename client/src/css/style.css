@@ -7,32 +7,34 @@
   min-height: 0;
   box-sizing: border-box;
   font-family: "Lato";
+  font-weight: 400;
   font-size: 16px;
-  color: #d6d6d6;
+  color: #4d4d4d;
   z-index: 0; }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: "Lato";
-  color: white; }
+  font-weight: 500;
+  color: #212121; }
 
 h1 {
-  font-size: 36px; }
+  font-size: 42px; }
 
 h2 {
-  font-size: 24px; }
+  font-size: 36px; }
 
 h3 {
-  font-size: 20px; }
+  font-size: 24px; }
 
 h4 {
-  font-size: 18px; }
+  font-size: 20px; }
 
 html, body {
   background: white;
   overflow-x: hidden; }
 
 p {
-  color: #d6d6d6;
+  color: #4d4d4d;
   font-size: 16px; }
 
 /* scss/components/_navigation.scss */
@@ -50,7 +52,7 @@ ul.nav__head {
   display: flex; }
 
 h3.nav__heading {
-  font-size: 20px;
+  font-size: 24px;
   color: #212121;
   font-weight: 400;
   margin-left: calc(8px * 3); }
@@ -85,23 +87,21 @@ img.user-dropdown__icon:hover {
   cursor: pointer; }
 
 div.user-dropdown__body {
-  background: white;
   padding: 8px;
-  border-radius: 2px;
+  border-radius: 4px;
   position: absolute;
   top: calc(8px * 2);
   left: -200px;
   width: 200px;
-  box-shadow: 0px 2px 5px rgba(50, 50, 50, 0.3); }
+  box-shadow: 0px 0px 3px rgba(50, 50, 50, 0.3);
+  background-color: white; }
   div.user-dropdown__body span#user-dropdown-title {
     display: block;
     margin-bottom: 8px;
-    text-align: center;
-    color: #15161A; }
+    text-align: center; }
   div.user-dropdown__body a.user-dropdown__link {
     display: block;
-    text-align: left;
-    color: #15161A; }
+    text-align: left; }
 
 div.user-dropdown--inactive div.user-dropdown__body {
   display: none; }
@@ -112,1131 +112,76 @@ div.user-dropdown--active div.user-dropdown__body {
 button.nav__button {
   display: none; }
 
-/* scss/components/_header.scss */
-header.header {
-  width: 100VW;
-  height: 40VH;
-  border-bottom: 1px solid rgba(50, 50, 50, 0.4); }
-  header.header div.header__overlay {
-    background: rgba(0, 0, 0, 0.6);
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center; }
-    header.header div.header__overlay h1.header__title {
-      font-size: 56pt;
-      color: #fff;
-      text-shadow: 2px 2px rgba(50, 50, 50, 0.7); }
-    header.header div.header__overlay h2.header__subtitle {
-      font-size: 16pt;
-      color: rgba(250, 250, 250, 0.7); }
-
-/* scss/components/_main-navigation.scss */
-nav.main-nav {
-  margin-bottom: 8px;
-  background: #1F242A; }
-  nav.main-nav ul.main-nav__head {
-    display: block;
-    margin-left: calc(8px * 4); }
-    nav.main-nav ul.main-nav__head li.main-nav__item {
-      padding: 8px;
-      display: inline-block;
-      list-style-type: none; }
-      nav.main-nav ul.main-nav__head li.main-nav__item a.main-nav__link {
-        color: #d6d6d6;
-        text-decoration: none;
-        transition: all 0.3s ease; }
-      nav.main-nav ul.main-nav__head li.main-nav__item a.main-nav__link:hover {
-        color: #fafafa;
-        transition: all 0.3s ease;
-        filter: drop-shadow(0px 0px 2px rgba(250, 250, 250, 0.5)); }
-    nav.main-nav ul.main-nav__head li.main-nav__item--active {
-      background: #2D3038; }
-      nav.main-nav ul.main-nav__head li.main-nav__item--active a.main-nav__link {
-        color: #fafafa;
-        font-weight: bold; }
-  nav.main-nav ul.main-nav__body {
-    background: #2D3038; }
-    nav.main-nav ul.main-nav__body li.main-nav__item {
-      padding: 8px;
-      display: inline-block;
-      list-style: none; }
-      nav.main-nav ul.main-nav__body li.main-nav__item a.main-nav__link {
-        color: #d6d6d6;
-        text-decoration: none;
-        list-style-type: none;
-        transition: all 0.3s ease; }
-      nav.main-nav ul.main-nav__body li.main-nav__item a.main-nav__link:hover {
-        color: #fafafa;
-        transition: all 0.3s ease;
-        filter: drop-shadow(0px 0px 2px rgba(250, 250, 250, 0.5)); }
-      nav.main-nav ul.main-nav__body li.main-nav__item a.main-nav__link--active {
-        color: #fafafa;
-        filter: drop-shadow(0px 0px 2px rgba(250, 250, 250, 0.5)); }
-
 /* scss/components/_user.scss */
-div#user p.user-property {
-  color: #d6d6d6;
-  text-align: center; }
-
-div#user div.account-section {
-  background: #15161A;
-  border-radius: 2px;
-  padding: 8px;
-  margin: calc(8px * 2) auto;
-  max-width: 1200px; }
-  div#user div.account-section h3 {
-    font-size: 24px;
-    color: white;
-    margin: 8px 0; }
-  div#user div.account-section div.role {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 4px; }
-
-div#user div.account-section--danger {
-  border: 2px solid red; }
-
-@media screen and (max-width: 600px) {
-  div#user div.account-section div.role {
-    padding: 8px;
-    grid-template-columns: 1fr; } }
-
 /* scss/components/_page.scss */
 div.page {
-  padding: calc(8px * 2); }
+  background: #1565c0; }
 
-@media screen and (max-width: 600px) {
-  div.page {
-    padding: calc(8px * 2); } }
+div.page#dashboard {
+  padding: calc(8px * 9);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: calc(8px * 6); }
 
 /* scss/components/_form.scss */
-form.form {
-  margin: calc(8px * 2) 0; }
-  form.form p.form__heading {
-    color: #d6d6d6;
-    font-size: 16px; }
-  form.form fieldset.form__fieldset {
-    border: none;
-    margin-bottom: 8px; }
-    form.form fieldset.form__fieldset label.form__label {
-      color: #7B7B7F;
-      font-size: 14px;
-      display: block;
-      margin-bottom: calc(8px / 4); }
-    form.form fieldset.form__fieldset select.form__input, form.form fieldset.form__fieldset input.form__input, form.form fieldset.form__fieldset textarea.form__input {
-      padding: calc(8px / 2) 8px;
-      color: #15161A; }
-      form.form fieldset.form__fieldset select.form__input option, form.form fieldset.form__fieldset input.form__input option, form.form fieldset.form__fieldset textarea.form__input option {
-        padding: 8px; }
-      form.form fieldset.form__fieldset select.form__input *, form.form fieldset.form__fieldset input.form__input *, form.form fieldset.form__fieldset textarea.form__input * {
-        color: #15161A; }
-    form.form fieldset.form__fieldset textarea.form__input {
-      min-width: 100%; }
-    form.form fieldset.form__fieldset input.form__input {
-      max-width: 200px; }
-    form.form fieldset.form__fieldset span.form__error {
-      color: red; }
-  form.form button.form__button {
-    padding: calc(8px / 2) 8px;
-    color: #15161A; }
-  form.form button.form__button:hover {
-    cursor: pointer; }
-
 /* client/src/scss/components/_alert.scss */
-div.alert-container {
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  padding: 8px; }
-  div.alert-container div.alert {
-    background-color: white;
-    padding: 8px;
-    position: relative;
-    border-width: 2px;
-    border-style: solid;
-    border-color: orange;
-    border-radius: 2px;
-    margin-bottom: 8px;
-    width: 300px; }
-    div.alert-container div.alert h5.alert__type {
-      text-align: left;
-      color: orange; }
-    div.alert-container div.alert p.alert__message {
-      color: #15161A; }
-    div.alert-container div.alert button.alert__button {
-      position: absolute;
-      top: calc(8px / 2);
-      right: calc(8px / 2);
-      color: #15161A;
-      border: none;
-      background: none; }
-    div.alert-container div.alert button.alert__button:hover {
-      cursor: pointer; }
-  div.alert-container div.alert--error {
-    border-color: red; }
-    div.alert-container div.alert--error h5.alert__type {
-      text-align: left;
-      color: red; }
-  div.alert-container div.alert--sucess {
-    border-color: green; }
-    div.alert-container div.alert--sucess h5.alert__type {
-      text-align: left;
-      color: green; }
-
 /* client/src/scss/components/_pagination.scss */
-div.pagination {
-  display: flex;
-  width: 100%;
-  color: #15161A;
-  justify-content: space-between;
-  align-items: center;
-  border: 1px solid #15161A; }
-  div.pagination button.pagination__button {
-    padding: calc(8px / 2) 8px;
-    border: none;
-    background: none;
-    color: #15161A; }
-  div.pagination button.pagination__button:hover {
-    cursor: pointer; }
-
-/* scss/api/_general-statistics.scss */
+/* client/src/scss/api/_statistics-api.scss */
 div#GeneralStatisticsAPI {
-  background: #15161A;
-  border-radius: 2px;
-  padding: 8px;
-  margin: calc(8px * 2) auto;
-  max-width: 1200px;
-  display: block; }
-  div#GeneralStatisticsAPI h2.statistics-title {
-    font-size: 36px;
-    text-align: center;
-    color: #fff; }
-  div#GeneralStatisticsAPI div.statistics-container img.user-image {
-    display: block;
-    margin: auto;
-    border-radius: 100%; }
-  div#GeneralStatisticsAPI div.statistics-container h3.stats-grid__heading {
-    color: white;
-    font-size: 20px; }
-  div#GeneralStatisticsAPI div.statistics-container div.stats-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); }
-    div#GeneralStatisticsAPI div.statistics-container div.stats-grid div.stats-box {
-      border-right: 1px solid rgba(50, 50, 50, 0.4);
-      border-left: 1px solid rgba(50, 50, 50, 0.4);
-      padding: 8px; }
-      div#GeneralStatisticsAPI div.statistics-container div.stats-grid div.stats-box h4.stats__heading {
-        color: #d6d6d6;
-        font-size: 16px; }
-      div#GeneralStatisticsAPI div.statistics-container div.stats-grid div.stats-box div.stat--main {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        text-align: center;
-        padding: 8px; }
-        div#GeneralStatisticsAPI div.statistics-container div.stats-grid div.stats-box div.stat--main p.stat__label {
-          font-size: 16px;
-          color: #7B7B7F;
-          text-align: center; }
-        div#GeneralStatisticsAPI div.statistics-container div.stats-grid div.stats-box div.stat--main span.stat__value {
-          font-size: 24px;
-          color: white; }
-      div#GeneralStatisticsAPI div.statistics-container div.stats-grid div.stats-box div.stat {
-        display: flex;
-        justify-content: space-between; }
-        div#GeneralStatisticsAPI div.statistics-container div.stats-grid div.stats-box div.stat p.stat__label {
-          color: #7B7B7F; }
-        div#GeneralStatisticsAPI div.statistics-container div.stats-grid div.stats-box div.stat span.stat__value {
-          color: #d6d6d6; }
+  grid-column: span 2; }
 
-@media screen and (max-width: 600px) {
-  div#GeneralStatisticsAPI div.statistics-container div.stats-grid {
-    grid-template-columns: 1fr; } }
-
-/* scss/api/_seasonal-statistics.scss */
-div#SeasonalStatisticsAPI {
-  background: #15161A;
-  border-radius: 2px;
-  padding: 8px;
-  margin: calc(8px * 2) auto;
-  max-width: 1200px;
-  display: block; }
-  div#SeasonalStatisticsAPI h2.statistics-title {
-    font-size: 36px;
-    text-align: center;
-    color: #fff;
-    margin-bottom: 8px; }
-  div#SeasonalStatisticsAPI div.statistics {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); }
-    div#SeasonalStatisticsAPI div.statistics div.stat {
-      border-right: 1px solid rgba(50, 50, 50, 0.4);
-      border-left: 1px solid rgba(50, 50, 50, 0.4);
-      padding: 8px;
-      text-align: center; }
-      div#SeasonalStatisticsAPI div.statistics div.stat p.stat__label {
-        font-size: 16px;
-        color: #7B7B7F; }
-      div#SeasonalStatisticsAPI div.statistics div.stat h4.stat__value {
-        font-size: 24px;
-        color: white;
-        margin-bottom: 8px; }
-    div#SeasonalStatisticsAPI div.statistics div.stat--main {
-      display: block;
-      width: 100%;
-      text-align: center;
-      padding: 8px; }
-      div#SeasonalStatisticsAPI div.statistics div.stat--main p.stat__label {
-        font-size: 16px;
-        color: #7B7B7F; }
-      div#SeasonalStatisticsAPI div.statistics div.stat--main h4.stat__value {
-        font-size: 24px;
-        color: white; }
-      div#SeasonalStatisticsAPI div.statistics div.stat--main p.stat__label--secondary {
-        font-size: 14px; }
-
-@media screen and (max-width: 600px) {
-  div#SeasonalStatisticsAPI {
-    padding: 8px;
-    margin: calc(8px / 2) auto; }
-    div#SeasonalStatisticsAPI div.statistics {
-      grid-template-columns: 1fr; }
-      div#SeasonalStatisticsAPI div.statistics div.stat {
-        border: none;
-        border-top: 1px solid rgba(50, 50, 50, 0.4);
-        border-bottom: 1px solid rgba(50, 50, 50, 0.4); } }
-
-/* scss/api/_operator-statistics.scss */
 div#OperatorStatisticsAPI {
-  background: #15161A;
-  border-radius: 2px;
-  padding: 8px;
-  margin: calc(8px * 2) auto;
-  max-width: 1200px;
-  display: block; }
-  div#OperatorStatisticsAPI h2.statistics-title {
-    font-size: 36px;
-    text-align: center;
-    color: #fff;
-    margin-bottom: 8px; }
-  div#OperatorStatisticsAPI div.statistics {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-gap: 4px; }
-    div#OperatorStatisticsAPI div.statistics input {
-      grid-column: span 4;
-      max-width: 400px;
-      display: block;
-      margin: 8px auto;
-      padding: calc(8px / 2) 8px;
-      color: #15161A; }
-    div#OperatorStatisticsAPI div.statistics button.statistics__button {
-      padding: 8px;
-      color: #15161A; }
-    div#OperatorStatisticsAPI div.statistics button.statistics__button:hover {
-      cursor: pointer; }
-    div#OperatorStatisticsAPI div.statistics div.operator-statistics {
-      grid-column: span 2;
-      padding: calc(8px / 2);
-      background: #2D3038;
-      display: grid;
-      grid-template-columns: 64px 1fr;
-      grid-gap: 4px; }
-      div#OperatorStatisticsAPI div.statistics div.operator-statistics div.operator-info img.operator-info__image {
-        display: block;
-        width: 100%; }
-      div#OperatorStatisticsAPI div.statistics div.operator-statistics div.operator-info h3.operator-info__name {
-        text-align: center;
-        color: #d6d6d6;
-        font-size: 16px; }
-      div#OperatorStatisticsAPI div.statistics div.operator-statistics div.operator-stats {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr); }
-        div#OperatorStatisticsAPI div.statistics div.operator-statistics div.operator-stats div.operator-stats__stat {
-          text-align: center;
-          font-size: 14px; }
-          div#OperatorStatisticsAPI div.statistics div.operator-statistics div.operator-stats div.operator-stats__stat p.operator-stats__label {
-            color: #7B7B7F; }
-          div#OperatorStatisticsAPI div.statistics div.operator-statistics div.operator-stats div.operator-stats__stat span.operator-stats__value {
-            color: white; }
+  grid-column: span 3; }
 
-@media screen and (max-width: 600px) {
-  div#OperatorStatisticsAPI {
-    padding: 8px;
-    margin: calc(8px / 2) auto; }
-    div#OperatorStatisticsAPI div.statistics button.statistics__button {
-      padding: calc(8px / 2) 8px;
-      grid-column: span 2; }
-    div#OperatorStatisticsAPI div.statistics div.operator-statistics {
-      grid-column: span 4;
-      padding: calc(8px / 2); }
-      div#OperatorStatisticsAPI div.statistics div.operator-statistics div.operator-info h3.operator-name {
-        font-size: 12pt; }
-      div#OperatorStatisticsAPI div.statistics div.operator-statistics div.operator-stats {
-        grid-template-columns: repeat(3, 1fr); }
-        div#OperatorStatisticsAPI div.statistics div.operator-statistics div.operator-stats div.operator-stats__stat {
-          font-size: 10pt; } }
+h2.statistics-title {
+  text-align: center;
+  margin-bottom: 8px; }
 
-/* scss/api/_view-team.scss */
-div#ViewTeamAPI div.team h2.team-name {
-  color: #fff;
-  font-size: 36px;
-  text-align: center; }
+h3.stats-grid__heading {
+  margin-bottom: calc(8px * 2);
+  margin-top: calc(8px * 4); }
 
-div#ViewTeamAPI div.team h3.team-description {
-  color: rgba(250, 250, 250, 0.7);
-  font-size: 24px;
-  text-align: center; }
+h4.stats__heading {
+  text-align: center;
+  color: #4d4d4d; }
 
-div#ViewTeamAPI div.team div.team-member:nth-child(odd) {
-  background: #1F242A; }
-
-div#ViewTeamAPI div.team div.roster {
-  margin-top: calc(8px * 2);
-  display: flex;
-  flex-direction: column;
-  background: #15161A;
-  padding: 8px; }
-  div#ViewTeamAPI div.team div.roster h3 {
-    color: #fff;
-    font-size: 20px; }
-  div#ViewTeamAPI div.team div.roster div.team-member--accent {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    padding: 8px;
-    border-radius: 2px; }
-    div#ViewTeamAPI div.team div.roster div.team-member--accent h4.team-member__username {
-      color: white;
-      text-transform: uppercase; }
-    div#ViewTeamAPI div.team div.roster div.team-member--accent p.team-member__status, div#ViewTeamAPI div.team div.roster div.team-member--accent p.team-member__quality {
-      font-size: 14px;
-      color: white;
-      text-align: center;
-      text-transform: uppercase; }
-  div#ViewTeamAPI div.team div.roster div.team-member {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    padding: 8px;
-    border-radius: 2px; }
-    div#ViewTeamAPI div.team div.roster div.team-member h4.team-member__username {
-      color: white; }
-    div#ViewTeamAPI div.team div.roster div.team-member p.team-member__status, div#ViewTeamAPI div.team div.roster div.team-member p.team-member__quality {
-      font-size: 14px;
-      color: #7B7B7F;
-      text-align: center; }
-    div#ViewTeamAPI div.team div.roster div.team-member div.attackers, div#ViewTeamAPI div.team div.roster div.team-member div.defenders {
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      align-items: center;
-      justify-content: center;
-      grid-column: span 2;
-      margin: 8px; }
-      div#ViewTeamAPI div.team div.roster div.team-member div.attackers p, div#ViewTeamAPI div.team div.roster div.team-member div.defenders p {
-        grid-column: span 6;
-        color: #7B7B7F;
-        text-align: center;
-        font-size: 14px; }
-      div#ViewTeamAPI div.team div.roster div.team-member div.attackers div img, div#ViewTeamAPI div.team div.roster div.team-member div.defenders div img {
-        width: 100%; }
-
-@media screen and (max-width: 600px) {
-  div#ViewTeamAPI div.team div.roster div.team-member--accent {
-    grid-template-columns: repeat(2, 1fr); }
-    div#ViewTeamAPI div.team div.roster div.team-member--accent h4.team-member__username {
-      font-size: 16px; }
-    div#ViewTeamAPI div.team div.roster div.team-member--accent p.team-member__status, div#ViewTeamAPI div.team div.roster div.team-member--accent p.team-member__quality {
-      text-align: left; }
-  div#ViewTeamAPI div.team div.roster div.team-member {
-    grid-template-columns: repeat(2, 1fr); }
-    div#ViewTeamAPI div.team div.roster div.team-member h4.team-member__username {
-      font-size: 16px; }
-    div#ViewTeamAPI div.team div.roster div.team-member p.team-member__status, div#ViewTeamAPI div.team div.roster div.team-member p.team-member__quality {
-      text-align: left; }
-    div#ViewTeamAPI div.team div.roster div.team-member div.attackers, div#ViewTeamAPI div.team div.roster div.team-member div.defenders {
-      padding: 8px;
-      margin: 0; } }
-
-/* scss/api/_view-team-statistics.scss */
-div#ViewTeamStatisticsAPI div.team-statistics {
-  margin-top: calc(8px * 2);
-  display: flex;
-  flex-direction: column;
-  background: #15161A;
-  padding: 8px; }
-  div#ViewTeamStatisticsAPI div.team-statistics h3 {
-    color: #fff;
-    font-size: 20px; }
-  div#ViewTeamStatisticsAPI div.team-statistics div.overview {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    padding: 8px;
-    border-radius: 2px; }
-    div#ViewTeamStatisticsAPI div.team-statistics div.overview p.overview-label {
-      color: white;
-      grid-column: span 5;
-      text-align: center; }
-    div#ViewTeamStatisticsAPI div.team-statistics div.overview p.team-stat {
-      font-size: 14px;
-      color: #7B7B7F;
-      text-align: center;
-      padding: 8px; }
-      div#ViewTeamStatisticsAPI div.team-statistics div.overview p.team-stat span.stat-label {
-        display: block;
-        color: white; }
-  div#ViewTeamStatisticsAPI div.team-statistics div.member-statistics {
-    margin-top: 8px; }
-    div#ViewTeamStatisticsAPI div.team-statistics div.member-statistics div.team-member-stats--accent {
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      padding: 8px;
-      border-radius: 2px;
-      color: white;
-      text-transform: uppercase; }
-      div#ViewTeamStatisticsAPI div.team-statistics div.member-statistics div.team-member-stats--accent p {
-        text-align: center;
-        font-size: 14px; }
-    div#ViewTeamStatisticsAPI div.team-statistics div.member-statistics div.team-member-stats:nth-child(even) {
-      background: #1F242A; }
-    div#ViewTeamStatisticsAPI div.team-statistics div.member-statistics div.team-member-stats {
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      padding: 8px;
-      border-radius: 2px; }
-      div#ViewTeamStatisticsAPI div.team-statistics div.member-statistics div.team-member-stats h4.team-member-stats__username {
-        color: white; }
-      div#ViewTeamStatisticsAPI div.team-statistics div.member-statistics div.team-member-stats p.team-member-stats__stat {
-        font-size: 14px;
-        color: #7B7B7F;
-        text-align: center; }
-
-@media screen and (max-width: 600px) {
-  div#ViewTeamStatisticsAPI div.team-statistics div.overview p.team-stat {
-    font-size: 10pt; }
-  div#ViewTeamStatisticsAPI div.team-statistics div.member-statistics {
-    padding: 8px; }
-    div#ViewTeamStatisticsAPI div.team-statistics div.member-statistics div.team-member-stats, div#ViewTeamStatisticsAPI div.team-statistics div.member-statistics div.team-member-stats--accent {
-      grid-template-columns: 108px repeat(2, 1fr); }
-      div#ViewTeamStatisticsAPI div.team-statistics div.member-statistics div.team-member-stats h4.team-member-stats__username, div#ViewTeamStatisticsAPI div.team-statistics div.member-statistics div.team-member-stats--accent h4.team-member-stats__username {
-        font-size: 16px; }
-      div#ViewTeamStatisticsAPI div.team-statistics div.member-statistics div.team-member-stats p.team-member-stats__stat, div#ViewTeamStatisticsAPI div.team-statistics div.member-statistics div.team-member-stats--accent p.team-member-stats__stat {
-        text-align: left; } }
-
-/* scss/api/_leave-team.scss */
-div#LeaveTeamAPI {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 8px; }
-  div#LeaveTeamAPI button {
-    margin-top: calc(8px * 3);
-    background: white;
-    color: white;
-    padding: calc(8px / 2) 8px;
-    border: 1px solid white;
-    transition: all 0.3s ease; }
-  div#LeaveTeamAPI button:hover {
-    cursor: pointer;
-    filter: invert(1);
-    transition: all 0.3s ease; }
-
-/* client/src/scss/api/_update-team-name.scss */
-div#UpdateTeamNameAPI {
-  padding: 8px; }
-  div#UpdateTeamNameAPI h2.current-name {
-    color: white;
-    margin: auto;
-    text-align: center; }
-  div#UpdateTeamNameAPI div#update-name-group {
-    display: block;
-    margin: 8px auto;
-    display: flex;
-    justify-content: center; }
-    div#UpdateTeamNameAPI div#update-name-group input.team-name-input {
-      padding: calc(8px / 2) 8px;
-      color: #15161A; }
-    div#UpdateTeamNameAPI div#update-name-group button.team-name-button {
-      padding: calc(8px / 2) 8px;
-      display: inline-block;
-      color: #15161A; }
-
-/* client/src/scss/api/_manage-team.scss */
-div#ManageTeamAPI {
-  background: #15161A;
-  max-width: 1200px;
+img.user-image {
   display: block;
-  margin: auto;
-  color: white; }
-  div#ManageTeamAPI div.manage-team-member {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    align-items: center;
-    text-align: center;
-    padding: 8px;
-    border-radius: 2px; }
-    div#ManageTeamAPI div.manage-team-member h4.manage-team-member__username {
-      color: white; }
-    div#ManageTeamAPI div.manage-team-member p.manage-team-member__status {
-      font-size: 14px;
-      color: #7B7B7F;
-      text-align: center;
-      padding: calc(8px / 2) 8px;
-      text-align: center; }
-    div#ManageTeamAPI div.manage-team-member select.manage-team-member__update-status {
-      padding: calc(8px / 2) 8px;
-      text-align: center;
-      display: block;
-      margin: auto; }
-    div#ManageTeamAPI div.manage-team-member button.manage-team-member__button {
-      display: block;
-      margin: auto;
-      padding: calc(8px / 2) 8px; }
+  margin: auto; }
 
-@media screen and (max-width: 600px) {
-  div#ManageTeamAPI div.manage-team-member {
-    align-items: center; }
-    div#ManageTeamAPI div.manage-team-member h4.manage-team-member__username {
-      color: white;
-      font-size: 16px; } }
+div.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: calc(8px * 2); }
 
-/* client/src/scss/api/_delete-team.scss */
-div#DeleteTeamAPI {
+div.stats-box {
+  padding: calc(8px * 2);
+  box-shadow: 0px 0px 3px rgba(50, 50, 50, 0.3);
+  transition: all 0.3s ease;
+  border-radius: 4px; }
+
+div.stats-box:hover {
+  box-shadow: 0px 2px 5px rgba(50, 50, 50, 0.3);
+  transform: translateY(calc(-8px));
+  transition: all 0.3s ease; }
+
+div.stat {
   display: flex;
-  justify-content: center; }
-  div#DeleteTeamAPI button {
-    padding: calc(8px / 2) 8px;
-    margin-top: calc(8px * 2);
-    color: #15161A; }
+  justify-content: space-between; }
+  div.stat p.stat__label {
+    color: #707070; }
 
-/* scss/api/_set-attacker-roles.scss */
-div#SetAttackerRoleAPI form.form#set-attacker-role-form fieldset.form__fieldset {
-  border: none; }
-  div#SetAttackerRoleAPI form.form#set-attacker-role-form fieldset.form__fieldset label.form__label {
-    display: inline;
-    color: #7B7B7F;
-    font-size: 14px;
-    width: 100%;
-    padding: calc(8px / 2); }
-  div#SetAttackerRoleAPI form.form#set-attacker-role-form fieldset.form__fieldset select.form__input {
-    margin-left: auto;
-    margin-right: 0;
-    float: right;
-    font-size: 14px;
-    padding: calc(8px / 2); }
-
-@media screen and (max-width: 600px) {
-  div#SetAttackerRoleAPI {
-    margin-bottom: 8px; }
-    div#SetAttackerRoleAPI fieldset.form__fieldset label.form__label {
-      width: 100%; }
-    div#SetAttackerRoleAPI fieldset.form__fieldset select.form__input {
-      float: left;
-      width: 100%;
-      display: block; } }
-
-/* scss/api/_set-defender-role.scss */
-div#SetDefenderRoleAPI form.form#set-defender-role-form fieldset.form__fieldset {
-  border: none; }
-  div#SetDefenderRoleAPI form.form#set-defender-role-form fieldset.form__fieldset label.form__label {
-    display: inline;
-    color: #7B7B7F;
-    font-size: 14px;
-    width: 100%;
-    padding: calc(8px / 2); }
-  div#SetDefenderRoleAPI form.form#set-defender-role-form fieldset.form__fieldset select.form__input {
-    margin-left: auto;
-    margin-right: 0;
-    float: right;
-    font-size: 14px;
-    padding: calc(8px / 2); }
-
-@media screen and (max-width: 600px) {
-  div#SetDefenderRoleAPI {
-    margin-bottom: 8px; }
-    div#SetDefenderRoleAPI fieldset.form__fieldset label.form__label {
-      width: 100%; }
-    div#SetDefenderRoleAPI fieldset.form__fieldset select.form__input {
-      float: left;
-      width: 100%;
-      display: block; } }
-
-/* scss/api/_set-attackers.scss */
-div#SetAttackersAPI {
-  background: #15161A;
-  border-radius: 2px;
-  padding: 8px;
-  margin: calc(8px * 2) auto;
-  max-width: 1200px; }
-  div#SetAttackersAPI form.form#set-attackers-form {
-    color: #7B7B7F;
-    font-size: 14px; }
-    div#SetAttackersAPI form.form#set-attackers-form fieldset.form__fieldset {
-      border: none;
-      padding: 8px; }
-      div#SetAttackersAPI form.form#set-attackers-form fieldset.form__fieldset > div {
-        display: grid;
-        grid-template-columns: repeat(10, 1fr);
-        grid-gap: 4px; }
-        div#SetAttackersAPI form.form#set-attackers-form fieldset.form__fieldset > div p.form__label {
-          grid-column: span 10; }
-        div#SetAttackersAPI form.form#set-attackers-form fieldset.form__fieldset > div div.attackers-form__attacker input.attackers-form__input {
-          display: none; }
-        div#SetAttackersAPI form.form#set-attackers-form fieldset.form__fieldset > div div.attackers-form__attacker input.attackers-form__input--checked + label > img {
-          width: 80%;
-          border: 3px solid #757BEB;
-          transition: all 0.3s ease; }
-        div#SetAttackersAPI form.form#set-attackers-form fieldset.form__fieldset > div div.attackers-form__attacker label.attackers-form__label {
-          display: flex;
-          width: 100%;
-          height: 100%;
-          align-items: center;
-          justify-content: center; }
-        div#SetAttackersAPI form.form#set-attackers-form fieldset.form__fieldset > div div.attackers-form__attacker label.attackers-form__label img.attackers-form__image {
-          width: 100%;
-          display: block;
-          margin: auto;
-          transition: all 0.3s ease; }
-        div#SetAttackersAPI form.form#set-attackers-form fieldset.form__fieldset > div div.attackers-form__attacker label.attackers-form__label img.attackers-form__image:hover {
-          cursor: pointer; }
-        div#SetAttackersAPI form.form#set-attackers-form fieldset.form__fieldset > div span.form__error {
-          grid-column: span 10; }
-        div#SetAttackersAPI form.form#set-attackers-form fieldset.form__fieldset > div button.form__button {
-          grid-column: span 10;
-          max-width: 200px;
-          display: block;
-          margin: 8px auto;
-          padding: calc(8px / 2) 8px; }
-
-@media screen and (max-width: 600px) {
-  div#SetAttackersAPI {
-    padding: 8px; }
-    div#SetAttackersAPI form.form#set-attackers-form fieldset.form__fieldset {
-      border: none;
-      padding: 8px; }
-      div#SetAttackersAPI form.form#set-attackers-form fieldset.form__fieldset > div {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr); }
-        div#SetAttackersAPI form.form#set-attackers-form fieldset.form__fieldset > div p.form__label {
-          grid-column: span 4; }
-        div#SetAttackersAPI form.form#set-attackers-form fieldset.form__fieldset > div span.form__error {
-          grid-column: span 4; }
-        div#SetAttackersAPI form.form#set-attackers-form fieldset.form__fieldset > div button.form__button {
-          grid-column: span 4; } }
-
-/* scss/api/_set-defenders.scss */
-div#SetDefendersAPI {
-  background: #15161A;
-  border-radius: 2px;
-  padding: 8px;
-  margin: calc(8px * 2) auto;
-  max-width: 1200px; }
-  div#SetDefendersAPI form.form#set-defenders-form {
-    color: #7B7B7F;
-    font-size: 14px; }
-    div#SetDefendersAPI form.form#set-defenders-form fieldset.form__fieldset {
-      border: none;
-      padding: 8px; }
-      div#SetDefendersAPI form.form#set-defenders-form fieldset.form__fieldset > div {
-        display: grid;
-        grid-template-columns: repeat(10, 1fr);
-        grid-gap: 4px; }
-        div#SetDefendersAPI form.form#set-defenders-form fieldset.form__fieldset > div p {
-          grid-column: span 10; }
-        div#SetDefendersAPI form.form#set-defenders-form fieldset.form__fieldset > div div.defenders-form__defender input.defenders-form__input {
-          display: none; }
-        div#SetDefendersAPI form.form#set-defenders-form fieldset.form__fieldset > div div.defenders-form__defender input.defenders-form__input--checked + label > img {
-          width: 80%;
-          border: 3px solid #757BEB;
-          transition: all 0.3s ease; }
-        div#SetDefendersAPI form.form#set-defenders-form fieldset.form__fieldset > div div.defenders-form__defender label.defenders-form__label {
-          display: flex;
-          width: 100%;
-          height: 100%;
-          align-items: center;
-          justify-content: center; }
-        div#SetDefendersAPI form.form#set-defenders-form fieldset.form__fieldset > div div.defenders-form__defender label.defenders-form__label img.defenders-form__image {
-          width: 100%;
-          display: block;
-          margin: auto;
-          transition: all 0.3s ease; }
-        div#SetDefendersAPI form.form#set-defenders-form fieldset.form__fieldset > div div.defenders-form__defender label.defenders-form__label img.defenders-form__image:hover {
-          cursor: pointer; }
-        div#SetDefendersAPI form.form#set-defenders-form fieldset.form__fieldset > div span.form__error {
-          grid-column: span 8; }
-        div#SetDefendersAPI form.form#set-defenders-form fieldset.form__fieldset > div button.form__button {
-          grid-column: span 10;
-          max-width: 200px;
-          display: block;
-          margin: 8px auto;
-          padding: calc(8px / 2) 8px; }
-
-@media screen and (max-width: 600px) {
-  div#SetDefendersAPI {
-    padding: 8px; }
-    div#SetDefendersAPI form.form#set-defenders-form fieldset.form__fieldset {
-      border: none;
-      padding: 8px; }
-      div#SetDefendersAPI form.form#set-defenders-form fieldset.form__fieldset > div {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr); }
-        div#SetDefendersAPI form.form#set-defenders-form fieldset.form__fieldset > div p {
-          grid-column: span 4; }
-        div#SetDefendersAPI form.form#set-defenders-form fieldset.form__fieldset > div span.form__error {
-          grid-column: span 4; }
-        div#SetDefendersAPI form.form#set-defenders-form fieldset.form__fieldset > div button.form__button {
-          grid-column: span 4; } }
-
-/* scss/api/_delete-user.scss */
-div#DeleteUserAPI div p {
-  color: #d6d6d6;
-  font-size: 14px; }
-
-div#DeleteUserAPI div button {
-  padding: calc(8px / 2) 8px;
+div.stat--main {
+  display: block;
+  text-align: center;
   margin-top: 8px;
-  color: #15161A; }
+  margin-bottom: 8px; }
+  div.stat--main span.stat__value {
+    color: #1565c0;
+    font-size: 24px; }
 
-/* scss/components/api/_view-strategies.scss */
-div#ViewStrategiesAPI {
-  padding: 8px;
-  margin: calc(8px * 2) auto;
-  max-width: 1200px; }
-  div#ViewStrategiesAPI div.strategy-list {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 4px; }
-    div#ViewStrategiesAPI div.strategy-list input.strategy-search {
-      padding: calc(8px / 2) 8px;
-      grid-column: span 2;
-      display: block;
-      margin: 8px auto; }
-    div#ViewStrategiesAPI div.strategy-list div.strategy-preview {
-      width: 100%;
-      background: #15161A;
-      padding: 8px;
-      border-radius: 2px;
-      display: flex;
-      align-items: center; }
-      div#ViewStrategiesAPI div.strategy-list div.strategy-preview h3.strategy-preview-heading {
-        margin-right: 8px;
-        color: #d6d6d6;
-        text-decoration: underline; }
-      div#ViewStrategiesAPI div.strategy-list div.strategy-preview h3.strategy-preview-heading:hover {
-        cursor: pointer; }
-      div#ViewStrategiesAPI div.strategy-list div.strategy-preview p.strategy-preview-type {
-        color: #7B7B7F; }
-  div#ViewStrategiesAPI div.strategy {
-    padding: 8px;
-    background: #15161A; }
-    div#ViewStrategiesAPI div.strategy p.strategy__link {
-      color: #d6d6d6;
-      text-decoration: underline;
-      font-size: 14px;
-      margin-bottom: 8px; }
-    div#ViewStrategiesAPI div.strategy p.strategy__link:hover {
-      cursor: pointer; }
-    div#ViewStrategiesAPI div.strategy h3.strategy__name {
-      text-align: center;
-      color: white;
-      font-size: 24px; }
-    div#ViewStrategiesAPI div.strategy h4.strategy__heading {
-      color: #d6d6d6;
-      font-size: 20px;
-      margin-top: 8px; }
-    div#ViewStrategiesAPI div.strategy h5.strategy__type {
-      text-align: center;
-      color: #7B7B7F;
-      font-size: 14px; }
-    div#ViewStrategiesAPI div.strategy ul.strategy__objectives {
-      padding: 8px; }
-      div#ViewStrategiesAPI div.strategy ul.strategy__objectives li.strategy__objective {
-        color: #d6d6d6; }
-    div#ViewStrategiesAPI div.strategy div.strategy__lineup {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      grid-gap: 8px; }
-      div#ViewStrategiesAPI div.strategy div.strategy__lineup div.operator img.operator__image {
-        width: 100%; }
-      div#ViewStrategiesAPI div.strategy div.strategy__lineup div.operator p.operator__name {
-        text-align: center;
-        color: #7B7B7F; }
-    div#ViewStrategiesAPI div.strategy p.strategy__text {
-      color: #d6d6d6; }
-
-@media screen and (max-width: 600px) {
-  div#ViewStrategiesAPI {
-    padding: 8px; }
-    div#ViewStrategiesAPI div.strategy__list {
-      grid-template-columns: 1fr; }
-    div#ViewStrategiesAPI div.strategy div.strategy__lineup {
-      grid-template-columns: repeat(3, 1fr);
-      grid-row-gap: 8px; } }
-
-/* client/src/scss/api/_create-strategy.scss */
-div#CreateStrategiesAPI {
-  margin-bottom: 8px;
-  width: 100%;
-  min-width: 1000px;
-  overflow-x: visible; }
-  div#CreateStrategiesAPI h4.create-strategy-heading {
-    color: #15161A;
-    text-decoration: underline;
-    text-align: left;
-    cursor: pointer;
-    display: inline; }
-  div#CreateStrategiesAPI div.add-map {
-    border: 1px solid #15161A;
-    padding: 8px;
-    margin-top: 8px; }
-    div#CreateStrategiesAPI div.add-map div.map-selector select.map-selector__input {
-      padding: calc(8px / 2) 8px;
-      color: #15161A; }
-      div#CreateStrategiesAPI div.add-map div.map-selector select.map-selector__input * {
-        color: #15161A; }
-    div#CreateStrategiesAPI div.add-map h2.add-map__heading {
-      text-align: center;
-      color: #15161A;
-      margin: 8px auto; }
-    div#CreateStrategiesAPI div.add-map div.type-selector select.type-selector__input {
-      display: block;
-      margin: auto;
-      margin-bottom: 8px;
-      color: #15161A;
-      padding: calc(8px / 2) 8px;
-      width: 128px; }
-      div#CreateStrategiesAPI div.add-map div.type-selector select.type-selector__input * {
-        color: #15161A; }
-    div#CreateStrategiesAPI div.add-map div.add-map__header {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      grid-gap: 16px; }
-      div#CreateStrategiesAPI div.add-map div.add-map__header > div:nth-child(1) {
-        padding: 8px; }
-        div#CreateStrategiesAPI div.add-map div.add-map__header > div:nth-child(1) div.site-selector select.site-selector__input {
-          padding: calc(8px / 2) 8px;
-          width: 100%;
-          display: block;
-          margin: auto;
-          color: #15161A; }
-          div#CreateStrategiesAPI div.add-map div.add-map__header > div:nth-child(1) div.site-selector select.site-selector__input * {
-            color: #15161A; }
-        div#CreateStrategiesAPI div.add-map div.add-map__header > div:nth-child(1) div.pagination {
-          margin-top: 8px; }
-        div#CreateStrategiesAPI div.add-map div.add-map__header > div:nth-child(1) input.add-map__name-input {
-          margin-top: 8px;
-          padding: calc(8px / 2) 8px;
-          color: #15161A;
-          width: 100%; }
-        div#CreateStrategiesAPI div.add-map div.add-map__header > div:nth-child(1) div.add-map__strategy-buttons {
-          display: grid;
-          grid-template-columns: repeat(2, 1fr);
-          grid-gap: 4px;
-          margin-top: 8px; }
-          div#CreateStrategiesAPI div.add-map div.add-map__header > div:nth-child(1) div.add-map__strategy-buttons button.add-map__strategy-button {
-            padding: calc(8px / 2) 8px;
-            color: #15161A;
-            background: none;
-            border: 1px solid #15161A; }
-          div#CreateStrategiesAPI div.add-map div.add-map__header > div:nth-child(1) div.add-map__strategy-buttons button.add-map__strategy-button:hover {
-            cursor: pointer; }
-      div#CreateStrategiesAPI div.add-map div.add-map__header > div:nth-child(2) {
-        grid-column: span 2; }
-      div#CreateStrategiesAPI div.add-map div.add-map__header div.lineup {
-        padding: calc(8px / 2);
-        border: 1px solid #15161A; }
-        div#CreateStrategiesAPI div.add-map div.add-map__header div.lineup h4.lineup__heading {
-          color: #15161A;
-          text-align: center;
-          margin-bottom: 8px; }
-        div#CreateStrategiesAPI div.add-map div.add-map__header div.lineup div.role-form, div#CreateStrategiesAPI div.add-map div.add-map__header div.lineup div.operator-form, div#CreateStrategiesAPI div.add-map div.add-map__header div.lineup div.utility-form, div#CreateStrategiesAPI div.add-map div.add-map__header div.lineup div.operator-images {
-          width: 100%;
-          display: grid;
-          grid-template-columns: repeat(5, 1fr);
-          margin-bottom: calc(8px / 2);
-          grid-gap: 4px; }
-          div#CreateStrategiesAPI div.add-map div.add-map__header div.lineup div.role-form select.role-form__input, div#CreateStrategiesAPI div.add-map div.add-map__header div.lineup div.role-form select.operator-form__input, div#CreateStrategiesAPI div.add-map div.add-map__header div.lineup div.role-form select.utility-form__input, div#CreateStrategiesAPI div.add-map div.add-map__header div.lineup div.operator-form select.role-form__input, div#CreateStrategiesAPI div.add-map div.add-map__header div.lineup div.operator-form select.operator-form__input, div#CreateStrategiesAPI div.add-map div.add-map__header div.lineup div.operator-form select.utility-form__input, div#CreateStrategiesAPI div.add-map div.add-map__header div.lineup div.utility-form select.role-form__input, div#CreateStrategiesAPI div.add-map div.add-map__header div.lineup div.utility-form select.operator-form__input, div#CreateStrategiesAPI div.add-map div.add-map__header div.lineup div.utility-form select.utility-form__input, div#CreateStrategiesAPI div.add-map div.add-map__header div.lineup div.operator-images select.role-form__input, div#CreateStrategiesAPI div.add-map div.add-map__header div.lineup div.operator-images select.operator-form__input, div#CreateStrategiesAPI div.add-map div.add-map__header div.lineup div.operator-images select.utility-form__input {
-            width: 100%;
-            color: #15161A;
-            padding: calc(8px / 4); }
-            div#CreateStrategiesAPI div.add-map div.add-map__header div.lineup div.role-form select.role-form__input *, div#CreateStrategiesAPI div.add-map div.add-map__header div.lineup div.role-form select.operator-form__input *, div#CreateStrategiesAPI div.add-map div.add-map__header div.lineup div.role-form select.utility-form__input *, div#CreateStrategiesAPI div.add-map div.add-map__header div.lineup div.operator-form select.role-form__input *, div#CreateStrategiesAPI div.add-map div.add-map__header div.lineup div.operator-form select.operator-form__input *, div#CreateStrategiesAPI div.add-map div.add-map__header div.lineup div.operator-form select.utility-form__input *, div#CreateStrategiesAPI div.add-map div.add-map__header div.lineup div.utility-form select.role-form__input *, div#CreateStrategiesAPI div.add-map div.add-map__header div.lineup div.utility-form select.operator-form__input *, div#CreateStrategiesAPI div.add-map div.add-map__header div.lineup div.utility-form select.utility-form__input *, div#CreateStrategiesAPI div.add-map div.add-map__header div.lineup div.operator-images select.role-form__input *, div#CreateStrategiesAPI div.add-map div.add-map__header div.lineup div.operator-images select.operator-form__input *, div#CreateStrategiesAPI div.add-map div.add-map__header div.lineup div.operator-images select.utility-form__input * {
-              color: #15161A; }
-          div#CreateStrategiesAPI div.add-map div.add-map__header div.lineup div.role-form img.operator-images__operator, div#CreateStrategiesAPI div.add-map div.add-map__header div.lineup div.operator-form img.operator-images__operator, div#CreateStrategiesAPI div.add-map div.add-map__header div.lineup div.utility-form img.operator-images__operator, div#CreateStrategiesAPI div.add-map div.add-map__header div.lineup div.operator-images img.operator-images__operator {
-            width: 100%;
-            height: 144px;
-            overflow: hidden;
-            object-fit: cover;
-            object-position: 50% -32px;
-            transition: all 0.1s ease; }
-          div#CreateStrategiesAPI div.add-map div.add-map__header div.lineup div.role-form img.operator-images__operator:hover, div#CreateStrategiesAPI div.add-map div.add-map__header div.lineup div.operator-form img.operator-images__operator:hover, div#CreateStrategiesAPI div.add-map div.add-map__header div.lineup div.utility-form img.operator-images__operator:hover, div#CreateStrategiesAPI div.add-map div.add-map__header div.lineup div.operator-images img.operator-images__operator:hover {
-            cursor: pointer;
-            transform: scale(1.02);
-            box-shadow: 1px 1px 3px rgba(50, 50, 50, 0.4);
-            transition: all 0.1s ease; }
-    div#CreateStrategiesAPI div.add-map div.add-map__body {
-      margin-top: 8px;
-      width: 100%;
-      display: grid;
-      grid-template-columns: auto 1fr;
-      grid-gap: 8px; }
-      div#CreateStrategiesAPI div.add-map div.add-map__body main.canvas {
-        width: 933px;
-        min-height: 700px;
-        border: 1px solid #15161A; }
-        div#CreateStrategiesAPI div.add-map div.add-map__body main.canvas div.canvas__controls {
-          display: grid;
-          grid-template-columns: repeat(2, 1fr) 156px; }
-          div#CreateStrategiesAPI div.add-map div.add-map__body main.canvas div.canvas__controls select.floor-selector {
-            padding: calc(8px / 2) 8px;
-            border: none;
-            border-right: 1px solid #15161A;
-            color: #15161A; }
-            div#CreateStrategiesAPI div.add-map div.add-map__body main.canvas div.canvas__controls select.floor-selector * {
-              color: #15161A; }
-          div#CreateStrategiesAPI div.add-map div.add-map__body main.canvas div.canvas__controls div.pagination {
-            border: none; }
-          div#CreateStrategiesAPI div.add-map div.add-map__body main.canvas div.canvas__controls div.scene-controls {
-            display: flex;
-            width: 80%;
-            margin: auto;
-            color: #15161A;
-            justify-content: space-around;
-            align-items: center; }
-            div#CreateStrategiesAPI div.add-map div.add-map__body main.canvas div.canvas__controls div.scene-controls a {
-              color: #15161A;
-              font-size: 22px;
-              padding: calc(8px / 2) 8px; }
-            div#CreateStrategiesAPI div.add-map div.add-map__body main.canvas div.canvas__controls div.scene-controls a:hover {
-              cursor: pointer; }
-        div#CreateStrategiesAPI div.add-map div.add-map__body main.canvas div.blueprint-form {
-          width: 100%;
-          height: 700px;
-          position: relative;
-          background-position: center;
-          background-size: cover;
-          z-index: 0; }
-          div#CreateStrategiesAPI div.add-map div.add-map__body main.canvas div.blueprint-form div.position-overlay {
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            top: 0;
-            left: 0; }
-            div#CreateStrategiesAPI div.add-map div.add-map__body main.canvas div.blueprint-form div.position-overlay div.drag-item {
-              width: 60px;
-              height: 60px;
-              position: absolute;
-              z-index: 1;
-              background-size: cover;
-              background-position: center;
-              transition: all 0.3s ease; }
-            div#CreateStrategiesAPI div.add-map div.add-map__body main.canvas div.blueprint-form div.position-overlay div.drag-item.drag {
-              transition: all 0.05s ease;
-              transform: scale(0.8); }
-            div#CreateStrategiesAPI div.add-map div.add-map__body main.canvas div.blueprint-form div.position-overlay div.drag-item:hover {
-              cursor: pointer; }
-      div#CreateStrategiesAPI div.add-map div.add-map__body aside.aside div.toolbar {
-        padding: 8px;
-        border: 1px solid #15161A; }
-        div#CreateStrategiesAPI div.add-map div.add-map__body aside.aside div.toolbar div.manage h3, div#CreateStrategiesAPI div.add-map div.add-map__body aside.aside div.toolbar div.manage h4 {
-          text-align: left;
-          margin-top: 8px;
-          color: #15161A; }
-        div#CreateStrategiesAPI div.add-map div.add-map__body aside.aside div.toolbar div.manage img {
-          width: 250px;
-          height: 150px;
-          object-fit: cover;
-          object-position: 50% 20%;
-          display: block;
-          margin: auto; }
-
-/* client/src/scss/api/_edit-strategies.scss */
-div#EditStrategiesAPI {
-  background: white;
-  padding: 8px;
-  margin: 8px auto;
-  max-width: 1500px;
-  overflow-x: auto; }
-  div#EditStrategiesAPI h3 {
-    color: #15161A;
-    text-align: center; }
-  div#EditStrategiesAPI p {
-    color: #15161A; }
-  div#EditStrategiesAPI div.strategy-list {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 4px; }
-    div#EditStrategiesAPI div.strategy-list input.strategy-search {
-      padding: calc(8px / 2) 8px;
-      grid-column: span 2;
-      display: block;
-      margin: 8px 0;
-      color: #15161A; }
-    div#EditStrategiesAPI div.strategy-list div.strategy-preview {
-      width: 100%;
-      background: #15161A;
-      padding: 8px;
-      border-radius: 2px;
-      display: flex;
-      align-items: center; }
-      div#EditStrategiesAPI div.strategy-list div.strategy-preview h3.strategy-preview-heading {
-        margin-right: 8px;
-        color: #d6d6d6;
-        text-decoration: underline; }
-      div#EditStrategiesAPI div.strategy-list div.strategy-preview h3.strategy-preview-heading:hover {
-        cursor: pointer; }
-      div#EditStrategiesAPI div.strategy-list div.strategy-preview p.strategy-preview-type {
-        color: #7B7B7F; }
-      div#EditStrategiesAPI div.strategy-list div.strategy-preview button.strategy-preview-button {
-        margin-left: auto;
-        padding: calc(8px / 2) 8px;
-        color: #15161A; }
-  div#EditStrategiesAPI form.form#update-strategy-form {
-    padding: 8px;
-    border: 1px solid #15161A;
-    border-radius: 2px; }
-    div#EditStrategiesAPI form.form#update-strategy-form p.strategy__link {
-      text-decoration: underline;
-      cursor: pointer;
-      margin-bottom: 8px; }
-    div#EditStrategiesAPI form.form#update-strategy-form input#newObjective {
-      width: 400px;
-      max-width: 400px; }
-    div#EditStrategiesAPI form.form#update-strategy-form * {
-      color: #15161A; }
-    div#EditStrategiesAPI form.form#update-strategy-form span.form__error {
-      color: red; }
-    div#EditStrategiesAPI form.form#update-strategy-form ul.objectives {
-      padding: 8px;
-      padding-left: calc(8px * 2);
-      width: 400px; }
-      div#EditStrategiesAPI form.form#update-strategy-form ul.objectives li.objectives__item {
-        margin-bottom: 8px;
-        width: 100%; }
-        div#EditStrategiesAPI form.form#update-strategy-form ul.objectives li.objectives__item span.objectives__value {
-          float: left; }
-        div#EditStrategiesAPI form.form#update-strategy-form ul.objectives li.objectives__item button.objectives__button {
-          margin-left: 8px;
-          padding: calc(8px / 4) calc(8px / 2);
-          float: right; }
-    div#EditStrategiesAPI form.form#update-strategy-form div.attacker-linup-form, div#EditStrategiesAPI form.form#update-strategy-form div.defender-linup-form {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr); }
-      div#EditStrategiesAPI form.form#update-strategy-form div.attacker-linup-form div.attacker-lineup-form__role, div#EditStrategiesAPI form.form#update-strategy-form div.attacker-linup-form div.defender-lineup-form__role, div#EditStrategiesAPI form.form#update-strategy-form div.defender-linup-form div.attacker-lineup-form__role, div#EditStrategiesAPI form.form#update-strategy-form div.defender-linup-form div.defender-lineup-form__role {
-        width: 100%; }
-        div#EditStrategiesAPI form.form#update-strategy-form div.attacker-linup-form div.attacker-lineup-form__role *, div#EditStrategiesAPI form.form#update-strategy-form div.attacker-linup-form div.defender-lineup-form__role *, div#EditStrategiesAPI form.form#update-strategy-form div.defender-linup-form div.attacker-lineup-form__role *, div#EditStrategiesAPI form.form#update-strategy-form div.defender-linup-form div.defender-lineup-form__role * {
-          width: 100%; }
-        div#EditStrategiesAPI form.form#update-strategy-form div.attacker-linup-form div.attacker-lineup-form__role p.attacker-lineup-form__heading, div#EditStrategiesAPI form.form#update-strategy-form div.attacker-linup-form div.attacker-lineup-form__role p.defender-lineup-form__heading, div#EditStrategiesAPI form.form#update-strategy-form div.attacker-linup-form div.defender-lineup-form__role p.attacker-lineup-form__heading, div#EditStrategiesAPI form.form#update-strategy-form div.attacker-linup-form div.defender-lineup-form__role p.defender-lineup-form__heading, div#EditStrategiesAPI form.form#update-strategy-form div.defender-linup-form div.attacker-lineup-form__role p.attacker-lineup-form__heading, div#EditStrategiesAPI form.form#update-strategy-form div.defender-linup-form div.attacker-lineup-form__role p.defender-lineup-form__heading, div#EditStrategiesAPI form.form#update-strategy-form div.defender-linup-form div.defender-lineup-form__role p.attacker-lineup-form__heading, div#EditStrategiesAPI form.form#update-strategy-form div.defender-linup-form div.defender-lineup-form__role p.defender-lineup-form__heading {
-          text-align: center; }
-        div#EditStrategiesAPI form.form#update-strategy-form div.attacker-linup-form div.attacker-lineup-form__role select.attacker-lineup-form__input, div#EditStrategiesAPI form.form#update-strategy-form div.attacker-linup-form div.attacker-lineup-form__role select.defender-lineup-form__input, div#EditStrategiesAPI form.form#update-strategy-form div.attacker-linup-form div.defender-lineup-form__role select.attacker-lineup-form__input, div#EditStrategiesAPI form.form#update-strategy-form div.attacker-linup-form div.defender-lineup-form__role select.defender-lineup-form__input, div#EditStrategiesAPI form.form#update-strategy-form div.defender-linup-form div.attacker-lineup-form__role select.attacker-lineup-form__input, div#EditStrategiesAPI form.form#update-strategy-form div.defender-linup-form div.attacker-lineup-form__role select.defender-lineup-form__input, div#EditStrategiesAPI form.form#update-strategy-form div.defender-linup-form div.defender-lineup-form__role select.attacker-lineup-form__input, div#EditStrategiesAPI form.form#update-strategy-form div.defender-linup-form div.defender-lineup-form__role select.defender-lineup-form__input {
-          width: 100%;
-          padding-left: calc(8px / 4); }
-        div#EditStrategiesAPI form.form#update-strategy-form div.attacker-linup-form div.attacker-lineup-form__role div.attacker-form, div#EditStrategiesAPI form.form#update-strategy-form div.attacker-linup-form div.attacker-lineup-form__role div.defender-form, div#EditStrategiesAPI form.form#update-strategy-form div.attacker-linup-form div.defender-lineup-form__role div.attacker-form, div#EditStrategiesAPI form.form#update-strategy-form div.attacker-linup-form div.defender-lineup-form__role div.defender-form, div#EditStrategiesAPI form.form#update-strategy-form div.defender-linup-form div.attacker-lineup-form__role div.attacker-form, div#EditStrategiesAPI form.form#update-strategy-form div.defender-linup-form div.attacker-lineup-form__role div.defender-form, div#EditStrategiesAPI form.form#update-strategy-form div.defender-linup-form div.defender-lineup-form__role div.attacker-form, div#EditStrategiesAPI form.form#update-strategy-form div.defender-linup-form div.defender-lineup-form__role div.defender-form {
-          width: 100%; }
-          div#EditStrategiesAPI form.form#update-strategy-form div.attacker-linup-form div.attacker-lineup-form__role div.attacker-form select.attacker-form__input, div#EditStrategiesAPI form.form#update-strategy-form div.attacker-linup-form div.attacker-lineup-form__role div.attacker-form select.defender-form__input, div#EditStrategiesAPI form.form#update-strategy-form div.attacker-linup-form div.attacker-lineup-form__role div.defender-form select.attacker-form__input, div#EditStrategiesAPI form.form#update-strategy-form div.attacker-linup-form div.attacker-lineup-form__role div.defender-form select.defender-form__input, div#EditStrategiesAPI form.form#update-strategy-form div.attacker-linup-form div.defender-lineup-form__role div.attacker-form select.attacker-form__input, div#EditStrategiesAPI form.form#update-strategy-form div.attacker-linup-form div.defender-lineup-form__role div.attacker-form select.defender-form__input, div#EditStrategiesAPI form.form#update-strategy-form div.attacker-linup-form div.defender-lineup-form__role div.defender-form select.attacker-form__input, div#EditStrategiesAPI form.form#update-strategy-form div.attacker-linup-form div.defender-lineup-form__role div.defender-form select.defender-form__input, div#EditStrategiesAPI form.form#update-strategy-form div.defender-linup-form div.attacker-lineup-form__role div.attacker-form select.attacker-form__input, div#EditStrategiesAPI form.form#update-strategy-form div.defender-linup-form div.attacker-lineup-form__role div.attacker-form select.defender-form__input, div#EditStrategiesAPI form.form#update-strategy-form div.defender-linup-form div.attacker-lineup-form__role div.defender-form select.attacker-form__input, div#EditStrategiesAPI form.form#update-strategy-form div.defender-linup-form div.attacker-lineup-form__role div.defender-form select.defender-form__input, div#EditStrategiesAPI form.form#update-strategy-form div.defender-linup-form div.defender-lineup-form__role div.attacker-form select.attacker-form__input, div#EditStrategiesAPI form.form#update-strategy-form div.defender-linup-form div.defender-lineup-form__role div.attacker-form select.defender-form__input, div#EditStrategiesAPI form.form#update-strategy-form div.defender-linup-form div.defender-lineup-form__role div.defender-form select.attacker-form__input, div#EditStrategiesAPI form.form#update-strategy-form div.defender-linup-form div.defender-lineup-form__role div.defender-form select.defender-form__input {
-            width: 100%;
-            padding-left: calc(8px / 4); }
-          div#EditStrategiesAPI form.form#update-strategy-form div.attacker-linup-form div.attacker-lineup-form__role div.attacker-form img.attacker-form__image, div#EditStrategiesAPI form.form#update-strategy-form div.attacker-linup-form div.attacker-lineup-form__role div.attacker-form img.defender-form__image, div#EditStrategiesAPI form.form#update-strategy-form div.attacker-linup-form div.attacker-lineup-form__role div.defender-form img.attacker-form__image, div#EditStrategiesAPI form.form#update-strategy-form div.attacker-linup-form div.attacker-lineup-form__role div.defender-form img.defender-form__image, div#EditStrategiesAPI form.form#update-strategy-form div.attacker-linup-form div.defender-lineup-form__role div.attacker-form img.attacker-form__image, div#EditStrategiesAPI form.form#update-strategy-form div.attacker-linup-form div.defender-lineup-form__role div.attacker-form img.defender-form__image, div#EditStrategiesAPI form.form#update-strategy-form div.attacker-linup-form div.defender-lineup-form__role div.defender-form img.attacker-form__image, div#EditStrategiesAPI form.form#update-strategy-form div.attacker-linup-form div.defender-lineup-form__role div.defender-form img.defender-form__image, div#EditStrategiesAPI form.form#update-strategy-form div.defender-linup-form div.attacker-lineup-form__role div.attacker-form img.attacker-form__image, div#EditStrategiesAPI form.form#update-strategy-form div.defender-linup-form div.attacker-lineup-form__role div.attacker-form img.defender-form__image, div#EditStrategiesAPI form.form#update-strategy-form div.defender-linup-form div.attacker-lineup-form__role div.defender-form img.attacker-form__image, div#EditStrategiesAPI form.form#update-strategy-form div.defender-linup-form div.attacker-lineup-form__role div.defender-form img.defender-form__image, div#EditStrategiesAPI form.form#update-strategy-form div.defender-linup-form div.defender-lineup-form__role div.attacker-form img.attacker-form__image, div#EditStrategiesAPI form.form#update-strategy-form div.defender-linup-form div.defender-lineup-form__role div.attacker-form img.defender-form__image, div#EditStrategiesAPI form.form#update-strategy-form div.defender-linup-form div.defender-lineup-form__role div.defender-form img.attacker-form__image, div#EditStrategiesAPI form.form#update-strategy-form div.defender-linup-form div.defender-lineup-form__role div.defender-form img.defender-form__image {
-            width: 100%; }
-    div#EditStrategiesAPI form.form#update-strategy-form textarea.form__input {
-      height: 156px; }
+div#GeneralStatisticsAPI, div#SeasonalStatisticsAPI, div#OperatorStatisticsAPI {
+  padding: calc(8px * 3);
+  border: 1px solid #dedede;
+  border-radius: 4px;
+  background: white; }

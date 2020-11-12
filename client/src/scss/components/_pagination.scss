@@ -1,19 +1,1 @@
 /* client/src/scss/components/_pagination.scss */
-
-div.pagination {
-  display: flex;
-  width: 100%;
-  color: $theme-dark;
-  justify-content: space-between;
-  align-items: center;
-  border: 1px solid $theme-dark;
-  button.pagination__button {
-    padding: calc(#{$padding} / 2) $padding;
-    border: none;
-    background: none;
-    color: $theme-dark;
-  }
-  button.pagination__button:hover {
-    cursor: pointer;
-  }
-}
