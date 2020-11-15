@@ -124,6 +124,11 @@ div.page#dashboard {
   grid-gap: calc(8px * 6); }
 
 /* scss/components/_form.scss */
+input.form__input {
+  padding: 12px calc(8px * 2);
+  border-radius: 4px;
+  border: 1px solid #dedede; }
+
 /* client/src/scss/components/_alert.scss */
 /* client/src/scss/components/_pagination.scss */
 /* client/src/scss/comopnents/_loading.scss */
@@ -172,14 +177,26 @@ div.page#dashboard {
 @keyframes color {
   100%,
   0% {
-    stroke: orange; }
+    stroke: #f54242; }
   40% {
-    stroke: orange; }
+    stroke: #f54242; }
   66% {
-    stroke: orange; }
+    stroke: #f54242; }
   80%,
   90% {
-    stroke: orange; } }
+    stroke: #f54242; } }
+
+/* client/src/scss/components/_button.scss */
+button.button {
+  border-radius: 4px;
+  color: white;
+  background: #1565c0;
+  padding: 8px calc(8px * 2);
+  border: none;
+  box-shadow: 0px 2px 5px rgba(50, 50, 50, 0.3); }
+
+button.button:hover {
+  cursor: pointer; }
 
 /* client/src/scss/api/_statistics-api.scss */
 div#GeneralStatisticsAPI {
@@ -202,7 +219,7 @@ h4.stats__heading {
 
 img.user-image {
   display: block;
-  margin: auto; }
+  max-width: 50px; }
 
 div.stats-grid {
   display: grid;
@@ -240,3 +257,73 @@ div#GeneralStatisticsAPI, div#SeasonalStatisticsAPI, div#OperatorStatisticsAPI {
   border: 1px solid #dedede;
   border-radius: 4px;
   background: white; }
+
+div#SeasonalStatisticsAPI div.stat.stat--main {
+  display: block;
+  margin-bottom: calc(8px* 3); }
+  div#SeasonalStatisticsAPI div.stat.stat--main h3.stat__value {
+    font-size: 36px;
+    color: #f54242;
+    margin-top: 8px;
+    margin-bottom: 8px; }
+  div#SeasonalStatisticsAPI div.stat.stat--main p.stat__label {
+    font-size: 24px; }
+  div#SeasonalStatisticsAPI div.stat.stat--main p.stat__label--secondary {
+    font-size: 20px; }
+
+div#SeasonalStatisticsAPI div.stat {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  margin-bottom: 8px; }
+
+div#SeasonalStatisticsAPI h3.stat__value--main {
+  grid-column: span 2;
+  color: #1565c0; }
+
+div#SeasonalStatisticsAPI h4.stat__value {
+  text-align: right; }
+
+div#OperatorStatisticsAPI div.statistics {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); }
+
+div#OperatorStatisticsAPI div.controls {
+  grid-column: span 2; }
+
+div#OperatorStatisticsAPI button.statistics__button {
+  display: inline-block;
+  margin: 0 8px; }
+
+div#OperatorStatisticsAPI input.form__input {
+  display: inline;
+  margin: 8px; }
+
+div#OperatorStatisticsAPI div.operator-statistics {
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  grid-gap: 8px;
+  border: 1px solid #dedede;
+  transition: all 0.3s ease; }
+  div#OperatorStatisticsAPI div.operator-statistics div.operator-info img.operator-info__image {
+    width: 100%; }
+  div#OperatorStatisticsAPI div.operator-statistics div.operator-info h3.operator-info__name {
+    font-size: 20px;
+    text-align: center; }
+  div#OperatorStatisticsAPI div.operator-statistics div.operator-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    padding: calc(8px * 2) 0; }
+    div#OperatorStatisticsAPI div.operator-statistics div.operator-stats div.operator-stats__stat {
+      margin: 0; }
+      div#OperatorStatisticsAPI div.operator-statistics div.operator-stats div.operator-stats__stat p.operator-stats__label {
+        text-align: center; }
+      div#OperatorStatisticsAPI div.operator-statistics div.operator-stats div.operator-stats__stat span.operator-stats__value {
+        text-align: center;
+        width: 100%;
+        display: block;
+        font-size: 20px;
+        color: black; }
+
+div#OperatorStatisticsAPI div.operator-statistics:hover {
+  box-shadow: 0px 0px 3px rgba(50, 50, 50, 0.3);
+  transition: all 0.3s ease; }

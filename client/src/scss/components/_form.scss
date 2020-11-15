@@ -1,1 +1,7 @@
 /* scss/components/_form.scss */
+
+input.form__input {
+  padding: 12px calc(#{$padding} * 2);
+  border-radius: $border-radius;
+  border: $border-primary;
+}

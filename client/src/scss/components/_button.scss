@@ -1,0 +1,13 @@
+/* client/src/scss/components/_button.scss */
+
+button.button {
+  border-radius: $border-radius;
+  color: white;
+  background: $color-primary;
+  padding: 8px calc(#{$padding} * 2);
+  border: none;
+  box-shadow: $box-shadow-tertiary;
+}
+button.button:hover {
+  cursor: pointer;
+}

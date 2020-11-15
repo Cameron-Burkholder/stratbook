@@ -74,17 +74,19 @@ class SeasonalStatisticsAPI extends React.Component {
           { this.state.stats ? (
             <div className="statistics">
               <div className="stat stat--main">
+                <h3 className="stat__value">{this.state.stats.seasons.shadow_legacy.regions.ncsa[0].rank_text}</h3>
                 <p className="stat__label">{this.state.stats.seasons.shadow_legacy.regions.ncsa[0].mmr} MMR</p>
-                <h4 className="stat__value">{this.state.stats.seasons.shadow_legacy.regions.ncsa[0].rank_text}</h4>
                 <p className="stat__label stat__label--secondary">MMR Change: {this.state.stats.seasons.shadow_legacy.regions.ncsa[0].last_match_mmr_change}</p>
               </div>
               <div className="stat">
+                <h3 className="stat__value--main">{Math.floor(100 * (this.state.stats.seasons.shadow_legacy.regions.ncsa[0].kills / this.state.stats.seasons.shadow_legacy.regions.ncsa[0].deaths)) / 100} KD</h3>
                 <p className="stat__label">Kills</p>
                 <h4 className="stat__value">{this.state.stats.seasons.shadow_legacy.regions.ncsa[0].kills}</h4>
                 <p className="stat__label">Deaths</p>
                 <h4 className="stat__value">{this.state.stats.seasons.shadow_legacy.regions.ncsa[0].deaths}</h4>
               </div>
               <div className="stat">
+                <h3 className="stat__value--main">{Math.floor(100 * (this.state.stats.seasons.shadow_legacy.regions.ncsa[0].wins / this.state.stats.seasons.shadow_legacy.regions.ncsa[0].losses)) / 100} WL</h3>
                 <p className="stat__label">Wins</p>
                 <h4 className="stat__value">{this.state.stats.seasons.shadow_legacy.regions.ncsa[0].wins}</h4>
                 <p className="stat__label">Losses</p>

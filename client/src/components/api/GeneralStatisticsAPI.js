@@ -40,6 +40,7 @@ class GeneralStatisticsAPI extends React.Component {
             hasLoaded: true,
             stats: response.data.stats
           });
+          console.log(response.data.stats);
           break;
         default:
           component.setState({
@@ -126,7 +127,7 @@ class GeneralStatisticsAPI extends React.Component {
                   </div>
                 </div>
               </div>
-              <h3 className="stats-grid__heading">Competitive</h3>
+              <h3 className="stats-grid__heading">Ranked</h3>
               <div className="stats-grid">
                 <div className="stats-box">
                   <h4 className="stats__heading">Progression</h4>

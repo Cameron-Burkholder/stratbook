@@ -20,7 +20,7 @@ h4.stats__heading {
 }
 img.user-image {
   display: block;
-  margin: auto;
+  max-width: 50px;
 }
 div.stats-grid {
   display: grid;
@@ -61,4 +61,91 @@ div#GeneralStatisticsAPI, div#SeasonalStatisticsAPI, div#OperatorStatisticsAPI {
   border: 1px solid #dedede;
   border-radius: 4px;
   background: $background;
+}
+
+div#SeasonalStatisticsAPI {
+  div.stat.stat--main {
+    display: block;
+    margin-bottom: calc(#{$margin}* 3);
+    h3.stat__value {
+      font-size: $heading2;
+      color: $color-secondary;
+      margin-top: $margin;
+      margin-bottom: $margin;
+    }
+    p.stat__label {
+      font-size: $heading3;
+    }
+    p.stat__label--secondary {
+      font-size: $heading4;
+    }
+  }
+  div.stat {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    margin-bottom: $margin;
+  }
+  h3.stat__value--main {
+    grid-column: span 2;
+    color: $color-primary;
+  }
+  h4.stat__value {
+    text-align: right;
+  }
+}
+
+div#OperatorStatisticsAPI {
+  div.statistics {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  div.controls {
+    grid-column: span 2;
+  }
+  button.statistics__button {
+    display: inline-block;
+    margin: 0 $margin;
+  }
+  input.form__input {
+    display: inline;
+    margin: $margin;
+  }
+  div.operator-statistics {
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    grid-gap: $margin;
+    border: $border-primary;
+    transition: all 0.3s ease;
+    div.operator-info {
+      img.operator-info__image {
+        width: 100%;
+      }
+      h3.operator-info__name {
+        font-size: $heading4;
+        text-align: center;
+      }
+    }
+    div.operator-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      padding: calc(#{$margin} * 2) 0;
+      div.operator-stats__stat {
+        margin: 0;
+        p.operator-stats__label {
+          text-align: center;
+        }
+        span.operator-stats__value {
+          text-align: center;
+          width: 100%;
+          display: block;
+          font-size: $heading4;
+          color: black;
+        }
+      }
+    }
+  }
+  div.operator-statistics:hover {
+    box-shadow: $box-shadow-secondary;
+    transition: all 0.3s ease;
+  }
 }
