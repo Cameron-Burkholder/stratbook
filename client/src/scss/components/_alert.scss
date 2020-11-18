@@ -1,1 +1,45 @@
 /* client/src/scss/components/_alert.scss */
+
+div.alert-container {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  padding: $padding;
+  padding-bottom: calc(#{$padding} * 3);
+}
+
+div.alert {
+  background: white;
+  border-radius: $border-radius;
+  padding: $padding;
+  box-shadow: $box-shadow-tertiary;
+  min-width: 300px;
+  display: grid;
+  grid-template-columns: 1fr 40px;
+  border: 2px solid $color-warning;
+  margin-top: $margin;
+  h5 {
+    grid-column: span 2;
+    color: $color-warning;
+    font-weight: bold;
+  }
+  button.alert__button {
+    border: none;
+    background: none;
+  }
+  button.alert__button:hover {
+    cursor: pointer;
+  }
+}
+div.alert--success {
+  border: 2px solid $color-success;
+  h5 {
+    color: $color-success;
+  }
+}
+div.alert--error {
+  border: 2px solid $color-danger;
+  h5 {
+    color: $color-danger;
+  }
+}

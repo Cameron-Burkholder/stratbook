@@ -5,6 +5,7 @@ import React from "react";
 import UpdateTeamNameAPI from "../api/UpdateTeamNameAPI.js";
 import ManageTeamAPI from "../api/ManageTeamAPI.js";
 import DeleteTeamAPI from "../api/DeleteTeamAPI.js";
+import { Link } from "react-router-dom";
 
 /*
   @func: ManageTeam
@@ -16,6 +17,7 @@ import DeleteTeamAPI from "../api/DeleteTeamAPI.js";
 const ManageTeam = (props) => {
   return (
     <div className="page" id="manage-team">
+      <Link className="button" to="/team">View Team</Link>
       <UpdateTeamNameAPI getAuthToken={props.getAuthToken} alert={props.alert}/>
       <ManageTeamAPI getAuthToken={props.getAuthToken} updateAuthToken={props.updateAuthToken} alert={props.alert}/>
       <DeleteTeamAPI getAuthToken={props.getAuthToken} updateAuthToken={props.updateAuthToken} alert={props.alert}/>

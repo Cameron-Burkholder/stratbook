@@ -3,7 +3,7 @@
 import React from "react";
 import axios from "axios";
 
-import LoadingModal from "../partials/LoadingModal.js";
+import Loading from "../partials/Loading.js";
 import TeamMemberStats from "../partials/TeamMemberStats.js";
 
 /*
@@ -88,21 +88,14 @@ class ViewTeamStatisticsAPI extends React.Component {
               <h3>Statistics</h3>
               <div className="overview">
                 <p className="overview-label">Team Performance</p>
-                <p className="team-stat"><span className="stat-label">Avg K/D</span>{this.state.stats.kd}</p>
-                <p className="team-stat"><span className="stat-label">Avg W/L</span>{this.state.stats.wl}</p>
-                <p className="team-stat"><span className="stat-label">Avg MMR</span>{this.state.stats.mmr}</p>
-                <p className="team-stat"><span className="stat-label">Avg MMR Change</span>{this.state.stats.mmrchange}</p>
-                <p className="team-stat"><span className="stat-label">Avg Level</span>{this.state.stats.level}</p>
+                <p className="team-stat"><span className="stat-label">K/D</span>{this.state.stats.kd}</p>
+                <p className="team-stat"><span className="stat-label">W/L</span>{this.state.stats.wl}</p>
+                <p className="team-stat"><span className="stat-label">MMR</span>{this.state.stats.mmr}</p>
+                <p className="team-stat"><span className="stat-label">MMR +/-</span>{this.state.stats.mmrchange}</p>
+                <p className="team-stat"><span className="stat-label">Level</span>{this.state.stats.level}</p>
               </div>
               <div className="member-statistics">
-                <div className="team-member-stats--accent">
-                  <h4 className="team-member-stats__username">Username</h4>
-                  <p className="team-member-stats__stat">K/D</p>
-                  <p className="team-member-stats__stat">W/L</p>
-                  <p className="team-member-stats__stat">MMR</p>
-                  <p className="team-member-stats__stat">MMR Change</p>
-                  <p className="team-member-stats__stat">Level</p>
-                </div>
+                <p className="overview-label">Individual Performances</p>
                 { teamMembers }
               </div>
             </div>
@@ -115,7 +108,7 @@ class ViewTeamStatisticsAPI extends React.Component {
     return (
       <div id="ViewTeamStatisticsAPI">
         { this.state.loading ? (
-          <LoadingModal/>
+          <Loading/>
         ) : (
           <div>
             { contents }

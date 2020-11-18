@@ -1,0 +1,161 @@
+/* client/src/scss/api/_team-api.scss */
+
+div.page#team {
+  div {
+    display: grid;
+  }
+  div.hasTeam {
+    grid-template-columns: 65% 1fr;
+    grid-gap: calc(#{$margin} * 4);
+  }
+  div.hasNoTeam {
+    display: flex;
+    height: 80VH;
+    flex-direction: column;
+    justify-content: center;
+
+    div.team-grid {
+      grid-template-columns: repeat(2, 1fr);
+      grid-column-gap: calc(#{$margin} * 4);
+    }
+    h2, p {
+      grid-column: span 2;
+      color: white;
+    }
+    p {
+      margin-bottom: calc(#{$margin} * 2);
+    }
+    div#CreateTeamAPI, div#JoinTeamAPI {
+      background: white;
+      border-radius: $border-radius;
+      padding: calc(#{$padding} * 2);
+      h3 {
+        margin-bottom: $margin;
+      }
+      button {
+        margin-top: $margin;
+      }
+    }
+  }
+  a.button {
+    grid-column: span 2;
+    border-radius: $border-radius;
+    color: white;
+    background: $color-secondary;
+    padding: 8px calc(#{$padding} * 2);
+    border: none;
+    box-shadow: $box-shadow-tertiary;
+    width: 156px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    text-align: center;
+  }
+}
+div.team {
+  background: white;
+  padding: calc(#{$margin} * 2);
+  border-radius: $border-radius;
+}
+h2.team-name, h3.team-description {
+  text-align: center;
+}
+
+div#ViewTeamAPI {
+  div.roster {
+    h3 {
+      margin-top: calc(#{$margin} * 2);
+      margin-bottom: $margin;
+    }
+    div.team-member {
+      border: $border-primary;
+      padding: calc(#{$padding} * 2);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      margin-bottom: $margin;
+      transition: all 0.3s ease;
+      h4.team-member__username {
+        font-size: $text;
+        color: black;
+        font-weight: bold;
+      }
+      div.attackers, div.defenders {
+        grid-column: span 2;
+        display: grid;
+        grid-template-columns: repeat(8, 1fr);
+        p {
+          grid-column: span 8;
+          font-size: $small;
+          margin-top: $margin;
+        }
+        img {
+          width: 100%;
+        }
+      }
+    }
+    div.team-member:hover {
+      box-shadow: $box-shadow-tertiary;
+      transition: all 0.3s ease;
+    }
+  }
+}
+
+div#ViewTeamStatisticsAPI {
+  background: white;
+  padding: calc(#{$margin} * 2);
+  border-radius: $border-radius;
+  div.team-statistics {
+    h3 {
+      text-align: center;
+    }
+    div.overview {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      p.overview-label {
+        color: black;
+        font-weight: bold;
+        grid-column: span 5;
+      }
+      p.team-stat {
+        font-size: $text;
+        text-align: center;
+        color: $color-primary;
+      }
+      span.stat-label {
+        font-size: $small;
+        display: block;
+        text-align: center;
+      }
+    }
+    div.member-statistics {
+      width: 100%;
+      p.overview-label {
+        color: black;
+        font-weight: bold;
+        grid-column: span 5;
+        margin-top: $margin;
+      }
+      div.team-member-stats {
+        border: $border-primary;
+        padding: calc(#{$padding} * 2);
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        margin-bottom: $margin;
+        transition: all 0.3s ease;
+        h4 {
+          font-size: $text;
+          font-weight: bold;
+        }
+        p {
+          text-align: center;
+        }
+      }
+    }
+  }
+}
+
+div#LeaveTeamAPI {
+  button {
+    width: 128px;
+    background: $color-danger;
+  }
+}

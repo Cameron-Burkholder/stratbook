@@ -11,7 +11,7 @@ import React from "react";
 
 const Alert = (props) => {
   return (
-    <div className={"alert" + (props.status === "ERROR" ? " alert--error" : "") + (props.status === "SUCCESS" ? " alert--sucess" : "")}>
+    <div className={"alert" + (props.status === "ERROR" ? " alert--error" : "") + (props.status === "SUCCESS" ? " alert--success" : "")}>
       <h5 className="alert__type">{props.status}</h5>
       <p className="alert__message">{props.message}</p>
       <button onClick={() => { props.clearAlert(props.index) }} className="alert__button">X</button>

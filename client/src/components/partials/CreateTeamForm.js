@@ -21,7 +21,7 @@ const CreateTeamForm = (props) => {
         <input onChange={props.onChange} className={"form__input" + (props.errors && props.errors.name == null ? "" : " form__input--error")} value={props.name} id="name" type="text" required/>
         <span className="form__error">{(props.errors ? props.errors.name : "")}</span>
       </fieldset>
-      { props.loading ? <Loading/> : <button className="form__button form__button--submit" type="submit">Create Team</button> }
+      { props.loading ? <Loading/> : <button className="form__button form__button--submit button" type="submit">Create Team</button> }
     </form>
   )
 }

@@ -98,6 +98,7 @@ div#OperatorStatisticsAPI {
   div.statistics {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+    grid-gap: calc(#{$margin} * 2);
   }
   div.controls {
     grid-column: span 2;
@@ -118,7 +119,9 @@ div#OperatorStatisticsAPI {
     transition: all 0.3s ease;
     div.operator-info {
       img.operator-info__image {
-        width: 100%;
+        width: 80%;
+        display: block;
+        margin: auto;
       }
       h3.operator-info__name {
         font-size: $heading4;
@@ -147,5 +150,8 @@ div#OperatorStatisticsAPI {
   div.operator-statistics:hover {
     box-shadow: $box-shadow-secondary;
     transition: all 0.3s ease;
+    span.operator-stats__value {
+      color: $color-primary !important;
+    }
   }
 }

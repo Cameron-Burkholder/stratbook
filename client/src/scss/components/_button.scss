@@ -7,7 +7,18 @@ button.button {
   padding: 8px calc(#{$padding} * 2);
   border: none;
   box-shadow: $box-shadow-tertiary;
+  transition: all 0.3s ease;
+}
+button.button--secondary {
+  background: $color-secondary;
 }
 button.button:hover {
   cursor: pointer;
+  transform: translateY(-2px);
+  transition: all 0.3s ease;
+}
+button.button:active, button.button:focus {
+  border: none;
+  background: $color-secondary;
+  transition: all 0.3s ease;
 }

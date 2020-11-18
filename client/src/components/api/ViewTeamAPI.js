@@ -3,7 +3,7 @@
 import React from "react";
 import axios from "axios";
 
-import LoadingModal from "../partials/LoadingModal.js";
+import Loading from "../partials/Loading.js";
 import TeamMember from "../partials/TeamMember.js";
 
 /*
@@ -87,12 +87,6 @@ class ViewTeamAPI extends React.Component {
               <h3 className="team-description">{this.state.team.platform} - {this.state.team.join_code}</h3>
               <div className="roster">
                 <h3>Roster</h3>
-                <div className="team-member--accent">
-                  <h4 className="team-member__username">Username</h4>
-                  <p className="team-member__status">Status</p>
-                  <p className="team-member__quality">Attacking Role</p>
-                  <p className="team-member__quality">Defending Role</p>
-                </div>
                 { teamMembers }
               </div>
             </div>
@@ -105,7 +99,7 @@ class ViewTeamAPI extends React.Component {
     return (
       <div id="ViewTeamAPI">
         { this.state.loading ? (
-          <LoadingModal/>
+          <Loading/>
         ) : (
           <div>
             { contents }

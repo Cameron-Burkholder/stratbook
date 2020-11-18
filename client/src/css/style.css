@@ -115,7 +115,8 @@ button.nav__button {
 /* scss/components/_user.scss */
 /* scss/components/_page.scss */
 div.page {
-  background: #1565c0; }
+  background: #1565c0;
+  padding: calc(8px * 6); }
 
 div.page#dashboard {
   padding: calc(8px * 9);
@@ -129,7 +130,50 @@ input.form__input {
   border-radius: 4px;
   border: 1px solid #dedede; }
 
+fieldset.form__fieldset {
+  border: none; }
+
+label.form__label {
+  display: block; }
+
 /* client/src/scss/components/_alert.scss */
+div.alert-container {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  padding: 8px;
+  padding-bottom: calc(8px * 3); }
+
+div.alert {
+  background: white;
+  border-radius: 4px;
+  padding: 8px;
+  box-shadow: 0px 2px 5px rgba(50, 50, 50, 0.3);
+  min-width: 300px;
+  display: grid;
+  grid-template-columns: 1fr 40px;
+  border: 2px solid #ffbb33;
+  margin-top: 8px; }
+  div.alert h5 {
+    grid-column: span 2;
+    color: #ffbb33;
+    font-weight: bold; }
+  div.alert button.alert__button {
+    border: none;
+    background: none; }
+  div.alert button.alert__button:hover {
+    cursor: pointer; }
+
+div.alert--success {
+  border: 2px solid #00C851; }
+  div.alert--success h5 {
+    color: #00C851; }
+
+div.alert--error {
+  border: 2px solid #ff4444; }
+  div.alert--error h5 {
+    color: #ff4444; }
+
 /* client/src/scss/components/_pagination.scss */
 /* client/src/scss/comopnents/_loading.scss */
 .loader {
@@ -177,14 +221,14 @@ input.form__input {
 @keyframes color {
   100%,
   0% {
-    stroke: #f54242; }
+    stroke: #2BBBAD; }
   40% {
-    stroke: #f54242; }
+    stroke: #2BBBAD; }
   66% {
-    stroke: #f54242; }
+    stroke: #2BBBAD; }
   80%,
   90% {
-    stroke: #f54242; } }
+    stroke: #2BBBAD; } }
 
 /* client/src/scss/components/_button.scss */
 button.button {
@@ -193,10 +237,21 @@ button.button {
   background: #1565c0;
   padding: 8px calc(8px * 2);
   border: none;
-  box-shadow: 0px 2px 5px rgba(50, 50, 50, 0.3); }
+  box-shadow: 0px 2px 5px rgba(50, 50, 50, 0.3);
+  transition: all 0.3s ease; }
+
+button.button--secondary {
+  background: #2BBBAD; }
 
 button.button:hover {
-  cursor: pointer; }
+  cursor: pointer;
+  transform: translateY(-2px);
+  transition: all 0.3s ease; }
+
+button.button:active, button.button:focus {
+  border: none;
+  background: #2BBBAD;
+  transition: all 0.3s ease; }
 
 /* client/src/scss/api/_statistics-api.scss */
 div#GeneralStatisticsAPI {
@@ -263,7 +318,7 @@ div#SeasonalStatisticsAPI div.stat.stat--main {
   margin-bottom: calc(8px* 3); }
   div#SeasonalStatisticsAPI div.stat.stat--main h3.stat__value {
     font-size: 36px;
-    color: #f54242;
+    color: #2BBBAD;
     margin-top: 8px;
     margin-bottom: 8px; }
   div#SeasonalStatisticsAPI div.stat.stat--main p.stat__label {
@@ -285,7 +340,8 @@ div#SeasonalStatisticsAPI h4.stat__value {
 
 div#OperatorStatisticsAPI div.statistics {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); }
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: calc(8px * 2); }
 
 div#OperatorStatisticsAPI div.controls {
   grid-column: span 2; }
@@ -305,7 +361,9 @@ div#OperatorStatisticsAPI div.operator-statistics {
   border: 1px solid #dedede;
   transition: all 0.3s ease; }
   div#OperatorStatisticsAPI div.operator-statistics div.operator-info img.operator-info__image {
-    width: 100%; }
+    width: 80%;
+    display: block;
+    margin: auto; }
   div#OperatorStatisticsAPI div.operator-statistics div.operator-info h3.operator-info__name {
     font-size: 20px;
     text-align: center; }
@@ -327,3 +385,131 @@ div#OperatorStatisticsAPI div.operator-statistics {
 div#OperatorStatisticsAPI div.operator-statistics:hover {
   box-shadow: 0px 0px 3px rgba(50, 50, 50, 0.3);
   transition: all 0.3s ease; }
+  div#OperatorStatisticsAPI div.operator-statistics:hover span.operator-stats__value {
+    color: #1565c0 !important; }
+
+/* client/src/scss/api/_team-api.scss */
+div.page#team div {
+  display: grid; }
+
+div.page#team div.hasTeam {
+  grid-template-columns: 65% 1fr;
+  grid-gap: calc(8px * 4); }
+
+div.page#team div.hasNoTeam {
+  display: flex;
+  height: 80VH;
+  flex-direction: column;
+  justify-content: center; }
+  div.page#team div.hasNoTeam div.team-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-column-gap: calc(8px * 4); }
+  div.page#team div.hasNoTeam h2, div.page#team div.hasNoTeam p {
+    grid-column: span 2;
+    color: white; }
+  div.page#team div.hasNoTeam p {
+    margin-bottom: calc(8px * 2); }
+  div.page#team div.hasNoTeam div#CreateTeamAPI, div.page#team div.hasNoTeam div#JoinTeamAPI {
+    background: white;
+    border-radius: 4px;
+    padding: calc(8px * 2); }
+    div.page#team div.hasNoTeam div#CreateTeamAPI h3, div.page#team div.hasNoTeam div#JoinTeamAPI h3 {
+      margin-bottom: 8px; }
+    div.page#team div.hasNoTeam div#CreateTeamAPI button, div.page#team div.hasNoTeam div#JoinTeamAPI button {
+      margin-top: 8px; }
+
+div.page#team a.button {
+  grid-column: span 2;
+  border-radius: 4px;
+  color: white;
+  background: #2BBBAD;
+  padding: 8px calc(8px * 2);
+  border: none;
+  box-shadow: 0px 2px 5px rgba(50, 50, 50, 0.3);
+  width: 156px;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  text-align: center; }
+
+div.team {
+  background: white;
+  padding: calc(8px * 2);
+  border-radius: 4px; }
+
+h2.team-name, h3.team-description {
+  text-align: center; }
+
+div#ViewTeamAPI div.roster h3 {
+  margin-top: calc(8px * 2);
+  margin-bottom: 8px; }
+
+div#ViewTeamAPI div.roster div.team-member {
+  border: 1px solid #dedede;
+  padding: calc(8px * 2);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  margin-bottom: 8px;
+  transition: all 0.3s ease; }
+  div#ViewTeamAPI div.roster div.team-member h4.team-member__username {
+    font-size: 16px;
+    color: black;
+    font-weight: bold; }
+  div#ViewTeamAPI div.roster div.team-member div.attackers, div#ViewTeamAPI div.roster div.team-member div.defenders {
+    grid-column: span 2;
+    display: grid;
+    grid-template-columns: repeat(8, 1fr); }
+    div#ViewTeamAPI div.roster div.team-member div.attackers p, div#ViewTeamAPI div.roster div.team-member div.defenders p {
+      grid-column: span 8;
+      font-size: 14px;
+      margin-top: 8px; }
+    div#ViewTeamAPI div.roster div.team-member div.attackers img, div#ViewTeamAPI div.roster div.team-member div.defenders img {
+      width: 100%; }
+
+div#ViewTeamAPI div.roster div.team-member:hover {
+  box-shadow: 0px 2px 5px rgba(50, 50, 50, 0.3);
+  transition: all 0.3s ease; }
+
+div#ViewTeamStatisticsAPI {
+  background: white;
+  padding: calc(8px * 2);
+  border-radius: 4px; }
+  div#ViewTeamStatisticsAPI div.team-statistics h3 {
+    text-align: center; }
+  div#ViewTeamStatisticsAPI div.team-statistics div.overview {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); }
+    div#ViewTeamStatisticsAPI div.team-statistics div.overview p.overview-label {
+      color: black;
+      font-weight: bold;
+      grid-column: span 5; }
+    div#ViewTeamStatisticsAPI div.team-statistics div.overview p.team-stat {
+      font-size: 16px;
+      text-align: center;
+      color: #1565c0; }
+    div#ViewTeamStatisticsAPI div.team-statistics div.overview span.stat-label {
+      font-size: 14px;
+      display: block;
+      text-align: center; }
+  div#ViewTeamStatisticsAPI div.team-statistics div.member-statistics {
+    width: 100%; }
+    div#ViewTeamStatisticsAPI div.team-statistics div.member-statistics p.overview-label {
+      color: black;
+      font-weight: bold;
+      grid-column: span 5;
+      margin-top: 8px; }
+    div#ViewTeamStatisticsAPI div.team-statistics div.member-statistics div.team-member-stats {
+      border: 1px solid #dedede;
+      padding: calc(8px * 2);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      margin-bottom: 8px;
+      transition: all 0.3s ease; }
+      div#ViewTeamStatisticsAPI div.team-statistics div.member-statistics div.team-member-stats h4 {
+        font-size: 16px;
+        font-weight: bold; }
+      div#ViewTeamStatisticsAPI div.team-statistics div.member-statistics div.team-member-stats p {
+        text-align: center; }
+
+div#LeaveTeamAPI button {
+  width: 128px;
+  background: #ff4444; }

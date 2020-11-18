@@ -21,7 +21,7 @@ const JoinTeamForm = (props) => {
         <input onChange={props.onChange} className={"form__input" + (props.errors && props.errors.join_code == null ? "" : " form__input--error")} value={props.join_code} id="join_code" type="text" required/>
         <span className="form__error">{(props.errors ? props.errors.join_code : "")}</span>
       </fieldset>
-      { props.loading ? <Loading/> : <button className="form__button form__button--submit" type="submit">Join Team</button> }
+      { props.loading ? <Loading/> : <button className="form__button form__button--submit button button--secondary" type="submit">Join Team</button> }
     </form>
   )
 }

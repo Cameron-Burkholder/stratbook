@@ -5,3 +5,10 @@ input.form__input {
   border-radius: $border-radius;
   border: $border-primary;
 }
+
+fieldset.form__fieldset {
+  border: none;
+}
+label.form__label {
+  display: block;
+}
