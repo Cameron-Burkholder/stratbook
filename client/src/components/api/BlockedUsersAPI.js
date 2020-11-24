@@ -71,7 +71,6 @@ class BlockedUsersAPI extends React.Component {
       });
       axios.defaults.headers.common["Authorization"] = this.props.getAuthToken();
       axios.patch("/api/users/unblock-user", {
-        username: username,
         id: id
       })
         .then((response) => {
@@ -81,7 +80,7 @@ class BlockedUsersAPI extends React.Component {
               loading: false
             });
             component.props.alert("SUCCESS", "User has been unblocked successfully.");
-            component.fetchTeamData();
+            component.fetchBlockedUsers();
             break;
           default:
             component.setState({

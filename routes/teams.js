@@ -760,6 +760,69 @@ module.exports = async (app, passport) => {
     });
   });
 
+
+  /*
+    @route /api/teams/unblock-user
+    @method PATCH
+
+    @inputs (body):
+      id: String
+
+    @outputs
+
+      If at any point there is an error
+        packet: Object (status: ERROR)
+
+      If user is not verified
+        packet: Object (status: USER_NOT_VERIFIED)
+
+      If user doesn't have a team code
+        packet: Object (status: USER_HAS_NO_TEAM)
+
+      If user is not an admin
+        packet: Object (status: USER_NOT_QUALIFIED)
+
+      If there is no team with the sent join code
+        packet: Object (status: TEAM_DOES_NOT_EXIST)
+
+      If user is not an admin on that team
+        packet: Object (status: USER_NOT_QUALIFIED)
+
+      If user is removing someone that cannot be found
+        packet: Object (status: USER_NOT_FOUND)
+
+      If user is allowed to block a user
+        packet: Object (status: USER_UNBLOCKED)
+  */
+  app.patch("/api/teams/block-user", (request, response, done) => {
+    log("PATCH REQUEST AT /api/teams/remove-user");
+    done();
+  }, passport.authenticate("jwt", { session: false }), validation.validateBlockUser, middleware.userIsVerified, middleware.userHasTeam, middleware.userIsAdmin, async (request, response) => {
+    let packet = {};
+    Team.findOne({ join_code: request.team.join_code }).then((team, error) => {
+      if (team.blocked_users.indexOf(request.body.id) < 0) {
+        packet.status = "ERROR";
+        packet.message = "The account you requested to block does not exist.";
+      } else {
+        team.blocked_users.splice(team.blocked_users.indexOf(request.body.id), 1);
+        team.save().then(() => {
+          packet.status = "USER_UNBLOCKED";
+        }).catch((error) => {
+          console.log(error);
+          packet.status = "ERROR";
+          packet.message = "An error occured while attempting to unblock user.";
+        });
+      }
+      response.json(packet);
+    }).catch(error => {
+      console.log(error);
+      packet.status = "ERROR";
+      packet.message = "An error occurred while attempting to unblock user.";
+      response.json(packet);
+    });
+  });
+
+
   /*
     @route /api/teams/delete-team
     @method DELETE
