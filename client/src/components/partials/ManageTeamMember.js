@@ -20,14 +20,14 @@ const ManageTeamMember = (props) => {
       { props.status === "ADMIN" ? (
         <p className="manage-team-member__status">{props.status}</p>
       ) : (
-        <select className="manage-team-member__input" onChange={(e) => { props.updateUserStatus(props.username, e.target.value) }}>
+        <select className="manage-team-member__input form__select" onChange={(e) => { props.updateUserStatus(props.username, e.target.value) }}>
           <option>MEMBER</option>
           <option>EDITOR</option>
           <option>ADMIN</option>
         </select>
       )}
       { props.status === "ADMIN" ? ("") : (
-        <button onClick={() => { props.blockUser(props.username) }} className="manage-team-member__button">Block User</button>
+        <button onClick={() => { props.blockUser(props.username) }} className="manage-team-member__button button button--warning">Block User</button>
       )}
     </div>
   )

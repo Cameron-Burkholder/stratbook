@@ -1,11 +1,9 @@
 /* client/src/components/api/ManageTeamAPI.js */
-/* client/components/api/ViewTeamAPI.js */
 
 import React from "react";
 import axios from "axios";
 
 import Loading from "../partials/Loading.js";
-import LoadingModal from "../partials/LoadingModal.js";
 import ManageTeamMember from "../partials/ManageTeamMember.js";
 
 /*
@@ -83,6 +81,7 @@ class ManageTeamAPI extends React.Component {
           component.setState({
             loading: false
           });
+          component.fetchTeamData();
           break;
         default:
           component.setState({
@@ -100,7 +99,39 @@ class ManageTeamAPI extends React.Component {
     });
   }
   blockUser(username) {
-
+    if (window.confirm(`You are about to block ${username} from the team. Are you sure?`)) {
+      const component = this;
+      this.setState({
+        loading: true
+      });
+      axios.defaults.headers.common["Authorization"] = this.props.getAuthToken();
+      axios.patch("/api/teams/block-user", {
+        username: username
+      })
+        .then((response) => {
+        switch (response.data.status) {
+          case "USER_BLOCKED":
+            component.setState({
+              loading: false
+            });
+            component.props.alert("SUCCESS", "User has been blocked successfully.");
+            component.fetchTeamData();
+            break;
+          default:
+            component.setState({
+              loading: false,
+            });
+            component.props.alert(response.data.message, response.data.status);
+            break;
+        }
+      }).catch((error) => {
+        console.log(error);
+        component.setState({
+          loading: false
+        });
+        component.props.alert("An error has occurred while attempting to block user.", "ERROR");
+      });
+    }
   }
   render() {
     let contents = <Loading/>;
@@ -129,9 +160,10 @@ class ManageTeamAPI extends React.Component {
     return (
       <div id="ManageTeamAPI">
         { this.state.loading ? (
-          <LoadingModal/>
+          <Loading/>
         ) : (
           <div>
+            <h3>Roster</h3>
             { contents }
           </div>
         )}

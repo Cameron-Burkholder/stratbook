@@ -138,6 +138,59 @@ module.exports = async (app, passport) => {
   });
 
   /*
+    @route /api/teams/view-blocked-users
+    @method GET
+
+    @outputs
+    If error occurs at any point
+      packet: Object (status: ERROR)
+
+    If user is not verified
+      packet: Object (status: USER_NOT_VERIFIED)
+
+    If user does not have a team
+      packet: Object (status: USER_HAS_NO_TEAM)
+
+    If team code from user does not match a team
+      packet: Object (status: TEAM_DOES_NOT_EXIST)
+
+    If user is not a member of the team
+      packet: Object (status: USER_NOT_QUALIFIED)
+
+    If user is allowed to view blocked users
+      packet: Object (status: BLOCKED_USERS_FOUND, team_data)
+  */
+  app.get("/api/teams/view-blocked-users", (request, response, done) => {
+    log("GET REQUEST AT /api/teams/view-blocked-users");
+    done();
+  }, passport.authenticate("jwt", { session: false }), middleware.userIsVerified, middleware.userHasTeam, middleware.userIsAdmin, async (request, response) => {
+    let packet = {};
+    let blocked_users = [];
+    let index = 0;
+    while (index < request.team.blocked_users.length) {
+      await new Promise((resolve, reject) => {
+        User.findOne({ _id: mongoose.Types.ObjectId(request.team.blocked_users[index]) }).then(async (user, error) => {
+          blocked_users.push({
+            username: user.username,
+            _id: user._id
+          });
+          resolve(true);
+        }).catch(error => {
+          console.log(error);
+          packet.status = "ERROR";
+          packet.message = "An error occurred while getting blocked users.";
+          response.json(packet);
+          reject(false);
+        })
+      });
+      index++;
+    }
+    packet.status = "BLOCKED_USERS_FOUND";
+    packet.blocked_users = blocked_users;
+    response.json(packet);
+  });
+
+  /*
     @route /api/teams/create-team
     @method: POST
 

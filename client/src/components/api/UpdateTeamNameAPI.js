@@ -93,10 +93,10 @@ class UpdateTeamNameAPI extends React.Component {
         <Loading/>
       ) : (
         <div>
-          <h2 className="current-name">Current Name: {this.state.currentName}</h2>
-          <div id="update-name-group">
-            <input className="team-name-input" onChange={this.onChange} id="newName" type="text" value={this.state.newName} placeholder={this.state.currentName}/>
-            <button className="team-name-button" onClick={this.onSubmit}>Update Name</button>
+          <h3 className="current-name">{this.state.currentName}</h3>
+          <div className="update-name-group">
+            <input className="team-name-input form__input" onChange={this.onChange} id="newName" type="text" value={this.state.newName} placeholder={this.state.currentName}/>
+            <button className="team-name-button button" onClick={this.onSubmit}>Update Name</button>
           </div>
         </div>
       )}

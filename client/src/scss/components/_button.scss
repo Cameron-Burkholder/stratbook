@@ -22,3 +22,9 @@ button.button:active, button.button:focus {
   background: $color-secondary;
   transition: all 0.3s ease;
 }
+button.button--danger {
+  background: $color-danger;
+}
+button.button--warning {
+  background: $color-warning;
+}

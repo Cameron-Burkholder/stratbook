@@ -3,6 +3,7 @@
 div.page {
   background: $color-primary;
   padding: calc(#{$margin} * 6);
+  min-height: 100VH;
 }
 
 div.page#dashboard {
@@ -10,4 +11,10 @@ div.page#dashboard {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: calc(#{$padding} * 6);
+}
+
+div.page#manage-team {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: $margin;
 }

@@ -116,7 +116,8 @@ button.nav__button {
 /* scss/components/_page.scss */
 div.page {
   background: #1565c0;
-  padding: calc(8px * 6); }
+  padding: calc(8px * 6);
+  min-height: 100VH; }
 
 div.page#dashboard {
   padding: calc(8px * 9);
@@ -124,8 +125,13 @@ div.page#dashboard {
   grid-template-columns: repeat(3, 1fr);
   grid-gap: calc(8px * 6); }
 
+div.page#manage-team {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 8px; }
+
 /* scss/components/_form.scss */
-input.form__input {
+input.form__input, select.form__select {
   padding: 12px calc(8px * 2);
   border-radius: 4px;
   border: 1px solid #dedede; }
@@ -252,6 +258,12 @@ button.button:active, button.button:focus {
   border: none;
   background: #2BBBAD;
   transition: all 0.3s ease; }
+
+button.button--danger {
+  background: #ff4444; }
+
+button.button--warning {
+  background: #ffbb33; }
 
 /* client/src/scss/api/_statistics-api.scss */
 div#GeneralStatisticsAPI {
@@ -491,12 +503,15 @@ div#ViewTeamStatisticsAPI {
       display: block;
       text-align: center; }
   div#ViewTeamStatisticsAPI div.team-statistics div.member-statistics {
-    width: 100%; }
+    width: 100%;
+    display: flex;
+    flex-direction: column; }
     div#ViewTeamStatisticsAPI div.team-statistics div.member-statistics p.overview-label {
       color: black;
       font-weight: bold;
       grid-column: span 5;
-      margin-top: 8px; }
+      margin-top: 8px;
+      margin-bottom: 8px; }
     div#ViewTeamStatisticsAPI div.team-statistics div.member-statistics div.team-member-stats {
       border: 1px solid #dedede;
       padding: calc(8px * 2);
@@ -513,3 +528,80 @@ div#ViewTeamStatisticsAPI {
 div#LeaveTeamAPI button {
   width: 128px;
   background: #ff4444; }
+
+a.button {
+  border-radius: 4px;
+  color: white;
+  background: #2BBBAD;
+  padding: 8px calc(8px * 2);
+  border: none;
+  box-shadow: 0px 2px 5px rgba(50, 50, 50, 0.3);
+  width: 156px;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  text-align: center;
+  margin-bottom: 8px; }
+
+div.page#manage-team {
+  min-height: 0; }
+  div.page#manage-team a.button {
+    grid-column: span 3;
+    height: 36px; }
+
+div#UpdateTeamNameAPI {
+  background: white;
+  border-radius: 4px;
+  padding: calc(8px * 2);
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+  div#UpdateTeamNameAPI h3 {
+    text-align: center; }
+  div#UpdateTeamNameAPI div.update-name-group {
+    display: flex;
+    justify-content: center; }
+  div#UpdateTeamNameAPI input {
+    margin-top: 8px; }
+  div#UpdateTeamNameAPI button {
+    margin-top: 8px;
+    margin-left: 8px; }
+
+div#ManageTeamAPI {
+  grid-column: span 2;
+  background: white;
+  border-radius: 4px;
+  padding: calc(8px * 2); }
+  div#ManageTeamAPI div.team {
+    padding: 0; }
+  div#ManageTeamAPI div.manage-team-member {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 8px;
+    grid-row-gap: calc(8px * 2);
+    align-items: center;
+    justify-content: center;
+    background: white;
+    margin: 8px 0;
+    padding: 0 8px;
+    height: 64px;
+    border: 1px solid #dedede; }
+    div#ManageTeamAPI div.manage-team-member h4 {
+      font-size: 16px;
+      color: #4d4d4d;
+      font-weight: bold; }
+    div#ManageTeamAPI div.manage-team-member button {
+      max-width: 200px;
+      display: block;
+      margin: auto; }
+
+div#BlockedUsersAPI {
+  background: white;
+  padding: calc(8px * 2);
+  border-radius: 4px; }
+  div#BlockedUsersAPI div.blocked-user {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; }
+    div#BlockedUsersAPI div.blocked-user h4 {
+      font-size: 16px;
+      font-weight: bold; }

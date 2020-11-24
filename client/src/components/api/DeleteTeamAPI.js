@@ -51,7 +51,7 @@ class DeleteTeamAPI extends React.Component {
         { this.state.loading ? (
           <Loading/>
         ) : (
-          <button onClick={this.onSubmit} className="form__button form__button--submit" id="DeleteTeamAPI">Delete Team</button>
+          <button onClick={this.onSubmit} className="form__button form__button--submit button button--danger" id="DeleteTeamAPI">Delete Team</button>
         )}
       </div>
     )
