@@ -214,7 +214,7 @@ class App extends React.Component {
             <Route exact path="/strategies">
               { this.state.loggedIn && this.state.user.team_code ? (
                 <div className="page-wrapper">
-                  <Strategies team_code={this.state.user.team_code} getAuthToken={this.getAuthToken} alert={this.alert}/>
+                  <Strategies team_code={this.state.user.team_code} status={this.state.user.status} getAuthToken={this.getAuthToken} alert={this.alert}/>
                 </div>
               )
               : ( <Redirect to="/"/> )
