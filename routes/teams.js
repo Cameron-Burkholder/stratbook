@@ -794,10 +794,10 @@ module.exports = async (app, passport) => {
       If user is allowed to block a user
         packet: Object (status: USER_UNBLOCKED)
   */
-  app.patch("/api/teams/block-user", (request, response, done) => {
+  app.patch("/api/teams/unblock-user", (request, response, done) => {
     log("PATCH REQUEST AT /api/teams/remove-user");
     done();
-  }, passport.authenticate("jwt", { session: false }), validation.validateBlockUser, middleware.userIsVerified, middleware.userHasTeam, middleware.userIsAdmin, async (request, response) => {
+  }, passport.authenticate("jwt", { session: false }), middleware.userIsVerified, middleware.userHasTeam, middleware.userIsAdmin, async (request, response) => {
     let packet = {};
     Team.findOne({ join_code: request.team.join_code }).then((team, error) => {
       if (team.blocked_users.indexOf(request.body.id) < 0) {

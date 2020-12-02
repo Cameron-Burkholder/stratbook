@@ -1,0 +1,15 @@
+/* client/src/scss/api/_account-api.scss */
+
+div#LoginAPI, div#RegisterAPI {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  form {
+    width: 400px;
+    input, select {
+      width: 100%;
+    }
+  }
+}

@@ -1,5 +1,8 @@
 /* scss/components/_page.scss */
 
+div.page-wrapper {
+  height: 100%;
+}
 div.page {
   background: $color-primary;
   padding: calc(#{$margin} * 6);
@@ -17,4 +20,5 @@ div.page#manage-team {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: $margin;
+  height: 100%;
 }

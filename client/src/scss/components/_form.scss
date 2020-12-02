@@ -1,4 +1,16 @@
 /* scss/components/_form.scss */
+form.form {
+  background: white;
+  border-radius: $border-radius;
+  padding: calc(#{$padding} * 4);
+  display: block;
+  margin: auto;
+}
+
+h4.form__heading {
+  text-align: center;
+  font-weight: bold;
+}
 
 input.form__input, select.form__select {
   padding: 12px calc(#{$padding} * 2);
@@ -8,7 +20,28 @@ input.form__input, select.form__select {
 
 fieldset.form__fieldset {
   border: none;
+  margin: $margin 0;
 }
 label.form__label {
   display: block;
+}
+span.form__description {
+  display: block;
+  font-size: $small;
+  color: $text-tertiary;
+}
+span.form__error {
+  color: $color-danger;
+}
+
+button.form__button {
+  border-radius: $border-radius;
+  color: white;
+  background: $color-primary;
+  padding: 8px calc(#{$padding} * 2);
+  border: none;
+  box-shadow: $box-shadow-tertiary;
+  display: block;
+  margin: $margin auto;
+  transition: all 0.3s ease;
 }

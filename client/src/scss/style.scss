@@ -35,6 +35,14 @@ h4 {
   font-size: $heading4;
 }
 
+body {
+  height: 100VH;
+}
+
+div#root, div.container {
+  height: 100%;
+}
+
 html, body {
   background: $background;
   overflow-x: hidden;
@@ -55,5 +63,6 @@ p {
 @import "./components/_button.scss";
 
 // Import APIs
+@import "./api/_account-api.scss";
 @import "./api/_statistics-api.scss";
 @import "./api/_team-api.scss";

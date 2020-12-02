@@ -29,6 +29,12 @@ h3 {
 h4 {
   font-size: 20px; }
 
+body {
+  height: 100VH; }
+
+div#root, div.container {
+  height: 100%; }
+
 html, body {
   background: white;
   overflow-x: hidden; }
@@ -114,6 +120,9 @@ button.nav__button {
 
 /* scss/components/_user.scss */
 /* scss/components/_page.scss */
+div.page-wrapper {
+  height: 100%; }
+
 div.page {
   background: #1565c0;
   padding: calc(8px * 6);
@@ -128,19 +137,51 @@ div.page#dashboard {
 div.page#manage-team {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-gap: 8px; }
+  grid-gap: 8px;
+  height: 100%; }
 
 /* scss/components/_form.scss */
+form.form {
+  background: white;
+  border-radius: 4px;
+  padding: calc(8px * 4);
+  display: block;
+  margin: auto; }
+
+h4.form__heading {
+  text-align: center;
+  font-weight: bold; }
+
 input.form__input, select.form__select {
   padding: 12px calc(8px * 2);
   border-radius: 4px;
   border: 1px solid #dedede; }
 
 fieldset.form__fieldset {
-  border: none; }
+  border: none;
+  margin: 8px 0; }
 
 label.form__label {
   display: block; }
+
+span.form__description {
+  display: block;
+  font-size: 14px;
+  color: #707070; }
+
+span.form__error {
+  color: #ff4444; }
+
+button.form__button {
+  border-radius: 4px;
+  color: white;
+  background: #1565c0;
+  padding: 8px calc(8px * 2);
+  border: none;
+  box-shadow: 0px 2px 5px rgba(50, 50, 50, 0.3);
+  display: block;
+  margin: 8px auto;
+  transition: all 0.3s ease; }
 
 /* client/src/scss/components/_alert.scss */
 div.alert-container {
@@ -264,6 +305,18 @@ button.button--danger {
 
 button.button--warning {
   background: #ffbb33; }
+
+/* client/src/scss/api/_account-api.scss */
+div#LoginAPI, div#RegisterAPI {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+  div#LoginAPI form, div#RegisterAPI form {
+    width: 400px; }
+    div#LoginAPI form input, div#LoginAPI form select, div#RegisterAPI form input, div#RegisterAPI form select {
+      width: 100%; }
 
 /* client/src/scss/api/_statistics-api.scss */
 div#GeneralStatisticsAPI {
