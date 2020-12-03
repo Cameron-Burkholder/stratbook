@@ -4,15 +4,18 @@ import React from "react";
 import { MAPS } from "../../data.js";
 
 const MapSelector = (props) => {
-  const options = MAPS.filter((map) => props.maps.indexOf(map) < 0).map((map, index) => {
-    return <option key={index}>{map}</option>
+  const maps = MAPS.filter((map) => props.maps.indexOf(map) < 0).map((map, index) => {
+    return (
+      <div className="map-option" onClick={() => { props.selectMap(map) }}>
+        <img className="map-option__image" src=""/>
+        <h4 className="map-option__title">{map}</h4>
+      </div>
+    )
   });
   return (
     <div className="map-selector">
-      <select className="map-selector__input" onChange={props.selectMap}>
-        <option>MAP</option>
-        { options }
-      </select>
+      <h3>Select a Map to Add to your Stratbook</h3>
+      { maps }
     </div>
   )
 }

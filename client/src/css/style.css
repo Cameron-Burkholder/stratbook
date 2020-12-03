@@ -660,3 +660,46 @@ div#BlockedUsersAPI {
       font-weight: bold; }
 
 /* client/src/scss/api/_strategy-api.scss */
+div#ViewStrategiesAPI p {
+  color: white;
+  margin-top: calc(8px * 2); }
+
+div#EditStrategiesAPI {
+  padding: calc(8px * 3); }
+  div#EditStrategiesAPI a {
+    display: block; }
+  div#EditStrategiesAPI button {
+    margin: calc(8px * 2) 0; }
+
+div#CreateStrategiesAPI div.map-selector {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 8px; }
+  div#CreateStrategiesAPI div.map-selector h3 {
+    grid-column: span 4;
+    text-align: center;
+    margin-bottom: calc(8px * 2); }
+  div#CreateStrategiesAPI div.map-selector div.map-option {
+    box-shadow: 0px 0px 3px rgba(50, 50, 50, 0.3);
+    position: relative;
+    transition: all 0.3s ease; }
+    div#CreateStrategiesAPI div.map-selector div.map-option img {
+      width: 100%;
+      min-height: 200px; }
+    div#CreateStrategiesAPI div.map-selector div.map-option h4 {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      height: 100%;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      font-weight: bold;
+      transform: translate(-50%, -50%); }
+  div#CreateStrategiesAPI div.map-selector div.map-option:hover {
+    cursor: pointer;
+    box-shadow: 0px 2px 5px rgba(50, 50, 50, 0.3);
+    transition: all 0.3s ease; }

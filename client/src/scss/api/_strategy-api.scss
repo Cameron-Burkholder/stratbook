@@ -1,1 +1,59 @@
 /* client/src/scss/api/_strategy-api.scss */
+
+div#ViewStrategiesAPI {
+  p {
+    color: white;
+    margin-top: calc(#{$margin} * 2);
+  }
+}
+
+div#EditStrategiesAPI {
+  padding: calc(#{$margin} * 3);
+  a {
+    display: block;
+  }
+  button {
+    margin: calc(#{$margin} * 2) 0;
+  }
+}
+
+div#CreateStrategiesAPI {
+  div.map-selector {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: $margin;
+    h3 {
+      grid-column: span 4;
+      text-align: center;
+      margin-bottom: calc(#{$margin} * 2);
+    }
+    div.map-option {
+      box-shadow: $box-shadow-primary;
+      position: relative;
+      transition: all 0.3s ease;
+      img {
+        width: 100%;
+        min-height: 200px;
+      }
+      h4 {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        height: 100%;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0, 0, 0, 0.7);
+        color: white;
+        font-weight: bold;
+        transform: translate(-50%, -50%);
+      }
+    }
+    div.map-option:hover {
+      cursor: pointer;
+      box-shadow: $box-shadow-tertiary;
+      transition: all 0.3s ease;
+    }
+  }
+}

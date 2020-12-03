@@ -8,6 +8,7 @@ import CreateStrategiesAPI from "./CreateStrategiesAPI";
 import LoadingModal from "../partials/LoadingModal.js";
 import StrategyEdit from "../partials/StrategyEdit.js";
 import EditMap from "../partials/EditMap.js";
+import { Link } from "react-router-dom";
 
 /*
   @prop getAuthToken: function
@@ -18,7 +19,10 @@ class EditStrategiesAPI extends React.Component {
   constructor(props) {
     super(props);
 
+    this.addMap = this.addMap.bind(this);
     this.fetchStrategies = this.fetchStrategies.bind(this);
+
+
     this.updateStrategy = this.updateStrategy.bind(this);
     this.deleteStrategy = this.deleteStrategy.bind(this);
     this.selectStrategy = this.selectStrategy.bind(this);
@@ -36,6 +40,7 @@ class EditStrategiesAPI extends React.Component {
       loading: true,
       hasLoaded: false,
       listView: true,
+      add: false,
       name: "",
       type: "ATTACK",
       newObjective: "",
@@ -46,38 +51,10 @@ class EditStrategiesAPI extends React.Component {
       utility: ["ANY", "ANY", "ANY", "ANY", "ANY"],
       errors: {},
     }
-  }/*
-    @func selectStrategy
-    @desc choose a strategy
-  */
-  selectStrategy(index) {
-    this.setState({
-      index: index,
-      listView: false,
-      name: this.state.strategies[this.state.index].name,
-      type: this.state.strategies[this.state.index].type,
-      objectives: this.state.strategies[this.state.index].objectives,
-      execution: this.state.strategies[this.state.index].execution,
-      roles: this.state.strategies[this.state.index].roles,
-      operators: this.state.strategies[this.state.index].operators,
-      utility: this.state.strategies[this.state.index].utility
-    });
   }
-  /*
-    @func exitStrategy
-    @desc go back to list view
-  */
-  exitStrategy() {
+  addMap() {
     this.setState({
-      listView: true
-    })
-  }
-  /*
-
-  */
-  onSearchChange(e) {
-    this.setState({
-      search: e.target.value
+      add: true
     });
   }
   /*
@@ -117,6 +94,44 @@ class EditStrategiesAPI extends React.Component {
       component.props.alert("An error has occurred while attempting to get strategies.", "ERROR");
     });
   }
+  componentDidMount() {
+    if (!this.state.hasLoaded) {
+      this.fetchStrategies();
+    }
+  }
+
+
+
+
+
+
+
+
+  /*
+    @func selectStrategy
+    @desc choose a strategy
+  */
+  selectStrategy(index) {
+
+  }
+  /*
+    @func exitStrategy
+    @desc go back to list view
+  */
+  exitStrategy() {
+    this.setState({
+      listView: true
+    })
+  }
+  /*
+
+  */
+  onSearchChange(e) {
+    this.setState({
+      search: e.target.value
+    });
+  }
+
   /*
     @func: updateStrategy
     @desc: update strategy
@@ -292,46 +307,34 @@ class EditStrategiesAPI extends React.Component {
       component.props.alert("An error has occurred while attempting to update strategy.", "ERROR");
     });
   }
-  componentDidMount() {
-    if (!this.state.hasLoaded) {
-      this.fetchStrategies();
-    }
-  }
+
+
+
+
+
   render() {
     let contents;
     if (this.state.loading) {
       contents = "";
+    } else if (this.state.add) {
+      contents = <CreateStrategiesAPI getAuthToken={this.props.getAuthToken} alert={this.props.alert} fetchStrategies={this.fetchStrategies} maps={this.state.maps}/>
     } else {
         if (this.state.maps.length > 0) {
-          const maps = this.state.maps.map((map, index) => {
-            return (
-              <div className="strategy-preview" key={index}>
 
-              </div>
-            )
-          });
-          contents = (this.state.listView) ? (
-            <div className="strategy-list">
-              { maps }
-            </div>
-          ) : (
-            <EditMap/>
-            /*<StrategyEdit onChange={this.onChange} onSubmit={this.onSubmit} name={this.state.name} type={this.state.type}
-                          newObjective={this.state.newObjective} objectives={this.state.objectives} removeObjective={this.removeObjective}
-                          onKeyPress={this.onKeyPress} getComponent={this.getComponent} execution={this.state.execution}
-                          roles={this.state.roles} operators={this.state.operators} errors={this.state.errors} utility={this.state.utility}
-                          index={this.state.index} exitStrategy={this.exitStrategy}/>*/
-          )
         } else {
           contents = <p>Your team does not currently have any strategies.</p>
         }
     }
     return (
       <div id="EditStrategiesAPI">
-        <h3>Edit Strategies</h3>
-        <CreateStrategiesAPI getAuthToken={this.props.getAuthToken} alert={this.props.alert} fetchStrategies={this.fetchStrategies} maps={this.state.maps}/>
         { this.state.loading ? <LoadingModal/> : (
           <div>
+            { this.state.add ? "" : (
+              <div>
+                <Link className="button" to="/strategies">Back to view</Link>
+                <button className="button" onClick={this.addMap}>Add Map</button>
+              </div>
+            )}
             { contents }
           </div>
         )}

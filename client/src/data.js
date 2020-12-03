@@ -49,7 +49,7 @@ module.exports = {
     },
     "ASH": {
       gadget: "Breaching Round",
-      count: 2
+      count: 3
     },
     "THERMITE": {
       gadget: "Exothermic Charge",
@@ -101,7 +101,7 @@ module.exports = {
     },
     "MONTAGNE": {
       gadget: "Extendable Shield",
-      count: 1
+      count: 0
     },
     "DOC": {
       gadget: "Stim Pistol",
@@ -141,7 +141,7 @@ module.exports = {
     },
     "HIBANA": {
       gadget: "X-Kairos Pellet",
-      count: 3
+      count: 9
     },
     "JACKAL": {
       gadget: "Eyenox Model III",
@@ -237,7 +237,7 @@ module.exports = {
     },
     "WAMAI": {
       gadget: "Mag-net System",
-      count: 5
+      count: 4
     },
     "IANA": {
       gadget: "Gemini Replicator",
@@ -290,9 +290,9 @@ module.exports = {
       "OPERATOR": ["BREACH CHARGES", "CLAYMORE", "FRAG GRENADES", "HARD BREACH CHARGE", "SMOKE GRENADES", "STUN GRENADES"],
       "SLEDGE": ["FRAG GRENADES", "STUN GRENADES"],
       "THATCHER": ["BREACH CHARGES", "CLAYMORE"],
-      "ASH": ["BREACH CHARGES", "STUN GRENADES"],
+      "ASH": ["BREACH CHARGES", "CLAYMORE"],
       "THERMITE": ["CLAYMORE", "STUN GRENADES"],
-      "TWITCH": ["BREACH CHARGES", "CLAYMORE"],
+      "TWITCH": ["BREACH CHARGES", "STUN GRENADES"],
       "MONTAGNE": ["HARD BREACH CHARGE", "SMOKE GRENADES"],
       "BLITZ": ["BREACH CHARGES", "SMOKE GRENADES"],
       "IQ": ["BREACH CHARGES", "CLAYMORE"],

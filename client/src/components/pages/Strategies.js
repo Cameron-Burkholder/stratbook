@@ -16,7 +16,7 @@ const Strategies = (props) => {
   return (
     <div className="page" id="strategies">
       { props.status === "EDITOR" || props.status === "ADMIN" ? (
-        <Link to="/strategies/edit">Edit</Link>
+        <Link className="button" to="/strategies/edit">Edit Strategies</Link>
       ) : ""}
       <ViewStrategiesAPI team_code={props.team_code} getAuthToken={props.getAuthToken} alert={props.alert}/>
     </div>
