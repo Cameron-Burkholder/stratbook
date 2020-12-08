@@ -1,4 +1,8 @@
 /* client/src/scss/api/_strategy-api.scss */
+div#edit-strategies {
+  width: 100%;
+  height: 100%;
+}
 
 div#ViewStrategiesAPI {
   p {
@@ -8,7 +12,12 @@ div#ViewStrategiesAPI {
 }
 
 div#EditStrategiesAPI {
-  padding: calc(#{$margin} * 3);
+  width: 100%;
+  height: 100%;
+  > div {
+    width: 100%;
+    height: 100%;
+  }
   a {
     display: block;
   }
@@ -18,6 +27,8 @@ div#EditStrategiesAPI {
 }
 
 div#CreateStrategiesAPI {
+  width: 100%;
+  height: 100%;
   div.map-selector {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -54,6 +65,111 @@ div#CreateStrategiesAPI {
       cursor: pointer;
       box-shadow: $box-shadow-tertiary;
       transition: all 0.3s ease;
+    }
+  }
+}
+div.add-map {
+  width: 100%;
+  height: 100%;
+}
+div.add-map__ui {
+  width: 100%;
+  height: 100%;
+  div.toolbar {
+    padding: $padding calc(#{$padding} * 2);
+    display: flex;
+    align-items: center;
+    border-bottom: $border-primary;
+    button.toolbar__button {
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+    * {
+      margin: 0 $margin;
+    }
+  }
+  main {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 256px 1224px 1fr;
+    div.sidebar {
+      padding: calc(#{$padding} * 2);
+      max-height: calc(100VH - (64px + 40px + 40px));
+      display: grid;
+      grid-template-rows: 300px 1fr;
+      border-right: $border-primary;
+      h3.site-container__heading, h3.scene-container__heading {
+        text-align: center;
+        margin-bottom: $margin;
+      }
+      div.scene-container {
+        height: 100%;
+      }
+      div.site, div.scene {
+        border-radius: $border-radius;
+        display: flex;
+        flex-direction: column;
+        padding: $padding;
+        margin-top: $margin;
+        transition: all 0.3s ease;
+        span.site__number, span.scene__number {
+          font-size: $small;
+          color: $text-tertiary;
+          opacity: 0.9;
+        }
+        p.site__name, p.scene__name {
+          color: $text-primary;
+          font-size: 14px;
+        }
+        div.scene__name-input {
+          input.scene__input {
+            padding: $padding;
+            border: $border-primary;
+          }
+        }
+      }
+      p.scene__name:hover {
+        text-decoration: underline;
+      }
+      div.site:hover, div.scene:hover {
+        cursor: pointer;
+        background: $background-accent;
+        transition: all 0.3s ease;
+      }
+      div.site--active, div.scene--active {
+        background: $background-accent;
+      }
+      div.scene-controls {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 256px;
+        height: 40px;
+        background: white;
+        border: $border-primary;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        button {
+          background: none;
+          border: none;
+          width: 100%;
+          height: 100%;
+          margin: 0 !important;
+          padding: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.3s ease;
+        }
+        button:hover {
+          background: $background-accent;
+          cursor: pointer;
+        }
+        button:nth-child(1) {
+          border-right: $border-primary;
+        }
+      }
     }
   }
 }

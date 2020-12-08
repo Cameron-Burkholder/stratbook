@@ -6,7 +6,7 @@ import { MAPS } from "../../data.js";
 const MapSelector = (props) => {
   const maps = MAPS.filter((map) => props.maps.indexOf(map) < 0).map((map, index) => {
     return (
-      <div className="map-option" onClick={() => { props.selectMap(map) }}>
+      <div className="map-option" onClick={() => { props.selectMap(map) }} key={index}>
         <img className="map-option__image" src=""/>
         <h4 className="map-option__title">{map}</h4>
       </div>
