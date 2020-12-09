@@ -71,7 +71,7 @@ class Sidebar extends React.Component {
     return (
       <div className="sidebar">
         <div className="site-container">
-          <h3 className="site-container__heading">Sites</h3>
+          <h3 className="site-container__heading">{this.props.map}</h3>
           { sites }
         </div>
         <div className="scene-container">

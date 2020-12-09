@@ -38,6 +38,7 @@ class CreateStrategiesAPI extends React.Component {
     this.updateRoles = this.updateRoles.bind(this);
     this.updateName = this.updateName.bind(this);
     this.updateFloor = this.updateFloor.bind(this);
+    this.save = this.save.bind(this);
 
     // Strategies
     this.decrementStrategy = this.decrementStrategy.bind(this);
@@ -209,12 +210,12 @@ class CreateStrategiesAPI extends React.Component {
       map: map
     });
   }
-  updateName(e) {
+  updateName(name) {
     let map = this.state.map;
     if (this.state.type === "ATTACK") {
-      map.attack[this.state.strategyIndex].name = e.target.value;
+      map.attack[this.state.strategyIndex].name = name;
     } else {
-      map.defense[this.state.site][this.state.strategyIndex].name = e.target.value;
+      map.defense[this.state.site][this.state.strategyIndex].name = name;
     }
     this.setState({
       map: map
@@ -229,6 +230,9 @@ class CreateStrategiesAPI extends React.Component {
     this.setState({
       activeOperator: index
     });
+  }
+  save() {
+    console.log("saved");
   }
 
   // Strategies
@@ -717,7 +721,13 @@ class CreateStrategiesAPI extends React.Component {
               <MapSelector selectMap={this.selectMap} maps={this.props.maps}/>
             ) : (
               <div className="add-map__ui">
-                <Toolbar map={this.state.map.name} strategy={this.state.map.name}
+                <Toolbar
+                  strategy={this.state.type === "ATTACK" ? (
+                    this.state.map.attack[this.state.strategyIndex].name
+                  ): (
+                    this.state.map.defense[this.state.site][this.state.strategyIndex].name
+                  )}
+                  updateStrategyName={this.updateName}
                   drones={this.state.type === "ATTACK" ? (
                     this.state.map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].drones) : undefined}
                   insertDrone={this.insertDrone}
@@ -736,9 +746,12 @@ class CreateStrategiesAPI extends React.Component {
                     this.state.map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].breaches
                   ) : undefined)}
                   insertBreach={this.insertBreach}
-                  removeBreach={this.removeBreach}/>
+                  removeBreach={this.removeBreach}
+                  alert={this.props.alert}/>
                 <main>
-                  <Sidebar sites={this.state.sites}
+                  <Sidebar
+                    map={this.state.map.name}
+                    sites={this.state.sites}
                     selectSite={this.selectSite}
                     siteIndex={this.state.siteIndex}
                     scenes={this.state.scenes}
