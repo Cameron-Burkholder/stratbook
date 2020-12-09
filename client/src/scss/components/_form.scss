@@ -18,6 +18,13 @@ input.form__input, select.form__select {
   border: $border-primary;
 }
 
+input.form__input--error, select.form__input--error {
+  border: 1px solid $color-danger;
+}
+
+p.form__heading {
+  font-size: $heading4;
+}
 fieldset.form__fieldset {
   border: none;
   margin: $margin 0;

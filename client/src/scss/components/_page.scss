@@ -7,7 +7,7 @@ div.page {
   background: $color-primary;
   padding: calc(#{$margin} * 6);
   min-height: 100VH;
-  position: relative;
+  z-index: 0;
 }
 
 div.page#dashboard {

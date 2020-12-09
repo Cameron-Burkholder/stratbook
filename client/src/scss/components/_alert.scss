@@ -6,6 +6,7 @@ div.alert-container {
   bottom: 0;
   padding: $padding;
   padding-bottom: calc(#{$padding} * 3);
+  max-width: 370px;
 }
 
 div.alert {

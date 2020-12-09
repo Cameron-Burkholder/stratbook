@@ -17,7 +17,7 @@ const AttackerRoleForm = (props) => {
     <form className="form" id="set-attacker-role-form" onSubmit={props.onSubmit}>
       <fieldset className="form__fieldset" id="attacker-role-field">
         <label className="form__label" htmlFor="attacker_role">Primary Attacker Role</label>
-        <select onChange={props.onChange} className={"form__input" + (props.errors && props.errors.role == null ? "" : " form__input--error")} value={props.attacker_role} id="attacker_role" required>
+        <select onChange={props.onChange} className={"form__select" + (props.errors && props.errors.role ? " form__input--error" : "")} value={props.attacker_role} id="attacker_role" required>
           <option>NONE</option>
           <option>HARD BREACH</option>
           <option>SOFT BREACH</option>

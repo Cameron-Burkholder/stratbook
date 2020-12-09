@@ -31,21 +31,20 @@ import DeleteUserAPI from "../api/DeleteUserAPI.js";
 const User = (props) => {
   return (
     <div className="page" id="user">
-      <p className="user-property">Username: {props.username}</p>
-      <p className="user-property">Email: {props.email}</p>
-      <p className="user-property">Platform: {props.platform}</p>
       <div className="account-section">
         <h3>Preferences</h3>
         <div className="role">
+          <h4>Roles</h4>
           <SetAttackerRoleAPI getAuthToken={props.getAuthToken} updateAuthToken={props.updateAuthToken} attacker_role={props.attacker_role} alert={props.alert}/>
           <SetDefenderRoleAPI getAuthToken={props.getAuthToken} updateAuthToken={props.updateAuthToken} defender_role={props.defender_role} alert={props.alert}/>
         </div>
         <div className="operators">
+          <h4>Operators</h4>
           <SetAttackersAPI getAuthToken={props.getAuthToken} updateAuthToken={props.updateAuthToken} attackers={props.attackers} alert={props.alert}/>
           <SetDefendersAPI getAuthToken={props.getAuthToken} updateAuthToken={props.updateAuthToken} defenders={props.defenders} alert={props.alert}/>
         </div>
       </div>
-      <div className="account-section">
+      <div className="account-section" id="account-info">
         <h3>Account Information</h3>
         <UpdatePlatformAPI getAuthToken={props.getAuthToken} updateAuthToken={props.updateAuthToken} platform={props.platform} alert={props.alert}/>
         <UpdateUsernameAPI getAuthToken={props.getAuthToken} updateAuthToken={props.updateAuthToken} username={props.username} alert={props.alert}/>

@@ -75,7 +75,7 @@ class UpdateEmailAPI extends React.Component {
   }
   render() {
     return (
-      <div id="UpdateEmailAPI">
+      <div className="update" id="UpdateEmailAPI">
         <UpdateEmailForm onSubmit={this.onSubmit} onChange={this.onChange} email={this.state.email} errors={this.state.errors} loading={this.state.loading}/>
       </div>
     )

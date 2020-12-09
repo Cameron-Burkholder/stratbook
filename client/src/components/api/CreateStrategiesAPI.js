@@ -331,7 +331,7 @@ class CreateStrategiesAPI extends React.Component {
     let scenes;
     let map = this.state.map;
     let name = window.prompt("Name of new scene?");
-    name = (name !== "" ? name : "Unnamed");
+    name = (name != null ? name : "Unnamed");
     if (this.state.type === "ATTACK") {
       scenes = map.attack[this.state.strategyIndex][this.state.site];
       scenes.push({

@@ -74,7 +74,7 @@ class UpdatePlatformAPI extends React.Component {
   }
   render() {
     return (
-      <div id="UpdatePlatformAPI">
+      <div className="update" id="UpdatePlatformAPI">
         <UpdatePlatformForm onChange={this.onChange} platform={this.state.platform} errors={this.state.errors} loading={this.state.loading}/>
       </div>
     )

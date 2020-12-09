@@ -130,6 +130,7 @@ div.add-map__ui {
       }
       button:hover {
         cursor: pointer;
+        color: $color-success;
       }
     }
   }
@@ -166,6 +167,7 @@ div.add-map__ui {
         p.site__name, p.scene__name {
           color: $text-primary;
           font-size: 14px;
+          margin-bottom: 2px;
         }
         div.scene__name-input {
           input.scene__input {

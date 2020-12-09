@@ -77,7 +77,7 @@ class UpdatePasswordAPI extends React.Component {
   }
   render() {
     return (
-      <div id="UpdateUsernameAPI">
+      <div className="update" id="UpdateUsernameAPI">
         <UpdatePasswordForm onSubmit={this.onSubmit} onChange={this.onChange} errors={this.state.errors} loading={this.state.loading}/>
       </div>
     )

@@ -75,7 +75,7 @@ class UpdateUsernameAPI extends React.Component {
   }
   render() {
     return (
-      <div id="UpdateUsernameAPI">
+      <div className="update" id="UpdateUsernameAPI">
         <UpdateUsernameForm onSubmit={this.onSubmit} onChange={this.onChange} username={this.state.username} errors={this.state.errors} loading={this.state.loading}/>
       </div>
     )

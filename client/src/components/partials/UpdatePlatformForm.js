@@ -18,7 +18,7 @@ const UpdatePlatformForm = (props) => {
       <p className="form__heading">Update Platform</p>
       <fieldset className="form__fieldset" id="platform-field">
         <label className="form__label">Platform</label>
-        <select onChange={props.onChange} className={"form__input" + (props.errors && props.errors.platform == null ? "" : " form__input--error")} value={props.platform} id="platform" required>
+        <select onChange={props.onChange} className={"form__select" + (props.errors && props.errors.platform == null ? "" : " form__input--error")} value={props.platform} id="platform" required>
           <option>XBOX</option>
           <option>PC</option>
           <option>PS4</option>
