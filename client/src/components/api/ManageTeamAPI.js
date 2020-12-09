@@ -4,6 +4,7 @@ import React from "react";
 import axios from "axios";
 
 import Loading from "../partials/Loading.js";
+import ErrorLoading from "../partials/ErrorLoading.js";
 import ManageTeamMember from "../partials/ManageTeamMember.js";
 
 /*
@@ -55,7 +56,8 @@ class ManageTeamAPI extends React.Component {
     }).catch((error) => {
       console.log(error);
       component.setState({
-        loading: false
+        loading: false,
+        error: true
       });
       component.props.alert("An error occurred while fetching team.", "ERROR");
     });
@@ -137,7 +139,7 @@ class ManageTeamAPI extends React.Component {
     let contents = <Loading/>;
     if (!this.state.loading) {
       if (this.state.error) {
-        contents = <p>An error occurred while fetching the team. Please try again in a bit.</p>;
+        contents = <ErrorLoading/>
       } else {
         let teamMembers = [];
         let index = 0;

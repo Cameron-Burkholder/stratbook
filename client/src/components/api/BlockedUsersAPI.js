@@ -4,6 +4,7 @@ import React from "react";
 import axios from "axios";
 
 import Loading from "../partials/Loading.js";
+import ErrorLoading from "../partials/ErrorLoading.js";
 
 /*
   @func: BlockedUsersAPI
@@ -53,7 +54,8 @@ class BlockedUsersAPI extends React.Component {
     }).catch((error) => {
       console.log(error);
       component.setState({
-        loading: false
+        loading: false,
+        error: true
       });
       component.props.alert("An error occurred while fetching blocked users.", "ERROR");
     });
@@ -101,18 +103,22 @@ class BlockedUsersAPI extends React.Component {
   }
   render() {
     let contents = <Loading/>;
-    if (this.state.blocked_users) {
-      if (this.state.blocked_users.length > 0) {
-        contents = this.state.blocked_users.map((user) => {
-          return (
-            <div className="blocked-user">
-              <h4>{user.username}</h4>
-              <button className="button button--secondary" onClick={() => { this.unblockUser(user.username, user._id) }}>Unblock</button>
-            </div>
-          )
-        })
-      } else {
-        contents = "No users have been blocked.";
+    if (this.state.error) {
+      contents = <ErrorLoading/>;
+    } else {
+      if (this.state.blocked_users) {
+        if (this.state.blocked_users.length > 0) {
+          contents = this.state.blocked_users.map((user) => {
+            return (
+              <div className="blocked-user">
+                <h4>{user.username}</h4>
+                <button className="button button--secondary" onClick={() => { this.unblockUser(user.username, user._id) }}>Unblock</button>
+              </div>
+            )
+          })
+        } else {
+          contents = "No users have been blocked.";
+        }
       }
     }
     return (

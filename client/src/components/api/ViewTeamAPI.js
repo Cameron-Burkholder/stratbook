@@ -4,6 +4,7 @@ import React from "react";
 import axios from "axios";
 
 import Loading from "../partials/Loading.js";
+import ErrorLoading from "../partials/ErrorLoading.js";
 import TeamMember from "../partials/TeamMember.js";
 
 /*
@@ -53,7 +54,8 @@ class ViewTeamAPI extends React.Component {
     }).catch((error) => {
       console.log(error);
       component.setState({
-        loading: false
+        loading: false,
+        error: true
       });
       component.props.alert("An error has occurred while attempting to view team.", "ERROR");
     });
@@ -67,7 +69,7 @@ class ViewTeamAPI extends React.Component {
     let contents;
     if (!this.state.loading) {
       if (this.state.error) {
-        contents = <p>An error occurred while fetching the team. Please try again in a bit.</p>;
+        contents = <ErrorLoading/>
       } else {
         let teamMembers = [];
         let index = 0;
@@ -92,7 +94,7 @@ class ViewTeamAPI extends React.Component {
             </div>
           );
         } else {
-          contents = <p>An error has occurred</p>
+          contents = <ErrorLoading/>
         }
       }
     }

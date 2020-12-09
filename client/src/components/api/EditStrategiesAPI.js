@@ -6,6 +6,7 @@ import axios from "axios";
 
 import CreateStrategiesAPI from "./CreateStrategiesAPI";
 import LoadingModal from "../partials/LoadingModal.js";
+import ErrorLoading from "../partials/ErrorLoading.js";
 import StrategyEdit from "../partials/StrategyEdit.js";
 import EditMap from "../partials/EditMap.js";
 import { Link } from "react-router-dom";
@@ -319,23 +320,29 @@ class EditStrategiesAPI extends React.Component {
     } else if (this.state.add) {
       contents = <CreateStrategiesAPI getAuthToken={this.props.getAuthToken} alert={this.props.alert} fetchStrategies={this.fetchStrategies} maps={this.state.maps}/>
     } else {
-        if (this.state.maps.length > 0) {
+      if (this.state.maps && this.state.maps.length > 0) {
 
-        } else {
-          contents = <p>Your team does not currently have any strategies.</p>
-        }
+      } else {
+        contents = <p>Your team does not currently have any strategies.</p>
+      }
     }
     return (
       <div id="EditStrategiesAPI">
         { this.state.loading ? <LoadingModal/> : (
           <div>
-            { this.state.add ? "" : (
+            { this.state.maps ? (
               <div>
-                <Link className="button" to="/strategies">Back to view</Link>
-                <button className="button" onClick={this.addMap}>Add Map</button>
+                { this.state.add ? "" : (
+                  <div>
+                    <Link className="button" to="/strategies">Back to view</Link>
+                    <button className="button" onClick={this.addMap}>Add Map</button>
+                  </div>
+                )}
+                { contents }
               </div>
+            ) : (
+              <ErrorLoading/>
             )}
-            { contents }
           </div>
         )}
       </div>

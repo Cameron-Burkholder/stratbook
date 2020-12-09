@@ -367,8 +367,7 @@ div.loading-modal {
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
-  max-height: calc(100VH - 64px);
+  height: 100VH;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -376,6 +375,48 @@ div.loading-modal {
   background: rgba(0, 0, 0, 0.9);
   color: white;
   font-size: 20px; }
+
+div.error-loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100VW;
+  height: 100VH;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(25, 5, 5, 0.95);
+  z-index: 10; }
+  div.error-loading div.error-loading__modal {
+    max-width: 500px;
+    background: white;
+    padding: calc(8px * 2); }
+    div.error-loading div.error-loading__modal h3 {
+      text-align: center;
+      margin-bottom: 8px; }
+    div.error-loading div.error-loading__modal p {
+      display: inline;
+      color: #212121 !important; }
+    div.error-loading div.error-loading__modal a#email {
+      color: #ff4444;
+      font-weight: bold;
+      display: inline !important;
+      text-decoration: none;
+      margin-left: 4px; }
+    div.error-loading div.error-loading__modal a#refresh {
+      display: block;
+      margin: auto;
+      margin-top: 8px;
+      padding: 8px;
+      border: none;
+      background: #ff4444;
+      color: white;
+      border-radius: 4px;
+      text-decoration: none;
+      max-width: 100px;
+      text-align: center; }
+    div.error-loading div.error-loading__modal a:hover {
+      cursor: pointer; }
 
 /* client/src/scss/components/_button.scss */
 button.button {
@@ -385,7 +426,8 @@ button.button {
   padding: 8px calc(8px * 2);
   border: none;
   box-shadow: 0px 2px 5px rgba(50, 50, 50, 0.3);
-  transition: all 0.3s ease; }
+  transition: all 0.3s ease;
+  z-index: 0; }
 
 button.button--secondary {
   background: #2BBBAD; }
@@ -678,9 +720,13 @@ div#ViewTeamStatisticsAPI {
       div#ViewTeamStatisticsAPI div.team-statistics div.member-statistics div.team-member-stats p {
         text-align: center; }
 
-div#LeaveTeamAPI button {
-  width: 128px;
-  background: #ff4444; }
+div#LeaveTeamAPI {
+  position: relative;
+  z-index: 0; }
+  div#LeaveTeamAPI button {
+    width: 128px;
+    background: #ff4444;
+    z-index: 1; }
 
 a.button {
   border-radius: 4px;
@@ -774,6 +820,8 @@ div#EditStrategiesAPI {
   div#EditStrategiesAPI > div {
     width: 100%;
     height: 100%; }
+    div#EditStrategiesAPI > div > div {
+      height: 100%; }
   div#EditStrategiesAPI a {
     display: block; }
   div#EditStrategiesAPI button {
@@ -876,7 +924,7 @@ div.add-map__ui {
     grid-template-columns: 256px 1224px 1fr; }
     div.add-map__ui main div.sidebar {
       padding: calc(8px * 2);
-      max-height: calc(100VH - (64px + 40px + 40px));
+      max-height: 100VH;
       display: grid;
       grid-template-rows: 300px 1fr;
       border-right: 1px solid #dedede; }

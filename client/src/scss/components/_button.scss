@@ -8,6 +8,7 @@ button.button {
   border: none;
   box-shadow: $box-shadow-tertiary;
   transition: all 0.3s ease;
+  z-index: 0;
 }
 button.button--secondary {
   background: $color-secondary;

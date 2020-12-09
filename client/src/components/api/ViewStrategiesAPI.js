@@ -5,6 +5,7 @@ import { Redirect } from "react-router";
 import axios from "axios";
 
 import LoadingModal from "../partials/LoadingModal.js";
+import ErrorLoading from "../partials/ErrorLoading.js";
 import Map from "../partials/Map.js";
 import { MAP_NAMES } from "../../data.js";
 
@@ -95,7 +96,8 @@ class ViewStrategiesAPI extends React.Component {
     }).catch((error) => {
       console.log(error);
       component.setState({
-        loading: false
+        loading: false,
+        error: true
       });
       component.props.alert("An error has occurred while attempting to get strategies.", "ERROR");
     });
@@ -110,33 +112,36 @@ class ViewStrategiesAPI extends React.Component {
     if (this.state.loading) {
       contents = <LoadingModal/>
     } else {
-      if (this.props.team_code && this.props.team_code !== "") {
-        if (this.state.strategies.length > 0) {
-          const strats = this.state.strategies.map((strat, index) => {
-            if (this.state.search === "" || strat.name.toUpperCase().includes(this.state.search.toUpperCase())) {
-              return (
-                <div className="strategy-preview" key={index}>
-                  <h3 className="strategy-preview-heading" onClick={() => { this.selectStrategy(index) }}>{strat.name}</h3>
-                  <p className="strategy-preview-type">{strat.type}</p>
-                </div>
-              )
-            }
-          });
-          contents = (this.state.listView) ? (
-            <div className="strategy-list">
-              <input className="strategy-search" onChange={this.onChange} value={this.state.search} type="text" placeholder="Search Strategies"/>
-              { strats }
-            </div>
-          ) : (
-            <Map strategy={this.state.strategies[this.state.index]} exitStrategy={this.exitStrategy}/>
-          )
-        } else {
-          contents = <p>Your team does not currently have any strategies.</p>
-        }
+      if (this.state.error) {
+        contents = <ErrorLoading/>
       } else {
-        contents = <p>You do not belong to a team at this time. In order to view strategies, you must be a part of a team.</p>
+        if (this.props.team_code && this.props.team_code !== "") {
+          if (this.state.strategies.length > 0) {
+            const strats = this.state.strategies.map((strat, index) => {
+              if (this.state.search === "" || strat.name.toUpperCase().includes(this.state.search.toUpperCase())) {
+                return (
+                  <div className="strategy-preview" key={index}>
+                    <h3 className="strategy-preview-heading" onClick={() => { this.selectStrategy(index) }}>{strat.name}</h3>
+                    <p className="strategy-preview-type">{strat.type}</p>
+                  </div>
+                )
+              }
+            });
+            contents = (this.state.listView) ? (
+              <div className="strategy-list">
+                <input className="strategy-search" onChange={this.onChange} value={this.state.search} type="text" placeholder="Search Strategies"/>
+                { strats }
+              </div>
+            ) : (
+              <Map strategy={this.state.strategies[this.state.index]} exitStrategy={this.exitStrategy}/>
+            )
+          } else {
+            contents = <p>Your team does not currently have any strategies.</p>
+          }
+        } else {
+          contents = <p>You do not belong to a team at this time. In order to view strategies, you must be a part of a team.</p>
+        }
       }
-
     }
     return (
       <div id="ViewStrategiesAPI">

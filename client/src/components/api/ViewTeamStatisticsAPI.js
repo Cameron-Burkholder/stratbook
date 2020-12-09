@@ -4,6 +4,7 @@ import React from "react";
 import axios from "axios";
 
 import Loading from "../partials/Loading.js";
+import ErrorLoading from "../partials/ErrorLoading.js";
 import TeamMemberStats from "../partials/TeamMemberStats.js";
 
 /*
@@ -60,7 +61,8 @@ class ViewTeamStatisticsAPI extends React.Component {
     }).catch((error) => {
       console.log(error);
       component.setState({
-        loading: false
+        loading: false,
+        error: true
       });
       component.props.alert("An error has occurred while attempting to view team statistics.", "ERROR");
     });
@@ -74,7 +76,7 @@ class ViewTeamStatisticsAPI extends React.Component {
     let contents;
     if (!this.state.loading) {
       if (this.state.error) {
-        contents = <p>An error occurred while fetching the team statistics. Please try again in a bit.</p>;
+        contents = <ErrorLoading/>
       } else {
         let index = 0;
         if (this.state.stats.team) {
@@ -101,19 +103,15 @@ class ViewTeamStatisticsAPI extends React.Component {
             </div>
           );
         } else {
-          contents = <p>An error has occurred</p>
+          contents = <ErrorLoading/>
         }
       }
     }
     return (
       <div id="ViewTeamStatisticsAPI">
-        { this.state.loading ? (
-          <Loading/>
-        ) : (
-          <div>
-            { contents }
-          </div>
-        )}
+        <div>
+          { contents }
+        </div>
       </div>
     )
   }
