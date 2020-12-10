@@ -7,6 +7,7 @@ import Loading from "../partials/Loading.js";
 import MapSelector from "../partials/MapSelector.js";
 import Toolbar from "../partials/Toolbar.js";
 import Sidebar from "../partials/Sidebar.js";
+import Canvas from "../partials/Canvas.js";
 
 // LEGACY
 import SiteSelector from "../partials/SiteSelector.js";
@@ -330,8 +331,7 @@ class CreateStrategiesAPI extends React.Component {
   addScene() {
     let scenes;
     let map = this.state.map;
-    let name = window.prompt("Name of new scene?");
-    name = (name != null ? name : "Unnamed");
+    let name = "Unnamed";
     if (this.state.type === "ATTACK") {
       scenes = map.attack[this.state.strategyIndex][this.state.site];
       scenes.push({
@@ -722,6 +722,7 @@ class CreateStrategiesAPI extends React.Component {
             ) : (
               <div className="add-map__ui">
                 <Toolbar
+                  type={this.state.type}
                   strategy={this.state.type === "ATTACK" ? (
                     this.state.map.attack[this.state.strategyIndex].name
                   ): (
@@ -760,15 +761,60 @@ class CreateStrategiesAPI extends React.Component {
                     addScene={this.addScene}
                     removeScene={this.removeScene}
                     updateSceneName={this.updateSceneName}/>
+                  <Canvas
+                    type={this.state.type}
+                    operators={(this.state.type === "ATTACK" ? (
+                      this.state.map.attack[this.state.strategyIndex].operators
+                    ) : (this.state.map.defense[this.state.site][this.state.strategyIndex].operators))}
+                    operatorPositions={(this.state.type === "ATTACK" ? (
+                      this.state.map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].operatorPositions) : (
+                      this.state.map.defense[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].operatorPositions
+                    ))}
+                    gadgets={(this.state.type === "ATTACK" ? (
+                      this.state.map.attack[this.state.strategyIndex].gadgets
+                    ) : (this.state.map.defense[this.state.site][this.state.strategyIndex].gadgets))}
+                    gadgetPositions={(this.state.type === "ATTACK" ? (
+                      this.state.map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].gadgetPositions) : (
+                      this.state.map.defense[this.state.site][this.state.strategyIndex].gadgetPositions
+                    ))}
+                    utility={(this.state.type === "ATTACK" ? (
+                      this.state.map.attack[this.state.strategyIndex].utility
+                    ) : (this.state.map.defense[this.state.site][this.state.strategyIndex].operators))}
+                    utilityPositions={(this.state.type === "ATTACK" ? (
+                      this.state.map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].utilityPositions) : (
+                      this.state.map.defense[this.state.site][this.state.strategyIndex].utilityPositions
+                    ))}
+                    drones={(this.state.type === "ATTACK" ? (
+                      this.state.map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].drones
+                    ) : undefined)}
+                    rotates={(this.state.type === "ATTACK" ? (
+                      undefined
+                    ) : this.state.map.defense[this.state.site][this.state.strategyIndex].rotates)}
+                    reinforcements={(this.state.type === "ATTACK" ? (
+                      undefined
+                    ) : this.state.map.defense[this.state.site][this.state.strategyIndex].reinforcements)}
+                    map={this.state.map.name} site={this.state.site} floorIndex={this.state.floorIndex}
+                    breaches={(this.state.type === "ATTACK" ? (
+                      this.state.map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].breaches
+                    ) : undefined)}
+                    floor={this.state.floors[this.state.floorIndex]}
+                    updateOperatorPositions={this.updateOperatorPositions}
+                    updateGadgetPositions={this.updateGadgetPositions}
+                    updateDronePositions={this.updateDronePositions}
+                    updateUtilityPositions={this.updateUtilityPositions}
+                    updateRotatePositions={this.updateRotatePositions}
+                    updateReinforcementPositions={this.updateReinforcementPositions}
+                    updateBreachPositions={this.updateBreachPositions}
+                    updateFloor={this.updateFloor}
+                    floors={this.state.floors}
+                    />
+
                 </main>
 
 
                 {/*
-                <h2 className="add-map__heading">{this.state.map.name}</h2>
-                <TypeSelector updateType={this.updateType} type={this.state.type}/>
                 <div className="add-map__header">
                   <div>
-                    <SiteSelector selectSite={this.selectSite} map={this.state.map.name} site={this.state.site}/>
                     <Pagination index={this.state.strategyIndex} title="Strategy"
                       decrement={this.decrementStrategy} increment={this.incrementStrategy}/>
                     <div className="add-map__strategy-buttons">
@@ -800,11 +846,6 @@ class CreateStrategiesAPI extends React.Component {
                   <main className="canvas">
                     <div className="canvas__controls">
                       <FloorSelector onChange={this.updateFloor} floors={this.state.floors} floor={this.state.floors[this.state.floorIndex]}/>
-                      <Pagination title="Scene" index={this.state.sceneIndex} increment={this.incrementScene} decrement={this.decrementScene}/>
-                      <div className="scene-controls">
-                        <a onClick={this.addScene}>+</a>
-                        <a onClick={this.removeScene}>-</a>
-                      </div>
                     </div>
                     <BlueprintForm type={this.state.type}
                       operators={(this.state.type === "ATTACK" ? (

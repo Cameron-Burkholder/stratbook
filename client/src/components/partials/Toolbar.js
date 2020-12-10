@@ -48,8 +48,18 @@ class Toolbar extends React.Component {
           <h4 className="toolbar__strategy" onClick={this.changeName}>{this.state.strategy}</h4>
         )}
         <button className="button toolbar__button" onClick={this.props.save}>Save</button>
-        <p>Drones</p>
-        <p>Breaches</p>
+        { this.props.type === "ATTACK" ? (
+          <div className="dropdown-container">
+            <p>Drones</p>
+            <p>Breaches</p>
+          </div>
+        ) : (
+          <div className="dropdown-container">
+            <p>Rotates</p>
+            <p>Reinforcements</p>
+          </div>
+        )}
+
       </div>
     )
   }

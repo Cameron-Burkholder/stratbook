@@ -60,7 +60,7 @@ class Sidebar extends React.Component {
           { this.state.active && this.state.index === index ? (
             <div className="scene__name-input">
               <input className="scene__input" onChange={this.updateName} value={this.state.name}/>
-              <button onClick={this.changeName} className="button">Save</button>
+              <button onClick={this.changeName}>&#10003;</button>
             </div>
           ) : (
             <p className="scene__name" onClick={(e) => { this.changeName(index, e) }}>{scene.name}</p>

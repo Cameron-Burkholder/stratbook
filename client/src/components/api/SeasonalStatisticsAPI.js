@@ -23,7 +23,7 @@ class SeasonalStatisticsAPI extends React.Component {
       stats: undefined,
       loading: true,
       hasLoaded: false,
-      season: "shadow_legacy"
+      season: "neon_dawn"
     }
   }
   fetchStats() {

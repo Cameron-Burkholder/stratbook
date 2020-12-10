@@ -114,6 +114,9 @@ div.add-map__ui {
       cursor: pointer;
       text-decoration: underline;
     }
+    div.dropdown-container {
+      display: flex;
+    }
     div.strategy__name-input {
       position: relative;
       input.strategy__input {
@@ -141,7 +144,7 @@ div.add-map__ui {
     width: 100%;
     height: 100%;
     display: grid;
-    grid-template-columns: 256px 1224px 1fr;
+    grid-template-columns: 256px 1024px 1fr;
     div.sidebar {
       padding: calc(#{$padding} * 2);
       max-height: 100VH;
@@ -173,9 +176,25 @@ div.add-map__ui {
           margin-bottom: 2px;
         }
         div.scene__name-input {
+          position: relative;
           input.scene__input {
             padding: $padding;
             border: $border-primary;
+          }
+          button {
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            right: 16px;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            opacity: 0.8;
+            padding: 8px;
+          }
+          button:hover {
+            cursor: pointer;
+            color: $color-success;
           }
         }
       }
@@ -221,5 +240,36 @@ div.add-map__ui {
         }
       }
     }
+  }
+}
+
+div.canvas {
+  width: 100%; // 1024px
+  height: 100%;
+  position: relative;
+  border-right: $border-primary;
+  div.blueprint-form {
+    width: 100%; //1024px
+    height: 576px; // 576px gives 16:9 ratio
+  }
+  div.position-overlay {
+    width: 100%;
+    height: 100%;
+  }
+  div.canvas__controls {
+    position: absolute;
+    top: calc(576px - 46px);
+    border-bottom: none;
+    border-left: none;
+    left: 0;
+    select {
+      border-radius: 0 !important;
+    }
+    select:hover {
+      cursor: pointer;
+    }
+  }
+  div.canvas__body {
+    padding: calc(#{$padding} * 2) calc(#{$padding} * 4);
   }
 }

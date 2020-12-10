@@ -7,7 +7,7 @@ const FloorSelector = (props) => {
     return <option key={index}>{floor}</option>
   })
   return (
-    <select onChange={props.onChange} className="floor-selector" value={props.floor}>
+    <select onChange={props.onChange} className="form__select" value={props.floor}>
       {options}
     </select>
   )
