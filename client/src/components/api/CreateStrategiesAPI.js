@@ -821,7 +821,13 @@ class CreateStrategiesAPI extends React.Component {
                       this.state.map.attack[this.state.strategyIndex].utility
                     ) : (this.state.map.defense[this.state.site][this.state.strategyIndex].utility))}
                     updateRoles={this.updateRoles} updateOperators={this.updateOperators} updateUtility={this.updateUtility}
-                    selectOperator={this.selectOperator}/>
+                    selectOperator={this.selectOperator} activeOperator={this.state.activeOperator}
+                    insertOperator={this.insertOperator} removeOperator={this.removeOperator}
+                    insertUtility={this.insertUtility} removeUtility={this.removeUtility}
+                    insertGadget={this.insertGadget} removeGadget={this.removeGadget}
+                    gadgets={(this.state.type === "ATTACK" ? (
+                      this.state.map.attack[this.state.strategyIndex].gadgets
+                    ) : (this.state.map.defense[this.state.site][this.state.strategyIndex].gadgets))}/>
                 </main>
 
 
@@ -839,20 +845,6 @@ class CreateStrategiesAPI extends React.Component {
                         this.state.map.attack[this.state.strategyIndex].name
                       ) : (this.state.map.defense[this.state.site][this.state.strategyIndex].name))}
                       placeholder="Strategy Name"/>
-                  </div>
-                  <div>
-                    <LineupForm type={this.state.type}
-                      roles={(this.state.type === "ATTACK" ? (
-                        this.state.map.attack[this.state.strategyIndex].roles
-                      ) : (this.state.map.defense[this.state.site][this.state.strategyIndex].roles ))}
-                      operators={(this.state.type === "ATTACK" ? (
-                        this.state.map.attack[this.state.strategyIndex].operators
-                      ) : (this.state.map.defense[this.state.site][this.state.strategyIndex].operators))}
-                      utility={(this.state.type === "ATTACK" ? (
-                        this.state.map.attack[this.state.strategyIndex].utility
-                      ) : (this.state.map.defense[this.state.site][this.state.strategyIndex].utility))}
-                      updateRoles={this.updateRoles} updateOperators={this.updateOperators} updateUtility={this.updateUtility}
-                      selectOperator={this.selectOperator}/>
                   </div>
                 </div>
                 <div className="add-map__body">

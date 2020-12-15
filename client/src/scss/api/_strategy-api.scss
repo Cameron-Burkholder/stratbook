@@ -241,6 +241,17 @@ div.add-map__ui {
       }
     }
   }
+  div.lineup {
+    padding: calc(#{$padding} * 2);
+    div.role {
+      border-radius: $border-radius;
+      display: grid;
+      grid-template-columns: 1fr 64px;
+    }
+    div.role--active {
+      box-shadow: $box-shadow-tertiary;
+    }
+  }
 }
 
 div.canvas {

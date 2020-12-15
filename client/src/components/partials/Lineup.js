@@ -51,21 +51,52 @@ class Lineup extends React.Component {
           return <option key={index}>{gadget}</option>
         })
       ));
-      return (
-        <div className="role" key={index}>
-          <select className="form__select" onChange={(e) => { this.props.updateRoles(e, index) }} value={this.props.roles[index]}>
-            { roleOptions }
-          </select>
-          <select className="form__select" onChange={(e) => { this.props.updateOperators(e, index) }} value={this.props.operators[index]} disabled={this.props.roles[index] === "ROLE"}>
-            <option>OPERATOR</option>
-            { operatorOptions }
-          </select>
-          <select className="form__select" onChange={(e) => { this.props.updateUtility(e, index) }} value={this.props.utility[index]}>
-            <option>UTILITY</option>
-            { utilityOptions }
-          </select>
-        </div>
-      )
+        return (
+          <div className={"role" + (this.props.activeOperator === index ? " role--active" : "")} key={index}>
+            <div className="role__head">
+              { this.props.activeOperator === index ? (
+                <div>
+                  <select className="form__select" onChange={(e) => { this.props.updateRoles(e, index) }} value={this.props.roles[index]}>
+                    { roleOptions }
+                  </select>
+                  <select className="form__select" onChange={(e) => { this.props.updateUtility(e, index) }} value={this.props.utility[index]}>
+                    <option>UTILITY</option>
+                    { utilityOptions }
+                  </select>
+                </div>
+              ) : (
+                <div>
+                  <p className="role__role">Role: {this.props.roles[index]}</p>
+                  <p className="role__utility">Utility: {this.props.utility[index]}</p>
+                </div>
+              )}
+            </div>
+            <div className="role__image" onClick={() => { this.props.selectOperator(index) }}>
+              <img className="role__image" src={`../media/${this.props.operators[index]}.jpg`}/>
+            </div>
+            { this.props.activeOperator === index ? (
+              <div className="role__body">
+                <div className="role__operator">
+                  <select className="form__select" onChange={(e) => { this.props.updateOperators(e, index) }} value={this.props.operators[index]} disabled={this.props.roles[index] === "ROLE"}>
+                    <option>OPERATOR</option>
+                    { operatorOptions }
+                  </select>
+                  <button className="insert" onClick={() => { this.props.insertOperator(this.props.activeOperator) }}>Insert</button>
+                </div>
+                <div className="role__gadget">
+                  <p>{this.props.gadgets[index]}</p>
+                  <button className="insert" onClick={() => { this.props.insertGadget(this.props.activeOperator) }}>+</button>
+                  <button className="remove" onClick={() => { this.props.removeGadget(this.props.activeOperator) }}>-</button>
+                </div>
+                <div className="role__utility">
+                  <p>{this.props.utility[index]}</p>
+                  <button className="insert" onClick={() => { this.props.insertUtility(this.props.activeOperator) }}>+</button>
+                  <button className="remove" onClick={() => { this.props.removeUtility(this.props.activeOperator) }}>-</button>
+                </div>
+              </div>
+            ) : ""}
+          </div>
+        )
     })
     return (
       <div className="lineup">
