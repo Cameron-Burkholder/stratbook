@@ -8,6 +8,7 @@ import MapSelector from "../partials/MapSelector.js";
 import Toolbar from "../partials/Toolbar.js";
 import Sidebar from "../partials/Sidebar.js";
 import Canvas from "../partials/Canvas.js";
+import Lineup from "../partials/Lineup.js";
 
 // LEGACY
 import SiteSelector from "../partials/SiteSelector.js";
@@ -808,7 +809,19 @@ class CreateStrategiesAPI extends React.Component {
                     updateFloor={this.updateFloor}
                     floors={this.state.floors}
                     />
-
+                  <Lineup
+                    type={this.state.type}
+                    roles={(this.state.type === "ATTACK" ? (
+                      this.state.map.attack[this.state.strategyIndex].roles
+                    ) : (this.state.map.defense[this.state.site][this.state.strategyIndex].roles ))}
+                    operators={(this.state.type === "ATTACK" ? (
+                      this.state.map.attack[this.state.strategyIndex].operators
+                    ) : (this.state.map.defense[this.state.site][this.state.strategyIndex].operators))}
+                    utility={(this.state.type === "ATTACK" ? (
+                      this.state.map.attack[this.state.strategyIndex].utility
+                    ) : (this.state.map.defense[this.state.site][this.state.strategyIndex].utility))}
+                    updateRoles={this.updateRoles} updateOperators={this.updateOperators} updateUtility={this.updateUtility}
+                    selectOperator={this.selectOperator}/>
                 </main>
 
 
@@ -843,54 +856,6 @@ class CreateStrategiesAPI extends React.Component {
                   </div>
                 </div>
                 <div className="add-map__body">
-                  <main className="canvas">
-                    <div className="canvas__controls">
-                      <FloorSelector onChange={this.updateFloor} floors={this.state.floors} floor={this.state.floors[this.state.floorIndex]}/>
-                    </div>
-                    <BlueprintForm type={this.state.type}
-                      operators={(this.state.type === "ATTACK" ? (
-                        this.state.map.attack[this.state.strategyIndex].operators
-                      ) : (this.state.map.defense[this.state.site][this.state.strategyIndex].operators))}
-                      operatorPositions={(this.state.type === "ATTACK" ? (
-                        this.state.map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].operatorPositions) : (
-                        this.state.map.defense[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].operatorPositions
-                      ))}
-                      gadgets={(this.state.type === "ATTACK" ? (
-                        this.state.map.attack[this.state.strategyIndex].gadgets
-                      ) : (this.state.map.defense[this.state.site][this.state.strategyIndex].gadgets))}
-                      gadgetPositions={(this.state.type === "ATTACK" ? (
-                        this.state.map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].gadgetPositions) : (
-                        this.state.map.defense[this.state.site][this.state.strategyIndex].gadgetPositions
-                      ))}
-                      utility={(this.state.type === "ATTACK" ? (
-                        this.state.map.attack[this.state.strategyIndex].utility
-                      ) : (this.state.map.defense[this.state.site][this.state.strategyIndex].operators))}
-                      utilityPositions={(this.state.type === "ATTACK" ? (
-                        this.state.map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].utilityPositions) : (
-                        this.state.map.defense[this.state.site][this.state.strategyIndex].utilityPositions
-                      ))}
-                      drones={(this.state.type === "ATTACK" ? (
-                        this.state.map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].drones
-                      ) : undefined)}
-                      rotates={(this.state.type === "ATTACK" ? (
-                        undefined
-                      ) : this.state.map.defense[this.state.site][this.state.strategyIndex].rotates)}
-                      reinforcements={(this.state.type === "ATTACK" ? (
-                        undefined
-                      ) : this.state.map.defense[this.state.site][this.state.strategyIndex].reinforcements)}
-                      map={this.state.map.name} site={this.state.site} floorIndex={this.state.floorIndex}
-                      breaches={(this.state.type === "ATTACK" ? (
-                        this.state.map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].breaches
-                      ) : undefined)}
-                      floor={this.state.floors[this.state.floorIndex]}
-                      updateOperatorPositions={this.updateOperatorPositions}
-                      updateGadgetPositions={this.updateGadgetPositions}
-                      updateDronePositions={this.updateDronePositions}
-                      updateUtilityPositions={this.updateUtilityPositions}
-                      updateRotatePositions={this.updateRotatePositions}
-                      updateReinforcementPositions={this.updateReinforcementPositions}
-                      updateBreachPositions={this.updateBreachPositions}/>
-                  </main>
                   <aside className="aside">
                     <OLD_Toolbar type={this.state.type}
                       operators={(this.state.type === "ATTACK" ? (
