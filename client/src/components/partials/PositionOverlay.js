@@ -38,6 +38,7 @@ class PositionOverlay extends React.Component {
     });
   }
   onMouseMove(e) {
+    console.log(e);
     let width = 60;
     let height = 60;
     let newPositions;
@@ -65,7 +66,7 @@ class PositionOverlay extends React.Component {
         break;
     }
     let newX = e.pageX - this.state.bounds.left - (width / 2);
-    let newY = e.pageY - this.state.bounds.top - (height);
+    let newY = e.pageY - this.state.bounds.top - (height / 2);
     if (newX < 0) {
       newX = 0;
     } else if (newX > this.state.bounds.width - width) {

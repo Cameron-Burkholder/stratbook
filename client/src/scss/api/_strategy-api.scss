@@ -266,6 +266,16 @@ div.canvas {
   div.position-overlay {
     width: 100%;
     height: 100%;
+    position: relative;
+    div.drag-item {
+      position: relative;
+      width: 60px;
+      height: 60px;
+    }
+    div.drag-item:hover, div.drag-item.active {
+      cursor: pointer;
+      transform: scale(0.9);
+    }
   }
   div.canvas__controls {
     position: absolute;

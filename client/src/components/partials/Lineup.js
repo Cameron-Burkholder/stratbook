@@ -84,7 +84,7 @@ class Lineup extends React.Component {
                   <button className="insert" onClick={() => { this.props.insertOperator(this.props.activeOperator) }}>Insert</button>
                 </div>
                 <div className="role__gadget">
-                  <p>{this.props.gadgets[index]}</p>
+                  <p>{this.props.gadgets[index].gadget}</p>
                   <button className="insert" onClick={() => { this.props.insertGadget(this.props.activeOperator) }}>+</button>
                   <button className="remove" onClick={() => { this.props.removeGadget(this.props.activeOperator) }}>-</button>
                 </div>
