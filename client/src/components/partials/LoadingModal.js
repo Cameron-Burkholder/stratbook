@@ -6,7 +6,7 @@ import React from "react";
   @func: Loading
   @desc: render a loading animation
 */
-const LoadingModal = () => {
+const LoadingModal = (props) => {
   return (
     <div className="loading-modal">
       <div className="loader">
@@ -14,7 +14,7 @@ const LoadingModal = () => {
           <circle className="path" cx="50" cy="50" r="20" fill="none" strokeWidth="2" strokeMiterlimit="10"/>
         </svg>
       </div>
-      Fetching Data
+      { props.message ? props.message : "Fetching Data" }
     </div>
   )
 }

@@ -50,7 +50,7 @@ const OperatorStatistics = (props) => {
         </div>
         <div className="operator-stats__stat">
           <p className="operator-stats__label">Playtime</p>
-          <span className="operator-stats__value">{Math.round(props.playtime / 3600 * 100) / 100} Hrs</span>
+          <span className="operator-stats__value">{Math.floor(props.playtime / 3600)} Hrs</span>
         </div>
         <div className="operator-stats__stat">
           <p className="operator-stats__label">Headshot %</p>

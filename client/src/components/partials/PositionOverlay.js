@@ -11,19 +11,20 @@ class PositionOverlay extends React.Component {
     this.selectElement = this.selectElement.bind(this);
     this.onMouseMove = this.onMouseMove.bind(this);
     this.onMouseUp = this.onMouseUp.bind(this);
+    this.detectChange = this.detectChange.bind(this);
 
     this.selector = React.createRef();
 
     this.state = {
       index: 0,
       type: "",
-      operatorPositions: this.props.operatorPositions,
-      gadgetPositions: this.props.gadgetPositions,
-      utilityPositions: this.props.utilityPositions,
-      drones: this.props.drones,
-      rotates: this.props.rotates,
-      reinforcements: this.props.reinforcements,
-      breaches: this.props.breaches
+      operatorPositions: (this.props.operatorPositions ? [...this.props.operatorPositions] : []),
+      gadgetPositions: (this.props.gadgetPositions ? [...this.props.gadgetPositions] : []),
+      utilityPositions: (this.props.utilityPositions ? [...this.props.utilityPositions] : []),
+      drones: (this.props.drones ? [...this.props.drones] : []),
+      rotates: (this.props.rotates ? [...this.props.rotates] : []),
+      reinforcements: (this.props.reinforcements ? [...this.props.reinforcements] : []),
+      breaches: (this.props.breaches ? [...this.props.breaches] : [])
     }
   }
   selectElement(index, type, gi) {
@@ -38,7 +39,6 @@ class PositionOverlay extends React.Component {
     });
   }
   onMouseMove(e) {
-    console.log(e);
     let width = 60;
     let height = 60;
     let newPositions;
@@ -162,6 +162,31 @@ class PositionOverlay extends React.Component {
       });
     });
   }
+  detectChange(prevProps, prevState) {
+    let bool = false;
+    if (prevProps.type != this.props.type) {
+      bool = true;
+    }
+    if (prevProps.operatorPositions != this.props.operatorPositions) {
+      bool = true;
+    }
+    if (prevProps.utilityPositions != this.props.utilityPositions) {
+      bool = true;
+    }
+    if (prevProps.gadgetPositions != this.props.gadgetPositions) {
+      bool = true;
+    }
+    if (prevProps.drones != this.props.drones) {
+      bool = true;
+    }
+    if (prevProps.rotates != this.props.rotates) {
+      bool = true;
+    }
+    if (prevProps.reinforcements != this.props.reinforcements) {
+      bool = true;
+    }
+    return bool;
+  }
   componentDidMount() {
     if (!this.state.bounds) {
       this.setState({
@@ -170,7 +195,7 @@ class PositionOverlay extends React.Component {
     }
   }
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps.type !== this.props.type) {
+    if (this.detectChange(prevProps, prevState)) {
       this.setState({
         index: 0,
         type: "",

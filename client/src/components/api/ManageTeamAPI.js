@@ -126,6 +126,9 @@ class ManageTeamAPI extends React.Component {
             component.props.alert(response.data.message, response.data.status);
             break;
         }
+        setTimeout(() => {
+          window.location.reload(false);
+        }, 500);
       }).catch((error) => {
         console.log(error);
         component.setState({

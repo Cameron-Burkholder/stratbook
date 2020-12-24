@@ -11,13 +11,14 @@ import Canvas from "../partials/Canvas.js";
 import Lineup from "../partials/Lineup.js";
 
 // LEGACY
+/*
 import SiteSelector from "../partials/SiteSelector.js";
 import TypeSelector from "../partials/TypeSelector.js";
 import Pagination from "../partials/Pagination.js";
 import LineupForm from "../partials/LineupForm.js";
 import BlueprintForm from "../partials/BlueprintForm.js";
 import FloorSelector from "../partials/FloorSelector.js";
-import OLD_Toolbar from "../partials/OLD_Toolbar.js";
+import OLD_Toolbar from "../partials/OLD_Toolbar.js";*/
 
 import { MAP_NAMES, SITES, FLOORS, GADGETS, UTILITY_GUIDE } from "../../data.js";
 
@@ -167,7 +168,9 @@ class CreateStrategiesAPI extends React.Component {
   selectSite(index) {
     this.setState({
       site: this.state.sites[index],
-      siteIndex: index
+      siteIndex: index,
+      sceneIndex: 0,
+      scenes: (this.state.type === "ATTACK" ? this.state.map.attack[this.state.strategyIndex][this.state.sites[index]] : this.state.map.defense[this.state.sites[index]][this.state.strategyIndex].scenes)
     });
   }
   updateType(e) {
@@ -334,20 +337,20 @@ class CreateStrategiesAPI extends React.Component {
     let map = this.state.map;
     let name = "Unnamed";
     if (this.state.type === "ATTACK") {
-      scenes = map.attack[this.state.strategyIndex][this.state.site];
+      scenes = [...map.attack[this.state.strategyIndex][this.state.site]];
       scenes.push({
         objectives: [],
         utilityPositions: [[], [], [], [], []],
         gadgetPositions: [[], [], [], [], []],
         breaches: [],
-        operatorPositions: [{x: 0, y: 0, floor: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}],
+        operatorPositions: [{x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}],
         drones: [],
         notes: "",
         name: name
       });
       map.attack[this.state.strategyIndex][this.state.site] = scenes;
     } else {
-      scenes = map.defense[this.state.site][this.state.strategyIndex].scenes;
+      scenes = [...map.defense[this.state.site][this.state.strategyIndex].scenes];
       scenes.push({
         objectives: [],
         operatorPositions: [{x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: null}, {x: 0, y: 0}, {x: 0, y: 0}],
@@ -761,7 +764,8 @@ class CreateStrategiesAPI extends React.Component {
                     sceneIndex={this.state.sceneIndex}
                     addScene={this.addScene}
                     removeScene={this.removeScene}
-                    updateSceneName={this.updateSceneName}/>
+                    updateSceneName={this.updateSceneName}
+                    type={this.state.type}/>
                   <Canvas
                     type={this.state.type}
                     operators={(this.state.type === "ATTACK" ? (

@@ -2,45 +2,55 @@
 
 div.alert-container {
   position: fixed;
-  right: 0;
   bottom: 0;
-  padding: $padding;
-  padding-bottom: calc(#{$padding} * 3);
-  max-width: 370px;
+  right: 0;
+  width: 100VW;
+  max-width: $phone-max-width;
+  padding: $padding-s;
+  z-index: 5;
 }
 
 div.alert {
-  background: white;
-  border-radius: $border-radius;
-  padding: $padding;
-  box-shadow: $box-shadow-tertiary;
-  min-width: 300px;
-  display: grid;
-  grid-template-columns: 1fr 40px;
-  border: 2px solid $color-warning;
-  margin-top: $margin;
-  h5 {
-    grid-column: span 2;
-    color: $color-warning;
-    font-weight: bold;
-  }
-  button.alert__button {
-    border: none;
-    background: none;
-  }
-  button.alert__button:hover {
-    cursor: pointer;
-  }
+  position: relative;
+  padding: $padding-s;
+  padding-right: 56px;
+  background: $background-primary;
+  border: 3px solid $color-primary;
+  box-shadow: $box-shadow-primary;
+  right: calc(-100% - #{$padding-s});
+  margin-top: $margin-s;
+  animation-name: alert-appear;
+  animation-duration: 0.3s;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease-in-out;
 }
-div.alert--success {
-  border: 2px solid $color-success;
-  h5 {
-    color: $color-success;
-  }
+button.alert__button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: none;
+  height: 100%;
+  border-radius: 0;
+}
+button.alert__button:hover {
+  background: $color-danger;
+  box-shadow: none;
 }
 div.alert--error {
-  border: 2px solid $color-danger;
-  h5 {
-    color: $color-danger;
+  border: 3px solid $color-danger;
+}
+div.alert--success {
+  border: 3px solid $color-success;
+  button.alert__button:hover {
+    background: $color-success;
+  }
+}
+
+@keyframes alert-appear {
+  0% {
+    right: calc(-100% - #{$padding-s});
+  }
+  100% {
+    right: 0;
   }
 }

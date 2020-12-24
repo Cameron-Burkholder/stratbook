@@ -7,8 +7,6 @@ import axios from "axios";
 import CreateStrategiesAPI from "./CreateStrategiesAPI";
 import LoadingModal from "../partials/LoadingModal.js";
 import ErrorLoading from "../partials/ErrorLoading.js";
-import StrategyEdit from "../partials/StrategyEdit.js";
-import EditMap from "../partials/EditMap.js";
 import { Link } from "react-router-dom";
 
 /*
@@ -328,12 +326,12 @@ class EditStrategiesAPI extends React.Component {
     }
     return (
       <div id="EditStrategiesAPI">
-        { this.state.loading ? <LoadingModal/> : (
+        { this.state.loading ? <LoadingModal message="Fetching Strategies"/> : (
           <div>
             { this.state.maps ? (
               <div>
                 { this.state.add ? "" : (
-                  <div>
+                  <div className="edit-buttons">
                     <Link className="button" to="/strategies">Back to view</Link>
                     <button className="button" onClick={this.addMap}>Add Map</button>
                   </div>

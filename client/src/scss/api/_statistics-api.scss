@@ -3,155 +3,420 @@
 div#GeneralStatisticsAPI {
   grid-column: span 2;
 }
-div#OperatorStatisticsAPI {
-  grid-column: span 3;
-}
-h2.statistics-title {
-  text-align: center;
-  margin-bottom: $margin;
-}
-h3.stats-grid__heading {
-  margin-bottom: calc(#{$margin} * 2);
-  margin-top: calc(#{$margin} * 4);
-}
-h4.stats__heading {
-  text-align: center;
-  color: $text-secondary;
-}
-img.user-image {
-  display: block;
-  max-width: 50px;
-}
-div.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: calc(#{$margin} * 2);
-}
-div.stats-box {
-  padding: calc(#{$padding} * 2);
-  box-shadow: $box-shadow-secondary;
-  transition: all 0.3s ease;
-  border-radius: $border-radius;
-}
-div.stats-box:hover {
-  box-shadow: $box-shadow-tertiary;
-  transform: translateY(calc(-#{$margin}));
-  transition: all 0.3s ease;
-}
-div.stat {
-  display: flex;
-  justify-content: space-between;
-  p.stat__label {
-    color: $text-tertiary;
-  }
-}
-div.stat--main {
-  display: block;
-  text-align: center;
-  margin-top: $margin;
-  margin-bottom: $margin;
-  span.stat__value {
-    color: $color-primary;
-    font-size: $heading3;
-  }
-}
-
-div#GeneralStatisticsAPI, div#SeasonalStatisticsAPI, div#OperatorStatisticsAPI {
-  padding: calc(#{$padding} * 3);
-  border: 1px solid #dedede;
-  border-radius: 4px;
-  background: $background;
-}
-
 div#SeasonalStatisticsAPI {
-  div.stat.stat--main {
-    display: block;
-    margin-bottom: calc(#{$margin}* 3);
-    h3.stat__value {
-      font-size: $heading2;
-      color: $color-secondary;
-      margin-top: $margin;
-      margin-bottom: $margin;
+  div.statistics {
+    display: flex;
+    flex-direction: column;
+  }
+  div.stat--main {
+    background: linear-gradient(#{$color-primary}, #{$color-secondary});
+    width: 256px;
+    height: 256px;
+    border-radius: 100%;
+    margin: $margin-m auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: $box-shadow-primary;
+    position: relative;
+    z-index: 1;
+    transition: all 0.3s ease;
+    h3 {
+      font-size: $font-heading1;
+      z-index: 2;
     }
-    p.stat__label {
-      font-size: $heading3;
+    p {
+      font-size: $font-heading2;
+      z-index: 2;
+      margin-top: 4px;
+      color: $text-heading;
     }
     p.stat__label--secondary {
-      font-size: $heading4;
+      font-size: $font-body;
+      margin-top: 0;
+      color: $text-heading;
+      z-index: 2;
     }
+  }
+  div.stat--main::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 244px;
+    height: 244px;
+    border-radius: 100%;
+    background: $background-primary;
+    z-index: 1;
+  }
+  div.stat--main:hover {
+    transform: translateY(-8px);
+    transition: all 0.3s ease;
   }
   div.stat {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    margin-bottom: $margin;
+    margin-top: $margin-s;
+    h3.stat__value--main {
+      grid-column: span 2;
+    }
   }
-  h3.stat__value--main {
-    grid-column: span 2;
-    color: $color-primary;
-  }
-  h4.stat__value {
-    text-align: right;
+}
+div#OperatorStatisticsAPI {
+  grid-column: span 3;
+  div.statistics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: $margin-s;
+    div.controls {
+      grid-column: span 3;
+      margin: $margin-m auto;
+      width: 100%;
+      button {
+        margin: $margin-s;
+      }
+      input {
+        margin-right: $margin-s;
+      }
+    }
+    div.operator-statistics {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      background: $background-secondary;
+      transition: all 0.3s ease;
+      div.operator-info {
+        padding: 8px;
+        img {
+          width: 100%;
+        }
+        h3 {
+          font-size: $font-body;
+          text-align: center;
+        }
+      }
+      div.operator-stats {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-row-gap: 8px;
+        padding: $padding-s;
+        div.operator-stats__stat {
+          p {
+            font-size: $font-small;
+          }
+          span {
+            color: $text-heading;
+          }
+        }
+      }
+    }
+    div.operator-statistics:hover {
+      box-shadow: $box-shadow-primary;
+      transform: translateY(-2px);
+      transition: all 0.3s ease;
+    }
   }
 }
 
-div#OperatorStatisticsAPI {
+div.statistics-api {
+  padding: $padding-m;
+  border: $border-primary;
+}
+h2.statistics-title, h3.statistics-title {
+  text-align: center;
+}
+img.user-image {
+  width: 64px;
+}
+h3.stats-grid__heading {
+  width: 100%;
+  margin-bottom: $margin-s;
+}
+div.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: $margin-m;
+  margin-bottom: $margin-m;
+}
+div.stats-box {
+  padding: $padding-m;
+  border: $border-primary;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: $box-shadow-primary;
+}
+div.stats-box:hover {
+  transform: translateY(-8px);
+  transition: all 0.5s ease;
+}
+div.stat {
+  display: flex;
+  justify-content: space-between;
+  span.stat__value {
+    color: $text-heading;
+  }
+}
+div.progress-circle {
+  display: flex;
+  border-radius: 100%;
+  margin: $margin-s auto;
+  border: $border-primary;
+  width: 128px;
+  height: 128px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  background: linear-gradient(#{$color-primary}, #{$color-secondary});
+  z-index: 1;
+  transition: all 0.5s ease;
+  p {
+    text-align: center;
+    z-index: 2;
+  }
+  p.progress-circle__value {
+    font-size: $font-heading1;
+    color: $text-heading;
+    z-index: 2;
+  }
+}
+div.progress-circle::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 124px;
+  height: 124px;
+  content: "";
+  background: $background-primary;
+  border-radius: 100%;
+  z-index: 1;
+}
+h4.stats__heading {
+  text-align: center;
+  margin-top: calc(-#{$margin-s});
+  margin-bottom: $margin-s;
+}
+
+div.statistics-api--rows {
   div.statistics {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: calc(#{$margin} * 2);
-  }
-  div.controls {
-    grid-column: span 2;
-  }
-  button.statistics__button {
-    display: inline-block;
-    margin: 0 $margin;
-  }
-  input.form__input {
-    display: inline;
-    margin: $margin;
-  }
-  div.operator-statistics {
-    display: grid;
-    grid-template-columns: 90px 1fr;
-    grid-gap: $margin;
-    border: $border-primary;
-    transition: all 0.3s ease;
-    div.operator-info {
-      img.operator-info__image {
-        width: 80%;
-        display: block;
-        margin: auto;
-      }
-      h3.operator-info__name {
-        font-size: $heading4;
-        text-align: center;
-      }
-    }
-    div.operator-stats {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      padding: calc(#{$margin} * 2) 0;
-      div.operator-stats__stat {
-        margin: 0;
-        p.operator-stats__label {
-          text-align: center;
-        }
-        span.operator-stats__value {
-          text-align: center;
-          width: 100%;
+    display: flex !important;
+    grid-gap: 0 !important;
+    flex-direction: column;
+    max-width: 1000px;
+    margin: auto;
+    div.operator-statistics {
+      background: transparent !important;
+      border-top: $border-primary;
+      border-bottom: $border-primary;
+      margin: 0;
+      div.operator-info {
+        img {
+          width: 48px !important;
           display: block;
-          font-size: $heading4;
-          color: black;
+          margin: auto;
+        }
+        h3 {
+          display: none;
+        }
+      }
+      div.operator-stats {
+        grid-template-columns: repeat(8, 1fr) !important;
+        div.operator-stats__stat {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+        }
+      }
+    }
+    div.operator-statistics:hover {
+      transform: none !important;
+    }
+  }
+}
+
+@media screen and (max-width: #{$laptop-max-width}) {
+  div#GeneralStatisticsAPI {
+    grid-column: span 3;
+  }
+  div#SeasonalStatisticsAPI {
+    grid-column: span 3;
+    div.statistics {
+      display: grid;
+      grid-template-columns: 2fr repeat(2, 1fr);
+      div.stat {
+        justify-content: center;
+        display: flex;
+        flex-direction: column;
+        h3 {
+          margin-bottom: $margin-s;
         }
       }
     }
   }
-  div.operator-statistics:hover {
-    box-shadow: $box-shadow-secondary;
-    transition: all 0.3s ease;
-    span.operator-stats__value {
-      color: $color-primary !important;
+  div#OperatorStatisticsAPI {
+    div.statistics {
+      grid-template-columns: repeat(2, 1fr);
+      div.controls {
+        grid-column: span 2;
+      }
+    }
+  }
+  div.stats-grid {
+    grid-gap: $margin-s;
+  }
+  div.progress-circle {
+    width: 116px;
+    height: 116px;
+  }
+  div.progress-circle::after {
+    width: 112px;
+    height: 112px;
+  }
+  div.stat {
+    p {
+      font-size: $font-small;
+    }
+  }
+}
+@media screen and (max-width: #{$tablet-max-width}) {
+  div#GeneralStatisticsAPI {
+    padding: $padding-s;
+    div.stats-box {
+      padding: $padding-s;
+      padding-top: $padding-m;
+    }
+  }
+  div#SeasonalStatisticsAPI {
+    padding: $padding-s;
+    div.statistics {
+
+    }
+    div.stat--main {
+      width: 200px;
+      height: 200px;
+    }
+    div.stat--main::after {
+      width: 192px;
+      height: 192px;
+    }
+    div.stat {
+      padding-left: $padding-s;
+    }
+  }
+  div#OperatorStatisticsAPI {
+    padding: $padding-s;
+    div.statistics {
+      grid-template-columns: 1fr;
+      div.controls {
+        grid-column: span 1;
+        input {
+          width: 100%;
+          max-width: 400px;
+          display: block;
+          margin: auto;
+          margin-bottom: $margin-s;
+        }
+      }
+    }
+  }
+  div.statistics-api--rows {
+    div.statistics {
+      div.operator-statistics {
+        grid-template-columns: 40px 1fr !important;
+        div.operator-info {
+          padding: 0 !important;
+          display: flex;
+          align-items: center;
+          img {
+            width: 100% !important;
+            margin: auto !important;
+          }
+        }
+        div.operator-stats {
+          padding-left: 8px !important;
+          padding-right: 8px !important;
+          display: flex !important;
+          justify-content: space-between;
+          div.operator-stats__stat {
+            p {
+              font-size: $font-small;
+            }
+            span {
+              font-size: $font-small;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+@media screen and (max-width: #{$phone-max-width}) {
+  div.stats-grid {
+    display: flex !important;
+    flex-direction: column;
+  }
+  div#SeasonalStatisticsAPI {
+    div.statistics {
+      grid-template-columns: repeat(2, 1fr);
+      div.stat--main {
+        grid-column: span 2;
+      }
+    }
+  }
+  div#OperatorStatisticsAPI {
+    padding: 0;
+    div.statistics {
+      grid-gap: 0;
+      div.controls {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        input {
+          grid-column: span 2;
+        }
+        button#rows {
+          display: none;
+        }
+      }
+      div.operator-statistics {
+        background: transparent;
+        margin: 0;
+        padding: 2px $padding-s;
+        border-top: $border-primary;
+        border-bottom: $border-primary;
+        grid-template-columns: 40px 1fr;
+        overflow-x: auto;
+        div.operator-info {
+          padding: 2px;
+          display: flex;
+          align-items: center;
+          flex-direction: column;
+          justify-content: center;
+          h3 {
+            font-size: $font-small;
+          }
+        }
+        div.operator-stats {
+          display: flex;
+          padding: 8px;
+          div.operator-stats__stat {
+            padding: 0 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            span {
+              font-size: $font-small;
+            }
+          }
+        }
+      }
+      div.operator-statistics:hover {
+        box-shadow: none;
+        transform: none;
+      }
     }
   }
 }

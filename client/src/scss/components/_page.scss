@@ -4,22 +4,36 @@ div.page-wrapper {
   height: 100%;
 }
 div.page {
-  background: $color-primary;
-  padding: calc(#{$margin} * 6);
-  min-height: 100VH;
+  background: $background-primary;
+  padding: $padding-m;
   z-index: 0;
+  h1 {
+    text-align: center;
+  }
 }
 
 div.page#dashboard {
-  padding: calc(#{$padding} * 9);
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-gap: calc(#{$padding} * 6);
+  grid-gap: $margin-m;
+  h1 {
+    grid-column: span 3;
+  }
 }
 
 div.page#manage-team {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-gap: $margin;
-  height: 100%;
+  grid-gap: $margin-m;
+  h1 {
+    grid-column: span 3;
+  }
+}
+
+
+
+@media screen and (max-width: #{$tablet-max-width}) {
+  div.page {
+    padding: $padding-s;
+  }
 }

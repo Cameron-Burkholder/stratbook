@@ -15,6 +15,7 @@ import { Link } from "react-router-dom";
 const Strategies = (props) => {
   return (
     <div className="page" id="strategies">
+      <h1>View Strategies</h1>
       { props.status === "EDITOR" || props.status === "ADMIN" ? (
         <Link className="button" to="/strategies/edit">Edit Strategies</Link>
       ) : ""}

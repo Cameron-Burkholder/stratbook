@@ -21,12 +21,14 @@ class OperatorStatisticsAPI extends React.Component {
     this.fetchStats = this.fetchStats.bind(this);
     this.sortOperators = this.sortOperators.bind(this);
     this.searchOperators = this.searchOperators.bind(this);
+    this.toggleRows = this.toggleRows.bind(this);
 
     this.state = {
       stats: undefined,
       loading: true,
       hasLoaded: false,
-      search: ""
+      search: "",
+      rows: false,
     }
   }
   fetchStats() {
@@ -88,6 +90,11 @@ class OperatorStatisticsAPI extends React.Component {
       search: e.target.value
     });
   }
+  toggleRows() {
+    this.setState({
+      rows: !this.state.rows
+    });
+  }
   componentDidMount() {
     if (!this.state.hasLoaded) {
       this.fetchStats();
@@ -103,7 +110,7 @@ class OperatorStatisticsAPI extends React.Component {
       });
     }
     return (
-      <div id="OperatorStatisticsAPI">
+      <div id="OperatorStatisticsAPI" className={"statistics-api" + (this.state.rows ? " statistics-api--rows" : "")}>
         <h2 className="statistics-title">Operators</h2>
         { this.state.loading ? (
           <Loading/>
@@ -112,11 +119,12 @@ class OperatorStatisticsAPI extends React.Component {
           { this.state.stats ? (
             <div className="statistics">
               <div className="controls">
-                <input onChange={this.searchOperators} className="form__input" value={this.state.search} placeholder="Search By Name"/>
-                <button onClick={this.sortOperators} className="statistics__button button" id="release">Sort By Release</button>
-                <button onClick={this.sortOperators} className="statistics__button button" id="name">Sort By Name</button>
-                <button onClick={this.sortOperators} className="statistics__button button" id="kd">Sort By KD</button>
-                <button onClick={this.sortOperators} className="statistics__button button" id="playtime">Sort By Playtime</button>
+                <input onChange={this.searchOperators} value={this.state.search} placeholder="Search By Name"/>
+                <button onClick={this.sortOperators} id="release">Sort By Release</button>
+                <button onClick={this.sortOperators} id="name">Sort By Name</button>
+                <button onClick={this.sortOperators} id="kd">Sort By KD</button>
+                <button onClick={this.sortOperators} id="playtime">Sort By Playtime</button>
+                <button onClick={this.toggleRows} id="rows">{ this.state.rows ? "Display Cards" : "Display Rows" }</button>
               </div>
               { operators }
             </div>

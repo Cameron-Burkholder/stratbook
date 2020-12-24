@@ -17,11 +17,11 @@ const TeamMemberStats = (props) => {
   return (
     <div className="team-member-stats">
       <h4 className="team-member-stats__username">{props.username}</h4>
-      <p className="team-member-stats__stat">{props.kd} K/D</p>
-      <p className="team-member-stats__stat">{props.wl} W/L</p>
       <p className="team-member-stats__stat">{props.mmr} MMR</p>
-      <p className="team-member-stats__stat">+/-{props.mmrchange} MMR</p>
+      <p className="team-member-stats__stat">{props.kd} K/D</p>
       <p className="team-member-stats__stat">Level {props.level}</p>
+      <p className="team-member-stats__stat">+/-{props.mmrchange} MMR</p>
+      <p className="team-member-stats__stat">{props.wl} W/L</p>
     </div>
   )
 }

@@ -21,6 +21,7 @@ import { Link } from "react-router-dom";
 const Team = (props) => {
   return (
     <div className="page" id="team">
+      <h1>Team</h1>
       { props.team_code ? (
         <div className="hasTeam">
           { props.status === "ADMIN" ? (
@@ -37,7 +38,7 @@ const Team = (props) => {
           <div className="team-grid">
             <CreateTeamAPI getAuthToken={props.getAuthToken} updateAuthToken={props.updateAuthToken} name={props.name} alert={props.alert}/>
             <JoinTeamAPI getAuthToken={props.getAuthToken} updateAuthToken={props.updateAuthToken} alert={props.alert}/>
-          </div>  
+          </div>
         </div>
       )}
     </div>

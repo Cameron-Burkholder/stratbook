@@ -363,5 +363,6 @@ module.exports = {
     "IMPACT GRENADES": 2,
     "NITRO CELL": 1,
     "PROXIMITY ALARMS": 2
-  }
+  },
+  CURRENT_SEASON: "neon_dawn"
 }

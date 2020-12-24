@@ -2,6 +2,7 @@
 
 const { log, getStats } = require("../config/utilities.js");
 const mongoose = require("mongoose");
+const { CURRENT_SEASON } = require("../client/src/data.js");
 
 const middleware = require("../middleware.js");
 
@@ -141,8 +142,8 @@ module.exports = async (app, passport) => {
                   deaths: genStats.stats.queue.ranked.deaths,
                   wl: genStats.stats.queue.ranked.wl,
                   games_played: genStats.stats.queue.ranked.games_played,
-                  mmr: seasonStats.seasons.shadow_legacy.regions.ncsa[0].mmr,
-                  mmrchange: seasonStats.seasons.shadow_legacy.regions.ncsa[0].last_match_mmr_change,
+                  mmr: seasonStats.seasons[CURRENT_SEASON].regions.ncsa[0].mmr,
+                  mmrchange: seasonStats.seasons[CURRENT_SEASON].regions.ncsa[0].last_match_mmr_change,
                   level: genStats.progression.level,
                 }
                 kd += new_user.kd;
@@ -182,8 +183,8 @@ module.exports = async (app, passport) => {
                   deaths: genStats.stats.queue.ranked.deaths,
                   wl: genStats.stats.queue.ranked.wl,
                   games_played: genStats.stats.queue.ranked.games_played,
-                  mmr: seasonStats.seasons.shadow_legacy.regions.ncsa[0].mmr,
-                  mmrchange: seasonStats.seasons.shadow_legacy.regions.ncsa[0].last_match_mmr_change,
+                  mmr: seasonStats.seasons[CURRENT_SEASON].regions.ncsa[0].mmr,
+                  mmrchange: seasonStats.seasons[CURRENT_SEASON].regions.ncsa[0].last_match_mmr_change,
                   level: genStats.progression.level,
                 }
                 kd += new_user.kd;
@@ -223,8 +224,8 @@ module.exports = async (app, passport) => {
                   deaths: genStats.stats.queue.ranked.deaths,
                   wl: genStats.stats.queue.ranked.wl,
                   games_played: genStats.stats.queue.ranked.games_played,
-                  mmr: seasonStats.seasons.shadow_legacy.regions.ncsa[0].mmr,
-                  mmrchange: seasonStats.seasons.shadow_legacy.regions.ncsa[0].last_match_mmr_change,
+                  mmr: seasonStats.seasons[CURRENT_SEASON].regions.ncsa[0].mmr,
+                  mmrchange: seasonStats.seasons[CURRENT_SEASON].regions.ncsa[0].last_match_mmr_change,
                   level: genStats.progression.level,
                 }
                 kd += new_user.kd;

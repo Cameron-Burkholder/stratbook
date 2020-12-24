@@ -76,13 +76,12 @@ class BlockedUsersAPI extends React.Component {
         id: id
       })
         .then((response) => {
-          console.log(response.data);
         switch (response.data.status) {
           case "USER_UNBLOCKED":
             component.setState({
               loading: false
             });
-            component.props.alert("SUCCESS", "User has been unblocked successfully.");
+            component.props.alert("User has been unblocked successfully.", "SUCCESS");
             component.fetchBlockedUsers();
             break;
           default:

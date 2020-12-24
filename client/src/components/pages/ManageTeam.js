@@ -18,11 +18,11 @@ import { Link } from "react-router-dom";
 const ManageTeam = (props) => {
   return (
     <div className="page" id="manage-team">
+      <h1>Manage Team</h1>
       <Link className="button" to="/team">Back to Team</Link>
       <UpdateTeamNameAPI getAuthToken={props.getAuthToken} alert={props.alert}/>
       <ManageTeamAPI getAuthToken={props.getAuthToken} updateAuthToken={props.updateAuthToken} alert={props.alert}/>
       <BlockedUsersAPI getAuthToken={props.getAuthToken} updateAuthToken={props.updateAuthToken} alert={props.alert}/>
-      <div></div><div></div>
       <DeleteTeamAPI getAuthToken={props.getAuthToken} updateAuthToken={props.updateAuthToken} alert={props.alert}/>
     </div>
   )

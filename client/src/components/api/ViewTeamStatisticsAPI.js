@@ -6,6 +6,7 @@ import axios from "axios";
 import Loading from "../partials/Loading.js";
 import ErrorLoading from "../partials/ErrorLoading.js";
 import TeamMemberStats from "../partials/TeamMemberStats.js";
+import ProgressCircle from "../partials/ProgressCircle.js";
 
 /*
   @func: ViewTeamStatisticsAPI
@@ -87,17 +88,16 @@ class ViewTeamStatisticsAPI extends React.Component {
           });
           contents = (
             <div className="team-statistics">
-              <h3>Statistics</h3>
+              <h2>Statistics</h2>
               <div className="overview">
-                <p className="overview-label">Team Performance</p>
-                <p className="team-stat"><span className="stat-label">K/D</span>{this.state.stats.kd}</p>
-                <p className="team-stat"><span className="stat-label">W/L</span>{this.state.stats.wl}</p>
-                <p className="team-stat"><span className="stat-label">MMR</span>{this.state.stats.mmr}</p>
-                <p className="team-stat"><span className="stat-label">MMR +/-</span>{this.state.stats.mmrchange}</p>
-                <p className="team-stat"><span className="stat-label">Level</span>{this.state.stats.level}</p>
+                <h3 className="overview-label">Team Performance</h3>
+                <ProgressCircle value={this.state.stats.kd} label="K/D"/>
+                <ProgressCircle value={this.state.stats.wl} label="W/L"/>
+                <ProgressCircle value={this.state.stats.mmr} label="MMR"/>
+                <p className="team-stat-label"><span className="stat-label">MMR +/-</span> {this.state.stats.mmrchange}</p>
               </div>
               <div className="member-statistics">
-                <p className="overview-label">Individual Performances</p>
+                <h3 className="overview-label">Individual Performances</h3>
                 { teamMembers }
               </div>
             </div>
@@ -106,6 +106,8 @@ class ViewTeamStatisticsAPI extends React.Component {
           contents = <ErrorLoading/>
         }
       }
+    } else {
+      contents = <Loading/>
     }
     return (
       <div id="ViewTeamStatisticsAPI">

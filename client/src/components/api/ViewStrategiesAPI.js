@@ -6,7 +6,6 @@ import axios from "axios";
 
 import LoadingModal from "../partials/LoadingModal.js";
 import ErrorLoading from "../partials/ErrorLoading.js";
-import Map from "../partials/Map.js";
 import { MAP_NAMES } from "../../data.js";
 
 /*
@@ -110,7 +109,7 @@ class ViewStrategiesAPI extends React.Component {
   render() {
     let contents;
     if (this.state.loading) {
-      contents = <LoadingModal/>
+      contents = <LoadingModal message="Fetching Strategies"/>
     } else {
       if (this.state.error) {
         contents = <ErrorLoading/>
@@ -133,7 +132,7 @@ class ViewStrategiesAPI extends React.Component {
                 { strats }
               </div>
             ) : (
-              <Map strategy={this.state.strategies[this.state.index]} exitStrategy={this.exitStrategy}/>
+              <p></p>
             )
           } else {
             contents = <p>Your team does not currently have any strategies.</p>

@@ -20,7 +20,7 @@ const ManageTeamMember = (props) => {
       { props.status === "ADMIN" ? (
         <p className="manage-team-member__status">{props.status}</p>
       ) : (
-        <select className="manage-team-member__input form__select" onChange={(e) => { props.updateUserStatus(props.username, e.target.value) }}>
+        <select className="manage-team-member__input form__select" onChange={(e) => { props.updateUserStatus(props.username, e.target.value) }} value={props.status}>
           <option>MEMBER</option>
           <option>EDITOR</option>
           <option>ADMIN</option>

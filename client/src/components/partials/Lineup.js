@@ -11,8 +11,6 @@ class Lineup extends React.Component {
     super(props);
   }
   render() {
-    console.log(this.props);
-
     const roleOptions = (this.props.type === "ATTACK" ? (
       attackRoles.map((option, index) => {
         return <option key={index}>{option}</option>
@@ -59,9 +57,9 @@ class Lineup extends React.Component {
                   <select className="form__select" onChange={(e) => { this.props.updateRoles(e, index) }} value={this.props.roles[index]}>
                     { roleOptions }
                   </select>
-                  <select className="form__select" onChange={(e) => { this.props.updateUtility(e, index) }} value={this.props.utility[index]}>
-                    <option>UTILITY</option>
-                    { utilityOptions }
+                  <select className="form__select" onChange={(e) => { this.props.updateOperators(e, index) }} value={this.props.operators[index]} disabled={this.props.roles[index] === "ROLE"}>
+                    <option>OPERATOR</option>
+                    { operatorOptions }
                   </select>
                 </div>
               ) : (
@@ -77,21 +75,25 @@ class Lineup extends React.Component {
             { this.props.activeOperator === index ? (
               <div className="role__body">
                 <div className="role__operator">
-                  <select className="form__select" onChange={(e) => { this.props.updateOperators(e, index) }} value={this.props.operators[index]} disabled={this.props.roles[index] === "ROLE"}>
-                    <option>OPERATOR</option>
-                    { operatorOptions }
-                  </select>
-                  <button className="insert" onClick={() => { this.props.insertOperator(this.props.activeOperator) }}>Insert</button>
+                  <button className="insert" onClick={() => { this.props.insertOperator(this.props.activeOperator) }}>Insert Op</button>
+                  <button className="remove" onClick={() => { this.props.removeOperator(this.props.activeOperator) }}>Remove Op</button>
                 </div>
                 <div className="role__gadget">
                   <p>{this.props.gadgets[index].gadget}</p>
-                  <button className="insert" onClick={() => { this.props.insertGadget(this.props.activeOperator) }}>+</button>
-                  <button className="remove" onClick={() => { this.props.removeGadget(this.props.activeOperator) }}>-</button>
+                  <div className="button-container">
+                    <button className="insert" onClick={() => { this.props.insertGadget(this.props.activeOperator) }}>+</button>
+                    <button className="remove" onClick={() => { this.props.removeGadget(this.props.activeOperator) }}>-</button>
+                  </div>
                 </div>
                 <div className="role__utility">
-                  <p>{this.props.utility[index]}</p>
-                  <button className="insert" onClick={() => { this.props.insertUtility(this.props.activeOperator) }}>+</button>
-                  <button className="remove" onClick={() => { this.props.removeUtility(this.props.activeOperator) }}>-</button>
+                  <select className="form__select" onChange={(e) => { this.props.updateUtility(e, index) }} value={this.props.utility[index]}>
+                    <option>UTILITY</option>
+                    { utilityOptions }
+                  </select>
+                  <div className="button-container">
+                    <button className="insert" onClick={() => { this.props.insertUtility(this.props.activeOperator) }}>+</button>
+                    <button className="remove" onClick={() => { this.props.removeUtility(this.props.activeOperator) }}>-</button>
+                  </div>
                 </div>
               </div>
             ) : ""}

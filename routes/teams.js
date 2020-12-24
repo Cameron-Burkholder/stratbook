@@ -803,17 +803,19 @@ module.exports = async (app, passport) => {
       if (team.blocked_users.indexOf(request.body.id) < 0) {
         packet.status = "ERROR";
         packet.message = "The account you requested to block does not exist.";
+        response.json(packet);
       } else {
         team.blocked_users.splice(team.blocked_users.indexOf(request.body.id), 1);
         team.save().then(() => {
           packet.status = "USER_UNBLOCKED";
+          response.json(packet);
         }).catch((error) => {
           console.log(error);
           packet.status = "ERROR";
           packet.message = "An error occured while attempting to unblock user.";
+          response.json(packet);
         });
       }
-      response.json(packet);
     }).catch(error => {
       console.log(error);
       packet.status = "ERROR";

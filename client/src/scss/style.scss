@@ -10,33 +10,37 @@
   min-width: 0;
   min-height: 0;
   box-sizing: border-box;
-  font-family: $primary-font;
+  font-family: $font-primary;
   font-weight: 400;
-  font-size: $text;
-  color: $text-secondary;
-  z-index: 0;
+  font-size: $font-body;
+  color: $text-body;
+}
+*:hover {
+  cursor: default;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: $primary-font;
-  font-weight: 500;
-  color: $text-primary;
+  font-family: $font-primary;
+  font-weight: 600;
+  color: $text-heading;
 }
 h1 {
-  font-size: $heading1;
+  font-size: $font-title;
 }
 h2 {
-  font-size: $heading2;
+  font-size: $font-heading1;
 }
 h3 {
-  font-size: $heading3;
+  font-size: $font-heading2;
 }
 h4 {
-  font-size: $heading4;
+  font-size: $font-heading3;
 }
-
-body {
-  height: 100VH;
+h5 {
+  font-size: $font-subtitle;
+}
+h6 {
+  font-size: $font-small;
 }
 
 div#root, div.container {
@@ -44,12 +48,19 @@ div#root, div.container {
 }
 
 html, body {
-  background: $background;
+  background: $background-primary;
   overflow-x: hidden;
 }
 p {
-  color: $text-secondary;
-  font-size: $text;
+  color: $text-body;
+  font-size: $font-body;
+}
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(#{$color-primary}, #{$color-secondary});
 }
 
 // Import components
@@ -63,7 +74,7 @@ p {
 @import "./components/_button.scss";
 
 // Import APIs
-@import "./api/_account-api.scss";
 @import "./api/_statistics-api.scss";
+@import "./api/_account-api.scss";
 @import "./api/_team-api.scss";
-@import "./api/_strategy-api.scss";
+@import "./api/_strategies-api.scss";

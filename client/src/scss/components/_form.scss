@@ -1,54 +1,76 @@
 /* scss/components/_form.scss */
-form.form {
-  background: white;
-  border-radius: $border-radius;
-  padding: calc(#{$padding} * 4);
-  display: block;
-  margin: auto;
+
+input, select {
+  display: inline-block;
+  padding: $padding-s;
+  border: none;
+  color: $text-dark;
+  font-size: $font-body;
+  padding-bottom: calc(#{$padding-s} - 4px);
+  border-bottom: 4px solid white;
+  transition: all 0.3s ease;
+}
+input:hover {
+  cursor: text;
+}
+input:focus {
+  border: none;
+  outline: none;
+  box-shadow: $box-shadow-primary;
+  border-bottom: 4px solid $color-secondary;
+  transition: all 0.3s ease;
 }
 
-h4.form__heading {
+.form__heading {
+  color: $text-dark;
+  font-size: $font-heading1;
   text-align: center;
   font-weight: bold;
+  margin-bottom: $margin-s;
 }
-
-input.form__input, select.form__select {
-  padding: 12px calc(#{$padding} * 2);
-  border-radius: $border-radius;
-  border: $border-primary;
-}
-
-input.form__input--error, select.form__input--error {
-  border: 1px solid $color-danger;
-}
-
-p.form__heading {
-  font-size: $heading4;
-}
-fieldset.form__fieldset {
-  border: none;
-  margin: $margin 0;
-}
-label.form__label {
-  display: block;
-}
-span.form__description {
-  display: block;
-  font-size: $small;
-  color: $text-tertiary;
-}
-span.form__error {
+.form__error {
   color: $color-danger;
+  font-size: $font-small;
+}
+.form__description {
+  color: $text-dark;
+  font-size: $font-small;
 }
 
-button.form__button {
-  border-radius: $border-radius;
-  color: white;
-  background: $color-primary;
-  padding: 8px calc(#{$padding} * 2);
+fieldset {
+  display: flex;
+  flex-direction: column;
   border: none;
-  box-shadow: $box-shadow-tertiary;
+  margin: $margin-s auto;
+  padding: $padding-s;
+}
+
+label {
+  color: $text-dark;
+  filter: opacity(0.9);
+}
+
+form button {
   display: block;
-  margin: $margin auto;
+  margin: auto;
+  width: 128px;
+  margin-top: $margin-m;
+  background: linear-gradient(#{$color-primary}, #{$color-secondary});
+  border: none;
   transition: all 0.3s ease;
+}
+form button:hover {
+  transform: translateY(-4px);
+}
+form input, form select {
+  border: $border-secondary;
+  border-bottom-width: 3px;
+}
+form select option {
+  color: $text-dark;
+  padding: $padding-s;
+}
+form input:focus {
+  border: $border-secondary;
+  border-bottom: 3px solid $color-secondary;
 }

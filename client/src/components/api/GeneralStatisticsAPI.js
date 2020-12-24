@@ -4,6 +4,7 @@ import React from "react";
 import axios from "axios";
 
 import Loading from "../partials/Loading.js";
+import ProgressCircle from "../partials/ProgressCircle.js";
 
 /*
   @func: GetGeneralStatisticsAPI
@@ -66,7 +67,7 @@ class GeneralStatisticsAPI extends React.Component {
   }
   render() {
     return (
-      <div id="GeneralStatisticsAPI">
+      <div id="GeneralStatisticsAPI" className="statistics-api">
         <h2 className="statistics-title">Overview</h2>
         { this.state.loading ? (
           <Loading/>
@@ -74,14 +75,13 @@ class GeneralStatisticsAPI extends React.Component {
           <div>
           { this.state.stats ? (
             <div className="statistics-container">
-              <img className="user-image" alt="User Image" src={this.state.stats.avatar_url_256}/>
+              <img className="user-image" alt="User" src={this.state.stats.avatar_url_256}/>
               <h3 className="stats-grid__heading">General</h3>
               <div className="stats-grid">
                 <div className="stats-box">
                   <h4 className="stats__heading">Progression</h4>
                   <div className="stat stat--main">
-                    <p className="stat__label">Level</p>
-                    <span className="stat__value">{this.state.stats.progression.level}</span>
+                    <ProgressCircle label="Level" value={this.state.stats.progression.level}/>
                   </div>
                   <div className="stat">
                     <p className="stat__label">Playtime</p>
@@ -95,8 +95,7 @@ class GeneralStatisticsAPI extends React.Component {
                 <div className="stats-box">
                   <h4 className="stats__heading">Personal Performance</h4>
                   <div className="stat stat--main">
-                    <p className="stat__label">K/D</p>
-                    <span className="stat__value">{this.state.stats.stats.general.kd}</span>
+                    <ProgressCircle label="K/D" value={this.state.stats.stats.general.kd}/>
                   </div>
                   <div className="stat">
                     <p className="stat__label">Kills</p>
@@ -104,7 +103,7 @@ class GeneralStatisticsAPI extends React.Component {
                   </div>
                   <div className="stat">
                     <p className="stat__label">Deaths</p>
-                    <span className="stat-__alue">{this.state.stats.stats.general.deaths}</span>
+                    <span className="stat__value">{this.state.stats.stats.general.deaths}</span>
                   </div>
                   <div className="stat">
                     <p className="stat__label">Headshot %</p>
@@ -114,8 +113,7 @@ class GeneralStatisticsAPI extends React.Component {
                 <div className="stats-box">
                   <h4 className="stats__heading">Team Performance</h4>
                   <div className="stat stat--main">
-                    <p className="stat__label">W/L</p>
-                    <span className="stat__value">{this.state.stats.stats.general.wl}</span>
+                    <ProgressCircle label="W/L" value={this.state.stats.stats.general.wl}/>
                   </div>
                   <div className="stat">
                     <p className="stat__label">Wins</p>
@@ -143,8 +141,7 @@ class GeneralStatisticsAPI extends React.Component {
                 <div className="stats-box">
                   <h4 className="stats__heading">Personal Performance</h4>
                   <div className="stat stat--main">
-                    <p className="stat__label">K/D</p>
-                    <span className="stat__value">{this.state.stats.stats.queue.ranked.kd}</span>
+                    <ProgressCircle label="K/D" value={this.state.stats.stats.queue.ranked.kd}/>
                   </div>
                   <div className="stat">
                     <p className="stat__label">Kills</p>
@@ -158,8 +155,7 @@ class GeneralStatisticsAPI extends React.Component {
                 <div className="stats-box">
                   <h4 className="stats__heading">Team Performance</h4>
                   <div className="stat stat--main">
-                    <p className="stat__label">W/L</p>
-                    <span className="stat__value">{this.state.stats.stats.queue.ranked.wl}</span>
+                    <ProgressCircle label="W/L" value={this.state.stats.stats.queue.ranked.wl}/>
                   </div>
                   <div className="stat">
                     <p className="stat__label">Wins</p>
@@ -173,7 +169,7 @@ class GeneralStatisticsAPI extends React.Component {
               </div>
             </div>
           ) : (
-            <p>Unable to load statistics. Make sure your username matches the account for the platform you signed up with.</p>
+            <p className="text-error">Unable to load statistics. Make sure your username matches the account for the platform you signed up with.</p>
           )}
           </div>
         )}
