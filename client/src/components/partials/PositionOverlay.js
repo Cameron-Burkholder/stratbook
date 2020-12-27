@@ -217,7 +217,7 @@ class PositionOverlay extends React.Component {
           <DragItem url={url}
             x={pos.x} y={pos.y}
             selectElement={this.selectElement} index={index} key={index} drag={this.state.drag}
-            type="OPERATOR"/>
+            type="OPERATOR" bounds={this.state.bounds}/>
         )
       } else {
         return "";
@@ -233,7 +233,7 @@ class PositionOverlay extends React.Component {
             <DragItem url={url}
               x={pos.x} y={pos.y}
               selectElement={this.selectElement} index={index} key={index} drag={this.state.drag}
-              type="DRONE"/>
+              type="DRONE" bounds={this.state.bounds}/>
           )
         } else {
           return "";
@@ -250,7 +250,7 @@ class PositionOverlay extends React.Component {
             <DragItem url={url}
             x={g.x} y={g.y}
             selectElement={this.selectElement} index={index} gindex={gindex} key={gindex * index + gindex} drag={this.state.drag}
-            type="GADGET"/>
+            type="GADGET" bounds={this.state.bounds}/>
           );
         }
       });
@@ -265,7 +265,7 @@ class PositionOverlay extends React.Component {
             <DragItem url={url}
             x={u.x} y={u.y}
             selectElement={this.selectElement} index={index} uindex={uindex} key={uindex * index + uindex} drag={this.state.drag}
-            type="UTILITY"/>
+            type="UTILITY" bounds={this.state.bounds}/>
           );
         }
       });
@@ -280,7 +280,7 @@ class PositionOverlay extends React.Component {
             <DragItem url={url}
               x={pos.x} y={pos.y}
               selectElement={this.selectElement} index={index} key={index} drag={this.state.drag}
-              type="ROTATE"/>
+              type="ROTATE" bounds={this.state.bounds}/>
           )
         }
       });
@@ -295,7 +295,7 @@ class PositionOverlay extends React.Component {
             <DragItem url={url}
               x={pos.x} y={pos.y}
               selectElement={this.selectElement} index={index} key={index} drag={this.state.drag}
-              type="REINFORCEMENT"/>
+              type="REINFORCEMENT" bounds={this.state.bounds}/>
           )
         }
       });
@@ -310,7 +310,7 @@ class PositionOverlay extends React.Component {
             <DragItem url={url}
               x={pos.x} y={pos.y}
               selectElement={this.selectElement} index={index} key={index} drag={this.state.drag}
-              type="BREACH"/>
+              type="BREACH" bounds={this.state.bounds}/>
           )
         }
       });
