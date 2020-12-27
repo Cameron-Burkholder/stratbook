@@ -206,7 +206,8 @@ div.user-dropdown--active div.user-dropdown__body {
         right: 0;
         background: transparent;
         border: none;
-        opacity: 1; }
+        opacity: 1;
+        display: flex; }
         ul.nav__body div.user-dropdown div.user-dropdown__body span {
           display: none; }
         ul.nav__body div.user-dropdown div.user-dropdown__body a.user-dropdown__link {
