@@ -645,7 +645,7 @@ module.exports = async (app, passport) => {
         const reset_expiry = Date.now() + 3600000;
         user.reset_token = reset_token;
         user.reset_expiry = reset_expiry;
-        const resetLink = "http://" + request.hostname + "/api/users/reset-password?password_token=" + reset_token;
+        const resetLink = "http://" + request.hostname + "/reset-password/" + reset_token;
         user.save().then(() => {
           packet.status = "PASSWORD_RESET_LINK_SENT";
           response.json(packet);
