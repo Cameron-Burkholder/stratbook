@@ -259,6 +259,7 @@ module.exports = async (app, passport) => {
                     packet.team_code = newTeam.join_code;
                   }
                   response.json(packet);
+                  email(user.email, "Team Created", `Congratulations on creating a team! <br/><br/>You have created the team, <em>${newTeam.name}</em>, for ${newTeam.platform} users. Send the join code, displayed on the team page, to allow your friends to join.`);
                 });
               }).catch(error => {
                 console.log(error);
@@ -328,21 +329,33 @@ module.exports = async (app, passport) => {
     done();
   }, passport.authenticate("jwt", { session: false }), validation.validateTeamInput, middleware.userIsVerified, middleware.userIsAdmin, middleware.userHasTeam, async (request, response) => {
     let packet = {};
-    Team.findOne({ _id: request.team._id }).then(team => {
+    Team.findOne({ _id: request.team._id }).then(async (team) => {
       if (team.admins.indexOf(String(request.user._id)) < 0) {
         packet.status = "USER_NOT_QUALIFIED";
         response.json(packet);
       } else {
-        Team.findOne({ name: request.body.name }).then((team, error) => {
+        Team.findOne({ name: request.body.name }).then(async (team, error) => {
           if (team) {
             packet.status = "TEAM_ALREADY_EXISTS";
             response.json(packet);
           } else {
-            Team.findOne({ join_code: request.user.team_code }).then((team, error) => {
+            Team.findOne({ join_code: request.user.team_code }).then(async (team, error) => {
               team.name = request.body.name;
-              team.save().then(() => {
+              team.save().then(async () => {
                 packet.status = "TEAM_NAME_UPDATED";
                 response.json(packet);
+                let index = 0;
+                while (index < team.admins.length) {
+                  await new Promise((resolve, reject) => {
+                    User.findOne({ _id: mongoose.Types.ObjectId(team.admins[index]) }).then(async (user, error) => {
+                      email(user.email, "Team Name Changed", `The name for your team on Stratbook with a team ID of ${user.team_code} has been changed to ${team.name}.`);
+                      resolve(true);
+                    }).catch(error => {
+                      reject(false);
+                    });
+                  });
+                  index++;
+                }
               }).catch(error => {
                 console.log(error);
                 packet.status = "ERROR";
@@ -437,8 +450,12 @@ module.exports = async (app, passport) => {
                       let index = 0;
                       while (index < team.admins.length) {
                         await new Promise((resolve, reject) => {
-                          email(team.admins[index].email, "User Joined Team", "<h1>A New User joined " + team.name + "</h1><p>" + user.username + "Joined your team.</p>");
-                          resolve(true);
+                          User.findOne({ _id: mongoose.Types.ObjectId(team.admins[index]) }).then(async (admin, error) => {
+                            email(admin.email, "User Joined", `${user.username} has joined your team ${team.name}.`);
+                            resolve(true);
+                          }).catch(error => {
+                            reject(false);
+                          });
                         });
                         index++;
                       }
@@ -560,6 +577,7 @@ module.exports = async (app, passport) => {
                     user.status = undefined;
                     await new Promise((resolve, reject) => {
                       user.save().then(() => {
+                        email(user.email, "Team Disbanded", `The team you were a part of, ${team.name}, has been disbanded. Your account and associated information have been disassociated with this team.`);
                         resolve(true);
                       }).catch((error) => {
                         console.log(error);
@@ -586,6 +604,7 @@ module.exports = async (app, passport) => {
                     user.status = undefined;
                     await new Promise((resolve, reject) => {
                       user.save().then(() => {
+                        email(user.email, "Team Disbanded", `The team you were a part of, ${team.name}, has been disbanded. Your account and associated information have been disassociated with this team.`);
                         resolve(true);
                       }).catch((error) => {
                         console.log(error);
@@ -612,6 +631,7 @@ module.exports = async (app, passport) => {
                     user.status = undefined;
                     await new Promise((resolve, reject) => {
                       user.save().then(() => {
+                        email(user.email, "Team Disbanded", `The team you were a part of, ${team.name}, has been disbanded. Your account and associated information have been disassociated with this team.`);
                         resolve(true);
                       }).catch((error) => {
                         console.log(error);
@@ -634,6 +654,18 @@ module.exports = async (app, passport) => {
             } else {
               packet.status = "USER_LEFT_TEAM";
               response.json(packet);
+              let index = 0;
+              while (index < team.admins.length) {
+                await new Promise((resolve, reject) => {
+                  User.findOne({ _id: mongoose.Types.ObjectId(team.admins[index]) }).then(async (admin, error) => {
+                    email(admin.email, "User Left Team", `${user.username} has left your team ${team.name}.`);
+                    resolve(true);
+                  }).catch(error => {
+                    reject(false);
+                  });
+                });
+                index++;
+              }
             }
           }).catch(error => {
             console.log(error);
@@ -887,6 +919,7 @@ module.exports = async (app, passport) => {
               user.status = undefined;
               await new Promise((resolve, reject) => {
                 user.save().then(() => {
+                  email(user.email, "Team Disbanded", `The team you were a part of, ${team.name}, has been disbanded. Your account and associated information have been disassociated with this team.`);
                   resolve(true);
                 }).catch((error) => {
                   console.log(error);
@@ -913,6 +946,7 @@ module.exports = async (app, passport) => {
               user.status = undefined;
               await new Promise((resolve, reject) => {
                 user.save().then(() => {
+                  email(user.email, "Team Disbanded", `The team you were a part of, ${team.name}, has been disbanded. Your account and associated information have been disassociated with this team.`);
                   resolve(true);
                 }).catch((error) => {
                   console.log(error);
@@ -939,6 +973,7 @@ module.exports = async (app, passport) => {
               user.status = undefined;
               await new Promise((resolve, reject) => {
                 user.save().then(() => {
+                  email(user.email, "Team Disbanded", `The team you were a part of, ${team.name}, has been disbanded. Your account and associated information have been disassociated with this team.`);
                   resolve(true);
                 }).catch((error) => {
                   console.log(error);
