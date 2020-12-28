@@ -304,6 +304,7 @@ module.exports = async (app, passport) => {
       user.save().then(() => {
         packet.status = "PLATFORM_UPDATED";
         response.json(packet);
+        email(user.email, "Platform Changed", "The platform associated with your account has changed. If you did not do this, be sure to change it to the appropriate platform.");
       }).catch(error => {
         console.log(error);
         packet.status = "ERROR";
@@ -356,6 +357,7 @@ module.exports = async (app, passport) => {
             user.save().then(() => {
               packet.status = "USERNAME_UPDATED";
               response.json(packet);
+              email(user.email, "Username Changed", "The username associated with your Stratbook account has been changed. If you did not do this, please correct this as it may cause the statistics functions of Stratbook to malfunction.");
             }).catch(error => {
               console.log(error);
               packet.status = "ERROR";
@@ -521,6 +523,7 @@ module.exports = async (app, passport) => {
                           user.save().then(() => {
                             packet.status = "USER_STATUS_UPDATED";
                             response.json(packet);
+                            email(user.email, "Team Status Updated", `The status associated with your membership on the team ${team.name} has been updated to ${user.status}.<br/><br/>This means your responsibilities and privileges related to the team may have changed. Contact a team admin if you think this is a mistake.`);
                           }).catch(error => {
                             console.log(error);
                             packet.status = "ERROR";
@@ -772,6 +775,7 @@ module.exports = async (app, passport) => {
       user.save().then(() => {
         packet.status = "PASSWORD_UPDATED";
         response.json(packet);
+        email(user.email, "Password Updated", `The password associated with your account has been updated. If you did not do this, <a href=${request.protocol + "://" + request.get("host") + request.originalUrl + "/forgot-password"} target="_blank">click here</a> to reset it.`);
       }).catch(error => {
         console.log(error);
         packet.status = "ERROR";
