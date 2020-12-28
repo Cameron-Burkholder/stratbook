@@ -45,6 +45,14 @@ fieldset {
   padding: $padding-s;
 }
 
+fieldset a {
+  color: $color-primary;
+  margin-top: 4px;
+}
+fieldset a:hover {
+  cursor: pointer;
+}
+
 label {
   color: $text-dark;
   filter: opacity(0.9);

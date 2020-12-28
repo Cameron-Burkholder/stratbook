@@ -3,6 +3,7 @@
 import React from "react";
 
 import Loading from "./Loading.js"
+import { Link } from "react-router-dom";
 
 /*
   @func: LoginForm
@@ -28,6 +29,7 @@ const LoginForm = (props) => {
         <label className="form__label" htmlFor="password">Password</label>
         <input onChange={props.onChange} className={"form__input" + (props.errors && props.errors.password == null ? "" : " form__input--error")} value={props.password} id="password" type="password" required/>
         <span className="form__error">{(props.errors ? props.errors.password : "")}</span>
+        <Link to="/forgot-password">Forgot Password?</Link>
       </fieldset>
       { props.loading ? <Loading/> : <button className="form__button form__button--submit" type="submit">Login</button> }
     </form>

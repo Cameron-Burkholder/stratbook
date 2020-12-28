@@ -649,7 +649,7 @@ module.exports = async (app, passport) => {
         user.save().then(() => {
           packet.status = "PASSWORD_RESET_LINK_SENT";
           response.json(packet);
-          email(user.email, "Password Reset Link", "<p>You are receiving this because you (or someone else) have requested the reset of the password for your account. Please click on the following link to complete the process</p><br/><br/><a href='" + resetLink + "' target='_blank'>Verify Email</a>");
+          email(user.email, "Password Reset Link", "<p>You are receiving this because you (or someone else) have requested the reset of the password for your account. Please click on the following link to complete the process</p><br/><br/><a href='" + resetLink + "' target='_blank'>Reset Password</a>");
         }).catch(error => {
           console.log(error);
           packet.status = "ERROR";
@@ -675,6 +675,7 @@ module.exports = async (app, passport) => {
     @inputs:
       password1: String
       password2: String
+      token: String
 
     @outputs:
       If an error occurs
@@ -700,7 +701,7 @@ module.exports = async (app, passport) => {
     let packet = {
       status: ""
     };
-    const reset_token = request.query.password_token;
+    const reset_token = request.body.token;
     if (reset_token || reset_token !== "") {
       User.findOne({ reset_token: reset_token }).then((user) => {
         if (user) {
@@ -715,7 +716,7 @@ module.exports = async (app, passport) => {
             user.save().then(() => {
               packet.status = "PASSWORD_RESET";
               response.json(packet);
-              email(user.email, "Your password has been reset", "<p>Your password has been reset. If you did not do this, log in to your account immediately and change the password.</p>");
+              email(user.email, "Your password has been reset", "<p>Your password has been reset. If you did not do this, reset your password immediately.</p>");
             }).catch(error => {
               console.log(error);
               packet.status = "ERROR";

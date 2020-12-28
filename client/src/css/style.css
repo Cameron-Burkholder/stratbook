@@ -317,6 +317,13 @@ fieldset {
   margin: 16px auto;
   padding: 16px; }
 
+fieldset a {
+  color: #0040D6;
+  margin-top: 4px; }
+
+fieldset a:hover {
+  cursor: pointer; }
+
 label {
   color: #19191a;
   filter: opacity(0.9); }
@@ -811,7 +818,7 @@ div.statistics-api--rows div.statistics {
         transform: none; } }
 
 /* client/src/scss/api/_account-api.scss */
-div#LoginAPI, div#RegisterAPI {
+div#LoginAPI, div#RegisterAPI, div#ForgotPasswordAPI, div#ResetPasswordAPI {
   width: 100%;
   max-width: 600px;
   background: white;
@@ -821,7 +828,7 @@ div#LoginAPI, div#RegisterAPI {
   z-index: 1; }
 
 @media screen and (max-width: 850px) {
-  div#LoginAPI, div#RegisterAPI {
+  div#LoginAPI, div#RegisterAPI, div#ForgotPasswordAPI, div#ResetPasswordAPI {
     padding: 16px; } }
 
 div.account-section {
@@ -1236,6 +1243,9 @@ div#DeleteTeamAPI {
         grid-template-columns: repeat(2, 1fr); }
         div.hasTeam div#ViewTeamStatisticsAPI div.member-statistics div.team-member-stats p {
           text-align: left; }
+        div.hasTeam div#ViewTeamStatisticsAPI div.member-statistics div.team-member-stats p:nth-child(4) {
+          grid-column: 2;
+          grid-row: 1; }
     div.hasTeam div#LeaveTeamAPI button {
       display: block;
       margin: auto;
@@ -1248,6 +1258,10 @@ div#DeleteTeamAPI {
     margin: auto; }
   div#ManageTeamAPI {
     padding: 16px; }
+    div#ManageTeamAPI div.manage-team-member {
+      grid-template-columns: repeat(2, 1fr); }
+      div#ManageTeamAPI div.manage-team-member h4 {
+        grid-column: span 2; }
   div#DeleteTeamAPI button {
     width: 100%;
     max-width: 100%; } }

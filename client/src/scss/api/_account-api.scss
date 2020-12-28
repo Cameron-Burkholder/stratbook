@@ -1,6 +1,6 @@
 /* client/src/scss/api/_account-api.scss */
 
-div#LoginAPI, div#RegisterAPI {
+div#LoginAPI, div#RegisterAPI, div#ForgotPasswordAPI, div#ResetPasswordAPI {
   width: 100%;
   max-width: $phone-max-width;
   background: $background-tertiary;
@@ -11,7 +11,7 @@ div#LoginAPI, div#RegisterAPI {
 }
 
 @media screen and (max-width: #{$tablet-max-width}) {
-  div#LoginAPI, div#RegisterAPI {
+  div#LoginAPI, div#RegisterAPI, div#ForgotPasswordAPI, div#ResetPasswordAPI {
     padding: $padding-s;
   }
 }

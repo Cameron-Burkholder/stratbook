@@ -17,6 +17,8 @@ import ManageTeam from "./components/pages/ManageTeam.js";
 import Strategies from "./components/pages/Strategies.js";
 import EditStrategies from "./components/pages/EditStrategies.js";
 import NotFound from "./components/pages/NotFound.js";
+import ForgotPassword from "./components/pages/ForgotPassword.js";
+import ResetPassword from "./components/pages/ResetPassword.js";
 
 // import presentational components
 import Navigation from "./components/partials/Navigation.js";
@@ -237,14 +239,6 @@ class App extends React.Component {
               : ( <Redirect to="/"/> )
               }
             </Route>
-            <Route exact path="/meta">
-              { this.state.loggedIn ? (
-                <div className="page-wrapper">
-                </div>
-              )
-              : ( <Redirect to="/"/> )
-              }
-            </Route>
             <Route exact path="/login">
               { this.state.loggedIn ? ( <Redirect to="/"/> )
               : (
@@ -270,6 +264,16 @@ class App extends React.Component {
                 )
               }
             </Route>
+            <Route exact path="/forgot-password">
+              { this.state.loggedIn ? ( <Redirect to="/"/> )
+              : (
+                <div className="page-wrapper">
+                  <ForgotPassword alert={this.alert}/>
+                </div>
+              )}
+            </Route>
+            <Route path="/reset-password/:token"
+              render={(props) => (<ResetPassword {...props} alert={this.alert}/>)}/>
             <Route>
               <div className="page-wrapper">
                 <Header title="Error: 404"/>
