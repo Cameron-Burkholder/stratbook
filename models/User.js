@@ -57,6 +57,14 @@ const UserSchema = new Schema({
   defenders: {
     type: [String],
     required: true
+  },
+  reset_token: {
+    type: String,
+    required: false
+  },
+  reset_expiry: {
+    type: Date,
+    required: false
   }
 });
 
