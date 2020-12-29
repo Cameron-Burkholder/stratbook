@@ -542,6 +542,7 @@ module.exports = async (app, passport) => {
                           user.save().then(() => {
                             packet.status = "USER_STATUS_UPDATED";
                             response.json(packet);
+                            email(user.email, "Team Status Updated", `The status associated with your membership on the team ${team.name} has been updated to ${user.status}.<br/><br/>This means your responsibilities and privileges related to the team may have changed. Contact a team admin if you think this is a mistake.`);
                           }).catch(error => {
                             console.log(error);
                             packet.status = "ERROR";
@@ -560,6 +561,7 @@ module.exports = async (app, passport) => {
                           user.save().then(() => {
                             packet.status = "USER_STATUS_UPDATED";
                             response.json(packet);
+                            email(user.email, "Team Status Updated", `The status associated with your membership on the team ${team.name} has been updated to ${user.status}.<br/><br/>This means your responsibilities and privileges related to the team may have changed. Contact a team admin if you think this is a mistake.`);
                           }).catch(error => {
                             console.log(error);
                             packet.status = "ERROR";

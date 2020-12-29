@@ -164,25 +164,7 @@ class PositionOverlay extends React.Component {
   }
   detectChange(prevProps, prevState) {
     let bool = false;
-    if (prevProps.type != this.props.type) {
-      bool = true;
-    }
-    if (prevProps.operatorPositions != this.props.operatorPositions) {
-      bool = true;
-    }
-    if (prevProps.utilityPositions != this.props.utilityPositions) {
-      bool = true;
-    }
-    if (prevProps.gadgetPositions != this.props.gadgetPositions) {
-      bool = true;
-    }
-    if (prevProps.drones != this.props.drones) {
-      bool = true;
-    }
-    if (prevProps.rotates != this.props.rotates) {
-      bool = true;
-    }
-    if (prevProps.reinforcements != this.props.reinforcements) {
+    if (prevProps != this.props) {
       bool = true;
     }
     return bool;
@@ -225,10 +207,10 @@ class PositionOverlay extends React.Component {
     });
 
     let drones = [];
-    if (this.state.drones && this.props.type === "ATTACK") {
+    if (this.props.type === "ATTACK") {
       this.state.drones.map((pos, index) => {
         if (pos.floor === this.props.floorIndex) {
-          let url = "https://external-preview.redd.it/mYPEnvxN9kDjubOi6dDM6IO1Z5Ando9V8Vzi1VS2qnM.png?auto=webp&s=0a1d4f3a875a6fc968ec22e68c9a7d868b342281";
+          let url = "../media/drone.png";
           drones.push(
             <DragItem url={url}
               x={pos.x} y={pos.y}
