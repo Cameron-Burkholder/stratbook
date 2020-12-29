@@ -181,13 +181,13 @@ class PositionOverlay extends React.Component {
       this.setState({
         index: 0,
         type: "",
-        operatorPositions: this.props.operatorPositions,
-        gadgetPositions: this.props.gadgetPositions,
-        utilityPositions: this.props.utilityPositions,
-        drones: this.props.drones,
-        rotates: this.props.rotates,
-        reinforcements: this.props.reinforcements,
-        breaches: this.props.breaches
+        operatorPositions: (this.props.operatorPositions ? [...this.props.operatorPositions] : []),
+        gadgetPositions: (this.props.gadgetPositions ? [...this.props.gadgetPositions] : []),
+        utilityPositions: (this.props.utilityPositions ? [...this.props.utilityPositions] : []),
+        drones: (this.props.drones ? [...this.props.drones] : []),
+        rotates: (this.props.rotates ? [...this.props.rotates] : []),
+        reinforcements: (this.props.reinforcements ? [...this.props.reinforcements] : []),
+        breaches: (this.props.breaches ? [...this.props.breaches] : [])
       });
     }
   }
@@ -207,21 +207,19 @@ class PositionOverlay extends React.Component {
     });
 
     let drones = [];
-    if (this.props.type === "ATTACK") {
-      this.state.drones.map((pos, index) => {
-        if (pos.floor === this.props.floorIndex) {
-          let url = "../media/drone.png";
-          drones.push(
-            <DragItem url={url}
-              x={pos.x} y={pos.y}
-              selectElement={this.selectElement} index={index} key={index} drag={this.state.drag}
-              type="DRONE" bounds={this.state.bounds}/>
-          )
-        } else {
-          return "";
-        }
-      });
-    }
+    this.state.drones.map((pos, index) => {
+      if (pos.floor === this.props.floorIndex) {
+        let url = "../media/drone.png";
+        drones.push(
+          <DragItem url={url}
+            x={pos.x} y={pos.y}
+            selectElement={this.selectElement} index={index} key={index} drag={this.state.drag}
+            type="DRONE" bounds={this.state.bounds}/>
+        )
+      } else {
+        return "";
+      }
+    });
 
     let gadgets = [];
     this.state.gadgetPositions.map((pos, index) => {
@@ -242,7 +240,7 @@ class PositionOverlay extends React.Component {
     this.state.utilityPositions.map((pos, index) => {
       pos.forEach((u, uindex) => {
         if (u.floor === this.props.floorIndex) {
-          let url = "https://liquipedia.net/commons/images/thumb/3/34/Barbed_Wire_R6S.jpg/256px-Barbed_Wire_R6S.jpg";
+          let url = `../media/${this.props.utility[index].replace(" ", "_").replace(" ", "_")}.png`;
           utility.push(
             <DragItem url={url}
             x={u.x} y={u.y}
@@ -254,49 +252,44 @@ class PositionOverlay extends React.Component {
     });
 
     let rotates = [];
-    if (this.state.rotates && this.props.type === "DEFENSE") {
-      this.state.rotates.map((pos, index) => {
-        if (pos.floor === this.props.floorIndex) {
-          let url = "https://img.favpng.com/11/9/20/explosion-cartoon-comics-bomb-png-favpng-uuPp7vCWSNnrUGy9QDQ0xyib8.jpg";
-          rotates.push(
-            <DragItem url={url}
-              x={pos.x} y={pos.y}
-              selectElement={this.selectElement} index={index} key={index} drag={this.state.drag}
-              type="ROTATE" bounds={this.state.bounds}/>
-          )
-        }
-      });
-    }
+    this.state.rotates.map((pos, index) => {
+      if (pos.floor === this.props.floorIndex) {
+        let url = "https://img.favpng.com/11/9/20/explosion-cartoon-comics-bomb-png-favpng-uuPp7vCWSNnrUGy9QDQ0xyib8.jpg";
+        rotates.push(
+          <DragItem url={url}
+            x={pos.x} y={pos.y}
+            selectElement={this.selectElement} index={index} key={index} drag={this.state.drag}
+            type="ROTATE" bounds={this.state.bounds}/>
+        )
+      }
+    });
 
     let reinforcements = [];
-    if (this.state.reinforcements && this.props.type === "DEFENSE") {
-      this.state.reinforcements.map((pos, index) => {
-        if (pos.floor === this.props.floorIndex) {
-          let url = "https://pm1.narvii.com/6859/4e921e8569aa49248d84d4deb2a31968c37d5533v2_hq.jpg";
-          reinforcements.push(
-            <DragItem url={url}
-              x={pos.x} y={pos.y}
-              selectElement={this.selectElement} index={index} key={index} drag={this.state.drag}
-              type="REINFORCEMENT" bounds={this.state.bounds}/>
-          )
-        }
-      });
-    }
+    this.state.reinforcements.map((pos, index) => {
+      if (pos.floor === this.props.floorIndex) {
+        let url = "../media/reinforcement.png";
+        reinforcements.push(
+          <DragItem url={url}
+            x={pos.x} y={pos.y}
+            selectElement={this.selectElement} index={index} key={index} drag={this.state.drag}
+            type="REINFORCEMENT" bounds={this.state.bounds}/>
+        )
+      }
+    });
+
 
     let breaches = [];
-    if (this.state.breaches && this.props.type === "ATTACK") {
-      this.state.breaches.map((pos, index) => {
-        if (pos.floor === this.props.floorIndex) {
-          let url = "https://img.favpng.com/11/9/20/explosion-cartoon-comics-bomb-png-favpng-uuPp7vCWSNnrUGy9QDQ0xyib8.jpg";
-          breaches.push(
-            <DragItem url={url}
-              x={pos.x} y={pos.y}
-              selectElement={this.selectElement} index={index} key={index} drag={this.state.drag}
-              type="BREACH" bounds={this.state.bounds}/>
-          )
-        }
-      });
-    }
+    this.state.breaches.map((pos, index) => {
+      if (pos.floor === this.props.floorIndex) {
+        let url = "../media/breach.png";
+        breaches.push(
+          <DragItem url={url}
+            x={pos.x} y={pos.y}
+            selectElement={this.selectElement} index={index} key={index} drag={this.state.drag}
+            type="BREACH" bounds={this.state.bounds}/>
+        )
+      }
+    });
 
     return (
       <div className="position-overlay" ref={this.selector}>

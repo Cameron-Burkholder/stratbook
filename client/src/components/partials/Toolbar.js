@@ -51,7 +51,7 @@ class Toolbar extends React.Component {
         { this.props.type === "ATTACK" ? (
           <div className="dropdown-container">
             <p onClick={this.props.insertDrone}>Drones</p>
-            <p>Breaches</p>
+            <p onClick={this.props.insertBreach}>Breaches</p>
           </div>
         ) : (
           <div className="dropdown-container">

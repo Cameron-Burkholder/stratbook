@@ -593,9 +593,13 @@ class CreateStrategiesAPI extends React.Component {
       floor: this.state.floorIndex
     };
     if (this.state.type === "ATTACK") {
-      map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].utilityPositions[index].push(utility);
+      if (map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].utilityPositions[index].length + 1 <= UTILITY_GUIDE[map.attack[this.state.strategyIndex].utility[index]]) {
+        map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].utilityPositions[index].push(utility);
+      }
     } else {
-      map.defense[this.state.site][this.state.strategyIndex].utilityPositions[index].push(utility);
+      if (map.defense[this.state.site][this.state.strategyIndex].utilityPositions[index].length + 1 <= UTILITY_GUIDE[map.defense[this.state.strategyIndex][this.state.site].utility[index]]) {
+        map.defense[this.state.site][this.state.strategyIndex].utilityPositions[index].push(utility);
+      }
     }
     this.setState({
       map: map
