@@ -4,7 +4,7 @@ const bcrypt = require("bcryptjs");
 const mongoose = require("mongoose");
 const email = require("../config/email.js");
 
-const { log, verifyPassword, hashPassword, issueJWT, genVerificationLink } = require("../config/utilities.js");
+const { log, verifyPassword, hashPassword, issueJWT, genVerificationLink, notify } = require("../config/utilities.js");
 
 // Load validation
 const validation = require("../validation.js");

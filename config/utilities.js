@@ -9,6 +9,15 @@ const saltRounds = 10;
 const axios = require("axios");
 require("dotenv").config();
 
+// Load push notifications
+const webpush = require("web-push");
+webpush.setGCMAPIKey(process.env.CLOUD_MESSAGING_API);
+webpush.setVapidDetails(
+  "mailto:r6stratbook@gmail.com",
+  process.env.PUBLIC_VAPID_KEY,
+  process.env.PRIVATE_VAPID_KEY
+)
+
 // Load Team model
 require("../models/Team.js");
 const Team = require("../models/Team.js");
@@ -115,5 +124,12 @@ module.exports = {
       return null;
     });
     return data;
+  },
+  notify: async function(user, message) {
+    if (user.subscription) {
+      webpush.sendNotification(user.subscription, JSON.stringify(message)).catch((error) => {
+        console.log(error);
+      });
+    }
   }
 };

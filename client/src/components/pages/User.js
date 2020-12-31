@@ -10,6 +10,7 @@ import SetAttackerRoleAPI from "../api/SetAttackerRoleAPI.js";
 import SetAttackersAPI from "../api/SetAttackersAPI.js";
 import SetDefenderRoleAPI from "../api/SetDefenderRoleAPI.js";
 import SetDefendersAPI from "../api/SetDefendersAPI.js";
+import PushNotificationsAPI from "../api/PushNotificationsAPI.js";
 import DeleteUserAPI from "../api/DeleteUserAPI.js";
 
 /*
@@ -51,9 +52,13 @@ const User = (props) => {
         <UpdateEmailAPI getAuthToken={props.getAuthToken} updateAuthToken={props.updateAuthToken} email={props.email} alert={props.alert}/>
         <UpdatePasswordAPI getAuthToken={props.getAuthToken} updateAuthToken={props.updateAuthToken} alert={props.alert}/>
       </div>
+      <div className="account-section" id="push-notifications">
+        <h3>Notifications</h3>
+        <PushNotificationsAPI getAuthToken={props.getAuthToken} alert={props.alert} subscription={props.subscription}/>
+      </div>
       <div className="account-section account-section--danger">
         <h3>Manage Account</h3>
-        <DeleteUserAPI getAuthToken={props.getAuthToken} logout={props.logout} alert={props.alert}/>
+        <DeleteUserAPI getAuthToken={props.getAuthToken} logout={props.logout} alert={props.alert} updateAuthToken={props.getAuthToken}/>
       </div>
     </div>
   )

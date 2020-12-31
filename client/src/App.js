@@ -179,7 +179,8 @@ class App extends React.Component {
                         logout={this.logout} username={this.state.user.username} email={this.state.user.email}
                         platform={this.state.user.platform} attacker_role={this.state.user.attacker_role}
                         attackers={this.state.user.attackers} defenders={this.state.user.defenders}
-                        defender_role={this.state.user.defender_role} alert={this.alert}/>
+                        defender_role={this.state.user.defender_role} alert={this.alert}
+                        subscription={this.state.user.subscription}/>
                 </div>
               )
               : ( <Redirect to="/"/> )

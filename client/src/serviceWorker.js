@@ -51,6 +51,16 @@ export function register(config) {
         registerValidSW(swUrl, config);
       }
     });
+    window.self.addEventListener("push", event => {
+      const data = event.data.json();
+      const { title } = data;
+
+      const body = {
+        body: data.body
+      }
+
+      event.waitUntil(window.self.registration.showNotification(title, body));
+    });
   }
 }
 

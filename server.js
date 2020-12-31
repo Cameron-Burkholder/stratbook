@@ -54,6 +54,7 @@ require("./routes/users.js")(app, passport);
 require("./routes/teams.js")(app, passport);
 require("./routes/statistics.js")(app, passport);
 require("./routes/strategies.js")(app, passport);
+require("./routes/push.js")(app, passport);
 app.get("/*", function(request, response) {
   log("GET REQUEST AT /*");
   if (process.env.NODE_ENV === "production") {

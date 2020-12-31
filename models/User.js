@@ -65,6 +65,10 @@ const UserSchema = new Schema({
   reset_expiry: {
     type: Date,
     required: false
+  },
+  subscription: {
+    type: Schema.Types.Mixed,
+    required: false
   }
 });
 
