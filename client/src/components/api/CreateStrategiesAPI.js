@@ -36,6 +36,7 @@ class CreateStrategiesAPI extends React.Component {
     super(props);
 
     this.selectMap = this.selectMap.bind(this);
+    this.showMaps = this.showMaps.bind(this);
     this.selectSite = this.selectSite.bind(this);
     this.updateType = this.updateType.bind(this);
     this.updateRoles = this.updateRoles.bind(this);
@@ -44,10 +45,9 @@ class CreateStrategiesAPI extends React.Component {
     this.save = this.save.bind(this);
 
     // Strategies
-    this.decrementStrategy = this.decrementStrategy.bind(this);
-    this.incrementStrategy = this.incrementStrategy.bind(this);
     this.addStrategy = this.addStrategy.bind(this);
     this.removeStrategy = this.removeStrategy.bind(this);
+    this.selectStrategy = this.selectStrategy.bind(this);
 
     // Scenes
     this.selectScene = this.selectScene.bind(this);
@@ -94,7 +94,8 @@ class CreateStrategiesAPI extends React.Component {
     this.removeBreach = this.removeBreach.bind(this);
 
     this.state = {
-      activeOperator: 0
+      activeOperator: 0,
+      showMaps: true
     }
   }
   selectMap(name) {
@@ -104,7 +105,7 @@ class CreateStrategiesAPI extends React.Component {
         attack: []
       };
       let attackStrategy = {
-        name: "",
+        name: "Unnamed",
         roles: ["ROLE", "ROLE", "ROLE", "ROLE", "ROLE"],
         operators: ["OPERATOR", "OPERATOR", "OPERATOR", "OPERATOR", "OPERATOR"],
         utility: ["UTILITY", "UTILITY", "UTILITY", "UTILITY", "UTILITY"],
@@ -129,7 +130,7 @@ class CreateStrategiesAPI extends React.Component {
       SITES[name].map((site) => {
         defenseStrategy[site] = [
           {
-            name: "",
+            name: "Unnamed",
             roles: ["ROLE", "ROLE", "ROLE", "ROLE", "ROLE"],
             operators: ["OPERATOR", "OPERATOR", "OPERATOR", "OPERATOR", "OPERATOR"],
             utility: ["UTILITY", "UTILITY", "UTILITY", "UTILITY", "UTILITY"],
@@ -151,6 +152,7 @@ class CreateStrategiesAPI extends React.Component {
       });
       map.defense = defenseStrategy;
       this.setState({
+        showMaps: false,
         map: map,
         sites: SITES[map.name],
         site: SITES[map.name][0],
@@ -165,16 +167,23 @@ class CreateStrategiesAPI extends React.Component {
       });
     }
   }
+  showMaps() {
+    this.setState({
+      showMaps: true
+    });
+  }
   selectSite(index) {
     this.setState({
       site: this.state.sites[index],
       siteIndex: index,
       sceneIndex: 0,
-      scenes: (this.state.type === "ATTACK" ? this.state.map.attack[this.state.strategyIndex][this.state.sites[index]] : this.state.map.defense[this.state.sites[index]][this.state.strategyIndex].scenes)
+      scenes: (this.state.type === "ATTACK" ? this.state.map.attack[this.state.strategyIndex][this.state.sites[index]] : this.state.map.defense[this.state.sites[index]][this.state.strategyIndex].scenes),
+      strategyIndex: 0,
+      strategies: (this.state.type === "ATTACK" ? this.state.strategies : this.state.map.defense[this.state.sites[index]])
     });
   }
-  updateType(e) {
-    if (e.target.value === "ATTACK") {
+  updateType(type) {
+    if (type === "ATTACK") {
       this.setState({
         type: "ATTACK",
         site: this.state.sites[0],
@@ -192,7 +201,7 @@ class CreateStrategiesAPI extends React.Component {
         siteIndex: 0,
         strategies: this.state.map.defense[this.state.sites[0]],
         strategyIndex: 0,
-        scenes: this.state.map.defense[this.state.sites[0]].scenes,
+        scenes: this.state.map.defense[this.state.sites[0]][0].scenes,
         sceneIndex: 0,
         floorIndex: 0
       });
@@ -246,7 +255,7 @@ class CreateStrategiesAPI extends React.Component {
     let newStrategies;
     if (this.state.type === "ATTACK") {
       let attackStrategy = {
-        name: "",
+        name: "Unnamed",
         roles: ["ROLE", "ROLE", "ROLE", "ROLE", "ROLE"],
         operators: ["OPERATOR", "OPERATOR", "OPERATOR", "OPERATOR", "OPERATOR"],
         utility: ["UTILITY", "UTILITY", "UTILITY", "UTILITY", "UTILITY"],
@@ -270,7 +279,7 @@ class CreateStrategiesAPI extends React.Component {
       newStrategies = map.attack;
     } else {
       let defenseStrategy = {
-        name: "",
+        name: "Unnamed",
         roles: ["ROLE", "ROLE", "ROLE", "ROLE", "ROLE"],
         operators: ["OPERATOR", "OPERATOR", "OPERATOR", "OPERATOR", "OPERATOR"],
         utility: ["UTILITY", "UTILITY", "UTILITY", "UTILITY", "UTILITY"],
@@ -298,9 +307,7 @@ class CreateStrategiesAPI extends React.Component {
     });
   }
   removeStrategy() {
-    if (this.state.strategies.length === 1) {
-      this.props.alert("User cannot delete only strategy in map.");
-    } else {
+    if (this.state.strategies.length !== 1) {
       let newStrategies = [...this.state.strategies];
       newStrategies.splice(this.state.strategyIndex, 1);
       let map = this.state.map;
@@ -311,24 +318,15 @@ class CreateStrategiesAPI extends React.Component {
       }
       this.setState({
         map: map,
-        strategyIndex: this.state.strategyIndex - 1,
+        strategyIndex: (this.state.strategyIndex - 1 >= 0 ? this.state.strategyIndex - 1 : 0),
         strategies: newStrategies,
       });
     }
   }
-  decrementStrategy() {
-    if (this.state.strategyIndex - 1 >= 0) {
-      this.setState({
-        strategyIndex: this.state.strategyIndex - 1
-      });
-    }
-  }
-  incrementStrategy() {
-    if (this.state.strategyIndex + 1 < this.state.strategies.length) {
-      this.setState({
-        strategyIndex: this.state.strategyIndex + 1
-      });
-    }
+  selectStrategy(index) {
+    this.setState({
+      strategyIndex: index
+    });
   }
 
   // Scenes
@@ -338,25 +336,19 @@ class CreateStrategiesAPI extends React.Component {
     let name = "Unnamed";
     if (this.state.type === "ATTACK") {
       scenes = [...map.attack[this.state.strategyIndex][this.state.site]];
-      scenes.push({
-        objectives: [],
-        utilityPositions: [[], [], [], [], []],
-        gadgetPositions: [[], [], [], [], []],
-        breaches: [],
-        operatorPositions: [{x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}],
-        drones: [],
-        notes: "",
-        name: name
-      });
+      let newScene = JSON.parse(JSON.stringify(scenes[scenes.length - 1]));
+      newScene.notes = "";
+      newScene.name = name;
+      newScene.objectives = [];
+      scenes.push(newScene);
       map.attack[this.state.strategyIndex][this.state.site] = scenes;
     } else {
       scenes = [...map.defense[this.state.site][this.state.strategyIndex].scenes];
-      scenes.push({
-        objectives: [],
-        operatorPositions: [{x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: null}, {x: 0, y: 0}, {x: 0, y: 0}],
-        notes: "",
-        name: name
-      });
+      let newScene = JSON.parse(JSON.stringify(scenes[scenes.length - 1]));
+      newScene.notes = "";
+      newScene.objectives = [];
+      newScene.name = name;
+      scenes.push(newScene);
       map.defense[this.state.site][this.state.strategyIndex].scenes = scenes;
     }
     this.setState({
@@ -390,16 +382,16 @@ class CreateStrategiesAPI extends React.Component {
       sceneIndex: index
     });
   }
-  updateSceneName(name) {
+  updateSceneName(name, index) {
     let map = this.state.map;
     let scenes;
     let strategies;
     if (this.state.type === "ATTACK") {
-      map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].name = name;
+      map.attack[this.state.strategyIndex][this.state.site][index].name = name;
       scenes = map.attack[this.state.strategyIndex][this.state.site];
       strategies = map.attack;
     } else {
-      map.defense[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].name = name;
+      map.defense[this.state.site][this.state.strategyIndex].scenes[index].name = name;
       scenes = map.defense[this.state.site][this.state.strategyIndex].scenes;
       strategies = map.defense[this.state.site];
     }
@@ -597,7 +589,7 @@ class CreateStrategiesAPI extends React.Component {
         map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].utilityPositions[index].push(utility);
       }
     } else {
-      if (map.defense[this.state.site][this.state.strategyIndex].utilityPositions[index].length + 1 <= UTILITY_GUIDE[map.defense[this.state.strategyIndex][this.state.site].utility[index]]) {
+      if (map.defense[this.state.site][this.state.strategyIndex].utilityPositions[index].length + 1 <= UTILITY_GUIDE[map.defense[this.state.site][this.state.strategyIndex].utility[index]]) {
         map.defense[this.state.site][this.state.strategyIndex].utilityPositions[index].push(utility);
       }
     }
@@ -725,12 +717,23 @@ class CreateStrategiesAPI extends React.Component {
           <Loading/>
         ) : (
           <div className="add-map">
-            { !this.state.map || this.state.map === "" ? (
+            { this.state.showMaps ? (
               <MapSelector selectMap={this.selectMap} maps={this.props.maps}/>
             ) : (
               <div className="add-map__ui">
                 <Toolbar
+                  showMaps={this.showMaps}
+                  map={this.state.map}
+                  strategies={this.state.strategies}
+                  strategyIndex={this.state.strategyIndex}
+                  selectStrategy={this.selectStrategy}
                   type={this.state.type}
+                  updateType={this.updateType}
+                  siteIndex={this.state.siteIndex}
+                  sites={this.state.sites}
+                  selectSite={this.selectSite}
+                  addStrategy={this.addStrategy}
+                  removeStrategy={this.removeStrategy}
                   strategy={this.state.type === "ATTACK" ? (
                     this.state.map.attack[this.state.strategyIndex].name
                   ): (
@@ -756,10 +759,18 @@ class CreateStrategiesAPI extends React.Component {
                   ) : undefined)}
                   insertBreach={this.insertBreach}
                   removeBreach={this.removeBreach}
-                  alert={this.props.alert}/>
+                  alert={this.props.alert} save={this.save}/>
                 <main>
                   <Sidebar
                     map={this.state.map.name}
+                    strategy={this.state.type === "ATTACK" ? (
+                      this.state.map.attack[this.state.strategyIndex].name
+                    ): (
+                      this.state.map.defense[this.state.site][this.state.strategyIndex].name
+                    )}
+                    strategies={this.state.strategies}
+                    selectStrategy={this.selectStrategy}
+                    strategyIndex={this.state.strategyIndex}
                     sites={this.state.sites}
                     selectSite={this.selectSite}
                     siteIndex={this.state.siteIndex}

@@ -254,7 +254,7 @@ class PositionOverlay extends React.Component {
     let rotates = [];
     this.state.rotates.map((pos, index) => {
       if (pos.floor === this.props.floorIndex) {
-        let url = "https://img.favpng.com/11/9/20/explosion-cartoon-comics-bomb-png-favpng-uuPp7vCWSNnrUGy9QDQ0xyib8.jpg";
+        let url = "../medida/rotate.png";
         rotates.push(
           <DragItem url={url}
             x={pos.x} y={pos.y}

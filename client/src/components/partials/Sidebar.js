@@ -15,12 +15,12 @@ class Sidebar extends React.Component {
       active: false
     }
   }
-  changeName(index, e) {
+  changeName(e, index) {
     if (e) {
       e.stopPropagation();
     }
     if (this.state.active) {
-      this.props.updateSceneName(this.state.name);
+      this.props.updateSceneName(this.state.name, this.state.index);
       this.setState({
         index: 0,
         name: "",
@@ -63,17 +63,35 @@ class Sidebar extends React.Component {
               <button onClick={this.changeName}>&#10003;</button>
             </div>
           ) : (
-            <p className="scene__name" onClick={(e) => { this.changeName(index, e) }}>{scene.name}</p>
+            <p className="scene__name" onClick={(e) => { this.changeName(e, index) }}>{scene.name}</p>
           )}
         </div>
       )
     });
+    const strategies = (this.props.type === "ATTACK" ? "" : (
+      this.props.strategies.map((strat, index) => {
+        return (
+          <div className={"strategy" + (this.props.strategyIndex === index ? " strategy--active" : "")} onClick={() => { this.props.selectStrategy(index) }} key={index}>
+            <p className="strategy__name">{strat.name}</p>
+          </div>
+        )
+      })
+    ));
     return (
       <div className="sidebar">
-        <div className="site-container">
-          <h3 className="site-container__heading">{this.props.map}: {this.props.type}</h3>
-          { sites }
-        </div>
+        { this.props.type === "ATTACK" ? (
+          <div className="site-container">
+            <h3 className="site-container__heading">{this.props.map}: {this.props.type}</h3>
+            <h4 className="site-container__subtitle">{this.props.strategy}</h4>
+            { sites }
+          </div>
+        ) : (
+          <div className="strategy-container">
+            <h3 className="strategy-container__heading">{this.props.map}: {this.props.type}</h3>
+            <h4 className="strategy-container__subtitle">{this.props.sites[this.props.siteIndex]}</h4>
+            { strategies }
+          </div>
+        )}
         <div className="scene-container">
           <h3 className="scene-container__heading">Scenes</h3>
           { scenes }

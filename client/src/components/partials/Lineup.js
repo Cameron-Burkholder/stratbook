@@ -102,6 +102,7 @@ class Lineup extends React.Component {
     })
     return (
       <div className="lineup">
+        <h3>Lineup</h3>
         { lineup }
       </div>
     )
