@@ -62,6 +62,7 @@ module.exports = async (app, passport) => {
                     console.log(error);
                     response.redirect("/register");
                   } else {
+                    notify(user, { title: "Account Verified", body: "You have successfully verified your Stratbook account." });
                     email(user.email, "Account Verified", "<h1>Thanks for verifying your account!</h1><br/><p>You can now create or join a team.</p>");
                     response.redirect("/login");
                   }
@@ -304,6 +305,7 @@ module.exports = async (app, passport) => {
       user.save().then(() => {
         packet.status = "PLATFORM_UPDATED";
         response.json(packet);
+        notify(user, { title: "Platform Changed", body: "The platform associated with your account has changed." });
         email(user.email, "Platform Changed", "The platform associated with your account has changed. If you did not do this, be sure to change it to the appropriate platform.");
       }).catch(error => {
         console.log(error);
@@ -357,6 +359,7 @@ module.exports = async (app, passport) => {
             user.save().then(() => {
               packet.status = "USERNAME_UPDATED";
               response.json(packet);
+              notify(user, { title: "Username Changed", body: "The username associated with your Stratbook account has been changed." });
               email(user.email, "Username Changed", "The username associated with your Stratbook account has been changed. If you did not do this, please correct this as it may cause the statistics functions of Stratbook to malfunction.");
             }).catch(error => {
               console.log(error);
@@ -430,6 +433,7 @@ module.exports = async (app, passport) => {
             user1.save().then(() => {
               packet.status = "EMAIL_UPDATED";
               response.json(packet);
+              notify(user, { title: "Email Changed", body: "The email associated with your Stratbook account has been changed." });
             }).catch(error => {
               console.log(error);
               packet.status = "ERROR_WHILE_UPDATING_EMAIL";
@@ -523,6 +527,7 @@ module.exports = async (app, passport) => {
                           user.save().then(() => {
                             packet.status = "USER_STATUS_UPDATED";
                             response.json(packet);
+                            notify(user, { title: "Team Status Updated", body: `The status of your membership on the team ${team.name} has been updated to ${user.status}.` });
                             email(user.email, "Team Status Updated", `The status associated with your membership on the team ${team.name} has been updated to ${user.status}.<br/><br/>This means your responsibilities and privileges related to the team may have changed. Contact a team admin if you think this is a mistake.`);
                           }).catch(error => {
                             console.log(error);
@@ -542,6 +547,7 @@ module.exports = async (app, passport) => {
                           user.save().then(() => {
                             packet.status = "USER_STATUS_UPDATED";
                             response.json(packet);
+                            notify(user, { title: "Team Status Updated", body: `The status of your membership on the team ${team.name} has been updated to ${user.status}.` });
                             email(user.email, "Team Status Updated", `The status associated with your membership on the team ${team.name} has been updated to ${user.status}.<br/><br/>This means your responsibilities and privileges related to the team may have changed. Contact a team admin if you think this is a mistake.`);
                           }).catch(error => {
                             console.log(error);
@@ -561,6 +567,7 @@ module.exports = async (app, passport) => {
                           user.save().then(() => {
                             packet.status = "USER_STATUS_UPDATED";
                             response.json(packet);
+                            notify(user, { title: "Team Status Updated", body: `The status of your membership on the team ${team.name} has been updated to ${user.status}.` });
                             email(user.email, "Team Status Updated", `The status associated with your membership on the team ${team.name} has been updated to ${user.status}.<br/><br/>This means your responsibilities and privileges related to the team may have changed. Contact a team admin if you think this is a mistake.`);
                           }).catch(error => {
                             console.log(error);
@@ -721,6 +728,7 @@ module.exports = async (app, passport) => {
             user.save().then(() => {
               packet.status = "PASSWORD_RESET";
               response.json(packet);
+              notify(user, { title: "Password Reset", body: "Your password has been reset. If you did not do this, login and reset your password immediately." });
               email(user.email, "Your password has been reset", "<p>Your password has been reset. If you did not do this, reset your password immediately.</p>");
             }).catch(error => {
               console.log(error);
@@ -777,6 +785,7 @@ module.exports = async (app, passport) => {
       user.save().then(() => {
         packet.status = "PASSWORD_UPDATED";
         response.json(packet);
+        notify(user, { title: "Password Updated", body: "The password associated with your Stratbook account has been udpated." });
         email(user.email, "Password Updated", `The password associated with your account has been updated. If you did not do this, <a href=${request.protocol + "://" + request.get("host") + request.originalUrl + "/forgot-password"} target="_blank">click here</a> to reset it.`);
       }).catch(error => {
         console.log(error);

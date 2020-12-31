@@ -1,7 +1,7 @@
 /* routes/teams.js */
 
 const email = require("../config/email.js");
-const { log, genJoinCode } = require("../config/utilities.js");
+const { log, genJoinCode, notify } = require("../config/utilities.js");
 const mongoose = require("mongoose");
 
 // Load validation
@@ -259,6 +259,7 @@ module.exports = async (app, passport) => {
                     packet.team_code = newTeam.join_code;
                   }
                   response.json(packet);
+                  notify(user, { title: "Team Created", body: "Congratulations on creating a team!" });
                   email(user.email, "Team Created", `Congratulations on creating a team! <br/><br/>You have created the team, <em>${newTeam.name}</em>, for ${newTeam.platform} users. Send the join code, displayed on the team page, to allow your friends to join.`);
                 });
               }).catch(error => {
@@ -348,6 +349,7 @@ module.exports = async (app, passport) => {
                 while (index < team.admins.length) {
                   await new Promise((resolve, reject) => {
                     User.findOne({ _id: mongoose.Types.ObjectId(team.admins[index]) }).then(async (user, error) => {
+                      notify(user, { title: "Team Name Changed", body: `The name of your team on Stratbook has been changed to ${team.name}.` });
                       email(user.email, "Team Name Changed", `The name for your team on Stratbook with a team ID of ${user.team_code} has been changed to ${team.name}.`);
                       resolve(true);
                     }).catch(error => {
@@ -451,6 +453,7 @@ module.exports = async (app, passport) => {
                       while (index < team.admins.length) {
                         await new Promise((resolve, reject) => {
                           User.findOne({ _id: mongoose.Types.ObjectId(team.admins[index]) }).then(async (admin, error) => {
+                            notify(admin, { title: "User Joined", body: `${user.username} has joined your team.` });
                             email(admin.email, "User Joined", `${user.username} has joined your team ${team.name}.`);
                             resolve(true);
                           }).catch(error => {
@@ -577,6 +580,7 @@ module.exports = async (app, passport) => {
                     user.status = undefined;
                     await new Promise((resolve, reject) => {
                       user.save().then(() => {
+                        notify(user, { title: "Team Disbanded", body: `Your Stratbook team, ${team.name}, has been disbanded.` });
                         email(user.email, "Team Disbanded", `The team you were a part of, ${team.name}, has been disbanded. Your account and associated information have been disassociated with this team.`);
                         resolve(true);
                       }).catch((error) => {
@@ -604,6 +608,7 @@ module.exports = async (app, passport) => {
                     user.status = undefined;
                     await new Promise((resolve, reject) => {
                       user.save().then(() => {
+                        notify(user, { title: "Team Disbanded", body: `Your Stratbook team, ${team.name}, has been disbanded.` });
                         email(user.email, "Team Disbanded", `The team you were a part of, ${team.name}, has been disbanded. Your account and associated information have been disassociated with this team.`);
                         resolve(true);
                       }).catch((error) => {
@@ -631,6 +636,7 @@ module.exports = async (app, passport) => {
                     user.status = undefined;
                     await new Promise((resolve, reject) => {
                       user.save().then(() => {
+                        notify(user, { title: "Team Disbanded", body: `Your Stratbook team, ${team.name}, has been disbanded.` });
                         email(user.email, "Team Disbanded", `The team you were a part of, ${team.name}, has been disbanded. Your account and associated information have been disassociated with this team.`);
                         resolve(true);
                       }).catch((error) => {
@@ -658,6 +664,7 @@ module.exports = async (app, passport) => {
               while (index < team.admins.length) {
                 await new Promise((resolve, reject) => {
                   User.findOne({ _id: mongoose.Types.ObjectId(team.admins[index]) }).then(async (admin, error) => {
+                    notify(admin, { title: "User Left Team", body: `${user.username} has left your team.` });
                     email(admin.email, "User Left Team", `${user.username} has left your team ${team.name}.`);
                     resolve(true);
                   }).catch(error => {

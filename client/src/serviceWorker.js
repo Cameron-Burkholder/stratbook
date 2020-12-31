@@ -22,6 +22,16 @@ const isLocalhost = Boolean(
 
 export function register(config) {
   if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
+    window.self.addEventListener("push", event => {
+      const data = event.data.json();
+      const { title } = data;
+
+      const body = {
+        body: data.body
+      }
+
+      event.waitUntil(window.self.registration.showNotification(title, body));
+    });
     // The URL constructor is available in all browsers that support SW.
     const publicUrl = new URL(process.env.PUBLIC_URL, window.location.href);
     if (publicUrl.origin !== window.location.origin) {
@@ -50,16 +60,6 @@ export function register(config) {
         // Is not localhost. Just register service worker
         registerValidSW(swUrl, config);
       }
-    });
-    window.self.addEventListener("push", event => {
-      const data = event.data.json();
-      const { title } = data;
-
-      const body = {
-        body: data.body
-      }
-
-      event.waitUntil(window.self.registration.showNotification(title, body));
     });
   }
 }
