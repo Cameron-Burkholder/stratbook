@@ -489,6 +489,16 @@ button.button--danger {
 button.button--danger:hover {
   background: #C93434; }
 
+/* client/src/scss/components/_footer.scss */
+footer.footer {
+  width: 100%;
+  padding: 16px;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  border-top: 1px solid #222326; }
+
 /* client/src/scss/api/_statistics-api.scss */
 div#GeneralStatisticsAPI {
   grid-column: span 2; }
@@ -1250,6 +1260,8 @@ div#DeleteTeamAPI {
       display: block;
       margin: auto;
       width: 100%; }
+  div.hasNoTeam {
+    padding-bottom: 256px; }
   a.button {
     width: 100%;
     max-width: 100%;

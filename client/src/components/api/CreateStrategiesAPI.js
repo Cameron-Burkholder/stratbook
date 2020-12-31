@@ -799,7 +799,7 @@ class CreateStrategiesAPI extends React.Component {
                     ))}
                     utility={(this.state.type === "ATTACK" ? (
                       this.state.map.attack[this.state.strategyIndex].utility
-                    ) : (this.state.map.defense[this.state.site][this.state.strategyIndex].operators))}
+                    ) : (this.state.map.defense[this.state.site][this.state.strategyIndex].utility))}
                     utilityPositions={(this.state.type === "ATTACK" ? (
                       this.state.map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].utilityPositions) : (
                       this.state.map.defense[this.state.site][this.state.strategyIndex].utilityPositions

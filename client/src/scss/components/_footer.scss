@@ -1,0 +1,11 @@
+/* client/src/scss/components/_footer.scss */
+
+footer.footer {
+  width: 100%;
+  padding: $padding-s;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  border-top: $border-primary;
+}
