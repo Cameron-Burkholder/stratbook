@@ -17,32 +17,28 @@ const options = {
   algorithms: ["RS256"]
 };
 
-/*
-  @func: passport.authenticate
-  @desc: Authenticate request based on json web token
-
-  @outputs:
-    If there is an error finding the user
-      done: function (error: error, data: false)
-
-    If the user is not found in the database
-      done: function (error: null, data: false)
-    Else
-      done: function (error: null, data: user)
+/**
+* Define authentication strategy using JWT
+* @function
+* @async
+* @param {object} passport passport object
+* @param {object} app instantiated app object (express router)
+* @returns {callback} callback called depending on validity of jwt
 */
-module.exports = (passport, app) => {
-  passport.use(new JwtStrategy(options, (jwt_payload, done) => {
-    User.findOne({ _id: jwt_payload.sub }, (error, user) => {
-      if (error) {
-        console.log(error);
-        return done(error, false);
-      }
-      if (!user) {
-        return done(null, false);
-      } else {
-        // User authorized
-        return done(null, user);
-      }
-    });
+module.exports = async (passport, app) => {
+  passport.use(new JwtStrategy(options, async (jwt_payload, done) => {
+    let user;
+    try {
+      user = await User.findOne({ _id: jwt_payload.sub }).exec();
+    } catch(error) {
+      console.log(error);
+      return done(error, false);
+    }
+
+    if (!user) {
+      return done(null, false);
+    } else {
+      return done(null, user);
+    }
   }));
 };

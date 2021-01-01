@@ -5,6 +5,8 @@ const mongoose = require("mongoose");
 const email = require("../config/email.js");
 
 const { log, verifyPassword, hashPassword, issueJWT, genVerificationLink, notify } = require("../config/utilities.js");
+const { VERIFY_ACCOUNT, USER_NOT_FOUND, INCORRECT_PASSWORD, EXISTING_USER, USER_REGISTERED } = require("../messages.js");
+const { ERROR_LOGIN, ERROR_REGISTER } = require("../errors.js");
 
 // Load validation
 const validation = require("../validation.js");
@@ -25,137 +27,121 @@ const UnverifiedUser = require("../models/UnverifiedUser.js");
 
 module.exports = async (app, passport) => {
 
-  /*
-    @route /api/users/verify
-    @method: GET
-
-    @inputs:
-      verification_id: String
-
-    @outputs:
-      If verification id isn't in the database
-        redirect: /register
-      Else
-        update verification state for user, delete record from verification database
-        redirect: /login
+  /**
+  * Verify a user's email
+  * @name /api/users/verify
+  * @method GET
+  * @function
+  * @async
+  * @description The user makes a request to this url with a query string specifying which user is attempting to verify their account.
+  *   If there is no string token associated with any unverified users, this will redirect to the register screen.
+  *   If the string token matches an unverified user, this will find the user object in the db, verify it, then delete the unverified object in the db.
+  *   Once the user has been verified this redirects to the login page and notifies the user.
+  * @param {string} request.query.verification_id string id token to verify user's account
   */
-  app.get("/api/users/verify", (request, response) => {
+  app.get("/api/users/verify", async (request, response) => {
     log("GET REQUEST AT /api/users/verify");
-    UnverifiedUser.findOne({ verification_id: request.query.verification_id }, function(error, item) {
-      if (error) {
-        console.log(error);
-        response.redirect("/register");
-      }
+    let unverified_user;
+    let user;
+
+    // Find unverified user object in db
+    try {
+      unverified_user = await UnverifiedUser.findOne({ verification_id: request.verification_id }).exec();
       if (!item) {
-        response.redirect("/register");
-      } else {
-        User.findOne({ _id: mongoose.Types.ObjectId(item.user_id) }, function(error, user) {
-          if (error) {
-            console.log(error);
-            response.redirect("/register");
-          } else {
-            if (user) {
-              user.verified = true;
-              user.save().then(() => {
-                UnverifiedUser.deleteOne({ user_id: user._id }, (error) => {
-                  if (error) {
-                    console.log(error);
-                    response.redirect("/register");
-                  } else {
-                    notify(user, { title: "Account Verified", body: "You have successfully verified your Stratbook account." });
-                    email(user.email, "Account Verified", "<h1>Thanks for verifying your account!</h1><br/><p>You can now create or join a team.</p>");
-                    response.redirect("/login");
-                  }
-                }).catch(error => {
-                  console.log(error);
-                  response.redirect("/login");
-                });
-              });
-            } else {
-              response.redirect("/register");
-            }
-          }
-        });
+        throw new Error();
       }
-    });
+    } catch (error) {
+      console.error(error);
+      return response.redirect("/register");
+    }
+
+    // Find user object associated with unverified user object
+    try {
+      user = await User.findOne({ _id: mongoose.Types.ObjectId(unverified_user.user_id) }).exec();
+    } catch(error) {
+      console.error(error);
+      return response.redirect("/register");
+    }
+
+    // Verify user and save
+    user.verified = true;
+    try {
+      await user.save().exec();
+    } catch(error) {
+      console.log(error);
+      return response.redirect("/register");
+    }
+
+    // Delete unverified user object
+    try {
+      await UnverifiedUser.deleteOne({ user_id: user._id });
+    } catch(error) {
+      console.log(error);
+      return response.redirect("/register");
+    }
+
+    // Notify user their account has been verified and redirect to login page
+    notify(user, VERIFY_ACCOUNT);
+    response.redirect("/login");
+
   });
 
-  /*
-    @route /api/users/login
-    @method: POST
-
-    @inputs:
-      email: String
-      password: String
-
-    @outputs:
-      If an error occurs at any point
-        packet: Object (status: ERROR)
-
-      If input data is invalid
-        packet: Object (status: INVALID_LOGIN, errors: errors)
-
-      If user does not exist in database
-        packet: Object (status: USER_NOT_FOUND)
-
-      If password is incorrect
-        packet: Object (status: INCORRECT_PASSWORD)
-
-      If password is correct
-        packet: Object (status: TOKEN_ISSUED, user_status: undefined or user_stats)
-
+  /**
+  * Login user
+  * @name /api/users/login
+  * @function
+  * @async
+  * @description The user makes a login request by providing an email and password.
+  *   If the input data is invalid, this returns an invalid login object
+  *   If the user does not exist in db, this returns a user not found object
+  *   If the password is incorrect, this returns an incorrect password object
+  *   If the password is correct, this returns a token issued object
+  * @param {string} request.body.email email address
+  * @param {string} request.body.password password
   */
   app.post("/api/users/login", (request, response, done) => {
     log("POST REQUEST AT /api/users/login");
     done();
-  }, validation.validateLoginInput, (request, response) => {
+  }, validation.validateLoginInput, async (request, response) => {
     let packet = {};
-    User.findOne({ email: request.body.email.toLowerCase() }).then((user) => {
-      if (!user) {
-        packet.status = "USER_NOT_FOUND";
-        packet.errors = {
-          email: "No user with that email was found."
-        }
-        response.json(packet);
-      } else {
-        const isValidPassword = verifyPassword(request.body.password, user.password);
-        if (isValidPassword) {
-          const tokenObject = issueJWT(user);
-          user.password = undefined;
-          user._id = undefined;
-          packet.status = "TOKEN_ISSUED";
-          packet.user = user;
-          packet.token = tokenObject.token;
-          packet.expiresIn = tokenObject.expires;
-          response.json(packet);
-        } else {
-          packet.status = "INCORRECT_PASSWORD";
-          packet.errors = {
-            password: "The password you entered is incorrect."
-          };
-          response.json(packet);
-        }
-      }
-    }).catch(error => {
+    let user;
+    try {
+      user = await User.findOne({ email: request.body.email.toLowerCase() }).exec();
+    } catch(error) {
       console.log(error);
-      packet.status = "ERROR";
-      packet.message = "There was an error while attempting to login.";
-      response.json(packet);
-    });
+      return response.json(ERROR_LOGIN);
+    }
+
+    if (!user) {
+      return response.json(USER_NOT_FOUND);
+    }
+
+    const isValidPassword = verifyPassword(request.body.password, user.password);
+    if (isValidPassword) {
+      const tokenObject = issueJWT(user);
+      user.password = undefined;
+      user._id = undefined;
+      let packet = TOKEN_ISSUED;
+      packet.user = user;
+      packet.token = tokenObject.token;
+      packet.expiresIn = tokenObject.expires;
+      return response.json(packet);
+    } else {
+      return response.json(INCORRECT_PASSWORD);
+    }
+
   });
 
-  /*
-    @route /api/users/update-token
-    @method GET
-
-    @outputs
-      If user is invalid
-        404
-      If login is valid
-        packet: Object (status: TOKEN_EXTENDED, token: token, expiresIn: Date)
+  /**
+  * Extend JSON web token for seamless login
+  * @name /api/users/update-token
+  * @function
+  * @description The user requests a new json web token upon loading the website.
+  *   If the user is still logged in with a valid token, a new one is granted.
+  *   If the user is not logged in with a valid token, the request is denied.
   */
   app.get("/api/users/update-token", (request, response, done) => {
-    log("GET REQUEST AT /api/users/extend-token");
+    log("GET REQUEST AT /api/users/update-token");
     done();
   }, passport.authenticate("jwt", { session: false }), (request, response) => {
     let packet = {};
@@ -169,107 +155,86 @@ module.exports = async (app, passport) => {
     response.json(packet);
   });
 
-  /*
-    @route /api/users/register
-    @method: POST
-
-    @inputs:
-      username: String
-      email: String
-      password1: String
-
-    @outputs:
-      If an error occurs
-        packet: Object (status: ERROR)
-
-      If input data is invalid
-        packet: Object (status: INVALID_REGISTRATION)
-
-      If input data is profane
-        packet: Object (status: PROFANE_INPUT)
-
-      If user already exists in database (email or username)
-        packet: Object (status: EXISTING_USER)
-
-      If user is able to register
-        packet: Object (status: USER_REGISTERED)
-
+  /**
+  * Register user
+  * @name /api/users/register
+  * @function
+  * @async
+  * @description The user makes a registration request to create an account.
+  *   If the input data is invalid, this returns an invalid registration object.
+  *   If the input data is profane, this returns a profane input object .
+  *   If an account with the same email already exists, this returns an existing user object .
+  *   If the user is able to register, this returns a user registered object.
+  * @param {string} request.body.username username associated with siege account
+  * @param {string} request.body.email email to register with
+  * @param {string} request.body.platform platform to associate account with
+  * @param {string} request.body.password1 password input 1
+  * @param {string} request.body.password2 password input 2
   */
   app.post("/api/users/register", (request, response, done) => {
     log("POST REQUEST AT /api/users/register");
     done();
-  }, validation.validateRegisterInput, (request, response) => {
-    let packet = {}
-    User.findOne({ email: request.body.email }, function(error, user) {
-      if (user) {
-        packet.status = "EXISTING_USER";
-        packet.errors = {
-          email: "An account with that email already exists."
-        };
-        response.json(packet);
-      } else {
-        User.findOne({ username: request.body.username }, function(error, user) {
-          if (user) {
-            packet.status = "EXISTING_USER";
-            packet.message = "An account with that username already exists.";
-            response.json(packet);
-          } else {
-            const newUser = new User({
-              username: request.body.username,
-              email: request.body.email,
-              password: request.body.password1,
-              platform: request.body.platform,
-              verified: process.env.NODE_ENV === "development" ? true : false,
-              attacker_role: "NONE",
-              defender_role: "NONE",
-              attackers: [],
-              defenders: []
-            });
-            if (process.env.NODE_ENV === "development") {
-              packet._id = newUser._id;
-            }
-            // Hash password before saving in database
-            let hashedPassword = hashPassword(request.body.password1);
-            if (hashedPassword) {
-              newUser.password = hashedPassword;
-              newUser.save().then(user => {
-                host = request.hostname;
-                let newVerificationId = genVerificationLink();
-                let newVerificationLink = "http://" + host + "/api/users/verify?verification_id="+ newVerificationId;
-                const newUnverifiedUser = new UnverifiedUser({
-                  user_id: newUser._id,
-                  verification_id: newVerificationId
-                });
-                newUnverifiedUser.save().then(user => {
-                  packet.status = "USER_REGISTERED";
-                  response.json(packet);
-                  let registrationEmail = {
-                    subject: "R6 Stratbook - Registration Complete!",
-                    html: "<div><p>Thank you for registering with R6 Stratbook!<br/><br/>We are glad to have you on our platform. To verify your account so you can create and join teams, click the link below.</p><br/><br/><a href='" + newVerificationLink + "' target='_blank'>Verify Email</a></div>"
-                  };
-                  email(newUser.email, registrationEmail.subject, registrationEmail.html);
-                }).catch(error => {
-                  console.log(error);
-                  packet.status = "ERROR";
-                  packet.message = "An error occurred while attempting to register user.";
-                  response.json(packet);
-                });
-              }).catch(error => {
-                console.log(error);
-                packet.status = "ERROR";
-                packet.message = "An error occurred while attempting to register user.";
-                response.json(packet);
-              });
-            } else {
-              console.log(error);
-              packet.status = "ERROR";
-              packet.message = "An error occurred while attempting to register user.";
-              response.json(packet);
-            }
-          }
-        });
-      }
+  }, validation.validateRegisterInput, async (request, response) => {
+    let packet = {};
+    let user;
+    try {
+      user = await User.findOne({ email: request.body.email }).exec();
+    } catch(error) {
+      console.log(error);
+      return response.json(ERROR_REGISTER);
+    }
+
+    if (user) {
+      packet = EXISTING_USER;
+      packet.errors = {
+        email: "An account with that email already exists."
+      };
+      return response.json(packet);
+    }
+
+    const newUser = new User({
+      username: request.body.username,
+      email: request.body.email,
+      password: request.body.password1,
+      platform: request.body.platform,
+      verified: process.env.NODE_ENV === "development" ? true : false,
+      attacker_role: "NONE",
+      defender_role: "NONE",
+      attackers: [],
+      defenders: []
     });
+    if (process.env.NODE_ENV === "development") {
+      packet._id = newUser._id;
+    }
+
+    let hashedPassword = hashPassword(request.body.password1);
+    if (hashedPassword) {
+      newUser.password = hashedPassword;
+      try {
+        await newUser.save().exec();
+      } catch(error) {
+        console.log(error);
+        return response.json(ERROR_REGISTER);
+      }
+
+      let host = request.hostname;
+      let newVerificationId = genVerificationLink();
+      let newVerificationLink = "http://" + host + "/api/users/verify?verification_id="+ newVerificationId;
+      const newUnverifiedUser = new UnverifiedUser({
+        user_id: newUser._id,
+        verification_id: newVerificationId
+      });
+
+      try {
+        await newUnverifiedUser.save().exec();
+      } catch(error) {
+        console.log(error);
+        return response.json(ERROR_REGISTER);
+      }
+
+      response.json(USER_REGISTERED);
+      notify(user, USER_REGISTERED);
+    }
   });
 
   /*

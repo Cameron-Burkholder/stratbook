@@ -2,7 +2,9 @@
 
 const mongoose = require("mongoose");
 
-// Check to see if user is a part of a team
+/**
+* Check to see if user is a part of a team
+*/
 exports.userHasTeam = async (request, response, done) => {
   let packet = {};
   if (request.user.team_code) {
@@ -31,7 +33,9 @@ exports.userHasTeam = async (request, response, done) => {
   }
 }
 
-// Check to see if user is not a part of a team
+/**
+* Check to see if user is not a part of a team
+*/
 exports.userHasNoTeam = (request, response, done) => {
   let packet = {};
   if (request.user.team_code) {
@@ -44,7 +48,9 @@ exports.userHasNoTeam = (request, response, done) => {
   }
 }
 
-// Check to see if user has verified their account
+/**
+* Check to see if user has verified their account
+*/
 exports.userIsVerified = (request, response, done) => {
   let packet = {};
   if (request.user.verified) {
@@ -57,7 +63,9 @@ exports.userIsVerified = (request, response, done) => {
   }
 }
 
-// Check to see if user is an admin
+/**
+* Check to see if user is an admin
+*/
 exports.userIsAdmin = (request, response, done) => {
   let packet = {};
   if (request.user.status !== "ADMIN") {

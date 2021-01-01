@@ -11,17 +11,13 @@ const OAuth2Client = new google.auth.OAuth2(
   "https://developers.google.com/oauthplayground"
 );
 
-/*
-  @func: email
-  @desc: Send an email to a user
-  @param userEmail: String
-  @param subject: String
-  @param html: HTML content to render
-
-  @outputs:
-    If an error occurs
-      error: Error
-
+/**
+* Send an email to user
+* @name email
+* @function
+* @param {string} email user's email
+* @param {string} subject subject of email to send
+* @param {string} message html string for email body
 */
 module.exports = email = (userEmail, subject, message) => {
   if (process.env.NODE_ENV !== "TESTING") {

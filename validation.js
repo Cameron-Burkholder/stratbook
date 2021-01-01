@@ -6,6 +6,9 @@ const filter = new Filter();
 filter.addWords("fuckboy", "fuckboys", "penisboy", "penisboys");
 const isEmpty = require("is-empty");
 const { ATTACKERS, ATTACKER_ROLES, DEFENDERS, DEFENDER_ROLES } = require("./client/src/data.js");
+const { INVALID_LOGIN, INVALID_REGISTRATION, PROFANE_INPUT, INVALID_ATTACKER_ROLE, INVALID_ATTACKERS, INVALID_DEFENDER_ROLE, INVALID_DEFENDERS,
+        INVALID_BLOCK_USER_INPUT, CANNOT_REMOVE_SELF, INVALID_EMAIL, INVALID_JOIN_CODE, INVALID_PASSWORD_INPUT, INVALID_PLATFORM,
+        INVALID_STATUS_INPUT, INVALID_TEAM_INPUT, PROFANE_TEAM_INPUT } = require("./messages.js");
 
 /**
 * Validates input fields for login form
@@ -13,7 +16,7 @@ const { ATTACKERS, ATTACKER_ROLES, DEFENDERS, DEFENDER_ROLES } = require("./clie
 exports.validateLoginInput = function(request, response, done) {
 
   let data = request.body;
-  let packet = {};
+  let packet = INVALID_LOGIN;
 
   let errors = {};
   data.email = !isEmpty(data.email) ? data.email : "";
@@ -33,7 +36,6 @@ exports.validateLoginInput = function(request, response, done) {
 
   // Check validation
   if (!isEmpty(errors)) {
-    packet.status = "INVALID_LOGIN";
     packet.errors = errors;
     response.json(packet);
     response.end();
@@ -51,7 +53,7 @@ exports.validateLoginInput = function(request, response, done) {
 exports.validateRegisterInput = function(request, response, done) {
 
   let data = request.body;
-  let packet = {};
+  let packet = INVALID_REGISTRATION;
 
   let errors = {};
   data.username = !isEmpty(data.username) ? data.username : "";
@@ -94,13 +96,12 @@ exports.validateRegisterInput = function(request, response, done) {
   }
 
   if (!isEmpty(errors)) {
-    packet.status = "INVALID_REGISTRATION";
     packet.errors = errors;
     response.json(packet);
     response.end();
     return packet;
   } else if (filter.isProfane(request.body.username) || filter.isProfane(request.body.email)) {
-    packet.status = "PROFANE_INPUT";
+    packet = PROFANE_INPUT;
     errors.username = filter.isProfane(request.body.username) ? "Username may not be inappropriate" : null;
     errors.email = filter.isProfane(request.body.email) ? "Email may not be inappropriate" : null;
     packet.errors = errors;
@@ -123,7 +124,7 @@ exports.validateAttackerRole = function(request, response, done) {
   const attackerRoles = ATTACKER_ROLES;
 
   let data = request.body;
-  let packet = {};
+  let packet = INVALID_ATTACKER_ROLE;
 
   let errors = {};
   data.role = !isEmpty(data.role) ? data.role.toUpperCase() : "";
@@ -138,7 +139,6 @@ exports.validateAttackerRole = function(request, response, done) {
 
   // Check validation
   if (!isEmpty(errors)) {
-    packet.status = "INVALID_ATTACKER_ROLE";
     packet.errors = errors;
     response.json(packet);
     response.end();
@@ -156,7 +156,7 @@ exports.validateAttackersInput = function(request, response, done) {
 
   const attackers = ATTACKERS;
   let data = request.body;
-  let packet = {};
+  let packet = INVALID_ATTACKERS;
 
   let errors = {};
 
@@ -177,7 +177,6 @@ exports.validateAttackersInput = function(request, response, done) {
 
   // Check validation
   if (!isEmpty(errors)) {
-    packet.status = "INVALID_ATTACKERS";
     packet.errors = errors;
     response.json(packet);
     response.end();
@@ -196,7 +195,7 @@ exports.validateDefenderRole = function(request, response, done) {
   const defenderRoles = DEFENDER_ROLES;
 
   let data = request.body;
-  let packet = {};
+  let packet = INVALID_DEFENDER_ROLE;
 
   let errors = {};
   data.role = !isEmpty(data.role) ? data.role.toUpperCase() : "";
@@ -211,7 +210,6 @@ exports.validateDefenderRole = function(request, response, done) {
 
   // Check validation
   if (!isEmpty(errors)) {
-    packet.status = "INVALID_DEFENDER_ROLE";
     packet.errors = errors;
     response.json(packet);
     response.end();
@@ -229,7 +227,7 @@ exports.validateDefendersInput = function(request, response, done) {
 
   const defenders = DEFENDERS;
   let data = request.body;
-  let packet = {};
+  let packet = INVALID_DEFENDERS;
 
   let errors = {};
   data.defenders = !isEmpty(data.defenders) ? data.defenders : "";
@@ -251,7 +249,6 @@ exports.validateDefendersInput = function(request, response, done) {
 
   // Check validation
   if (!isEmpty(errors)) {
-    packet.status = "INVALID_DEFENDERS";
     packet.errors = errors;
     response.json(packet);
     response.end();
@@ -268,7 +265,7 @@ exports.validateDefendersInput = function(request, response, done) {
 exports.validateBlockUser = function(request, response, done) {
 
   let data = request.body;
-  let packet = {};
+  let packet = INVALID_BLOCK_USER_INPUT;
 
   let errors = {};
   data.username = !isEmpty(data.username) ? data.username : "";
@@ -279,14 +276,13 @@ exports.validateBlockUser = function(request, response, done) {
 
   // Check validation
   if (!isEmpty(errors)) {
-    packet.status = "INVALID_BLOCK_USER_INPUT";
     packet.errors = errors;
     response.json(packet);
     response.end();
     return packet;
   } else {
     if (request.body.username === request.user.username) {
-      packet.status = "CANNOT_REMOVE_SELF";
+      packet = CANNOT_REMOVE_SELF;
       packet.message = "User cannot block himself/herself.";
       response.json(packet);
       response.end();
@@ -304,7 +300,7 @@ exports.validateBlockUser = function(request, response, done) {
 exports.validateEmailInput = function(request, response, done) {
 
   let data = request.body;
-  let packet = {};
+  let packet = INVALID_EMAIL;
 
   let errors = {};
   data.email = !isEmpty(data.email) ? data.email : "";
@@ -317,13 +313,12 @@ exports.validateEmailInput = function(request, response, done) {
   }
 
   if (!isEmpty(errors)) {
-    packet.status = "INVALID_EMAIL";
     packet.errors = errors;
     response.json(packet);
     response.end();
     return packet;
   } else if (filter.isProfane(request.body.email)) {
-    packet.status = "PROFANE_INPUT";
+    packet = PROFANE_INPUT;
     errors.email = filter.isProfane(request.body.email) ? "Email may not be inappropriate" : null;
     packet.errors = errors;
     response.json(packet);
@@ -342,7 +337,7 @@ exports.validateEmailInput = function(request, response, done) {
 exports.validateJoinCode = function(request, response, done) {
 
   let data = request.body;
-  let packet = {};
+  let packet = INVALID_JOIN_CODE;
 
   let errors = {};
   data.join_code = !isEmpty(data.join_code) ? data.join_code : "";
@@ -358,7 +353,6 @@ exports.validateJoinCode = function(request, response, done) {
 
   // Check validation
   if (!isEmpty(errors)) {
-    packet.status = "INVALID_JOIN_CODE";
     packet.errors = errors;
     response.json(packet);
     response.end();
@@ -375,7 +369,7 @@ exports.validateJoinCode = function(request, response, done) {
 exports.validatePasswordInput = function(request, response, done) {
 
   let data = request.body;
-  let packet = {};
+  let packet = INVALID_PASSWORD_INPUT;
 
   let errors = {};
   data.password1 = !isEmpty(data.password1) ? data.password1 : "";
@@ -395,7 +389,6 @@ exports.validatePasswordInput = function(request, response, done) {
   }
 
   if (!isEmpty(errors)) {
-    packet.status = "INVALID_PASSWORD_INPUT";
     packet.errors = errors;
     response.json(packet);
     response.end();
@@ -412,7 +405,7 @@ exports.validatePasswordInput = function(request, response, done) {
 exports.validatePlatformInput = function(request, response, done) {
 
   let data = request.body;
-  let packet = {};
+  let packet = INVALID_PLATFORM;
 
   let errors = {};
   data.platform = !isEmpty(data.platform) ? data.platform.toUpperCase() : "";
@@ -425,7 +418,6 @@ exports.validatePlatformInput = function(request, response, done) {
   }
 
   if (!isEmpty(errors)) {
-    packet.status = "INVALID_PLATFORM";
     packet.errors = errors;
     response.json(packet);
     response.end();
@@ -442,7 +434,7 @@ exports.validatePlatformInput = function(request, response, done) {
 exports.validateStatusInput = function(request, response, done) {
 
   let data = request.body;
-  let packet = {};
+  let packet = INVALID_STATUS_INPUT;
 
   let errors = {};
   data.status = !isEmpty(data.status) ? data.status.toUpperCase() : "";
@@ -462,7 +454,6 @@ exports.validateStatusInput = function(request, response, done) {
 
   // Check validation
   if (!isEmpty(errors)) {
-    packet.status = "INVALID_STATUS_INPUT";
     packet.errors = errors;
     response.json(packet);
     response.end();
@@ -481,7 +472,7 @@ exports.validateStatusInput = function(request, response, done) {
 exports.validateTeamInput = function(request, response, done) {
 
   let data = request.body;
-  let packet = {};
+  let packet = INVALID_TEAM_INPUT;
 
   let errors = {};
   data.name = !isEmpty(data.name) ? data.name : "";
@@ -493,13 +484,12 @@ exports.validateTeamInput = function(request, response, done) {
 
   // Check validation
   if (!isEmpty(errors)) {
-    packet.status = "INVALID_TEAM_INPUT";
     packet.errors = errors;
     response.json(packet);
     response.end();
     return packet;
   } else if (filter.isProfane(request.body.name)) {
-    packet.status = "PROFANE_TEAM_INPUT";
+    packet = PROFANE_TEAM_INPUT;
     errors.name = "Name may not be inappropriate";
     packet.errors = errors;
     response.json(packet);
@@ -517,7 +507,7 @@ exports.validateTeamInput = function(request, response, done) {
 exports.validateUsernameInput = function(request, response, done) {
 
   let data = request.body;
-  let packet = {};
+  let packet = INVALID_USERNAME;
 
   let errors = {};
   data.username = !isEmpty(data.username) ? data.username : "";
@@ -528,13 +518,12 @@ exports.validateUsernameInput = function(request, response, done) {
   }
 
   if (!isEmpty(errors)) {
-    packet.status = "INVALID_USERNAME";
     packet.errors = errors;
     response.json(packet);
     response.end();
     return packet;
   } else if (filter.isProfane(request.body.username)) {
-    packet.status = "PROFANE_INPUT";
+    packet = PROFANE_INPUT;
     errors.username = filter.isProfane(request.body.username) ? "Username may not be inappropriate" : null;
     packet.errors = errors;
     response.json(packet);
