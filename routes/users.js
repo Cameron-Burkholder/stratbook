@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 const email = require("../config/email.js");
 
 const { log, verifyPassword, hashPassword, issueJWT, genVerificationLink, notify } = require("../config/utilities.js");
-const { INCORRECT_PASSWORD, EXISTING_USER, PERMISSION_DENIED, PLATFORM_UPDATED, USER_NOT_FOUND, USER_REGISTERED, USER_STATUS_UPDATED, USERNAME_UPDATED, VERIFY_ACCOUNT } = require("../messages.js");
+const { INCORRECT_PASSWORD, EXISTING_USER, PASSWORD_RESET_LINK_SENT, PERMISSION_DENIED, PLATFORM_UPDATED, USER_NOT_FOUND, USER_REGISTERED, USER_STATUS_UPDATED, USERNAME_UPDATED, VERIFY_ACCOUNT } = require("../messages.js");
 const { ERROR_EMAIL, ERROR_FORGOT_PASSWORD, ERROR_LOGIN, ERROR_PLATFORM, ERROR_REGISTER, ERROR_UPDATE_USER_STATUS, ERROR_USERNAME } = require("../errors.js");
 
 // Load validation
