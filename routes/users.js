@@ -6,7 +6,7 @@ const email = require("../config/email.js");
 
 const { log, verifyPassword, hashPassword, issueJWT, genVerificationLink, notify } = require("../config/utilities.js");
 const { INCORRECT_PASSWORD, EXISTING_USER, PERMISSION_DENIED, PLATFORM_UPDATED, USER_NOT_FOUND, USER_REGISTERED, USER_STATUS_UPDATED, USERNAME_UPDATED, VERIFY_ACCOUNT } = require("../messages.js");
-const { ERROR_EMAIL, ERROR_LOGIN, ERROR_PLATFORM, ERROR_REGISTER, ERROR_UPDATE_USER_STATUS, ERROR_USERNAME } = require("../errors.js");
+const { ERROR_EMAIL, ERROR_FORGOT_PASSWORD, ERROR_LOGIN, ERROR_PLATFORM, ERROR_REGISTER, ERROR_UPDATE_USER_STATUS, ERROR_USERNAME } = require("../errors.js");
 
 // Load validation
 const validation = require("../validation.js");
@@ -509,40 +509,49 @@ module.exports = async (app, passport) => {
         packet: Object(status: PASSWORD_RESET_LINK_SENT)
 
   */
+  /**
+  * Send reset password link
+  * @name /api/users/forgot-password
+  * @function
+  * @async
+  * @description The user submits their email in order to request a password reset link.
+  *   If the input email is invalid, this returns an invalid email object.
+  *   If the input email is profane, this returns a profane input object.
+  *   If the requested email is not found, this returns a user not found object.
+  *   If the reset link can be sent, this returns a password reset link sent object.
+  * @param {string} request.body.email the email to send the reset link
+  */
   app.patch("/api/users/forgot-password", (request, response, done) => {
     log("PATCH REQUEST AT /api/users/forgot-password");
     done();
-  }, validation.validateEmailInput, (request, response) => {
-    let packet = {
-      status: ""
-    };
-    User.findOne({ email: request.body.email }).then((user) => {
-      if (user) {
-        const reset_token = genVerificationLink();
-        const reset_expiry = Date.now() + 3600000;
-        user.reset_token = reset_token;
-        user.reset_expiry = reset_expiry;
-        const resetLink = "http://" + request.hostname + "/reset-password/" + reset_token;
-        user.save().then(() => {
-          packet.status = "PASSWORD_RESET_LINK_SENT";
-          response.json(packet);
-          email(user.email, "Password Reset Link", "<p>You are receiving this because you (or someone else) have requested the reset of the password for your account. Please click on the following link to complete the process</p><br/><br/><a href='" + resetLink + "' target='_blank'>Reset Password</a>");
-        }).catch(error => {
-          console.log(error);
-          packet.status = "ERROR";
-          packet.message = "An error occurred while sending password reset link.";
-          response.json(packet);
-        });
-      } else {
-        packet.status = "USER_NOT_FOUND";
-        response.json(packet);
-      }
-    }).catch(error => {
+  }, validation.validateEmailInput, async (request, response) => {
+    let user;
+    try {
+      user = await User.findOne({ email: request.body.email }).exec();
+    } catch(error) {
       console.log(error);
-      packet.status = "ERROR";
-      packet.message = "An error occurred while sending password reset link.";
-      response.json(packet);
-    });
+      return response.json(ERROR_FORGOT_PASSWORD);
+    }
+
+    if (!user) {
+      return response.json(USER_NOT_FOUND);
+    }
+
+    const reset_token = genVerificationLink();
+    const reset_expiry = Date.now() + 3600000;
+    user.reset_token = reset_token;
+    user.reset_expiry = reset_expiry;
+    const resetLink = "http://" + request.hostname + "/reset-password/" + reset_token;
+
+    try {
+      await user.save();
+    } catch(error) {
+      console.log(error);
+      return response.json(ERROR_FORGOT_PASSWORD);
+    }
+
+    response.json(PASSWORD_RESET_LINK_SENT);
+    email(user.email, "Password Reset", "<div><h2>Reset your password</h2><br/><p>You are receiving this because you have requested to reset the password for your Stratbook account. To complete the process, click on the following link and follow the provided instructions. If you did not request this, consider changing the email associated with your account in addition to your Stratbook password.</p><br/><br/><a href='" + resetLink + "' target='_blank'>Reset Password</a>");
   });
 
   /*

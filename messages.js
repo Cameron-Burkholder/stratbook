@@ -87,6 +87,10 @@ module.exports = {
   INVALID_USERNAME: {
     status: "Invalid Username"
   },
+  PASSWORD_RESET_LINK_SENT: {
+    status: "Password Reset Link Sent",
+    message: "A link to reset your password has been sent to your email."
+  },
   PERMISSION_DENIED: {
     status: "Permission Denied",
     message: "Permission to perform the action you requested has been denied."

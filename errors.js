@@ -5,6 +5,10 @@ module.exports = {
     status: "ERROR",
     message: "An error occurred while attempting to update email."
   },
+  ERROR_FORGOT_PASSWORD: {
+    status: "Error",
+    message: "An error occured while attempting to send a reset password email."
+  },
   ERROR_LOGIN: {
     status: "ERROR",
     message: "An error occurred while attempting to log in."
