@@ -1,3 +1,15 @@
-MONGODB_URI=
-EMAIL=
-EMAIL_PASS=
+MONGODB_URI | uri to connect to production MongoDB database
+TESTING_URI | uri to connect to development MongoDB database
+EMAIL | email (Gmail) to be used with automated emails
+EMAIL_PASS | email password for automated email account
+OAUTH_CLIENT_SECRET | client secret from Google OAuth portal
+OAUTH_CLIENT_ID | client id from Google OAuth portal
+OAUTH_REFRESH_TOKEN | refresh token from Google OAuth portal
+CLOUD_MESSAGING_API | api key for Google Cloud Messaging API (push notifications)
+PUBLIC_VAPID_KEY | public vapid key for push notifications
+PRIVATE_VAPID_KEY | private vapid key for push notifications
+TESTING_PASSWORD | password to be used for testing users in automated tests
+STATS_API_KEY | api key for accessing Siege statistics through the r6stats api
+RSA_PRIVATE_KEY | rsa private key generated using rsa_keygen.js
+RSA_PUBLIC_KEY | rsa public key generated using rsa_keygen.js
+NODE_ENV | project build mode

@@ -67,7 +67,7 @@ const UserSchema = new Schema({
     required: false
   },
   subscription: {
-    type: Schema.Types.Mixed,
+    type: Object,
     required: false
   }
 });
