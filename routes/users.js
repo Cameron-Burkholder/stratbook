@@ -5,8 +5,8 @@ const mongoose = require("mongoose");
 const email = require("../config/email.js");
 
 const { log, verifyPassword, hashPassword, issueJWT, genVerificationLink, notify } = require("../config/utilities.js");
-const { VERIFY_ACCOUNT, USER_NOT_FOUND, INCORRECT_PASSWORD, EXISTING_USER, USER_REGISTERED } = require("../messages.js");
-const { ERROR_LOGIN, ERROR_REGISTER } = require("../errors.js");
+const { INCORRECT_PASSWORD, EXISTING_USER, PERMISSION_DENIED, PLATFORM_UPDATED, USER_NOT_FOUND, USER_REGISTERED, USER_STATUS_UPDATED, USERNAME_UPDATED, VERIFY_ACCOUNT } = require("../messages.js");
+const { ERROR_EMAIL, ERROR_LOGIN, ERROR_PLATFORM, ERROR_REGISTER, ERROR_UPDATE_USER_STATUS, ERROR_USERNAME } = require("../errors.js");
 
 // Load validation
 const validation = require("../validation.js");
@@ -66,7 +66,7 @@ module.exports = async (app, passport) => {
     // Verify user and save
     user.verified = true;
     try {
-      await user.save().exec();
+      await user.save();
     } catch(error) {
       console.log(error);
       return response.redirect("/register");
@@ -211,7 +211,7 @@ module.exports = async (app, passport) => {
     if (hashedPassword) {
       newUser.password = hashedPassword;
       try {
-        await newUser.save().exec();
+        await newUser.save();
       } catch(error) {
         console.log(error);
         return response.json(ERROR_REGISTER);
@@ -226,363 +226,263 @@ module.exports = async (app, passport) => {
       });
 
       try {
-        await newUnverifiedUser.save().exec();
+        await newUnverifiedUser.save();
       } catch(error) {
         console.log(error);
         return response.json(ERROR_REGISTER);
       }
+
+      email(newUser.email, "Account Verification", `<div><h2>Verify your Account</h2><br/><p>Click the link below to verify your Stratbook account.</p><br/><a target="blank" href=${newVerificationLink}>Verify Account</a>`);
 
       response.json(USER_REGISTERED);
       notify(user, USER_REGISTERED);
     }
   });
 
-  /*
-    @route /api/users/update-platform
-    @method PATCH
-
-    @inputs:
-      platform: String
-
-    @outputs:
-      If an error occurs
-        packet: Object (status: ERROR_WHILE_UPDATING_PLATFORM)
-
-      If input is invalid
-        packet: Object (status: INVALID_PLATFORM)
-
-      If user does not exist in database
-        packet: Object (status: USER_NOT_FOUND)
-
-      If user has a team
-        packet: Object (status: USER_HAS_TEAM)
-
-      If user is allowed to update platofmr
-        packet: Object (status: PLATFORM_UPDATED)
+  /**
+  * Update user's platform
+  * @name /api/users/update-platform
+  * @function
+  * @async
+  * @description The user sends a request to update their platform.
+  *   If the input is invalid, this sends an invalid platform object.
+  *   If the user does not exist in database, this returns a user not found object.
+  *   If the user has a team, this returns a user has team object.
+  *   If the user can change their platform, this returns a platform updated object.
+  * @param {string} request.body.platform platform to change to
   */
   app.patch("/api/users/update-platform", (request, response, done) => {
     log("PATCH REQUEST AT /api/users/update-platform");
     done();
-  }, passport.authenticate("jwt", { session: false }), validation.validatePlatformInput, middleware.userIsVerified, middleware.userHasNoTeam, (request, response) => {
+  }, passport.authenticate("jwt", { session: false }), validation.validatePlatformInput, middleware.userIsVerified, middleware.userHasNoTeam, async (request, response) => {
     let packet = {};
-    User.findOne({ _id: request.user._id }).then(user => {
-      user.platform = request.body.platform;
-      user.save().then(() => {
-        packet.status = "PLATFORM_UPDATED";
-        response.json(packet);
-        notify(user, { title: "Platform Changed", body: "The platform associated with your account has changed." });
-        email(user.email, "Platform Changed", "The platform associated with your account has changed. If you did not do this, be sure to change it to the appropriate platform.");
-      }).catch(error => {
-        console.log(error);
-        packet.status = "ERROR";
-        packet.message = "An error occurred while attempting to update platform.";
-        response.json(packet);
-      })
-    }).catch(error => {
+    let user;
+
+    try {
+      user = await User.findOne({ _id: request.user._id }).exec();
+    } catch(error) {
       console.log(error);
-      packet.status = "ERROR";
-      packet.message = "An error occurred while attempting to update platform.";
-      response.json(packet);
-    });
+      return response.json(ERROR_PLATFORM);
+    }
+
+    user.platform = request.body.platform;
+
+    try {
+      await user.save();
+    } catch(error) {
+      console.log(error);
+      return response.json(ERROR_PLATFORM);
+    }
+
+    response.json(PLATFORM_UPDATED);
+    notify(user, PLATFORM_UPDATED);
   });
 
-  /*
-    @route /api/users/update-username
-    @method PATCH
-
-    @inputs:
-      username: String
-
-    @outputs:
-      If an error occurs
-        packet: Object (status: ERROR_WHILE_UPDATING_USERNAME)
-
-      If user does not exist
-        packet: Object (status: USER_NOT_FOUND)
-
-      If user with new name exists
-        packet: Object (status: USERNAME_TAKEN)
-
-      If user is allowed to update username
-        packet: Object (status: USERNAME_UPDATED)
+  /**
+  * Update user's username
+  * @name /api/users/update-username
+  * @function
+  * @async
+  * @description The user sends a request to update their username.
+  *   If the user is not found, this returns a user not found object.
+  *   If the user is allowed to update username, this returns a username updated object.
+  * @param {string} request.body.username the user name to change to
   */
   app.patch("/api/users/update-username", (request, response, done) => {
     log("PATCH REQUEST AT /api/users/update-username");
     done();
-  }, passport.authenticate("jwt", { session: false }), validation.validateUsernameInput, (request, response) => {
-    let packet = {};
-      User.findOne({ username: request.body.username }).then((existing_user) => {
-        if (existing_user) {
-          packet.status = "USERNAME_TAKEN";
-          packet.errors = {
-            username: "A user with that username already exists"
-          }
-          response.json(packet);
-        } else {
-          User.findOne({ _id: request.user._id }).then(user => {
-            user.username = request.body.username;
-            user.save().then(() => {
-              packet.status = "USERNAME_UPDATED";
-              response.json(packet);
-              notify(user, { title: "Username Changed", body: "The username associated with your Stratbook account has been changed." });
-              email(user.email, "Username Changed", "The username associated with your Stratbook account has been changed. If you did not do this, please correct this as it may cause the statistics functions of Stratbook to malfunction.");
-            }).catch(error => {
-              console.log(error);
-              packet.status = "ERROR";
-              packet.message = "An error occurred while attempting to update username.";
-            })
-          }).catch(error => {
-            console.log(error);
-            packet.status = "ERROR";
-            packet.message = "An error occurred while attempting to update username.";
-          })
-        }
-      }).catch(error => {
-        console.log(error);
-        packet.status = "ERROR";
-        packet.message = "An error occurred while attempting to update username.";
-        response.json(packet);
-      });
+  }, passport.authenticate("jwt", { session: false }), validation.validateUsernameInput, async (request, response) => {
+    let user;
+    try {
+      user = await User.findOne({ _id: request.body._id }).exec();
+    } catch(error) {
+      console.log(error);
+      return response.json(ERROR_USERNAME);
+    }
+
+    user.username = request.body.username;
+
+    try {
+      await user.save();
+    } catch(error) {
+      console.log(error);
+      return response.json(ERROR_USERNAME);
+    }
+
+    response.json(USERNAME_UPDATED);
+    notify(user, USERNAME_UPDATED);
   });
 
-  /*
-    @route /api/users/update-email
-    @method PATCH
-
-    @inputs:
-      email: String
-
-    @outputs:
-      If an error occurs
-        packet: Object (status: ERROR_WHILE_UPDATING_EMAIL)
-
-      If email is invalid
-        packet: Object (status: INVALID_EMAIL)
-
-      If email is profane
-        packet: Object (status: PROFANE_INPUT)
-
-      If user is not verified
-        packet: Object (status: USER_NOT_VERIFIED)
-
-      If user is not found
-        packet: Object (status: USER_NOT_FOUND)
-
-      If email is in use
-        packet: Object (status: EMAIL_TAKEN)
-
-      If email is updated successfully
-        packet: Object( status: EMAIL_UPDATED)
+  /**
+  * Update user's email
+  * @name /api/users/update-email
+  * @function
+  * @async
+  * @description The user sends a request to update their email.
+  *   If the email requested is invalid, this returns an invalid email object.
+  *   If the email requested is profane, this returns a profane input object.
+  *   If the email requested is already taken, this returns an email taken object.
+  *   If the email is able to be updated, this returns an email updated object.
+  * @param {string} request.body.email the email to change to
   */
   app.patch("/api/users/update-email", (request, response, done) => {
     log("PATCH REQUEST AT /api/users/update-email");
     done();
-  }, passport.authenticate("jwt", { session: false }), validation.validateEmailInput, middleware.userIsVerified, (request, response) => {
-    let packet = {
-      status: ""
-    };
-    User.findOne({ email: request.user.email }).then((user1) => {
-      if (!user1) {
-        packet.status = "USER_NOT_FOUND";
-        response.json(packet);
-      } else {
-        User.findOne({ email: request.body.email }).then((user2) => {
-          if (user2) {
-            packet.status = "EMAIL_TAKEN";
-            packet.errors = {
-              email: "An account with that email already exists"
-            };
-            response.json(packet);
-          } else {
-            user1.email = request.body.email;
-            user1.save().then(() => {
-              packet.status = "EMAIL_UPDATED";
-              response.json(packet);
-              notify(user, { title: "Email Changed", body: "The email associated with your Stratbook account has been changed." });
-            }).catch(error => {
-              console.log(error);
-              packet.status = "ERROR_WHILE_UPDATING_EMAIL";
-              response.json(packet);
-            });
-          }
-        }).catch(error => {
-          console.log(error);
-          packet.status = "ERROR_WHILE_UPDATING_EMAIL";
-          response.json(packet);
-        });
-      }
-    }).catch(error => {
+  }, passport.authenticate("jwt", { session: false }), validation.validateEmailInput, async (request, response) => {
+    let existing_user;
+    let user;
+
+    try {
+      existing_user = await User.findOne({ email: request.body.email }).exec();
+    } catch(error) {
       console.log(error);
-      packet.status = "ERROR_WHILE_UPDATING_EMAIL";
-      response.json(packet);
-    });
+      return response.json(ERROR_EMAIL);
+    }
+
+    if (existing_user) {
+      let packet = EXISTING_USER;
+      packet.errors = {
+        email: "An account with that email already exists."
+      };
+      return response.json(packet);
+    }
+
+    try {
+      user = await User.findOne({ _id: request.body._id }).exec();
+    } catch(error) {
+      console.log(error);
+      return response.json(ERROR_EMAIL);
+    }
+
+    const old_user = JSON.parse(JSON.stringify(user));
+    user.email = request.body.email;
+
+    try {
+      await user.save();
+    } catch(error) {
+      console.log(error);
+      return response.json(ERROR_EMAIL);
+    }
+
+    if (!user.verified) {
+      let unverified_user;
+      try {
+        unverified_user = await UnverifiedUser.findOne({ user_id: user._id }).exec();
+      } catch(error) {
+        console.log(error);
+        return response.json(ERROR_EMAIL);
+      }
+
+      let host = request.hostname;
+      let newVerificationLink = "http://" + host + "/api/users/verify?verification_id="+ unverified_user.verification_id;
+
+      email(newUser.email, "Account Verification", `<div><h2>Verify your Account</h2><br/><p>Click the link below to verify your Stratbook account.</p><br/><a target="blank" href="${newVerificationLink}">Verify Account</a>`);
+    }
+
+    response.json(EMAIL_UPDATED);
+    notify(user, EMAIL_UPDATED);
+    notify(old_user, EMAIL_UPDATED);
   });
 
-  /*
-    @route /api/users/update-user-status
-    @method PATCH
-
-    @inputs
-      username: String
-      status: String
-
-    @outputs
-      If an error occurs
-        packet: Object (status: ERROR_WHILE_UPDATING_USER_STATUS)
-
-      If input is invalid
-        packet: Object (status: INVALID_STATUS_INPUT)
-
-      If requesting user is not verified
-        packet: Object (status: USER_NOT_VERIFIED)
-
-      If requesting user is not an admin
-        packet: Object (status: USER_NOT_QUALIFIED)
-
-      If requesting user is not found
-        packet: Object (status: USER_NOT_FOUND)
-
-      If requesting user is not on team
-        packet: Object (status: USER_HAS_NO_TEAM)
-
-      If requested user does not exist
-        packet: Object (status: USER_NOT_FOUND)
-
-      If requested user is an admin
-        packet: Object (status: PERMISSION_DENIED)
-
-      If requesting users team is not found
-        packet: Object (status: TEAM_DOES_NOT_EXIST)
-
-      If requested user is not on team
-        packet: Object (status: USER_NOT_QUALIFIED)
-
-      If update has been completed
-        packet: Object (status: USER_STATUS_UPDATED)
+  /**
+  * Update user status
+  * @name /api/users/update-user-status
+  * @function
+  * @async
+  * @description The user sends a request to update the status of a team member.
+  *   If the status input is invalid, this returns an invalid status object.
+  *   If the requesting user is not verified, this returns a user not verified object.
+  *   If the requesting user is not an admin, this returns a permission denied object.
+  *   If the requesting user is not on a team, this returns a user has no team object.
+  *   If the requested user can't be found, this returns a user not found object.
+  *   If the requested user is an admin, this returns a permission denied object.
+  *   If the requested user is not on team, this returns a permission denied object.
+  *   If the udpate is able to be performed, this returns a user status updated object.
+  * @param {string} request.body.username the username of the account to be updated
   */
   app.patch("/api/users/update-user-status", (request, response, done) => {
     log("PATCH REQUEST AT /api/users/update-user-status");
     done();
-  }, passport.authenticate("jwt", { session: false }), validation.validateStatusInput, middleware.userIsVerified, middleware.userIsAdmin, middleware.userHasTeam, (request, response) => {
-    let packet = {
-      status: ""
-    };
-    User.findOne({ username: request.user.username }).then((rUser) => {
-        if (rUser) {
-          User.findOne({ username: request.body.username }).then((user) => {
-            if (user) {
-              if (user.status === "ADMIN") {
-                packet.status = "PERMISSION_DENIED";
-                response.json(packet);
-              } else {
-                Team.findOne({ _id: request.team._id }).then((team) => {
-                  if (team) {
-                    if (team.members.indexOf(String(user._id)) >= 0 || team.editors.indexOf(String(user._id)) >= 0) {
-                      if (team.members.indexOf(String(user._id)) >= 0) {
-                        let index = team.members.indexOf(String(user._id));
-                        team.members.splice(index, 1);
-                      } else {
-                        let index = team.editors.indexOf(String(user._id));
-                        team.editors.splice(index, 1);
-                      }
-                      user.status = request.body.status;
-                      if (request.body.status === "ADMIN") {
-                        team.admins.push(String(user._id));
-                        team.save().then(() => {
-                          user.save().then(() => {
-                            packet.status = "USER_STATUS_UPDATED";
-                            response.json(packet);
-                            notify(user, { title: "Team Status Updated", body: `The status of your membership on the team ${team.name} has been updated to ${user.status}.` });
-                            email(user.email, "Team Status Updated", `The status associated with your membership on the team ${team.name} has been updated to ${user.status}.<br/><br/>This means your responsibilities and privileges related to the team may have changed. Contact a team admin if you think this is a mistake.`);
-                          }).catch(error => {
-                            console.log(error);
-                            packet.status = "ERROR";
-                            packet.message = "An error occurred while attempting to update user status.";
-                            response.json(packet);
-                          });
-                        }).catch(error => {
-                          console.log(error);
-                          packet.status = "ERROR";
-                          packet.message = "An error occurred while attempting to update user status.";
-                          response.json(packet);
-                        });
-                      } else if (request.body.status === "EDITOR") {
-                        team.editors.push(String(user._id));
-                        team.save().then(() => {
-                          user.save().then(() => {
-                            packet.status = "USER_STATUS_UPDATED";
-                            response.json(packet);
-                            notify(user, { title: "Team Status Updated", body: `The status of your membership on the team ${team.name} has been updated to ${user.status}.` });
-                            email(user.email, "Team Status Updated", `The status associated with your membership on the team ${team.name} has been updated to ${user.status}.<br/><br/>This means your responsibilities and privileges related to the team may have changed. Contact a team admin if you think this is a mistake.`);
-                          }).catch(error => {
-                            console.log(error);
-                            packet.status = "ERROR";
-                            packet.message = "An error occurred while attempting to update user status.";
-                            response.json(packet);
-                          });
-                        }).catch(error => {
-                          console.log(error);
-                          packet.status = "ERROR";
-                          packet.message = "An error occurred while attempting to update user status.";
-                          response.json(packet);
-                        });
-                      } else if (request.body.status === "MEMBER") {
-                        team.members.push(String(user._id));
-                        team.save().then(() => {
-                          user.save().then(() => {
-                            packet.status = "USER_STATUS_UPDATED";
-                            response.json(packet);
-                            notify(user, { title: "Team Status Updated", body: `The status of your membership on the team ${team.name} has been updated to ${user.status}.` });
-                            email(user.email, "Team Status Updated", `The status associated with your membership on the team ${team.name} has been updated to ${user.status}.<br/><br/>This means your responsibilities and privileges related to the team may have changed. Contact a team admin if you think this is a mistake.`);
-                          }).catch(error => {
-                            console.log(error);
-                            packet.status = "ERROR";
-                            packet.message = "An error occurred while attempting to update user status.";
-                            response.json(packet);
-                          });
-                        }).catch(error => {
-                          console.log(error);
-                          packet.status = "ERROR";
-                          packet.message = "An error occurred while attempting to update user status.";
-                          response.json(packet);
-                        });
-                      } else {
-                        packet.status = "INVALID_STATUS_INPUT";
-                        packet.errors = {
-                          status: "Status field invalid"
-                        };
-                        response.json(packet);
-                      }
-                    } else {
-                      packet.status = "USER_NOT_QUALIFIED";
-                      response.json(packet);
-                    }
-                  } else {
-                    packet.status = "TEAM_NOT_FOUND";
-                    response.json(packet);
-                  }
-                }).catch(error => {
-                  console.log(error);
-                  packet.status = "ERROR";
-                  packet.message = "An error occurred while attempting to update user status.";
-                  response.json(packet);
-                });
-              }
-            } else {
-              packet.status = "USER_NOT_FOUND";
-              response.json(packet);
-            }
-          }).catch(error => {
-            console.log(error);
-            packet.status = "ERROR";
-            packet.message = "An error occurred while attempting to update user status.";
-            response.json(packet);
-          });
-        } else {
-          packet.status = "USER_NOT_FOUND";
-          response.json(packet);
-        }
-      });
+  }, passport.authenticate("jwt", { session: false }), validation.validateStatusInput, middleware.userIsVerified, middleware.userIsAdmin, middleware.userHasTeam, async (request, response) => {
+
+    let user;
+    let team;
+
+    // Find user to update
+    try {
+      user = await User.findOne({ username: request.body.username }).exec();
+    } catch(error) {
+      console.log(error);
+      return response.json(ERROR_UPDATE_USER_STATUS);
+    }
+
+    // If requested user can't be found
+    if (!user) {
+      return response.json(USER_NOT_FOUND);
+    }
+
+    // If user is an admin
+    if (user.status === "ADMIN") {
+      return response.json(PERMISSION_DENIED);
+    }
+
+    // Find team
+    try {
+      team = await Team.findOne({ _id: request.team._id }).exec();
+    } catch(error) {
+      console.log(error);
+      return response.json(ERROR_UPDATE_USER_STATUS);
+    }
+
+    // Check to see if requested user is on team
+    if (team.members.indexOf(String(user._id)) < 0 && team.editors.indexOf(String(user._id)) < 0) {
+      return response.json(PERMISSION_DENIED);
+    }
+
+    // If user is a member, remove from member list
+    if (team.members.indexOf(String(user._id)) >= 0) {
+      let index = team.members.indexOf(String(user._id));
+      team.members.splice(index, 1);
+    }
+    // If user is an editor, remove from editor list
+    if (team.editors.indexOf(String(user._id)) >= 0) {
+      let index = team.editors.indexOf(String(user._id));
+      team.editors.splice(index, 1);
+    }
+
+    // Update user status
+    user.status = request.body.status;
+
+    // Put user in correct status list
+    if (request.body.status === "ADMIN") {
+      team.admins.push(String(user._id));
+    }
+    if (request.body.status === "EDITOR") {
+      team.editors.push(String(user._id));
+    }
+    if (request.body.status === "MEMBER") {
+      team.members.push(String(user._id));
+    }
+
+    // Save user
+    try {
+      await user.save();
+    } catch(error) {
+      console.log(error);
+      return response.json(ERROR_UPDATE_USER_STATUS);
+    }
+
+    // Save team
+    try {
+      await team.save();
+    } catch(error) {
+      console.log(error);
+      return response.json(ERROR_UPDATE_USER_STATUS);
+    }
+
+
+    response.json(USER_STATUS_UPDATED);
+    notify(user, USER_STATUS_UPDATED);
   });
 
   /*
