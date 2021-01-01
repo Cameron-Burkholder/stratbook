@@ -4,39 +4,20 @@
 * List of messages and error reports used throughout platform
 */
 module.exports = {
-  EMAIL_UPDATED: {
-    status: "Email Updated",
-    body: "Your email has been updated.",
-    email_body: "<div><h2>Your email has been updated</h2><br/><p>The email associated with your Stratbook account has been updated. If you did not do this, login to your Stratbook account and change it back immediately.</p></div>"
+  ATTACKER_ROLE_SET: {
+    status: "Attacker Role Set"
   },
-  PLATFORM_UPDATED: {
-    status: "Platform Updated",
-    body: "Your platform has been updated",
-    email_body: "<div><h2>Your platform has been updated</h2><br/><p>The platform associated with your account has been changed.</p></div>"
+  ATTACKERS_SET: {
+    status: "Attackers Set"
   },
-  USER_REGISTERED: {
-    status: "User Registered",
-    body: "You have created an account with Stratbook.",
-    email_body: "<div><h2>Welcome to Stratbook</h2><br/><p>You have successfully created an account on Stratbook. Check your email for a verification link that will allow you to verify your account. Verifying your account allows you to create or join a team and make strategies.</p></div>"
-  },
-  USER_STATUS_UPDATED: {
-    status: "User Status Updated",
-    body: "Your status on your Stratbook team has been updated.",
-    email_body: "<div><h2>User Status Updated</h2><br/><p>The status of your membership on your Stratbook team has been updated.</p></div>"
-  },
-  USERNAME_UPDATED: {
-    status: "Username Updated",
-    body: "Your username has been updated.",
-    email_body: "<div><h2>Your username has been updated</h2><br/><p>Your username has been updated.</p></div>"
-  },
-  VERIFY_ACCOUNT: {
-    title: "Account Verified",
-    body: "You have verified your Stratbook account.",
-    email_body: "<div><h2>Your Stratbook Account is Verified!</h2><br/><p>Congratulations on successfully verifying your Stratbook account. You can now access the team and strategies features.</p></div>"
-  },
-
   CANNOT_REMOVE_SELF: {
     status: "Cannot Remove Self"
+  },
+  DEFENDER_ROLE_SET: {
+    status: "Defender Role Set"
+  },
+  DEFENDERS_SET: {
+    status: "Defenders Set"
   },
   EXISTING_USER: {
     status: "EXISTING_USER"
@@ -75,6 +56,10 @@ module.exports = {
   INVALID_REGISTRATION: {
     status: "Invalid Registration"
   },
+  INVALID_RESET_TOKEN: {
+    status: "Invalid Reset Token",
+    message: "The reset token provided is invalid or expired."
+  },
   INVALID_PLATFORM: {
     status: "Invalid Platform"
   },
@@ -107,6 +92,12 @@ module.exports = {
   },
   TOKEN_ISSUED: {
     status: "Token Issued"
+  },
+  USER_AND_TEAM_DELETED: {
+    status: "User and Team Deleted"
+  },
+  USER_DELETED: {
+    status: "User Deleted"
   },
   USER_HAS_NO_TEAM: {
     status: "User Has No Team",

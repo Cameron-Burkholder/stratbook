@@ -4,6 +4,10 @@ const chai = require("chai");
 const assert = chai.assert;
 const validation = require("../validation.js");
 
+const messages = require("../messages/messages.js");
+const errors = require("../messages/errors.js");
+const emails = require("../messages/emails.js");
+
 suite("UNIT TESTS", function() {
 
   suite("Login", function() {
@@ -17,7 +21,7 @@ suite("UNIT TESTS", function() {
       let request = {
         body: {}
       }
-      assert.equal(validateLoginInput(request, response, done).status, "INVALID_LOGIN", "Response should be invalid if email field is not provided in request.");
+      assert.equal(validateLoginInput(request, response, done).status, messages.INVALID_LOGIN.status, "Response should be invalid if email field is not provided in request.");
       assert.equal(validateLoginInput(request, response, done).errors.email, "Email field is required", "Errors should list email as required if not provided in request.");
     });
     test("# Email field is empty", function() {

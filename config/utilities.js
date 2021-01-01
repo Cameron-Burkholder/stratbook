@@ -36,13 +36,13 @@ const PRIV_KEY = process.env.RSA_PRIVATE_KEY.replace(/\\n/g, "\n");
 exports.notify = async function(user, message) {
   if (user.subscription) {
     try {
-      await webpush.sendNotification(user.subscription, JSON.stringify({ title: message.title, body: message.body }));
+      await webpush.sendNotification(user.subscription, JSON.stringify({ title: message.status, body: message.body }));
     } catch(error) {
       console.log(error);
     }
   }
 
-  email(user.email, message.title, message.email_body);
+  email(user.email, message.status, message.email_body);
 }
 
 /**

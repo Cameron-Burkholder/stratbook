@@ -1,6 +1,30 @@
 /* errors.js */
 
 module.exports = {
+  ERROR_ATTACKERS: {
+    status: "ERROR",
+    message: "An error occurred while attempting to set attackers."
+  },
+  ERROR_ATTACKER_ROLE: {
+    status: "ERROR",
+    message: "An error occurred while attempting to set attacker role."
+  },
+  ERROR_DEFENDERS: {
+    status: "ERROR",
+    message: "An error occurred while attempting to set defenders."
+  },
+  ERROR_DEFENDER_ROLE: {
+    status: "ERROR",
+    message: "An error occurred while attempting to set defender role."
+  },
+  ERROR_DELETE_TEAM_AND_USER: {
+    status: "ERROR",
+    message: "An error occurred while attempting to delete user and associated team."
+  },
+  ERROR_DELETE_USER: {
+    status: "ERROR",
+    message: "An error occurred while attempting to delete user."
+  },
   ERROR_EMAIL: {
     status: "ERROR",
     message: "An error occurred while attempting to update email."
@@ -21,9 +45,17 @@ module.exports = {
     status: "ERROR",
     message: "An error occurred while attempting to register."
   },
+  ERROR_RESET_PASSWORD: {
+    status: "ERROR",
+    message: "An error occurred while attempting to reset password."
+  },
   ERROR_TEAM: {
     status: "ERROR",
     message: "An error occurred while attempting to find the requested team."
+  },
+  ERROR_UPDATE_PASSWORD: {
+    status: "ERROR",
+    message: "An error occurred while attempting to update password."
   },
   ERROR_UPDATE_USER_STATUS: {
     status: "ERROR",

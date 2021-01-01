@@ -5,8 +5,9 @@ const mongoose = require("mongoose");
 const email = require("../config/email.js");
 
 const { log, verifyPassword, hashPassword, issueJWT, genVerificationLink, notify } = require("../config/utilities.js");
-const { INCORRECT_PASSWORD, EXISTING_USER, PASSWORD_RESET_LINK_SENT, PERMISSION_DENIED, PLATFORM_UPDATED, USER_NOT_FOUND, USER_REGISTERED, USER_STATUS_UPDATED, USERNAME_UPDATED, VERIFY_ACCOUNT } = require("../messages.js");
-const { ERROR_EMAIL, ERROR_FORGOT_PASSWORD, ERROR_LOGIN, ERROR_PLATFORM, ERROR_REGISTER, ERROR_UPDATE_USER_STATUS, ERROR_USERNAME } = require("../errors.js");
+const messages = require("../messages/messages.js");
+const emails = require("../messages/emails.js");
+const errors = require("../messages/errors.js");
 
 // Load validation
 const validation = require("../validation.js");
@@ -30,7 +31,6 @@ module.exports = async (app, passport) => {
   /**
   * Verify a user's email
   * @name /api/users/verify
-  * @method GET
   * @function
   * @async
   * @description The user makes a request to this url with a query string specifying which user is attempting to verify their account.
@@ -81,7 +81,7 @@ module.exports = async (app, passport) => {
     }
 
     // Notify user their account has been verified and redirect to login page
-    notify(user, VERIFY_ACCOUNT);
+    notify(user, emails.VERIFY_ACCOUNT);
     response.redirect("/login");
 
   });
@@ -109,11 +109,11 @@ module.exports = async (app, passport) => {
       user = await User.findOne({ email: request.body.email.toLowerCase() }).exec();
     } catch(error) {
       console.log(error);
-      return response.json(ERROR_LOGIN);
+      return response.json(errors.ERROR_LOGIN);
     }
 
     if (!user) {
-      return response.json(USER_NOT_FOUND);
+      return response.json(messages.USER_NOT_FOUND);
     }
 
     const isValidPassword = verifyPassword(request.body.password, user.password);
@@ -121,13 +121,13 @@ module.exports = async (app, passport) => {
       const tokenObject = issueJWT(user);
       user.password = undefined;
       user._id = undefined;
-      let packet = TOKEN_ISSUED;
+      let packet = messages.TOKEN_ISSUED;
       packet.user = user;
       packet.token = tokenObject.token;
       packet.expiresIn = tokenObject.expires;
       return response.json(packet);
     } else {
-      return response.json(INCORRECT_PASSWORD);
+      return response.json(messages.INCORRECT_PASSWORD);
     }
 
   });
@@ -148,7 +148,7 @@ module.exports = async (app, passport) => {
     const tokenObject = issueJWT(request.user);
     request.user.password = undefined;
     request.user._id = undefined;
-    packet.status = "TOKEN_UPDATED";
+    packet = messages.TOKEN_ISSUED;
     packet.user = request.user;
     packet.token = tokenObject.token;
     packet.expiresIn = tokenObject.expires;
@@ -181,11 +181,11 @@ module.exports = async (app, passport) => {
       user = await User.findOne({ email: request.body.email }).exec();
     } catch(error) {
       console.log(error);
-      return response.json(ERROR_REGISTER);
+      return response.json(errors.ERROR_REGISTER);
     }
 
     if (user) {
-      packet = EXISTING_USER;
+      packet = messages.EXISTING_USER;
       packet.errors = {
         email: "An account with that email already exists."
       };
@@ -214,7 +214,7 @@ module.exports = async (app, passport) => {
         await newUser.save();
       } catch(error) {
         console.log(error);
-        return response.json(ERROR_REGISTER);
+        return response.json(errors.ERROR_REGISTER);
       }
 
       let host = request.hostname;
@@ -229,13 +229,13 @@ module.exports = async (app, passport) => {
         await newUnverifiedUser.save();
       } catch(error) {
         console.log(error);
-        return response.json(ERROR_REGISTER);
+        return response.json(errors.ERROR_REGISTER);
       }
 
       email(newUser.email, "Account Verification", `<div><h2>Verify your Account</h2><br/><p>Click the link below to verify your Stratbook account.</p><br/><a target="blank" href=${newVerificationLink}>Verify Account</a>`);
 
-      response.json(USER_REGISTERED);
-      notify(user, USER_REGISTERED);
+      response.json(emails.USER_REGISTERED);
+      notify(user, emails.USER_REGISTERED);
     }
   });
 
@@ -262,7 +262,7 @@ module.exports = async (app, passport) => {
       user = await User.findOne({ _id: request.user._id }).exec();
     } catch(error) {
       console.log(error);
-      return response.json(ERROR_PLATFORM);
+      return response.json(errors.ERROR_PLATFORM);
     }
 
     user.platform = request.body.platform;
@@ -271,11 +271,11 @@ module.exports = async (app, passport) => {
       await user.save();
     } catch(error) {
       console.log(error);
-      return response.json(ERROR_PLATFORM);
+      return response.json(errors.ERROR_PLATFORM);
     }
 
-    response.json(PLATFORM_UPDATED);
-    notify(user, PLATFORM_UPDATED);
+    response.json(emails.PLATFORM_UPDATED);
+    notify(user, emails.PLATFORM_UPDATED);
   });
 
   /**
@@ -297,7 +297,7 @@ module.exports = async (app, passport) => {
       user = await User.findOne({ _id: request.body._id }).exec();
     } catch(error) {
       console.log(error);
-      return response.json(ERROR_USERNAME);
+      return response.json(errors.ERROR_USERNAME);
     }
 
     user.username = request.body.username;
@@ -306,11 +306,11 @@ module.exports = async (app, passport) => {
       await user.save();
     } catch(error) {
       console.log(error);
-      return response.json(ERROR_USERNAME);
+      return response.json(errors.ERROR_USERNAME);
     }
 
-    response.json(USERNAME_UPDATED);
-    notify(user, USERNAME_UPDATED);
+    response.json(emails.USERNAME_UPDATED);
+    notify(user, emails.USERNAME_UPDATED);
   });
 
   /**
@@ -336,11 +336,11 @@ module.exports = async (app, passport) => {
       existing_user = await User.findOne({ email: request.body.email }).exec();
     } catch(error) {
       console.log(error);
-      return response.json(ERROR_EMAIL);
+      return response.json(errors.ERROR_EMAIL);
     }
 
     if (existing_user) {
-      let packet = EXISTING_USER;
+      let packet = messages.EXISTING_USER;
       packet.errors = {
         email: "An account with that email already exists."
       };
@@ -351,7 +351,7 @@ module.exports = async (app, passport) => {
       user = await User.findOne({ _id: request.body._id }).exec();
     } catch(error) {
       console.log(error);
-      return response.json(ERROR_EMAIL);
+      return response.json(errors.ERROR_EMAIL);
     }
 
     const old_user = JSON.parse(JSON.stringify(user));
@@ -361,7 +361,7 @@ module.exports = async (app, passport) => {
       await user.save();
     } catch(error) {
       console.log(error);
-      return response.json(ERROR_EMAIL);
+      return response.json(errors.ERROR_EMAIL);
     }
 
     if (!user.verified) {
@@ -370,7 +370,7 @@ module.exports = async (app, passport) => {
         unverified_user = await UnverifiedUser.findOne({ user_id: user._id }).exec();
       } catch(error) {
         console.log(error);
-        return response.json(ERROR_EMAIL);
+        return response.json(errors.ERROR_EMAIL);
       }
 
       let host = request.hostname;
@@ -379,9 +379,9 @@ module.exports = async (app, passport) => {
       email(newUser.email, "Account Verification", `<div><h2>Verify your Account</h2><br/><p>Click the link below to verify your Stratbook account.</p><br/><a target="blank" href="${newVerificationLink}">Verify Account</a>`);
     }
 
-    response.json(EMAIL_UPDATED);
-    notify(user, EMAIL_UPDATED);
-    notify(old_user, EMAIL_UPDATED);
+    response.json(emails.EMAIL_UPDATED);
+    notify(user, emails.EMAIL_UPDATED);
+    notify(old_user, emails.EMAIL_UPDATED);
   });
 
   /**
@@ -413,17 +413,17 @@ module.exports = async (app, passport) => {
       user = await User.findOne({ username: request.body.username }).exec();
     } catch(error) {
       console.log(error);
-      return response.json(ERROR_UPDATE_USER_STATUS);
+      return response.json(errors.ERROR_UPDATE_USER_STATUS);
     }
 
     // If requested user can't be found
     if (!user) {
-      return response.json(USER_NOT_FOUND);
+      return response.json(messages.USER_NOT_FOUND);
     }
 
     // If user is an admin
     if (user.status === "ADMIN") {
-      return response.json(PERMISSION_DENIED);
+      return response.json(messages.PERMISSION_DENIED);
     }
 
     // Find team
@@ -431,12 +431,12 @@ module.exports = async (app, passport) => {
       team = await Team.findOne({ _id: request.team._id }).exec();
     } catch(error) {
       console.log(error);
-      return response.json(ERROR_UPDATE_USER_STATUS);
+      return response.json(errors.ERROR_UPDATE_USER_STATUS);
     }
 
     // Check to see if requested user is on team
     if (team.members.indexOf(String(user._id)) < 0 && team.editors.indexOf(String(user._id)) < 0) {
-      return response.json(PERMISSION_DENIED);
+      return response.json(messages.PERMISSION_DENIED);
     }
 
     // If user is a member, remove from member list
@@ -469,7 +469,7 @@ module.exports = async (app, passport) => {
       await user.save();
     } catch(error) {
       console.log(error);
-      return response.json(ERROR_UPDATE_USER_STATUS);
+      return response.json(errors.ERROR_UPDATE_USER_STATUS);
     }
 
     // Save team
@@ -477,38 +477,14 @@ module.exports = async (app, passport) => {
       await team.save();
     } catch(error) {
       console.log(error);
-      return response.json(ERROR_UPDATE_USER_STATUS);
+      return response.json(errors.ERROR_UPDATE_USER_STATUS);
     }
 
 
-    response.json(USER_STATUS_UPDATED);
-    notify(user, USER_STATUS_UPDATED);
+    response.json(emails.USER_STATUS_UPDATED);
+    notify(user, emails.USER_STATUS_UPDATED);
   });
 
-  /*
-    @route /api/users/forgot-password
-    @method PATCH
-
-    @inputs
-      email: String
-
-    @outputs
-      If an error occurs
-        packet: Object (status: ERROR_WHILE_GETTING_USER)
-
-      If input is invalid
-        packet: Object (status: INVALID_EMAIL)
-
-      If input is profane
-        packet: Object (status: PROFANE_INPUT)
-
-      If user is not found
-        packet: Object (status: USER_NOT_FOUND)
-
-      If reset link has been generated
-        packet: Object(status: PASSWORD_RESET_LINK_SENT)
-
-  */
   /**
   * Send reset password link
   * @name /api/users/forgot-password
@@ -530,11 +506,11 @@ module.exports = async (app, passport) => {
       user = await User.findOne({ email: request.body.email }).exec();
     } catch(error) {
       console.log(error);
-      return response.json(ERROR_FORGOT_PASSWORD);
+      return response.json(errors.ERROR_FORGOT_PASSWORD);
     }
 
     if (!user) {
-      return response.json(USER_NOT_FOUND);
+      return response.json(messages.USER_NOT_FOUND);
     }
 
     const reset_token = genVerificationLink();
@@ -547,312 +523,241 @@ module.exports = async (app, passport) => {
       await user.save();
     } catch(error) {
       console.log(error);
-      return response.json(ERROR_FORGOT_PASSWORD);
+      return response.json(errors.ERROR_FORGOT_PASSWORD);
     }
 
-    response.json(PASSWORD_RESET_LINK_SENT);
+    response.json(messages.PASSWORD_RESET_LINK_SENT);
     email(user.email, "Password Reset", "<div><h2>Reset your password</h2><br/><p>You are receiving this because you have requested to reset the password for your Stratbook account. To complete the process, click on the following link and follow the provided instructions. If you did not request this, consider changing the email associated with your account in addition to your Stratbook password.</p><br/><br/><a href='" + resetLink + "' target='_blank'>Reset Password</a>");
   });
 
-  /*
-    @route /api/users/reset-password
-    @method PATCH
-
-    @inputs:
-      password1: String
-      password2: String
-      token: String
-
-    @outputs:
-      If an error occurs
-        packet: Object (status: ERROR_WHILE_RESETTING_PASSWORD)
-
-      If input is invalid
-        packet: Object (status: INVALID_PASSWORD_INPUT)
-
-      If token is not found
-        packet: Object (status: INVALID_RESET_TOKEN)
-
-      If token is expired
-        packet: Object (status: RESET_TOKEN_EXPIRED)
-
-      If password is reset
-        packet: Object (status: PASSWORD_RESET)
-
+  /**
+  * Reset user's password
+  * @name /api/users/reset-password
+  * @function
+  * @async
+  * @description The user submits a request to reset their password.
+  *   If the password input is invalid, this returns an invalid password input object.
+  *   If the token is not matched to a user, invalid, or expired, this returns an invalid reset token object.
+  *   If the password is reset, this returns a password reset object.
+  * @param {string} request.body.token the reset token to match to a user
+  * @param {string} request.body.pasword1 the input field for password 1
+  * @param {string} request.body.password2 the input field for password 2
   */
   app.patch("/api/users/reset-password", (request, response, done) => {
     log("PATCH REQUEST AT /api/users/reset-password");
     done();
-  }, validation.validatePasswordInput, (request, response) => {
-    let packet = {
-      status: ""
-    };
+  }, validation.validatePasswordInput, async (request, response) => {
+    let user;
     const reset_token = request.body.token;
     if (reset_token || reset_token !== "") {
-      User.findOne({ reset_token: reset_token }).then((user) => {
-        if (user) {
-          if (Date.now() > new Date(user.reset_expiry)) {
-            packet.status = "RESET_TOKEN_EXPIRED";
-            response.json(packet);
-          } else {
-            const hash = hashPassword(request.body.password1);
-            user.password = hash;
-            user.reset_token = undefined;
-            user.reset_expiry = undefined;
-            user.save().then(() => {
-              packet.status = "PASSWORD_RESET";
-              response.json(packet);
-              notify(user, { title: "Password Reset", body: "Your password has been reset. If you did not do this, login and reset your password immediately." });
-              email(user.email, "Your password has been reset", "<p>Your password has been reset. If you did not do this, reset your password immediately.</p>");
-            }).catch(error => {
-              console.log(error);
-              packet.status = "ERROR";
-              packet.message = "An error occurred while resetting the user's password.";
-              response.json(packet);
-            });
-          }
-        } else {
-          packet.status = "INVALID_RESET_TOKEN";
-          response.json(packet);
-        }
-      }).catch(error => {
+      try {
+        user = await User.findOne({ reset_token: reset_token }).exec();
+      } catch(error) {
         console.log(error);
-        packet.status = "ERROR";
-        packet.message = "An error occurred while resetting the user's password.";
-        response.json(packet);
-      });
-    } else {
-      packet.status = "INVALID_RESET_TOKEN";
-      response.json(packet);
-    }
+        return response.json(errors.ERROR_RESET_PASSWORD);
+      }
 
+      if (user) {
+        if (Date.now() < new Date(user.reset_expiry)) {
+          return response.json(messages.INVALID_RESET_TOKEN);
+        } else {
+          const hash = hashPassword(request.body.password1);
+          user.password = hash;
+          user.reset_token = undefined;
+          user.reset_expiry = undefined;
+
+          try {
+            await user.save();
+          } catch(error) {
+            console.log(error);
+            return response.json(errors.ERROR_RESET_PASSWORD);
+          }
+
+          response.json(emails.PASSWORD_RESET);
+          notify(user, emails.PASSWORD_RESET);
+        }
+      } else {
+        return response.json(messages.INVALID_RESET_TOKEN);
+      }
+    } else {
+      return response.json(messages.INVALID_RESET_TOKEN);
+    }
   });
 
-  /*
-    @route /api/users/update-password
-    @method PATCH
-
-    @inputs:
-      password1: String
-      password2: String
-
-    @outputs:
-      If there is an error
-        packet: Object (status: ERROR_WHILE_UPDATING_PASSWORD)
-
-      If user is not found
-        packet: Object (status: USER_NOT_FOUND)
-
-      If password has been updated
-        packet: Object (status: PASSWORD_UPDATED)
-
+  /**
+  * Update user's password
+  * @name /api/users/update-password
+  * @function
+  * @async
+  * @description The user submits a request to update their password.
+  *   If the user is able to update their password, this returns a password updated object.
+  * @param {string} password1 the password 1 input field
+  * @param {string} password2 the password 2 input field
   */
   app.patch("/api/users/update-password", (request, response, done) => {
     log("PATCH REQUEST AT /api/users/update-password");
     done();
-  }, passport.authenticate("jwt", { session: false }), validation.validatePasswordInput, (request, response) => {
-    let packet = {
-      status: ""
-    };
-    User.findOne({ username: request.user.username }).then((user) => {
-      user.password = hashPassword(request.body.password1);
-      user.save().then(() => {
-        packet.status = "PASSWORD_UPDATED";
-        response.json(packet);
-        notify(user, { title: "Password Updated", body: "The password associated with your Stratbook account has been udpated." });
-        email(user.email, "Password Updated", `The password associated with your account has been updated. If you did not do this, <a href=${request.protocol + "://" + request.get("host") + request.originalUrl + "/forgot-password"} target="_blank">click here</a> to reset it.`);
-      }).catch(error => {
-        console.log(error);
-        packet.status = "ERROR";
-        packet.message = "An error occurred while updating password.";
-        response.json(packet);
-      });
-    }).catch(error => {
+  }, passport.authenticate("jwt", { session: false }), validation.validatePasswordInput, async (request, response) => {
+
+    let user;
+    try {
+      user = await User.findOne({ username: request.user.username }).exec();
+    } catch(error) {
       console.log(error);
-      packet.status = "ERROR";
-      packet.message = "An error occurred while updating password.";
-      response.json(packet);
-    })
+      return response.json(errors.ERROR_UPDATE_PASSWORD);
+    }
+
+    user.password = hashPassword(request.body.password1);
+
+    try {
+      await user.save();
+    } catch(error) {
+      console.log(error);
+      return response.json(errors.ERROR_UPDATE_PASSWORD);
+    }
+
+    response.json(PASSWORD_UPDATED);
+    notify(user, emails.PASSWORD_UPDATED);
   });
 
-  /*
-    @route /api/users/set-attacker-role
-    @method PATCH
-
-    @inputs:
-      role: String
-
-    @outputs:
-      If there is an error
-        packet: Object (status: ERROR_WHILE_SETTING_ATTACKER_ROLE)
-
-      If input is invalid
-        packet: Object (status: INVALID_ATTACKER_ROLE)
-
-      If user is not found
-        packet: Object (status: USER_NOT_FOUND)
-
-      If attacker role has been updated
-        packet: Object (status: ATTACKER_ROLE_SET)
+  /**
+  * Update user's attacker role
+  * @name /api/users/set-attacker-role
+  * @function
+  * @async
+  * @description The user submits a request to set their attacker role.
+  *   If the input data is invalid, this returns an invalid attacker role object.
+  *   If the attacker role can be set, this returns an attacker role set object.
+  * @param {string} request.body.role the attacker role to change to
   */
   app.patch("/api/users/set-attacker-role", (request, response, done) => {
     log("PATCH REQUEST AT /api/users/set-attacker-role");
     done();
-  }, passport.authenticate("jwt", { session: false }), validation.validateAttackerRole, (request, response) => {
-    let packet = {
-      status: ""
-    };
-    User.findOne({ username: request.user.username }).then((user) => {
-      user.attacker_role = request.body.role;
-      user.save().then(() => {
-        packet.status = "ATTACKER_ROLE_SET";
-        response.json(packet);
-      }).catch(error => {
-        console.log(error);
-        packet.status = "ERROR";
-        packet.message = "An error occurred while attempting to set user's attacker role.";
-        response.json(packet);
-      })
-    }).catch(error => {
+  }, passport.authenticate("jwt", { session: false }), validation.validateAttackerRole, async (request, response) => {
+    let user;
+
+    try {
+      user = await User.findOne({ _id: request.user._id }).exec();
+    } catch(error) {
       console.log(error);
-      packet.status = "ERROR";
-      packet.message = "An error occurred while attempting to set user's attacker role.";
-      response.json(packet);
-    });
+      return response.json(errors.ERROR_ATTACKER_ROLE);
+    }
+
+    user.attacker_role = request.body.role;
+
+    try {
+      await user.save();
+    } catch(error) {
+      console.log(error);
+      return response.json(errors.ERROR_ATTACKER_ROLE);
+    }
+
+    response.json(messages.ATTACKER_ROLE_SET);
   });
 
-  /*
-    @route /api/users/set-defender-role
-    @method PATCH
-
-    @inputs:
-      role: String
-
-    @outputs:
-      If there is an error
-        packet: Object (status: ERROR_WHILE_SETTING_DEFENDER_ROLE)
-
-      If input is invalid
-        packet: Object (status: INVALID_DEFENDER_ROLE)
-
-      If user is not found
-        packet: Object (status: USER_NOT_FOUND)
-
-      If defender role has been updated
-        packet: Object (status: DEFENDER_ROLE_SET)
+  /**
+  * Update user's defender role
+  * @name /api/users/set-defender-role
+  * @function
+  * @async
+  * @description The user submits a request to set their defender role.
+  *   If the input data is invalid, this returns an invalid defender role object.
+  *   If the defender role can be set, this returns an defender role set object.
+  * @param {string} request.body.role the defender role to change to
   */
   app.patch("/api/users/set-defender-role", (request, response, done) => {
     log("PATCH REQUEST AT /api/users/set-defender-role");
     done();
-  }, passport.authenticate("jwt", { session: false }), validation.validateDefenderRole, (request, response) => {
-    let packet = {
-      status: ""
-    };
-    User.findOne({ username: request.user.username }).then((user) => {
-      user.defender_role = request.body.role;
-      user.save().then(() => {
-        packet.status = "DEFENDER_ROLE_SET";
-        response.json(packet);
-      }).catch(error => {
-        console.log(error);
-        packet.status = "ERROR";
-        packet.message = "An error occurred while setting user's defender role.";
-        response.json(packet);
-      })
-    }).catch(error => {
+  }, passport.authenticate("jwt", { session: false }), validation.validateDefenderRole, async (request, response) => {
+    let user;
+
+    try {
+      user = await User.findOne({ _id: request.user._id }).exec();
+    } catch(error) {
       console.log(error);
-      packet.status = "ERROR";
-      packet.message = "An error occurred while setting user's defender role.";
-      response.json(packet);
-    });
+      return response.json(errors.ERROR_DEFENDER_ROLE);
+    }
+
+    user.defender_role = request.body.role;
+
+    try {
+      await user.save();
+    } catch(error) {
+      console.log(error);
+      return response.json(errors.ERROR_DEFENDER_ROLE);
+    }
+
+    response.json(messages.DEFENDER_ROLE_SET);
   });
 
-  /*
-    @route /api/users/set-attackers
-    @method PATCH
-
-    @inputs
-      attackers: Array
-
-    @outputs
-      If there is an error
-        packet: Object (status: ERROR_WHILE_SETTING_ATTACKERS)
-
-      If input is invalid
-        packet: Object (status: INVALID_ATTACKERS)
-
-      If user is not found
-        packet: Object (status: USER_NOT_FOUND)
-
-      If attackers are set
-        packet: Object (status: ATTACKERS_SET)
+  /**
+  * Update user's attackers
+  * @name /api/users/set-attackers
+  * @function
+  * @async
+  * @description The user submits a request to update their attackers.
+  *   If the input is invalid, this returns an invalid attackers object.
+  *   If the attackers are able to be set, this returns an attackers set object.
+  * @param {[String]} request.body.attackers the array of attackers to set to
   */
   app.patch("/api/users/set-attackers", (request, response, done) => {
     log("PATCH REQUEST AT /api/users/set-attackers");
     done();
-  }, passport.authenticate("jwt", { session: false }), validation.validateAttackersInput, (request, response) => {
-    let packet = {
-      status: ""
-    };
-    User.findOne({ username: request.user.username }).then((user) => {
-      user.attackers = request.body.attackers;
-      user.save().then(() => {
-        packet.status = "ATTACKERS_SET";
-        response.json(packet);
-      }).catch(error => {
-        console.log(error);
-        packet.status = "ERROR";
-        packet.message = "An error occurred while attempting to set user's preferred attackers.";
-        response.json(packet);
-      });
-    }).catch(error => {
+  }, passport.authenticate("jwt", { session: false }), validation.validateAttackersInput, async (request, response) => {
+    let user;
+
+    try {
+      user = await User.findOne({ _id: request.user._id }).exec();
+    } catch(error) {
       console.log(error);
-      packet.status = "ERROR";
-      packet.message = "An error occurred while attempting to set user's preferred attackers.";
-      response.json(packet);
-    });
+      return response.json(errors.ERROR_ATTACKERS);
+    }
+
+    user.attackers = request.body.attackers;
+
+    try {
+      await user.save();
+    } catch(error) {
+      console.log(error);
+      return response.json(errors.ERROR_ATTACKERS);
+    }
+
+    response.json(messages.ATTACKERS_SET);
   });
 
-  /*
-    @route /api/users/set-defenders
-    @method PATCH
-
-    @inputs
-      attackers: Array
-
-    @outputs
-      If there is an error
-        packet: Object (status: ERROR_WHILE_SETTING_DEFENDERS)
-
-      If user is not found
-        packet: Object (status: USER_NOT_FOUND)
-
-      I
+  /**
+  * Update user's defenders
+  * @name /api/users/set-defenders
+  * @function
+  * @async
+  * @description The user submits a request to update their defenders.
+  *   If the input is invalid, this returns an invalid defenders object.
+  *   If the defenders are able to be set, this returns a defenders set object.
+  * @param {[String]} request.body.defenders the array of defenders to set to
   */
   app.patch("/api/users/set-defenders", (request, response, done) => {
     log("PATCH REQUEST AT /api/users/set-defenders");
     done();
-  }, passport.authenticate("jwt", { session: false }), validation.validateDefendersInput, (request, response) => {
-    let packet = {
-      status: ""
-    };
-    User.findOne({ username: request.user.username }).then((user) => {
-      user.defenders = request.body.defenders;
-      user.save().then(() => {
-        packet.status = "DEFENDERS_SET";
-        response.json(packet);
-      }).catch(error => {
-        console.log(error);
-        packet.status = "ERROR";
-        packet.message = "An error occurred while attempting to set user's defender role.";
-        response.json(packet);
-      });
-    }).catch(error => {
+  }, passport.authenticate("jwt", { session: false }), validation.validateDefendersInput, async (request, response) => {
+    let user;
+
+    try {
+      user = await User.findOne({ _id: request.user._id }).exec();
+    } catch(error) {
       console.log(error);
-      packet.status = "ERROR";
-      packet.message = "An error occurred while attempting to set user's defender role.";
-      response.json(packet);
-    });
+      return response.json(errors.ERROR_DEFENDERS);
+    }
+
+    user.defenders = request.body.defenders;
+
+    try {
+      await user.save();
+    } catch(error) {
+      console.log(error);
+      return response.json(errors.ERROR_DEFENDERS);
+    }
+
+    response.json(messages.DEFENDERS_SET);
   });
 
   /*
@@ -869,113 +774,87 @@ module.exports = async (app, passport) => {
     If user is deleted (even on a team)
       packet: Object (status: USER_DELETED)
   */
+  /**
+  * Delete user
+  * @name /api/users/delete
+  * @function
+  * @async
+  * @description The user submits a request to delete account.
+  *   If the user is the only person on a team, this returns a user and team deleted object.
+  *   If the user is deleted, this returns a user deleted object.
+  */
   app.delete("/api/users/delete", (request, response, done) => {
     log("DELETE REQUEST AT /api/users/delete");
     done();
-  }, passport.authenticate("jwt", { session: false }), (request, response) => {
-    let packet = {
-      status: ""
-    };
+  }, passport.authenticate("jwt", { session: false }), async (request, response) => {
+    let user;
+    let team;
+
     if (request.user.team_code) {
-      Team.findOne({ join_code: request.user.team_code }).then((team, error) => {
-        if (team.members.length === 1 && team.members[0] === String(request.user._id) && team.admins.length === 0 && team.editors.length === 0) {
-          Team.deleteOne({ join_code: request.user.team_code }).then(() => {
-            User.deleteOne({ _id: mongoose.Types.ObjectId(request.user._id) }).then(() => {
-              packet.status = "USER_AND_TEAM_DELETED";
-              response.json(packet);
-              email(request.user.email, "Account Deleted", "<h2>Your account has succesfully been deleted.</h2><br/><br/><p>Thank you for using R6 Stratbook. While we are sad to see you go, your data has been removed from our databases. If you wish to use the platform again, you will have to create a new account.<br/><br/>Thanks.</p>");
-            }).catch(error => {
-              console.log(error);
-              packet.status = "ERROR_WHILE_DELETING_USER";
-              response.json(packet);
-            });
-          }).catch(error => {
-            console.log(error);
-            packet.status = "ERROR";
-            packet.message = "An error occurred while attempting to delete user's account.";
-            response.json(packet);
-          })
-        } else if (team.editors.length === 1 && team.editors[0] === String(request.user._id) && team.members.length === 0 && team.admins.length === 0) {
-          Team.deleteOne({ join_code: request.user.team_code }).then(() => {
-            User.deleteOne({ _id: mongoose.Types.ObjectId(request.user._id) }).then(() => {
-              packet.status = "USER_AND_TEAM_DELETED";
-              response.json(packet);
-              email(request.user.email, "Account Deleted", "<h2>Your account has succesfully been deleted.</h2><br/><br/><p>Thank you for using R6 Stratbook. While we are sad to see you go, your data has been removed from our databases. If you wish to use the platform again, you will have to create a new account.<br/><br/>Thanks.</p>");
-            }).catch(error => {
-              console.log(error);
-              packet.status = "ERROR";
-              packet.message = "An error occurred while attempting to delete user's account.";
-              response.json(packet);
-            });
-          }).catch(error => {
-            console.log(error);
-            packet.status = "ERROR";
-            packet.message = "An error occurred while attempting to delete user's account.";
-            response.json(packet);
-          })
-        } else if (team.admins.length === 1 && team.admins.indexOf(String(request.user._id)) >= 0) {
-          Team.deleteOne({ join_code: request.user.team_code }).then(() => {
-            User.deleteOne({ _id: mongoose.Types.ObjectId(request.user._id) }).then(() => {
-              packet.status = "USER_AND_TEAM_DELETED";
-              response.json(packet);
-              email(request.user.email, "Account Deleted", "<h2>Your account has succesfully been deleted.</h2><br/><br/><p>Thank you for using R6 Stratbook. While we are sad to see you go, your data has been removed from our databases. If you wish to use the platform again, you will have to create a new account.<br/><br/>Thanks.</p>");
-            }).catch(error => {
-              console.log(error);
-              packet.status = "ERROR";
-              packet.message = "An error occurred while attempting to delete user's account.";
-              response.json(packet);
-            });
-          }).catch(error => {
-            console.log(error);
-            packet.status = "ERROR";
-            packet.message = "An error occurred while attempting to delete user's account.";
-            response.json(packet);
-          })
-        } else {
-          if (team.members.indexOf(String(request.user._id)) >= 0) {
-            let index = team.members.indexOf(String(request.user._id));
-            team.members = team.members.splice(index, 1);
-          } else if (team.editors.indexOf(String(request.user._id)) >= 0) {
-            let index = team.editors.indexOf(String(request.user._id));
-            team.editors = team.editors.splice(index, 1);
-          } else if (team.admins.indexOf(String(request.user._id)) >= 0) {
-            let index = team.admins.indexOf(String(request.user._id));
-            team.admins = team.admins.splice(index, 1);
-          }
-          team.save().then(() => {
-            User.deleteOne({ _id: mongoose.Types.ObjectId(request.user._id) }).then(() => {
-              packet.status = "USER_DELETED";
-              response.json(packet);
-              email(request.user.email, "Account Deleted", "<h2>Your account has succesfully been deleted.</h2><br/><br/><p>Thank you for using R6 Stratbook. While we are sad to see you go, your data has been removed from our databases. If you wish to use the platform again, you will have to create a new account.<br/><br/>Thanks.</p>");
-            }).catch(error => {
-              console.log(error);
-              packet.status = "ERROR";
-              packet.message = "An error occurred while attempting to delete user's account.";
-              response.json(packet);
-            });
-          }).catch(error => {
-            console.log(error);
-            packet.status = "ERROR";
-            packet.message = "An error occurred while attempting to delete user's account.";
-            response.json(packet);
-          })
+      try {
+        team = await Team.findOne({ join_code: request.user.team_code }).exec();
+      } catch(error) {
+        console.log(error);
+        return response.json(errors.ERROR_DELETE_USER);
+      }
+
+      if ((team.members.length === 1 && team.members[0] === String(request.user._id) && team.editors.length === 0 && team.admins.length === 0) ||
+          (team.editors.length === 1 && team.editors[0] === String(request.user._id) && team.members.length === 0 && team.admins.length === 0) ||
+          (team.admins.length === 1 && team.admins[0] === String(request.user._id) >= 0)) {
+        try {
+          await Team.deleteOne({ join_code: request.user.team_code }).exec();
+        } catch(error) {
+          console.log(error);
+          return response.json(errors.ERROR_DELETE_TEAM_AND_USER);
         }
-      }).catch(error => {
-        console.log(error);
-        packet.status = "ERROR";
-        packet.message = "An error occurred while attempting to delete user's account.";
-        response.json(packet);
-      });
+
+        try {
+          await User.deleteOne({ _id: request.user._id }).exec();
+        } catch(error) {
+          console.log(error);
+          return response.json(errors.ERROR_DELETE_TEAM_AND_USER);
+        }
+
+        response.json(messages.USER_AND_TEAM_DELETED);
+      } else {
+        if (user.status === "MEMBER" && team.members.indexOf(String(request.user._id)) >= 0) {
+          let index = team.members.indexOf(String(request.user._id));
+          team.members.splice(index, 1);
+        }
+        if (user.status === "EDITOR" && team.editors.indexOf(String(request.user._id)) >= 0) {
+          let index = team.editors.indexOf(String(request.user._id));
+          team.editors.splice(index, 1);
+        }
+        if (user.status === "ADMIN" && team.admins.indexOf(String(request.user._id)) >= 0) {
+          let index = team.admins.indexOf(String(request.user._id));
+          team.admins.splice(index, 1);
+        }
+
+        try {
+          await team.save();
+        } catch(error) {
+          console.log(error);
+          return response.json(errors.ERROR_DELETE_TEAM_AND_USER);
+        }
+
+        try {
+          await User.deleteOne({ _id: request.user._id }).exec();
+        } catch(error) {
+          console.log(error);
+          return response.json(errors.ERROR_DELETE_TEAM_AND_USER);
+        }
+
+        response.json(messages.USER_DELETED);
+      }
     } else {
-      User.deleteOne({ _id: mongoose.Types.ObjectId(request.user._id) }).then(() => {
-        packet.status = "USER_DELETED";
-        response.json(packet);
-      }).catch(error => {
+      try {
+        await User.deleteOne({ _id: mongoose.Types.ObjectId(request.user._id) }).exec();
+      } catch(error) {
         console.log(error);
-        packet.status = "ERROR";
-        packet.message = "An error occurred while attempting to delete user's account.";
-        response.json(packet);
-      });
+        return response.json(errors.ERROR_DELETE_USER);
+      }
+
+      response.json(messages.USER_DELETED);
     }
   });
 
