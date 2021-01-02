@@ -3,6 +3,8 @@
 import React from "react";
 import axios from "axios";
 import Loading from "../partials/Loading.js";
+import { TEAM_NAME_UPDATED } from "../../messages/messages.js";
+import { ERROR_UPDATE_TEAM_NAME } from "../../messages/errors.js";
 
 class UpdateTeamNameAPI extends React.Component {
   constructor(props) {
@@ -59,7 +61,7 @@ class UpdateTeamNameAPI extends React.Component {
     })
       .then((response) => {
       switch (response.data.status) {
-        case "TEAM_NAME_UPDATED":
+        case TEAM_NAME_UPDATED.status:
           component.setState({
             loading: false,
             currentName: component.state.newName
@@ -78,7 +80,7 @@ class UpdateTeamNameAPI extends React.Component {
       component.setState({
         loading: false
       });
-      component.props.alert("An error has occurred while attempting to update team name.", "ERROR");
+      component.props.alert(ERROR_UPDATE_TEAM_NAME.message, ERROR_UPDATE_TEAM_NAME.status);
     });
   }
   componentDidMount() {

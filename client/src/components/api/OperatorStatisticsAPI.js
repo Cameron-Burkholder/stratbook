@@ -2,6 +2,7 @@
 
 import React from "react";
 import axios from "axios";
+import { OPERATOR_STATS_FOUND } from "../../messages/messages.js";
 
 import Loading from "../partials/Loading.js";
 import OperatorStatistics from "../partials/OperatorStatistics.js";
@@ -40,7 +41,7 @@ class OperatorStatisticsAPI extends React.Component {
     axios.get("/api/statistics/operators")
       .then((response) => {
       switch (response.data.status) {
-        case "OPERATOR_STATS_FOUND":
+        case OPERATOR_STATS_FOUND.status:
           component.setState({
             loading: false,
             hasLoaded: true,

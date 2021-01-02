@@ -2,6 +2,8 @@
 
 import React from "react";
 import axios from "axios";
+import { ATTACKERS_SET } from "../../messages/messages.js";
+import { ERROR_ATTACKERS } from "../../messages/errors.js";
 
 import Loading from "../partials/Loading.js";
 import AttackersForm from "../partials/AttackersForm.js";
@@ -64,7 +66,7 @@ class SetAttackersAPI extends React.Component {
       attackers: this.state.attackers
     }).then((response) => {
       switch (response.data.status) {
-        case "ATTACKERS_SET":
+        case ATTACKERS_SET.status:
           component.setState({
             loading: false,
           });
@@ -80,7 +82,7 @@ class SetAttackersAPI extends React.Component {
       }
     }).catch((error) => {
       console.log(error);
-      component.props.alert("An error has occurred while attempting to set attackers.", "ERROR");
+      component.props.alert(ERROR_ATTACKERS.message, ERROR_ATTACKERS.status);
     });
   }
   render() {

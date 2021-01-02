@@ -2,6 +2,8 @@
 
 import React from "react";
 import axios from "axios";
+import { EMAIL_UPDATED } from "../../messages/messages.js";
+import { ERROR_EMAIL } from "../../messages/errors.js";
 
 import UpdateEmailForm from "../partials/UpdateEmailForm.js";
 
@@ -53,7 +55,7 @@ class UpdateEmailAPI extends React.Component {
       email: this.state.email
     }).then((response) => {
       switch (response.data.status) {
-        case "EMAIL_UPDATED":
+        case EMAIL_UPDATED.status:
           component.setState({
             loading: false,
           });
@@ -70,7 +72,7 @@ class UpdateEmailAPI extends React.Component {
       }
     }).catch((error) => {
       console.log(error);
-      component.props.alert("An error has occurred while attempting to update email.", "ERROR");
+      component.props.alert(ERROR_EMAIL.message, ERROR_EMAIL.status);
     });
   }
   render() {

@@ -3,7 +3,7 @@
 const email = require("../config/email.js");
 const { log, genJoinCode } = require("../config/utilities.js");
 const mongoose = require("mongoose");
-const messages = require("../messages/messages.js");
+const messages = require("../client/src/messages/messages.js");
 
 // Load input validation
 const validation = require("../validation.js");

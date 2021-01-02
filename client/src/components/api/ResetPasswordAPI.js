@@ -3,6 +3,8 @@
 import React from "react";
 import { Redirect } from "react-router";
 import axios from "axios";
+import { PASSWORD_RESET } from "../../messages/messages.js";
+import { ERROR_RESET_PASSWORD } from "../../messages/errors.js";
 
 import ResetPasswordForm from "../partials/ResetPasswordForm.js";
 
@@ -59,7 +61,7 @@ class ResetPasswordAPI extends React.Component {
       token: this.props.token
     }).then((response) => {
       switch (response.data.status) {
-        case "PASSWORD_RESET":
+        case PASSWORD_RESET.status:
           component.setState({
             loading: false,
             redirect: "/login"
@@ -75,7 +77,7 @@ class ResetPasswordAPI extends React.Component {
       }
     }).catch((error) => {
       console.log(error);
-      component.props.alert("An error has occurred while attempting to reset password.", "ERROR");
+      component.props.alert(ERROR_RESET_PASSWORD.message, ERROR_RESET_PASSWORD.status);
     });
   }
   render() {

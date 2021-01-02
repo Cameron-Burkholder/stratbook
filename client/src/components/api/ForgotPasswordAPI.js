@@ -3,6 +3,8 @@
 import React from "react";
 import { Redirect } from "react-router";
 import axios from "axios";
+import { PASSWORD_RESET_LINK_SENT } from "../../messages/messages.js";
+import { ERROR_RESET_PASSWORD } from "../../messages/errors.js";
 
 import ForgotPasswordForm from "../partials/ForgotPasswordForm.js";
 
@@ -56,7 +58,7 @@ class ForgotPasswordAPI extends React.Component {
       email: this.state.email
     }).then((response) => {
       switch (response.data.status) {
-        case "PASSWORD_RESET_LINK_SENT":
+        case PASSWORD_RESET_LINK_SENT.status:
           component.setState({
             loading: false,
             redirect: "/login"
@@ -72,7 +74,7 @@ class ForgotPasswordAPI extends React.Component {
       }
     }).catch((error) => {
       console.log(error);
-      component.props.alert("An error has occurred while attempting to send reset link.", "ERROR");
+      component.props.alert(ERROR_RESET_PASSWORD.message, ERROR_RESET_PASSWORD.status);
     });
   }
   render() {

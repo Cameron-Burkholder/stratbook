@@ -2,6 +2,12 @@
 
 import React from "react";
 import axios from "axios";
+import { TEAM_FOUND } from "../../messages/messages.js";
+import { USER_STATUS_UPDATED } from "../../messages/messages.js";
+import { USER_BLOCKED } from "../../messages/messages.js";
+import { ERROR_TEAM } from"../../messages/errors.js";
+import { ERROR_UPDATE_USER_STATUS } from "../../messages/errors.js";
+import { ERROR_BLOCK_USER } from "../../messages/errors.js";
 
 import Loading from "../partials/Loading.js";
 import ErrorLoading from "../partials/ErrorLoading.js";
@@ -40,7 +46,7 @@ class ManageTeamAPI extends React.Component {
     axios.get("/api/teams/view-team")
       .then((response) => {
       switch (response.data.status) {
-        case "TEAM_FOUND":
+        case TEAM_FOUND.status:
           component.setState({
             loading: false,
             team: response.data.team
@@ -59,7 +65,7 @@ class ManageTeamAPI extends React.Component {
         loading: false,
         error: true
       });
-      component.props.alert("An error occurred while fetching team.", "ERROR");
+      component.props.alert(ERROR_TEAM.message, ERROR_TEAM.status);
     });
   }
   componentDidMount() {
@@ -79,7 +85,7 @@ class ManageTeamAPI extends React.Component {
     })
       .then((response) => {
       switch (response.data.status) {
-        case "USER_STATUS_UPDATED":
+        case USER_STATUS_UPDATED.status:
           component.setState({
             loading: false
           });
@@ -97,7 +103,7 @@ class ManageTeamAPI extends React.Component {
       component.setState({
         loading: false
       });
-      component.props.alert("An error has occurred while attempting to update user status.", "ERROR");
+      component.props.alert(ERROR_UPDATE_USER_STATUS.message, ERROR_UPDATE_USER_STATUS.status);
     });
   }
   blockUser(username) {
@@ -112,7 +118,7 @@ class ManageTeamAPI extends React.Component {
       })
         .then((response) => {
         switch (response.data.status) {
-          case "USER_BLOCKED":
+          case USER_BLOCKED.status:
             component.setState({
               loading: false
             });
@@ -134,7 +140,7 @@ class ManageTeamAPI extends React.Component {
         component.setState({
           loading: false
         });
-        component.props.alert("An error has occurred while attempting to block user.", "ERROR");
+        component.props.alert(ERROR_BLOCK_USER.message, ERROR_BLOCK_USER.status);
       });
     }
   }

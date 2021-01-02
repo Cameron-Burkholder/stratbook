@@ -2,6 +2,8 @@
 
 import React from "react";
 import axios from "axios";
+import { DEFENDER_ROLE_SET } from "../../messages/messages.js";
+import { ERROR_DEFENDER_ROLE } from "../../messages/errors.js";
 
 import Loading from "../partials/Loading.js";
 import DefenderRoleForm from "../partials/DefenderRoleForm.js";
@@ -54,7 +56,7 @@ class SetDefenderRoleAPI extends React.Component {
       role: this.state.defender_role
     }).then((response) => {
       switch (response.data.status) {
-        case "DEFENDER_ROLE_SET":
+        case DEFENDER_ROLE_SET.status:
           component.setState({
             loading: false,
           });
@@ -70,7 +72,7 @@ class SetDefenderRoleAPI extends React.Component {
       }
     }).catch((error) => {
       console.log(error);
-      component.props.alert("An error has occurred while attempting to set defender role.", "ERROR");
+      component.props.alert(ERROR_DEFENDER_ROLE.message, ERROR_DEFENDER_ROLE.status);
     });
   }
   render() {

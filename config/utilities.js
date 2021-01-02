@@ -68,10 +68,7 @@ exports.log = function(msg) {
 * @returns {bool} returns true if passwords match
 */
 exports.verifyPassword = function(password, hash) {
-  console.log("verify");
   let isValidPassword = bcrypt.compareSync(password, hash);
-  console.log("returning");
-  console.log(isValidPassword);
   return isValidPassword;
 }
 

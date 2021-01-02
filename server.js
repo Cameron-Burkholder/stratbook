@@ -12,7 +12,7 @@ const morgan = require("morgan");             // For use in loggin requests
 require("dotenv").config();                   // For using environment variables
 
 // IMPORT UTILITY FUNCTIONS
-const { log } = require("./config/utilities");
+const { log, hashPassword } = require("./config/utilities");
 
 // SETUP EXPRESS
 const app = express();

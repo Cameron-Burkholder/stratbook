@@ -3,6 +3,8 @@
 import React from "react";
 import { Redirect } from "react-router";
 import axios from "axios";
+import { TOKEN_ISSUED } from "../../messages/messages.js";
+import { ERROR_LOGIN } from "../../messages/errors.js";
 
 import LoginForm from "../partials/LoginForm.js";
 
@@ -56,7 +58,7 @@ class LoginAPI extends React.Component {
       password: this.state.password
     }).then((response) => {
       switch (response.data.status) {
-        case "TOKEN_ISSUED":
+        case TOKEN_ISSUED.status:
           component.setState({
             loading: false,
           });
@@ -67,12 +69,12 @@ class LoginAPI extends React.Component {
             loading: false,
             errors: response.data.errors
           });
-          component.props.alert(response.message.status, response.data.status);
+          component.props.alert(response.data.message, response.data.status);
           break;
       }
     }).catch((error) => {
       console.log(error);
-      component.props.alert("An error has occurred while attempting to log in.", "ERROR");
+      component.props.alert(ERROR_LOGIN.message, ERROR_LOGIN.status);
     });
   }
   render() {

@@ -2,6 +2,8 @@
 
 import React from "react";
 import axios from "axios";
+import { TEAM_STATS_FOUND } from "../../messages/messages.js";
+import { ERROR_TEAM_STATS } from "../../messages/errors.js";
 
 import Loading from "../partials/Loading.js";
 import ErrorLoading from "../partials/ErrorLoading.js";
@@ -39,7 +41,7 @@ class ViewTeamStatisticsAPI extends React.Component {
     axios.get("/api/statistics/team")
       .then((response) => {
       switch (response.data.status) {
-        case "TEAM_STATS_FOUND":
+        case TEAM_STATS_FOUND.status:
           component.setState({
             loading: false,
             stats: {
@@ -65,7 +67,7 @@ class ViewTeamStatisticsAPI extends React.Component {
         loading: false,
         error: true
       });
-      component.props.alert("An error has occurred while attempting to view team statistics.", "ERROR");
+      component.props.alert(ERROR_TEAM_STATS.message, ERROR_TEAM_STATS.status);
     });
   }
   componentDidMount() {

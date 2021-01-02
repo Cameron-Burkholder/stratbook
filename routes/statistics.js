@@ -3,7 +3,7 @@
 const { log, getStats } = require("../config/utilities.js");
 const mongoose = require("mongoose");
 const { CURRENT_SEASON } = require("../client/src/data.js");
-const messages = require("../messages/messages.js");
+const messages = require("../client/src/messages/messages.js");
 
 const middleware = require("../middleware.js");
 

@@ -2,6 +2,8 @@
 
 import React from "react";
 import axios from "axios";
+import { USERNAME_UPDATED } from "../../messages/messages.js";
+import { ERROR_USERNAME } from "../../messages/errors.js";
 
 import UpdateUsernameForm from "../partials/UpdateUsernameForm.js";
 
@@ -53,7 +55,7 @@ class UpdateUsernameAPI extends React.Component {
       username: this.state.username
     }).then((response) => {
       switch (response.data.status) {
-        case "USERNAME_UPDATED":
+        case USERNAME_UPDATED.status:
           component.setState({
             loading: false,
           });
@@ -70,7 +72,7 @@ class UpdateUsernameAPI extends React.Component {
       }
     }).catch((error) => {
       console.log(error);
-      component.props.alert("An error has occurred while attempting to update username.", "ERROR");
+      component.props.alert(ERROR_USERNAME.message, ERROR_USERNAME.status);
     });
   }
   render() {

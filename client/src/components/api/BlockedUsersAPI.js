@@ -5,6 +5,8 @@ import axios from "axios";
 
 import Loading from "../partials/Loading.js";
 import ErrorLoading from "../partials/ErrorLoading.js";
+import { BLOCKED_USERS_FOUND } from "../../messages/messages.js";
+import { ERROR_VIEW_BLOCKED_USERS } from "../../messages/errors.js";
 
 /*
   @func: BlockedUsersAPI
@@ -38,7 +40,7 @@ class BlockedUsersAPI extends React.Component {
     axios.get("/api/teams/view-blocked-users")
       .then((response) => {
       switch (response.data.status) {
-        case "BLOCKED_USERS_FOUND":
+        case BLOCKED_USERS_FOUND.status:
           component.setState({
             loading: false,
             blocked_users: response.data.blocked_users
@@ -57,7 +59,7 @@ class BlockedUsersAPI extends React.Component {
         loading: false,
         error: true
       });
-      component.props.alert("An error occurred while fetching blocked users.", "ERROR");
+      component.props.alert(ERROR_VIEW_BLOCKED_USERS.message, ERROR_VIEW_BLOCKED_USERS.status);
     });
   }
   componentDidMount() {

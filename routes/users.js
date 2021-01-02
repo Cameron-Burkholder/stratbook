@@ -5,9 +5,9 @@ const mongoose = require("mongoose");
 const email = require("../config/email.js");
 
 const { log, verifyPassword, hashPassword, issueJWT, genVerificationLink, notify } = require("../config/utilities.js");
-const messages = require("../messages/messages.js");
-const emails = require("../messages/emails.js");
-const errors = require("../messages/errors.js");
+const messages = require("../client/src/messages/messages.js");
+const emails = require("../client/src/messages/emails.js");
+const errors = require("../client/src/messages/errors.js");
 
 // Load validation
 const validation = require("../validation.js");
@@ -118,35 +118,27 @@ module.exports = async (app, passport) => {
     done();
   }, validation.validateLoginInput, async (request, response) => {
     let user;
-    console.log('here');
     try {
       user = await User.findOne({ email: request.body.email.toLowerCase() }).exec();
     } catch(error) {
       console.log(error);
       return response.json(errors.ERROR_LOGIN);
     }
-    console.log('passed');
     if (!user) {
       return response.json(messages.USER_NOT_FOUND);
     }
 
-    console.log('herea');
     const isValidPassword = verifyPassword(request.body.password, user.password);
-    console.log('passed');
     if (isValidPassword) {
-      console.log("issueing");
       const tokenObject = issueJWT(user);
-      console.log("issued");
       user.password = undefined;
       user._id = undefined;
       let packet = messages.TOKEN_ISSUED;
       packet.user = user;
       packet.token = tokenObject.token;
       packet.expiresIn = tokenObject.expires;
-      console.log(packet);
       return response.json(packet);
     } else {
-      console.log("incorrect");
       return response.json(messages.INCORRECT_PASSWORD);
     }
 
@@ -571,7 +563,7 @@ module.exports = async (app, passport) => {
   }, validation.validatePasswordInput, async (request, response) => {
     let user;
     const reset_token = request.body.token;
-    if (reset_token && reset_token !== "") {
+    if (reset_token !== "") {
       try {
         user = await User.findOne({ reset_token: reset_token }).exec();
       } catch(error) {

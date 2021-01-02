@@ -3,9 +3,9 @@
 const email = require("../config/email.js");
 const { log, genJoinCode, notify } = require("../config/utilities.js");
 const mongoose = require("mongoose");
-const messages = require("../messages/messages.js");
-const emails = require("../messages/emails.js");
-const errors = require("../messages/errors.js");
+const messages = require("../client/src/messages/messages.js");
+const emails = require("../client/src/messages/emails.js");
+const errors = require("../client/src/messages/errors.js");
 
 // Load validation
 const validation = require("../validation.js");

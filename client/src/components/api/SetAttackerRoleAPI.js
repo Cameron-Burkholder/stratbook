@@ -2,6 +2,8 @@
 
 import React from "react";
 import axios from "axios";
+import { ATTACKER_ROLE_SET } from "../../messages/messages.js";
+import { ERROR_ATTACKER_ROLE } from "../../messages/errors.js";
 
 import Loading from "../partials/Loading.js";
 import AttackerRoleForm from "../partials/AttackerRoleForm.js";
@@ -54,7 +56,7 @@ class SetAttackerRoleAPI extends React.Component {
       role: this.state.attacker_role
     }).then((response) => {
       switch (response.data.status) {
-        case "ATTACKER_ROLE_SET":
+        case ATTACKER_ROLE_SET.status:
           component.setState({
             loading: false,
           });
@@ -70,7 +72,7 @@ class SetAttackerRoleAPI extends React.Component {
       }
     }).catch((error) => {
       console.log(error);
-      component.props.alert("An error has occured while attempting to set attacker role.", "ERROR");
+      component.props.alert(ERROR_ATTACKER_ROLE.message, ERROR_ATTACKER_ROLE.status);
     });
   }
   render() {

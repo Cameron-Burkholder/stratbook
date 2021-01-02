@@ -2,6 +2,8 @@
 
 import React from "react";
 import axios from "axios";
+import { TEAM_CREATED } from "../../messages/messages.js";
+import { ERROR_CREATE_TEAM } from "../../messages/errors.js";
 
 import CreateTeamForm from "../partials/CreateTeamForm.js";
 
@@ -52,7 +54,7 @@ class CreateTeamAPI extends React.Component {
       name: this.state.name
     }).then((response) => {
       switch (response.data.status) {
-        case "TEAM_CREATED":
+        case TEAM_CREATED.status:
           component.setState({
             loading: false,
           });
@@ -69,7 +71,7 @@ class CreateTeamAPI extends React.Component {
       }
     }).catch((error) => {
       console.log(error);
-      component.props.alert("An error has occurred while attempting to create team.", "ERROR");
+      component.props.alert(ERROR_CREATE_TEAM.message, ERROR_CREATE_TEAM.status);
     });
   }
   render() {

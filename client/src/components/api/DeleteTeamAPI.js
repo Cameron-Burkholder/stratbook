@@ -3,6 +3,8 @@
 import React from "react";
 import axios from "axios";
 import Loading from "../partials/Loading.js";
+import { TEAM_DELETED } from "../../messages/messages.js";
+import { ERROR_DELETE_TEAM } from "../../messages/errors.js";
 
 class DeleteTeamAPI extends React.Component {
   constructor(props) {
@@ -21,7 +23,7 @@ class DeleteTeamAPI extends React.Component {
       axios.delete("/api/teams/delete-team")
         .then((response) => {
         switch (response.data.status) {
-          case "TEAM_DELETED":
+          case TEAM_DELETED.status:
             component.setState({
               loading: false
             });
@@ -41,7 +43,7 @@ class DeleteTeamAPI extends React.Component {
         component.setState({
           loading: false
         });
-        component.props.alert("An error occurred while attempting to delete team.", "ERROR");
+        component.props.alert(ERROR_DELETE_TEAM.message, ERROR_DELETE_TEAM.status);
       });
     }
   }

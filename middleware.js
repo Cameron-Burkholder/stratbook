@@ -1,8 +1,8 @@
 /* middleware.js */
 
 const mongoose = require("mongoose");
-const errors = require("./messages/errors.js");
-const messages = require("./messages/messages.js");
+const errors = require("./client/src/messages/errors.js");
+const messages = require("./client/src/messages/messages.js");
 
 /**
 * Check to see if user is a part of a team

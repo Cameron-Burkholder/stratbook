@@ -5,7 +5,7 @@ const Filter = require("bad-words");
 const filter = new Filter();
 filter.addWords("fuckboy", "fuckboys", "penisboy", "penisboys");
 const isEmpty = require("is-empty");
-const messages = require("./messages/messages.js");
+const messages = require("./client/src/messages/messages.js");
 const { ATTACKERS, ATTACKER_ROLES, DEFENDERS, DEFENDER_ROLES } = require("./client/src/data.js");
 
 /**

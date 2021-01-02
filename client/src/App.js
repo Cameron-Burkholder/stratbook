@@ -28,6 +28,8 @@ import Footer from "./components/partials/Footer.js";
 
 import "./css/style.css";
 
+import { TOKEN_ISSUED } from "./messages/messages.js";
+
 /*
   App: root component, used to manage client-side auth and routing
 */
@@ -59,6 +61,7 @@ class App extends React.Component {
     user {Object}: user data object to store in localStorage
   */
   login(token, expiresIn, user) {
+    console.log("loggin in");
     this.setLocalStorage(token, expiresIn, user, this.updateState);
     axios.defaults.headers.common["Authorization"] = this.state.token;
   }
@@ -114,12 +117,12 @@ class App extends React.Component {
       axios.get("/api/users/update-token")
         .then((response) => {
         switch (response.data.status) {
-          case "TOKEN_UPDATED":
+          case TOKEN_ISSUED.status:
             const user = response.data.user;
             this.login(response.data.token, response.data.expiresIn, user);
             break;
           default:
-            this.alert("An error has occurred.");
+            this.alert("An error has occurred whil attempting to authenticate your login.");
             break;
         }
       }).catch((error) => {

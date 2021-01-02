@@ -2,6 +2,8 @@
 
 import React from "react";
 import axios from "axios";
+import { PLATFORM_UPDATED } from "../../messages/messages.js";
+import { ERROR_PLATFORM } from "../../messages/errors.js";
 
 import UpdatePlatformForm from "../partials/UpdatePlatformForm.js";
 
@@ -52,7 +54,7 @@ class UpdatePlatformAPI extends React.Component {
       platform: this.state.platform
     }).then((response) => {
       switch (response.data.status) {
-        case "PLATFORM_UPDATED":
+        case PLATFORM_UPDATED.status:
           component.setState({
             loading: false,
           });
@@ -69,7 +71,7 @@ class UpdatePlatformAPI extends React.Component {
       }
     }).catch((error) => {
       console.log(error);
-      component.props.alert("An error has occurred while attempting to update platform.", "ERROR");
+      component.props.alert(ERROR_PLATFORM.message, ERROR_PLATFORM.status);
     });
   }
   render() {

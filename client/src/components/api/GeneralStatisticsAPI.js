@@ -2,6 +2,8 @@
 
 import React from "react";
 import axios from "axios";
+import { GENERAL_STATS_FOUND } from "../../messages/messages.js";
+import { USER_NOT_FOUND } from "../../messages/messages.js";
 
 import Loading from "../partials/Loading.js";
 import ProgressCircle from "../partials/ProgressCircle.js";
@@ -35,13 +37,12 @@ class GeneralStatisticsAPI extends React.Component {
     axios.get("/api/statistics/general")
       .then((response) => {
       switch (response.data.status) {
-        case "GENERAL_STATS_FOUND":
+        case GENERAL_STATS_FOUND.status:
           component.setState({
             loading: false,
             hasLoaded: true,
             stats: response.data.stats
           });
-          console.log(response.data.stats);
           break;
         default:
           component.setState({

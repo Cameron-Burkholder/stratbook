@@ -2,6 +2,8 @@
 
 import React from "react";
 import axios from "axios";
+import { TEAM_FOUND } from "../../messages/messages.js";
+import { ERROR_VIEW_TEAM } from "../../messages/errors.js";
 
 import Loading from "../partials/Loading.js";
 import ErrorLoading from "../partials/ErrorLoading.js";
@@ -38,10 +40,10 @@ class ViewTeamAPI extends React.Component {
     axios.get("/api/teams/view-team")
       .then((response) => {
       switch (response.data.status) {
-        case "TEAM_FOUND":
+        case TEAM_FOUND.status:
           component.setState({
             loading: false,
-            team: response.data.team
+            team: response.data.team_data
           });
           break;
         default:
@@ -57,7 +59,7 @@ class ViewTeamAPI extends React.Component {
         loading: false,
         error: true
       });
-      component.props.alert("An error has occurred while attempting to view team.", "ERROR");
+      component.props.alert(ERROR_VIEW_TEAM.message, ERROR_VIEW_TEAM.status);
     });
   }
   componentDidMount() {

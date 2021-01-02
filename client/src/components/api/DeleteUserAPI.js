@@ -2,6 +2,10 @@
 
 import React from "react";
 import axios from "axios";
+import { USER_DELETED } from "../../messages/messages.js";
+import { USER_AND_TEAM_DELETED } from "../../messages/messages.js";
+import { ERROR_DELETE_USER } from "../../messages/errors.js";
+import { ERROR_DELETE_TEAM_AND_USER } from "../../messages/errors.js";
 
 import Loading from "../partials/Loading.js";
 
@@ -38,13 +42,13 @@ class DeleteUserAPI extends React.Component {
       axios.delete("/api/users/delete")
         .then((response) => {
         switch (response.data.status) {
-          case "USER_DELETED":
+          case USER_DELETED.status:
             component.setState({
               loading: false
             });
             component.props.alert("Your account has been deleted.", "SUCCESS");
             this.props.logout();
-          case "USER_AND_TEAM_DELETED":
+          case USER_AND_TEAM_DELETED.status:
             component.setState({
               loading: false,
             });
@@ -60,7 +64,7 @@ class DeleteUserAPI extends React.Component {
         }
       }).catch((error) => {
         console.log(error);
-        component.props.alert("An error has occurred while attempting to delete user.", "ERROR");
+        component.props.alert(ERROR_DELETE_USER.message, ERROR_DELETE_USER.status);
       });
     }
   }

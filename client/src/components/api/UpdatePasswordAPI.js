@@ -2,6 +2,8 @@
 
 import React from "react";
 import axios from "axios";
+import { PASSWORD_UPDATED } from "../../messages/messages.js";
+import { ERROR_UPDATE_PASSWORD } from "../../messages/errors.js";
 
 import UpdatePasswordForm from "../partials/UpdatePasswordForm.js";
 
@@ -55,7 +57,7 @@ class UpdatePasswordAPI extends React.Component {
       password2: this.state.password2
     }).then((response) => {
       switch (response.data.status) {
-        case "PASSWORD_UPDATED":
+        case PASSWORD_UPDATED.status:
           component.setState({
             loading: false,
           });
@@ -72,7 +74,7 @@ class UpdatePasswordAPI extends React.Component {
       }
     }).catch((error) => {
       console.log(error);
-      component.props.alert("An error has occurred while attempting to update password.", "ERROR");
+      component.props.alert(ERROR_UPDATE_PASSWORD.message, ERROR_UPDATE_PASSWORD.status);
     });
   }
   render() {

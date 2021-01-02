@@ -1,0 +1,210 @@
+/* messages.js*/
+
+/**
+* List of messages and error reports used throughout platform
+*/
+module.exports = {
+  ATTACKER_ROLE_SET: {
+    status: "Attacker Role Set",
+    message: "Your attacking role has been set."
+  },
+  ATTACKERS_SET: {
+    status: "Attackers Set",
+    message: "Your preferred attackers have been set."
+  },
+  BLOCKED_USERS_FOUND: {
+    status: "Blocked Users Found",
+    message: "Team's blocked users have been found."
+  },
+  CANNOT_REMOVE_SELF: {
+    status: "Cannot Remove Self",
+    message: "User cannot block self from team."
+  },
+  DEFENDER_ROLE_SET: {
+    status: "Defender Role Set",
+    message: "Your defending role has been set."
+  },
+  DEFENDERS_SET: {
+    status: "Defenders Set",
+    message: "Your preferred defenders have been set."
+  },
+  EXISTING_USER: {
+    status: "Existing User",
+    message: "A user with those credentials already exists."
+  },
+  GENERAL_STATS_FOUND: {
+    status: "General Statistics Found",
+    message: "General statistics have been found."
+  },
+  INCORRECT_PASSWORD: {
+    status: "Incorrect Password",
+    message: "The password entered was incorrect."
+  },
+  INVALID_ATTACKER_ROLE: {
+    status: "Invalid Attacker Role",
+    message: "The attacking role you selected is invalid."
+  },
+  INVALID_ATTACKERS: {
+    status: "Invalid Attackers",
+    message: "The preferred attackers you selected are invalid."
+  },
+  INVALID_BLOCK_USER_INPUT: {
+    status: "Invalid Block User Input",
+    message: "The block user input provided is invalid."
+  },
+  INVALID_DEFENDER_ROLE: {
+    status: "Invalid Defender Role",
+    message: "The defending role you selected is invalid."
+  },
+  INVALID_DEFENDERS: {
+    status: "Invalid Defenders",
+    message: "The preferred defenders you selected are invalid."
+  },
+  INVALID_EMAIL: {
+    status: "Invalid Email",
+    message: "The email address provided is invalid."
+  },
+  INVALID_JOIN_CODE: {
+    status: "Invalid Join Code",
+    message: "The join code provided is invalid."
+  },
+  INVALID_LOGIN: {
+    status: "Invalid Login",
+    message: "The login input provided is invalid."
+  },
+  INVALID_PASSWORD_INPUT: {
+    status: "Invalid Password Input",
+    message: "The password input provided is invalid."
+  },
+  INVALID_REGISTRATION: {
+    status: "Invalid Registration",
+    message: "The registration input provided is invalid."
+  },
+  INVALID_RESET_TOKEN: {
+    status: "Invalid Reset Token",
+    message: "The reset token provided is invalid or expired."
+  },
+  INVALID_PLATFORM: {
+    status: "Invalid Platform",
+    message: "The platform selected is invalid."
+  },
+  INVALID_STATUS_INPUT: {
+    status: "Invalid Status Input",
+    message: "The user status selected is invalid."
+  },
+  INVALID_TEAM_INPUT: {
+    status: "Invalid Team Input",
+    message: "The team name provided is invalid."
+  },
+  INVALID_USERNAME: {
+    status: "Invalid Username",
+    message: "The username provided is invalid."
+  },
+  OPERATOR_STATS_FOUND: {
+    status: "Operator Statistics Found",
+    message: "Operator statistics found."
+  },
+  PASSWORD_RESET_LINK_SENT: {
+    status: "Password Reset Link Sent",
+    message: "A link to reset your password has been sent to your email."
+  },
+  PERMISSION_DENIED: {
+    status: "Permission Denied",
+    message: "Permission to perform the action you requested has been denied."
+  },
+  PLATFORM_DOES_NOT_MATCH: {
+    status: "Platform Does Not Match",
+    message: "The platform of the team you requested to join does not match your platform."
+  },
+  PROFANE_INPUT: {
+    status: "Profane Input",
+    message: "Stratbook does not accept profane input."
+  },
+  PROFANE_TEAM_INPUT: {
+    status: "Profane Team Input",
+    message: "Stratbook does not accept profane input."
+  },
+  SEASONAL_STATS_FOUND: {
+    status: "Seasonal Statistics Found",
+    message: "Seasonal statistics found."
+  },
+  STRATEGIES_FOUND: {
+    status: "Strategies Found",
+    message: "Strategies found."
+  },
+  TEAM_CREATED: {
+    status: "Team Created",
+    message: "You have created a team."
+  },
+  TEAM_DELETED: {
+    status: "Team Deleted",
+    message: "You have deleted your team."
+  },
+  TEAM_EXISTS: {
+    status: "Team Exists",
+    message: "A team with that name already exists."
+  },
+  TEAM_FOUND: {
+    status: "Team Found",
+    message: "Team found."
+  },
+  TEAM_JOINED: {
+    status: "Team Joined",
+    message: "You have joined the team."
+  },
+  TEAM_LEFT: {
+    status: "Team Left",
+    message: "You have left the team."
+  },
+  TEAM_NAME_UPDATED: {
+    status: "Team Name Updated",
+    message: "You have updated the team name."
+  },
+  TEAM_NOT_FOUND: {
+    status: "Team Not Found",
+    message: "No team with the provided credentials could be found."
+  },
+  TEAM_STATS_FOUND: {
+    status: "Team Statistics Found",
+    message: "Team statistics found."
+  },
+  TOKEN_ISSUED: {
+    status: "Token Issued",
+    message: "Token issued."
+  },
+  USER_AND_TEAM_DELETED: {
+    status: "User and Team Deleted",
+    message: "You have deleted your account and your team."
+  },
+  USER_BLOCKED: {
+    status: "User Blocked",
+    message: "You have blocked the requested user."
+  },
+  USER_UNBLOCKED: {
+    status: "User Unblocked",
+    message: "You have unblocked the requested user."
+  },
+  USER_DELETED: {
+    status: "User Deleted",
+    message: "You have deleted your account."
+  },
+  USER_HAS_NO_TEAM: {
+    status: "User Has No Team",
+    message: "You must have a team to perform this action."
+  },
+  USER_HAS_TEAM: {
+    status: "User Has Team",
+    message: "You cannot perform this action if you are a part of a team."
+  },
+  USER_NOT_FOUND: {
+    status: "User Not Found",
+    message: "Unable to find user with provided credentials.",
+    errors: {
+      email: "No user with that email address was found."
+    }
+  },
+  USER_NOT_VERIFIED: {
+    status: "User Not Verified",
+    message: "You must verify your account to perform this action."
+  }
+}

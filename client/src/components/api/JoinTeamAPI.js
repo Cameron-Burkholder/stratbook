@@ -2,6 +2,8 @@
 
 import React from "react";
 import axios from "axios";
+import { TEAM_JOINED } from "../../messages/messages.js";
+import { ERROR_JOIN_TEAM } from "../../messages/errors.js";
 
 import JoinTeamForm from "../partials/JoinTeamForm.js";
 
@@ -52,7 +54,7 @@ class JoinTeamAPI extends React.Component {
       join_code: this.state.join_code
     }).then((response) => {
       switch (response.data.status) {
-        case "TEAM_JOINED":
+        case TEAM_JOINED.status:
           component.setState({
             loading: false,
           });
@@ -69,7 +71,7 @@ class JoinTeamAPI extends React.Component {
       }
     }).catch((error) => {
       console.log(error);
-      component.props.alert("An error has occurred while attempting to join team.", "ERROR");
+      component.props.alert(ERROR_JOIN_TEAM.message, ERROR_JOIN_TEAM.status);
     });
   }
   render() {

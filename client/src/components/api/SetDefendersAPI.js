@@ -2,6 +2,8 @@
 
 import React from "react";
 import axios from "axios";
+import { DEFENDERS_SET } from "../../messages/messages.js";
+import { ERROR_DEFENDERS } from "../../messages/errors.js";
 
 import Loading from "../partials/Loading.js";
 import DefendersForm from "../partials/DefendersForm.js";
@@ -64,7 +66,7 @@ class SetDefendersAPI extends React.Component {
       defenders: this.state.defenders
     }).then((response) => {
       switch (response.data.status) {
-        case "DEFENDERS_SET":
+        case DEFENDERS_SET.status:
           component.setState({
             loading: false,
           });
@@ -80,7 +82,7 @@ class SetDefendersAPI extends React.Component {
       }
     }).catch((error) => {
       console.log(error);
-      component.props.alert("An error has occurred while attempting to set defenders.", "ERROR");
+      component.props.alert(ERROR_DEFENDERS.message, ERROR_DEFENDERS.status);
     });
   }
   render() {

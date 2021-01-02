@@ -2,6 +2,8 @@
 
 import React from "react";
 import axios from "axios";
+import { TEAM_LEFT } from "../../messages/messages.js";
+import { ERROR_LEAVE_TEAM } from "../../messages/errors.js";
 
 /*
   @func: LeaveTeamAPI
@@ -37,7 +39,7 @@ class LeaveTeamAPI extends React.Component {
       axios.patch("/api/teams/leave-team")
         .then((response) => {
         switch (response.data.status) {
-          case "USER_LEFT_TEAM":
+          case TEAM_LEFT.status:
             component.setState({
               loading: false,
             });
@@ -53,7 +55,7 @@ class LeaveTeamAPI extends React.Component {
         }
       }).catch((error) => {
         console.log(error);
-        component.props.alert("An error has occurred while attempting to leave team.", "ERROR");
+        component.props.alert(ERROR_LEAVE_TEAM.message, ERROR_LEAVE_TEAM.status);
       });
     }
   }

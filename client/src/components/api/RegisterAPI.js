@@ -3,6 +3,8 @@
 import React from "react";
 import { Redirect } from "react-router";
 import axios from "axios";
+import { USER_REGISTERED } from "../../messages/messages.js";
+import { ERROR_REGISTER } from "../../messages/errors.js";
 
 import RegisterForm from "../partials/RegisterForm.js";
 
@@ -64,7 +66,7 @@ class RegisterAPI extends React.Component {
       password2: this.state.password2
     }).then((response) => {
       switch (response.data.status) {
-        case "USER_REGISTERED":
+        case USER_REGISTERED.status:
           component.setState({
             loading: false,
             redirect: "/login"
@@ -80,7 +82,7 @@ class RegisterAPI extends React.Component {
       }
     }).catch((error) => {
       console.log(error);
-      component.props.alert("An error has occurred while attempting to register.", "ERROR");
+      component.props.alert(ERROR_REGISTER.message, ERROR_REGISTER.status);
     });
   }
   render() {
