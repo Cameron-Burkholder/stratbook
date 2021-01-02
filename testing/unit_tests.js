@@ -28,7 +28,7 @@ suite("UNIT TESTS", function() {
       let request = {
         body: { email: "" }
       }
-      assert.equal(validateLoginInput(request, response, done).status, "INVALID_LOGIN", "Response should be invalid if email field is empty.");
+      assert.equal(validateLoginInput(request, response, done).status, messages.INVALID_LOGIN.status, "Response should be invalid if email field is empty.");
       assert.equal(validateLoginInput(request, response, done).errors.email, "Email field is required", "Errors should list email as required if empty in request.");
     });
     test("# Email is invalid format", function() {
@@ -63,31 +63,31 @@ suite("UNIT TESTS", function() {
         body: { email: "valid_email@valid.com" }
       };
 
-      assert.equal(validateLoginInput(request1, response, done).status, "INVALID_LOGIN", "Response should be invalid if email contains no @ or domain.");
+      assert.equal(validateLoginInput(request1, response, done).status, messages.INVALID_LOGIN.status, "Response should be invalid if email contains no @ or domain.");
       assert.equal(validateLoginInput(request1, response, done).errors.email, "Email is invalid", "Errors should inform user that email is invalid when without a @ or domain.");
 
-      assert.equal(validateLoginInput(request2, response, done).status, "INVALID_LOGIN", "Response should be invalid if email contains no domain.");
+      assert.equal(validateLoginInput(request2, response, done).status, messages.INVALID_LOGIN.status, "Response should be invalid if email contains no domain.");
       assert.equal(validateLoginInput(request2, response, done).errors.email, "Email is invalid", "Errors should inform user that email is invalid when without a domain.");
 
-      assert.equal(validateLoginInput(request3, response, done).status, "INVALID_LOGIN", "Response should be invalid if email contains no domain specifyer (.com, etch)");
+      assert.equal(validateLoginInput(request3, response, done).status, messages.INVALID_LOGIN.status, "Response should be invalid if email contains no domain specifyer (.com, etch)");
       assert.equal(validateLoginInput(request3, response, done).errors.email, "Email is invalid", "Errors should inform user that email is invalid when without a domain specifyer (.com, etch)");
 
-      assert.equal(validateLoginInput(request4, response, done).status, "INVALID_LOGIN", "Response should be invalid if email contains extra non-alphanumeric characters after domain.");
+      assert.equal(validateLoginInput(request4, response, done).status, messages.INVALID_LOGIN.status, "Response should be invalid if email contains extra non-alphanumeric characters after domain.");
       assert.equal(validateLoginInput(request4, response, done).errors.email, "Email is invalid", "Errors should inform user that email is invalid when there are extra non-alphanumeric characters after domain.");
 
-      assert.equal(validateLoginInput(request5, response, done).status, "INVALID_LOGIN", "Response should be invalid if email contains only @.");
+      assert.equal(validateLoginInput(request5, response, done).status, messages.INVALID_LOGIN.status, "Response should be invalid if email contains only @.");
       assert.equal(validateLoginInput(request5, response, done).errors.email, "Email is invalid", "Errors should inform user that email is invalid when there is only @.");
 
-      assert.equal(validateLoginInput(request6, response, done).status, "INVALID_LOGIN", "Response should be invalid if email contains only domain.");
+      assert.equal(validateLoginInput(request6, response, done).status, messages.INVALID_LOGIN.status, "Response should be invalid if email contains only domain.");
       assert.equal(validateLoginInput(request6, response, done).errors.email, "Email is invalid", "Errors should inform user that email is invalid when there is only a domain.");
 
-      assert.equal(validateLoginInput(request7, response, done).status, "INVALID_LOGIN", "Response should be invalid if email contains only domain with extra characters.");
+      assert.equal(validateLoginInput(request7, response, done).status, messages.INVALID_LOGIN.status, "Response should be invalid if email contains only domain with extra characters.");
       assert.equal(validateLoginInput(request7, response, done).errors.email, "Email is invalid", "Errors should inform user that email is invalid when there is only a domain with extra characters.");
 
-      assert.equal(validateLoginInput(request8, response, done).status, "INVALID_LOGIN", "Response should be invalid if email contains only @ and domain.");
+      assert.equal(validateLoginInput(request8, response, done).status, messages.INVALID_LOGIN.status, "Response should be invalid if email contains only @ and domain.");
       assert.equal(validateLoginInput(request8, response, done).errors.email, "Email is invalid", "Errors should inform user that email is invalid when it only contains @ and a domain.");
 
-      assert.equal(validateLoginInput(request9, response, done).status, "INVALID_LOGIN", "Response should be invalid if email contains only @ and domain plus extra characters.");
+      assert.equal(validateLoginInput(request9, response, done).status, messages.INVALID_LOGIN.status, "Response should be invalid if email contains only @ and domain plus extra characters.");
       assert.equal(validateLoginInput(request9, response, done).errors.email, "Email is invalid", "Errors should inform user that email is invalid when it only contains @ and domain plus extra characters.");
 
       assert.equal(validateLoginInput(request10, response, done).errors.email, null, "Packet.errors.email should be null if email is valid.");
@@ -98,14 +98,14 @@ suite("UNIT TESTS", function() {
       let request = {
         body: {}
       }
-      assert.equal(validateLoginInput(request, response, done).status, "INVALID_LOGIN", "Response should be invalid if password field is not provided.");
+      assert.equal(validateLoginInput(request, response, done).status, messages.INVALID_LOGIN.status, "Response should be invalid if password field is not provided.");
       assert.equal(validateLoginInput(request, response, done).errors.password, "Password field is required", "Errors should list password as required if not provided in request.");
     });
     test("# Password field is empty", function() {
       let request = {
         body: { password: "" }
       };
-      assert.equal(validateLoginInput(request, response, done).status, "INVALID_LOGIN", "Response should be invalid if password field is empty.");
+      assert.equal(validateLoginInput(request, response, done).status, messages.INVALID_LOGIN.status, "Response should be invalid if password field is empty.");
       assert.equal(validateLoginInput(request, response, done).errors.password, "Password field is required", "Errors should list password as required if empty in request.");
 
     });
@@ -123,21 +123,21 @@ suite("UNIT TESTS", function() {
       let request = {
         body: []
       };
-      assert.equal(validateRegisterInput(request, response, done).status, "INVALID_REGISTRATION", "Response should be invalid if username field is not provided.");
+      assert.equal(validateRegisterInput(request, response, done).status, messages.INVALID_REGISTRATION.status, "Response should be invalid if username field is not provided.");
       assert.equal(validateRegisterInput(request, response, done).errors.username, "Username field is required", "Errors should list username as required i not provided in request.");
     });
     test("# Username field is empty", function() {
       let request = {
         body: { username: "" }
       };
-      assert.equal(validateRegisterInput(request, response, done).status, "INVALID_REGISTRATION", "Response should be invalid if username field is empty.");
+      assert.equal(validateRegisterInput(request, response, done).status, messages.INVALID_REGISTRATION.status, "Response should be invalid if username field is empty.");
       assert.equal(validateRegisterInput(request, response, done).errors.username, "Username field is required", "Errors should list username as required if empty in request.");
     });
     test("# Username is inappropriate", function() {
       let request = {
         body: { username: "Fuck", email: "valid@website.com", password1: "validpass", password2: "validpass", platform: "XBOX" }
       };
-      assert.equal(validateRegisterInput(request, response, done).status, "PROFANE_INPUT", "Response should be invalid if username is profane.");
+      assert.equal(validateRegisterInput(request, response, done).status, messages.PROFANE_INPUT.status, "Response should be invalid if username is profane.");
       assert.equal(validateRegisterInput(request, response, done).errors.username, "Username may not be inappropriate", "Errors should list username as profane if it is.");
     });
 
@@ -145,14 +145,14 @@ suite("UNIT TESTS", function() {
       let request = {
         body: {}
       }
-      assert.equal(validateRegisterInput(request, response, done).status, "INVALID_REGISTRATION", "Response should be invalid if email field is not provided in request.");
+      assert.equal(validateRegisterInput(request, response, done).status, messages.INVALID_REGISTRATION.status, "Response should be invalid if email field is not provided in request.");
       assert.equal(validateRegisterInput(request, response, done).errors.email, "Email field is required", "Errors should list email as required if not provided in request.");
     });
     test("# Email field is empty", function() {
       let request = {
         body: { email: "" }
       }
-      assert.equal(validateRegisterInput(request, response, done).status, "INVALID_REGISTRATION", "Response should be invalid if email field is empty.");
+      assert.equal(validateRegisterInput(request, response, done).status, messages.INVALID_REGISTRATION.status, "Response should be invalid if email field is empty.");
       assert.equal(validateRegisterInput(request, response, done).errors.email, "Email field is required", "Errors should list email as required if empty in request.");
     });
     test("# Email is invalid format", function() {
@@ -187,31 +187,31 @@ suite("UNIT TESTS", function() {
         body: { email: "valid_email@valid.com" }
       };
 
-      assert.equal(validateRegisterInput(request1, response, done).status, "INVALID_REGISTRATION", "Response should be invalid if email contains no @ or domain.");
+      assert.equal(validateRegisterInput(request1, response, done).status, messages.INVALID_REGISTRATION.status, "Response should be invalid if email contains no @ or domain.");
       assert.equal(validateRegisterInput(request1, response, done).errors.email, "Email is invalid", "Errors should inform user that email is invalid when without a @ or domain.");
 
-      assert.equal(validateRegisterInput(request2, response, done).status, "INVALID_REGISTRATION", "Response should be invalid if email contains no domain.");
+      assert.equal(validateRegisterInput(request2, response, done).status, messages.INVALID_REGISTRATION.status, "Response should be invalid if email contains no domain.");
       assert.equal(validateRegisterInput(request2, response, done).errors.email, "Email is invalid", "Errors should inform user that email is invalid when without a domain.");
 
-      assert.equal(validateRegisterInput(request3, response, done).status, "INVALID_REGISTRATION", "Response should be invalid if email contains no domain specifyer (.com, etch)");
+      assert.equal(validateRegisterInput(request3, response, done).status, messages.INVALID_REGISTRATION.status, "Response should be invalid if email contains no domain specifyer (.com, etch)");
       assert.equal(validateRegisterInput(request3, response, done).errors.email, "Email is invalid", "Errors should inform user that email is invalid when without a domain specifyer (.com, etch)");
 
-      assert.equal(validateRegisterInput(request4, response, done).status, "INVALID_REGISTRATION", "Response should be invalid if email contains extra non-alphanumeric characters after domain.");
+      assert.equal(validateRegisterInput(request4, response, done).status, messages.INVALID_REGISTRATION.status, "Response should be invalid if email contains extra non-alphanumeric characters after domain.");
       assert.equal(validateRegisterInput(request4, response, done).errors.email, "Email is invalid", "Errors should inform user that email is invalid when there are extra non-alphanumeric characters after domain.");
 
-      assert.equal(validateRegisterInput(request5, response, done).status, "INVALID_REGISTRATION", "Response should be invalid if email contains only @.");
+      assert.equal(validateRegisterInput(request5, response, done).status, messages.INVALID_REGISTRATION.status, "Response should be invalid if email contains only @.");
       assert.equal(validateRegisterInput(request5, response, done).errors.email, "Email is invalid", "Errors should inform user that email is invalid when there is only @.");
 
-      assert.equal(validateRegisterInput(request6, response, done).status, "INVALID_REGISTRATION", "Response should be invalid if email contains only domain.");
+      assert.equal(validateRegisterInput(request6, response, done).status, messages.INVALID_REGISTRATION.status, "Response should be invalid if email contains only domain.");
       assert.equal(validateRegisterInput(request6, response, done).errors.email, "Email is invalid", "Errors should inform user that email is invalid when there is only a domain.");
 
-      assert.equal(validateRegisterInput(request7, response, done).status, "INVALID_REGISTRATION", "Response should be invalid if email contains only domain with extra characters.");
+      assert.equal(validateRegisterInput(request7, response, done).status, messages.INVALID_REGISTRATION.status, "Response should be invalid if email contains only domain with extra characters.");
       assert.equal(validateRegisterInput(request7, response, done).errors.email, "Email is invalid", "Errors should inform user that email is invalid when there is only a domain with extra characters.");
 
-      assert.equal(validateRegisterInput(request8, response, done).status, "INVALID_REGISTRATION", "Response should be invalid if email contains only @ and domain.");
+      assert.equal(validateRegisterInput(request8, response, done).status, messages.INVALID_REGISTRATION.status, "Response should be invalid if email contains only @ and domain.");
       assert.equal(validateRegisterInput(request8, response, done).errors.email, "Email is invalid", "Errors should inform user that email is invalid when it only contains @ and a domain.");
 
-      assert.equal(validateRegisterInput(request9, response, done).status, "INVALID_REGISTRATION", "Response should be invalid if email contains only @ and domain plus extra characters.");
+      assert.equal(validateRegisterInput(request9, response, done).status, messages.INVALID_REGISTRATION.status, "Response should be invalid if email contains only @ and domain plus extra characters.");
       assert.equal(validateRegisterInput(request9, response, done).errors.email, "Email is invalid", "Errors should inform user that email is invalid when it only contains @ and domain plus extra characters.");
 
       assert.equal(validateRegisterInput(request10, response, done).errors.email, null, "Packet.errors.email should be null if email is valid.");
@@ -221,7 +221,7 @@ suite("UNIT TESTS", function() {
       let request = {
         body: { username: "user", email: "fuck@penis.com", password1: "validpass", password2: "validpass", platform: "XBOX" }
       };
-      assert.equal(validateRegisterInput(request, response, done).status, "PROFANE_INPUT", "Response should be invalid if email is profane.");
+      assert.equal(validateRegisterInput(request, response, done).status, messages.PROFANE_INPUT.status, "Response should be invalid if email is profane.");
       assert.equal(validateRegisterInput(request, response, done).errors.email, "Email may not be inappropriate", "Errors should list email as profane if it is.");
     })
 
@@ -229,14 +229,14 @@ suite("UNIT TESTS", function() {
       let request = {
         body: {}
       }
-      assert.equal(validateRegisterInput(request, response, done).status, "INVALID_REGISTRATION", "Response should be invalid if password field is not provided in request.");
+      assert.equal(validateRegisterInput(request, response, done).status, messages.INVALID_REGISTRATION.status, "Response should be invalid if password field is not provided in request.");
       assert.equal(validateRegisterInput(request, response, done).errors.password1, "Password field is required", "Errors should list password as required if not provided in request.");
     });
     test("# Password field is empty", function() {
       let request = {
         body: { password1: "" }
       };
-      assert.equal(validateRegisterInput(request, response, done).status, "INVALID_REGISTRATION", "Response should be invalid if password field is empty.");
+      assert.equal(validateRegisterInput(request, response, done).status, messages.INVALID_REGISTRATION.status, "Response should be invalid if password field is empty.");
       assert.equal(validateRegisterInput(request, response, done).errors.password1, "Password field is required", "Errors should list password as required if empty in request.");
     });
 
@@ -244,14 +244,14 @@ suite("UNIT TESTS", function() {
       let request = {
         body: {}
       }
-      assert.equal(validateRegisterInput(request, response, done).status, "INVALID_REGISTRATION", "Response should be invalid if confirm password field is not provided in request.");
+      assert.equal(validateRegisterInput(request, response, done).status, messages.INVALID_REGISTRATION.status, "Response should be invalid if confirm password field is not provided in request.");
       assert.equal(validateRegisterInput(request, response, done).errors.password2, "Confirm password field is required", "Errors should list confirm password as required if not provided in request.");
     });
     test("# Confirm password field is empty", function() {
       let request = {
         body: { password2: "" }
       };
-      assert.equal(validateRegisterInput(request, response, done).status, "INVALID_REGISTRATION", "Response should be invalid if confirm password field is empty.");
+      assert.equal(validateRegisterInput(request, response, done).status, messages.INVALID_REGISTRATION.status, "Response should be invalid if confirm password field is empty.");
       assert.equal(validateRegisterInput(request, response, done).errors.password1, "Password field is required", "Errors should list confirm password as required if empty in request.");
     });
 
@@ -265,10 +265,10 @@ suite("UNIT TESTS", function() {
       let request3 = {
         body: { password1: "justright" }
       };
-      assert.equal(validateRegisterInput(request1, response, done).status, "INVALID_REGISTRATION", "Response should be invalid if password is less than six characters.");
+      assert.equal(validateRegisterInput(request1, response, done).status, messages.INVALID_REGISTRATION.status, "Response should be invalid if password is less than six characters.");
       assert.equal(validateRegisterInput(request1, response, done).errors.password1, "Password must be at least 6 characters and at most 30", "Errors should list password as too short.");
 
-      assert.equal(validateRegisterInput(request2, response, done).status, "INVALID_REGISTRATION", "Response should be invalid if password is more than thirty characters.");
+      assert.equal(validateRegisterInput(request2, response, done).status, messages.INVALID_REGISTRATION.status, "Response should be invalid if password is more than thirty characters.");
       assert.equal(validateRegisterInput(request2, response, done).errors.password1, "Password must be at least 6 characters and at most 30", "Errors should list password as too long.");
 
       assert.equal(validateRegisterInput(request3, response, done).errors.password1, null, "If password is in appropriate parameters, errors.password1 should be null.");
@@ -281,7 +281,7 @@ suite("UNIT TESTS", function() {
         body: { password1: "sixchars", password2: "sixchars" }
       };
 
-      assert.equal(validateRegisterInput(request1, response, done).status, "INVALID_REGISTRATION", "Response should be invalid if passwords are not equal.");
+      assert.equal(validateRegisterInput(request1, response, done).status, messages.INVALID_REGISTRATION.status, "Response should be invalid if passwords are not equal.");
       assert.equal(validateRegisterInput(request1, response, done).errors.password2, "Passwords must match", "Errors should list passwords as not matching if they do not.");
 
       assert.equal(validateRegisterInput(request2, response, done).errors.password2, null, "If passwords match, password2 should not list any errors.");
@@ -291,14 +291,14 @@ suite("UNIT TESTS", function() {
       let request = {
         body: {}
       };
-      assert.equal(validateRegisterInput(request, response, done).status, "INVALID_REGISTRATION", "Response should be invalid if platform field is not provided in request.");
+      assert.equal(validateRegisterInput(request, response, done).status, messages.INVALID_REGISTRATION.status, "Response should be invalid if platform field is not provided in request.");
       assert.equal(validateRegisterInput(request, response, done).errors.platform, "Platform field is required", "Errors should list platform is required if not provided in request.");
     });
     test("# Platform field is empty", function() {
       let request = {
         body: { platform: "" }
       }
-      assert.equal(validateRegisterInput(request, response, done).status, "INVALID_REGISTRATION", "Response should be invalid if platform field is empty.");
+      assert.equal(validateRegisterInput(request, response, done).status, messages.INVALID_REGISTRATION.status, "Response should be invalid if platform field is empty.");
       assert.equal(validateRegisterInput(request, response, done).errors.platform, "Platform field is required", "Errors should list platform field as required if it is empty.");
     });
     test("# Platform field is invalid", function() {
@@ -323,7 +323,7 @@ suite("UNIT TESTS", function() {
       let request7 = {
         body: { platform: "ps4" }
       };
-      assert.equal(validateRegisterInput(request1, response, done).status, "INVALID_REGISTRATION", "Response should be invalid if platform is not one of the accepted values.");
+      assert.equal(validateRegisterInput(request1, response, done).status, messages.INVALID_REGISTRATION.status, "Response should be invalid if platform is not one of the accepted values.");
       assert.equal(validateRegisterInput(request1, response, done).errors.platform, "The only platforms accepted are Xbox, PC, or PS4", "Errors should list platform as invalid if not one of the accepted values.");
 
       assert.equal(validateRegisterInput(request2, response, done).errors.platform, null, "XBOX should be an accepted value.");
@@ -348,21 +348,21 @@ suite("UNIT TESTS", function() {
       let request = {
         body: {}
       };
-      assert.equal(validateTeamName(request, response, done).status, "INVALID_TEAM_INPUT", "Response should be invalid if name field is not provided in request.");
+      assert.equal(validateTeamName(request, response, done).status, messages.INVALID_TEAM_INPUT.status, "Response should be invalid if name field is not provided in request.");
       assert.equal(validateTeamName(request, response, done).errors.name, "Name field is required", "Errors should list name as invalid if not provided in request.");
     });
     test("# Name field is empty", function() {
       let request = {
         body: {}
       };
-      assert.equal(validateTeamName(request, response, done).status, "INVALID_TEAM_INPUT", "Response should be invalid if name field is empty in request.");
+      assert.equal(validateTeamName(request, response, done).status, messages.INVALID_TEAM_INPUT.status, "Response should be invalid if name field is empty in request.");
       assert.equal(validateTeamName(request, response, done).errors.name, "Name field is required", "Errors should list name as invalid if empty in request.");
     });
     test("# Name is inappropriate", function() {
       let request = {
         body: { name: "Fuck" }
       };
-      assert.equal(validateTeamName(request, response, done).status, "PROFANE_TEAM_INPUT", "Response should indicate that profanity is not accepted if found in team names.");
+      assert.equal(validateTeamName(request, response, done).status, messages.PROFANE_TEAM_INPUT.status, "Response should indicate that profanity is not accepted if found in team names.");
       assert.equal(validateTeamName(request, response, done).errors.name, "Name may not be inappropriate", "Errors should list name is invalid if it is in appropriate.");
     })
   });
@@ -378,14 +378,14 @@ suite("UNIT TESTS", function() {
       let request = {
         body: {}
       };
-      assert.equal(validateJoinCode(request, response, done).status, "INVALID_JOIN_CODE", "Response should be invalid if join code is not included in request.");
+      assert.equal(validateJoinCode(request, response, done).status, messages.INVALID_JOIN_CODE.status, "Response should be invalid if join code is not included in request.");
       assert.equal(validateJoinCode(request, response, done).errors.join_code, "Join code field is required", "Errors should list join code as invalid if not included in request.");
     });
     test("# Join code field is empty", function() {
       let request = {
         body: { join_code: "" }
       };
-      assert.equal(validateJoinCode(request, response, done).status, "INVALID_JOIN_CODE", "Response should be invalid if join code is empty in request.");
+      assert.equal(validateJoinCode(request, response, done).status, messages.INVALID_JOIN_CODE.status, "Response should be invalid if join code is empty in request.");
       assert.equal(validateJoinCode(request, response, done).errors.join_code, "Join code field is required", "Errors should list join code as invalid if it is empty in request.");
     });
     test("# Join code is not 8 digits", function() {
@@ -398,10 +398,10 @@ suite("UNIT TESTS", function() {
       let request3 = {
         body: { join_code: "88888888" }
       }
-      assert.equal(validateJoinCode(request1, response, done).status, "INVALID_JOIN_CODE", "Response should be invalid if join code is less than 8 digits.");
+      assert.equal(validateJoinCode(request1, response, done).status, messages.INVALID_JOIN_CODE.status, "Response should be invalid if join code is less than 8 digits.");
       assert.equal(validateJoinCode(request1, response, done).errors.join_code, "Join code must be exactly 8 digits", "Errors should list join code as invalid if it is less than 8 digits.");
 
-      assert.equal(validateJoinCode(request2, response, done).status, "INVALID_JOIN_CODE", "Response should be invalid if join code is more than 8 digits.");
+      assert.equal(validateJoinCode(request2, response, done).status, messages.INVALID_JOIN_CODE.status, "Response should be invalid if join code is more than 8 digits.");
       assert.equal(validateJoinCode(request2, response, done).errors.join_code, "Join code must be exactly 8 digits", "Errors should list join code as invalid if it is more than 8 digits.");
 
       assert.equal(validateJoinCode(request3, response, done), null, "Errors should be empty if join code is valid.");
@@ -422,16 +422,16 @@ suite("UNIT TESTS", function() {
       let request5 = {
         body: { join_code: "12345678" }
       }
-      assert.equal(validateJoinCode(request1, response, done).status, "INVALID_JOIN_CODE", "Response should be invalid if join code only contains alphabet characters.");
+      assert.equal(validateJoinCode(request1, response, done).status, messages.INVALID_JOIN_CODE.status, "Response should be invalid if join code only contains alphabet characters.");
       assert.equal(validateJoinCode(request1, response, done).errors.join_code, "Join code may not contain non-number characters", "Errors should list join code as invalid if it is only letter characters.");
 
-      assert.equal(validateJoinCode(request2, response, done).status, "INVALID_JOIN_CODE", "Response should be invalid if join code contains any letters.");
+      assert.equal(validateJoinCode(request2, response, done).status, messages.INVALID_JOIN_CODE.status, "Response should be invalid if join code contains any letters.");
       assert.equal(validateJoinCode(request2, response, done).errors.join_code, "Join code may not contain non-number characters", "Errors should list join code as invalid if it contains any letters.");
 
-      assert.equal(validateJoinCode(request3, response, done).status, "INVALID_JOIN_CODE", "Response should be invalid if join code contains all non-alphanumeric characters.");
+      assert.equal(validateJoinCode(request3, response, done).status, messages.INVALID_JOIN_CODE.status, "Response should be invalid if join code contains all non-alphanumeric characters.");
       assert.equal(validateJoinCode(request3, response, done).errors.join_code, "Join code may not contain non-number characters", "Errors should list join code as invalid if it contains all non-alphanumeric characters.");
 
-      assert.equal(validateJoinCode(request4, response, done).status, "INVALID_JOIN_CODE", "Response should be invalid if join code contains any non-alphanumeric characters.");
+      assert.equal(validateJoinCode(request4, response, done).status, messages.INVALID_JOIN_CODE.status, "Response should be invalid if join code contains any non-alphanumeric characters.");
       assert.equal(validateJoinCode(request4, response, done).errors.join_code, "Join code may not contain non-number characters", "Errors should list join code as invalid if it contains any non-alphanumeric characters.");
 
       assert.equal(validateJoinCode(request5, response, done), null, "Response should be valid if join code is 8 numerical digits.");
@@ -449,14 +449,14 @@ suite("UNIT TESTS", function() {
       let request = {
         body: {}
       };
-      assert.equal(validatePlatformInput(request, response, done).status, "INVALID_PLATFORM", "Response should be invalid if platform field is not provided in request.");
+      assert.equal(validatePlatformInput(request, response, done).status, messages.INVALID_PLATFORM.status, "Response should be invalid if platform field is not provided in request.");
       assert.equal(validatePlatformInput(request, response, done).errors.platform, "Platform field is required", "Errors should list platform is required if not provided in request.");
     });
     test("# Platform field is empty", function() {
       let request = {
         body: { platform: "" }
       }
-      assert.equal(validatePlatformInput(request, response, done).status, "INVALID_PLATFORM", "Response should be invalid if platform field is empty.");
+      assert.equal(validatePlatformInput(request, response, done).status, messages.INVALID_PLATFORM.status, "Response should be invalid if platform field is empty.");
       assert.equal(validatePlatformInput(request, response, done).errors.platform, "Platform field is required", "Errors should list platform field as required if it is empty.");
     });
     test("# Platform field is invalid", function() {
@@ -481,7 +481,7 @@ suite("UNIT TESTS", function() {
       let request7 = {
         body: { platform: "ps4" }
       };
-      assert.equal(validatePlatformInput(request1, response, done).status, "INVALID_PLATFORM", "Response should be invalid if platform is not one of the accepted values.");
+      assert.equal(validatePlatformInput(request1, response, done).status, messages.INVALID_PLATFORM.status, "Response should be invalid if platform is not one of the accepted values.");
       assert.equal(validatePlatformInput(request1, response, done).errors.platform, "The only platforms accepted are Xbox, PC, or PS4", "Errors should list platform as invalid if not one of the accepted values.");
 
       assert.equal(validatePlatformInput(request2, response, done), null, "XBOX should be an accepted value.");
@@ -505,14 +505,14 @@ suite("UNIT TESTS", function() {
       let request = {
         body: {}
       };
-      assert.equal(validateUsernameInput(request, response, done).status, "INVALID_USERNAME", "Response should be invalid if username field is not provided in request.");
+      assert.equal(validateUsernameInput(request, response, done).status, messages.INVALID_USERNAME.status, "Response should be invalid if username field is not provided in request.");
       assert.equal(validateUsernameInput(request, response, done).errors.username, "Username field is required", "Errors should list username is required if not provided in request.");
     });
     test("# Username field is empty", function() {
       let request = {
         body: { platform: "" }
       }
-      assert.equal(validateUsernameInput(request, response, done).status, "INVALID_USERNAME", "Response should be invalid if username field is empty.");
+      assert.equal(validateUsernameInput(request, response, done).status, messages.INVALID_USERNAME.status, "Response should be invalid if username field is empty.");
       assert.equal(validateUsernameInput(request, response, done).errors.username, "Username field is required", "Errors should list username field as required if it is empty.");
     });
     test("# Platform field is profane", function() {
@@ -520,7 +520,7 @@ suite("UNIT TESTS", function() {
         body: { username: "something bitch" }
       };
 
-      assert.equal(validateUsernameInput(request, response, done).status, "PROFANE_INPUT", "Response should be invalid if input is profane.");
+      assert.equal(validateUsernameInput(request, response, done).status, messages.PROFANE_INPUT.status, "Response should be invalid if input is profane.");
       assert.equal(validateUsernameInput(request, response, done).errors.username, "Username may not be inappropriate", "Errors should indicate username is inappropriate.");
 
     });
@@ -538,14 +538,14 @@ suite("UNIT TESTS", function() {
       let request = {
         body: {}
       };
-      assert.equal(validateBlockUser(request, response, done).status, "INVALID_BLOCK_USER_INPUT", "Response should be invalid if username is not included in request.");
+      assert.equal(validateBlockUser(request, response, done).status, messages.INVALID_BLOCK_USER_INPUT.status, "Response should be invalid if username is not included in request.");
       assert.equal(validateBlockUser(request, response, done).errors.username, "Username field is required", "Errors should list username as invalid if not included in request.");
     });
     test("# Username field is empty", function() {
       let request = {
         body: { username: "" }
       };
-      assert.equal(validateBlockUser(request, response, done).status, "INVALID_BLOCK_USER_INPUT", "Response should be invalid if username is empty in request.");
+      assert.equal(validateBlockUser(request, response, done).status, messages.INVALID_BLOCK_USER_INPUT.status, "Response should be invalid if username is empty in request.");
       assert.equal(validateBlockUser(request, response, done).errors.username, "Username field is required", "Errors should list username as invalid if it is empty in request.");
     })
   });
@@ -561,35 +561,35 @@ suite("UNIT TESTS", function() {
       let request = {
         body: {}
       };
-      assert.equal(validateStatusInput(request, response, done).status, "INVALID_STATUS_INPUT", "Response should be invalid if username field is not provided in request.");
+      assert.equal(validateStatusInput(request, response, done).status, messages.INVALID_STATUS_INPUT.status, "Response should be invalid if username field is not provided in request.");
       assert.equal(validateStatusInput(request, response, done).errors.username, "Username field is required", "Errors should list username is required if not provided in request.");
     });
     test("# Username field is empty", function() {
       let request = {
         body: { platform: "" }
       }
-      assert.equal(validateStatusInput(request, response, done).status, "INVALID_STATUS_INPUT", "Response should be invalid if username field is empty.");
+      assert.equal(validateStatusInput(request, response, done).status, messages.INVALID_STATUS_INPUT.status, "Response should be invalid if username field is empty.");
       assert.equal(validateStatusInput(request, response, done).errors.username, "Username field is required", "Errors should list username field as required if it is empty.");
     });
     test("# Status field not provided", function() {
       let request = {
         body: {}
       };
-      assert.equal(validateStatusInput(request, response, done).status, "INVALID_STATUS_INPUT", "Response should be invalid if status is not provided.");
+      assert.equal(validateStatusInput(request, response, done).status, messages.INVALID_STATUS_INPUT.status, "Response should be invalid if status is not provided.");
       assert.equal(validateStatusInput(request, response, done).errors.status, "Status field is required", "Response should indiciate status field is required.");
     });
     test("# Status field empty", function() {
       let request = {
         body: { status: "" }
       };
-      assert.equal(validateStatusInput(request, response, done).status, "INVALID_STATUS_INPUT", "Response should be invalid if status is not provided.");
+      assert.equal(validateStatusInput(request, response, done).status, messages.INVALID_STATUS_INPUT.status, "Response should be invalid if status is not provided.");
       assert.equal(validateStatusInput(request, response, done).errors.status, "Status field is required", "Response should indiciate status field is required.");
     });
     test("# Status field is invalid", function() {
       let request = {
         body: { status: "not member" }
       };
-      assert.equal(validateStatusInput(request, response, done).status, "INVALID_STATUS_INPUT", "Response should indicate status is invalid.");
+      assert.equal(validateStatusInput(request, response, done).status, messages.INVALID_STATUS_INPUT.status, "Response should indicate status is invalid.");
       assert.equal(validateStatusInput(request, response, done).errors.status, "Status field invalid", "Response should indiciate status is invalid.");
     });
     test("# Valid status update", function() {
@@ -612,14 +612,14 @@ suite("UNIT TESTS", function() {
       let request = {
         body: {}
       };
-      assert.equal(validateEmailInput(request, response, done).status, "INVALID_EMAIL", "Response should be invalid if email field is not provided in request.");
+      assert.equal(validateEmailInput(request, response, done).status, messages.INVALID_EMAIL.status, "Response should be invalid if email field is not provided in request.");
       assert.equal(validateEmailInput(request, response, done).errors.email, "Email field is required", "Errors should list email is required if not provided in request.");
     });
     test("# Email field is empty", function() {
       let request = {
         body: { email: "" }
       }
-      assert.equal(validateEmailInput(request, response, done).status, "INVALID_EMAIL", "Response should be invalid if email field is empty.");
+      assert.equal(validateEmailInput(request, response, done).status, messages.INVALID_EMAIL.status, "Response should be invalid if email field is empty.");
       assert.equal(validateEmailInput(request, response, done).errors.email, "Email field is required", "Errors should list email field as required if it is empty.");
     });
     test("# Email is invalid", function() {
@@ -654,31 +654,31 @@ suite("UNIT TESTS", function() {
         body: { email: "valid_email@valid.com" }
       };
 
-      assert.equal(validateEmailInput(request1, response, done).status, "INVALID_EMAIL", "Response should be invalid if email contains no @ or domain.");
+      assert.equal(validateEmailInput(request1, response, done).status, messages.INVALID_EMAIL.status, "Response should be invalid if email contains no @ or domain.");
       assert.equal(validateEmailInput(request1, response, done).errors.email, "Email is invalid", "Errors should inform user that email is invalid when without a @ or domain.");
 
-      assert.equal(validateEmailInput(request2, response, done).status, "INVALID_EMAIL", "Response should be invalid if email contains no domain.");
+      assert.equal(validateEmailInput(request2, response, done).status, messages.INVALID_EMAIL.status, "Response should be invalid if email contains no domain.");
       assert.equal(validateEmailInput(request2, response, done).errors.email, "Email is invalid", "Errors should inform user that email is invalid when without a domain.");
 
-      assert.equal(validateEmailInput(request3, response, done).status, "INVALID_EMAIL", "Response should be invalid if email contains no domain specifyer (.com, etch)");
+      assert.equal(validateEmailInput(request3, response, done).status, messages.INVALID_EMAIL.status, "Response should be invalid if email contains no domain specifyer (.com, etch)");
       assert.equal(validateEmailInput(request3, response, done).errors.email, "Email is invalid", "Errors should inform user that email is invalid when without a domain specifyer (.com, etch)");
 
-      assert.equal(validateEmailInput(request4, response, done).status, "INVALID_EMAIL", "Response should be invalid if email contains extra non-alphanumeric characters after domain.");
+      assert.equal(validateEmailInput(request4, response, done).status, messages.INVALID_EMAIL.status, "Response should be invalid if email contains extra non-alphanumeric characters after domain.");
       assert.equal(validateEmailInput(request4, response, done).errors.email, "Email is invalid", "Errors should inform user that email is invalid when there are extra non-alphanumeric characters after domain.");
 
-      assert.equal(validateEmailInput(request5, response, done).status, "INVALID_EMAIL", "Response should be invalid if email contains only @.");
+      assert.equal(validateEmailInput(request5, response, done).status, messages.INVALID_EMAIL.status, "Response should be invalid if email contains only @.");
       assert.equal(validateEmailInput(request5, response, done).errors.email, "Email is invalid", "Errors should inform user that email is invalid when there is only @.");
 
-      assert.equal(validateEmailInput(request6, response, done).status, "INVALID_EMAIL", "Response should be invalid if email contains only domain.");
+      assert.equal(validateEmailInput(request6, response, done).status, messages.INVALID_EMAIL.status, "Response should be invalid if email contains only domain.");
       assert.equal(validateEmailInput(request6, response, done).errors.email, "Email is invalid", "Errors should inform user that email is invalid when there is only a domain.");
 
-      assert.equal(validateEmailInput(request7, response, done).status, "INVALID_EMAIL", "Response should be invalid if email contains only domain with extra characters.");
+      assert.equal(validateEmailInput(request7, response, done).status, messages.INVALID_EMAIL.status, "Response should be invalid if email contains only domain with extra characters.");
       assert.equal(validateEmailInput(request7, response, done).errors.email, "Email is invalid", "Errors should inform user that email is invalid when there is only a domain with extra characters.");
 
-      assert.equal(validateEmailInput(request8, response, done).status, "INVALID_EMAIL", "Response should be invalid if email contains only @ and domain.");
+      assert.equal(validateEmailInput(request8, response, done).status, messages.INVALID_EMAIL.status, "Response should be invalid if email contains only @ and domain.");
       assert.equal(validateEmailInput(request8, response, done).errors.email, "Email is invalid", "Errors should inform user that email is invalid when it only contains @ and a domain.");
 
-      assert.equal(validateEmailInput(request9, response, done).status, "INVALID_EMAIL", "Response should be invalid if email contains only @ and domain plus extra characters.");
+      assert.equal(validateEmailInput(request9, response, done).status, messages.INVALID_EMAIL.status, "Response should be invalid if email contains only @ and domain plus extra characters.");
       assert.equal(validateEmailInput(request9, response, done).errors.email, "Email is invalid", "Errors should inform user that email is invalid when it only contains @ and domain plus extra characters.");
 
       assert.equal(validateEmailInput(request10, response, done), null, "Packet.errors.email should be null if email is valid.");
@@ -689,7 +689,7 @@ suite("UNIT TESTS", function() {
         body: { email: "bitch@shit.com" }
       };
 
-      assert.equal(validateEmailInput(request, response, done).status, "PROFANE_INPUT", "Response should be invalid if input is profane.");
+      assert.equal(validateEmailInput(request, response, done).status, messages.PROFANE_INPUT.status, "Response should be invalid if input is profane.");
       assert.equal(validateEmailInput(request, response, done).errors.email, "Email may not be inappropriate", "Errors should indicate email is inappropriate.");
 
     });
@@ -707,14 +707,14 @@ suite("UNIT TESTS", function() {
       let request = {
         body: {}
       }
-      assert.equal(validatePasswordInput(request, response, done).status, "INVALID_PASSWORD_INPUT", "Response should be invalid if password field is not provided in request.");
+      assert.equal(validatePasswordInput(request, response, done).status, messages.INVALID_PASSWORD_INPUT.status, "Response should be invalid if password field is not provided in request.");
       assert.equal(validatePasswordInput(request, response, done).errors.password1, "Password field is required", "Errors should list password as required if not provided in request.");
     });
     test("# Password field is empty", function() {
       let request = {
         body: { password1: "" }
       };
-      assert.equal(validatePasswordInput(request, response, done).status, "INVALID_PASSWORD_INPUT", "Response should be invalid if password field is empty.");
+      assert.equal(validatePasswordInput(request, response, done).status, messages.INVALID_PASSWORD_INPUT.status, "Response should be invalid if password field is empty.");
       assert.equal(validatePasswordInput(request, response, done).errors.password1, "Password field is required", "Errors should list password as required if empty in request.");
     });
 
@@ -722,14 +722,14 @@ suite("UNIT TESTS", function() {
       let request = {
         body: {}
       }
-      assert.equal(validatePasswordInput(request, response, done).status, "INVALID_PASSWORD_INPUT", "Response should be invalid if confirm password field is not provided in request.");
+      assert.equal(validatePasswordInput(request, response, done).status, messages.INVALID_PASSWORD_INPUT.status, "Response should be invalid if confirm password field is not provided in request.");
       assert.equal(validatePasswordInput(request, response, done).errors.password2, "Confirm password field is required", "Errors should list confirm password as required if not provided in request.");
     });
     test("# Confirm password field is empty", function() {
       let request = {
         body: { password2: "" }
       };
-      assert.equal(validatePasswordInput(request, response, done).status, "INVALID_PASSWORD_INPUT", "Response should be invalid if confirm password field is empty.");
+      assert.equal(validatePasswordInput(request, response, done).status, messages.INVALID_PASSWORD_INPUT.status, "Response should be invalid if confirm password field is empty.");
       assert.equal(validatePasswordInput(request, response, done).errors.password1, "Password field is required", "Errors should list confirm password as required if empty in request.");
     });
 
@@ -743,10 +743,10 @@ suite("UNIT TESTS", function() {
       let request3 = {
         body: { password1: "justright" }
       };
-      assert.equal(validatePasswordInput(request1, response, done).status, "INVALID_PASSWORD_INPUT", "Response should be invalid if password is less than six characters.");
+      assert.equal(validatePasswordInput(request1, response, done).status, messages.INVALID_PASSWORD_INPUT.status, "Response should be invalid if password is less than six characters.");
       assert.equal(validatePasswordInput(request1, response, done).errors.password1, "Password must be at least 6 characters and at most 30", "Errors should list password as too short.");
 
-      assert.equal(validatePasswordInput(request2, response, done).status, "INVALID_PASSWORD_INPUT", "Response should be invalid if password is more than thirty characters.");
+      assert.equal(validatePasswordInput(request2, response, done).status, messages.INVALID_PASSWORD_INPUT.status, "Response should be invalid if password is more than thirty characters.");
       assert.equal(validatePasswordInput(request2, response, done).errors.password1, "Password must be at least 6 characters and at most 30", "Errors should list password as too long.");
 
       assert.equal(validatePasswordInput(request3, response, done).errors.password1, null, "If password is in appropriate parameters, errors.password1 should be null.");
@@ -759,7 +759,7 @@ suite("UNIT TESTS", function() {
         body: { password1: "sixchars", password2: "sixchars" }
       };
 
-      assert.equal(validatePasswordInput(request1, response, done).status, "INVALID_PASSWORD_INPUT", "Response should be invalid if passwords are not equal.");
+      assert.equal(validatePasswordInput(request1, response, done).status, messages.INVALID_PASSWORD_INPUT.status, "Response should be invalid if passwords are not equal.");
       assert.equal(validatePasswordInput(request1, response, done).errors.password2, "Passwords must match", "Errors should list passwords as not matching if they do not.");
 
       assert.equal(validatePasswordInput(request2, response, done), null, "If passwords match, password2 should not list any errors.");
@@ -778,7 +778,7 @@ suite("UNIT TESTS", function() {
       let request = {
         body: {}
       }
-      assert.equal(validateAttackerInput(request, response, done).status, "INVALID_ATTACKER_ROLE", "Response should be invalid if attacker role field is not present.");
+      assert.equal(validateAttackerInput(request, response, done).status, messages.INVALID_ATTACKER_ROLE.status, "Response should be invalid if attacker role field is not present.");
       assert.equal(validateAttackerInput(request, response, done).errors.role, "Role field is invalid", "Errors should indicate attacker role is required.");
     });
 
@@ -786,7 +786,7 @@ suite("UNIT TESTS", function() {
       let request = {
         body: { role: "" }
       };
-      assert.equal(validateAttackerInput(request, response, done).status, "INVALID_ATTACKER_ROLE", "Response should be invalid if attacker role field is empty.");
+      assert.equal(validateAttackerInput(request, response, done).status, messages.INVALID_ATTACKER_ROLE.status, "Response should be invalid if attacker role field is empty.");
       assert.equal(validateAttackerInput(request, response, done).errors.role, "Role field is invalid", "Errors should indicate attacker role is required.");
     });
 
@@ -794,7 +794,7 @@ suite("UNIT TESTS", function() {
       let request = {
         body: { role: "SOMETHING" }
       }
-      assert.equal(validateAttackerInput(request, response, done).status, "INVALID_ATTACKER_ROLE", "Response should be invalid if attacker role is invalid.");
+      assert.equal(validateAttackerInput(request, response, done).status, messages.INVALID_ATTACKER_ROLE.status, "Response should be invalid if attacker role is invalid.");
       assert.equal(validateAttackerInput(request, response, done).errors.role, "Role field is invalid", "Errors should indicate attacker role is invalid.");
     });
 
@@ -818,7 +818,7 @@ suite("UNIT TESTS", function() {
       let request = {
         body: {}
       }
-      assert.equal(validateDefenderInput(request, response, done).status, "INVALID_DEFENDER_ROLE", "Response should be invalid if attacker role field is not present.");
+      assert.equal(validateDefenderInput(request, response, done).status, messages.INVALID_DEFENDER_ROLE.status, "Response should be invalid if attacker role field is not present.");
       assert.equal(validateDefenderInput(request, response, done).errors.role, "Role field is invalid", "Errors should indicate attacker role is required.");
     });
 
@@ -826,7 +826,7 @@ suite("UNIT TESTS", function() {
       let request = {
         body: { role: "" }
       };
-      assert.equal(validateDefenderInput(request, response, done).status, "INVALID_DEFENDER_ROLE", "Response should be invalid if attacker role field is empty.");
+      assert.equal(validateDefenderInput(request, response, done).status, messages.INVALID_DEFENDER_ROLE.status, "Response should be invalid if attacker role field is empty.");
       assert.equal(validateDefenderInput(request, response, done).errors.role, "Role field is invalid", "Errors should indicate attacker role is required.");
     });
 
@@ -834,7 +834,7 @@ suite("UNIT TESTS", function() {
       let request = {
         body: { role: "SOMETHING" }
       }
-      assert.equal(validateDefenderInput(request, response, done).status, "INVALID_DEFENDER_ROLE", "Response should be invalid if attacker role is invalid.");
+      assert.equal(validateDefenderInput(request, response, done).status, messages.INVALID_DEFENDER_ROLE.status, "Response should be invalid if attacker role is invalid.");
       assert.equal(validateDefenderInput(request, response, done).errors.role, "Role field is invalid", "Errors should indicate attacker role is invalid.");
     });
 
@@ -857,7 +857,7 @@ suite("UNIT TESTS", function() {
       let request = {
         body: {}
       }
-      assert.equal(validateAttackersInput(request, response, done).status, "INVALID_ATTACKERS", "Response should be invalid if attackers list not provided in request.");
+      assert.equal(validateAttackersInput(request, response, done).status, messages.INVALID_ATTACKERS.status, "Response should be invalid if attackers list not provided in request.");
       assert.equal(validateAttackersInput(request, response, done).errors.attackers, "Attackers list is required", "Response should indicate attackers list is required if not provided in request.");
     });
 
@@ -865,7 +865,7 @@ suite("UNIT TESTS", function() {
       let request = {
         body: { attackers: [] }
       }
-      assert.equal(validateAttackersInput(request, response, done).status, "INVALID_ATTACKERS", "Response should be invalid if attackers list is empty.");
+      assert.equal(validateAttackersInput(request, response, done).status, messages.INVALID_ATTACKERS.status, "Response should be invalid if attackers list is empty.");
       assert.equal(validateAttackersInput(request, response, done).errors.attackers, "Attackers list is required", "Response should indiciate attackers list cannot be empty.");
     });
 
@@ -873,7 +873,7 @@ suite("UNIT TESTS", function() {
       let request = {
         body: { attackers: ["MARU", "MAVERICKK", "BUUCK"] }
       }
-      assert.equal(validateAttackersInput(request, response, done).status, "INVALID_ATTACKERS", "Response should be invalid if attackers list is.");
+      assert.equal(validateAttackersInput(request, response, done).status, messages.INVALID_ATTACKERS.status, "Response should be invalid if attackers list is.");
       assert.equal(validateAttackersInput(request, response, done).errors.attackers, "Attackers list is invalid", "Response should indicate attackers list is invalid.");
     });
 
@@ -896,7 +896,7 @@ suite("UNIT TESTS", function() {
       let request = {
         body: {}
       }
-      assert.equal(validateDefendersInput(request, response, done).status, "INVALID_DEFENDERS", "Response should be invalid if defenders list not provided in request.");
+      assert.equal(validateDefendersInput(request, response, done).status, messages.INVALID_DEFENDERS.status, "Response should be invalid if defenders list not provided in request.");
       assert.equal(validateDefendersInput(request, response, done).errors.defenders, "Defenders list is required", "Response should indicate defenders list is required if not provided in request.");
     });
 
@@ -904,7 +904,7 @@ suite("UNIT TESTS", function() {
       let request = {
         body: { defenders: [] }
       }
-      assert.equal(validateDefendersInput(request, response, done).status, "INVALID_DEFENDERS", "Response should be invalid if defenders list is empty.");
+      assert.equal(validateDefendersInput(request, response, done).status, messages.INVALID_DEFENDERS.status, "Response should be invalid if defenders list is empty.");
       assert.equal(validateDefendersInput(request, response, done).errors.defenders, "Defenders list is required", "Response should indiciate defenders list cannot be empty.");
     });
 
@@ -912,7 +912,7 @@ suite("UNIT TESTS", function() {
       let request = {
         body: { defenders: ["MARU", "MAVERICKK", "BUUCK"] }
       }
-      assert.equal(validateDefendersInput(request, response, done).status, "INVALID_DEFENDERS", "Response should be invalid if defenders list is.");
+      assert.equal(validateDefendersInput(request, response, done).status, messages.INVALID_DEFENDERS.status, "Response should be invalid if defenders list is.");
       assert.equal(validateDefendersInput(request, response, done).errors.defenders, "Defenders list is invalid", "Response should indicate defenders list is invalid.");
     });
 
@@ -922,36 +922,6 @@ suite("UNIT TESTS", function() {
       }
       assert.equal(validateDefendersInput(request, response, done), null, "Response should be valid if defenders list is.");
     })
-  });
-
-  suite("Create Strategy", function() {
-    let validateStrategyInput = validation.validateStrategyInput;
-    let response = {
-      json: function() {},
-      end: function() {}
-    }
-    let done = function() {};
-
-    test("# Invalid input", function() {
-      let request = {
-        body: {
-          strategy: {
-            name: "",
-            type: "",
-            objectives: [],
-            roles: [],
-            operators: [],
-            execution: ""
-          }
-        }
-      }
-      assert.equal(validateStrategyInput(request, response, done).status, "INVALID_STRATEGY", "Response should indicate invalid strategy.");
-      assert.equal(validateStrategyInput(request, response, done).errors.name, "Name field is required");
-      assert.equal(validateStrategyInput(request, response, done).errors.type, "Type field is required");
-      assert.equal(validateStrategyInput(request, response, done).errors.execution, "Execution field is required");
-      assert.equal(validateStrategyInput(request, response, done).errors.roles, "Roles field is invalid");
-      assert.equal(validateStrategyInput(request, response, done).errors.operators, "Operators field is invalid");
-    });
   });
 
   suite("Utility Functions", function() {

@@ -8,6 +8,10 @@ const assert = chai.assert;
 const { issueJWT, genVerificationLink } = require("../config/utilities.js");
 const mongoose = require("mongoose");
 
+const messages = require("../messages/messages.js");
+const emails = require("../messages/emails.js");
+const errors = require("../messages/errors.js");
+
 const server = require("../server.js");
 
 suite("FUNCTIONAL TESTS", function() {
@@ -68,7 +72,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if JWT is valid.");
-            assert.equal(response.body.status, "TEAM_CREATED", "Response object should be TEAM_CREATED when input is valid.");
+            assert.equal(response.body.status, messages.TEAM_CREATED.status, "Response object should be TEAM_CREATED when input is valid.");
             dev_team_code = response.body.team_code;
             test_team_code = response.body.team_code;
             done();
@@ -104,7 +108,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if JWT is valid but name field is not provided.");
-            assert.equal(response.body.status, "INVALID_TEAM_INPUT", "Response object should be INVALID_TEAM_INPUT if name field is not provided.");
+            assert.equal(response.body.status, messages.INVALID_TEAM_INPUT.status, "Response object should be INVALID_TEAM_INPUT if name field is not provided.");
             assert.isOk(response.body.errors, "Response object should have an errors object if name field is not provided.");
             done();
           });
@@ -117,7 +121,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if JWT is valid but name field is empty.");
-            assert.equal(response.body.status, "INVALID_TEAM_INPUT", "Response object should be INVALID_TEAM_INPUT if name field is empty.");
+            assert.equal(response.body.status, messages.INVALID_TEAM_INPUT.status, "Response object should be INVALID_TEAM_INPUT if name field is empty.");
             assert.isOk(response.body.errors, "Response object should have an errors object if name field is empty.");
             done();
           });
@@ -130,7 +134,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if JWT is valid but name is inappropriate.");
-            assert.equal(response.body.status, "PROFANE_TEAM_INPUT", "Response object should be PROFANE_TEAM_INPUT if name is profane.");
+            assert.equal(response.body.status, messages.PROFANE_TEAM_INPUT.status, "Response object should be PROFANE_TEAM_INPUT if name is profane.");
             assert.isOk(response.body.errors, "Response object should have an errors object if name field is profrane.");
             done();
           });
@@ -143,7 +147,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if JWT is valid but user is not verified.");
-            assert.equal(response.body.status, "USER_NOT_VERIFIED", "Response object should be USER_NOT_VERIFIED if user is not verified.");
+            assert.equal(response.body.status, messages.USER_NOT_VERIFIED.status, "Response object should be USER_NOT_VERIFIED if user is not verified.");
             done();
           })
       });
@@ -155,7 +159,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if JWT is valid but user has a team already.");
-            assert.equal(response.body.status, "USER_HAS_TEAM", "Response object should be USER_HAS_TEAM if user has a team.");
+            assert.equal(response.body.status, messages.USER_HAS_TEAM.status, "Response object should be USER_HAS_TEAM if user has a team.");
             done();
           });
       });
@@ -167,7 +171,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if JWT is valid.");
-            assert.equal(response.body.status, "TEAM_ALREADY_EXISTS", "Response object should be TEAM_ALREADY_EXISTS if team already exists.");
+            assert.equal(response.body.status, messages.TEAM_EXISTS.status, "Response object should be TEAM_ALREADY_EXISTS if team already exists.");
             done();
           });
       });
@@ -243,7 +247,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if the JWT is valid and the input is valid.");
-            assert.equal(response.body.status, "TEAM_FOUND", "Response should indicate team has been sent if inputs are valid.");
+            assert.equal(response.body.status, messages.TEAM_FOUND.status, "Response should indicate team has been sent if inputs are valid.");
             done();
           });
       });
@@ -275,7 +279,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if JWT is valid but user is unverified.");
-            assert.equal(response.body.status, "USER_NOT_VERIFIED", "Response should indicate user is not verified if user is not verified.");
+            assert.equal(response.body.status, messages.USER_NOT_VERIFIED.status, "Response should indicate user is not verified if user is not verified.");
             done();
           });
       });
@@ -286,7 +290,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if JWT is valid but user is not on team.");
-            assert.equal(response.body.status, "USER_NOT_QUALIFIED", "Response should indicate user is not qualified if they are not on team.");
+            assert.equal(response.body.status, messages.PERMISSION_DENIED.status, "Response should indicate user is not qualified if they are not on team.");
             done();
           });
       });
@@ -297,7 +301,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if JWT is valid but user has no team.");
-            assert.equal(response.body.status, "USER_HAS_NO_TEAM", "Response should indicate user has no team if they have no team.");
+            assert.equal(response.body.status, messages.USER_HAS_NO_TEAM.status, "Response should indicate user has no team if they have no team.");
             done();
           });
       })
@@ -308,7 +312,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
               assert.equal(response.status, 200, "Response should be 200 if JWT is valid but team does not exist.");
-              assert.equal(response.body.status, "TEAM_NOT_FOUND", "Response should indicate team does not exist if it does not.");
+              assert.equal(response.body.status, messages.TEAM_NOT_FOUND.status, "Response should indicate team does not exist if it does not.");
             done();
           });
       });
@@ -393,7 +397,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if JWT is valid.");
-            assert.equal(response.body.status, "TEAM_NAME_UPDATED", "Response object should be TEAM_NAME_UPDATED when input is valid.");
+            assert.equal(response.body.status, messages.TEAM_NAME_UPDATED.status, "Response object should be TEAM_NAME_UPDATED when input is valid.");
             done();
           });
       });
@@ -405,7 +409,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if JWT is valid.");
-            assert.equal(response.body.status, "TEAM_NAME_UPDATED", "Response object should be TEAM_NAME_UPDATED when input is valid.");
+            assert.equal(response.body.status, messages.TEAM_NAME_UPDATED.status, "Response object should be TEAM_NAME_UPDATED when input is valid.");
             done();
           })
       });
@@ -417,7 +421,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if JWT is valid but name already exists.");
-            assert.equal(response.body.status, "TEAM_ALREADY_EXISTS", "Response should indicate team with new name already exists.");
+            assert.equal(response.body.status, messages.TEAM_EXISTS.status, "Response should indicate team with new name already exists.");
             done();
           });
       });
@@ -451,7 +455,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if JWT is valid but name field is not provided.");
-            assert.equal(response.body.status, "INVALID_TEAM_INPUT", "Response object should be INVALID_TEAM_INPUT if name field is not provided.");
+            assert.equal(response.body.status, messages.INVALID_TEAM_INPUT.status, "Response object should be INVALID_TEAM_INPUT if name field is not provided.");
             assert.isOk(response.body.errors, "Response object should have an errors object if name field is not provided.");
             done();
           });
@@ -464,7 +468,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if JWT is valid but name field is empty.");
-            assert.equal(response.body.status, "INVALID_TEAM_INPUT", "Response object should be INVALID_TEAM_INPUT if name field is empty.");
+            assert.equal(response.body.status, messages.INVALID_TEAM_INPUT.status, "Response object should be INVALID_TEAM_INPUT if name field is empty.");
             assert.isOk(response.body.errors, "Response object should have an errors object if name field is empty.");
             done();
           });
@@ -477,7 +481,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if JWT is valid but name is inappropriate.");
-            assert.equal(response.body.status, "PROFANE_TEAM_INPUT", "Response object should be PROFANE_TEAM_INPUT if name is profane.");
+            assert.equal(response.body.status, messages.PROFANE_TEAM_INPUT.status, "Response object should be PROFANE_TEAM_INPUT if name is profane.");
             assert.isOk(response.body.errors, "Response object should have an errors object if name field is profrane.");
             done();
           });
@@ -490,7 +494,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if JWT is valid but user is not verified.");
-            assert.equal(response.body.status, "USER_NOT_VERIFIED", "Response object should be USER_NOT_VERIFIED if user is not verified.");
+            assert.equal(response.body.status, messages.USER_NOT_VERIFIED.status, "Response object should be USER_NOT_VERIFIED if user is not verified.");
             done();
           })
       });
@@ -502,7 +506,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if JWT is valid but user is not on team.");
-            assert.equal(response.body.status, "USER_NOT_QUALIFIED", "Response should indicate user is not qualified if they are not on team.");
+            assert.equal(response.body.status, messages.PERMISSION_DENIED.status, "Response should indicate user is not qualified if they are not on team.");
             done();
           });
       });
@@ -514,7 +518,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if JWT is valid but user has no team.");
-            assert.equal(response.body.status, "USER_HAS_NO_TEAM", "Response should indicate user has no team if they have no team.");
+            assert.equal(response.body.status, messages.USER_HAS_NO_TEAM.status, "Response should indicate user has no team if they have no team.");
             done();
           });
       })
@@ -526,7 +530,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
               assert.equal(response.status, 200, "Response should be 200 if JWT is valid but team does not exist.");
-              assert.equal(response.body.status, "TEAM_NOT_FOUND", "Response should indicate team does not exist if it does not.");
+              assert.equal(response.body.status, messages.TEAM_NOT_FOUND.status, "Response should indicate team does not exist if it does not.");
             done();
           });
       });
@@ -538,7 +542,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if JWT is valid but user is not admin.");
-            assert.equal(response.body.status, "USER_NOT_QUALIFIED", "Response should indicate that user is not qualified if they are not.");
+            assert.equal(response.body.status, messages.PERMISSION_DENIED.status, "Response should indicate that user is not qualified if they are not.");
             done();
           });
       });
@@ -586,7 +590,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if input is valid.");
-            assert.equal(response.body.status, "USER_BLOCKED", "Response should return valid blocking when input data is valid.");
+            assert.equal(response.body.status, messages.USER_BLOCKED.status, "Response should return valid blocking when input data is valid.");
             done();
           });
       });
@@ -662,7 +666,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if user has joined succesfully.");
-            assert.equal(response.body.status, "TEAM_JOINED", "Response should indicate user has joined team.");
+            assert.equal(response.body.status, messages.TEAM_JOINED.status, "Response should indicate user has joined team.");
             join_team_user.team_code = response.body.team_code;
             joinTeamJWT = issueJWT(join_team_user).token;
             done();
@@ -697,7 +701,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if JWT is valid but join code is not present in request.");
-            assert.equal(response.body.status, "INVALID_JOIN_CODE", "Response object should state INVALID_JOIN_CODE if it is not present in request.");
+            assert.equal(response.body.status, messages.INVALID_JOIN_CODE.status, "Response object should state INVALID_JOIN_CODE if it is not present in request.");
             assert.equal(response.body.errors.join_code, "Join code field is required", "Errors object should identify join code as required.");
             done();
           });
@@ -710,7 +714,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if JWT is valid but join code field is empty.");
-            assert.equal(response.body.status, "INVALID_JOIN_CODE", "Response object should state INVALID_JOIN_CODE if it is empty.");
+            assert.equal(response.body.status, messages.INVALID_JOIN_CODE.status, "Response object should state INVALID_JOIN_CODE if it is empty.");
             assert.equal(response.body.errors.join_code, "Join code field is required", "Errors object should identify join code as required.");
             done();
           });
@@ -723,7 +727,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if JWT is valid but join code is too short.");
-            assert.equal(response.body.status, "INVALID_JOIN_CODE", "Response object should state INVALID_JOIN_CODE if it is too short.");
+            assert.equal(response.body.status, messages.INVALID_JOIN_CODE.status, "Response object should state INVALID_JOIN_CODE if it is too short.");
             assert.equal(response.body.errors.join_code, "Join code must be exactly 8 digits", "Errors object should identify join code as too short if it is.");
             done();
           });
@@ -736,7 +740,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if JWT is valid but join code is too long.");
-            assert.equal(response.body.status, "INVALID_JOIN_CODE", "Response object should state INVALID_JOIN_CODE if it is too long.");
+            assert.equal(response.body.status, messages.INVALID_JOIN_CODE.status, "Response object should state INVALID_JOIN_CODE if it is too long.");
             assert.equal(response.body.errors.join_code, "Join code must be exactly 8 digits", "Errors object should identify join code as too long if it is.");
             done();
           });
@@ -749,7 +753,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if JWT is valid but code is non-numeric.");
-            assert.equal(response.body.status, "INVALID_JOIN_CODE", "Response object should indicate join code is invalid if it contains non-numeric characters.");
+            assert.equal(response.body.status, messages.INVALID_JOIN_CODE.status, "Response object should indicate join code is invalid if it contains non-numeric characters.");
             assert.equal(response.body.errors.join_code, "Join code may not contain non-number characters", "Errors object should state join code may not contain alpha characters.");
             done();
           });
@@ -762,7 +766,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if JWT is valid but user is unverified.");
-            assert.equal(response.body.status, "USER_NOT_VERIFIED", "Response should indicate user is not verified if user is not verified.");
+            assert.equal(response.body.status, messages.USER_NOT_VERIFIED.status, "Response should indicate user is not verified if user is not verified.");
             done();
           });
       });
@@ -786,7 +790,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if JWT is valid but user has a team already.");
-            assert.equal(response.body.status, "USER_HAS_TEAM", "Response object should be USER_HAS_TEAM if user has a team.");
+            assert.equal(response.body.status, messages.USER_HAS_TEAM.status, "Response object should be USER_HAS_TEAM if user has a team.");
             done();
           });
       });
@@ -798,7 +802,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if platforms do not match.");
-            assert.equal(response.body.status, "PLATFORM_DOES_NOT_MATCH", "Response should indicate platforms do not match.");
+            assert.equal(response.body.status, messages.PLATFORM_DOES_NOT_MATCH.status, "Response should indicate platforms do not match.");
             done();
           });
       });
@@ -810,7 +814,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if JWT is valid but user is blocked.");
-            assert.equal(response.body.status, "UNABLE_TO_JOIN_TEAM", "Response object should vaguely indicated use has been blocked.");
+            assert.equal(response.body.status, messages.PERMISSION_DENIED.status, "Response object should vaguely indicated use has been blocked.");
             done();
           });
       });
@@ -885,7 +889,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if JWT is valid but user is unverified.");
-            assert.equal(response.body.status, "USER_NOT_VERIFIED", "Response should indicate user is not verified if user is not verified.");
+            assert.equal(response.body.status, messages.USER_NOT_VERIFIED.status, "Response should indicate user is not verified if user is not verified.");
             done();
           });
       });
@@ -896,7 +900,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if user has no team.");
-            assert.equal(response.body.status, "USER_HAS_NO_TEAM", "Response should indicate user has no team.");
+            assert.equal(response.body.status, messages.USER_HAS_NO_TEAM.status, "Response should indicate user has no team.");
             done();
           });
       });
@@ -918,7 +922,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if team is not found.");
-            assert.equal(response.body.status, "TEAM_NOT_FOUND", "Response should indicate team is not found.");
+            assert.equal(response.body.status, messages.TEAM_NOT_FOUND.status, "Response should indicate team is not found.");
             done();
           });
       });
@@ -929,7 +933,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if user has left team.");
-            assert.equal(response.body.status, "USER_LEFT_TEAM", "Response should indicate user has left team.");
+            assert.equal(response.body.status, messages.TEAM_LEFT.status, "Response should indicate user has left team.");
             done();
           });
       });
@@ -1005,7 +1009,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if JWT is valid.");
-            assert.equal(response.body.status, "TEAM_DELETED", "Response object should be TEAM_DELETED when input is valid.");
+            assert.equal(response.body.status, messages.TEAM_DELETED.status, "Response object should be TEAM_DELETED when input is valid.");
             done();
           });
       });
@@ -1037,7 +1041,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if JWT is valid but user is unverified.");
-            assert.equal(response.body.status, "USER_NOT_VERIFIED", "Response should indicate user is not verified if user is not verified.");
+            assert.equal(response.body.status, messages.USER_NOT_VERIFIED.status, "Response should indicate user is not verified if user is not verified.");
             done();
           });
       });
@@ -1048,7 +1052,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if JWT is valid but user is not an admin.");
-            assert.equal(response.body.status, "USER_NOT_QUALIFIED", "Response should indicate user is not qualified if they are not an admin.");
+            assert.equal(response.body.status, messages.PERMISSION_DENIED.status, "Response should indicate user is not qualified if they are not an admin.");
             done();
           });
       });
@@ -1059,7 +1063,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if JWT is valid but user is not on team.");
-            assert.equal(response.body.status, "USER_NOT_QUALIFIED", "Response should indicate user is not qualified if they are not on team.");
+            assert.equal(response.body.status, messages.PERMISSION_DENIED.status, "Response should indicate user is not qualified if they are not on team.");
             done();
           });
       });
@@ -1070,7 +1074,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if JWT is valid but user has no team.");
-            assert.equal(response.body.status, "USER_HAS_NO_TEAM", "Response should indicate user has no team if they have no team.");
+            assert.equal(response.body.status, messages.USER_HAS_NO_TEAM.status, "Response should indicate user has no team if they have no team.");
             done();
           });
       })
@@ -1081,7 +1085,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
               assert.equal(response.status, 200, "Response should be 200 if JWT is valid but team does not exist.");
-              assert.equal(response.body.status, "TEAM_NOT_FOUND", "Response should indicate team does not exist if it does not.");
+              assert.equal(response.body.status, messages.TEAM_NOT_FOUND.status, "Response should indicate team does not exist if it does not.");
             done();
           });
       });
@@ -1098,7 +1102,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if username field not provided.");
-            assert.equal(response.body.status, "INVALID_REGISTRATION", "Response should indicate registration is invalid if username is not in request.");
+            assert.equal(response.body.status, messages.INVALID_REGISTRATION.status, "Response should indicate registration is invalid if username is not in request.");
             assert.equal(response.body.errors.username, "Username field is required", "Errors should indicate username field is required if username is not in request.");
             done();
           });
@@ -1110,7 +1114,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if username field is empty.");
-            assert.equal(response.body.status, "INVALID_REGISTRATION", "Response should indicate registration is invalid if username is empty.");
+            assert.equal(response.body.status, messages.INVALID_REGISTRATION.status, "Response should indicate registration is invalid if username is empty.");
             assert.equal(response.body.errors.username, "Username field is required", "Errors should indicate username field is required if username is empty.");
             done();
           });
@@ -1122,7 +1126,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if email field is not in request.");
-            assert.equal(response.body.status, "INVALID_REGISTRATION", "Response should indicate invalid registration if email not in request.");
+            assert.equal(response.body.status, messages.INVALID_REGISTRATION.status, "Response should indicate invalid registration if email not in request.");
             assert.equal(response.body.errors.email, "Email field is required", "Errors should indicate email is required.");
             done();
           });
@@ -1134,7 +1138,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if email field is empty.");
-            assert.equal(response.body.status, "INVALID_REGISTRATION", "Response should indicate invalid registration if email is empty.");
+            assert.equal(response.body.status, messages.INVALID_REGISTRATION.status, "Response should indicate invalid registration if email is empty.");
             assert.equal(response.body.errors.email, "Email field is required", "Errors should indicate email is required.");
             done();
           });
@@ -1146,7 +1150,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if email field is invalid.");
-            assert.equal(response.body.status, "INVALID_REGISTRATION", "Response should indicate invalid registration if email is invalid.");
+            assert.equal(response.body.status, messages.INVALID_REGISTRATION.status, "Response should indicate invalid registration if email is invalid.");
             assert.equal(response.body.errors.email, "Email is invalid", "Errors should indicate email is invalid.");
             done();
           });
@@ -1158,7 +1162,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if password field is not in request.");
-            assert.equal(response.body.status, "INVALID_REGISTRATION", "Response should indicate invalid registration if password field is not provided.");
+            assert.equal(response.body.status, messages.INVALID_REGISTRATION.status, "Response should indicate invalid registration if password field is not provided.");
             assert.equal(response.body.errors.password1, "Password field is required", "Errors should indicate password is required.");
             done();
           });
@@ -1170,7 +1174,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if password field is empty.");
-            assert.equal(response.body.status, "INVALID_REGISTRATION", "Response should indicate invalid registration if password field is empty.");
+            assert.equal(response.body.status, messages.INVALID_REGISTRATION.status, "Response should indicate invalid registration if password field is empty.");
             assert.equal(response.body.errors.password1, "Password field is required", "Errors should indicate password is required.");
             done();
           });
@@ -1182,7 +1186,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if password is wrong length.");
-            assert.equal(response.body.status, "INVALID_REGISTRATION", "Response should indicate invalid registration if password is wrong length.");
+            assert.equal(response.body.status, messages.INVALID_REGISTRATION.status, "Response should indicate invalid registration if password is wrong length.");
             assert.equal(response.body.errors.password1, "Password must be at least 6 characters and at most 30", "Errors should indicate password is wrong length.");
             done();
           });
@@ -1194,7 +1198,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if confirm password field not included.");
-            assert.equal(response.body.status, "INVALID_REGISTRATION", "Response should indicate registration is invalid if confirm password not included.");
+            assert.equal(response.body.status, messages.INVALID_REGISTRATION.status, "Response should indicate registration is invalid if confirm password not included.");
             assert.equal(response.body.errors.password2, "Confirm password field is required", "Errors should indicate confirm password field is required.");
             done();
           });
@@ -1206,7 +1210,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if confirm password field is empty.");
-            assert.equal(response.body.status, "INVALID_REGISTRATION", "Response should indicate registration is invalid if confirm password field is empty.");
+            assert.equal(response.body.status, messages.INVALID_REGISTRATION.status, "Response should indicate registration is invalid if confirm password field is empty.");
             assert.equal(response.body.errors.password2, "Confirm password field is required", "Errors should indicate confirm password field is required.");
             done();
           });
@@ -1218,7 +1222,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if passwords do not match.");
-            assert.equal(response.body.status, "INVALID_REGISTRATION", "Response should indicate passwords do not match.");
+            assert.equal(response.body.status, messages.INVALID_REGISTRATION.status, "Response should indicate passwords do not match.");
             assert.equal(response.body.errors.password2, "Passwords must match", "Errors should indicate passwords do not match.");
             done();
           });
@@ -1230,7 +1234,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if platform is not provided.");
-            assert.equal(response.body.status, "INVALID_REGISTRATION", "Response should indicate registration is invalid if platform is not required.");
+            assert.equal(response.body.status, messages.INVALID_REGISTRATION.status, "Response should indicate registration is invalid if platform is not required.");
             assert.equal(response.body.errors.platform, "Platform field is required", "Errors should indicate platform field is required.");
             done();
           });
@@ -1242,7 +1246,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if platform is empty.");
-            assert.equal(response.body.status, "INVALID_REGISTRATION", "Response should indicate registration is invalid if platform is empty.");
+            assert.equal(response.body.status, messages.INVALID_REGISTRATION.status, "Response should indicate registration is invalid if platform is empty.");
             assert.equal(response.body.errors.platform, "Platform field is required", "Errors should indicate platform field is required.");
             done();
           });
@@ -1254,7 +1258,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if platform is invalid.");
-            assert.equal(response.body.status, "INVALID_REGISTRATION", "Response should indicate registration is invalid if platform is invalid.");
+            assert.equal(response.body.status, messages.INVALID_REGISTRATION.status, "Response should indicate registration is invalid if platform is invalid.");
             assert.equal(response.body.errors.platform, "The only platforms accepted are Xbox, PC, or PS4", "Errors should indicate platform is invalid.");
             done();
           });
@@ -1266,7 +1270,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if input is profane.");
-            assert.equal(response.body.status, "PROFANE_INPUT", "Response should indicate input is inappropriate.");
+            assert.equal(response.body.status, messages.PROFANE_INPUT.status, "Response should indicate input is inappropriate.");
             assert.equal(response.body.errors.email, "Email may not be inappropriate", "Errors should indicate email may not be inappropriate.");
             assert.equal(response.body.errors.username, "Username may not be inappropriate", "Errors should indicate username may not be inappropriate.");
             done();
@@ -1279,7 +1283,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if user is duplicate (email).");
-            assert.equal(response.body.status, "EXISTING_USER", "Response should indicate user already exists if email has already been registered.");
+            assert.equal(response.body.status, messages.EXISTING_USER.status, "Response should indicate user already exists if email has already been registered.");
             done();
           });
       });
@@ -1290,7 +1294,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if user is duplicate (username).");
-            assert.equal(response.body.status, "EXISTING_USER", "Response should indicate user already exists if username has already been registered.");
+            assert.equal(response.body.status, messages.EXISTING_USER.status, "Response should indicate user already exists if username has already been registered.");
             done();
           });
       });
@@ -1310,7 +1314,7 @@ suite("FUNCTIONAL TESTS", function() {
             newUser._id = mongoose.Types.ObjectId(response.body._id);
             newUserJWT = issueJWT(newUser).token;
             assert.equal(response.status, 200, "Response should be 200 if registration input is valid.");
-            assert.equal(response.body.status, "USER_REGISTERED", "If user is registered succesfully response should indicate such.");
+            assert.equal(response.body.status, messages.USER_REGISTERED.status, "If user is registered succesfully response should indicate such.");
             done();
           });
       });
@@ -1346,7 +1350,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if email field is not in request.");
-            assert.equal(response.body.status, "INVALID_LOGIN", "Response should indicate invalid login if email not in request.");
+            assert.equal(response.body.status, messages.INVALID_LOGIN.status, "Response should indicate invalid login if email not in request.");
             assert.equal(response.body.errors.email, "Email field is required", "Errors should indicate email is required.");
             done();
           });
@@ -1358,7 +1362,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if email field is empty.");
-            assert.equal(response.body.status, "INVALID_LOGIN", "Response should indicate invalid login if email is empty.");
+            assert.equal(response.body.status, messages.INVALID_LOGIN.status, "Response should indicate invalid login if email is empty.");
             assert.equal(response.body.errors.email, "Email field is required", "Errors should indicate email is required.");
             done();
           });
@@ -1370,7 +1374,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if email field is invalid.");
-            assert.equal(response.body.status, "INVALID_LOGIN", "Response should indicate invalid login if email is invalid.");
+            assert.equal(response.body.status, messages.INVALID_LOGIN.status, "Response should indicate invalid login if email is invalid.");
             assert.equal(response.body.errors.email, "Email is invalid", "Errors should indicate email is invalid.");
             done();
           });
@@ -1382,7 +1386,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if password field is not in request.");
-            assert.equal(response.body.status, "INVALID_LOGIN", "Response should indicate invalid login if password field is not provided.");
+            assert.equal(response.body.status, messages.INVALID_LOGIN.status, "Response should indicate invalid login if password field is not provided.");
             assert.equal(response.body.errors.password, "Password field is required", "Errors should indicate password is required.");
             done();
           });
@@ -1394,7 +1398,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if password field is empty.");
-            assert.equal(response.body.status, "INVALID_LOGIN", "Response should indicate invalid login if password field is empty.");
+            assert.equal(response.body.status, messages.INVALID_LOGIN.status, "Response should indicate invalid login if password field is empty.");
             assert.equal(response.body.errors.password, "Password field is required", "Errors should indicate password is required.");
             done();
           });
@@ -1406,7 +1410,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if user is not found.");
-            assert.equal(response.body.status, "USER_NOT_FOUND", "Response should indicate user not found if user does not exist.");
+            assert.equal(response.body.status, messages.USER_NOT_FOUND.status, "Response should indicate user not found if user does not exist.");
             done();
           });
       });
@@ -1417,7 +1421,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if password is incorrect.");
-            assert.equal(response.body.status, "INCORRECT_PASSWORD", "Response should indicate password is incorrect.");
+            assert.equal(response.body.status, messages.INCORRECT_PASSWORD.status, "Response should indicate password is incorrect.");
             done();
           })
       });
@@ -1428,7 +1432,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if login is valid.");
-            assert.equal(response.body.status, "TOKEN_ISSUED", "Response should indicate token has been issued if login is valid.");
+            assert.equal(response.body.status, messages.TOKEN_ISSUED.status, "Response should indicate token has been issued if login is valid.");
             assert.isOk(response.body.token, "Response should issue a token if login is valid.");
             done();
           });
@@ -1488,7 +1492,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if platform is updated succesfully.");
-            assert.equal(response.body.status, "PLATFORM_UPDATED", "Response should indicate platform updated.");
+            assert.equal(response.body.status, messages.PLATFORM_UPDATED.status, "Response should indicate platform updated.");
             done();
           });
       });
@@ -1540,18 +1544,6 @@ suite("FUNCTIONAL TESTS", function() {
             done();
           });
       });
-      test("# Username taken", function(done) {
-        chai.request(server)
-          .patch("/api/users/update-username")
-          .send({ username: "TESTING USER" })
-          .set({ Authorization: newUserJWT })
-          .end((error, response) => {
-            if (error) return done(error);
-            assert.equal(response.status, 200, "Response should be 200 if username is taken.");
-            assert.equal(response.body.status, "USERNAME_TAKEN", "Response should indicate username is taken.");
-            done();
-          });
-      });
       test("# Username updated succesfully", function(done) {
         chai.request(server)
           .patch("/api/users/update-username")
@@ -1560,7 +1552,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if username is updated succesfully.");
-            assert.equal(response.body.status, "USERNAME_UPDATED", "Response should indicate username has been updated.");
+            assert.equal(response.body.status, emails.USERNAME_UPDATED.status, "Response should indicate username has been updated.");
             done();
           })
       });
@@ -1637,7 +1629,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if JWT is valid but user is unverified.");
-            assert.equal(response.body.status, "USER_NOT_VERIFIED", "Response should indicate user is not verified if user is not verified.");
+            assert.equal(response.body.status, messages.USER_NOT_VERIFIED.status, "Response should indicate user is not verified if user is not verified.");
             done();
           });
       });
@@ -1661,7 +1653,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if email is taken.");
-            assert.equal(response.body.status, "EMAIL_TAKEN", "Response should indicate if email is taken.");
+            assert.equal(response.body.status, messages.EXISTING_USER.status, "Response should indicate if email is taken.");
             done();
           });
       });
@@ -1673,7 +1665,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if email is updated.");
-            assert.equal(response.body.status, "EMAIL_UPDATED", "Response should indicate email has been updated.");
+            assert.equal(response.body.status, emails.EMAIL_UPDATED.status, "Response should indicate email has been updated.");
             done();
           });
       });
@@ -1685,7 +1677,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if email is reverted.");
-            assert.equal(response.body.status, "EMAIL_UPDATED", "Response should indicate email has been updated.");
+            assert.equal(response.body.status, emails.EMAIL_UPDATED.status, "Response should indicate email has been updated.");
             done();
           });
       });
@@ -1793,7 +1785,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if JWT is valid but user is unverified.");
-            assert.equal(response.body.status, "USER_NOT_VERIFIED", "Response should indicate user is not verified if user is not verified.");
+            assert.equal(response.body.status, messages.USER_NOT_VERIFIED.status, "Response should indicate user is not verified if user is not verified.");
             done();
           });
       });
@@ -1817,7 +1809,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if input is invalid.");
-            assert.equal(response.body.status, "INVALID_STATUS_INPUT", "Response should indicate status input is invalid.");
+            assert.equal(response.body.status, messages.INVALID_STATUS_INPUT.status, "Response should indicate status input is invalid.");
             done();
           });
       });
@@ -1829,7 +1821,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if user is not admin.");
-            assert.equal(response.body.status, "USER_NOT_QUALIFIED", "Response should indiciate user is not qualified if not admin.");
+            assert.equal(response.body.status, messages.PERMISSION_DENIED.status, "Response should indiciate user is not qualified if not admin.");
             done();
           });
       });
@@ -1841,7 +1833,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if user has no team.");
-            assert.equal(response.body.status, "USER_HAS_NO_TEAM", "Response should indicate requesting user has no team.");
+            assert.equal(response.body.status, messages.USER_HAS_NO_TEAM.status, "Response should indicate requesting user has no team.");
             done();
           });
       });
@@ -1853,7 +1845,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if user is not found.");
-            assert.equal(response.body.status, "TEAM_NOT_FOUND", "Response should indiciate requested user not found.");
+            assert.equal(response.body.status, messages.TEAM_NOT_FOUND.status, "Response should indiciate requested user not found.");
             done();
           });
       });
@@ -1865,7 +1857,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if user is not on team.");
-            assert.equal(response.body.status, "USER_NOT_QUALIFIED", "Response should indicate user is not qualified to perform action.");
+            assert.equal(response.body.status, messages.PERMISSION_DENIED.status, "Response should indicate user is not qualified to perform action.");
             done();
           });
       });
@@ -1877,7 +1869,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if user is not on a team.");
-            assert.equal(response.body.status, "PERMISSION_DENIED", "Response should indicate permission is denied to update status of another admin.");
+            assert.equal(response.body.status, messages.PERMISSION_DENIED.status, "Response should indicate permission is denied to update status of another admin.");
             done();
           });
       });
@@ -1889,7 +1881,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if user status has been updated.");
-            assert.equal(response.body.status, "USER_STATUS_UPDATED", "Response should indicate user status has been updated.");
+            assert.equal(response.body.status, emails.USER_STATUS_UPDATED.status, "Response should indicate user status has been updated.");
             done();
           });
       });
@@ -1960,7 +1952,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if input is invalid.");
-            assert.equal(response.body.status, "INVALID_ATTACKER_ROLE", "Response should indicate role is invalid.");
+            assert.equal(response.body.status, messages.INVALID_ATTACKER_ROLE.status, "Response should indicate role is invalid.");
             done();
           });
       });
@@ -1972,7 +1964,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if input is valid.");
-            assert.equal(response.body.status, "ATTACKER_ROLE_SET");
+            assert.equal(response.body.status, messages.ATTACKER_ROLE_SET.status);
             done();
           });
       });
@@ -2042,7 +2034,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if input is invalid.");
-            assert.equal(response.body.status, "INVALID_DEFENDER_ROLE", "Response should indicate role is invalid.");
+            assert.equal(response.body.status, messages.INVALID_DEFENDER_ROLE.status, "Response should indicate role is invalid.");
             done();
           });
       });
@@ -2054,7 +2046,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if input is valid.");
-            assert.equal(response.body.status, "DEFENDER_ROLE_SET");
+            assert.equal(response.body.status, messages.DEFENDER_ROLE_SET.status);
             done();
           });
       });
@@ -2124,7 +2116,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if input is invalid.");
-            assert.equal(response.body.status, "INVALID_ATTACKERS", "Response should indicate attackers list is invalid.");
+            assert.equal(response.body.status, messages.INVALID_ATTACKERS.status, "Response should indicate attackers list is invalid.");
             done();
           });
       });
@@ -2136,7 +2128,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if input is valid.");
-            assert.equal(response.body.status, "ATTACKERS_SET");
+            assert.equal(response.body.status, messages.ATTACKERS_SET.status);
             done();
           });
       });
@@ -2205,7 +2197,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if input is invalid.");
-            assert.equal(response.body.status, "INVALID_DEFENDERS", "Response should indicate defenders list is invalid.");
+            assert.equal(response.body.status, messages.INVALID_DEFENDERS.status, "Response should indicate defenders list is invalid.");
             done();
           });
       });
@@ -2217,7 +2209,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if input is valid.");
-            assert.equal(response.body.status, "DEFENDERS_SET");
+            assert.equal(response.body.status, messages.DEFENDERS_SET.status);
             done();
           });
       });
@@ -2240,7 +2232,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if user is not found.");
-            assert.equal(response.body.status, "USER_NOT_FOUND", "Response should indiciate user not found.");
+            assert.equal(response.body.status, messages.USER_NOT_FOUND.status, "Response should indiciate user not found.");
             done();
           });
       });
@@ -2251,7 +2243,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if reset link has been sent.");
-            assert.equal(response.body.status, "PASSWORD_RESET_LINK_SENT", "Response should indicate reset link sent.");
+            assert.equal(response.body.status, messages.PASSWORD_RESET_LINK_SENT.status, "Response should indicate reset link sent.");
             done();
           })
       });
@@ -2266,7 +2258,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if password input is invalid.");
-            assert.equal(response.body.status, "INVALID_PASSWORD_INPUT", "Response should indiciate invalid password input.");
+            assert.equal(response.body.status, messages.INVALID_PASSWORD_INPUT.status, "Response should indiciate invalid password input.");
             done();
           });
       });
@@ -2277,7 +2269,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if password token is invalid.");
-            assert.equal(response.body.status, "INVALID_RESET_TOKEN", "Response should indicate invalid reset token.");
+            assert.equal(response.body.status, messages.INVALID_RESET_TOKEN.status, "Response should indicate invalid reset token.");
             done();
           });
       });
@@ -2347,7 +2339,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if password has been updated.");
-            assert.equal(response.body.status, "PASSWORD_UPDATED", "Response should indicate password has been updated.");
+            assert.equal(response.body.status, emails.PASSWORD_UPDATED.status, "Response should indicate password has been updated.");
             done();
           });
       });
@@ -2385,7 +2377,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if user is deleted succesfully.");
-            assert.equal(response.body.status, "USER_DELETED", "Response should indicate user has been deleted.");
+            assert.equal(response.body.status, emails.USER_DELETED.status, "Response should indicate user has been deleted.");
             done();
           });
       });
@@ -2418,7 +2410,7 @@ suite("FUNCTIONAL TESTS", function() {
                   .end((error, response) => {
                     if (error) return done(error);
                     assert.equal(response.status, 200, "Response should be 200 if user is deleted succesfully with team.");
-                    assert.equal(response.body.status, "USER_DELETED", "Response should indicate user has been deleted if user with team is deleted.");
+                    assert.equal(response.body.status, emails.USER_DELETED.status, "Response should indicate user has been deleted if user with team is deleted.");
                     done();
                   });
               });
@@ -2446,14 +2438,14 @@ suite("FUNCTIONAL TESTS", function() {
               .end((error, response) => {
                 if (error) return done(error);
                 assert.equal(response.status, 200);
-                assert.equal(response.body.status, "TEAM_CREATED");
+                  assert.equal(response.body.status, emails.TEAM_CREATED.status);
                 chai.request(server)
                   .delete("/api/users/delete")
                   .set({ Authorization: onlyUserOnTeamJWT })
                   .end((error, response) => {
                     if (error) return done(error);
                     assert.equal(response.status, 200, "Response  should be 200 if JWT is valid.");
-                    assert.equal(response.body.status, "USER_AND_TEAM_DELETED", "User and team should be deleted if user is only member of team.");
+                    assert.equal(response.body.status, emails.USER_AND_TEAM_DELETED.status, "User and team should be deleted if user is only member of team.");
                     done();
                   });
               });
@@ -2513,7 +2505,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if user is not found in stats api.");
-            assert.equal(response.body.status, "USER_NOT_FOUND", "Response should indicate user was not found.");
+            assert.equal(response.body.status, messages.USER_NOT_FOUND.status, "Response should indicate user was not found.");
             done();
           });
       });
@@ -2568,7 +2560,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if user is not found in stats api.");
-            assert.equal(response.body.status, "USER_NOT_FOUND", "Response should indicate user was not found.");
+            assert.equal(response.body.status, messages.USER_NOT_FOUND.status, "Response should indicate user was not found.");
             done();
           });
       });
@@ -2623,7 +2615,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if user is not found in stats api.");
-            assert.equal(response.body.status, "USER_NOT_FOUND", "Response should indicate user was not found.");
+            assert.equal(response.body.status, messages.USER_NOT_FOUND.status, "Response should indicate user was not found.");
             done();
           });
       });
@@ -2699,7 +2691,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if user has no team api.");
-            assert.equal(response.body.status, "USER_HAS_NO_TEAM", "Response should indicate user has no team.");
+            assert.equal(response.body.status, messages.USER_HAS_NO_TEAM.status, "Response should indicate user has no team.");
             done();
           });
       });
@@ -2710,7 +2702,7 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if team is not found.");
-            assert.equal(response.body.status, "TEAM_NOT_FOUND", "Response should indiciate team has not been found.");
+            assert.equal(response.body.status, messages.TEAM_NOT_FOUND.status, "Response should indiciate team has not been found.");
             done();
           });
       });
@@ -2721,15 +2713,11 @@ suite("FUNCTIONAL TESTS", function() {
           .end((error, response) => {
             if (error) return done(error);
             assert.equal(response.status, 200, "Response should be 200 if user is not on team.");
-            assert.equal(response.body.status, "USER_NOT_QUALIFIED", "Response should indicate user is not qualified.");
+            assert.equal(response.body.status, messages.PERMISSION_DENIED.status, "Response should indicate user is not qualified.");
             done();
           });
       });
     });
-  });
-
-  suite("STRATEGIES MODEL", function() {
-    
   });
 
 });

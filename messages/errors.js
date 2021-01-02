@@ -9,6 +9,14 @@ module.exports = {
     status: "ERROR",
     message: "An error occurred while attempting to set attacker role."
   },
+  ERROR_BLOCK_USER: {
+    status: "ERROR",
+    message: "An error occurred while attempting to block user."
+  },
+  ERROR_CREATE_TEAM: {
+    status: "ERROR",
+    message: "An error occurred while attempting to create a team."
+  },
   ERROR_DEFENDERS: {
     status: "ERROR",
     message: "An error occurred while attempting to set defenders."
@@ -16,6 +24,10 @@ module.exports = {
   ERROR_DEFENDER_ROLE: {
     status: "ERROR",
     message: "An error occurred while attempting to set defender role."
+  },
+  ERROR_DELETE_TEAM: {
+    status: "ERROR",
+    message: "An error occurred while attempting to delete team."
   },
   ERROR_DELETE_TEAM_AND_USER: {
     status: "ERROR",
@@ -32,6 +44,14 @@ module.exports = {
   ERROR_FORGOT_PASSWORD: {
     status: "Error",
     message: "An error occured while attempting to send a reset password email."
+  },
+  ERROR_JOIN_TEAM: {
+    status: "ERROR",
+    message: "An error occurred while attempting to join team."
+  },
+  ERROR_LEAVE_TEAM: {
+    status: "ERROR",
+    message: "An error occurred while attempting to leave team."
   },
   ERROR_LOGIN: {
     status: "ERROR",
@@ -53,9 +73,17 @@ module.exports = {
     status: "ERROR",
     message: "An error occurred while attempting to find the requested team."
   },
+  ERROR_UNBLOCK_USER: {
+    status: "ERROR",
+    message: "An error has occurred while attempting to unblock a user."
+  },
   ERROR_UPDATE_PASSWORD: {
     status: "ERROR",
     message: "An error occurred while attempting to update password."
+  },
+  ERROR_UPDATE_TEAM_NAME: {
+    status: "ERROR",
+    message: "An error occurred while attempting to update team name."
   },
   ERROR_UPDATE_USER_STATUS: {
     status: "ERROR",
@@ -64,5 +92,13 @@ module.exports = {
   ERROR_USERNAME: {
     status: "ERROR",
     message: "An error occurred while attempting to update username."
+  },
+  ERROR_VIEW_BLOCKED_USERS: {
+    status: "ERROR",
+    message: "An error occurred while attempting to view blocked users."
+  },
+  ERROR_VIEW_TEAM: {
+    status: "ERROR",
+    message: "An error occurred while attempting to view team."
   }
 }

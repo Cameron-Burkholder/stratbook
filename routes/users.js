@@ -18,13 +18,22 @@ const middleware = require("../middleware.js");
 // Prepare user verification
 let host;
 
+// Define roles
+const ADMIN = "ADMIN";
+const MEMBER = "MEMBER";
+const EDITOR = "EDITOR";
+
 // Load User model
 require("../models/User.js");
 const User = require("../models/User.js");
 
-// Load UnverifiedUser model
-require("../models/UnverifiedUser.js");
-const UnverifiedUser = require("../models/UnverifiedUser.js");
+// Load Strategies model
+require("../models/Strategies.js");
+const Strategies = require("../models/Strategies.js");
+
+// Load Team model
+require("../models/Team.js");
+const Team = require("../models/Team.js");
 
 module.exports = async (app, passport) => {
 
@@ -422,7 +431,7 @@ module.exports = async (app, passport) => {
     }
 
     // If user is an admin
-    if (user.status === "ADMIN") {
+    if (user.status === ADMIN) {
       return response.json(messages.PERMISSION_DENIED);
     }
 
@@ -454,13 +463,13 @@ module.exports = async (app, passport) => {
     user.status = request.body.status;
 
     // Put user in correct status list
-    if (request.body.status === "ADMIN") {
+    if (request.body.status === ADMIN) {
       team.admins.push(String(user._id));
     }
-    if (request.body.status === "EDITOR") {
+    if (request.body.status === EDITOR) {
       team.editors.push(String(user._id));
     }
-    if (request.body.status === "MEMBER") {
+    if (request.body.status === MEMBER) {
       team.members.push(String(user._id));
     }
 
@@ -801,6 +810,14 @@ module.exports = async (app, passport) => {
       if ((team.members.length === 1 && team.members[0] === String(request.user._id) && team.editors.length === 0 && team.admins.length === 0) ||
           (team.editors.length === 1 && team.editors[0] === String(request.user._id) && team.members.length === 0 && team.admins.length === 0) ||
           (team.admins.length === 1 && team.admins[0] === String(request.user._id) >= 0)) {
+
+        try {
+          await Strategies.deleteOne({ join_code: request.user.team_code }).exec();
+        } catch(error) {
+          console.log(error);
+          return response.json(errors.ERROR_DELETE_TEAM_AND_USER);
+        }
+
         try {
           await Team.deleteOne({ join_code: request.user.team_code }).exec();
         } catch(error) {
@@ -815,17 +832,18 @@ module.exports = async (app, passport) => {
           return response.json(errors.ERROR_DELETE_TEAM_AND_USER);
         }
 
-        response.json(messages.USER_AND_TEAM_DELETED);
+        notify(user, emails.USER_AND_TEAM_DELETED);
+        response.json(emails.USER_AND_TEAM_DELETED);
       } else {
-        if (user.status === "MEMBER" && team.members.indexOf(String(request.user._id)) >= 0) {
+        if (user.status === MEMBER && team.members.indexOf(String(request.user._id)) >= 0) {
           let index = team.members.indexOf(String(request.user._id));
           team.members.splice(index, 1);
         }
-        if (user.status === "EDITOR" && team.editors.indexOf(String(request.user._id)) >= 0) {
+        if (user.status === EDITOR && team.editors.indexOf(String(request.user._id)) >= 0) {
           let index = team.editors.indexOf(String(request.user._id));
           team.editors.splice(index, 1);
         }
-        if (user.status === "ADMIN" && team.admins.indexOf(String(request.user._id)) >= 0) {
+        if (user.status === ADMIN && team.admins.indexOf(String(request.user._id)) >= 0) {
           let index = team.admins.indexOf(String(request.user._id));
           team.admins.splice(index, 1);
         }
@@ -844,7 +862,8 @@ module.exports = async (app, passport) => {
           return response.json(errors.ERROR_DELETE_TEAM_AND_USER);
         }
 
-        response.json(messages.USER_DELETED);
+        response.json(emails.USER_DELETED);
+        notify(user, emails.USER_DELETED);
       }
     } else {
       try {
@@ -854,7 +873,8 @@ module.exports = async (app, passport) => {
         return response.json(errors.ERROR_DELETE_USER);
       }
 
-      response.json(messages.USER_DELETED);
+      notify(user, emails.USER_DELETED);
+      response.json(emails.USER_DELETED);
     }
   });
 

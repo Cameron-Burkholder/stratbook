@@ -10,6 +10,9 @@ module.exports = {
   ATTACKERS_SET: {
     status: "Attackers Set"
   },
+  BLOCKED_USERS_FOUND: {
+    status: "Blocked Users Found"
+  },
   CANNOT_REMOVE_SELF: {
     status: "Cannot Remove Self"
   },
@@ -80,11 +83,37 @@ module.exports = {
     status: "Permission Denied",
     message: "Permission to perform the action you requested has been denied."
   },
+  PLATFORM_DOES_NOT_MATCH: {
+    status: "Platform Does Not Match",
+    message: "The platform of the team you requested to join does not match your platform."
+  },
   PROFANE_INPUT: {
     status: "Profane Input"
   },
   PROFANE_TEAM_INPUT: {
     status: "Profane Team Input"
+  },
+  TEAM_CREATED: {
+    status: "Team Created"
+  },
+  TEAM_DELETED: {
+    status: "Team Deleted"
+  },
+  TEAM_EXISTS: {
+    status: "Team Exists",
+    message: "A team with that name already exists"
+  },
+  TEAM_FOUND: {
+    status: "Team Found"
+  },
+  TEAM_JOINED: {
+    status: "Team Joined"
+  },
+  TEAM_LEFT: {
+    status: "Team Left"
+  },
+  TEAM_NAME_UPDATED: {
+    status: "Team Name Updated"
   },
   TEAM_NOT_FOUND: {
     status: "Team Not Found",
@@ -95,6 +124,12 @@ module.exports = {
   },
   USER_AND_TEAM_DELETED: {
     status: "User and Team Deleted"
+  },
+  USER_BLOCKED: {
+    status: "User Blocked"
+  },
+  USER_UNBLOCKED: {
+    status: "User Unblocked"
   },
   USER_DELETED: {
     status: "User Deleted"
