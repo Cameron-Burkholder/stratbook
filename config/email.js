@@ -20,7 +20,7 @@ const OAuth2Client = new google.auth.OAuth2(
 * @param {string} message html string for email body
 */
 module.exports = email = (userEmail, subject, message) => {
-  if (process.env.NODE_ENV !== "TESTING") {
+  if (process.env.NODE_ENV !== "development") {
     OAuth2Client.setCredentials({
       refresh_token: process.env.OAUTH_REFRESH_TOKEN
     });
@@ -44,7 +44,6 @@ module.exports = email = (userEmail, subject, message) => {
       subject: subject,
       html: message
     };
-    log("SENDING EMAIL.");
     try {
       transporter.sendMail(emailOptions, (error, info) => {
         if (error) {

@@ -73,6 +73,10 @@ module.exports = {
     status: "ERROR",
     message: "An error occurred while attempting to find the requested team."
   },
+  ERROR_TEAM_STATS: {
+    status: "ERROR",
+    message: "An error occurred while attempting to get team statistics."
+  },
   ERROR_UNBLOCK_USER: {
     status: "ERROR",
     message: "An error has occurred while attempting to unblock a user."
@@ -96,6 +100,10 @@ module.exports = {
   ERROR_VIEW_BLOCKED_USERS: {
     status: "ERROR",
     message: "An error occurred while attempting to view blocked users."
+  },
+  ERROR_VIEW_STRATEGIES: {
+    status: "ERROR",
+    message: "An error occurred while attempting to view strategies."
   },
   ERROR_VIEW_TEAM: {
     status: "ERROR",

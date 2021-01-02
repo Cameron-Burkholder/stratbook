@@ -1287,17 +1287,6 @@ suite("FUNCTIONAL TESTS", function() {
             done();
           });
       });
-      test("# Existing username", function(done) {
-        chai.request(server)
-          .post("/api/users/register")
-          .send({ email: "something_new@domain.com", username: "TESTING USER", platform: "PC", password1: process.env.TESTING_PASSWORD, password2: process.env.TESTING_PASSWORD })
-          .end((error, response) => {
-            if (error) return done(error);
-            assert.equal(response.status, 200, "Response should be 200 if user is duplicate (username).");
-            assert.equal(response.body.status, messages.EXISTING_USER.status, "Response should indicate user already exists if username has already been registered.");
-            done();
-          });
-      });
       test("# User registered succesfully", function(done) {
         let newUser = {
           email: "new_user@domain.com",
@@ -1314,7 +1303,7 @@ suite("FUNCTIONAL TESTS", function() {
             newUser._id = mongoose.Types.ObjectId(response.body._id);
             newUserJWT = issueJWT(newUser).token;
             assert.equal(response.status, 200, "Response should be 200 if registration input is valid.");
-            assert.equal(response.body.status, messages.USER_REGISTERED.status, "If user is registered succesfully response should indicate such.");
+            assert.equal(response.body.status, emails.USER_REGISTERED.status, "If user is registered succesfully response should indicate such.");
             done();
           });
       });
@@ -1618,18 +1607,6 @@ suite("FUNCTIONAL TESTS", function() {
             if (error) return done(error);
             assert.equal(response.status, 401, "Response should be 401 Unauthorized if JWT is invalid.");
             assert.equal(response.text, "Unauthorized", "Response should return unauthorized if JWT is invalid.");
-            done();
-          });
-      });
-      test("# User not verified", function(done) {
-        chai.request(server)
-          .patch("/api/users/update-email")
-          .send({ email: "new_email_change@domain.com" })
-          .set({ Authorization: unverifiedJWT })
-          .end((error, response) => {
-            if (error) return done(error);
-            assert.equal(response.status, 200, "Response should be 200 if JWT is valid but user is unverified.");
-            assert.equal(response.body.status, messages.USER_NOT_VERIFIED.status, "Response should indicate user is not verified if user is not verified.");
             done();
           });
       });

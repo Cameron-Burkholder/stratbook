@@ -3,6 +3,7 @@
 const email = require("../config/email.js");
 const { log, genJoinCode } = require("../config/utilities.js");
 const mongoose = require("mongoose");
+const messages = require("../messages/messages.js");
 
 // Load input validation
 const validation = require("../validation.js");
@@ -29,51 +30,35 @@ const Team = require("../models/Team.js");
 
 module.exports = async (app, passport) => {
 
-  /*
-    @route /api/strategies/view
-    @method GET
-
-    @outputs
-      If there is an error
-        packet: Object (status: ERROR)
-
-      If user is not verified
-        packet: Object (status: USER_NOT_VERIFIED)
-
-      If user has no team
-        packet: Object (status: USER_HAS_NO_TEAM)
-
-      If team does not exist
-        packet: Object (status: TEAM_NOT_FOUND)
-
-      If user is not on team
-        packet: Object (status: USER_NOT_QUALIFIED)
-
-      If strategies are able to be sent
-        packet: Object (status: STRATEGIES_FOUND)
+  /**
+  * Fetch strategies
+  * @name /api/strategies/view
+  * @function
+  * @async
+  * @description The user submits a request to view strategies.
+  *   If the user is not on the team, this returns a permission denied object.
+  *   If the user is able to view the strategies, this returns a strategies found object.
   */
   app.get("/api/strategies/view", (request, response, done) => {
     log("GET REQUEST AT /api/strategies/view");
     done();
-  }, passport.authenticate("jwt", { session: false }), middleware.userIsVerified, middleware.userHasTeam, (request, response, done) => {
-    let packet = {};
-    if (request.team.members.indexOf(String(request.user._id)) >= 0 || request.team.editors.indexOf(String(request.user._id)) >= 0 || request.team.admins.indexOf(String(request.user._id)) >= 0) {
-      Strategies.findOne({ join_code: request.user.team_code }).then((strategies) => {
-        packet.status = "STRATEGIES_FOUND";
-        packet.strategies = strategies;
-        response.json(packet);
-      }).catch(error => {
-        console.log(error);
-        packet.status = "ERROR";
-        packet.message = "An error occurred while attempting to get strategies for the requested team.";
-        response.json(packet);
-      })
-    } else {
-      packet.status = "USER_NOT_QUALIFIED";
-      packet.message = "User is not on requested team.";
-      response.json(packet);
+  }, passport.authenticate("jwt", { session: false }), middleware.userIsVerified, middleware.userHasTeam, async (request, response, done) => {
+    if (request.team.members.indexOf(String(request.user._id)) < 0 && request.team.editors.indexOf(String(request.user._id)) < 0 && request.team.admins.indexOf(String(request.user._id)) < 0) {
+      return response.json(messages.PERMISSION_DENIED);
     }
+
+    let strategies;
+    try {
+      strategies = await Strategies.findOne({ join_code: request.user.team_code }).exec();
+    } catch(error) {
+      console.log(error);
+      return response.json(errors.ERROR_VIEW_STRATEGIES);
+    }
+
+    let packet = messages.STRATEGIES_FOUND;
+    packet.strategies = strategies;
+    response.json(packet);
   });
 
-  
+
 };

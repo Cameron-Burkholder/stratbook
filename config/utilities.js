@@ -34,15 +34,17 @@ const PRIV_KEY = process.env.RSA_PRIVATE_KEY.replace(/\\n/g, "\n");
 * @param {object} message a message object used to notify the user with a title and body
 */
 exports.notify = async function(user, message) {
-  if (user.subscription) {
-    try {
-      await webpush.sendNotification(user.subscription, JSON.stringify({ title: message.status, body: message.body }));
-    } catch(error) {
-      console.log(error);
+  if (process.env.NODE_ENV !== "development") {
+    if (user.subscription) {
+      try {
+        await webpush.sendNotification(user.subscription, JSON.stringify({ title: message.status, body: message.body }));
+      } catch(error) {
+        console.log(error);
+      }
     }
-  }
 
-  email(user.email, message.status, message.email_body);
+    email(user.email, message.status, message.email_body);
+  }
 }
 
 /**
@@ -66,7 +68,10 @@ exports.log = function(msg) {
 * @returns {bool} returns true if passwords match
 */
 exports.verifyPassword = function(password, hash) {
+  console.log("verify");
   let isValidPassword = bcrypt.compareSync(password, hash);
+  console.log("returning");
+  console.log(isValidPassword);
   return isValidPassword;
 }
 

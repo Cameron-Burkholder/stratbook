@@ -49,7 +49,7 @@ module.exports = async (app, passport) => {
   }, passport.authenticate("jwt", { session: false }), middleware.userIsVerified, middleware.userHasTeam, async (request, response) => {
 
     if (request.team.members.indexOf(String(request.user._id)) < 0 && request.team.editors.indexOf(String(request.user._id)) < 0 && request.team.admins.indexOf(String(request.user._id)) < 0) {
-      return response.json(PERMISSION_DENIED);
+      return response.json(messages.PERMISSION_DENIED);
     }
 
     let team_data = {
@@ -173,6 +173,7 @@ module.exports = async (app, passport) => {
   }, passport.authenticate("jwt", { session: false }), validation.validateTeamInput, middleware.userIsVerified, middleware.userHasNoTeam, async (request, response) => {
 
     let existing_team;
+    let user;
     try {
       existing_team = await Team.findOne({ name: request.body.name }).exec();
     } catch(error) {
@@ -187,6 +188,13 @@ module.exports = async (app, passport) => {
     const join_code = await genJoinCode();
     let admins = [];
     admins.push(String(request.user._id));
+
+    try {
+      user = await User.findOne({ _id: request.user._id }).exec();
+    } catch(error) {
+      console.log(error);
+      return response.json(errors.ERROR_CREATE_TEAM);
+    }
 
     const newStrategies = new Strategies({
       join_code: join_code
@@ -283,7 +291,7 @@ module.exports = async (app, passport) => {
       return response.json(errors.ERROR_UPDATE_TEAM_NAME);
     }
 
-    response.json(TEAM_NAME_UPDATED);
+    response.json(messages.TEAM_NAME_UPDATED);
 
     let index = 0;
     while (index < team.admins.length) {
@@ -404,7 +412,7 @@ module.exports = async (app, passport) => {
     }
 
     try {
-      team = await Team.findOne({ _id: request.uesr._id }).exec();
+      team = await Team.findOne({ _id: request.team._id }).exec();
     } catch(error) {
       console.log(error);
       return response.json(errors.ERROR_LEAVE_TEAM);
@@ -767,5 +775,6 @@ module.exports = async (app, passport) => {
       index++;
     }
 
+    response.json(messages.TEAM_DELETED);
   });
 };

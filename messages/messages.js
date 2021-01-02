@@ -23,7 +23,10 @@ module.exports = {
     status: "Defenders Set"
   },
   EXISTING_USER: {
-    status: "EXISTING_USER"
+    status: "Existing User"
+  },
+  GENERAL_STATS_FOUND: {
+    status: "General Statistics Found"
   },
   INCORRECT_PASSWORD: {
     status: "Incorrect Password",
@@ -75,6 +78,9 @@ module.exports = {
   INVALID_USERNAME: {
     status: "Invalid Username"
   },
+  OPERATOR_STATS_FOUND: {
+    status: "Operator Statistics Found"
+  },
   PASSWORD_RESET_LINK_SENT: {
     status: "Password Reset Link Sent",
     message: "A link to reset your password has been sent to your email."
@@ -92,6 +98,12 @@ module.exports = {
   },
   PROFANE_TEAM_INPUT: {
     status: "Profane Team Input"
+  },
+  SEASONAL_STATS_FOUND: {
+    status: "Seasonal Statistics Found"
+  },
+  STRATEGIES_FOUND: {
+    status: "Strategies Found"
   },
   TEAM_CREATED: {
     status: "Team Created"
@@ -118,6 +130,9 @@ module.exports = {
   TEAM_NOT_FOUND: {
     status: "Team Not Found",
     message: "No team with the provided credentials could be found."
+  },
+  TEAM_STATS_FOUND: {
+    status: "Team Statistics Found"
   },
   TOKEN_ISSUED: {
     status: "Token Issued"

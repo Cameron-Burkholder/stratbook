@@ -35,6 +35,10 @@ const Strategies = require("../models/Strategies.js");
 require("../models/Team.js");
 const Team = require("../models/Team.js");
 
+// Load Unverified User model
+require("../models/UnverifiedUser.js");
+const UnverifiedUser = require("../models/UnverifiedUser.js");
+
 module.exports = async (app, passport) => {
 
   /**
@@ -50,49 +54,50 @@ module.exports = async (app, passport) => {
   */
   app.get("/api/users/verify", async (request, response) => {
     log("GET REQUEST AT /api/users/verify");
-    let unverified_user;
-    let user;
 
-    // Find unverified user object in db
-    try {
-      unverified_user = await UnverifiedUser.findOne({ verification_id: request.verification_id }).exec();
-      if (!item) {
-        throw new Error();
+    if (request.query.verification_id) {
+      let unverified_user;
+      let user;
+
+      // Find unverified user object in db
+      try {
+        unverified_user = await UnverifiedUser.findOne({ verification_id: request.query.verification_id }).exec();
+      } catch (error) {
+        console.error(error);
+        return response.redirect("/register");
       }
-    } catch (error) {
-      console.error(error);
-      return response.redirect("/register");
+
+      // Find user object associated with unverified user object
+      try {
+        user = await User.findOne({ _id: unverified_user.user_id }).exec();
+      } catch(error) {
+        console.error(error);
+        return response.redirect("/register");
+      }
+
+      // Verify user and save
+      user.verified = true;
+      try {
+        await user.save();
+      } catch(error) {
+        console.log(error);
+        return response.redirect("/register");
+      }
+
+      // Delete unverified user object
+      try {
+        await UnverifiedUser.deleteOne({ user_id: user._id });
+      } catch(error) {
+        console.log(error);
+        return response.redirect("/register");
+      }
+
+      // Notify user their account has been verified and redirect to login page
+      notify(user, emails.VERIFY_ACCOUNT);
+      response.redirect("/login");
+    } else {
+      response.redirect("/register");
     }
-
-    // Find user object associated with unverified user object
-    try {
-      user = await User.findOne({ _id: mongoose.Types.ObjectId(unverified_user.user_id) }).exec();
-    } catch(error) {
-      console.error(error);
-      return response.redirect("/register");
-    }
-
-    // Verify user and save
-    user.verified = true;
-    try {
-      await user.save();
-    } catch(error) {
-      console.log(error);
-      return response.redirect("/register");
-    }
-
-    // Delete unverified user object
-    try {
-      await UnverifiedUser.deleteOne({ user_id: user._id });
-    } catch(error) {
-      console.log(error);
-      return response.redirect("/register");
-    }
-
-    // Notify user their account has been verified and redirect to login page
-    notify(user, emails.VERIFY_ACCOUNT);
-    response.redirect("/login");
-
   });
 
   /**
@@ -112,30 +117,36 @@ module.exports = async (app, passport) => {
     log("POST REQUEST AT /api/users/login");
     done();
   }, validation.validateLoginInput, async (request, response) => {
-    let packet = {};
     let user;
+    console.log('here');
     try {
       user = await User.findOne({ email: request.body.email.toLowerCase() }).exec();
     } catch(error) {
       console.log(error);
       return response.json(errors.ERROR_LOGIN);
     }
-
+    console.log('passed');
     if (!user) {
       return response.json(messages.USER_NOT_FOUND);
     }
 
+    console.log('herea');
     const isValidPassword = verifyPassword(request.body.password, user.password);
+    console.log('passed');
     if (isValidPassword) {
+      console.log("issueing");
       const tokenObject = issueJWT(user);
+      console.log("issued");
       user.password = undefined;
       user._id = undefined;
       let packet = messages.TOKEN_ISSUED;
       packet.user = user;
       packet.token = tokenObject.token;
       packet.expiresIn = tokenObject.expires;
+      console.log(packet);
       return response.json(packet);
     } else {
+      console.log("incorrect");
       return response.json(messages.INCORRECT_PASSWORD);
     }
 
@@ -216,7 +227,7 @@ module.exports = async (app, passport) => {
       packet._id = newUser._id;
     }
 
-    let hashedPassword = hashPassword(request.body.password1);
+    let hashedPassword = await hashPassword(request.body.password1);
     if (hashedPassword) {
       newUser.password = hashedPassword;
       try {
@@ -245,6 +256,8 @@ module.exports = async (app, passport) => {
 
       response.json(emails.USER_REGISTERED);
       notify(user, emails.USER_REGISTERED);
+    } else {
+      return response.json(errors.ERROR_REGISTER);
     }
   });
 
@@ -357,7 +370,7 @@ module.exports = async (app, passport) => {
     }
 
     try {
-      user = await User.findOne({ _id: request.body._id }).exec();
+      user = await User.findOne({ _id: request.user._id }).exec();
     } catch(error) {
       console.log(error);
       return response.json(errors.ERROR_EMAIL);
@@ -383,7 +396,7 @@ module.exports = async (app, passport) => {
       }
 
       let host = request.hostname;
-      let newVerificationLink = "http://" + host + "/api/users/verify?verification_id="+ unverified_user.verification_id;
+      let newVerificationLink = "http://" + host + "/api/users/verify?verification_id=" + unverified_user.verification_id;
 
       email(newUser.email, "Account Verification", `<div><h2>Verify your Account</h2><br/><p>Click the link below to verify your Stratbook account.</p><br/><a target="blank" href="${newVerificationLink}">Verify Account</a>`);
     }
@@ -558,7 +571,7 @@ module.exports = async (app, passport) => {
   }, validation.validatePasswordInput, async (request, response) => {
     let user;
     const reset_token = request.body.token;
-    if (reset_token || reset_token !== "") {
+    if (reset_token && reset_token !== "") {
       try {
         user = await User.findOne({ reset_token: reset_token }).exec();
       } catch(error) {
@@ -625,7 +638,7 @@ module.exports = async (app, passport) => {
       return response.json(errors.ERROR_UPDATE_PASSWORD);
     }
 
-    response.json(PASSWORD_UPDATED);
+    response.json(emails.PASSWORD_UPDATED);
     notify(user, emails.PASSWORD_UPDATED);
   });
 
