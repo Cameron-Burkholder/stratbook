@@ -49,7 +49,7 @@ class ManageTeamAPI extends React.Component {
         case TEAM_FOUND.status:
           component.setState({
             loading: false,
-            team: response.data.team
+            team: response.data.team_data
           });
           break;
         default:

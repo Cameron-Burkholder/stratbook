@@ -247,7 +247,7 @@ module.exports = async (app, passport) => {
       email(newUser.email, "Account Verification", `<div><h2>Verify your Account</h2><br/><p>Click the link below to verify your Stratbook account.</p><br/><a target="blank" href=${newVerificationLink}>Verify Account</a>`);
 
       response.json(emails.USER_REGISTERED);
-      notify(user, emails.USER_REGISTERED);
+      notify(newUser, emails.USER_REGISTERED);
     } else {
       return response.json(errors.ERROR_REGISTER);
     }
@@ -308,7 +308,7 @@ module.exports = async (app, passport) => {
   }, passport.authenticate("jwt", { session: false }), validation.validateUsernameInput, async (request, response) => {
     let user;
     try {
-      user = await User.findOne({ _id: request.body._id }).exec();
+      user = await User.findOne({ _id: request.user._id }).exec();
     } catch(error) {
       console.log(error);
       return response.json(errors.ERROR_USERNAME);
@@ -872,7 +872,7 @@ module.exports = async (app, passport) => {
       }
     } else {
       try {
-        await User.deleteOne({ _id: mongoose.Types.ObjectId(request.user._id) }).exec();
+        await User.deleteOne({ _id: request.user._id }).exec();
       } catch(error) {
         console.log(error);
         return response.json(errors.ERROR_DELETE_USER);

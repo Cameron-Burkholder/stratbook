@@ -67,7 +67,7 @@ class BlockedUsersAPI extends React.Component {
       this.fetchBlockedUsers();
     }
   }
-  unblockUser(username, id) {
+  unblockUser(username, _id) {
     if (window.confirm(`You are about to unblock ${username}. He/she will be able to join the team if he/she has the join code. Are you sure?`)) {
       const component = this;
       this.setState({
@@ -75,7 +75,7 @@ class BlockedUsersAPI extends React.Component {
       });
       axios.defaults.headers.common["Authorization"] = this.props.getAuthToken();
       axios.patch("/api/teams/unblock-user", {
-        id: id
+        _id: _id
       })
         .then((response) => {
         switch (response.data.status) {

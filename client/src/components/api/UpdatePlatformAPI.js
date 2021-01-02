@@ -2,7 +2,7 @@
 
 import React from "react";
 import axios from "axios";
-import { PLATFORM_UPDATED } from "../../messages/messages.js";
+import { PLATFORM_UPDATED } from "../../messages/emails.js";
 import { ERROR_PLATFORM } from "../../messages/errors.js";
 
 import UpdatePlatformForm from "../partials/UpdatePlatformForm.js";

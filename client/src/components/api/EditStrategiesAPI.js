@@ -1,8 +1,9 @@
 /* client/src/components/api/EditStrategiesAPI.js */
 
 import React from "react";
-
 import axios from "axios";
+import { STRATEGIES_FOUND } from "../../messages/messages.js";
+import { ERROR_VIEW_STRATEGIES } from "../../messages/errors.js";
 
 import CreateStrategiesAPI from "./CreateStrategiesAPI";
 import LoadingModal from "../partials/LoadingModal.js";
@@ -69,7 +70,7 @@ class EditStrategiesAPI extends React.Component {
     axios.get("/api/strategies/view")
       .then((response) => {
       switch (response.data.status) {
-        case "STRATEGIES_FOUND":
+        case STRATEGIES_FOUND.status:
           const maps = Object.keys(response.data.strategies).filter((map) => MAP_NAMES.indexOf(map) >= 0);
           component.setState({
             loading: false,
@@ -90,7 +91,7 @@ class EditStrategiesAPI extends React.Component {
       component.setState({
         loading: false
       });
-      component.props.alert("An error has occurred while attempting to get strategies.", "ERROR");
+      component.props.alert(ERROR_VIEW_STRATEGIES.message, ERROR_VIEW_STRATEGIES.status);
     });
   }
   componentDidMount() {

@@ -147,7 +147,7 @@ module.exports = async (app, passport) => {
 
       blocked_users.push({
         username: user.username,
-        id: user._id
+        _id: String(user._id)
       });
       index++;
     }
@@ -394,7 +394,7 @@ module.exports = async (app, passport) => {
   * @name /api/teams/leave-team
   * @function
   * @async
-  * @description The user submtis a request to leave team.
+  * @description The user submits a request to leave team.
   *   If the user is able to leave the team, this returns a team left object.
   */
   app.patch("/api/teams/leave-team", (request, response, done) => {
@@ -561,7 +561,7 @@ module.exports = async (app, passport) => {
   * @param {string} request.body.username the user to block
   */
   app.patch("/api/teams/block-user", (request, response, done) => {
-    log("PATCH REQUEST AT /api/teams/remove-user");
+    log("PATCH REQUEST AT /api/teams/block-user");
     done();
   }, passport.authenticate("jwt", { session: false }), validation.validateBlockUser, middleware.userIsVerified, middleware.userHasTeam, middleware.userIsAdmin, async (request, response) => {
     let team;
@@ -633,23 +633,22 @@ module.exports = async (app, passport) => {
   * @param {string} request.body.id id of user to unblock
   */
   app.patch("/api/teams/unblock-user", (request, response, done) => {
-    log("PATCH REQUEST AT /api/teams/remove-user");
+    log("PATCH REQUEST AT /api/teams/unblock-user");
     done();
   }, passport.authenticate("jwt", { session: false }), middleware.userIsVerified, middleware.userHasTeam, middleware.userIsAdmin, async (request, response) => {
     let team;
-
     try {
-      team = await Team.findeOne({ join_code: request.team.join_code }).exec();
+      team = await Team.findOne({ join_code: request.team.join_code }).exec();
     } catch(error) {
       console.log(error);
       return response.json(errors.ERROR_UNBLOCK_USER);
     }
 
-    if (team.blocked_users.indexOf(String(request.body.id)) < 0) {
+    if (team.blocked_users.indexOf(String(request.body._id)) < 0) {
       return response.json(messages.USER_NOT_FOUND);
     }
 
-    team.blocked_users.splice(team.blocked_users.indexOf(request.body.id), 1);
+    team.blocked_users.splice(team.blocked_users.indexOf(request.body._id), 1);
 
     try {
       await team.save();

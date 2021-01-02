@@ -3,7 +3,9 @@
 import React from "react";
 import axios from "axios";
 import Loading from "../partials/Loading.js";
-import { TEAM_NAME_UPDATED } from "../../messages/messages.js";
+import { TEAM_FOUND } from "../../messages/messages.js";
+import { TEAM_NAME_UPDATED } from "../../messages/emails.js";
+import { ERROR_VIEW_TEAM } from "../../messages/errors.js";
 import { ERROR_UPDATE_TEAM_NAME } from "../../messages/errors.js";
 
 class UpdateTeamNameAPI extends React.Component {
@@ -26,10 +28,10 @@ class UpdateTeamNameAPI extends React.Component {
     axios.get("/api/teams/view-team")
       .then((response) => {
       switch (response.data.status) {
-        case "TEAM_FOUND":
+        case TEAM_FOUND.status:
           component.setState({
             loading: false,
-            currentName: response.data.team.name
+            currentName: response.data.team_data.name
           });
           break;
         default:
@@ -44,7 +46,7 @@ class UpdateTeamNameAPI extends React.Component {
       component.setState({
         loading: false
       });
-      component.props.alert("An error has occurred while attempting to get current team name.", "ERROR");
+      component.props.alert(ERROR_VIEW_TEAM.message, ERROR_VIEW_TEAM.status);
     });
   }
   onChange(e) {

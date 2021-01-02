@@ -2,7 +2,7 @@
 
 import React from "react";
 import axios from "axios";
-import { PASSWORD_UPDATED } from "../../messages/messages.js";
+import { PASSWORD_UPDATED } from "../../messages/emails.js";
 import { ERROR_UPDATE_PASSWORD } from "../../messages/errors.js";
 
 import UpdatePasswordForm from "../partials/UpdatePasswordForm.js";

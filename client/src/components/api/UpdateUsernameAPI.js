@@ -2,7 +2,7 @@
 
 import React from "react";
 import axios from "axios";
-import { USERNAME_UPDATED } from "../../messages/messages.js";
+import { USERNAME_UPDATED } from "../../messages/emails.js";
 import { ERROR_USERNAME } from "../../messages/errors.js";
 
 import UpdateUsernameForm from "../partials/UpdateUsernameForm.js";

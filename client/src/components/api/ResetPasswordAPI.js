@@ -3,7 +3,7 @@
 import React from "react";
 import { Redirect } from "react-router";
 import axios from "axios";
-import { PASSWORD_RESET } from "../../messages/messages.js";
+import { PASSWORD_RESET } from "../../messages/emails.js";
 import { ERROR_RESET_PASSWORD } from "../../messages/errors.js";
 
 import ResetPasswordForm from "../partials/ResetPasswordForm.js";

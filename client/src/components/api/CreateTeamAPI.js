@@ -2,7 +2,7 @@
 
 import React from "react";
 import axios from "axios";
-import { TEAM_CREATED } from "../../messages/messages.js";
+import { TEAM_CREATED } from "../../messages/emails.js";
 import { ERROR_CREATE_TEAM } from "../../messages/errors.js";
 
 import CreateTeamForm from "../partials/CreateTeamForm.js";

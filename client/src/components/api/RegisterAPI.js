@@ -3,7 +3,7 @@
 import React from "react";
 import { Redirect } from "react-router";
 import axios from "axios";
-import { USER_REGISTERED } from "../../messages/messages.js";
+import { USER_REGISTERED } from "../../messages/emails.js";
 import { ERROR_REGISTER } from "../../messages/errors.js";
 
 import RegisterForm from "../partials/RegisterForm.js";

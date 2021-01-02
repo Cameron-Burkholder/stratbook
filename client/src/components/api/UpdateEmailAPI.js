@@ -2,7 +2,7 @@
 
 import React from "react";
 import axios from "axios";
-import { EMAIL_UPDATED } from "../../messages/messages.js";
+import { EMAIL_UPDATED } from "../../messages/emails.js";
 import { ERROR_EMAIL } from "../../messages/errors.js";
 
 import UpdateEmailForm from "../partials/UpdateEmailForm.js";

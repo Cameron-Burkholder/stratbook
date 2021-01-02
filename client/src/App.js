@@ -61,7 +61,6 @@ class App extends React.Component {
     user {Object}: user data object to store in localStorage
   */
   login(token, expiresIn, user) {
-    console.log("loggin in");
     this.setLocalStorage(token, expiresIn, user, this.updateState);
     axios.defaults.headers.common["Authorization"] = this.state.token;
   }
