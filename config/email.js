@@ -19,7 +19,7 @@ const OAuth2Client = new google.auth.OAuth2(
 * @param {string} subject subject of email to send
 * @param {string} message html string for email body
 */
-module.exports = email = (userEmail, subject, message) => {
+module.exports = (userEmail, subject, message) => {
   if (process.env.NODE_ENV !== "development") {
     OAuth2Client.setCredentials({
       refresh_token: process.env.OAUTH_REFRESH_TOKEN

@@ -572,7 +572,7 @@ module.exports = async (app, passport) => {
       }
 
       if (user) {
-        if (Date.now() < new Date(user.reset_expiry)) {
+        if (Date.now() > new Date(user.reset_expiry)) {
           return response.json(messages.INVALID_RESET_TOKEN);
         } else {
           const hash = hashPassword(request.body.password1);
