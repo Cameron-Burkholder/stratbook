@@ -6,7 +6,7 @@ import Loading from "../partials/Loading.js";
 import { PUSH_SUBSCRIBE } from "../../messages/messages.js";
 import { ERROR_PUSH } from "../../messages/errors.js";
 require("dotenv").config();
-const convertedVapidKey = process.env.PUBLIC_VAPID_KEY;
+const convertedVapidKey = "BKe8OGW20LmKc386UPPLHqXoFr-hWJQL6GeI83RNt1vPTTdZgau_H_KGc96zzV0h-U1xuN72WzSAEVLEyj07gLY";
 
 class PushNotificationsAPI extends React.Component {
   constructor(props) {
@@ -67,29 +67,33 @@ class PushNotificationsAPI extends React.Component {
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.ready.then(function(registration) {
         if (!registration.pushManager) {
-          console.log('Push manager unavailable.')
-          return
+          return component.props.alert("Push manager unavailable.");
         }
 
-        registration.pushManager.getSubscription().then(function(existedSubscription) {
-          if (existedSubscription === null) {
-            registration.pushManager.subscribe({
-              applicationServerKey: convertedVapidKey,
-              userVisibleOnly: true,
-            }).then(function(newSubscription) {
-              component.sendSubscription(newSubscription)
-            }).catch(function(e) {
-              if (Notification.permission !== 'granted') {
-                component.props.alert("Notification permissions are required to receive push notifications.", "ERROR");
+        Notification.requestPermission().then((permission) => {
+          if (permission === "granted") {
+            registration.pushManager.getSubscription().then(function(existedSubscription) {
+              if (existedSubscription === null) {
+                registration.pushManager.subscribe({
+                  applicationServerKey: convertedVapidKey,
+                  userVisibleOnly: true,
+                }).then(function(newSubscription) {
+                  component.sendSubscription(newSubscription)
+                }).catch(function(e) {
+                  if (Notification.permission !== 'granted') {
+                    component.props.alert("Notification permissions are required to receive push notifications.", "ERROR");
+                  } else {
+                    console.log(e);
+                    component.props.alert("An error occurred while attempting to subscribe to push notifications.", "ERROR");
+                  }
+                })
               } else {
-                console.log(e);
-                component.props.alert("An error occurred while attempting to subscribe to push notifications.");
+                component.sendSubscription(existedSubscription);
               }
             })
-          } else {
-            component.sendSubscription(existedSubscription);
           }
         })
+
       })
         .catch(function(e) {
           console.error('An error ocurred during Service Worker registration.', e);
