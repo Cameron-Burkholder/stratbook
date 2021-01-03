@@ -26,7 +26,7 @@ class CreateStrategiesAPI extends React.Component {
     this.addMap = this.addMap.bind(this);
 
     this.state = {
-      maps: MAP_NAMES.filter((map) => this.props.maps.indexOf(map) < 0)
+      maps: MAP_NAMES.filter((map) => this.props.maps.indexOf(map.toUpperCase()) >= 0)
     }
   }
   selectMap(name) {
@@ -142,7 +142,7 @@ class CreateStrategiesAPI extends React.Component {
             <h1>Create Strategy</h1>
             <h4>Add a map to your Stratbook</h4>
             <div className="map-selector">
-              { maps }
+              { maps.length > 0 ? maps : <p>There are no maps to add to your Stratbook. Your Stratbook contains all the available maps.</p> }
             </div>
           </div>
         )}
