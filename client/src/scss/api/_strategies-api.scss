@@ -1,42 +1,94 @@
 /* client/src/scss/api/_strategies-api.scss */
 
-div#ViewStrategiesAPI {
-
-}
-
 div#EditStrategiesAPI {
-  div.edit-buttons {
-    padding: $padding-m;
-  }
-}
-
-div#CreateStrategiesAPI {
-  div.map-selector {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: $margin-m;
-    padding: $padding-m;
-    h3 {
-      grid-column: span 3;
+  div.edit-container {
+    padding: $padding-m !important;
+    h1 {
       text-align: center;
     }
-    div.map-option {
-      background: $background-secondary;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: $padding-m;
-      transition: all 0.3s ease;
+  }
+  div.edit-buttons {
+    display: flex;
+    justify-content: flex-start;
+    a.button {
+      display: block;
+      width: 100%;
+      margin: 0;
     }
-    div.map-option:hover {
-      box-shadow: $box-shadow-primary;
-      cursor: pointer;
+    button.button {
+      max-width: 172px;
+      display: block;
+      margin: 0;
+      width: 100%;
+      margin-left: $margin-s;
+      background: linear-gradient(to right, #{$color-tertiary}, #{$color-primary});
+    }
+  }
+}
+
+div.add-strategy {
+  padding: $padding-m;
+  button#cancel {
+    border: 2px solid $color-danger;
+  }
+  button#cancel:hover {
+    background: $color-danger;
+  }
+}
+div#CreateStrategiesAPI {
+  h1, h4 {
+    text-align: center;
+  }
+}
+div.map-selector {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: $margin-m;
+  padding: $padding-m;
+  h3 {
+    grid-column: span 3;
+    text-align: center;
+  }
+  div.map-option, a.map-option {
+    background: $background-secondary;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: $padding-m;
+    transition: all 0.3s ease;
+    background-size: cover;
+    background-position: center;
+    padding: 0;
+    height: 100px;
+    text-decoration: none;
+  }
+  div.map-overlay {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: $font-heading1;
+    font-weight: bold;
+    text-shadow: 2px 2px black;
+    cursor: pointer;
+    text-decoration: none !important;
+    transition: all 0.3s ease;
+  }
+  div.map-option:hover, a.map-option:hover {
+    box-shadow: $box-shadow-primary;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    div.map-overlay {
+      background: rgba(0, 0, 0, 0.4);
       transition: all 0.3s ease;
     }
   }
 }
 
-div.add-map__ui {
+div#Editor {
   main {
     width: 100%;
     height: 100%;
@@ -144,13 +196,23 @@ div.toolbar__navigation {
   h4:hover {
     text-decoration: none;
   }
-  button#showMaps {
+  a#showMaps {
+    display: block;
     background: transparent;
     color: $text-dark;
     border: $border-secondary;
     margin: 0;
     margin-top: $margin-s;
+    padding: $padding-s;
     width: 100%;
+    text-decoration: none;
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+  a#showMaps:hover {
+    box-shadow: $box-shadow-primary;
+    transition: all 0.3s ease;
   }
   div.type-selector, div.strategy-selector, div.site-container, div.site-container div {
     margin: 0;

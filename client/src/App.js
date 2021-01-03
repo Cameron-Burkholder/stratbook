@@ -234,6 +234,19 @@ class App extends React.Component {
               : ( <Redirect to="/strategies"/> )
               }
             </Route>
+            <Route exact path="/strategies/edit/:map"
+              render={(props) => {
+                if (this.state.loggedIn && (this.state.user.status === "ADMIN" || this.state.user.status === "EDITOR")) {
+                  const map_name = props.match.params.map.toUpperCase();
+                  return (
+                    <div className="page-wrapper">
+                      <EditStrategies getAuthToken={this.getAuthToken} alert={this.alert} map={map_name} {...props}/>
+                    </div>
+                  )
+                } else {
+                  return <Redirect to="/strategies"/>
+                }
+              }}/>
             <Route exact path="/chat">
               { this.state.loggedIn && this.state.user.team_code ? (
                 <div className="page-wrapper">

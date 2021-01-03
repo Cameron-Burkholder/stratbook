@@ -13,7 +13,7 @@ import EditStrategiesAPI from "../api/EditStrategiesAPI.js";
 const EditStrategies = (props) => {
   return (
     <div id="edit-strategies">
-      <EditStrategiesAPI getAuthToken={props.getAuthToken} alert={props.alert}/>
+      <EditStrategiesAPI getAuthToken={props.getAuthToken} alert={props.alert} map={props.map}/>
     </div>
   )
 }

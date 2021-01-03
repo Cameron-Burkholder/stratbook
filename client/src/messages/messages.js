@@ -100,6 +100,22 @@ module.exports = {
     status: "Invalid Username",
     message: "The username provided is invalid."
   },
+  MAP_ADDED: {
+    status: "Map Added",
+    message: "The requested map has been added to your Stratbook."
+  },
+  MAP_EXISTS: {
+    status: "Map Exists",
+    message: "The requested map already exists in your Stratbook. In order to protect your data, a duplicate cannot be added."
+  },
+  MAP_FOUND: {
+    status: "Map Found",
+    message: "The requested map has been found."
+  },
+  MAP_NOT_FOUND: {
+    status: "Map Not Found",
+    message: "The requested map could not be found in the team's stratbook."
+  },
   OPERATOR_STATS_FOUND: {
     status: "Operator Statistics Found",
     message: "Operator statistics found."

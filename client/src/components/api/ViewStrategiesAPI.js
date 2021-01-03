@@ -79,12 +79,10 @@ class ViewStrategiesAPI extends React.Component {
       .then((response) => {
       switch (response.data.status) {
         case STRATEGIES_FOUND.status:
-          const maps = Object.keys(response.data.strategies).filter((map) => MAP_NAMES.indexOf(map) >= 0);
           component.setState({
             loading: false,
             hasLoaded: true,
-            strategies: response.data.strategies,
-            maps: maps
+            maps: response.data.maps
           });
           break;
           default:
@@ -117,21 +115,10 @@ class ViewStrategiesAPI extends React.Component {
         contents = <ErrorLoading/>
       } else {
         if (this.props.team_code && this.props.team_code !== "") {
-          if (this.state.strategies.length > 0) {
-            const strats = this.state.strategies.map((strat, index) => {
-              if (this.state.search === "" || strat.name.toUpperCase().includes(this.state.search.toUpperCase())) {
-                return (
-                  <div className="strategy-preview" key={index}>
-                    <h3 className="strategy-preview-heading" onClick={() => { this.selectStrategy(index) }}>{strat.name}</h3>
-                    <p className="strategy-preview-type">{strat.type}</p>
-                  </div>
-                )
-              }
-            });
+          if (this.state.maps.length > 0) {
             contents = (this.state.listView) ? (
               <div className="strategy-list">
                 <input className="strategy-search" onChange={this.onChange} value={this.state.search} type="text" placeholder="Search Strategies"/>
-                { strats }
               </div>
             ) : (
               <p></p>

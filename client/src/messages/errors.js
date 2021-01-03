@@ -1,6 +1,10 @@
 /* errors.js */
 
 module.exports = {
+  ERROR_ADD_MAP: {
+    status: "ERROR",
+    message: "An error occurred while attempting to add map."
+  },
   ERROR_ATTACKERS: {
     status: "ERROR",
     message: "An error occurred while attempting to set attackers."
@@ -100,6 +104,10 @@ module.exports = {
   ERROR_VIEW_BLOCKED_USERS: {
     status: "ERROR",
     message: "An error occurred while attempting to view blocked users."
+  },
+  ERROR_VIEW_MAP: {
+    status: "ERROR",
+    message: "An error occurred while attempting to view the requested map."
   },
   ERROR_VIEW_STRATEGIES: {
     status: "ERROR",

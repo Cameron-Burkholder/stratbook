@@ -1,6 +1,7 @@
 /* client/src/components/partials/Toolbar.js */
 
 import React from "react";
+import { Link } from "react-router-dom";
 
 class Toolbar extends React.Component {
   constructor(props) {
@@ -87,7 +88,7 @@ class Toolbar extends React.Component {
         <div className={"toolbar__navigation" + (this.state.nav ? " toolbar__navigation--active" : "")}>
           <h3>{this.props.map.name}</h3>
           <button className="button toolbar__button" onClick={this.props.save}>Save</button>
-          <button onClick={this.props.showMaps} id="showMaps">Back to Maps</button>
+          <Link to="/strategies/edit" onClick={this.props.fetchStrategies} id="showMaps">Back to Maps</Link>
           <div className="strategy__navigation">
             <h4>Mode</h4>
             <div className="type-selector">

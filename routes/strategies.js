@@ -42,7 +42,7 @@ module.exports = async (app, passport) => {
   app.get("/api/strategies/view", (request, response, done) => {
     log("GET REQUEST AT /api/strategies/view");
     done();
-  }, passport.authenticate("jwt", { session: false }), middleware.userIsVerified, middleware.userHasTeam, async (request, response, done) => {
+  }, passport.authenticate("jwt", { session: false }), middleware.userIsVerified, middleware.userHasTeam, async (request, response) => {
     if (request.team.members.indexOf(String(request.user._id)) < 0 && request.team.editors.indexOf(String(request.user._id)) < 0 && request.team.admins.indexOf(String(request.user._id)) < 0) {
       return response.json(messages.PERMISSION_DENIED);
     }
@@ -56,9 +56,88 @@ module.exports = async (app, passport) => {
     }
 
     let packet = messages.STRATEGIES_FOUND;
-    packet.strategies = strategies;
+    packet.maps = strategies.maps;
     response.json(packet);
   });
 
+  /**
+  * Fetch a map
+  * @name /api/strategies/view/:map
+  * @function
+  * @async
+  * @description The user submits a request to view a specific map.
+  *   If the user is not on the team, this returns a permission denied object.
+  *   If the strategy is not a part of the team's stratbook, this returns a map not found object.
+  *   If the strategy can be found, this returns a map found object.
+  * @param {string} request.params.map the map to find
+  */
+  app.get("/api/strategies/view/:map", (request, response, done) => {
+    log("GET REQUEST AT /api/strategies/view/:map");
+    done();
+  }, passport.authenticate("jwt", { session: false }), middleware.userIsVerified, middleware.userHasTeam, async (request, response) => {
+    if (request.team.members.indexOf(String(request.user._id)) < 0 && request.team.editors.indexOf(String(request.user._id)) < 0 && request.team.admins.indexOf(String(request.user._id)) < 0) {
+      return response.json(messages.PERMISSION_DENIED);
+    }
 
+    let strategies;
+    try {
+      strategies = await Strategies.findOne({ join_code: request.user.team_code }).exec();
+    } catch(error) {
+      console.log(error);
+      return response.json(errors.ERROR_VIEW_MAP);
+    }
+
+    if (!strategies[request.params.map.toLowerCase()]) {
+      return response.json(messages.MAP_NOT_FOUND);
+    }
+
+    let packet = messages.MAP_FOUND;
+    packet[request.params.map.toLowerCase()] = strategies[request.params.map.toLowerCase()];
+    response.json(packet);
+  });
+
+  /**
+  * Add map to stratbook
+  * @name /api/strategies/add/:map
+  * @function
+  * @async
+  * @description The user submits a request to add a map.
+  *   If the user is not an editor or admin on the team, this returns a permission denied object.
+  *   If the map is already in the stratbook, this returns a map exists object.
+  *   If the strategy is able to be added, this returns a map added object.
+  * @param {string} request.params.map the map to add the strategy for
+  * @param {object} request.body.map the map data to add 
+  */
+  app.post("/api/strategies/add/:map", (request, response, done) => {
+    log("POST REQUEST AT /api/strategies/add/:map");
+    done();
+  }, passport.authenticate("jwt", { session: false }), middleware.userIsVerified, middleware.userHasTeam, async (request, response) => {
+    if (request.team.editors.indexOf(String(request.user._id)) < 0 && request.team.admins.indexOf(String(request.user._id)) < 0) {
+      return response.json(messages.PERMISSION_DENIED);
+    }
+
+    let strategies;
+    try {
+      strategies = await Strategies.findOne({ join_code: request.user.team_code }).exec();
+    } catch(error) {
+      console.log(error);
+      return response.json(errors.ERROR_ADD_MAP);
+    }
+
+    if (strategies[request.params.map]) {
+      return response.json(messages.MAP_EXISTS);
+    }
+
+    strategies[request.params.map] = JSON.parse(request.body.map);
+    strategies.maps.push(request.params.map.toLowerCase());
+
+    try {
+      await strategies.save();
+    } catch(error) {
+      console.log(error);
+      return response.json(errors.ERROR_ADD_MAP);
+    }
+
+    response.json(messages.MAP_ADDED);
+  });
 };

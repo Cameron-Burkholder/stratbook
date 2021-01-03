@@ -5,7 +5,7 @@ import React from "react";
 import PositionOverlay from "./PositionOverlay.js";
 
 const BlueprintForm = (props) => {
-  const url = `../media/${props.map.replace(" ", "_")}-${props.floor.toUpperCase().replace(" ", "_")}.jpg`;
+  const url = `../../media/${props.map.replace(" ", "_")}-${props.floor.toUpperCase().replace(" ", "_")}.jpg`;
   const style = {
     backgroundImage: `url(${url})`,
     backgroundPosition: "center",
