@@ -55,8 +55,15 @@ require("./routes/teams.js")(app, passport);
 require("./routes/statistics.js")(app, passport);
 require("./routes/strategies.js")(app, passport);
 require("./routes/push.js")(app, passport);
+// Send service worker files
+app.get("/service-worker.js", (request, response) => {
+  response.sendFile(path.join(__dirname, "client", "build", "service-workder.js"));
+});
+app.get("/custom-sw.js", (request, response) => {
+  response.sendFile(path.join(__dirname, "client", "build", "custom-sw.js"));
+});
 // Send appropriate file depending on deployment mode (production vs development)
-app.get("/*", function(request, response) {
+app.get("/*", (request, response) => {
   log("GET REQUEST AT /*");
   if (process.env.NODE_ENV === "production") {
     response.sendFile(path.join(__dirname, "client", "build", "index.html"));
