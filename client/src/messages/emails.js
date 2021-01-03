@@ -6,6 +6,11 @@ module.exports = {
     body: "Your email has been updated.",
     email_body: "<div><h2>Your email has been updated</h2><br/><p>The email associated with your Stratbook account has been updated. If you did not do this, login to your Stratbook account and change it back immediately.</p></div>"
   },
+  MAP_ADDED: {
+    status: "Map Added",
+    body: "A map has been added to your Stratbook.",
+    email_body: "<div><h2>A map has been added to your Stratbook.</h2><br/><p>A user has added a map to the Stratbook associated with your team.</p></div>"
+  },
   PASSWORD_RESET: {
     status: "Password Reset",
     body: "Your password has been reset.",

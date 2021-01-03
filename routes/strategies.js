@@ -1,9 +1,10 @@
 /* routes/strategies.js */
 
 const email = require("../config/email.js");
-const { log, genJoinCode } = require("../config/utilities.js");
+const { log, genJoinCode, notify } = require("../config/utilities.js");
 const mongoose = require("mongoose");
 const messages = require("../client/src/messages/messages.js");
+const emails = require("../client/src/messages/emails.js");
 
 // Load input validation
 const validation = require("../validation.js");
@@ -106,7 +107,7 @@ module.exports = async (app, passport) => {
   *   If the map is already in the stratbook, this returns a map exists object.
   *   If the strategy is able to be added, this returns a map added object.
   * @param {string} request.params.map the map to add the strategy for
-  * @param {object} request.body.map the map data to add 
+  * @param {object} request.body.map the map data to add
   */
   app.post("/api/strategies/add/:map", (request, response, done) => {
     log("POST REQUEST AT /api/strategies/add/:map");
@@ -139,5 +140,18 @@ module.exports = async (app, passport) => {
     }
 
     response.json(messages.MAP_ADDED);
+
+    let index = 0;
+    while (index < request.team.admins.length) {
+      let user;
+      try {
+        user = await User.findOne({ _id: mongoose.Types.ObjectId(request.team.admins[index]) }).exec();
+      } catch(error) {
+        console.log(error);
+        return response.json(errors.ERROR_VIEW_TEAM);
+      }
+      notify(user, emails.MAP_ADDED);
+      index++;
+    }
   });
 };
