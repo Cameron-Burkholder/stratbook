@@ -21,7 +21,7 @@ const isLocalhost = Boolean(
 );
 
 export function register(config) {
-  if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
+  if ('serviceWorker' in navigator) {
     window.self.addEventListener("push", event => {
       const data = event.data.json();
       const { title } = data;
@@ -42,7 +42,8 @@ export function register(config) {
     }
 
     window.addEventListener('load', () => {
-      const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
+      const swFileName = process.env.NODE_ENV === "production" ? "service-worder.js" : "custom-sw.js";
+      const swUrl = `${process.env.PUBLIC_URL}/${swFileName}`;
 
       if (isLocalhost) {
         // This is running on localhost. Let's check if a service worker still exists or not.

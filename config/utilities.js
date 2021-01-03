@@ -14,7 +14,7 @@ require("dotenv").config();
 const webpush = require("web-push");
 webpush.setGCMAPIKey(process.env.CLOUD_MESSAGING_API);
 webpush.setVapidDetails(
-  "mailto:r6stratbook@gmail.com",
+  `mailto:${process.env.EMAIL}`,
   process.env.PUBLIC_VAPID_KEY,
   process.env.PRIVATE_VAPID_KEY
 )
@@ -37,12 +37,11 @@ exports.notify = async function(user, message) {
   if (process.env.NODE_ENV !== "development") {
     if (user.subscription) {
       try {
-        await webpush.sendNotification(user.subscription, JSON.stringify({ title: message.status, body: message.body }));
+        await webpush.sendNotification(JSON.parse(user.subscription), JSON.stringify({ title: message.status, body: message.body }));
       } catch(error) {
         console.log(error);
       }
     }
-
     email(user.email, message.status, message.email_body);
   }
 }

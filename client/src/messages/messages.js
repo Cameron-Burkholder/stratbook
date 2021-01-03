@@ -140,6 +140,10 @@ module.exports = {
     status: "Profane Team Input",
     message: "Stratbook does not accept profane input."
   },
+  PUSH_SUBSCRIBE: {
+    status: "Push Notifications Subscribed",
+    message: "You have successfully subscribed to push notifications on this device."
+  },
   SEASONAL_STATS_FOUND: {
     status: "Seasonal Statistics Found",
     message: "Seasonal statistics found."

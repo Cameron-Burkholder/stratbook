@@ -65,6 +65,10 @@ module.exports = {
     status: "ERROR",
     message: "An error occurred while attempting to update platform."
   },
+  ERROR_PUSH: {
+    status: "ERROR",
+    message: "An error ocurred while attempting to subscribe to push notifications."
+  },
   ERROR_REGISTER: {
     status: "ERROR",
     message: "An error occurred while attempting to register."

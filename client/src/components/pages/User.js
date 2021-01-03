@@ -53,7 +53,7 @@ const User = (props) => {
         <UpdatePasswordAPI getAuthToken={props.getAuthToken} updateAuthToken={props.updateAuthToken} alert={props.alert}/>
       </div>
       <div className="account-section" id="push-notifications">
-        <h3>Notifications</h3>
+        <h3>Notification Preferences</h3>
         <PushNotificationsAPI getAuthToken={props.getAuthToken} alert={props.alert} subscription={props.subscription}/>
       </div>
       <div className="account-section account-section--danger">

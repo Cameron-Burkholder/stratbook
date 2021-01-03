@@ -7,6 +7,7 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "axios": "^0.20.0",
+    "cra-append-sw": "^2.7.0",
     "node-sass": "^4.14.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -18,7 +19,7 @@
     "start": "react-scripts start",
     "scss": "node-sass src/scss -o src/css",
     "watch-scss": "node-sass -w src/scss -o src/css",
-    "build": "react-scripts build",
+    "build": "react-scripts build && cra-append-sw --skip-compile ./public/custom-sw.js",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
