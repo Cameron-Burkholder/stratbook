@@ -3,7 +3,7 @@
 import React from "react";
 import axios from "axios";
 import { TEAM_FOUND } from "../../messages/messages.js";
-import { USER_STATUS_UPDATED } from "../../messages/messages.js";
+import { USER_STATUS_UPDATED } from "../../messages/emails.js";
 import { USER_BLOCKED } from "../../messages/messages.js";
 import { ERROR_TEAM } from"../../messages/errors.js";
 import { ERROR_UPDATE_USER_STATUS } from "../../messages/errors.js";
@@ -84,6 +84,7 @@ class ManageTeamAPI extends React.Component {
       status: status
     })
       .then((response) => {
+        console.log(response.data);
       switch (response.data.status) {
         case USER_STATUS_UPDATED.status:
           component.setState({
