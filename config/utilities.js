@@ -35,6 +35,7 @@ const PRIV_KEY = process.env.RSA_PRIVATE_KEY.replace(/\\n/g, "\n");
 */
 exports.notify = async function(user, message) {
   if (process.env.NODE_ENV !== "development") {
+    const email = require("./email.js");
     let email_body = message.email_body;
     if (user.subscription) {
       let body = message.body;
