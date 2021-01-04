@@ -5,8 +5,7 @@ import axios from "axios";
 import Loading from "../partials/Loading.js";
 import { PUSH_SUBSCRIBE } from "../../messages/messages.js";
 import { ERROR_PUSH } from "../../messages/errors.js";
-require("dotenv").config();
-const convertedVapidKey = "BKe8OGW20LmKc386UPPLHqXoFr-hWJQL6GeI83RNt1vPTTdZgau_H_KGc96zzV0h-U1xuN72WzSAEVLEyj07gLY";
+const convertedVapidKey = process.env.REACT_APP_PUBLIC_VAPID_KEY;
 
 class PushNotificationsAPI extends React.Component {
   constructor(props) {

@@ -15,7 +15,7 @@ const webpush = require("web-push");
 webpush.setGCMAPIKey(process.env.CLOUD_MESSAGING_API);
 webpush.setVapidDetails(
   `mailto:${process.env.EMAIL}`,
-  process.env.REACT_APP_PUBLIC_VAPID_KEY,
+  process.env.PUBLIC_VAPID_KEY,
   process.env.PRIVATE_VAPID_KEY
 )
 
