@@ -871,6 +871,9 @@ div.account-section {
     div.account-section div.operators h4 {
       grid-column: span 2; }
 
+div#notifications {
+  margin-top: 128px; }
+
 div#SetDefendersAPI fieldset > div, div#SetAttackersAPI fieldset > div {
   display: grid;
   grid-template-columns: repeat(10, 1fr); }

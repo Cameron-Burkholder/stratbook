@@ -150,7 +150,7 @@ module.exports = async (app, passport) => {
         console.log(error);
         return response.json(errors.ERROR_VIEW_TEAM);
       }
-      notify(user, emails.MAP_ADDED);
+      notify(user, emails.MAP_ADDED, request.params.map.toUpperCase());
       index++;
     }
   });

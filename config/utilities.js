@@ -35,14 +35,27 @@ const PRIV_KEY = process.env.RSA_PRIVATE_KEY.replace(/\\n/g, "\n");
 */
 exports.notify = async function(user, message) {
   if (process.env.NODE_ENV !== "development") {
+    let email_body = message.email_body;
     if (user.subscription) {
+      let body = message.body;
+      for (let i = 2; i < arguments.length; i++) {
+        let startIndex = body.indexOf("{");
+        let endIndex = body.indexOf("}");
+        body = body.slice(0, startIndex) + body.slice(endIndex + 1, body.length);
+        body = body.replace(`#${i - 1}`, arguments[i]);
+
+        startIndex = email_body.indexOf("{");
+        endIndex = email_body.indexOf("}");
+        email_body = email_body.slice(0, startIndex) + email_body.slice(endIndex + 1, email_body.length);
+        email_body = email_body.replace(`#${i - 1}`, arguments[i]);
+      }
       try {
-        await webpush.sendNotification(JSON.parse(user.subscription), JSON.stringify({ title: message.status, body: message.body }));
+        await webpush.sendNotification(JSON.parse(user.subscription), JSON.stringify({ title: message.status, body: body }));
       } catch(error) {
         console.log(error);
       }
     }
-    email(user.email, message.status, message.email_body);
+    email(user.email, message.status, email_body);
   }
 }
 

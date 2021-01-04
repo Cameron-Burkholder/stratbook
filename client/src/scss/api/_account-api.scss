@@ -55,6 +55,9 @@ div.account-section {
     }
   }
 }
+div#notifications {
+  margin-top: $margin-l;
+}
 div#SetDefendersAPI, div#SetAttackersAPI {
   fieldset > div {
     display: grid;

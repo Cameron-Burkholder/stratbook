@@ -240,7 +240,7 @@ module.exports = async (app, passport) => {
       packet.team_code = newTeam.join_code;
     }
     response.json(packet);
-    notify(user, emails.TEAM_CREATED);
+    notify(user, emails.TEAM_CREATED, team.name);
   });
 
   /**
@@ -303,7 +303,7 @@ module.exports = async (app, passport) => {
         return;
       }
 
-      notify(user, emails.TEAM_NAME_UPDATED);
+      notify(user, emails.TEAM_NAME_UPDATED, team.name);
       index++;
     }
   });
@@ -366,15 +366,15 @@ module.exports = async (app, passport) => {
 
           let index = 0;
           while (index < team.admins.length) {
-            let user;
+            let admin;
             try {
-              user = await User.findOne({ _id: mongoose.Types.ObjectId(team.admins[index]) }).exec();
+              admin = await User.findOne({ _id: mongoose.Types.ObjectId(team.admins[index]) }).exec();
             } catch(error) {
               console.log(error);
               response.json(errors.ERROR_JOIN_TEAM);
             }
 
-            notify(user, emails.USER_JOINED_TEAM);
+            notify(admin, emails.USER_JOINED_TEAM, user.username, team.name);
             index++;
           }
 
@@ -480,7 +480,7 @@ module.exports = async (app, passport) => {
           return response.json(errors.ERROR_LEAVE_TEAM);
         }
 
-        notify(member, emails.TEAM_DISBANDED);
+        notify(member, emails.TEAM_DISBANDED, team.name);
         index++;
       }
 
@@ -503,7 +503,7 @@ module.exports = async (app, passport) => {
           return response.json(errors.ERROR_LEAVE_TEAM);
         }
 
-        notify(editor, emails.TEAM_DISBANDED);
+        notify(editor, emails.TEAM_DISBANDED, team.name);
         index++;
       }
 
@@ -526,7 +526,7 @@ module.exports = async (app, passport) => {
           return response.json(errors.ERROR_LEAVE_TEAM);
         }
 
-        notify(admin, emails.TEAM_DISBANDED);
+        notify(admin, emails.TEAM_DISBANDED, team.name);
         index++;
       }
 
@@ -543,7 +543,7 @@ module.exports = async (app, passport) => {
           response.json(errors.ERROR_LEAVE_TEAM);
         }
 
-        notify(admin, emails.USER_LEFT_TEAM);
+        notify(admin, emails.USER_LEFT_TEAM, user.username, team.name);
         index++;
       }
     }
@@ -712,7 +712,7 @@ module.exports = async (app, passport) => {
       user.team_code = undefined;
       user.status = undefined;
 
-      notify(user, emails.TEAM_DISBANDED);
+      notify(user, emails.TEAM_DISBANDED, team.name);
 
       try {
         await user.save();
@@ -737,7 +737,7 @@ module.exports = async (app, passport) => {
       user.team_code = undefined;
       user.status = undefined;
 
-      notify(user, emails.TEAM_DISBANDED);
+      notify(user, emails.TEAM_DISBANDED, team.name);
 
       try {
         await user.save();
@@ -762,7 +762,7 @@ module.exports = async (app, passport) => {
       user.team_code = undefined;
       user.status = undefined;
 
-      notify(user, emails.TEAM_DISBANDED);
+      notify(user, emails.TEAM_DISBANDED, team.name);
 
       try {
         await user.save();

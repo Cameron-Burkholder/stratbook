@@ -394,8 +394,8 @@ module.exports = async (app, passport) => {
     }
 
     response.json(emails.EMAIL_UPDATED);
-    notify(user, emails.EMAIL_UPDATED);
-    notify(old_user, emails.EMAIL_UPDATED);
+    notify(user, emails.EMAIL_UPDATED, user.email);
+    notify(old_user, emails.EMAIL_UPDATED, user.email);
   });
 
   /**
@@ -496,7 +496,7 @@ module.exports = async (app, passport) => {
 
 
     response.json(emails.USER_STATUS_UPDATED);
-    notify(user, emails.USER_STATUS_UPDATED);
+    notify(user, emails.USER_STATUS_UPDATED, team.name, user.status);
   });
 
   /**
