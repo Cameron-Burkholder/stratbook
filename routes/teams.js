@@ -258,6 +258,10 @@ module.exports = async (app, passport) => {
     log("POST REQUEST AT /api/teams/announce");
     done();
   }, passport.authenticate("jwt", { session: false }), validation.validateAnnouncement, middleware.userIsVerified, middleware.userIsAdmin, middleware.userHasTeam, async (request, response) => {
+    if (request.team.admins.indexOf(String(request.user._id)) < 0) {
+      return response.json(messages.PERMISSION_DENIED);
+    }
+
     let team;
     try {
       team = await Team.findOne({ _id: request.team._id }).exec();
