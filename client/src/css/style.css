@@ -275,7 +275,7 @@ div.page#manage-team {
     padding: 16px; } }
 
 /* scss/components/_form.scss */
-input, select {
+input, select, textarea {
   display: inline-block;
   padding: 16px;
   border: none;
@@ -285,10 +285,10 @@ input, select {
   border-bottom: 4px solid white;
   transition: all 0.3s ease; }
 
-input:hover {
+input:hover, textarea:hover {
   cursor: text; }
 
-input:focus {
+input:focus, textarea:focus {
   border: none;
   outline: none;
   box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.17);
@@ -1107,6 +1107,22 @@ div#UpdateTeamNameAPI {
     display: block;
     margin-top: 40px; }
 
+div#TeamAnnouncementAPI {
+  padding: 40px;
+  box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.17);
+  border-left: 3px solid #0040D6;
+  margin-top: 16px; }
+  div#TeamAnnouncementAPI h3 {
+    text-align: center; }
+  div#TeamAnnouncementAPI textarea {
+    width: 100%; }
+  div#TeamAnnouncementAPI textarea:focus {
+    cursor: text; }
+  div#TeamAnnouncementAPI button {
+    margin: auto;
+    display: block;
+    margin-top: 40px; }
+
 div#ManageTeamAPI {
   grid-column: span 2;
   padding: 40px;
@@ -1185,8 +1201,11 @@ div#DeleteTeamAPI {
         grid-column: span 2; }
   div#ManageTeamAPI {
     grid-column: span 3; }
-  div#UpdateTeamNameAPI {
-    grid-column: span 3; }
+  div#TeamControls {
+    grid-column: span 3;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 40px; }
   div#BlockedUsersAPI {
     grid-column: span 3; }
   div#DeleteTeamAPI {
@@ -1215,6 +1234,8 @@ div#DeleteTeamAPI {
       grid-template-columns: repeat(1, 1fr); }
       div.hasTeam div#ViewTeamStatisticsAPI div.member-statistics h3 {
         grid-column: span 1; }
+  div#TeamControls {
+    grid-template-columns: 1fr; }
   div.hasNoTeam div.team-grid {
     grid-template-columns: 1fr !important; } }
 

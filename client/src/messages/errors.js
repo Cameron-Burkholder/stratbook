@@ -5,6 +5,10 @@ module.exports = {
     status: "ERROR",
     message: "An error occurred while attempting to add map."
   },
+  ERROR_ANNOUNCE: {
+    status: "ERROR",
+    message: "An error occurred while attempting to make announcement."
+  },
   ERROR_ATTACKERS: {
     status: "ERROR",
     message: "An error occurred while attempting to set attackers."

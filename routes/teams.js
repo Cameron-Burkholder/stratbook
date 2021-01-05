@@ -244,6 +244,76 @@ module.exports = async (app, passport) => {
   });
 
   /**
+  * Make an announcement
+  * @name /api/teams/announce
+  * @function
+  * @async
+  * @description The user submits a request to make a team announcement.
+  *   If the user is not an admin, this returns a permission denied object.
+  *   If the data is invalid, this returns an invalid announcement object.
+  *   If the user can make the announcement, this returns an announcement sent object.
+  * @param {string} request.body.announcement the announcement to send
+  */
+  app.post("/api/teams/announce", (request, response, done) => {
+    log("POST REQUEST AT /api/teams/announce");
+    done();
+  }, passport.authenticate("jwt", { session: false }), validation.validateAnnouncement, middleware.userIsVerified, middleware.userIsAdmin, middleware.userHasTeam, async (request, response) => {
+    let team;
+    try {
+      team = await Team.findOne({ _id: request.team._id }).exec();
+    } catch(error) {
+      console.log(error);
+      return response.json(errors.ERROR_ANNOUNCE);
+    }
+
+    let index = 0;
+    while (index < team.members.length) {
+      let member;
+      try {
+        member = await User.findOne({ _id: mongoose.Types.ObjectId(team.members[index]) }).exec();
+      } catch(error) {
+        console.log(error);
+        return response.json(errors.ERROR_ANNOUNCE);
+      }
+
+      notify(member, emails.ANNOUNCEMENT, request.user.username, request.body.announcement);
+      index++;
+    }
+
+    index = 0;
+    while (index < team.editors.length) {
+      let editor;
+      try {
+        editor = await User.findOne({ _id: mongoose.Types.ObjectId(team.editors[index]) }).exec();
+      } catch(error) {
+        console.log(error);
+        return response.json(errors.ERROR_ANNOUNCE);
+      }
+
+      notify(editor, emails.ANNOUNCEMENT, request.user.username, request.body.announcement);
+      index++;
+    }
+
+    index = 0;
+    while (index < team.admins.length) {
+      let admin;
+      try {
+        admin = await User.findOne({ _id: mongoose.Types.ObjectId(team.admins[index]) }).exec();
+      } catch(error) {
+        console.log(error);
+        return response.json(errors.ERROR_ANNOUNCE);
+      }
+
+      if (admin.username !== request.user.username) {
+        notify(admin, emails.ANNOUNCEMENT, request.user.username, request.body.announcement);
+      }
+      index++;
+    }
+
+    response.json(messages.ANNOUNCEMENT_SENT);
+  });
+
+  /**
   * Update team name
   * @name /api/teams/update-name
   * @function

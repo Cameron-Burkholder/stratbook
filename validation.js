@@ -9,6 +9,31 @@ const messages = require("./client/src/messages/messages.js");
 const { ATTACKERS, ATTACKER_ROLES, DEFENDERS, DEFENDER_ROLES } = require("./client/src/data.js");
 
 /**
+* Validates announcement input field
+*/
+exports.validateAnnouncement = function(request, response, done) {
+  let data = request.body;
+  let packet = messages.INVALID_ANNOUNCEMENT;
+
+  let errors = {};
+  data.announcement = !isEmpty(data.announcement) ? data.announcement : "";
+
+  if (Validator.isEmpty(data.announcement)) {
+    errors.announcement = "Announcement may not be empty."
+  }
+
+  if (!isEmpty(errors)) {
+    packet.errors = errors;
+    response.json(packet);
+    response.end();
+    return packet;
+  } else {
+    done();
+    return null;
+  }
+}
+
+/**
 * Validates input fields for login form
 */
 exports.validateLoginInput = function(request, response, done) {

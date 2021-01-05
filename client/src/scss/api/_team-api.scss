@@ -177,6 +177,26 @@ div#UpdateTeamNameAPI {
     margin-top: $margin-m;
   }
 }
+div#TeamAnnouncementAPI {
+  padding: $padding-m;
+  box-shadow: $box-shadow-primary;
+  border-left: 3px solid $color-primary;
+  margin-top: $margin-s;
+  h3 {
+    text-align: center;
+  }
+  textarea {
+    width: 100%;
+  }
+  textarea:focus {
+    cursor: text;
+  }
+  button {
+    margin: auto;
+    display: block;
+    margin-top: $margin-m;
+  }
+}
 div#ManageTeamAPI {
   grid-column: span 2;
   padding: $padding-m;
@@ -284,8 +304,17 @@ div#DeleteTeamAPI {
   div#ManageTeamAPI {
     grid-column: span 3;
   }
-  div#UpdateTeamNameAPI {
+  div#TeamControls {
     grid-column: span 3;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: $padding-m;
+  }
+  div#UpdateTeamNameAPI {
+
+  }
+  div#TeamAnnouncementAPI {
+
   }
   div#BlockedUsersAPI {
     grid-column: span 3;
@@ -334,6 +363,9 @@ div#DeleteTeamAPI {
         }
       }
     }
+  }
+  div#TeamControls {
+    grid-template-columns: 1fr;
   }
   div.hasNoTeam div.team-grid {
     grid-template-columns: 1fr !important;

@@ -727,7 +727,7 @@ module.exports = async (app, passport) => {
       return response.json(errors.ERROR_ATTACKERS);
     }
 
-    user.attackers = request.body.attackers;
+    user.attackers = request.body.attackers.sort();
 
     try {
       await user.save();
@@ -762,7 +762,7 @@ module.exports = async (app, passport) => {
       return response.json(errors.ERROR_DEFENDERS);
     }
 
-    user.defenders = request.body.defenders;
+    user.defenders = request.body.defenders.sort();
 
     try {
       await user.save();

@@ -1,6 +1,6 @@
 /* scss/components/_form.scss */
 
-input, select {
+input, select, textarea {
   display: inline-block;
   padding: $padding-s;
   border: none;
@@ -10,10 +10,10 @@ input, select {
   border-bottom: 4px solid white;
   transition: all 0.3s ease;
 }
-input:hover {
+input:hover, textarea:hover {
   cursor: text;
 }
-input:focus {
+input:focus, textarea:focus {
   border: none;
   outline: none;
   box-shadow: $box-shadow-primary;

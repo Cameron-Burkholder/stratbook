@@ -4,6 +4,10 @@
 * List of messages and error reports used throughout platform
 */
 module.exports = {
+  ANNOUNCEMENT_SENT: {
+    status: "Announcement Sent",
+    message: "Your announcement has been successfully sent."
+  },
   ATTACKER_ROLE_SET: {
     status: "Attacker Role Set",
     message: "Your attacking role has been set."
@@ -39,6 +43,10 @@ module.exports = {
   INCORRECT_PASSWORD: {
     status: "Incorrect Password",
     message: "The password entered was incorrect."
+  },
+  INVALID_ANNOUNCEMENT: {
+    status: "Invalid Announcement",
+    message: "The announcement provided is invalid."
   },
   INVALID_ATTACKER_ROLE: {
     status: "Invalid Attacker Role",

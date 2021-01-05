@@ -1,6 +1,11 @@
 /* messages/emails.js */
 
 module.exports = {
+  ANNOUNCEMENT: {
+    status: "Team Announcement",
+    body: '#1{NAME}: "#2{ANNOUNCEMENT}"',
+    email_body: '<div><h2>Team Announcement</h2><br/><p>#1{NAME}: "#{ANNOUNCEMENT}"'
+  },
   EMAIL_UPDATED: {
     status: "Email Updated",
     body: "Your email has been updated to #1{NEW_EMAIL}.",
