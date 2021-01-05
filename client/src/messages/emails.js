@@ -46,6 +46,11 @@ module.exports = {
     body: "Your team name has been updated to #1{NEW_NAME}.",
     email_body: "<div><h2>Your team name has been updated to #1{NEW_NAME}.</h2><br/><p>Your Stratbook team name has been updated. If you wish to undo this as an admin on the team, login and revert the change.</p></div>"
   },
+  TEAM_STATUS_UPDATED: {
+    status: "Team Status Updated",
+    body: "Your team status has been changed to #1{NEW_STATUS}.",
+    email_body: "<div><h2>Your team status has been updated to #1{NEW_STATUS}.</h2><br/><p>Changing your team status affects the ability of new members to join. If you think this was a mistake, you can update the team status under the manage page.</p></div>"
+  },
   USER_AND_TEAM_DELETED: {
     status: "User and Team Deleted",
     body: "Your Stratbook account and team have been deleted.",

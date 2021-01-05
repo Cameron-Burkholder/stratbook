@@ -58,7 +58,8 @@ module.exports = async (app, passport) => {
       platform: request.team.platform,
       members: [],
       editors: [],
-      admins: []
+      admins: [],
+      open: request.team.open
     };
 
     let index = 0;
@@ -208,7 +209,8 @@ module.exports = async (app, passport) => {
       blocked_users: [],
       name: request.body.name,
       strategies_id: newStrategies._id,
-      platform: request.user.platform.toUpperCase()
+      platform: request.user.platform.toUpperCase(),
+      open: true
     });
 
     user.team_code = newTeam.join_code;
@@ -391,6 +393,7 @@ module.exports = async (app, passport) => {
   *   If no team with the provided join code exists, this returns a team not found object.
   *   If the user's platform does not match the team platform, this returns a platform does not match object.
   *   If the user is blocked from the team, this returns a permission denied object.
+  *   If the team is closed, this returns a permission denied object.
   *   If the user is able to join the team, this returns a team joined object.
   * @param {string} request.body.join_code the join code of the team to join
   */
@@ -410,6 +413,11 @@ module.exports = async (app, passport) => {
     if (team) {
       if (team.platform === request.user.platform.toUpperCase()) {
         if (team.blocked_users.indexOf(String(request.user._id)) < 0) {
+
+          if (!team.open) {
+            return response.json(messages.PERMISSION_DENIED);
+          }
+
           let user;
           try {
             user = await User.findOne({ _id: request.user._id }).exec();
@@ -732,6 +740,61 @@ module.exports = async (app, passport) => {
     }
 
     response.json(messages.USER_UNBLOCKED);
+  });
+
+  /**
+  * Update team status
+  * @name /api/teams/update-team-status
+  * @function
+  * @async
+  * @description The user submits a request to update team status.
+  *   If the user is not an admin on the team, this returns a permission denied object.
+  *   If the status changed to is not valid, this returns an invalid team status object.
+  *   If the user can successfully change the team status, this returns a team status updated object.
+  * @param {Boolean} request.body.status the team status to change to
+  */
+  app.patch("/api/teams/update-team-status", (request, response, done) => {
+    log("PATCH REQUEST AT /api/teams/update-team-status");
+    done();
+  }, passport.authenticate("jwt", { session: false }), validation.validateTeamStatus, middleware.userIsVerified, middleware.userHasTeam, middleware.userIsAdmin, async (request, response) => {
+    if (request.team.admins.indexOf(String(request.user._id)) < 0) {
+      return response.json(messages.PERMISSION_DENIED);
+    }
+
+    let team;
+    try {
+      team = await Team.findOne({ _id: request.team._id }).exec();
+    } catch(error) {
+      console.log(error);
+      return response.json(errors.ERROR_UPDATE_TEAM_STATUS);
+    }
+
+    team.open = request.body.status;
+
+    try {
+      await team.save();
+    } catch(error) {
+      console.log(error);
+      return response.json(errors.ERROR_UPDATE_TEAM_STATUS);
+    }
+
+    let index = 0;
+    while (index < team.admins.length) {
+      let admin;
+      try {
+        admin = await User.findOne({ _id: mongoose.Types.ObjectId(team.admins[index]) }).exec();
+      } catch(error) {
+        console.log(error);
+        return response.json(errors.ERROR_UPDATE_TEAM_STATUS);
+      }
+      notify(admin, emails.TEAM_STATUS_UPDATED, (team.open ? "OPEN" : "CLOSED"));
+      index++;
+    }
+
+    let packet = emails.TEAM_STATUS_UPDATED;
+    packet.open = team.open;
+    response.json(packet);
+
   });
 
   /**

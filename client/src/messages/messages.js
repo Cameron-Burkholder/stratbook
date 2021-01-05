@@ -104,6 +104,10 @@ module.exports = {
     status: "Invalid Team Input",
     message: "The team name provided is invalid."
   },
+  INVALID_TEAM_STATUS: {
+    status: "Invalid Team Status",
+    message: "The team status requested to update to is invalid."
+  },
   INVALID_USERNAME: {
     status: "Invalid Username",
     message: "The username provided is invalid."

@@ -45,6 +45,10 @@ const TeamSchema = new Schema({
   platform: {
     type: String,
     required: true
+  },
+  open: {
+    type: Boolean,
+    required: true
   }
 });
 

@@ -240,6 +240,12 @@ div#ManageTeamAPI {
     box-shadow: $box-shadow-primary;
     transition: all 0.3s ease;
   }
+  div.team-status {
+    margin-top: $margin-m;
+    option {
+      color: $text-dark;
+    }
+  }
 }
 div#BlockedUsersAPI {
   box-shadow: $box-shadow-primary;
@@ -454,6 +460,11 @@ div#DeleteTeamAPI {
       grid-template-columns: repeat(2, 1fr);
       h4 {
         grid-column: span 2;
+      }
+    }
+    div.team-status {
+      select {
+        width: 100%;
       }
     }
   }

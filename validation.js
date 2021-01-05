@@ -34,6 +34,31 @@ exports.validateAnnouncement = function(request, response, done) {
 }
 
 /**
+*  Validate team status field
+*/
+exports.validateTeamStatus = function(request, response, done) {
+  let data = request.body;
+  let packet = messages.INVALID_TEAM_STATUS;
+
+  let errors = {};
+  data.status = !isEmpty(data.status) ? data.status : "";
+
+  if (typeof data.status !== "boolean") {
+    errors.status = "Status must be a Boolean value.";
+  }
+
+  if (!isEmpty(errors)) {
+    packet.errors = errors;
+    response.json(packet);
+    response.end();
+    return packet;
+  } else {
+    done();
+    return null;
+  }
+}
+
+/**
 * Validates input fields for login form
 */
 exports.validateLoginInput = function(request, response, done) {

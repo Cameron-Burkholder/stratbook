@@ -1158,6 +1158,10 @@ div#ManageTeamAPI {
   div#ManageTeamAPI div.manage-team-member:hover {
     box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.17);
     transition: all 0.3s ease; }
+  div#ManageTeamAPI div.team-status {
+    margin-top: 40px; }
+    div#ManageTeamAPI div.team-status option {
+      color: #19191a; }
 
 div#BlockedUsersAPI {
   box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.17);
@@ -1298,6 +1302,8 @@ div#DeleteTeamAPI {
       grid-template-columns: repeat(2, 1fr); }
       div#ManageTeamAPI div.manage-team-member h4 {
         grid-column: span 2; }
+    div#ManageTeamAPI div.team-status select {
+      width: 100%; }
   div#DeleteTeamAPI button {
     width: 100%;
     max-width: 100%; } }
