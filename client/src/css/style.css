@@ -489,6 +489,40 @@ button.button--danger {
 button.button--danger:hover {
   background: #C93434; }
 
+/* client/src/scss/components/_dropdown.scss */
+div.dropdown {
+  margin: 0 !important;
+  padding: 0;
+  position: relative;
+  z-index: 2; }
+  div.dropdown p.dropdown-title {
+    cursor: pointer; }
+  div.dropdown p.dropdown-title:hover {
+    text-decoration: underline; }
+
+div.dropdown-body {
+  position: absolute;
+  top: 36px;
+  left: 0;
+  background: #1A1D27;
+  padding: 16px 4px;
+  margin: 0 !important;
+  border: 1px solid #222326;
+  display: none;
+  visibility: hidden;
+  width: 144px; }
+
+div.dropdown--active p.dropdown-title {
+  text-decoration: underline; }
+
+div.dropdown--active div.dropdown-body {
+  display: block;
+  visibility: visible;
+  box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.17); }
+  div.dropdown--active div.dropdown-body p:hover {
+    text-decoration: underline;
+    cursor: pointer; }
+
 /* client/src/scss/components/_footer.scss */
 footer.footer {
   width: 100%;
@@ -1358,7 +1392,8 @@ div.map-selector {
     background-position: center;
     padding: 0;
     height: 100px;
-    text-decoration: none; }
+    text-decoration: none;
+    position: relative; }
   div.map-selector div.map-overlay {
     width: 100%;
     height: 100%;
@@ -1373,12 +1408,29 @@ div.map-selector {
     cursor: pointer;
     text-decoration: none !important;
     transition: all 0.3s ease; }
+  div.map-selector button.delete-button {
+    border-radius: 0px !important;
+    background: #1A1D27;
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    border: none;
+    border-left: 1px solid #222326;
+    filter: opacity(0);
+    transition: all 0.3s ease; }
+  div.map-selector button.delete-button:hover {
+    box-shadow: none;
+    background: #C93434; }
   div.map-selector div.map-option:hover, div.map-selector a.map-option:hover {
     box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.17);
     cursor: pointer;
     transition: all 0.3s ease; }
     div.map-selector div.map-option:hover div.map-overlay, div.map-selector a.map-option:hover div.map-overlay {
       background: rgba(0, 0, 0, 0.4);
+      transition: all 0.3s ease; }
+    div.map-selector div.map-option:hover button.delete-button, div.map-selector a.map-option:hover button.delete-button {
+      filter: opacity(1);
       transition: all 0.3s ease; }
 
 div#Editor main {

@@ -1,6 +1,7 @@
 /* client/src/components/partials/Toolbar.js */
 
 import React from "react";
+import Dropdown from "./Dropdown.js";
 import { Link } from "react-router-dom";
 
 class Toolbar extends React.Component {
@@ -76,13 +77,13 @@ class Toolbar extends React.Component {
         )}
         { this.props.type === "ATTACK" ? (
           <div className="dropdown-container">
-            <p onClick={this.props.insertDrone}>Drones</p>
-            <p onClick={this.props.insertBreach}>Breaches</p>
+            <Dropdown title="Drones" links={["Insert drone", "Remove drone"]} actions={[this.props.insertDrone, this.props.removeDrone]}/>
+            <Dropdown title="Breaches" links={["Insert breach", "Remove breach"]} actions={[this.props.insertBreach, this.props.removeBreach]}/>
           </div>
         ) : (
           <div className="dropdown-container">
-            <p onClick={this.props.insertRotate}>Rotates</p>
-            <p onClick={this.props.insertReinforcement}>Reinforcements</p>
+            <Dropdown title="Rotates" links={["Insert rotate", "Remove rotate"]} actions={[this.props.insertRotate, this.props.removeRotate]}/>
+            <Dropdown title="Reinforcements" links={["Insert reinforcements", "Remove reinforcements"]} actions={[this.props.insertReinforcement, this.props.removeReinforcement]}/>
           </div>
         )}
         <div className={"toolbar__navigation" + (this.state.nav ? " toolbar__navigation--active" : "")}>

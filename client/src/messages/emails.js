@@ -16,6 +16,11 @@ module.exports = {
     body: "#1{NEW_MAP} has been added to your Stratbook.",
     email_body: "<div><h2>#1{NEW_MAP} has been added to your Stratbook.</h2><br/><p>A user has added a map to the Stratbook associated with your team.</p></div>"
   },
+  MAP_DELETED: {
+    status: "Map Deleted",
+    body: "#1{MAP} has been removed from your Stratbook.",
+    email_body: "<div><h2>#1{MAP} has been removed from your Stratbook.</h2><br/><p>A user has removed a map from the Stratbook associated with your team.</p></div>"
+  },
   PASSWORD_RESET: {
     status: "Password Reset",
     body: "Your password has been reset.",

@@ -139,8 +139,6 @@ module.exports = async (app, passport) => {
       return response.json(errors.ERROR_ADD_MAP);
     }
 
-    response.json(messages.MAP_ADDED);
-
     let index = 0;
     while (index < request.team.admins.length) {
       let user;
@@ -148,16 +146,18 @@ module.exports = async (app, passport) => {
         user = await User.findOne({ _id: mongoose.Types.ObjectId(request.team.admins[index]) }).exec();
       } catch(error) {
         console.log(error);
-        return response.json(errors.ERROR_VIEW_TEAM);
+        return response.json(errors.ERROR_ADD_MAP);
       }
-      notify(user, emails.MAP_ADDED, request.params.map.toUpperCase());
+      notify(user, emails.MAP_ADDED, request.params.map.toUpperCase().replace("_", " "));
       index++;
     }
+
+    response.json(messages.MAP_ADDED);
   });
 
   /**
   * Update map in Stratbook
-  * @name /api/strategies/update/map
+  * @name /api/strategies/update/:map
   * @function
   * @async
   * @description The user submits a request to update a specific map.
@@ -183,7 +183,7 @@ module.exports = async (app, passport) => {
       return response.json(errors.ERROR_UPDATE_MAP);
     }
 
-    if (!strategies[request.params.map]) {
+    if (!strategies[request.params.map] || strategies.maps.indexOf(request.params.map) < 0) {
       return response.json(messages.MAP_DOES_NOT_EXIST);
     }
 
@@ -197,5 +197,63 @@ module.exports = async (app, passport) => {
     }
 
     response.json(messages.MAP_UPDATED);
+  });
+
+  /**
+  * Delete map from Stratbook
+  * @name /api/strategies/delete/:map
+  * @function
+  * @async
+  * @description The user submits a request to delete a specific map.
+  *   If the user is not on the team, this returns a permission denied object.
+  *   If the strategy does not currently exist in the stratbook, this returns a map does not exist object.
+  *   If the map can be deleted, this returns a map deleted object.
+  * @param {string} request.params.map the map to be deleted
+  */
+  app.delete("/api/strategies/delete/:map", (request, response, done) => {
+    log("DELETE REQUEST AT /api/strategies/delete/:map");
+    done();
+  }, passport.authenticate("jwt", { session: false }), middleware.userIsVerified, middleware.userHasTeam, async (request, response) => {
+    if (request.team.editors.indexOf(String(request.user._id)) < 0 && request.team.admins.indexOf(String(request.user._id)) < 0) {
+      return response.json(messages.PERMISSION_DENIED);
+    }
+
+    let strategies;
+    try {
+      strategies = await Strategies.findOne({ join_code: request.team.join_code }).exec();
+    } catch(error) {
+      console.log(error);
+      return response.json(errors.ERROR_DELETE_MAP);
+    }
+
+    if (!strategies[request.params.map] || strategies.maps.indexOf(request.params.map) < 0) {
+      return response.json(messages.MAP_DOES_NOT_EXIST);
+    }
+
+    strategies[request.params.map] = undefined;
+    strategies.maps.splice(strategies.maps.indexOf(request.params.map), 1);
+
+    try {
+      await strategies.save();
+    } catch(error) {
+      console.log(error);
+      return response.json(errors.ERROR_DELETE_MAP);
+    }
+
+    let index = 0;
+    while (index < request.team.admins.length) {
+      let user;
+      try {
+        user = await User.findOne({ _id: mongoose.Types.ObjectId(request.team.admins[index]) }).exec();
+      } catch(error) {
+        console.log(error);
+        return response.json(errors.ERROR_DELETE_MAP);
+      }
+      notify(user, emails.MAP_DELETED, request.params.map.toUpperCase().replace("_", " "));
+      index++;
+    }
+
+    response.json(messages.MAP_DELETED);
+
   });
 };

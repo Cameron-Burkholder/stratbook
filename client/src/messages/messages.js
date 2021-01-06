@@ -116,6 +116,10 @@ module.exports = {
     status: "Map Added",
     message: "The requested map has been added to your Stratbook."
   },
+  MAP_DELETED: {
+    status: "Map Deleted",
+    message: "The requested map has been deleted."
+  },
   MAP_DOES_NOT_EXIST: {
     status: "Map Does Not Exist",
     message: "The requested map does not exist in your team's Stratbook."

@@ -3,8 +3,8 @@
 import React from "react";
 import axios from "axios";
 import { Redirect } from "react-router-dom";
-import { STRATEGIES_FOUND, MAP_FOUND, MAP_UPDATED } from "../../messages/messages.js";
-import { ERROR_VIEW_STRATEGIES, ERROR_VIEW_MAP, ERROR_UPDATE_MAP } from "../../messages/errors.js";
+import { STRATEGIES_FOUND, MAP_FOUND, MAP_UPDATED, MAP_DELETED } from "../../messages/messages.js";
+import { ERROR_VIEW_STRATEGIES, ERROR_VIEW_MAP, ERROR_UPDATE_MAP, ERROR_DELETE_MAP } from "../../messages/errors.js";
 
 import CreateStrategiesAPI from "./CreateStrategiesAPI";
 import LoadingModal from "../partials/LoadingModal.js";
@@ -147,6 +147,42 @@ class EditStrategiesAPI extends React.Component {
         component.props.alert(ERROR_UPDATE_MAP.message, ERROR_UPDATE_MAP.status);
       })
   }
+  deleteMap(e, map) {
+    e.preventDefault();
+    e.stopPropagation();
+    if (window.confirm(`You are about to remove ${map.toUpperCase()} from your team's Stratbook. If you decide to add this map again, it will not restore the data currently stored. Are you sure?`)) {
+      const component = this;
+      this.setState({
+        loading: true
+      });
+      axios.defaults.headers.common["Authorization"] = this.props.getAuthToken();
+      axios.delete(`/api/strategies/delete/${map.toLowerCase().replace(" ", "_")}`)
+        .then((response) => {
+          switch (response.data.status) {
+            case MAP_DELETED.status:
+              component.setState({
+                loading: false,
+              });
+              component.props.alert("You have deleted the requested map", "SUCCESS");
+              component.fetchStrategies();
+              break;
+            default:
+              component.setState({
+                loading: false,
+              }, component.props.fetchStrategies);
+              component.props.alert(response.data.message, response.data.status);
+              break;
+          }
+        }).catch((error) => {
+          console.log(error);
+          component.setState({
+            loading: false,
+            hasLoaded: true
+          });
+          component.props.alert(ERROR_DELETE_MAP.message, ERROR_DELETE_MAP.status);
+        })
+    }
+  }
   componentDidMount() {
     if (!this.state.hasLoaded) {
       if (this.state.map_name) {
@@ -187,6 +223,7 @@ class EditStrategiesAPI extends React.Component {
               <div className="map-overlay">
                 { map.toUpperCase() }
               </div>
+              <button className="delete-button" onClick={(e) => { this.deleteMap(e, map) }}>&#128465;</button>
             </Link>
           )
         });

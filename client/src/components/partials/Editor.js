@@ -173,8 +173,8 @@ class Editor extends React.Component {
       site: this.state.sites[index],
       siteIndex: index,
       sceneIndex: 0,
-      scenes: (this.state.type === "ATTACK" ? this.state.map.attack[this.state.strategyIndex][this.state.sites[index]] : this.state.map.defense[this.state.sites[index]][this.state.strategyIndex].scenes),
-      strategyIndex: 0,
+      scenes: (this.state.type === "ATTACK" ? this.state.map.attack[this.state.strategyIndex][this.state.sites[index]] : this.state.map.defense[this.state.sites[index]][0].scenes),
+      strategyIndex: (this.state.type === "ATTACK" ? this.state.strategyIndex : 0),
       strategies: (this.state.type === "ATTACK" ? this.state.strategies : this.state.map.defense[this.state.sites[index]])
     });
   }
@@ -304,19 +304,21 @@ class Editor extends React.Component {
   }
   removeStrategy() {
     if (this.state.strategies.length !== 1) {
-      let newStrategies = [...this.state.strategies];
-      newStrategies.splice(this.state.strategyIndex, 1);
-      let map = this.state.map;
-      if (this.state.type === "ATTACK") {
-        map.attack = newStrategies;
-      } else {
-        map.defense[this.state.sites[this.state.siteIndex]] = newStrategies;
+      if (window.confirm(`You are about to remove ${this.state.strategies[this.state.strategyIndex].name} from your Stratbook. If you wish to continue, please confirm.`)) {
+        let newStrategies = [...this.state.strategies];
+        newStrategies.splice(this.state.strategyIndex, 1);
+        let map = this.state.map;
+        if (this.state.type === "ATTACK") {
+          map.attack = newStrategies;
+        } else {
+          map.defense[this.state.sites[this.state.siteIndex]] = newStrategies;
+        }
+        this.setState({
+          map: map,
+          strategyIndex: (this.state.strategyIndex - 1 >= 0 ? this.state.strategyIndex - 1 : 0),
+          strategies: newStrategies,
+        });
       }
-      this.setState({
-        map: map,
-        strategyIndex: (this.state.strategyIndex - 1 >= 0 ? this.state.strategyIndex - 1 : 0),
-        strategies: newStrategies,
-      });
     }
   }
   selectStrategy(index) {

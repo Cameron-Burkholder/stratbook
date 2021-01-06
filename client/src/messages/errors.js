@@ -33,6 +33,10 @@ module.exports = {
     status: "ERROR",
     message: "An error occurred while attempting to set defender role."
   },
+  ERROR_DELETE_MAP: {
+    status: "ERROR",
+    message: "An error occurred while attempting to delete map from Stratbook."
+  },
   ERROR_DELETE_TEAM: {
     status: "ERROR",
     message: "An error occurred while attempting to delete team."
