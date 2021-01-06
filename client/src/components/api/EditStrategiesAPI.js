@@ -25,6 +25,7 @@ class EditStrategiesAPI extends React.Component {
     this.fetchStrategies = this.fetchStrategies.bind(this);
     this.fetchMap = this.fetchMap.bind(this);
     this.updateStrategy = this.updateStrategy.bind(this);
+    this.deleteMap = this.deleteMap.bind(this);
 
     this.state = {
       map_name: this.props.map,

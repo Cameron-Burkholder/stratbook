@@ -3,8 +3,12 @@
 import React from "react";
 import { Redirect } from "react-router";
 import axios from "axios";
-import { STRATEGIES_FOUND } from "../../messages/messages.js";
-import { ERROR_VIEW_STRATEGIES } from "../../messages/errors.js";
+import { STRATEGIES_FOUND, MAP_FOUND } from "../../messages/messages.js";
+import { ERROR_VIEW_STRATEGIES, ERROR_VIEW_MAP } from "../../messages/errors.js";
+
+import Editor from "../partials/Editor.js";
+import Viewer from "../partials/Viewer.js";
+import { Link } from "react-router-dom";
 
 import LoadingModal from "../partials/LoadingModal.js";
 import ErrorLoading from "../partials/ErrorLoading.js";
@@ -25,45 +29,14 @@ class ViewStrategiesAPI extends React.Component {
     super(props);
 
     this.fetchStrategies = this.fetchStrategies.bind(this);
-    this.selectStrategy = this.selectStrategy.bind(this);
-    this.exitStrategy = this.exitStrategy.bind(this);
-    this.onChange = this.onChange.bind(this);
+    this.fetchMap = this.fetchMap.bind(this);
 
     this.state = {
-      strategies: {},
-      index: 0,
+      map_name: this.props.map,
       loading: true,
       hasLoaded: false,
-      listView: true,
-      search: ""
+      errors: {},
     }
-  }
-  /*
-    @func selectStrategy
-    @desc choose a strategy
-  */
-  selectStrategy(index) {
-    this.setState({
-      index: index,
-      listView: false
-    });
-  }
-  /*
-    @func exitStrategy
-    @desc go back to list view
-  */
-  exitStrategy() {
-    this.setState({
-      listView: true
-    })
-  }
-  /*
-
-  */
-  onChange(e) {
-    this.setState({
-      search: e.target.value
-    });
   }
   /*
     @func fetchStrategies
@@ -72,22 +45,27 @@ class ViewStrategiesAPI extends React.Component {
   fetchStrategies() {
     const component = this;
     this.setState({
-      loading: true
+      loading: true,
+      add: false
     });
     axios.defaults.headers.common["Authorization"] = this.props.getAuthToken();
     axios.get("/api/strategies/view")
       .then((response) => {
       switch (response.data.status) {
         case STRATEGIES_FOUND.status:
+          const maps = Object.keys(response.data.maps).filter((map) => MAP_NAMES.indexOf(map) >= 0);
           component.setState({
             loading: false,
             hasLoaded: true,
-            maps: response.data.maps
+            maps: response.data.maps,
+            map: undefined,
+            map_name: undefined
           });
           break;
           default:
           component.setState({
-            loading: false
+            loading: false,
+            hasLoaded: true
           });
           component.props.alert(response.data.message, response.data.status);
           break;
@@ -96,14 +74,53 @@ class ViewStrategiesAPI extends React.Component {
       console.log(error);
       component.setState({
         loading: false,
-        error: true
+        hasLoaded: true
       });
       component.props.alert(ERROR_VIEW_STRATEGIES.message, ERROR_VIEW_STRATEGIES.status);
     });
   }
+  fetchMap(map) {
+    const component = this;
+    this.setState({
+      loading: true
+    });
+    let map_name = map ? map : this.state.map_name;
+    axios.defaults.headers.common["Authorization"] = this.props.getAuthToken();
+    axios.get(`/api/strategies/view/${map_name.toLowerCase().replace(" ", "_")}`)
+      .then((response) => {
+        switch (response.data.status) {
+          case MAP_FOUND.status:
+            component.setState({
+              loading: false,
+              hasLoaded: true,
+              map_name: map_name,
+              map: response.data[map_name.toLowerCase()]
+            });
+            break;
+          default:
+            component.setState({
+              loading: false,
+              hasLoaded: true
+            });
+            component.props.alert(response.data.message, response.data.status);
+            break;
+        }
+      }).catch((error) => {
+        console.log(error);
+        component.setState({
+          loading: false,
+          hasLoaded: true
+        });
+        component.props.alert(ERROR_VIEW_MAP.message, ERROR_VIEW_MAP.status);
+      })
+  }
   componentDidMount() {
     if (!this.state.hasLoaded) {
-      this.fetchStrategies();
+      if (this.state.map_name) {
+        this.fetchMap();
+      } else {
+        this.fetchStrategies();
+      }
     }
   }
   render() {
@@ -111,24 +128,34 @@ class ViewStrategiesAPI extends React.Component {
     if (this.state.loading) {
       contents = <LoadingModal message="Fetching Strategies"/>
     } else {
-      if (this.state.error) {
-        contents = <ErrorLoading/>
-      } else {
-        if (this.props.team_code && this.props.team_code !== "") {
-          if (this.state.maps.length > 0) {
-            contents = (this.state.listView) ? (
-              <div className="strategy-list">
-                <input className="strategy-search" onChange={this.onChange} value={this.state.search} type="text" placeholder="Search Strategies"/>
-              </div>
-            ) : (
-              <p></p>
-            )
-          } else {
-            contents = <p>Your team does not currently have any strategies.</p>
-          }
+      if (this.state.map_name) {
+        if (this.state.hasLoaded && this.state.map) {
+          contents = <Viewer map={this.state.map} alert={this.props.alert} fetchStrategies={this.fetchStrategies}/>;
         } else {
-          contents = <p>You do not belong to a team at this time. In order to view strategies, you must be a part of a team.</p>
+          contents = "Waiting for server";
         }
+      } else {
+        const maps = this.state.maps.map((map, index) => {
+          return (
+            <Link to={`/strategies/${map}`} className="map-option" key={index} style={{ backgroundImage: `url(https://staticctf.akamaized.net/J3yJr34U2pZ2Ieem48Dwy9uqj5PNUQTn/6ilgtuzucX7hEu2MvjhRtp/e399b773b495f9249b42a82006259109/r6-maps-${map.toLowerCase()}.jpg)`}}
+              onClick={() => { this.fetchMap(map) }}>
+              <div className="map-overlay">
+                { map.toUpperCase() }
+              </div>
+            </Link>
+          )
+        });
+        contents = (
+          <div className="view-container">
+            <h1>View Strategies</h1>
+            { this.props.status === "EDITOR" || this.props.status === "ADMIN" ? (
+              <Link className="button" to="/strategies/edit">Edit Strategies</Link>
+            ) : ""}
+            <div className="map-selector">
+              { maps.length > 0 ? maps : "No maps to show." }
+            </div>
+          </div>
+        )
       }
     }
     return (

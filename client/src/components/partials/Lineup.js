@@ -1,4 +1,4 @@
-/* client/src/components/partials/Toolbar.js */
+/* client/src/components/partials/Viewer.js */
 
 import React from "react";
 import { ATTACKER_ROLES, ATTACKER_OPERATORS, DEFENDER_ROLES, DEFENDER_OPERATORS, UTILITY_GUIDE, UTILITY } from "../../data.js";

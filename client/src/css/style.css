@@ -270,6 +270,9 @@ div.page#manage-team {
   div.page#manage-team h1 {
     grid-column: span 3; }
 
+div.page#strategies {
+  padding: 0; }
+
 @media screen and (max-width: 850px) {
   div.page {
     padding: 16px; } }
@@ -1363,6 +1366,11 @@ div#EditStrategiesAPI div.edit-buttons {
     margin-left: 16px;
     background: linear-gradient(to right, #4915D6, #0040D6); }
 
+div#ViewStrategiesAPI div.view-container {
+  padding: 40px !important; }
+  div#ViewStrategiesAPI div.view-container h1 {
+    text-align: center; }
+
 div.add-strategy {
   padding: 40px; }
   div.add-strategy button#cancel {
@@ -1433,7 +1441,7 @@ div.map-selector {
       filter: opacity(1);
       transition: all 0.3s ease; }
 
-div#Editor main {
+div#Editor main, div#Viewer main {
   width: 100%;
   height: 100%;
   display: grid;

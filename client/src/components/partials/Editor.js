@@ -708,7 +708,6 @@ class Editor extends React.Component {
   }
 
   render() {
-    console.log(this.state);
     return (
       <div id="Editor">
         <Toolbar

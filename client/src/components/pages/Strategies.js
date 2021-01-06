@@ -15,11 +15,7 @@ import { Link } from "react-router-dom";
 const Strategies = (props) => {
   return (
     <div className="page" id="strategies">
-      <h1>View Strategies</h1>
-      { props.status === "EDITOR" || props.status === "ADMIN" ? (
-        <Link className="button" to="/strategies/edit">Edit Strategies</Link>
-      ) : ""}
-      <ViewStrategiesAPI team_code={props.team_code} getAuthToken={props.getAuthToken} alert={props.alert}/>
+      <ViewStrategiesAPI team_code={props.team_code} getAuthToken={props.getAuthToken} alert={props.alert} map={props.map} status={props.status}/>
     </div>
   )
 }

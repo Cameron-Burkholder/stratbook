@@ -28,6 +28,14 @@ div#EditStrategiesAPI {
     }
   }
 }
+div#ViewStrategiesAPI {
+  div.view-container {
+    padding: $padding-m !important;
+    h1 {
+      text-align: center;
+    }
+  }
+}
 
 div.add-strategy {
   padding: $padding-m;
@@ -112,7 +120,7 @@ div.map-selector {
   }
 }
 
-div#Editor {
+div#Editor, div#Viewer {
   main {
     width: 100%;
     height: 100%;
