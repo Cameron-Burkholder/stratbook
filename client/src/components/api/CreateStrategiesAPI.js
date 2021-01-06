@@ -26,7 +26,7 @@ class CreateStrategiesAPI extends React.Component {
     this.addMap = this.addMap.bind(this);
 
     this.state = {
-      maps: MAP_NAMES.filter((map) => this.props.maps.indexOf(map.toUpperCase()) >= 0)
+      maps: MAP_NAMES.filter((map) => this.props.maps.indexOf(map.toLowerCase()) < 0)
     }
   }
   selectMap(name) {
@@ -119,7 +119,7 @@ class CreateStrategiesAPI extends React.Component {
           hasLoaded: true
         });
         component.props.alert(ERROR_ADD_MAP.message, ERROR_ADD_MAP.status);
-      })
+      });
   }
 
   render() {

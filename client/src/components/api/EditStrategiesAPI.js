@@ -3,8 +3,8 @@
 import React from "react";
 import axios from "axios";
 import { Redirect } from "react-router-dom";
-import { STRATEGIES_FOUND, MAP_FOUND } from "../../messages/messages.js";
-import { ERROR_VIEW_STRATEGIES, ERROR_VIEW_MAP } from "../../messages/errors.js";
+import { STRATEGIES_FOUND, MAP_FOUND, MAP_UPDATED } from "../../messages/messages.js";
+import { ERROR_VIEW_STRATEGIES, ERROR_VIEW_MAP, ERROR_UPDATE_MAP } from "../../messages/errors.js";
 
 import CreateStrategiesAPI from "./CreateStrategiesAPI";
 import LoadingModal from "../partials/LoadingModal.js";
@@ -24,7 +24,7 @@ class EditStrategiesAPI extends React.Component {
     this.addMap = this.addMap.bind(this);
     this.fetchStrategies = this.fetchStrategies.bind(this);
     this.fetchMap = this.fetchMap.bind(this);
-    this.updateStrategy.bind(this);
+    this.updateStrategy = this.updateStrategy.bind(this);
 
     this.state = {
       map_name: this.props.map,
@@ -87,7 +87,7 @@ class EditStrategiesAPI extends React.Component {
     });
     let map_name = map ? map : this.state.map_name;
     axios.defaults.headers.common["Authorization"] = this.props.getAuthToken();
-    axios.get(`/api/strategies/view/${map_name.toLowerCase()}`)
+    axios.get(`/api/strategies/view/${map_name.toLowerCase().replace(" ", "_")}`)
       .then((response) => {
         switch (response.data.status) {
           case MAP_FOUND.status:
@@ -115,8 +115,37 @@ class EditStrategiesAPI extends React.Component {
         component.props.alert(ERROR_VIEW_MAP.message, ERROR_VIEW_MAP.status);
       })
   }
-  updateStrategy() {
-    console.log("saved");
+  updateStrategy(map) {
+    const component = this;
+    this.setState({
+      loading: true
+    });
+    axios.defaults.headers.common["Authorization"] = this.props.getAuthToken();
+    axios.patch(`/api/strategies/update/${this.state.map.name.toLowerCase().replace(" ", "_")}`, {
+      map: map
+      })
+      .then((response) => {
+        switch (response.data.status) {
+          case MAP_UPDATED.status:
+            component.setState({
+              loading: false,
+            });
+            break;
+          default:
+            component.setState({
+              loading: false,
+            }, component.props.fetchStrategies);
+            component.props.alert(response.data.message, response.data.status);
+            break;
+        }
+      }).catch((error) => {
+        console.log(error);
+        component.setState({
+          loading: false,
+          hasLoaded: true
+        });
+        component.props.alert(ERROR_UPDATE_MAP.message, ERROR_UPDATE_MAP.status);
+      })
   }
   componentDidMount() {
     if (!this.state.hasLoaded) {

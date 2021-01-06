@@ -116,6 +116,10 @@ module.exports = {
     status: "Map Added",
     message: "The requested map has been added to your Stratbook."
   },
+  MAP_DOES_NOT_EXIST: {
+    status: "Map Does Not Exist",
+    message: "The requested map does not exist in your team's Stratbook."
+  },
   MAP_EXISTS: {
     status: "Map Exists",
     message: "The requested map already exists in your Stratbook. In order to protect your data, a duplicate cannot be added."
@@ -127,6 +131,10 @@ module.exports = {
   MAP_NOT_FOUND: {
     status: "Map Not Found",
     message: "The requested map could not be found in the team's stratbook."
+  },
+  MAP_UPDATED: {
+    status: "Map Updated",
+    message: "The requested map has been updated."
   },
   OPERATOR_STATS_FOUND: {
     status: "Operator Statistics Found",

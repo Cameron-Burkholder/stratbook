@@ -154,4 +154,48 @@ module.exports = async (app, passport) => {
       index++;
     }
   });
+
+  /**
+  * Update map in Stratbook
+  * @name /api/strategies/update/map
+  * @function
+  * @async
+  * @description The user submits a request to update a specific map.
+  *   If the user is not on the team, this returns a permission denied object.
+  *   If the strategy does not currently exist in the stratbook, this returns a map does not exist object.
+  *   If the map can be updated, this returns a map updated object.
+  * @param {string} request.params.map the map to update
+  * @param {object} request.body.map the map data to update to
+  */
+  app.patch("/api/strategies/update/:map", (request, response, done) => {
+    log("PATCH REQUEST AT /api/strategies/update/:map");
+    done();
+  }, passport.authenticate("jwt", { session: false }), middleware.userIsVerified, middleware.userHasTeam, async (request, response) => {
+    if (request.team.editors.indexOf(String(request.user._id)) < 0 && request.team.admins.indexOf(String(request.user._id)) < 0) {
+      return response.json(messages.PERMISSION_DENIED);
+    }
+
+    let strategies;
+    try {
+      strategies = await Strategies.findOne({ join_code: request.team.join_code }).exec();
+    } catch(error) {
+      console.log(error);
+      return response.json(errors.ERROR_UPDATE_MAP);
+    }
+
+    if (!strategies[request.params.map]) {
+      return response.json(messages.MAP_DOES_NOT_EXIST);
+    }
+
+    strategies[request.params.map] = JSON.parse(request.body.map);
+
+    try {
+      await strategies.save();
+    } catch(error) {
+      console.log(error);
+      return response.json(errors.ERROR_UPDATE_MAP);
+    }
+
+    response.json(messages.MAP_UPDATED);
+  });
 };

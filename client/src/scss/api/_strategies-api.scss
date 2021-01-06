@@ -1,5 +1,8 @@
 /* client/src/scss/api/_strategies-api.scss */
 
+$canvas-width: 1024px;
+$canvas-height: 576px;
+
 div#EditStrategiesAPI {
   div.edit-container {
     padding: $padding-m !important;
@@ -93,7 +96,7 @@ div#Editor {
     width: 100%;
     height: 100%;
     display: grid;
-    grid-template-columns: 256px 1024px 1fr;
+    grid-template-columns: 256px $canvas-width 1fr;
   }
 }
 
@@ -506,7 +509,7 @@ div.canvas {
   z-index: 1;
   div.blueprint-form {
     width: 100%; // 1024px
-    height: 576px; // 576px gives 16:9 ratio
+    height: $canvas-height; // 576px gives 16:9 ratio
   }
   div.position-overlay {
     width: 100%;

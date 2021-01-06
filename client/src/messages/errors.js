@@ -93,6 +93,10 @@ module.exports = {
     status: "ERROR",
     message: "An error has occurred while attempting to unblock a user."
   },
+  ERROR_UPDATE_MAP: {
+    status: "ERROR",
+    message: "An error has occurred while attempting to update map."
+  },
   ERROR_UPDATE_PASSWORD: {
     status: "ERROR",
     message: "An error occurred while attempting to update password."

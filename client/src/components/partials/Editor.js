@@ -28,7 +28,6 @@ class Editor extends React.Component {
     super(props);
 
     this.selectMap = this.selectMap.bind(this);
-    this.showMaps = this.showMaps.bind(this);
     this.selectSite = this.selectSite.bind(this);
     this.updateType = this.updateType.bind(this);
     this.updateRoles = this.updateRoles.bind(this);
@@ -169,11 +168,6 @@ class Editor extends React.Component {
       });
     }
   }
-  showMaps() {
-    this.setState({
-      showMaps: true
-    });
-  }
   selectSite(index) {
     this.setState({
       site: this.state.sites[index],
@@ -248,7 +242,7 @@ class Editor extends React.Component {
     });
   }
   save() {
-    console.log("saved");
+    this.props.save(JSON.stringify(this.state.map));
   }
 
   // Strategies
