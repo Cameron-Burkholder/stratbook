@@ -125,7 +125,7 @@ class CreateStrategiesAPI extends React.Component {
   render() {
     const maps = this.state.maps.map((map, index) => {
       return (
-        <div className="map-option" key={index} style={{ backgroundImage: `url(../../media/maps/${map.toUpperCase().replace(" ", "_")}.png)`}}
+        <div className="map-option" key={index} style={{ backgroundImage: `url(../../media/maps/${map.toUpperCase().replace(" ", "_")}-min.png)`}}
           onClick={() => { this.selectMap(map.toUpperCase()) }}>
           <div className="map-overlay">
             { map }

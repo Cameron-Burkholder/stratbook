@@ -137,7 +137,7 @@ class ViewStrategiesAPI extends React.Component {
       } else {
         const maps = this.state.maps.map((map, index) => {
           return (
-            <Link to={`/strategies/${map}`} className="map-option" key={index} style={{ backgroundImage: `url(../../media/maps/${map.toUpperCase().replace(" ", "_")}.png)` }}
+            <Link to={`/strategies/${map}`} className="map-option" key={index} style={{ backgroundImage: `url(../../media/maps/${map.toUpperCase().replace(" ", "_")}-min.png)` }}
               onClick={() => { this.fetchMap(map) }}>
               <div className="map-overlay">
                 { map.toUpperCase() }
