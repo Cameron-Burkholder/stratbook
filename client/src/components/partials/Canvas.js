@@ -4,6 +4,7 @@ import React from "react";
 
 import FloorSelector from "./FloorSelector.js";
 import BlueprintForm from "./BlueprintForm.js";
+import Objectives from "./Objectives.js";
 
 class Canvas extends React.Component {
   constructor(props) {
@@ -37,14 +38,8 @@ class Canvas extends React.Component {
           updateReinforcementPositions={this.props.updateReinforcementPositions}
           updateBreachPositions={this.props.updateBreachPositions}/>
         <div className="canvas__body">
-          <h3>Objectives</h3>
-          <ul>
-            <li>DO first things first</li>
-            <li>Get wall open</li>
-            <li>Plan</li>
-          </ul>
-          <h3>Notes</h3>
-          <p></p>
+          <Objectives objectives={this.props.objectives} addObjective={this.props.addObjective} removeObjective={this.props.removeObjective}
+            notes={this.props.notes} updateNotes={this.props.updateNotes}/>
         </div>
       </div>
     )

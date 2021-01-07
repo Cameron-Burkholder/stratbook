@@ -21,7 +21,7 @@ class ViewerSidebar extends React.Component {
     });
     const scenes = this.props.scenes.map((scene, index) => {
       return (
-        <div className={"scene" + (this.props.sceneIndex === index ? " scene--active" : "")} key={index}>
+        <div className={"scene" + (this.props.sceneIndex === index ? " scene--active" : "")} onClick={() => { this.props.selectScene(index) }} key={index}>
           <span className="scene__number">Scene {index + 1}</span>
           <p className="scene__name">{scene.name}</p>
         </div>

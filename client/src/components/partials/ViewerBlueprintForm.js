@@ -25,13 +25,6 @@ const ViewerBlueprintForm = (props) => {
         reinforcements={props.reinforcements}
         floorIndex={props.floorIndex}
         breaches={props.breaches}
-        updateOperatorPositions={props.updateOperatorPositions}
-        updateGadgetPositions={props.updateGadgetPositions}
-        updateDronePositions={props.updateDronePositions}
-        updateUtilityPositions={props.updateUtilityPositions}
-        updateRotatePositions={props.updateRotatePositions}
-        updateReinforcementPositions={props.updateReinforcementPositions}
-        updateBreachPositions={props.updateBreachPositions}
         type={props.type}/>
     </div>
   )

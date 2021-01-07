@@ -27,7 +27,6 @@ if (process.env.NODE_ENV === "production") {
   app.use(morgan("combined"));
 }
 
-
 // SETUP DATABASE
 const URI = (process.env.NODE_ENV === "development" ? process.env.TESTING_URI : process.env.MONGODB_URI);
 // Handle error in establishing connection

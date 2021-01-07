@@ -3,7 +3,8 @@
 import React from "react";
 
 import FloorSelector from "./FloorSelector.js";
-import ViewerBlueprintForm from "./BlueprintForm.js";
+import ViewerBlueprintForm from "./ViewerBlueprintForm.js";
+import ViewerObjectives from "./ViewerObjectives.js";
 
 class ViewerCanvas extends React.Component {
   constructor(props) {
@@ -31,14 +32,7 @@ class ViewerCanvas extends React.Component {
           floor={this.props.floor}
           />
         <div className="canvas__body">
-          <h3>Objectives</h3>
-          <ul>
-            <li>DO first things first</li>
-            <li>Get wall open</li>
-            <li>Plan</li>
-          </ul>
-          <h3>Notes</h3>
-          <p></p>
+          <ViewerObjectives objectives={this.props.objectives} notes={this.props.notes}/>
         </div>
       </div>
     )

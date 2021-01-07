@@ -198,6 +198,12 @@ class Viewer extends React.Component {
             floor={this.state.floors[this.state.floorIndex]}
             updateFloor={this.updateFloor}
             floors={this.state.floors}
+            objectives={(this.state.type === "ATTACK" ? (
+              this.state.map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].objectives
+            ) : ( this.state.map.defense[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].objectives))}
+            notes={(this.state.type === "ATTACK" ? (
+              this.state.map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].notes
+            ) : ( this.state.map.defense[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].notes))}
             />
           <ViewerLineup
             type={this.state.type}

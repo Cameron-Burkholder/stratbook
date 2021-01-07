@@ -1447,6 +1447,31 @@ div#Editor main, div#Viewer main {
   display: grid;
   grid-template-columns: 256px 1024px 1fr; }
 
+div.objectives h3 {
+  margin-top: 40px; }
+
+div.objectives input {
+  width: 100%;
+  max-width: 600px; }
+
+div.objectives ul {
+  padding: 16px;
+  list-style-type: circle; }
+
+div.objectives li {
+  display: flex;
+  align-items: center;
+  padding: 16px; }
+  div.objectives li button {
+    margin-left: 40px;
+    padding: 8px; }
+  div.objectives li button:hover {
+    background: #C93434; }
+
+div.objectives textarea {
+  width: 100%;
+  max-width: 600px; }
+
 div.toolbar {
   border-bottom: 1px solid #222326;
   display: flex;
@@ -1822,3 +1847,15 @@ div.canvas {
       margin-left: 16px; }
     div.canvas div.canvas__body h3 {
       margin-top: 16px; }
+
+div#Viewer h4.toolbar__strategy {
+  cursor: default; }
+
+div#Viewer h4.toolbar__strategy:hover {
+  text-decoration: none; }
+
+div#Viewer div.drag-item {
+  cursor: default; }
+
+div#Viewer p.scene__name:hover {
+  text-decoration: none; }

@@ -84,6 +84,11 @@ class Editor extends React.Component {
     this.insertBreach = this.insertBreach.bind(this);
     this.removeBreach = this.removeBreach.bind(this);
 
+    // Objectives and Notes
+    this.addObjective = this.addObjective.bind(this);
+    this.removeObjective = this.removeObjective.bind(this);
+    this.updateNotes = this.updateNotes.bind(this);
+
     this.state = {
       activeOperator: 0,
       map: this.props.map,
@@ -707,6 +712,65 @@ class Editor extends React.Component {
     }
   }
 
+  // Objectives and Notes
+  addObjective(msg) {
+    let map = this.state.map;
+    let scenes;
+    let strategies;
+    if (this.state.type === "ATTACK") {
+      map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].objectives.push(msg);
+      scenes = map.attack[this.state.strategyIndex][this.state.site];
+      strategies = map.attack;
+    } else {
+      map.defense[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].objectives.push(msg);
+      scenes = map.defense[this.state.site][this.state.strategyIndex].scenes;
+      strategies = map.defense[this.state.site];
+    }
+    this.setState({
+      map: map,
+      scenes: scenes,
+      strategies: strategies
+    });
+  }
+  removeObjective(index) {
+    let map = this.state.map;
+    let scenes;
+    let strategies;
+    if (this.state.type === "ATTACK") {
+      map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].objectives.splice(index, 1);
+      scenes = map.attack[this.state.strategyIndex][this.state.site];
+      strategies = map.attack;
+    } else {
+      map.defense[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].objectives.splice(index, 1);
+      scenes = map.defense[this.state.site][this.state.strategyIndex].scenes;
+      strategies = map.defense[this.state.site];
+    }
+    this.setState({
+      map: map,
+      scenes: scenes,
+      strategies: strategies
+    });
+  }
+  updateNotes(e) {
+    let map = this.state.map;
+    let scenes;
+    let strategies;
+    if (this.state.type === "ATTACK") {
+      map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].notes = e.target.value;
+      scenes = map.attack[this.state.strategyIndex][this.state.site];
+      strategies = map.attack;
+    } else {
+      map.defense[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].notes = e.target.value;
+      scenes = map.defense[this.state.site][this.state.strategyIndex].scenes;
+      strategies = map.defense[this.state.site];
+    }
+    this.setState({
+      map: map,
+      scenes: scenes,
+      strategies: strategies
+    });
+  }
+
   render() {
     return (
       <div id="Editor">
@@ -817,6 +881,15 @@ class Editor extends React.Component {
             updateBreachPositions={this.updateBreachPositions}
             updateFloor={this.updateFloor}
             floors={this.state.floors}
+            objectives={(this.state.type === "ATTACK" ? (
+              this.state.map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].objectives
+            ) : ( this.state.map.defense[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].objectives))}
+            notes={(this.state.type === "ATTACK" ? (
+              this.state.map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].notes
+            ) : ( this.state.map.defense[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].notes))}
+            addObjective={this.addObjective}
+            removeObjective={this.removeObjective}
+            updateNotes={this.updateNotes}
             />
           <Lineup
             type={this.state.type}

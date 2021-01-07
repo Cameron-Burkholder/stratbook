@@ -129,6 +129,36 @@ div#Editor, div#Viewer {
   }
 }
 
+div.objectives {
+  h3 {
+    margin-top: $margin-m;
+  }
+  input {
+    width: 100%;
+    max-width: $phone-max-width;
+  }
+  ul {
+    padding: $padding-s;
+    list-style-type: circle;
+  }
+  li {
+    display: flex;
+    align-items: center;
+    padding: $padding-s;
+    button {
+      margin-left: $margin-m;
+      padding: 8px;
+    }
+    button:hover {
+      background: $color-danger;
+    }
+  }
+  textarea {
+    width: 100%;
+    max-width: $phone-max-width;
+  }
+}
+
 div.toolbar {
   border-bottom: $border-primary;
   display: flex;
@@ -585,5 +615,20 @@ div.canvas {
     h3 {
       margin-top: $margin-s;
     }
+  }
+}
+
+div#Viewer {
+  h4.toolbar__strategy {
+    cursor: default;
+  }
+  h4.toolbar__strategy:hover {
+    text-decoration: none;
+  }
+  div.drag-item {
+    cursor: default;
+  }
+  p.scene__name:hover {
+    text-decoration: none;
   }
 }
