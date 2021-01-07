@@ -1,7 +1,7 @@
 /* data.js */
 
 module.exports = {
-  MAP_NAMES: ["BANK", "CLUBHOUSE"],
+  MAP_NAMES: ["CLUBHOUSE"],
   SITES: {
     "BANK": ["B Lockers/B CCTV Room", "1F Teller's Office/1F Archives", "1F Staff Room/1F Open Area", "2F Executive Lounge/2F CEO Office"],
     "BORDER": ["1F Customs Inspection/1F Supply Room", "1F Ventilation Room/1F Workshop", "1F Bathroom/1F Tellers", "2F Armory Lockers/2F Archives"],
@@ -12,6 +12,7 @@ module.exports = {
     "KAFE DOSTOYEVSKY": ["1F Kitchen Cooking/1F Kitchen Service", "2F Fireplace Hall/2F Mining Room", "2F Fireplace Hall/2F Reading Room", "3F Cocktail Bar/3F Bar"],
     "KANAL": ["B Supply Room/B Kayaks", "1F Coast Guard Meeting Room/1F Lounge", "1F Security Room/1F Maps Room", "2F Radar Room/2F Server Room"],
     "OREGON": ["B Laundry/B Supply Room", "1F Kitchen/1F Dining Room", "1F Kitchen/1F Meeting Room", "2F Kid's Dorm/2F Dorms Main Hall"],
+    "SKYSCRAPER": ["1F Kitchen/1F BBQ", "1F Bedroom/1F Bathroom", "2F Tea Room/2F Karaoke", "2F Exhibition Room/2F Office"],
     "THEME PARK": ["1F Armory Room/1F Throne Room", "1F Lab/1F Storage", "2F Office/2F Initiation Room", "2F Bunk/2F Day Care"],
     "VILLA": ["1F Living Room/1F Library", "1F Kitchen/1F Dining Room", "2F Trophy Room/2F Statuary Room", "2F Aviator Room/2F Games Room"]
   },
@@ -25,6 +26,7 @@ module.exports = {
     "KAFE DOSTOYEVSKY": ["First Floor", "Second Floor", "Third Floor"],
     "KANAL": ["Basement", "First Floor", "Second Floor"],
     "OREGON": ["Basement", "First Floor", "Second Floor", "Third Floor"],
+    "SKYSCRAPER": ["First Floor", "Second Floor"],
     "THEME PARK": ["First Floor", "Second Floor"],
     "VILLA": ["Basement", "First Floor", "Second Floor"]
   },
