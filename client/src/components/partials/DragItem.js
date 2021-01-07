@@ -1,6 +1,7 @@
 /* client/src/components/partials/DragItem.js */
 
 import React from "react";
+import r6operators from "r6operators";
 
 class DragItem extends React.Component {
   constructor(props) {

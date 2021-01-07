@@ -194,7 +194,7 @@ class PositionOverlay extends React.Component {
   render() {
     const operators = this.state.operatorPositions.map((pos, index) => {
       if (pos.floor === this.props.floorIndex) {
-        let url = `https://cdn.r6stats.com/badges/${this.props.operators[index].toLowerCase()}_badge.png`;
+        let url = `../../media/operators/${this.props.operators[index].toLowerCase()}.png`;
         return (
           <DragItem url={url}
             x={pos.x} y={pos.y}
@@ -240,7 +240,7 @@ class PositionOverlay extends React.Component {
     this.state.utilityPositions.map((pos, index) => {
       pos.forEach((u, uindex) => {
         if (u.floor === this.props.floorIndex) {
-          let url = `../../media/${this.props.utility[index].replace(" ", "_").replace(" ", "_")}.png`;
+          let url = `../../media/utility/${this.props.utility[index].replace(" ", "_").replace(" ", "_")}.png`;
           utility.push(
             <DragItem url={url}
             x={u.x} y={u.y}
