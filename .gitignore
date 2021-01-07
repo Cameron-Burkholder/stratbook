@@ -1,5 +1,6 @@
 node_modules
 client/node_modules
+client/build
 .env
 client/.env
 id_rsa_pub.pem
