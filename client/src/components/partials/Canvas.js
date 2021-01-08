@@ -3,19 +3,31 @@
 import React from "react";
 
 import FloorSelector from "./FloorSelector.js";
+import ZoomSelector from "./ZoomSelector.js";
 import BlueprintForm from "./BlueprintForm.js";
 import Objectives from "./Objectives.js";
 
 class Canvas extends React.Component {
   constructor(props) {
     super(props);
-  }
 
+    this.updateZoom = this.updateZoom.bind(this);
+
+    this.state = {
+      zoom: 1
+    }
+  }
+  updateZoom(e) {
+    this.setState({
+      zoom: e.target.value
+    });
+  }
   render() {
     return (
       <div className="canvas">
         <div className="canvas__controls">
           <FloorSelector onChange={this.props.updateFloor} floors={this.props.floors} floor={this.props.floor}/>
+          <ZoomSelector onChange={this.updateZoom} zoom={this.state.zoom}/>
         </div>
         <BlueprintForm type={this.props.type}
           operators={this.props.operators}
@@ -36,7 +48,8 @@ class Canvas extends React.Component {
           updateUtilityPositions={this.props.updateUtilityPositions}
           updateRotatePositions={this.props.updateRotatePositions}
           updateReinforcementPositions={this.props.updateReinforcementPositions}
-          updateBreachPositions={this.props.updateBreachPositions}/>
+          updateBreachPositions={this.props.updateBreachPositions}
+          zoom={this.state.zoom}/>
         <div className="canvas__body">
           <Objectives objectives={this.props.objectives} addObjective={this.props.addObjective} removeObjective={this.props.removeObjective}
             notes={this.props.notes} updateNotes={this.props.updateNotes}/>

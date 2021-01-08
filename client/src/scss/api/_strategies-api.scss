@@ -2,6 +2,7 @@
 
 $canvas-width: 1024px;
 $canvas-height: 576px;
+$drag-item-width: 30px;
 
 div#EditStrategiesAPI {
   div.edit-container {
@@ -569,6 +570,8 @@ div.canvas {
   div.blueprint-form {
     width: 100%; // 1024px
     height: $canvas-height; // 576px gives 16:9 ratio
+    overflow: auto;
+    position: relative;
   }
   div.position-overlay {
     width: 100%;
@@ -576,8 +579,8 @@ div.canvas {
     position: relative;
     div.drag-item {
       position: absolute;
-      width: 60px;
-      height: 60px;
+      width: $drag-item-width;
+      height: $drag-item-width;
       transition: all 0.5s ease;
     }
     div.drag-item:hover {
@@ -588,13 +591,23 @@ div.canvas {
       cursor: grabbing;
       transition: all 0s ease;
     }
+    div.drag-operator {
+      border: 2px solid $color-primary;
+    }
+    div.drag-drone, div.drag-reinforcement {
+      border: 2px solid $color-warning;
+    }
+    div.drag-breach, div.drag-rotate {
+      border: 2px solid $color-danger;
+    }
   }
   div.canvas__controls {
     position: absolute;
     height: 50px;
-    top: calc(576px - 50px);
+    top: calc(#{$canvas-height} - 50px);
     border-bottom: none;
     border-left: none;
+    display: flex;
     z-index: 2;
     left: 0;
     select {
@@ -615,6 +628,18 @@ div.canvas {
     h3 {
       margin-top: $margin-s;
     }
+  }
+}
+
+div.zoom-selector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  input {
+    cursor: pointer;
+    margin: 0;
+    transform: scale(0.8);
   }
 }
 

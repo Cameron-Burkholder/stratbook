@@ -5,7 +5,7 @@ import React from "react";
 import ViewerPositionOverlay from "./ViewerPositionOverlay.js";
 
 const ViewerBlueprintForm = (props) => {
-  const url = `../../media/${props.map.replace(" ", "_")}-${props.floor.toUpperCase().replace(" ", "_")}.jpg`;
+  const url = `../../media/maps/${props.map.replace(" ", "_")}-${props.floor.toUpperCase().replace(" ", "_")}.png`;
   const style = {
     backgroundImage: `url(${url})`,
     backgroundPosition: "center",

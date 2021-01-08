@@ -1811,15 +1811,17 @@ div.canvas {
   z-index: 1; }
   div.canvas div.blueprint-form {
     width: 100%;
-    height: 576px; }
+    height: 576px;
+    overflow: auto;
+    position: relative; }
   div.canvas div.position-overlay {
     width: 100%;
     height: 100%;
     position: relative; }
     div.canvas div.position-overlay div.drag-item {
       position: absolute;
-      width: 60px;
-      height: 60px;
+      width: 30px;
+      height: 30px;
       transition: all 0.5s ease; }
     div.canvas div.position-overlay div.drag-item:hover {
       cursor: grab;
@@ -1827,12 +1829,19 @@ div.canvas {
     div.canvas div.position-overlay div.drag-item.drag {
       cursor: grabbing;
       transition: all 0s ease; }
+    div.canvas div.position-overlay div.drag-operator {
+      border: 2px solid #0040D6; }
+    div.canvas div.position-overlay div.drag-drone, div.canvas div.position-overlay div.drag-reinforcement {
+      border: 2px solid #ffbb33; }
+    div.canvas div.position-overlay div.drag-breach, div.canvas div.position-overlay div.drag-rotate {
+      border: 2px solid #C93434; }
   div.canvas div.canvas__controls {
     position: absolute;
     height: 50px;
     top: calc(576px - 50px);
     border-bottom: none;
     border-left: none;
+    display: flex;
     z-index: 2;
     left: 0; }
     div.canvas div.canvas__controls select {
@@ -1847,6 +1856,16 @@ div.canvas {
       margin-left: 16px; }
     div.canvas div.canvas__body h3 {
       margin-top: 16px; }
+
+div.zoom-selector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; }
+  div.zoom-selector input {
+    cursor: pointer;
+    margin: 0;
+    transform: scale(0.8); }
 
 div#Viewer h4.toolbar__strategy {
   cursor: default; }

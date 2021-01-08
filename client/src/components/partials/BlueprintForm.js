@@ -5,15 +5,17 @@ import React from "react";
 import PositionOverlay from "./PositionOverlay.js";
 
 const BlueprintForm = (props) => {
-  const url = `../../media/${props.map.replace(" ", "_")}-${props.floor.toUpperCase().replace(" ", "_")}.jpg`;
+  const url = `../../media/maps/${props.map.replace(" ", "_")}-${props.floor.toUpperCase().replace(" ", "_")}.png`;
   const style = {
     backgroundImage: `url(${url})`,
     backgroundPosition: "center",
-    backgroundSize: "cover"
+    backgroundSize: "cover",
+    transform: `scale(${parseFloat(props.zoom)})`
   }
   return (
-    <div className="blueprint-form" style={style}>
+    <div className="blueprint-form">
       <PositionOverlay
+        style={style}
         operators={props.operators}
         operatorPositions={props.operatorPositions}
         gadgets={props.gadgets}
@@ -32,7 +34,8 @@ const BlueprintForm = (props) => {
         updateRotatePositions={props.updateRotatePositions}
         updateReinforcementPositions={props.updateReinforcementPositions}
         updateBreachPositions={props.updateBreachPositions}
-        type={props.type}/>
+        type={props.type}
+        zoom={props.zoom}/>
     </div>
   )
 }

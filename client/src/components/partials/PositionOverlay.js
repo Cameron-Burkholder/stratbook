@@ -39,8 +39,8 @@ class PositionOverlay extends React.Component {
     });
   }
   onMouseMove(e) {
-    let width = 60;
-    let height = 60;
+    let width = 30;
+    let height = 30;
     let newPositions;
     switch (this.state.type) {
       case "OPERATOR":
@@ -291,8 +291,14 @@ class PositionOverlay extends React.Component {
       }
     });
 
+    let style = JSON.parse(JSON.stringify(this.props.style));
+    if (this.state.bounds) {
+      style.top = 0;//((this.props.zoom * this.state.bounds.width) - this.state.bounds.width) / 2;
+      style.left = 0;//((this.props.zoom * this.state.bounds.height) - this.state.bounds.height) / 2;
+    }
+    console.log(style);
     return (
-      <div className="position-overlay" ref={this.selector}>
+      <div className="position-overlay" ref={this.selector} style={style}>
         { operators }
         { drones }
         { rotates }
