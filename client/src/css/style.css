@@ -1445,7 +1445,7 @@ div#Editor main, div#Viewer main {
   width: 100%;
   height: 100%;
   display: grid;
-  grid-template-columns: 256px 1024px 1fr; }
+  grid-template-columns: 256px 900px 1fr; }
 
 div.objectives h3 {
   margin-top: 40px; }
@@ -1811,7 +1811,7 @@ div.canvas {
   z-index: 1; }
   div.canvas div.blueprint-form {
     width: 100%;
-    height: 576px;
+    height: 675px;
     overflow: auto;
     position: relative; }
   div.canvas div.position-overlay {
@@ -1838,7 +1838,7 @@ div.canvas {
   div.canvas div.canvas__controls {
     position: absolute;
     height: 50px;
-    top: calc(576px - 50px);
+    top: calc(675px - 50px);
     border-bottom: none;
     border-left: none;
     display: flex;

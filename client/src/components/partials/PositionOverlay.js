@@ -296,7 +296,6 @@ class PositionOverlay extends React.Component {
       style.top = 0;//((this.props.zoom * this.state.bounds.width) - this.state.bounds.width) / 2;
       style.left = 0;//((this.props.zoom * this.state.bounds.height) - this.state.bounds.height) / 2;
     }
-    console.log(style);
     return (
       <div className="position-overlay" ref={this.selector} style={style}>
         { operators }

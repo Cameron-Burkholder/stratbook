@@ -26,7 +26,7 @@ class CreateStrategiesAPI extends React.Component {
     this.addMap = this.addMap.bind(this);
 
     this.state = {
-      maps: MAP_NAMES.filter((map) => this.props.maps.indexOf(map.toLowerCase()) < 0)
+      maps: MAP_NAMES.filter((map) => this.props.maps.indexOf(map.toLowerCase().replace(" ", "_")) < 0)
     }
   }
   selectMap(name) {

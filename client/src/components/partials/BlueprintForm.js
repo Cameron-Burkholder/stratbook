@@ -4,14 +4,18 @@ import React from "react";
 
 import PositionOverlay from "./PositionOverlay.js";
 
+const width = 900;
+const height = 675;
+
 const BlueprintForm = (props) => {
-  const url = `../../media/maps/${props.map.replace(" ", "_")}-${props.floor.toUpperCase().replace(" ", "_")}.png`;
+  const url = `../../media/maps/${props.map.replace(" ", "_")}-${props.floor.toUpperCase().replace(" ", "_")}-min.jpg`;
   const style = {
     backgroundImage: `url(${url})`,
     backgroundPosition: "center",
     backgroundSize: "cover",
-    transform: `scale(${parseFloat(props.zoom)})`
+    transform: `scale(${parseFloat(props.zoom)}) translate(${(props.zoom * width - width) / 2}px, ${(props.zoom * height - height) / 2}px)`
   }
+  console.log(style);
   return (
     <div className="blueprint-form">
       <PositionOverlay
