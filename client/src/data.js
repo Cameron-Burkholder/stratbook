@@ -1,7 +1,7 @@
 /* data.js */
 
 module.exports = {
-  MAP_NAMES: ["CLUBHOUSE"],
+  MAP_NAMES: ["CLUBHOUSE", "KAFE DOSTOYEVSKY", "OREGON"],
   SITES: {
     "BANK": ["B Lockers/B CCTV Room", "1F Teller's Office/1F Archives", "1F Staff Room/1F Open Area", "2F Executive Lounge/2F CEO Office"],
     "BORDER": ["1F Customs Inspection/1F Supply Room", "1F Ventilation Room/1F Workshop", "1F Bathroom/1F Tellers", "2F Armory Lockers/2F Archives"],
@@ -25,7 +25,7 @@ module.exports = {
     "CONSULATE": ["Basement", "First Floor", "Second Floor"],
     "KAFE DOSTOYEVSKY": ["First Floor", "Second Floor", "Third Floor"],
     "KANAL": ["Basement", "First Floor", "Second Floor"],
-    "OREGON": ["Basement", "First Floor", "Second Floor", "Third Floor"],
+    "OREGON": ["Basement", "First Floor", "Second Floor", "Tier 3"],
     "SKYSCRAPER": ["First Floor", "Second Floor"],
     "THEME PARK": ["First Floor", "Second Floor"],
     "VILLA": ["Basement", "First Floor", "Second Floor"]

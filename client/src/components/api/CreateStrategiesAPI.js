@@ -93,7 +93,7 @@ class CreateStrategiesAPI extends React.Component {
       loading: true
     });
     axios.defaults.headers.common["Authorization"] = this.props.getAuthToken();
-    axios.post(`/api/strategies/add/${this.state.map.name.toLowerCase()}`, {
+    axios.post(`/api/strategies/add/${this.state.map.name.toLowerCase().replace(" ", "_")}`, {
       map: JSON.stringify(this.state.map)
       })
       .then((response) => {

@@ -140,7 +140,7 @@ class ViewStrategiesAPI extends React.Component {
             <Link to={`/strategies/${map}`} className="map-option" key={index} style={{ backgroundImage: `url(../../media/maps/${map.toUpperCase().replace(" ", "_")}-min.png)` }}
               onClick={() => { this.fetchMap(map) }}>
               <div className="map-overlay">
-                { map.toUpperCase() }
+                { map.toUpperCase().replace("_", " ") }
               </div>
             </Link>
           )
