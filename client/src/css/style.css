@@ -1472,6 +1472,9 @@ div.objectives textarea {
   width: 100%;
   max-width: 600px; }
 
+div.blueprint-form {
+  overflow: hidden !important; }
+
 div.toolbar {
   border-bottom: 1px solid #222326;
   display: flex;
@@ -1838,12 +1841,13 @@ div.canvas {
   div.canvas div.canvas__controls {
     position: absolute;
     height: 50px;
-    top: calc(675px - 50px);
+    top: 675px;
     border-bottom: none;
     border-left: none;
     display: flex;
     z-index: 2;
-    left: 0; }
+    left: 0;
+    background: white; }
     div.canvas div.canvas__controls select {
       border-radius: 0 !important; }
       div.canvas div.canvas__controls select option {
@@ -1851,6 +1855,7 @@ div.canvas {
     div.canvas div.canvas__controls select:hover {
       cursor: pointer; }
   div.canvas div.canvas__body {
+    margin-top: 40px;
     padding: 40px; }
     div.canvas div.canvas__body ul {
       margin-left: 16px; }
@@ -1861,7 +1866,11 @@ div.zoom-selector {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center; }
+  justify-content: center;
+  color: #19191a !important; }
+  div.zoom-selector p {
+    color: #19191a;
+    margin-top: 8px; }
   div.zoom-selector input {
     cursor: pointer;
     margin: 0;

@@ -7,41 +7,57 @@ import PositionOverlay from "./PositionOverlay.js";
 const width = 900;
 const height = 675;
 
-const BlueprintForm = (props) => {
-  const url = `../../media/maps/${props.map.replace(" ", "_")}-${props.floor.toUpperCase().replace(" ", "_")}-min.jpg`;
-  const style = {
-    backgroundImage: `url(${url})`,
-    backgroundPosition: "center",
-    backgroundSize: "cover",
-    transform: `scale(${parseFloat(props.zoom)}) translate(${(props.zoom * width - width) / 2}px, ${(props.zoom * height - height) / 2}px)`
+class BlueprintForm extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.selector = React.createRef();
+
+    this.state = {};
   }
-  console.log(style);
-  return (
-    <div className="blueprint-form">
-      <PositionOverlay
-        style={style}
-        operators={props.operators}
-        operatorPositions={props.operatorPositions}
-        gadgets={props.gadgets}
-        gadgetPositions={props.gadgetPositions}
-        utility={props.utility}
-        utilityPositions={props.utilityPositions}
-        drones={props.drones}
-        rotates={props.rotates}
-        reinforcements={props.reinforcements}
-        floorIndex={props.floorIndex}
-        breaches={props.breaches}
-        updateOperatorPositions={props.updateOperatorPositions}
-        updateGadgetPositions={props.updateGadgetPositions}
-        updateDronePositions={props.updateDronePositions}
-        updateUtilityPositions={props.updateUtilityPositions}
-        updateRotatePositions={props.updateRotatePositions}
-        updateReinforcementPositions={props.updateReinforcementPositions}
-        updateBreachPositions={props.updateBreachPositions}
-        type={props.type}
-        zoom={props.zoom}/>
-    </div>
-  )
+  componentDidMount() {
+    if (!this.state.bounds) {
+      this.setState({
+        bounds: this.selector.current.getBoundingClientRect()
+      })
+    }
+  }
+  render() {
+    const url = `../../media/maps/${this.props.map.replace(" ", "_")}-${this.props.floor.toUpperCase().replace(" ", "_")}-min.jpg`;
+    const style = {
+      backgroundImage: `url(${url})`,
+      backgroundPosition: "center",
+      backgroundSize: "cover",
+      transform: `scale(${parseFloat(this.props.zoom)})`
+    };
+    return (
+      <div className="blueprint-form" ref={this.selector}>
+        <PositionOverlay
+          style={style}
+          operators={this.props.operators}
+          operatorPositions={this.props.operatorPositions}
+          gadgets={this.props.gadgets}
+          gadgetPositions={this.props.gadgetPositions}
+          utility={this.props.utility}
+          utilityPositions={this.props.utilityPositions}
+          drones={this.props.drones}
+          rotates={this.props.rotates}
+          reinforcements={this.props.reinforcements}
+          floorIndex={this.props.floorIndex}
+          breaches={this.props.breaches}
+          updateOperatorPositions={this.props.updateOperatorPositions}
+          updateGadgetPositions={this.props.updateGadgetPositions}
+          updateDronePositions={this.props.updateDronePositions}
+          updateUtilityPositions={this.props.updateUtilityPositions}
+          updateRotatePositions={this.props.updateRotatePositions}
+          updateReinforcementPositions={this.props.updateReinforcementPositions}
+          updateBreachPositions={this.props.updateBreachPositions}
+          type={this.props.type}
+          zoom={this.props.zoom}
+          bounds={this.state.bounds}/>
+      </div>
+    )
+  }
 }
 
 export default BlueprintForm;

@@ -4,6 +4,9 @@ import React from "react";
 
 import DragItem from "./DragItem.js";
 
+let width = 30;
+let height = 30;
+
 class PositionOverlay extends React.Component {
   constructor(props) {
     super(props);
@@ -11,9 +14,8 @@ class PositionOverlay extends React.Component {
     this.selectElement = this.selectElement.bind(this);
     this.onMouseMove = this.onMouseMove.bind(this);
     this.onMouseUp = this.onMouseUp.bind(this);
+    this.onTouchMove = this.onTouchMove.bind(this);
     this.detectChange = this.detectChange.bind(this);
-
-    this.selector = React.createRef();
 
     this.state = {
       index: 0,
@@ -36,11 +38,11 @@ class PositionOverlay extends React.Component {
     }, () => {
       document.addEventListener("mousemove", this.onMouseMove);
       document.addEventListener("mouseup", this.onMouseUp);
+      document.addEventListener("touchmove", this.onTouchMove);
+      document.addEventListener("touchend", this.onMouseUp);
     });
   }
   onMouseMove(e) {
-    let width = 30;
-    let height = 30;
     let newPositions;
     switch (this.state.type) {
       case "OPERATOR":
@@ -65,17 +67,104 @@ class PositionOverlay extends React.Component {
         newPositions = [...this.state.breaches];
         break;
     }
-    let newX = e.pageX - this.state.bounds.left - (width / 2);
-    let newY = e.pageY - this.state.bounds.top - (height / 2);
+    let newX = e.clientX - this.props.zoom * this.props.bounds.left - (width / 2);
+    let newY = e.clientY - this.props.zoom * this.props.bounds.top - (height / 2);
     if (newX < 0) {
       newX = 0;
-    } else if (newX > this.state.bounds.width - width) {
-      newX = this.state.bounds.width - width;
+    } else if (newX > this.props.bounds.width - width) {
+      newX = this.props.bounds.width - width;
     }
     if (newY < 0) {
       newY = 0;
-    } else if (newY > this.state.bounds.height - height) {
-      newY = this.state.bounds.height - height;
+    } else if (newY > this.props.bounds.height - height) {
+      newY = this.props.bounds.height - height;
+    }
+    if (this.state.type === "GADGET" || this.state.type === "UTILITY") {
+      newPositions[this.state.gi].x = newX;
+      newPositions[this.state.gi].y = newY;
+    } else {
+      newPositions[this.state.index].x = newX;
+      newPositions[this.state.index].y = newY;
+    }
+    let positions;
+    switch (this.state.type) {
+      case "OPERATOR":
+        this.setState({
+          operatorPositions: newPositions
+        });
+        break;
+      case "DRONE":
+        this.setState({
+          drones: newPositions
+        });
+        break;
+      case "GADGET":
+        positions = [...this.state.gadgetPositions];
+        positions[this.state.index] = newPositions;
+        this.setState({
+          gadgetPositions: positions
+        });
+        break;
+      case "UTILITY":
+        positions = [...this.state.utilityPositions];
+        positions[this.state.index] = newPositions;
+        this.setState({
+          utilityPositions: positions
+        });
+        break;
+      case "ROTATE":
+        this.setState({
+          rotates: newPositions
+        });
+        break;
+      case "REINFORCEMENT":
+        this.setState({
+          reinforcements: newPositions
+        });
+        break;
+      case "BREACH":
+        this.setState({
+          breaches: newPositions
+        });
+        break;
+    }
+  }
+  onTouchMove(t) {
+    let newPositions;
+    switch (this.state.type) {
+      case "OPERATOR":
+        newPositions = [...this.state.operatorPositions];
+        break;
+      case "DRONE":
+        newPositions = [...this.state.drones];
+        break;
+      case "GADGET":
+        newPositions = [...this.state.gadgetPositions][this.state.index];
+        break;
+      case "UTILITY":
+        newPositions = [...this.state.utilityPositions][this.state.index];
+        break;
+      case "ROTATE":
+        newPositions = [...this.state.rotates];
+        break;
+      case "REINFORCEMENT":
+        newPositions = [...this.state.reinforcements];
+        break;
+      case "BREACH":
+        newPositions = [...this.state.breaches];
+        break;
+    }
+    let newX = t.touches[0].clientX - this.props.zoom * this.props.bounds.left - (width / 2);
+    let newY = t.touches[0].clientY - this.props.zoom * this.props.bounds.top - (height / 2);
+    if (newX < 0) {
+      newX = 0;
+    } else if (newX > this.props.bounds.width - width) {
+      newX = this.props.bounds.width - width;
+    }
+    if (newY < 0) {
+      newY = 0;
+    } else if (newY > this.props.bounds.height - height) {
+      newY = this.props.bounds.height - height;
     }
     if (this.state.type === "GADGET" || this.state.type === "UTILITY") {
       newPositions[this.state.gi].x = newX;
@@ -130,6 +219,8 @@ class PositionOverlay extends React.Component {
   onMouseUp(e) {
     document.removeEventListener("mousemove", this.onMouseMove);
     document.removeEventListener("mouseup", this.onMouseUp);
+    document.removeEventListener("touchmove", this.onTouchMove);
+    document.removeEventListener("touchend", this.onMouseUp);
     this.setState({
       drag: false
     }, () => {
@@ -168,13 +259,6 @@ class PositionOverlay extends React.Component {
       bool = true;
     }
     return bool;
-  }
-  componentDidMount() {
-    if (!this.state.bounds) {
-      this.setState({
-        bounds: this.selector.current.getBoundingClientRect()
-      })
-    }
   }
   componentDidUpdate(prevProps, prevState) {
     if (this.detectChange(prevProps, prevState)) {
@@ -297,7 +381,7 @@ class PositionOverlay extends React.Component {
       style.left = 0;//((this.props.zoom * this.state.bounds.height) - this.state.bounds.height) / 2;
     }
     return (
-      <div className="position-overlay" ref={this.selector} style={style}>
+      <div className="position-overlay" style={style}>
         { operators }
         { drones }
         { rotates }

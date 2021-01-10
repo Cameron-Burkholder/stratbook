@@ -160,6 +160,11 @@ div.objectives {
   }
 }
 
+div.blueprint-form {
+  overflow: hidden !important;
+}
+
+
 div.toolbar {
   border-bottom: $border-primary;
   display: flex;
@@ -604,12 +609,13 @@ div.canvas {
   div.canvas__controls {
     position: absolute;
     height: 50px;
-    top: calc(#{$canvas-height} - 50px);
+    top: $canvas-height;
     border-bottom: none;
     border-left: none;
     display: flex;
     z-index: 2;
     left: 0;
+    background: $background-tertiary;
     select {
       border-radius: 0 !important;
       option {
@@ -621,6 +627,7 @@ div.canvas {
     }
   }
   div.canvas__body {
+    margin-top: $margin-m;
     padding: $padding-m;
     ul {
       margin-left: $margin-s;
@@ -636,6 +643,11 @@ div.zoom-selector {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  color: $text-dark !important;
+  p {
+    color: $text-dark;
+    margin-top: 8px;
+  }
   input {
     cursor: pointer;
     margin: 0;
