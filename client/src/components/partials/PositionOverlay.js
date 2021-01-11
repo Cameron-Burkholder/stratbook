@@ -100,8 +100,8 @@ class PositionOverlay extends React.Component {
       }
     }
 
-    newX -= ((width) / 2) + (this.props.offsetX);
-    newY -= ((height) / 2) + (this.props.offsetY);
+    newX -= ((width) / 2);
+    newY -= ((height) / 2);
 
     if (newX < 0) {
       newX = 0;
