@@ -81,8 +81,27 @@ class PositionOverlay extends React.Component {
         break;
     }
 
-    let newX = e.pageX - this.props.bounds.left - ((width * this.props.zoom) / 2) - this.props.offsetX;
-    let newY = e.pageY - this.props.bounds.top - ((height * this.props.zoom) / 2) - this.props.offsetY;
+    let newX = e.pageX - this.state.bounds.left;
+    let newY = e.pageY - this.state.bounds.top;
+
+    if (this.props.zoom > 1) {
+      const centerX = this.state.bounds.width / 2;
+      const centerY = this.state.bounds.height / 2;
+      if (newX > centerX) {
+        newX = (centerX / this.props.zoom) + ((newX - centerX) / this.props.zoom);
+      } else {
+        newX = (centerX / this.props.zoom) - ((centerX - newX) / this.props.zoom);
+      }
+
+      if (newY > centerY) {
+        newY = (centerY / this.props.zoom) + ((newY - centerY) / this.props.zoom);
+      } else {
+        newY = (centerY / this.props.zoom) - ((centerY - newY) / this.props.zoom);
+      }
+    }
+
+    newX -= ((width) / 2) + (this.props.offsetX);
+    newY -= ((height) / 2) + (this.props.offsetY);
 
     if (newX < 0) {
       newX = 0;

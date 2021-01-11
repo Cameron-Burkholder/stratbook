@@ -1512,7 +1512,9 @@ div.toolbar {
     div.toolbar div.strategy__name-input input.strategy__input {
       padding: 4px;
       padding-top: 8px;
-      margin: 0; }
+      margin: 0;
+      min-width: 300px;
+      max-width: none; }
     div.toolbar div.strategy__name-input button {
       margin: 0 !important;
       position: absolute;
