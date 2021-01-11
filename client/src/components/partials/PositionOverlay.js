@@ -19,6 +19,7 @@ class PositionOverlay extends React.Component {
 
     // Handle drag canvas
     this.onDrag = this.onDrag.bind(this);
+    this.onDragTouch = this.onDragTouch.bind(this);
 
     // Handle new props
     this.detectChange = this.detectChange.bind(this);
@@ -54,6 +55,9 @@ class PositionOverlay extends React.Component {
   }
   onDrag(e) {
     this.props.onDragStart(e);
+  }
+  onDragTouch(t) {
+    this.props.onDragTouch(t);
   }
   onMouseMove(e) {
     let newPositions;
@@ -190,8 +194,29 @@ class PositionOverlay extends React.Component {
         newPositions = [...this.state.breaches];
         break;
     }
-    let newX = t.touches[0].clientX - this.props.zoom * this.props.bounds.left - (width / 2);
-    let newY = t.touches[0].clientY - this.props.zoom * this.props.bounds.top - (height / 2);
+
+    let newX = t.touches[0].clientX - this.state.bounds.left;
+    let newY = t.touches[0].clientY - this.state.bounds.top;
+
+    if (this.props.zoom > 1) {
+      const centerX = this.state.bounds.width / 2;
+      const centerY = this.state.bounds.height / 2;
+      if (newX > centerX) {
+        newX = (centerX / this.props.zoom) + ((newX - centerX) / this.props.zoom);
+      } else {
+        newX = (centerX / this.props.zoom) - ((centerX - newX) / this.props.zoom);
+      }
+
+      if (newY > centerY) {
+        newY = (centerY / this.props.zoom) + ((newY - centerY) / this.props.zoom);
+      } else {
+        newY = (centerY / this.props.zoom) - ((centerY - newY) / this.props.zoom);
+      }
+    }
+
+    newX -= ((width) / 2);
+    newY -= ((height) / 2);
+
     if (newX < 0) {
       newX = 0;
     } else if (newX > this.props.bounds.width - width) {
@@ -202,6 +227,7 @@ class PositionOverlay extends React.Component {
     } else if (newY > this.props.bounds.height - height) {
       newY = this.props.bounds.height - height;
     }
+
     if (this.state.type === "GADGET" || this.state.type === "UTILITY") {
       newPositions[this.state.gi].x = newX;
       newPositions[this.state.gi].y = newY;
@@ -418,9 +444,9 @@ class PositionOverlay extends React.Component {
         )
       }
     });
-
+    
     return (
-      <div className="position-overlay" style={this.props.style} ref={this.innerSelector} onMouseDown={this.onDrag}>
+      <div className="position-overlay" style={this.props.style} ref={this.innerSelector} onMouseDown={this.onDrag} onTouchStart={this.onDragTouch}>
         { operators }
         { drones }
         { rotates }

@@ -12,6 +12,7 @@ class BlueprintForm extends React.Component {
     super(props);
 
     this.onDragStart = this.onDragStart.bind(this);
+    this.onDragTouch = this.onDragTouch.bind(this);
     this.onDrag = this.onDrag.bind(this);
     this.onDragStop = this.onDragStop.bind(this);
 
@@ -32,9 +33,24 @@ class BlueprintForm extends React.Component {
       document.addEventListener("mouseup", this.onDragStop);
     });
   }
+  onDragTouch(t) {
+    this.setState({
+      startX: t.touches[0].clientX,
+      startY: t.touches[0].clientY,
+      move: true
+    }, () => {
+      console.log(this.state);
+      document.addEventListener("touchmove", this.onDrag);
+      document.addEventListener("touchend", this.onDragStop);
+    })
+  }
   onDrag(e) {
     let offsetX = e.clientX - this.state.startX;
     let offsetY = e.clientY - this.state.startY;
+    if (e.touches) {
+      offsetX = e.touches[0].clientX - this.state.startX;
+      offsetY = e.touches[0].clientY - this.state.startY;
+    }
     const xLowerBound = this.props.zoom * (((this.props.zoom * this.state.bounds.width) - this.state.bounds.width) / 2);
     const xUpperBound = this.props.zoom * ((this.state.bounds.width - (this.props.zoom * this.state.bounds.width)) / 2);
     const yLowerBound = this.props.zoom * (((this.props.zoom * this.state.bounds.height) - this.state.bounds.height) / 2);
@@ -62,6 +78,8 @@ class BlueprintForm extends React.Component {
   onDragStop(e) {
     document.removeEventListener("mousemove", this.onDrag);
     document.removeEventListener("mouseup", this.onDragStop);
+    document.removeEventListener("touchmove", this.onDrag);
+    document.addEventListener("touchend", this.onDragStop);
   }
   componentDidMount() {
     if (!this.state.bounds) {
@@ -104,6 +122,7 @@ class BlueprintForm extends React.Component {
           zoom={this.props.zoom}
           bounds={this.state.bounds}
           onDragStart={this.onDragStart}
+          onDragTouch={this.onDragTouch}
           offsetX={this.state.offsetX}
           offsetY={this.state.offsetY}/>
       </div>

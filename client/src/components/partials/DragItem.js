@@ -34,6 +34,8 @@ class DragItem extends React.Component {
           });
         }}
         onTouchStart={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
           this.setState({
             drag: true
           }, () => {
