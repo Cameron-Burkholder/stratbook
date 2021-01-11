@@ -1820,7 +1820,8 @@ div.canvas {
   div.canvas div.position-overlay {
     width: 100%;
     height: 100%;
-    position: relative; }
+    position: relative;
+    cursor: move; }
     div.canvas div.position-overlay div.drag-item {
       position: absolute;
       width: 30px;

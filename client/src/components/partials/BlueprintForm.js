@@ -11,9 +11,36 @@ class BlueprintForm extends React.Component {
   constructor(props) {
     super(props);
 
+    this.onDragStart = this.onDragStart.bind(this);
+    this.onDrag = this.onDrag.bind(this);
+    this.onDragStop = this.onDragStop.bind(this);
+
     this.selector = React.createRef();
 
-    this.state = {};
+    this.state = {
+      offsetX: 0,
+      offsetY: 0
+    };
+  }
+  onDragStart(e) {
+    this.setState({
+      startX: e.clientX,
+      startY: e.clientY,
+      move: true
+    }, () => {
+      document.addEventListener("mousemove", this.onDrag);
+      document.addEventListener("mouseup", this.onDragStop);
+    });
+  }
+  onDrag(e) {
+    this.setState({
+      offsetX: e.clientX - this.state.startX,
+      offsetY: e.clientY - this.state.startY
+    });
+  }
+  onDragStop(e) {
+    document.removeEventListener("mousemove", this.onDrag);
+    document.removeEventListener("mouseup", this.onDragStop);
   }
   componentDidMount() {
     if (!this.state.bounds) {
@@ -28,7 +55,7 @@ class BlueprintForm extends React.Component {
       backgroundImage: `url(${url})`,
       backgroundPosition: "center",
       backgroundSize: "cover",
-      transform: `scale(${parseFloat(this.props.zoom)})`
+      transform: `scale(${parseFloat(this.props.zoom)}) translate(${this.state.offsetX}px, ${this.state.offsetY}px)`
     };
     return (
       <div className="blueprint-form" ref={this.selector}>
@@ -54,7 +81,10 @@ class BlueprintForm extends React.Component {
           updateBreachPositions={this.props.updateBreachPositions}
           type={this.props.type}
           zoom={this.props.zoom}
-          bounds={this.state.bounds}/>
+          bounds={this.state.bounds}
+          onDragStart={this.onDragStart}
+          offsetX={this.state.offsetX}
+          offsetY={this.state.offsetY}/>
       </div>
     )
   }

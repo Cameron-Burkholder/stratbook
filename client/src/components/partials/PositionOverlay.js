@@ -11,11 +11,20 @@ class PositionOverlay extends React.Component {
   constructor(props) {
     super(props);
 
+    // Handle drag items
     this.selectElement = this.selectElement.bind(this);
     this.onMouseMove = this.onMouseMove.bind(this);
     this.onMouseUp = this.onMouseUp.bind(this);
     this.onTouchMove = this.onTouchMove.bind(this);
+
+    // Handle drag canvas
+    this.onDrag = this.onDrag.bind(this);
+
+    // Handle new props
     this.detectChange = this.detectChange.bind(this);
+
+
+    this.innerSelector = React.createRef();
 
     this.state = {
       index: 0,
@@ -26,7 +35,8 @@ class PositionOverlay extends React.Component {
       drones: (this.props.drones ? [...this.props.drones] : []),
       rotates: (this.props.rotates ? [...this.props.rotates] : []),
       reinforcements: (this.props.reinforcements ? [...this.props.reinforcements] : []),
-      breaches: (this.props.breaches ? [...this.props.breaches] : [])
+      breaches: (this.props.breaches ? [...this.props.breaches] : []),
+      style: JSON.parse(JSON.stringify(this.props.style))
     }
   }
   selectElement(index, type, gi) {
@@ -41,6 +51,9 @@ class PositionOverlay extends React.Component {
       document.addEventListener("touchmove", this.onTouchMove);
       document.addEventListener("touchend", this.onMouseUp);
     });
+  }
+  onDrag(e) {
+    this.props.onDragStart(e);
   }
   onMouseMove(e) {
     let newPositions;
@@ -67,8 +80,23 @@ class PositionOverlay extends React.Component {
         newPositions = [...this.state.breaches];
         break;
     }
-    let newX = e.clientX - this.props.zoom * this.props.bounds.left - (width / 2);
-    let newY = e.clientY - this.props.zoom * this.props.bounds.top - (height / 2);
+    let newX = e.pageX - this.props.bounds.left - ((width * this.props.zoom) / 2) - this.props.offsetX;
+    let newY = e.pageY - this.props.bounds.top - ((height * this.props.zoom) / 2) - this.props.offsetY;
+
+    /*
+    const offsetX = ((this.props.zoom * this.props.bounds.width) - this.props.bounds.width) / 2;
+    const offsetY = ((this.props.zoom * this.props.bounds.height) - this.props.bounds.height) / 2;
+    let newX = e.clientX - (this.props.bounds.left - offsetX) - (width / 2);
+    let newY = e.clientY - (this.props.bounds.top - offsetY) - (height / 2);
+    */
+
+    console.log("PageX: " + e.pageX);
+    console.log("ClientX: " + e.clientX);
+    console.log("S.BoundsX: " + this.state.bounds.left);
+    console.log("P.BoundsX: " + this.props.bounds.left);
+    console.log("X: " + newX);
+    console.log("");
+
     if (newX < 0) {
       newX = 0;
     } else if (newX > this.props.bounds.width - width) {
@@ -79,6 +107,7 @@ class PositionOverlay extends React.Component {
     } else if (newY > this.props.bounds.height - height) {
       newY = this.props.bounds.height - height;
     }
+
     if (this.state.type === "GADGET" || this.state.type === "UTILITY") {
       newPositions[this.state.gi].x = newX;
       newPositions[this.state.gi].y = newY;
@@ -86,6 +115,7 @@ class PositionOverlay extends React.Component {
       newPositions[this.state.index].x = newX;
       newPositions[this.state.index].y = newY;
     }
+
     let positions;
     switch (this.state.type) {
       case "OPERATOR":
@@ -260,6 +290,13 @@ class PositionOverlay extends React.Component {
     }
     return bool;
   }
+  componentDidMount() {
+    if (!this.state.bounds) {
+      this.setState({
+        bounds: this.innerSelector.current.getBoundingClientRect()
+      })
+    }
+  }
   componentDidUpdate(prevProps, prevState) {
     if (this.detectChange(prevProps, prevState)) {
       this.setState({
@@ -271,11 +308,13 @@ class PositionOverlay extends React.Component {
         drones: (this.props.drones ? [...this.props.drones] : []),
         rotates: (this.props.rotates ? [...this.props.rotates] : []),
         reinforcements: (this.props.reinforcements ? [...this.props.reinforcements] : []),
-        breaches: (this.props.breaches ? [...this.props.breaches] : [])
+        breaches: (this.props.breaches ? [...this.props.breaches] : []),
+        bounds: this.innerSelector.current.getBoundingClientRect()
       });
     }
   }
   render() {
+
     const operators = this.state.operatorPositions.map((pos, index) => {
       if (pos.floor === this.props.floorIndex) {
         let url = `../../media/operators/${this.props.operators[index].toLowerCase()}.png`;
@@ -361,7 +400,6 @@ class PositionOverlay extends React.Component {
       }
     });
 
-
     let breaches = [];
     this.state.breaches.map((pos, index) => {
       if (pos.floor === this.props.floorIndex) {
@@ -375,13 +413,8 @@ class PositionOverlay extends React.Component {
       }
     });
 
-    let style = JSON.parse(JSON.stringify(this.props.style));
-    if (this.state.bounds) {
-      style.top = 0;//((this.props.zoom * this.state.bounds.width) - this.state.bounds.width) / 2;
-      style.left = 0;//((this.props.zoom * this.state.bounds.height) - this.state.bounds.height) / 2;
-    }
     return (
-      <div className="position-overlay" style={style}>
+      <div className="position-overlay" style={this.props.style} ref={this.innerSelector} onMouseDown={this.onDrag}>
         { operators }
         { drones }
         { rotates }

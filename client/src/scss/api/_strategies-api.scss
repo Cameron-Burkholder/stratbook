@@ -582,6 +582,7 @@ div.canvas {
     width: 100%;
     height: 100%;
     position: relative;
+    cursor: move;
     div.drag-item {
       position: absolute;
       width: $drag-item-width;
