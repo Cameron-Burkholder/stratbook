@@ -602,9 +602,13 @@ div.canvas {
     }
     div.drag-drone, div.drag-reinforcement {
       border: 2px solid $color-warning;
+      transform: scale(0.9);
     }
     div.drag-breach, div.drag-rotate {
       border: 2px solid $color-danger;
+    }
+    div.drag-utility {
+      transform: scale(0.8);
     }
   }
   div.canvas__controls {

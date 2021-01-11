@@ -33,9 +33,30 @@ class BlueprintForm extends React.Component {
     });
   }
   onDrag(e) {
+    let offsetX = e.clientX - this.state.startX;
+    let offsetY = e.clientY - this.state.startY;
+    const xLowerBound = this.props.zoom * (((this.props.zoom * this.state.bounds.width) - this.state.bounds.width) / 2);
+    const xUpperBound = this.props.zoom * ((this.state.bounds.width - (this.props.zoom * this.state.bounds.width)) / 2);
+    const yLowerBound = this.props.zoom * (((this.props.zoom * this.state.bounds.height) - this.state.bounds.height) / 2);
+    const yUpperBound = this.props.zoom * ((this.state.bounds.height - (this.props.zoom * this.state.bounds.height)) / 2);
+
+    if (offsetX > xLowerBound) {
+      offsetX = xLowerBound;
+    }
+    if (offsetX < xUpperBound) {
+      offsetX = xUpperBound;
+    }
+
+    if (offsetY > yLowerBound) {
+      offsetY = yLowerBound;
+    }
+    if (offsetY < yUpperBound) {
+      offsetY = yUpperBound;
+    }
+
     this.setState({
-      offsetX: e.clientX - this.state.startX,
-      offsetY: e.clientY - this.state.startY
+      offsetX: offsetX,
+      offsetY: offsetY
     });
   }
   onDragStop(e) {

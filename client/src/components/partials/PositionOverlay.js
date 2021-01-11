@@ -80,22 +80,9 @@ class PositionOverlay extends React.Component {
         newPositions = [...this.state.breaches];
         break;
     }
+
     let newX = e.pageX - this.props.bounds.left - ((width * this.props.zoom) / 2) - this.props.offsetX;
     let newY = e.pageY - this.props.bounds.top - ((height * this.props.zoom) / 2) - this.props.offsetY;
-
-    /*
-    const offsetX = ((this.props.zoom * this.props.bounds.width) - this.props.bounds.width) / 2;
-    const offsetY = ((this.props.zoom * this.props.bounds.height) - this.props.bounds.height) / 2;
-    let newX = e.clientX - (this.props.bounds.left - offsetX) - (width / 2);
-    let newY = e.clientY - (this.props.bounds.top - offsetY) - (height / 2);
-    */
-
-    console.log("PageX: " + e.pageX);
-    console.log("ClientX: " + e.clientX);
-    console.log("S.BoundsX: " + this.state.bounds.left);
-    console.log("P.BoundsX: " + this.props.bounds.left);
-    console.log("X: " + newX);
-    console.log("");
 
     if (newX < 0) {
       newX = 0;
@@ -403,7 +390,7 @@ class PositionOverlay extends React.Component {
     let breaches = [];
     this.state.breaches.map((pos, index) => {
       if (pos.floor === this.props.floorIndex) {
-        let url = "../../media/breach.png";
+        let url = "../../breach.png";
         breaches.push(
           <DragItem url={url}
             x={pos.x} y={pos.y}
