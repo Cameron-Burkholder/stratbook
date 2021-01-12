@@ -8,11 +8,13 @@ class Sidebar extends React.Component {
 
     this.changeName = this.changeName.bind(this);
     this.updateName = this.updateName.bind(this);
+    this.toggleSidebar = this.toggleSidebar.bind(this);
 
     this.state = {
       index: 0,
       name: "",
-      active: false
+      active: false,
+      showSidebar: false
     }
   }
   changeName(e, index) {
@@ -37,6 +39,11 @@ class Sidebar extends React.Component {
   updateName(e) {
     this.setState({
       name: e.target.value
+    });
+  }
+  toggleSidebar() {
+    this.setState({
+      showSidebar: !this.state.showSidebar
     });
   }
   render() {
@@ -78,27 +85,30 @@ class Sidebar extends React.Component {
       })
     ));
     return (
-      <div className="sidebar">
-        { this.props.type === "ATTACK" ? (
-          <div className="site-container">
-            <h3 className="site-container__heading">{this.props.map}: {this.props.type}</h3>
-            <h4 className="site-container__subtitle">{this.props.strategy}</h4>
-            { sites }
+      <div className={"sidebar" + (this.state.showSidebar ? " sidebar--active" : "")}>
+        <button onClick={this.toggleSidebar}>&#8594;</button>
+        <div className="sidebar-body">
+          { this.props.type === "ATTACK" ? (
+            <div className="site-container">
+              <h3 className="site-container__heading">{this.props.map}: {this.props.type}</h3>
+              <h4 className="site-container__subtitle">{this.props.strategy}</h4>
+              { sites }
+            </div>
+          ) : (
+            <div className="strategy-container">
+              <h3 className="strategy-container__heading">{this.props.map}: {this.props.type}</h3>
+              <h4 className="strategy-container__subtitle">{this.props.sites[this.props.siteIndex]}</h4>
+              { strategies }
+            </div>
+          )}
+          <div className="scene-container">
+            <h3 className="scene-container__heading">Scenes</h3>
+            { scenes }
           </div>
-        ) : (
-          <div className="strategy-container">
-            <h3 className="strategy-container__heading">{this.props.map}: {this.props.type}</h3>
-            <h4 className="strategy-container__subtitle">{this.props.sites[this.props.siteIndex]}</h4>
-            { strategies }
+          <div className="scene-controls">
+            <button onClick={this.props.addScene}>Add Scene</button>
+            <button onClick={this.props.removeScene}>Remove Scene</button>
           </div>
-        )}
-        <div className="scene-container">
-          <h3 className="scene-container__heading">Scenes</h3>
-          { scenes }
-        </div>
-        <div className="scene-controls">
-          <button onClick={this.props.addScene}>Add Scene</button>
-          <button onClick={this.props.removeScene}>Remove Scene</button>
         </div>
       </div>
     )

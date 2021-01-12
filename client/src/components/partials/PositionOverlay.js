@@ -24,7 +24,6 @@ class PositionOverlay extends React.Component {
     // Handle new props
     this.detectChange = this.detectChange.bind(this);
 
-
     this.innerSelector = React.createRef();
 
     this.state = {
@@ -195,8 +194,8 @@ class PositionOverlay extends React.Component {
         break;
     }
 
-    let newX = t.touches[0].clientX - this.state.bounds.left;
-    let newY = t.touches[0].clientY - this.state.bounds.top;
+    let newX = t.touches[0].pageX - this.state.bounds.left;
+    let newY = t.touches[0].pageY - this.state.bounds.top;
 
     if (this.props.zoom > 1) {
       const centerX = this.state.bounds.width / 2;
@@ -444,7 +443,7 @@ class PositionOverlay extends React.Component {
         )
       }
     });
-    
+
     return (
       <div className="position-overlay" style={this.props.style} ref={this.innerSelector} onMouseDown={this.onDrag} onTouchStart={this.onDragTouch}>
         { operators }

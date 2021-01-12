@@ -83,8 +83,11 @@ class BlueprintForm extends React.Component {
   }
   componentDidMount() {
     if (!this.state.bounds) {
+      let bounds = this.selector.current.getBoundingClientRect();
+      bounds.width = width;
+      bounds.height = height;
       this.setState({
-        bounds: this.selector.current.getBoundingClientRect()
+        bounds: bounds
       })
     }
   }

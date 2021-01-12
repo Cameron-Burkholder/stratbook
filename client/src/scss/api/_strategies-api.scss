@@ -359,6 +359,9 @@ div.sidebar {
   display: grid;
   grid-template-rows: 400px 1fr;
   border-right: $border-primary;
+  button {
+    display: none;
+  }
   h3.site-container__heading, h3.scene-container__heading, h3.strategy-container__heading {
     text-align: center;
     margin-bottom: $margin-s;
@@ -458,6 +461,9 @@ div.sidebar {
   div.site--active, div.scene--active {
     border-left: 3px solid $color-primary;
   }
+  div.scene-container {
+    margin-top: $margin-m;
+  }
   div.scene-controls {
     position: fixed;
     bottom: 0;
@@ -494,6 +500,9 @@ div.sidebar {
 }
 div.lineup {
   padding: $padding-s;
+  > button {
+    display: none;
+  }
   h3 {
     text-align: center;
     margin-bottom: $margin-s;
@@ -530,7 +539,7 @@ div.lineup {
     }
     div.role__body {
       width: 100%;
-      div.role__operator, div.role__gadget, div.role__utility {
+      div.role__operator {
         width: 100%;
         display: grid;
         grid-template-columns: repeat(2, 1fr);
@@ -552,14 +561,11 @@ div.lineup {
           padding: 8px;
           font-size: $font-small;
           border: none;
+          width: 100%;
           option {
             color: $text-dark;
           }
         }
-      }
-      div.button-container {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
       }
     }
   }
@@ -674,5 +680,134 @@ div#Viewer {
   }
   p.scene__name:hover {
     text-decoration: none;
+  }
+}
+
+@media screen and (max-width: 1400px) {
+
+  div#Editor {
+    main {
+      width: 100%;
+      height: 100%;
+      display: grid;
+      grid-template-columns: 48px $canvas-width 1fr !important;
+    }
+    div.sidebar {
+      padding: 8px;
+      position: relative;
+      z-index: 2;
+      button {
+        display: block;
+        padding: 0;
+        margin: 0;
+        height: 48px;
+      }
+      div.sidebar-body {
+        padding: $padding-s;
+        position: absolute;
+        top: 64px;
+        left: 0;
+        width: 256px;
+        background: $background-primary;
+        transform: translateX(-100%);
+        transition: all 0.3s ease;
+        div.scene-controls {
+          position: relative;
+          top: 0;
+          left: 0;
+          width: 100%;
+        }
+      }
+    }
+    div.sidebar--active {
+      > button {
+        transform: rotate(180deg);
+      }
+      div.sidebar-body {
+        transform: translate(0);
+        transition: all 0.3s ease;
+      }
+    }
+  }
+
+}
+
+@media screen and (max-width: 1250px) {
+  div.lineup {
+    padding: 8px;
+    position: relative;
+    z-index: 2;
+    > button {
+      display: block;
+      padding: 0;
+      margin: 0;
+      height: 48px;
+      transform: rotate(180deg);
+      width: 100%;
+    }
+    div.lineup-body {
+      padding: 16px;
+      position: absolute;
+      top: 64px;
+      right: 0;
+      width: 324px;
+      background: $background-primary;
+      transform: translate(324px);
+      transition: all 0.3s ease;
+    }
+  }
+  div.lineup--active {
+    > button {
+      transform: rotate(0deg);
+    }
+    div.lineup-body {
+      transform: translate(0);
+    }
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  div#Editor {
+    main {
+      width: 100%;
+      height: 100%;
+      display: grid;
+      grid-template-columns: 1fr !important;
+      div.sidebar {
+        max-width: 48px;
+      }
+      div.lineup {
+        grid-row: 1;
+        width: 100%;
+        > button {
+          display: none;
+        }
+        div.lineup-body {
+          position: relative;
+          top: 0;
+          left: 0;
+          right: default;
+          width: auto;
+          transform: none;
+          display: grid;
+          grid-template-columns: repeat(5, 1fr);
+          h3 {
+            grid-column: span 5;
+          }
+          div.role {
+            grid-template-columns: 1fr;
+            div.role__head {
+              display: none;
+            }
+            div.role__image {
+              img {
+                width: 100%;
+                height: auto;
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }

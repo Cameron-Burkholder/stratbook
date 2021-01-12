@@ -1644,6 +1644,8 @@ div.sidebar {
   display: grid;
   grid-template-rows: 400px 1fr;
   border-right: 1px solid #222326; }
+  div.sidebar button {
+    display: none; }
   div.sidebar h3.site-container__heading, div.sidebar h3.scene-container__heading, div.sidebar h3.strategy-container__heading {
     text-align: center;
     margin-bottom: 16px; }
@@ -1723,6 +1725,8 @@ div.sidebar {
     transition: all 0.3s ease; }
   div.sidebar div.site--active, div.sidebar div.scene--active {
     border-left: 3px solid #0040D6; }
+  div.sidebar div.scene-container {
+    margin-top: 40px; }
   div.sidebar div.scene-controls {
     position: fixed;
     bottom: 0;
@@ -1755,6 +1759,8 @@ div.sidebar {
 
 div.lineup {
   padding: 16px; }
+  div.lineup > button {
+    display: none; }
   div.lineup h3 {
     text-align: center;
     margin-bottom: 16px; }
@@ -1783,28 +1789,26 @@ div.lineup {
       cursor: pointer; }
     div.lineup div.role div.role__body {
       width: 100%; }
-      div.lineup div.role div.role__body div.role__operator, div.lineup div.role div.role__body div.role__gadget, div.lineup div.role div.role__body div.role__utility {
+      div.lineup div.role div.role__body div.role__operator {
         width: 100%;
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         align-items: center;
         margin-bottom: 4px; }
-        div.lineup div.role div.role__body div.role__operator p, div.lineup div.role div.role__body div.role__gadget p, div.lineup div.role div.role__body div.role__utility p {
+        div.lineup div.role div.role__body div.role__operator p {
           font-size: 10pt; }
-        div.lineup div.role div.role__body div.role__operator button, div.lineup div.role div.role__body div.role__gadget button, div.lineup div.role div.role__body div.role__utility button {
+        div.lineup div.role div.role__body div.role__operator button {
           padding: 8px;
           font-size: 10pt; }
-        div.lineup div.role div.role__body div.role__operator button:hover, div.lineup div.role div.role__body div.role__gadget button:hover, div.lineup div.role div.role__body div.role__utility button:hover {
+        div.lineup div.role div.role__body div.role__operator button:hover {
           background: linear-gradient(to right, #4915D6, #0040D6); }
       div.lineup div.role div.role__body div.role__utility select {
         padding: 8px;
         font-size: 10pt;
-        border: none; }
+        border: none;
+        width: 100%; }
         div.lineup div.role div.role__body div.role__utility select option {
           color: #19191a; }
-      div.lineup div.role div.role__body div.button-container {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr); }
   div.lineup div.role--active {
     border-left: 3px solid #4915D6; }
 
@@ -1893,3 +1897,96 @@ div#Viewer div.drag-item {
 
 div#Viewer p.scene__name:hover {
   text-decoration: none; }
+
+@media screen and (max-width: 1400px) {
+  div#Editor main {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 48px 900px 1fr !important; }
+  div#Editor div.sidebar {
+    padding: 8px;
+    position: relative;
+    z-index: 2; }
+    div#Editor div.sidebar button {
+      display: block;
+      padding: 0;
+      margin: 0;
+      height: 48px; }
+    div#Editor div.sidebar div.sidebar-body {
+      padding: 16px;
+      position: absolute;
+      top: 64px;
+      left: 0;
+      width: 256px;
+      background: #1A1D27;
+      transform: translateX(-100%);
+      transition: all 0.3s ease; }
+      div#Editor div.sidebar div.sidebar-body div.scene-controls {
+        position: relative;
+        top: 0;
+        left: 0;
+        width: 100%; }
+  div#Editor div.sidebar--active > button {
+    transform: rotate(180deg); }
+  div#Editor div.sidebar--active div.sidebar-body {
+    transform: translate(0);
+    transition: all 0.3s ease; } }
+
+@media screen and (max-width: 1250px) {
+  div.lineup {
+    padding: 8px;
+    position: relative;
+    z-index: 2; }
+    div.lineup > button {
+      display: block;
+      padding: 0;
+      margin: 0;
+      height: 48px;
+      transform: rotate(180deg);
+      width: 100%; }
+    div.lineup div.lineup-body {
+      padding: 16px;
+      position: absolute;
+      top: 64px;
+      right: 0;
+      width: 324px;
+      background: #1A1D27;
+      transform: translate(324px);
+      transition: all 0.3s ease; }
+  div.lineup--active > button {
+    transform: rotate(0deg); }
+  div.lineup--active div.lineup-body {
+    transform: translate(0); } }
+
+@media screen and (max-width: 1000px) {
+  div#Editor main {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr !important; }
+    div#Editor main div.sidebar {
+      max-width: 48px; }
+    div#Editor main div.lineup {
+      grid-row: 1;
+      width: 100%; }
+      div#Editor main div.lineup > button {
+        display: none; }
+      div#Editor main div.lineup div.lineup-body {
+        position: relative;
+        top: 0;
+        left: 0;
+        right: default;
+        width: auto;
+        transform: none;
+        display: grid;
+        grid-template-columns: repeat(5, 1fr); }
+        div#Editor main div.lineup div.lineup-body h3 {
+          grid-column: span 5; }
+        div#Editor main div.lineup div.lineup-body div.role {
+          grid-template-columns: 1fr; }
+          div#Editor main div.lineup div.lineup-body div.role div.role__head {
+            display: none; }
+          div#Editor main div.lineup div.lineup-body div.role div.role__image img {
+            width: 100%;
+            height: auto; } }

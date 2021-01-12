@@ -9,6 +9,17 @@ const utility_guide = UTILITY;
 class Lineup extends React.Component {
   constructor(props) {
     super(props);
+
+    this.toggleLineup = this.toggleLineup.bind(this);
+
+    this.state = {
+      active: false
+    }
+  }
+  toggleLineup() {
+    this.setState({
+      active: !this.state.active
+    })
   }
   render() {
     const roleOptions = (this.props.type === "ATTACK" ? (
@@ -75,25 +86,14 @@ class Lineup extends React.Component {
             { this.props.activeOperator === index ? (
               <div className="role__body">
                 <div className="role__operator">
-                  <button className="insert" onClick={() => { this.props.insertOperator(this.props.activeOperator) }}>Insert Op</button>
-                  <button className="remove" onClick={() => { this.props.removeOperator(this.props.activeOperator) }}>Remove Op</button>
-                </div>
-                <div className="role__gadget">
-                  <p>{this.props.gadgets[index].gadget}</p>
-                  <div className="button-container">
-                    <button className="insert" onClick={() => { this.props.insertGadget(this.props.activeOperator) }}>+</button>
-                    <button className="remove" onClick={() => { this.props.removeGadget(this.props.activeOperator) }}>-</button>
-                  </div>
+                  <button className="insert" onClick={() => { this.props.insertOperator(this.props.activeOperator) }}>Insert</button>
+                  <button className="remove" onClick={() => { this.props.removeOperator(this.props.activeOperator) }}>Remove</button>
                 </div>
                 <div className="role__utility">
                   <select className="form__select" onChange={(e) => { this.props.updateUtility(e, index) }} value={this.props.utility[index]}>
                     <option>UTILITY</option>
                     { utilityOptions }
                   </select>
-                  <div className="button-container">
-                    <button className="insert" onClick={() => { this.props.insertUtility(this.props.activeOperator) }}>+</button>
-                    <button className="remove" onClick={() => { this.props.removeUtility(this.props.activeOperator) }}>-</button>
-                  </div>
                 </div>
               </div>
             ) : ""}
@@ -101,9 +101,12 @@ class Lineup extends React.Component {
         )
     })
     return (
-      <div className="lineup">
-        <h3>Lineup</h3>
-        { lineup }
+      <div className={"lineup" + (this.state.active ? " lineup--active" : "")}>
+        <button onClick={this.toggleLineup}>&#8594;</button>
+        <div className="lineup-body">
+          <h3>Lineup</h3>
+          { lineup }
+        </div>
       </div>
     )
   }
