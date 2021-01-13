@@ -4,12 +4,21 @@ import React from "react";
 
 import ViewerDragItem from "./ViewerDragItem.js";
 
+let width = 30;
+let height = 30;
+
 class ViewerPositionOverlay extends React.Component {
   constructor(props) {
     super(props);
 
+    // Handle drag canvas
+    this.onDrag = this.onDrag.bind(this);
+    this.onDragTouch = this.onDragTouch.bind(this);
+
+    // Handle new props
     this.detectChange = this.detectChange.bind(this);
-    this.selector = React.createRef();
+
+    this.innerSelector = React.createRef();
 
     this.state = {
       index: 0,
@@ -20,8 +29,15 @@ class ViewerPositionOverlay extends React.Component {
       drones: (this.props.drones ? [...this.props.drones] : []),
       rotates: (this.props.rotates ? [...this.props.rotates] : []),
       reinforcements: (this.props.reinforcements ? [...this.props.reinforcements] : []),
-      breaches: (this.props.breaches ? [...this.props.breaches] : [])
+      breaches: (this.props.breaches ? [...this.props.breaches] : []),
+      style: JSON.parse(JSON.stringify(this.props.style))
     }
+  }
+  onDrag(e) {
+    this.props.onDragStart(e);
+  }
+  onDragTouch(t) {
+    this.props.onDragTouch(t);
   }
   detectChange(prevProps, prevState) {
     let bool = false;
@@ -33,7 +49,7 @@ class ViewerPositionOverlay extends React.Component {
   componentDidMount() {
     if (!this.state.bounds) {
       this.setState({
-        bounds: this.selector.current.getBoundingClientRect()
+        bounds: this.innerSelector.current.getBoundingClientRect()
       })
     }
   }
@@ -48,18 +64,20 @@ class ViewerPositionOverlay extends React.Component {
         drones: (this.props.drones ? [...this.props.drones] : []),
         rotates: (this.props.rotates ? [...this.props.rotates] : []),
         reinforcements: (this.props.reinforcements ? [...this.props.reinforcements] : []),
-        breaches: (this.props.breaches ? [...this.props.breaches] : [])
+        breaches: (this.props.breaches ? [...this.props.breaches] : []),
+        bounds: this.innerSelector.current.getBoundingClientRect()
       });
     }
   }
   render() {
+
     const operators = this.state.operatorPositions.map((pos, index) => {
       if (pos.floor === this.props.floorIndex) {
         let url = `../../media/operators/${this.props.operators[index].toLowerCase()}.png`;
         return (
           <ViewerDragItem url={url}
             x={pos.x} y={pos.y}
-            index={index} key={index}
+            selectElement={this.selectElement} index={index} key={index} drag={this.state.drag}
             type="OPERATOR" bounds={this.state.bounds}/>
         )
       } else {
@@ -74,7 +92,7 @@ class ViewerPositionOverlay extends React.Component {
         drones.push(
           <ViewerDragItem url={url}
             x={pos.x} y={pos.y}
-            index={index} key={index}
+            selectElement={this.selectElement} index={index} key={index} drag={this.state.drag}
             type="DRONE" bounds={this.state.bounds}/>
         )
       } else {
@@ -90,7 +108,7 @@ class ViewerPositionOverlay extends React.Component {
           gadgets.push(
             <ViewerDragItem url={url}
             x={g.x} y={g.y}
-            index={index} gindex={gindex} key={gindex * index + gindex}
+            selectElement={this.selectElement} index={index} gindex={gindex} key={gindex * index + gindex} drag={this.state.drag}
             type="GADGET" bounds={this.state.bounds}/>
           );
         }
@@ -105,7 +123,7 @@ class ViewerPositionOverlay extends React.Component {
           utility.push(
             <ViewerDragItem url={url}
             x={u.x} y={u.y}
-            index={index} uindex={uindex} key={uindex * index + uindex}
+            selectElement={this.selectElement} index={index} uindex={uindex} key={uindex * index + uindex} drag={this.state.drag}
             type="UTILITY" bounds={this.state.bounds}/>
           );
         }
@@ -119,7 +137,7 @@ class ViewerPositionOverlay extends React.Component {
         rotates.push(
           <ViewerDragItem url={url}
             x={pos.x} y={pos.y}
-            index={index} key={index}
+            selectElement={this.selectElement} index={index} key={index} drag={this.state.drag}
             type="ROTATE" bounds={this.state.bounds}/>
         )
       }
@@ -132,28 +150,27 @@ class ViewerPositionOverlay extends React.Component {
         reinforcements.push(
           <ViewerDragItem url={url}
             x={pos.x} y={pos.y}
-            index={index} key={index}
+            selectElement={this.selectElement} index={index} key={index} drag={this.state.drag}
             type="REINFORCEMENT" bounds={this.state.bounds}/>
         )
       }
     });
 
-
     let breaches = [];
     this.state.breaches.map((pos, index) => {
       if (pos.floor === this.props.floorIndex) {
-        let url = "../../media/breach.png";
+        let url = "../../breach.png";
         breaches.push(
           <ViewerDragItem url={url}
             x={pos.x} y={pos.y}
-            index={index} key={index}
+            selectElement={this.selectElement} index={index} key={index} drag={this.state.drag}
             type="BREACH" bounds={this.state.bounds}/>
         )
       }
     });
 
     return (
-      <div className="position-overlay" ref={this.selector}>
+      <div className="position-overlay" style={this.props.style} ref={this.innerSelector} onMouseDown={this.onDrag} onTouchStart={this.onDragTouch}>
         { operators }
         { drones }
         { rotates }

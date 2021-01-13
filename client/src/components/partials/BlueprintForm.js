@@ -34,7 +34,6 @@ class BlueprintForm extends React.Component {
     });
   }
   onDragTouch(t) {
-    console.log("dragging");
     this.setState({
       startX: t.touches[0].clientX,
       startY: t.touches[0].clientY,

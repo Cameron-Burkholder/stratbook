@@ -681,11 +681,14 @@ div#Viewer {
   p.scene__name:hover {
     text-decoration: none;
   }
+  img.role__image:hover {
+    cursor: default !important;
+  }
 }
 
 @media screen and (max-width: 1400px) {
 
-  div#Editor {
+  div#Editor, div#Viewer {
     main {
       width: 100%;
       height: 100%;
@@ -733,6 +736,9 @@ div#Viewer {
 }
 
 @media screen and (max-width: 1250px) {
+  div.map-selector {
+    grid-template-columns: repeat(2, 1fr);
+  }
   div.lineup {
     padding: 8px;
     position: relative;
@@ -767,7 +773,17 @@ div#Viewer {
 }
 
 @media screen and (max-width: #{$tablet-max-width}) {
-  div#Editor {
+  div.map-selector {
+    grid-template-columns: 1fr;
+    padding: 8px;
+    padding-top: $padding-m;
+      button.delete-button {
+        filter: none;
+        border: 1px solid $color-danger;
+        background: $color-danger;
+      }
+  }
+  div#Editor, div#Viewer {
     div.toolbar {
       overflow-x: auto;
       z-index: 4;
@@ -865,7 +881,7 @@ div#Viewer {
 }
 
 @media screen and (max-width: #{$phone-max-width}) {
-  div#Editor {
+  div#Editor, div#Viewer {
     div.toolbar {
       overflow-x: auto;
       z-index: 4;

@@ -1,4 +1,4 @@
-/* client/components/partials/Viewer.js */
+/* client/components/partials/Editor.js */
 
 import React from "react";
 import axios from "axios";
@@ -13,8 +13,8 @@ import ViewerLineup from "./ViewerLineup.js";
 import { MAP_NAMES, SITES, FLOORS, GADGETS, UTILITY_GUIDE } from "../../data.js";
 
 /*
-  @func: Viewer
-  @desc: view strategies
+  @func: Editor
+  @desc: manage state of new strategies and make requests to server
   @prop map
   @prop save (function)
   @prop getAuthToken: function
@@ -111,6 +111,7 @@ class Viewer extends React.Component {
     return (
       <div id="Viewer">
         <ViewerToolbar
+          showMaps={this.showMaps}
           map={this.state.map}
           strategies={this.state.strategies}
           strategyIndex={this.state.strategyIndex}
@@ -136,7 +137,7 @@ class Viewer extends React.Component {
           breaches={(this.state.type === "ATTACK" ? (
             this.state.map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].breaches
           ) : undefined)}
-          alert={this.props.alert}
+          alert={this.props.alert} save={this.save}
           fetchStrategies={this.props.fetchStrategies}/>
         <main>
           <ViewerSidebar
@@ -155,9 +156,6 @@ class Viewer extends React.Component {
             scenes={this.state.scenes}
             selectScene={this.selectScene}
             sceneIndex={this.state.sceneIndex}
-            addScene={this.addScene}
-            removeScene={this.removeScene}
-            updateSceneName={this.updateSceneName}
             type={this.state.type}/>
           <ViewerCanvas
             type={this.state.type}
@@ -216,6 +214,7 @@ class Viewer extends React.Component {
             utility={(this.state.type === "ATTACK" ? (
               this.state.map.attack[this.state.strategyIndex].utility
             ) : (this.state.map.defense[this.state.site][this.state.strategyIndex].utility))}
+            activeOperator={this.state.activeOperator}
             gadgets={(this.state.type === "ATTACK" ? (
               this.state.map.attack[this.state.strategyIndex].gadgets
             ) : (this.state.map.defense[this.state.site][this.state.strategyIndex].gadgets))}/>

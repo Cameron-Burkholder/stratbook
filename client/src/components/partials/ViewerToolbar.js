@@ -43,10 +43,10 @@ class ViewerToolbar extends React.Component {
     return (
       <div className="toolbar">
         <button onClick={this.toggleStrategyNavigation} className={"toolbar__navigation-button" + (this.state.nav ? " toolbar__navigation-button--active" : "")}>&#9776;</button>
-        <h4 className="toolbar__strategy" onClick={this.changeName}>{this.state.strategy}</h4>
+        <h4 className="toolbar__strategy">{this.state.strategy}</h4>
         <div className={"toolbar__navigation" + (this.state.nav ? " toolbar__navigation--active" : "")}>
           <h3>{this.props.map.name}</h3>
-          <Link to="/strategies" onClick={this.props.fetchStrategies} id="showMaps">Back to Maps</Link>
+          <Link to="/strategies/edit" onClick={this.props.fetchStrategies} id="showMaps">Back to Maps</Link>
           <div className="strategy__navigation">
             <h4>Mode</h4>
             <div className="type-selector">
