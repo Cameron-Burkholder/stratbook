@@ -773,11 +773,28 @@ div#Viewer {
       height: 100%;
       display: grid;
       grid-template-columns: 1fr !important;
+      div.canvas {
+        grid-row: 1;
+        width: 100%;
+        div.blueprint-form {
+          width: 100%;
+          height: $canvas-height;
+          overflow: hidden;
+          div.position-overlay {
+            width: $canvas-width;
+            height: 100%;
+          }
+        }
+        div.canvas__controls {
+          left: 50%;
+          transform: translateX(-50%);
+        }
+      }
       div.sidebar {
-        max-width: 48px;
+        grid-row: 2;
       }
       div.lineup {
-        grid-row: 1;
+        grid-row: 3;
         width: 100%;
         > button {
           display: none;

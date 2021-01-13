@@ -1965,10 +1965,23 @@ div#Viewer p.scene__name:hover {
     height: 100%;
     display: grid;
     grid-template-columns: 1fr !important; }
-    div#Editor main div.sidebar {
-      max-width: 48px; }
-    div#Editor main div.lineup {
+    div#Editor main div.canvas {
       grid-row: 1;
+      width: 100%; }
+      div#Editor main div.canvas div.blueprint-form {
+        width: 100%;
+        height: 675px;
+        overflow: hidden; }
+        div#Editor main div.canvas div.blueprint-form div.position-overlay {
+          width: 900px;
+          height: 100%; }
+      div#Editor main div.canvas div.canvas__controls {
+        left: 50%;
+        transform: translateX(-50%); }
+    div#Editor main div.sidebar {
+      grid-row: 2; }
+    div#Editor main div.lineup {
+      grid-row: 3;
       width: 100%; }
       div#Editor main div.lineup > button {
         display: none; }
