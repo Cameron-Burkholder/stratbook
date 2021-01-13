@@ -1959,7 +1959,91 @@ div#Viewer p.scene__name:hover {
   div.lineup--active div.lineup-body {
     transform: translate(0); } }
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 850px) {
+  div#Editor div.toolbar {
+    overflow-x: auto;
+    z-index: 4; }
+    div#Editor div.toolbar div.strategy__name-input {
+      position: fixed;
+      max-width: 600px;
+      margin: 0;
+      top: 112px;
+      left: 50%;
+      transform: translateX(-50%); }
+  div#Editor main {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr) !important; }
+    div#Editor main div.canvas {
+      grid-row: 1;
+      grid-column: span 2;
+      width: 100%; }
+      div#Editor main div.canvas div.blueprint-form {
+        width: 100%;
+        height: 675px;
+        overflow: hidden;
+        touch-action: none; }
+        div#Editor main div.canvas div.blueprint-form div.position-overlay {
+          width: 900px;
+          height: 100%; }
+      div#Editor main div.canvas div.canvas__controls {
+        left: 50%;
+        transform: translateX(-50%); }
+    div#Editor main div.sidebar {
+      grid-row: 2;
+      grid-column: span 1;
+      width: 100%; }
+      div#Editor main div.sidebar > button {
+        display: none; }
+      div#Editor main div.sidebar div.sidebar-body {
+        transform: none;
+        top: 0;
+        width: 100%; }
+    div#Editor main div.lineup {
+      width: 100%; }
+      div#Editor main div.lineup > button {
+        display: none; }
+      div#Editor main div.lineup div.lineup-body {
+        position: relative;
+        top: 0;
+        left: 0;
+        right: default;
+        width: auto;
+        transform: none;
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        padding: 0;
+        margin-bottom: 128px; }
+        div#Editor main div.lineup div.lineup-body h3 {
+          grid-column: span 5; }
+        div#Editor main div.lineup div.lineup-body div.role {
+          grid-template-columns: 1fr;
+          padding: 4px; }
+          div#Editor main div.lineup div.lineup-body div.role div.role__head {
+            display: none; }
+          div#Editor main div.lineup div.lineup-body div.role div.role__image img {
+            width: 100%;
+            height: auto; }
+        div#Editor main div.lineup div.lineup-body div.role--active {
+          border: 3px solid #4915D6; }
+          div#Editor main div.lineup div.lineup-body div.role--active div.role__body {
+            position: absolute;
+            top: 100%;
+            background: #1A1D27;
+            width: 100%; } }
+
+@media screen and (max-width: 600px) {
+  div#Editor div.toolbar {
+    overflow-x: auto;
+    z-index: 4; }
+    div#Editor div.toolbar div.strategy__name-input {
+      position: fixed;
+      max-width: 600px;
+      margin: 0;
+      top: 112px;
+      left: 50%;
+      transform: translateX(-50%); }
   div#Editor main {
     width: 100%;
     height: 100%;
@@ -1971,7 +2055,8 @@ div#Viewer p.scene__name:hover {
       div#Editor main div.canvas div.blueprint-form {
         width: 100%;
         height: 675px;
-        overflow: hidden; }
+        overflow: hidden;
+        touch-action: none; }
         div#Editor main div.canvas div.blueprint-form div.position-overlay {
           width: 900px;
           height: 100%; }
@@ -1980,6 +2065,12 @@ div#Viewer p.scene__name:hover {
         transform: translateX(-50%); }
     div#Editor main div.sidebar {
       grid-row: 2; }
+      div#Editor main div.sidebar > button {
+        display: none; }
+      div#Editor main div.sidebar div.sidebar-body {
+        transform: none;
+        top: 0;
+        width: 100%; }
     div#Editor main div.lineup {
       grid-row: 3;
       width: 100%; }
@@ -1993,13 +2084,23 @@ div#Viewer p.scene__name:hover {
         width: auto;
         transform: none;
         display: grid;
-        grid-template-columns: repeat(5, 1fr); }
+        grid-template-columns: repeat(5, 1fr);
+        padding: 0;
+        margin-bottom: 128px; }
         div#Editor main div.lineup div.lineup-body h3 {
           grid-column: span 5; }
         div#Editor main div.lineup div.lineup-body div.role {
-          grid-template-columns: 1fr; }
+          grid-template-columns: 1fr;
+          padding: 4px; }
           div#Editor main div.lineup div.lineup-body div.role div.role__head {
             display: none; }
           div#Editor main div.lineup div.lineup-body div.role div.role__image img {
             width: 100%;
-            height: auto; } }
+            height: auto; }
+        div#Editor main div.lineup div.lineup-body div.role--active {
+          border: 3px solid #4915D6; }
+          div#Editor main div.lineup div.lineup-body div.role--active div.role__body {
+            position: absolute;
+            top: 100%;
+            background: #1A1D27;
+            width: calc(100VW - 16px); } }

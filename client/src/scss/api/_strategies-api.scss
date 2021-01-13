@@ -766,20 +766,34 @@ div#Viewer {
   }
 }
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: #{$tablet-max-width}) {
   div#Editor {
+    div.toolbar {
+      overflow-x: auto;
+      z-index: 4;
+      div.strategy__name-input {
+        position: fixed;
+        max-width: $phone-max-width;
+        margin: 0;
+        top: 112px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+    }
     main {
       width: 100%;
       height: 100%;
       display: grid;
-      grid-template-columns: 1fr !important;
+      grid-template-columns: repeat(2, 1fr) !important;
       div.canvas {
         grid-row: 1;
+        grid-column: span 2;
         width: 100%;
         div.blueprint-form {
           width: 100%;
           height: $canvas-height;
           overflow: hidden;
+          touch-action: none;
           div.position-overlay {
             width: $canvas-width;
             height: 100%;
@@ -792,6 +806,111 @@ div#Viewer {
       }
       div.sidebar {
         grid-row: 2;
+        grid-column: span 1;
+        width: 100%;
+        > button {
+          display: none;
+        }
+        div.sidebar-body {
+          transform: none;
+          top: 0;
+          width: 100%;
+        }
+      }
+      div.lineup {
+        width: 100%;
+        > button {
+          display: none;
+        }
+        div.lineup-body {
+          position: relative;
+          top: 0;
+          left: 0;
+          right: default;
+          width: auto;
+          transform: none;
+          display: grid;
+          grid-template-columns: repeat(5, 1fr);
+          padding: 0;
+          margin-bottom: $margin-l;
+          h3 {
+            grid-column: span 5;
+          }
+          div.role {
+            grid-template-columns: 1fr;
+            padding: 4px;
+            div.role__head {
+              display: none;
+            }
+            div.role__image {
+              img {
+                width: 100%;
+                height: auto;
+              }
+            }
+          }
+          div.role--active {
+            border: 3px solid $color-tertiary;
+            div.role__body {
+              position: absolute;
+              top: 100%;
+              background: $background-primary;
+              width: 100%;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: #{$phone-max-width}) {
+  div#Editor {
+    div.toolbar {
+      overflow-x: auto;
+      z-index: 4;
+      div.strategy__name-input {
+        position: fixed;
+        max-width: $phone-max-width;
+        margin: 0;
+        top: 112px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+    }
+    main {
+      width: 100%;
+      height: 100%;
+      display: grid;
+      grid-template-columns: 1fr !important;
+      div.canvas {
+        grid-row: 1;
+        width: 100%;
+        div.blueprint-form {
+          width: 100%;
+          height: $canvas-height;
+          overflow: hidden;
+          touch-action: none;
+          div.position-overlay {
+            width: $canvas-width;
+            height: 100%;
+          }
+        }
+        div.canvas__controls {
+          left: 50%;
+          transform: translateX(-50%);
+        }
+      }
+      div.sidebar {
+        grid-row: 2;
+        > button {
+          display: none;
+        }
+        div.sidebar-body {
+          transform: none;
+          top: 0;
+          width: 100%;
+        }
       }
       div.lineup {
         grid-row: 3;
@@ -808,11 +927,14 @@ div#Viewer {
           transform: none;
           display: grid;
           grid-template-columns: repeat(5, 1fr);
+          padding: 0;
+          margin-bottom: $margin-l;
           h3 {
             grid-column: span 5;
           }
           div.role {
             grid-template-columns: 1fr;
+            padding: 4px;
             div.role__head {
               display: none;
             }
@@ -821,6 +943,15 @@ div#Viewer {
                 width: 100%;
                 height: auto;
               }
+            }
+          }
+          div.role--active {
+            border: 3px solid $color-tertiary;
+            div.role__body {
+              position: absolute;
+              top: 100%;
+              background: $background-primary;
+              width: calc(100VW - #{$padding-s});
             }
           }
         }
