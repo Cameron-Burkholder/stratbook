@@ -27,7 +27,6 @@ class Editor extends React.Component {
   constructor(props) {
     super(props);
 
-    this.selectMap = this.selectMap.bind(this);
     this.selectSite = this.selectSite.bind(this);
     this.updateType = this.updateType.bind(this);
     this.updateRoles = this.updateRoles.bind(this);
@@ -102,75 +101,6 @@ class Editor extends React.Component {
       floors: FLOORS[this.props.map.name],
       floorIndex: 0,
       type: "ATTACK",
-    }
-  }
-  selectMap(name) {
-    if (MAP_NAMES.indexOf(name) >= 0) {
-      let map = {
-        name: name,
-        attack: []
-      };
-      let attackStrategy = {
-        name: "Unnamed",
-        roles: ["ROLE", "ROLE", "ROLE", "ROLE", "ROLE"],
-        operators: ["OPERATOR", "OPERATOR", "OPERATOR", "OPERATOR", "OPERATOR"],
-        utility: ["UTILITY", "UTILITY", "UTILITY", "UTILITY", "UTILITY"],
-        gadgets: ["", "", "", "", ""]
-      };
-      SITES[name].map((site) => {
-        attackStrategy[site] = [
-          {
-            objectives: [],
-            utilityPositions: [[], [], [], [], []],
-            gadgetPositions: [[], [], [], [], []],
-            breaches: [],
-            operatorPositions: [{x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}],
-            drones: [],
-            notes: "",
-            name: "Unnamed"
-          }
-        ]
-      });
-      map.attack.push(attackStrategy);
-      let defenseStrategy = {};
-      SITES[name].map((site) => {
-        defenseStrategy[site] = [
-          {
-            name: "Unnamed",
-            roles: ["ROLE", "ROLE", "ROLE", "ROLE", "ROLE"],
-            operators: ["OPERATOR", "OPERATOR", "OPERATOR", "OPERATOR", "OPERATOR"],
-            utility: ["UTILITY", "UTILITY", "UTILITY", "UTILITY", "UTILITY"],
-            gadgets: ["", "", "", "", ""],
-            reinforcements: [],
-            rotates: [],
-            utilityPositions: [[], [], [], [], []],
-            gadgetPositions: [[], [], [], [], []],
-            scenes: [
-              {
-                objectives: [],
-                operatorPositions: [{x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}],
-                notes: "",
-                name: "Unnamed"
-              }
-            ]
-          }
-        ]
-      });
-      map.defense = defenseStrategy;
-      this.setState({
-        showMaps: false,
-        map: map,
-        sites: SITES[map.name],
-        site: SITES[map.name][0],
-        siteIndex: 0,
-        strategyIndex: 0,
-        strategies: map.attack,
-        sceneIndex: 0,
-        scenes: map.attack[0][SITES[map.name][0]],
-        floors: FLOORS[map.name],
-        floorIndex: 0,
-        type: "ATTACK",
-      });
     }
   }
   selectSite(index) {
@@ -813,7 +743,16 @@ class Editor extends React.Component {
           insertBreach={this.insertBreach}
           removeBreach={this.removeBreach}
           alert={this.props.alert} save={this.save}
-          fetchStrategies={this.props.fetchStrategies}/>
+          fetchStrategies={this.props.fetchStrategies}
+          gadgets={(this.state.type === "ATTACK" ? (
+            this.state.map.attack[this.state.strategyIndex].gadgets
+          ) : (this.state.map.defense[this.state.site][this.state.strategyIndex].gadgets))}
+          utility={(this.state.type === "ATTACK" ? (
+            this.state.map.attack[this.state.strategyIndex].utility
+          ) : (this.state.map.defense[this.state.site][this.state.strategyIndex].utility))}
+          insertUtility={this.insertUtility} removeUtility={this.removeUtility}
+          insertGadget={this.insertGadget} removeGadget={this.removeGadget}
+          />
         <main>
           <Sidebar
             map={this.state.map.name}
@@ -905,11 +844,7 @@ class Editor extends React.Component {
             updateRoles={this.updateRoles} updateOperators={this.updateOperators} updateUtility={this.updateUtility}
             selectOperator={this.selectOperator} activeOperator={this.state.activeOperator}
             insertOperator={this.insertOperator} removeOperator={this.removeOperator}
-            insertUtility={this.insertUtility} removeUtility={this.removeUtility}
-            insertGadget={this.insertGadget} removeGadget={this.removeGadget}
-            gadgets={(this.state.type === "ATTACK" ? (
-              this.state.map.attack[this.state.strategyIndex].gadgets
-            ) : (this.state.map.defense[this.state.site][this.state.strategyIndex].gadgets))}/>
+            />
         </main>
       </div>
     )
