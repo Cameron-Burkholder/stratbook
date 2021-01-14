@@ -258,6 +258,10 @@ module.exports = {
     "ZERO": {
       gadget: "Argus Launcher",
       count: 4
+    },
+    "ARUNI": {
+      gadget: "Surya Gate",
+      count: 3
     }
   },
   ATTACKER_ROLES: ["ROLE", "HARD BREACH", "SOFT BREACH", "ENTRY FRAG", "AREA DENIAL/FLANK WATCH", "INTEL", "UTILITY CLEAR", "SUPPORT", "ROAM CLEAR"],

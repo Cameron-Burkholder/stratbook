@@ -597,6 +597,18 @@ div.canvas {
       height: $drag-item-width;
       transition: all 0.5s ease;
     }
+    div.drag-item span {
+      position: absolute;
+      top: 120%;
+      left: 50%;
+      transform: translate(-50%);
+      color: $text-heading;
+      background: $background-primary;
+      padding: 4px;
+      display: flex;
+      align-items: center;
+      font-size: $font-small;
+    }
     div.drag-item:hover {
       cursor: grab;
       transition: all 0s ease;
@@ -610,13 +622,18 @@ div.canvas {
     }
     div.drag-drone, div.drag-reinforcement {
       border: 2px solid $color-warning;
-      transform: scale(0.9);
+      transform: scale(0.8);
     }
     div.drag-breach, div.drag-rotate {
       border: 2px solid $color-danger;
     }
     div.drag-utility {
       transform: scale(0.8);
+    }
+    div.drag-gadget {
+      transform: scale(0.8);
+      border-radius: 100%;
+      border: 1px solid $color-success;
     }
   }
   div.canvas__controls {
@@ -629,6 +646,20 @@ div.canvas {
     z-index: 2;
     left: 0;
     background: $background-tertiary;
+    div.labels {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      padding: 8px;
+      span {
+        color: $text-dark;
+        font-size: $font-small;
+      }
+      input {
+        cursor: pointer;
+      }
+    }
     select {
       border-radius: 0 !important;
       option {

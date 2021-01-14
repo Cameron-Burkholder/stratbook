@@ -1833,6 +1833,17 @@ div.canvas {
       width: 30px;
       height: 30px;
       transition: all 0.5s ease; }
+    div.canvas div.position-overlay div.drag-item span {
+      position: absolute;
+      top: 120%;
+      left: 50%;
+      transform: translate(-50%);
+      color: #E6E6E6;
+      background: #1A1D27;
+      padding: 4px;
+      display: flex;
+      align-items: center;
+      font-size: 10pt; }
     div.canvas div.position-overlay div.drag-item:hover {
       cursor: grab;
       transition: all 0s ease; }
@@ -1843,11 +1854,15 @@ div.canvas {
       border: 2px solid #0040D6; }
     div.canvas div.position-overlay div.drag-drone, div.canvas div.position-overlay div.drag-reinforcement {
       border: 2px solid #ffbb33;
-      transform: scale(0.9); }
+      transform: scale(0.8); }
     div.canvas div.position-overlay div.drag-breach, div.canvas div.position-overlay div.drag-rotate {
       border: 2px solid #C93434; }
     div.canvas div.position-overlay div.drag-utility {
       transform: scale(0.8); }
+    div.canvas div.position-overlay div.drag-gadget {
+      transform: scale(0.8);
+      border-radius: 100%;
+      border: 1px solid #00C851; }
   div.canvas div.canvas__controls {
     position: absolute;
     height: 50px;
@@ -1858,6 +1873,17 @@ div.canvas {
     z-index: 2;
     left: 0;
     background: white; }
+    div.canvas div.canvas__controls div.labels {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      padding: 8px; }
+      div.canvas div.canvas__controls div.labels span {
+        color: #19191a;
+        font-size: 10pt; }
+      div.canvas div.canvas__controls div.labels input {
+        cursor: pointer; }
     div.canvas div.canvas__controls select {
       border-radius: 0 !important; }
       div.canvas div.canvas__controls select option {

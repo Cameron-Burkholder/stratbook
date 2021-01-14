@@ -47,9 +47,11 @@ class DragItem extends React.Component {
               this.props.selectElement(this.props.index, this.props.type);
             }
           })
-        }
-
-        }data-type={this.props.type}>
+        }}
+        data-type={this.props.type}>
+        { this.props.labels ? (
+          <span>{(this.props.type === "GADGET" || this.props.type === "UTILITY" || this.props.type === "OPERATOR" ? this.props.value.replace("_", " ").replace("_", " ").toUpperCase() : "")}</span>
+        ) : ""}
       </div>
     )
   }

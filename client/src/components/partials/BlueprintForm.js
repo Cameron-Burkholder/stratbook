@@ -145,7 +145,8 @@ class BlueprintForm extends React.Component {
           onDragStart={this.onDragStart}
           onDragTouch={this.onDragTouch}
           offsetX={this.state.offsetX}
-          offsetY={this.state.offsetY}/>
+          offsetY={this.state.offsetY}
+          labels={this.props.labels}/>
       </div>
     )
   }
