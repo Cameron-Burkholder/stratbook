@@ -131,6 +131,7 @@ module.exports = async (app, passport) => {
 
     strategies[request.params.map] = JSON.parse(request.body.map);
     strategies.maps.push(request.params.map.toLowerCase());
+    strategies.maps = strategies.maps.sort();
 
     try {
       await strategies.save();

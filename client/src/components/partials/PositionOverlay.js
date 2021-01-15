@@ -346,17 +346,42 @@ class PositionOverlay extends React.Component {
   }
   render() {
 
-    const operators = this.state.operatorPositions.map((pos, index) => {
+    let breaches = [];
+    this.state.breaches.map((pos, index) => {
       if (pos.floor === this.props.floorIndex) {
-        let url = `../../media/operators/${this.props.operators[index].toLowerCase()}.png`;
-        return (
+        let url = "../../breach.png";
+        breaches.push(
           <DragItem url={url}
             x={pos.x} y={pos.y}
             selectElement={this.selectElement} index={index} key={index} drag={this.state.drag}
-            type="OPERATOR" bounds={this.state.bounds} value={this.props.operators[index]} labels={this.props.labels}/>
+            type="BREACH" bounds={this.state.bounds} labels={this.props.labels}/>
         )
-      } else {
-        return "";
+      }
+    });
+
+    let reinforcements = [];
+    this.state.reinforcements.map((pos, index) => {
+      if (pos.floor === this.props.floorIndex) {
+        let url = "../../media/reinforcement.png";
+        reinforcements.push(
+          <DragItem url={url}
+            x={pos.x} y={pos.y}
+            selectElement={this.selectElement} index={index} key={index} drag={this.state.drag}
+            type="REINFORCEMENT" bounds={this.state.bounds} labels={this.props.labels}/>
+        )
+      }
+    });
+
+    let rotates = [];
+    this.state.rotates.map((pos, index) => {
+      if (pos.floor === this.props.floorIndex) {
+        let url = "../../media/rotate.png";
+        rotates.push(
+          <DragItem url={url}
+            x={pos.x} y={pos.y}
+            selectElement={this.selectElement} index={index} key={index} drag={this.state.drag}
+            type="ROTATE" bounds={this.state.bounds} labels={this.props.labels}/>
+        )
       }
     });
 
@@ -375,6 +400,21 @@ class PositionOverlay extends React.Component {
       }
     });
 
+    let utility = [];
+    this.state.utilityPositions.map((pos, index) => {
+      pos.forEach((u, uindex) => {
+        if (u.floor === this.props.floorIndex) {
+          let url = `../../media/utility/${this.props.utility[index].replace(" ", "_").replace(" ", "_")}.png`;
+          utility.push(
+            <DragItem url={url}
+            x={u.x} y={u.y}
+            selectElement={this.selectElement} index={index} uindex={uindex} key={uindex * index + uindex} drag={this.state.drag}
+            type="UTILITY" bounds={this.state.bounds} value={this.props.utility[index]} labels={this.props.labels}/>
+          );
+        }
+      });
+    });
+
     let gadgets = [];
     this.state.gadgetPositions.map((pos, index) => {
       pos.forEach((g, gindex) => {
@@ -391,69 +431,29 @@ class PositionOverlay extends React.Component {
       });
     });
 
-    let utility = [];
-    this.state.utilityPositions.map((pos, index) => {
-      pos.forEach((u, uindex) => {
-        if (u.floor === this.props.floorIndex) {
-          let url = `../../media/utility/${this.props.utility[index].replace(" ", "_").replace(" ", "_")}.png`;
-          utility.push(
-            <DragItem url={url}
-            x={u.x} y={u.y}
-            selectElement={this.selectElement} index={index} uindex={uindex} key={uindex * index + uindex} drag={this.state.drag}
-            type="UTILITY" bounds={this.state.bounds} value={this.props.utility[index]} labels={this.props.labels}/>
-          );
-        }
-      });
-    });
-
-    let rotates = [];
-    this.state.rotates.map((pos, index) => {
+    const operators = this.state.operatorPositions.map((pos, index) => {
       if (pos.floor === this.props.floorIndex) {
-        let url = "../../media/rotate.png";
-        rotates.push(
+        let url = `../../media/operators/${this.props.operators[index].toLowerCase()}.png`;
+        return (
           <DragItem url={url}
             x={pos.x} y={pos.y}
             selectElement={this.selectElement} index={index} key={index} drag={this.state.drag}
-            type="ROTATE" bounds={this.state.bounds} labels={this.props.labels}/>
+            type="OPERATOR" bounds={this.state.bounds} value={this.props.operators[index]} labels={this.props.labels}/>
         )
-      }
-    });
-
-    let reinforcements = [];
-    this.state.reinforcements.map((pos, index) => {
-      if (pos.floor === this.props.floorIndex) {
-        let url = "../../media/reinforcement.png";
-        reinforcements.push(
-          <DragItem url={url}
-            x={pos.x} y={pos.y}
-            selectElement={this.selectElement} index={index} key={index} drag={this.state.drag}
-            type="REINFORCEMENT" bounds={this.state.bounds} labels={this.props.labels}/>
-        )
-      }
-    });
-
-    let breaches = [];
-    this.state.breaches.map((pos, index) => {
-      if (pos.floor === this.props.floorIndex) {
-        let url = "../../breach.png";
-        breaches.push(
-          <DragItem url={url}
-            x={pos.x} y={pos.y}
-            selectElement={this.selectElement} index={index} key={index} drag={this.state.drag}
-            type="BREACH" bounds={this.state.bounds} labels={this.props.labels}/>
-        )
+      } else {
+        return "";
       }
     });
 
     return (
       <div className="position-overlay" style={this.props.style} ref={this.innerSelector} onMouseDown={this.onDrag} onTouchStart={this.onDragTouch}>
-        { operators }
-        { drones }
-        { rotates }
-        { gadgets }
-        { utility }
         { reinforcements }
+        { rotates }
         { breaches }
+        { drones }
+        { utility }
+        { gadgets }
+        { operators }
       </div>
     )
   }

@@ -626,6 +626,7 @@ div.canvas {
     }
     div.drag-breach, div.drag-rotate {
       border: 2px solid $color-danger;
+      transform: scale(0.8);
     }
     div.drag-utility {
       transform: scale(0.8);

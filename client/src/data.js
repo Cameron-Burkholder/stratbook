@@ -76,7 +76,7 @@ module.exports = {
       count: 5
     },
     "TACHANKA": {
-      gadget: "Grenade Launcher",
+      gadget: "Shumikha",
       count: 10
     },
     "BLITZ": {
@@ -109,7 +109,7 @@ module.exports = {
     },
     "ROOK": {
       gadget: "Armor Pack",
-      count: 1
+      count: 0
     },
     "FROST": {
       gadget: "Welcome Mat",
@@ -120,7 +120,7 @@ module.exports = {
       count: 16
     },
     "VALKYRIE": {
-      gadget: "Black Eye Camera",
+      gadget: "Black Eye",
       count: 3
     },
     "BLACKBEARD": {
@@ -140,7 +140,7 @@ module.exports = {
       count: 2
     },
     "HIBANA": {
-      gadget: "X-Kairos Pellet",
+      gadget: "X-Kairos Pellets",
       count: 9
     },
     "JACKAL": {
@@ -164,7 +164,7 @@ module.exports = {
       count: 3
     },
     "ZOFIA": {
-      gadget: "KS79",
+      gadget: "KS79 Lifeline",
       count: 4
     },
     "DOKKAEBI": {

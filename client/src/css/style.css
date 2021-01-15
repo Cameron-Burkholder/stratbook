@@ -1856,7 +1856,8 @@ div.canvas {
       border: 2px solid #ffbb33;
       transform: scale(0.8); }
     div.canvas div.position-overlay div.drag-breach, div.canvas div.position-overlay div.drag-rotate {
-      border: 2px solid #C93434; }
+      border: 2px solid #C93434;
+      transform: scale(0.8); }
     div.canvas div.position-overlay div.drag-utility {
       transform: scale(0.8); }
     div.canvas div.position-overlay div.drag-gadget {

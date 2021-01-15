@@ -16,7 +16,7 @@ class Canvas extends React.Component {
 
     this.state = {
       zoom: 1,
-      labels: true
+      labels: false
     }
   }
   toggleLabels() {
