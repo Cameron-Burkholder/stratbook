@@ -65,7 +65,6 @@ class Toolbar extends React.Component {
       )
     });
 
-    console.log(this.props);
     let gadgets = [];
     let gadgetActions = [];
     this.props.gadgets.map((gadget, index) => {
