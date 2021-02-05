@@ -1195,9 +1195,12 @@ div#ManageTeamAPI {
   div#ManageTeamAPI div.manage-team-member:hover {
     box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.17);
     transition: all 0.3s ease; }
-  div#ManageTeamAPI div.team-status {
+  div#ManageTeamAPI div.team-status, div#ManageTeamAPI div.team-platform {
     margin-top: 40px; }
-    div#ManageTeamAPI div.team-status option {
+    div#ManageTeamAPI div.team-status select, div#ManageTeamAPI div.team-platform select {
+      width: 100%;
+      max-width: 256px; }
+    div#ManageTeamAPI div.team-status option, div#ManageTeamAPI div.team-platform option {
       color: #19191a; }
 
 div#BlockedUsersAPI {

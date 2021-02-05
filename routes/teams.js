@@ -797,6 +797,100 @@ module.exports = async (app, passport) => {
 
   });
 
+
+  app.patch("/api/teams/update-team-platform", (request, response, done) => {
+    log("PATCH request at /api/teams/update-team-platform");
+    done();
+  }, passport.authenticate("jwt", { session: false }), validation.validateTeamPlatform, middleware.userIsVerified, middleware.userHasTeam, middleware.userIsAdmin, async (request, response) => {
+    let team;
+    try {
+      team = await Team.findOne({ _id: request.team._id }).exec();
+    } catch(error) {
+      console.log(error);
+      return response.json(errors.ERROR_UPDATE_TEAM_PLATFORM);
+    }
+
+    team.platform = request.body.platform;
+    try {
+      await team.save();
+    } catch(error) {
+      console.log(error);
+      return response.json(errors.ERROR_UPDATE_TEAM_PLATFORM);
+    }
+
+    let index = 0;
+    while (index < team.members.length) {
+      let member;
+      try {
+        member = await User.findOne({ _id: mongoose.Types.ObjectId(team.members[index]) }).exec();
+      } catch(error) {
+        console.log(error);
+        return response.json(errors.ERROR_UPDATE_TEAM_PLATFORM);
+      }
+
+      member.platform = request.body.platform;
+
+      try {
+        await member.save();
+      } catch(error) {
+        console.log(error);
+        return response.json(errors.ERROR_UPDATE_TEAM_PLATFORM);
+      }
+
+      notify(member, emails.PLATFORM_UPDATED);
+      index++;
+    }
+
+    index = 0;
+    while (index < team.editors.length) {
+      let editor;
+      try {
+        editor = await User.findOne({ _id: mongoose.Types.ObjectId(team.editors[index]) }).exec();
+      } catch(error) {
+        console.log(error);
+        return response.json(errors.ERROR_UPDATE_TEAM_PLATFORM);
+      }
+
+      editor.platform = request.body.platform;
+
+      try {
+        await editor.save();
+      } catch(error) {
+        console.log(error);
+        return response.json(errors.ERROR_UPDATE_TEAM_PLATFORM);
+      }
+
+      notify(editor, emails.PLATFORM_UPDATED);
+      index++;
+    }
+
+    index = 0;
+    while (index < team.admins.length) {
+      let admin;
+      try {
+        admin = await User.findOne({ _id: mongoose.Types.ObjectId(team.admins[index]) }).exec();
+      } catch(error) {
+        console.log(error);
+        return response.json(errors.ERROR_UPDATE_TEAM_PLATFORM);
+      }
+
+      admin.platform = request.body.platform;
+
+      try {
+        await admin.save();
+      } catch(error) {
+        console.log(error);
+        return response.json(errors.ERROR_UPDATE_TEAM_PLATFORM);
+      }
+
+      notify(admin, emails.PLATFORM_UPDATED);
+      index++;
+    }
+
+    response.json(messages.TEAM_PLATFORM_UPDATED);
+  });
+
+
   /**
   * Delete team
   * @name /api/teams/delete-team

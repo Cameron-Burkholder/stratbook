@@ -58,6 +58,34 @@ exports.validateTeamStatus = function(request, response, done) {
   }
 }
 
+exports.validateTeamPlatform = function(request, response, done) {
+  let data = request.body;
+  let packet = messages.INVALID_TEAM_PLATFORM;
+  data.platform = data.platform.toUpperCase();
+
+  let errors = {};
+  data.platform = !isEmpty(data.platform) ? data.platform : "";
+
+  if (Validator.isEmpty(data.platform)) {
+    errors.platform = "Status may not be empty.";
+  }
+
+  if (data.platform !== "PC" && data.platform !== "XBOX" && data.platform !== "PS4") {
+    errors.platform = "Platform is not valid.";
+  }
+
+  if (!isEmpty(errors)) {
+    packet.errors = errors;
+    response.json(packet);
+    response.end();
+    return packet;
+  } else {
+    request.body.platform = request.body.platform.toUpperCase();
+    done();
+    return null;
+  }
+}
+
 /**
 * Validates input fields for login form
 */

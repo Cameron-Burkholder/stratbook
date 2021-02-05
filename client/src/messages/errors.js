@@ -109,6 +109,10 @@ module.exports = {
     status: "ERROR",
     message: "An error occurred while attempting to update team name."
   },
+  ERROR_UPDATE_TEAM_PLATFORM: {
+    status: "ERROR",
+    message: "An error occurred while attempting to update team platform."
+  },
   ERROR_UPDATE_TEAM_STATUS: {
     status: "ERROR",
     message: "An error occurred while attempting to update team status."

@@ -104,6 +104,10 @@ module.exports = {
     status: "Invalid Team Input",
     message: "The team name provided is invalid."
   },
+  INVALID_TEAM_PLATFORM: {
+    status: "Invalid Team Platform",
+    message: "The platform provided is invalid."
+  },
   INVALID_TEAM_STATUS: {
     status: "Invalid Team Status",
     message: "The team status requested to update to is invalid."
@@ -207,6 +211,10 @@ module.exports = {
   TEAM_NOT_FOUND: {
     status: "Team Not Found",
     message: "No team with the provided credentials could be found."
+  },
+  TEAM_PLATFORM_UPDATED: {
+    status: "Team Platform Updated",
+    message: "Your team platform has been successfully updated."
   },
   TEAM_STATS_FOUND: {
     status: "Team Statistics Found",
