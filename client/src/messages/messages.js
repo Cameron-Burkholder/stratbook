@@ -80,6 +80,10 @@ module.exports = {
     status: "Invalid Login",
     message: "The login input provided is invalid."
   },
+  INVALID_MMR: {
+    status: "Invalid MMR",
+    message: "The MMR threshold provided is invalid."
+  },
   INVALID_PASSWORD_INPUT: {
     status: "Invalid Password Input",
     message: "The password input provided is invalid."
@@ -203,6 +207,10 @@ module.exports = {
   TEAM_LEFT: {
     status: "Team Left",
     message: "You have left the team."
+  },
+  TEAM_MMR_UPDATED: {
+    status: "Team MMR Updated",
+    message: "You have updated the MMR threshold required to join your team."
   },
   TEAM_NAME_UPDATED: {
     status: "Team Name Updated",

@@ -369,5 +369,30 @@ module.exports = {
     "NITRO CELL": 1,
     "PROXIMITY ALARMS": 2
   },
-  CURRENT_SEASON: "neon_dawn"
+  CURRENT_SEASON: "neon_dawn",
+  RANKS: {
+    "Silver III": 2300,
+    "Silver II": 2400,
+    "Silver I": 2500,
+    "Gold III": 2600,
+    "Gold II": 2800,
+    "Gold I": 3000,
+    "Platinum III": 3200,
+    "Platinum II": 3600,
+    "Platinum I": 4000,
+    "Diamond": 4400
+  },
+  MMR_THRESHOLDS: {
+    0: "None",
+    2300: "Silver III",
+    2400: "Silver II",
+    2500: "Silver I",
+    2600: "Gold III",
+    2800: "Gold II",
+    3000: "Gold I",
+    3200: "Platinum III",
+    3600: "Platinum II",
+    4000: "Platinum I",
+    4400: "Diamond"
+  }
 }

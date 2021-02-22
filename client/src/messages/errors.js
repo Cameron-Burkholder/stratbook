@@ -105,6 +105,10 @@ module.exports = {
     status: "ERROR",
     message: "An error occurred while attempting to update password."
   },
+  ERROR_UPDATE_TEAM_MMR: {
+    status: "ERROR",
+    message: "An error occurred while attempting to update team mmr."
+  },
   ERROR_UPDATE_TEAM_NAME: {
     status: "ERROR",
     message: "An error occurred while attempting to update team name."

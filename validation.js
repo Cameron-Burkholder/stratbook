@@ -6,7 +6,7 @@ const filter = new Filter();
 filter.addWords("fuckboy", "fuckboys", "penisboy", "penisboys");
 const isEmpty = require("is-empty");
 const messages = require("./client/src/messages/messages.js");
-const { ATTACKERS, ATTACKER_ROLES, DEFENDERS, DEFENDER_ROLES } = require("./client/src/data.js");
+const { ATTACKERS, ATTACKER_ROLES, DEFENDERS, DEFENDER_ROLES, MMR_THRESHOLDS } = require("./client/src/data.js");
 
 /**
 * Validates announcement input field
@@ -607,6 +607,34 @@ exports.validateUsernameInput = function(request, response, done) {
     return packet;
   } else {
     request.body.username = request.body.username.toUpperCase();
+    done();
+    return null;
+  }
+}
+
+exports.validateTeamMMR = function(request, response, done) {
+  let data = request.body;
+  let packet = messages.INVALID_MMR;
+
+  let errors = {};
+
+  if (typeof data.mmr !== "number") {
+    errors.mmr = "MMR field must be a number";
+  }
+
+  console.log(MMR_THRESHOLDS);
+  console.log(Object.keys(MMR_THRESHOLDS));
+
+  if (Object.keys(MMR_THRESHOLDS).indexOf(String(data.mmr)) < 0) {
+    errors.mmr = "MMR field is invalid"
+  }
+
+  if (!isEmpty(errors)) {
+    packet.errors = errors;
+    response.json(packet);
+    response.end();
+    return packet;
+  } else {
     done();
     return null;
   }

@@ -1,7 +1,7 @@
 /* routes/teams.js */
 
 const email = require("../config/email.js");
-const { log, genJoinCode, notify } = require("../config/utilities.js");
+const { log, genJoinCode, notify, getStats } = require("../config/utilities.js");
 const mongoose = require("mongoose");
 const messages = require("../client/src/messages/messages.js");
 const emails = require("../client/src/messages/emails.js");
@@ -19,6 +19,8 @@ let host;
 const ADMIN = "ADMIN";
 const MEMBER = "MEMBER";
 const EDITOR = "EDITOR";
+
+const { CURRENT_SEASON } = require("../client/src/data.js");
 
 // Load User model
 require("../models/User.js");
@@ -59,6 +61,7 @@ module.exports = async (app, passport) => {
       members: [],
       editors: [],
       admins: [],
+      mmr: request.team.mmr,
       open: request.team.open
     };
 
@@ -210,7 +213,8 @@ module.exports = async (app, passport) => {
       name: request.body.name,
       strategies_id: newStrategies._id,
       platform: request.user.platform.toUpperCase(),
-      open: true
+      open: true,
+      mmr: 0
     });
 
     user.team_code = newTeam.join_code;
@@ -394,6 +398,8 @@ module.exports = async (app, passport) => {
   *   If the user's platform does not match the team platform, this returns a platform does not match object.
   *   If the user is blocked from the team, this returns a permission denied object.
   *   If the team is closed, this returns a permission denied object.
+  *   If the team has an mmr threshold and the user cannot be found, this returns a permission denied object.
+  *   If the user's mmr is below the team's threshold, this returns a permission denied object
   *   If the user is able to join the team, this returns a team joined object.
   * @param {string} request.body.join_code the join code of the team to join
   */
@@ -416,6 +422,24 @@ module.exports = async (app, passport) => {
 
           if (!team.open) {
             return response.json(messages.PERMISSION_DENIED);
+          }
+
+          let stats;
+          try {
+            stats = await getStats(request.user.username.toLowerCase(), request.user.platform.toLowerCase(), "seasonal")
+          } catch(error) {
+            console.log(error);
+            return response.json(errors.ERROR_JOIN_TEAM);
+          }
+
+          if (team.mmr !== 0) {
+            if (stats) {
+              if (stats.seasons[CURRENT_SEASON].regions.ncsa[0].mmr < team.mmr) {
+                return response.json(messages.PERMISSION_DENIED);
+              }
+            } else {
+              return response.json(messages.PERMISSION_DENIED);
+            }
           }
 
           let user;
@@ -797,11 +821,24 @@ module.exports = async (app, passport) => {
 
   });
 
-
+  /**
+  * Update team platform
+  * @name /api/teams/update-team-platform
+  * @function
+  * @async
+  * @description The user submits a request to update the team platform
+  *   If the user does not have permission, this returns a permission denied object
+  *   If the team platform is able to be updated, this returns a platform updated object
+  * @param {String} request.body.platform the platform to change to
+  */
   app.patch("/api/teams/update-team-platform", (request, response, done) => {
     log("PATCH request at /api/teams/update-team-platform");
     done();
   }, passport.authenticate("jwt", { session: false }), validation.validateTeamPlatform, middleware.userIsVerified, middleware.userHasTeam, middleware.userIsAdmin, async (request, response) => {
+    if (request.team.admins.indexOf(String(request.user._id)) < 0) {
+      return response.json(messages.PERMISSION_DENIED);
+    }
+
     let team;
     try {
       team = await Team.findOne({ _id: request.team._id }).exec();
@@ -890,6 +927,44 @@ module.exports = async (app, passport) => {
     response.json(messages.TEAM_PLATFORM_UPDATED);
   });
 
+  /**
+  * Update team mmr
+  * @name /api/teams/update-team-mmr
+  * @function
+  * @async
+  * @description The user submits a request to update the team mmr
+  *   If the user does not have permission, this returns a permission denied object
+  *   If the team platform is invalid, this returns an invalid mmr object
+  *   If the team mmr threshold is able to be updated, this returns a team mmr updated object
+  * @param {Number} request.body.mmr the mmr threshold to use
+  */
+  app.patch("/api/teams/update-team-mmr", (request, response, done) => {
+    log("PATCH request at /api/teams/update-team-platform");
+    done();
+  }, passport.authenticate("jwt", { session: false }), validation.validateTeamMMR, middleware.userIsVerified, middleware.userHasTeam, middleware.userIsAdmin, async (request, response) => {
+    if (request.team.admins.indexOf(String(request.user._id)) < 0) {
+      return response.json(messages.PERMISSION_DENIED);
+    }
+
+    let team;
+    try {
+      team = await Team.findOne({ _id: request.team._id }).exec();
+    } catch(error) {
+      console.log(error);
+      return response.json(errors.ERROR_UPDATE_TEAM_MMR);
+    }
+
+    team.mmr = request.body.mmr;
+
+    try {
+      await team.save();
+    } catch(error) {
+      console.log(error);
+      return response.json(errors.ERROR_UPDATE_TEAM_MMR);
+    }
+
+    response.json(messages.TEAM_MMR_UPDATED);
+  })
 
   /**
   * Delete team

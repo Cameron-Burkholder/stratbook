@@ -7,11 +7,14 @@ import { USER_STATUS_UPDATED } from "../../messages/emails.js";
 import { USER_BLOCKED } from "../../messages/messages.js";
 import { TEAM_STATUS_UPDATED } from "../../messages/emails.js";
 import { TEAM_PLATFORM_UPDATED } from "../../messages/messages.js";
+import { TEAM_MMR_UPDATED } from "../../messages/messages.js";
 import { ERROR_TEAM } from"../../messages/errors.js";
 import { ERROR_UPDATE_USER_STATUS } from "../../messages/errors.js";
 import { ERROR_BLOCK_USER } from "../../messages/errors.js";
 import { ERROR_UPDATE_TEAM_STATUS } from "../../messages/errors.js";
 import { ERROR_UPDATE_TEAM_PLATFORM } from "../../messages/errors.js";
+import { ERROR_UPDATE_TEAM_MMR } from "../../messages/errors.js";
+import { RANKS, MMR_THRESHOLDS } from "../../data.js";
 
 import Loading from "../partials/Loading.js";
 import ErrorLoading from "../partials/ErrorLoading.js";
@@ -34,6 +37,7 @@ class ManageTeamAPI extends React.Component {
     this.updateTeamStatus = this.updateTeamStatus.bind(this);
     this.onChange = this.onChange.bind(this);
     this.changeTeamPlatform = this.changeTeamPlatform.bind(this);
+    this.changeTeamMMR = this.changeTeamMMR.bind(this);
 
     this.state = {
       team: {},
@@ -59,7 +63,8 @@ class ManageTeamAPI extends React.Component {
             loading: false,
             team: response.data.team_data,
             status: (response.data.team_data.open ? "Allow New Members" : "No New Members"),
-            platform: response.data.team_data.platform
+            platform: response.data.team_data.platform,
+            mmr: response.data.team_data.mmr
           });
           break;
         default:
@@ -226,6 +231,40 @@ class ManageTeamAPI extends React.Component {
       component.props.alert(ERROR_UPDATE_TEAM_PLATFORM.message, ERROR_UPDATE_TEAM_PLATFORM.status);
     });
   }
+  changeTeamMMR(e) {
+    const component = this;
+    this.setState({
+      loading: true
+    });
+    axios.defaults.headers.common["Authorization"] = this.props.getAuthToken();
+    axios.patch("/api/teams/update-team-mmr", {
+      mmr: RANKS[e.target.value]
+    })
+      .then((response) => {
+      switch (response.data.status) {
+        case TEAM_MMR_UPDATED.status:
+          component.setState({
+            loading: false,
+          });
+          component.props.alert("Your team MMR threshold has been updated.", "SUCCESS");
+          component.fetchTeamData();
+          break;
+        default:
+          component.setState({
+            loading: false,
+          });
+          component.props.alert(response.data.message, response.data.status);
+          break;
+      }
+    }).catch((error) => {
+      console.log(error);
+      component.setState({
+        loading: false,
+        error: true
+      });
+      component.props.alert(ERROR_UPDATE_TEAM_MMR.message, ERROR_UPDATE_TEAM_MMR.status);
+    });
+  }
   render() {
     let contents = <Loading/>;
     if (!this.state.loading) {
@@ -271,6 +310,22 @@ class ManageTeamAPI extends React.Component {
                 <option>XBOX</option>
                 <option>PC</option>
                 <option>PS4</option>
+              </select>
+            </div>
+            <div className="team-mmr">
+              <p>MMR Threshold</p>
+              <select onChange={this.changeTeamMMR} value={MMR_THRESHOLDS[this.state.mmr]}>
+                <option>None</option>
+                <option>Silver III</option>
+                <option>Silver II</option>
+                <option>Silver I</option>
+                <option>Gold III</option>
+                <option>Gold II</option>
+                <option>Gold I</option>
+                <option>Platinum III</option>
+                <option>Platinum II</option>
+                <option>Platinum I</option>
+                <option>Diamond</option>
               </select>
             </div>
           </div>

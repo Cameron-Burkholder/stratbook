@@ -49,6 +49,10 @@ const TeamSchema = new Schema({
   open: {
     type: Boolean,
     required: true
+  },
+  mmr: {
+    type: Number,
+    required: true
   }
 });
 
