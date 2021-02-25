@@ -325,7 +325,7 @@ class PositionOverlay extends React.Component {
     if (!this.state.bounds) {
       this.setState({
         bounds: this.innerSelector.current.getBoundingClientRect()
-      })
+      });
     }
   }
   componentDidUpdate(prevProps, prevState) {
@@ -339,8 +339,7 @@ class PositionOverlay extends React.Component {
         drones: (this.props.drones ? [...this.props.drones] : []),
         rotates: (this.props.rotates ? [...this.props.rotates] : []),
         reinforcements: (this.props.reinforcements ? [...this.props.reinforcements] : []),
-        breaches: (this.props.breaches ? [...this.props.breaches] : []),
-        bounds: this.innerSelector.current.getBoundingClientRect()
+        breaches: (this.props.breaches ? [...this.props.breaches] : [])
       });
     }
   }
