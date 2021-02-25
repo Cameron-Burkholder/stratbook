@@ -87,6 +87,16 @@ class PositionOverlay extends React.Component {
     let newX = e.pageX - this.state.bounds.left;
     let newY = e.pageY - this.state.bounds.top;
 
+    console.log("Page");
+    console.log("X: " + e.pageX);
+    console.log("Y: " + e.pageY);
+
+    console.log("State Bounds");
+    console.log("Left: " + this.state.bounds.left);
+    console.log("Top: " + this.state.bounds.top);
+
+    console.log("");
+
     if (this.props.zoom > 1) {
       const centerX = this.state.bounds.width / 2;
       const centerY = this.state.bounds.height / 2;
@@ -330,6 +340,7 @@ class PositionOverlay extends React.Component {
   }
   componentDidUpdate(prevProps, prevState) {
     if (this.detectChange(prevProps, prevState)) {
+      const bounds = this.state.bounds;
       this.setState({
         index: 0,
         type: "",
@@ -339,7 +350,9 @@ class PositionOverlay extends React.Component {
         drones: (this.props.drones ? [...this.props.drones] : []),
         rotates: (this.props.rotates ? [...this.props.rotates] : []),
         reinforcements: (this.props.reinforcements ? [...this.props.reinforcements] : []),
-        breaches: (this.props.breaches ? [...this.props.breaches] : [])
+        breaches: (this.props.breaches ? [...this.props.breaches] : []),
+        bounds: (this.props.zoom !== prevProps.zoom || this.props.offsetX !== prevProps.offsetX || this.props.offsetY !== prevProps.offsetY ?
+                this.innerSelector.current.getBoundingClientRect() : bounds)
       });
     }
   }
