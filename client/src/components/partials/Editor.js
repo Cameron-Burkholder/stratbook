@@ -88,19 +88,50 @@ class Editor extends React.Component {
     this.removeObjective = this.removeObjective.bind(this);
     this.updateNotes = this.updateNotes.bind(this);
 
+    // Declare initial state
+    let siteIndex;
+    let sceneIndex;
+    let strategyIndex;
+    let scenes;
+    let strategies;
+    let floorIndex;
+    let type;
+    if (this.props.position) {
+      type = this.props.position.type;
+      siteIndex = this.props.position.siteIndex;
+      sceneIndex = this.props.position.sceneIndex;
+      strategyIndex = this.props.position.strategyIndex;
+      floorIndex = this.props.position.floorIndex;
+      if (this.props.position.type === "ATTACK") {
+        strategies = this.props.map.attack;
+        scenes = this.props.map.attack[strategyIndex][SITES[this.props.map.name][siteIndex]];
+      } else {
+        strategies = this.props.map.defense[SITES[this.props.map.name][siteIndex]];
+        scenes = this.props.map.defense[SITES[this.props.map.name][siteIndex]][strategyIndex].scenes;
+      }
+    } else {
+      siteIndex = 0;
+      strategyIndex = 0;
+      sceneIndex = 0;
+      floorIndex = 0;
+      type = "ATTACK";
+      scenes = this.props.map.attack[0][SITES[this.props.map.name][0]];
+      strategies = this.props.map.attack;
+    }
+
     this.state = {
       activeOperator: 0,
       map: this.props.map,
       sites: SITES[this.props.map.name],
-      site: SITES[this.props.map.name][0],
-      siteIndex: 0,
-      strategyIndex: 0,
-      strategies: this.props.map.attack,
-      sceneIndex: 0,
-      scenes: this.props.map.attack[0][SITES[this.props.map.name][0]],
+      site: SITES[this.props.map.name][siteIndex],
+      siteIndex: siteIndex,
+      strategyIndex: strategyIndex,
+      strategies: strategies,
+      sceneIndex: sceneIndex,
+      scenes: scenes,
       floors: FLOORS[this.props.map.name],
-      floorIndex: 0,
-      type: "ATTACK",
+      floorIndex: floorIndex,
+      type: type,
     }
   }
   selectSite(index) {
@@ -177,7 +208,14 @@ class Editor extends React.Component {
     });
   }
   save() {
-    this.props.save(JSON.stringify(this.state.map));
+    const position = {
+      siteIndex: this.state.siteIndex,
+      strategyIndex: this.state.strategyIndex,
+      sceneIndex: this.state.sceneIndex,
+      floorIndex: this.state.floorIndex,
+      type: this.state.type
+    };
+    this.props.save(JSON.stringify(this.state.map), position);
   }
 
   // Strategies

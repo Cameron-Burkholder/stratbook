@@ -116,10 +116,11 @@ class EditStrategiesAPI extends React.Component {
         component.props.alert(ERROR_VIEW_MAP.message, ERROR_VIEW_MAP.status);
       })
   }
-  updateStrategy(map) {
+  updateStrategy(map, position) {
     const component = this;
     this.setState({
-      loading: true
+      loading: true,
+      position: position
     });
     axios.defaults.headers.common["Authorization"] = this.props.getAuthToken();
     axios.patch(`/api/strategies/update/${this.state.map.name.toLowerCase().replace(" ", "_")}`, {
@@ -207,7 +208,7 @@ class EditStrategiesAPI extends React.Component {
     } else {
       if (this.state.map_name) {
         if (this.state.hasLoaded && this.state.map) {
-          contents = <Editor map={this.state.map} alert={this.props.alert} save={this.updateStrategy} fetchStrategies={this.fetchStrategies}/>;
+          contents = <Editor map={this.state.map} alert={this.props.alert} save={this.updateStrategy} fetchStrategies={this.fetchStrategies} position={this.state.position}/>;
         } else {
           contents = (
             <div>
