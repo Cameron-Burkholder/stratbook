@@ -17,14 +17,14 @@ const TeamMember = (props) => {
   const attackers = props.attackers.map((attacker, index) => {
     return (
       <div className="attacker" key={index}>
-        <img className="attacker__image" alt={attacker} src={"https://cdn.r6stats.com/badges/" + attacker.toLowerCase() + "_badge.png"}/>
+        <img className="attacker__image" alt={attacker} src={`../media/min/operators/${attacker.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")}.png`}/>
       </div>
     )
   });
   const defenders = props.defenders.map((defender, index) => {
     return (
       <div className="defender" key={index}>
-        <img className="defender__image" alt={defender} src={"https://cdn.r6stats.com/badges/" + defender.toLowerCase() + "_badge.png"}/>
+        <img className="defender__image" alt={defender} src={`../media/min/operators/${defender.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")}.png`}/>
       </div>
     )
   });

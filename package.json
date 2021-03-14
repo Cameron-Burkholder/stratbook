@@ -39,6 +39,9 @@
   },
   "devDependencies": {
     "chai": "^4.2.0",
+    "imagemin": "^7.0.1",
+    "imagemin-jpegtran": "^7.0.0",
+    "imagemin-pngquant": "^9.0.2",
     "nodemon": "^2.0.4"
   },
   "proxy": "http://localhost:5000"

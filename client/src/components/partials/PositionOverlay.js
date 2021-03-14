@@ -470,7 +470,7 @@ class PositionOverlay extends React.Component {
     let breaches = [];
     this.state.breaches.map((pos, index) => {
       if (pos.floor === this.props.floorIndex) {
-        let url = "../../breach.png";
+        let url = "../../media/min/breach.png";
         breaches.push(
           <DragItem url={url}
             x={pos.x} y={pos.y}
@@ -491,7 +491,7 @@ class PositionOverlay extends React.Component {
     let reinforcements = [];
     this.state.reinforcements.map((pos, index) => {
       if (pos.floor === this.props.floorIndex) {
-        let url = "../../media/reinforcement.png";
+        let url = "../../media/min/reinforcement.png";
         reinforcements.push(
           <DragItem url={url}
             x={pos.x} y={pos.y}
@@ -512,7 +512,7 @@ class PositionOverlay extends React.Component {
     let rotates = [];
     this.state.rotates.map((pos, index) => {
       if (pos.floor === this.props.floorIndex) {
-        let url = "../../media/rotate.png";
+        let url = "../../media/min/rotate.png";
         rotates.push(
           <DragItem url={url}
             x={pos.x} y={pos.y}
@@ -533,7 +533,7 @@ class PositionOverlay extends React.Component {
     let drones = [];
     this.state.drones.map((pos, index) => {
       if (pos.floor === this.props.floorIndex) {
-        let url = "../../media/drone.png";
+        let url = "../../media/min/drone.png";
         drones.push(
           <DragItem url={url}
             x={pos.x} y={pos.y}
@@ -557,7 +557,7 @@ class PositionOverlay extends React.Component {
     this.state.utilityPositions.map((pos, index) => {
       pos.forEach((u, uindex) => {
         if (u.floor === this.props.floorIndex) {
-          let url = `../../media/utility/${this.props.utility[index].replace(" ", "_").replace(" ", "_")}.png`;
+          let url = `../../media/min/utility/${this.props.utility[index].replace(" ", "_").replace(" ", "_")}.png`;
           utility.push(
             <DragItem url={url}
             x={u.x} y={u.y}
@@ -581,7 +581,7 @@ class PositionOverlay extends React.Component {
       pos.forEach((g, gindex) => {
         if (g.floor === this.props.floorIndex) {
           let gadget = this.props.gadgets[index].gadget.replace(" ", "_").replace(" ", "_").toUpperCase();
-          let url = `../../media/gadgets/${gadget}.png`;
+          let url = `../../media/min/gadgets/${gadget}.png`;
           gadgets.push(
             <DragItem url={url}
             x={g.x} y={g.y}
@@ -602,7 +602,7 @@ class PositionOverlay extends React.Component {
 
     const operators = this.state.operatorPositions.map((pos, index) => {
       if (pos.floor === this.props.floorIndex) {
-        let url = `../../media/operators/${this.props.operators[index].toLowerCase()}.png`;
+        let url = `../../media/min/operators/${this.props.operators[index].toLowerCase()}.png`;
         return (
           <DragItem url={url}
             x={pos.x} y={pos.y}
