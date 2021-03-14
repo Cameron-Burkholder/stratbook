@@ -60,7 +60,6 @@ class Lineup extends React.Component {
           return <option key={index}>{gadget}</option>
         })
       ));
-      console.log(this.props);
       return (
         <div className={"role" + (this.props.activeOperator === index ? " role--active" : "")} key={index}>
           <div className="role__head">
@@ -90,7 +89,11 @@ class Lineup extends React.Component {
               <p>{this.props.operators[index]}</p>
               <img className="role__image" src={`../../media/operators/${this.props.operators[index]}.png`}
                 onClick={() => {
-                  this.props.insertOperator(this.props.activeOperator);
+                  if (this.props.activeOperator === index) {
+                    this.props.insertOperator(this.props.activeOperator);
+                  } else {
+                    this.props.selectOperator(index);
+                  }
                 }}/>
             </div>
           </div>

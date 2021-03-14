@@ -122,6 +122,9 @@ div.map-selector {
 }
 
 div#Editor, div#Viewer {
+  max-width: 1600px;
+  display: block;
+  margin: auto;
   main {
     width: 100%;
     height: 100%;
@@ -598,23 +601,26 @@ div.canvas {
   height: 100%;
   position: relative;
   border-right: $border-primary;
-  z-index: 1;
+  z-index: 3;
   div.blueprint-form {
     width: 100%; // 1024px
     height: $canvas-height; // 576px gives 16:9 ratio
     overflow: auto;
     position: relative;
+    z-index: 1;
   }
   div.position-overlay {
     width: 100%;
     height: 100%;
     position: relative;
+    z-index: 2;
     cursor: move;
     div.drag-item {
       position: absolute;
       width: $drag-item-width;
       height: $drag-item-width;
       transition: all 0.5s ease;
+      z-index: 2;
     }
     div.drag-item span {
       position: absolute;
@@ -627,14 +633,62 @@ div.canvas {
       display: flex;
       align-items: center;
       font-size: $font-small;
+      z-index: 2;
     }
     div.drag-item:hover {
       cursor: grab;
       transition: all 0s ease;
     }
+    button.drag-item__button {
+      position: absolute;
+      top: -12px;
+      right: -12px;
+      padding: 2px;
+      font-weight: bold;
+      background: none;
+      text-align: center;
+      border-radius: 0;
+      font-size: 9pt;
+      color: $color-danger;
+      border: none;
+      width: 18px;
+      height: 18px;
+      background: white;
+      border-radius: $border-radius;
+      z-index: 3;
+      filter: opacity(1);
+    }
     div.drag-item.drag {
       cursor: grabbing;
       transition: all 0s ease;
+    }
+    div.drag-item--selected::before{
+      content: "";
+      display: block;
+      position: relative;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 150%;
+      height: 150%;
+      border: 3px dotted black;
+      z-index: 3;
+      border-radius: $border-radius;
+      animation-name: blink;
+      animation-duration: 0.5s;
+      animation-timing-function: ease-in-out;
+      animation-iteration-count: infinite;
+    }
+    @keyframes blink {
+      0% {
+        filter: opacity(0.3)
+      }
+      50% {
+        filter: opacity(1)
+      }
+      100% {
+        filter: opacity(0.3)
+      }
     }
     div.drag-operator {
       border: 2px solid $color-primary;

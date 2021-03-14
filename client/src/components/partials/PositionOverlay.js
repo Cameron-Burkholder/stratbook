@@ -36,7 +36,8 @@ class PositionOverlay extends React.Component {
       rotates: (this.props.rotates ? [...this.props.rotates] : []),
       reinforcements: (this.props.reinforcements ? [...this.props.reinforcements] : []),
       breaches: (this.props.breaches ? [...this.props.breaches] : []),
-      style: JSON.parse(JSON.stringify(this.props.style))
+      style: JSON.parse(JSON.stringify(this.props.style)),
+      selected: {}
     }
   }
   selectElement(index, type, gi) {
@@ -44,7 +45,12 @@ class PositionOverlay extends React.Component {
       index: index,
       drag: true,
       type: type,
-      gi: gi
+      gi: gi,
+      selected: {
+        type: type,
+        index: index,
+        gi: gi
+      }
     }, () => {
       document.addEventListener("mousemove", this.onMouseMove);
       document.addEventListener("mouseup", this.onMouseUp);
@@ -356,7 +362,15 @@ class PositionOverlay extends React.Component {
           <DragItem url={url}
             x={pos.x} y={pos.y}
             selectElement={this.selectElement} index={index} key={index} drag={this.state.drag}
-            type="BREACH" bounds={this.state.bounds} labels={this.props.labels}/>
+            type="BREACH" bounds={this.state.bounds} labels={this.props.labels}
+            removeOperator={this.props.removeOperator}
+            removeGadget={this.props.removeGadget}
+            removeUtility={this.props.removeUtility}
+            removeDrone={this.props.removeDrone}
+            removeBreach={this.props.removeBreach}
+            removeRotate={this.props.removeRotate}
+            removeReinforcement={this.props.removeReinforcement}
+            selected={this.state.selected}/>
         )
       }
     });
@@ -369,7 +383,15 @@ class PositionOverlay extends React.Component {
           <DragItem url={url}
             x={pos.x} y={pos.y}
             selectElement={this.selectElement} index={index} key={index} drag={this.state.drag}
-            type="REINFORCEMENT" bounds={this.state.bounds} labels={this.props.labels}/>
+            type="REINFORCEMENT" bounds={this.state.bounds} labels={this.props.labels}
+            removeOperator={this.props.removeOperator}
+            removeGadget={this.props.removeGadget}
+            removeUtility={this.props.removeUtility}
+            removeDrone={this.props.removeDrone}
+            removeBreach={this.props.removeBreach}
+            removeRotate={this.props.removeRotate}
+            removeReinforcement={this.props.removeReinforcement}
+            selected={this.state.selected}/>
         )
       }
     });
@@ -382,7 +404,15 @@ class PositionOverlay extends React.Component {
           <DragItem url={url}
             x={pos.x} y={pos.y}
             selectElement={this.selectElement} index={index} key={index} drag={this.state.drag}
-            type="ROTATE" bounds={this.state.bounds} labels={this.props.labels}/>
+            type="ROTATE" bounds={this.state.bounds} labels={this.props.labels}
+            removeOperator={this.props.removeOperator}
+            removeGadget={this.props.removeGadget}
+            removeUtility={this.props.removeUtility}
+            removeDrone={this.props.removeDrone}
+            removeBreach={this.props.removeBreach}
+            removeRotate={this.props.removeRotate}
+            removeReinforcement={this.props.removeReinforcement}
+            selected={this.state.selected}/>
         )
       }
     });
@@ -395,7 +425,15 @@ class PositionOverlay extends React.Component {
           <DragItem url={url}
             x={pos.x} y={pos.y}
             selectElement={this.selectElement} index={index} key={index} drag={this.state.drag}
-            type="DRONE" bounds={this.state.bounds} labels={this.props.labels}/>
+            type="DRONE" bounds={this.state.bounds} labels={this.props.labels}
+            removeOperator={this.props.removeOperator}
+            removeGadget={this.props.removeGadget}
+            removeUtility={this.props.removeUtility}
+            removeDrone={this.props.removeDrone}
+            removeBreach={this.props.removeBreach}
+            removeRotate={this.props.removeRotate}
+            removeReinforcement={this.props.removeReinforcement}
+            selected={this.state.selected}/>
         )
       } else {
         return "";
@@ -410,8 +448,16 @@ class PositionOverlay extends React.Component {
           utility.push(
             <DragItem url={url}
             x={u.x} y={u.y}
-            selectElement={this.selectElement} index={index} uindex={uindex} key={uindex * index + uindex} drag={this.state.drag}
-            type="UTILITY" bounds={this.state.bounds} value={this.props.utility[index]} labels={this.props.labels}/>
+            selectElement={this.selectElement} index={index} gi={uindex} key={uindex * index + uindex} drag={this.state.drag}
+            type="UTILITY" bounds={this.state.bounds} value={this.props.utility[index]} labels={this.props.labels}
+            removeOperator={this.props.removeOperator}
+            removeGadget={this.props.removeGadget}
+            removeUtility={this.props.removeUtility}
+            removeDrone={this.props.removeDrone}
+            removeBreach={this.props.removeBreach}
+            removeRotate={this.props.removeRotate}
+            removeReinforcement={this.props.removeReinforcement}
+            selected={this.state.selected}/>
           );
         }
       });
@@ -426,8 +472,16 @@ class PositionOverlay extends React.Component {
           gadgets.push(
             <DragItem url={url}
             x={g.x} y={g.y}
-            selectElement={this.selectElement} index={index} gindex={gindex} key={gindex * index + gindex} drag={this.state.drag}
-            type="GADGET" bounds={this.state.bounds} value={this.props.gadgets[index].gadget} labels={this.props.labels}/>
+            selectElement={this.selectElement} index={index} gi={gindex} key={gindex * index + gindex} drag={this.state.drag}
+            type="GADGET" bounds={this.state.bounds} value={this.props.gadgets[index].gadget} labels={this.props.labels}
+            removeOperator={this.props.removeOperator}
+            removeGadget={this.props.removeGadget}
+            removeUtility={this.props.removeUtility}
+            removeDrone={this.props.removeDrone}
+            removeBreach={this.props.removeBreach}
+            removeRotate={this.props.removeRotate}
+            removeReinforcement={this.props.removeReinforcement}
+            selected={this.state.selected}/>
           );
         }
       });
@@ -440,13 +494,20 @@ class PositionOverlay extends React.Component {
           <DragItem url={url}
             x={pos.x} y={pos.y}
             selectElement={this.selectElement} index={index} key={index} drag={this.state.drag}
-            type="OPERATOR" bounds={this.state.bounds} value={this.props.operators[index]} labels={this.props.labels}/>
+            type="OPERATOR" bounds={this.state.bounds} value={this.props.operators[index]} labels={this.props.labels}
+            removeOperator={this.props.removeOperator}
+            removeGadget={this.props.removeGadget}
+            removeUtility={this.props.removeUtility}
+            removeDrone={this.props.removeDrone}
+            removeBreach={this.props.removeBreach}
+            removeRotate={this.props.removeRotate}
+            removeReinforcement={this.props.removeReinforcement}
+            selected={this.state.selected}/>
         )
       } else {
         return "";
       }
     });
-
     return (
       <div className="position-overlay" style={this.props.style} ref={this.innerSelector} onMouseDown={this.onDrag} onTouchStart={this.onDragTouch}>
         { reinforcements }

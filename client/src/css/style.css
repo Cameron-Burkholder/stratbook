@@ -1444,11 +1444,15 @@ div.map-selector {
       filter: opacity(1);
       transition: all 0.3s ease; }
 
-div#Editor main, div#Viewer main {
-  width: 100%;
-  height: 100%;
-  display: grid;
-  grid-template-columns: 256px 900px 1fr; }
+div#Editor, div#Viewer {
+  max-width: 1600px;
+  display: block;
+  margin: auto; }
+  div#Editor main, div#Viewer main {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 256px 900px 1fr; }
 
 div.objectives h3 {
   margin-top: 40px; }
@@ -1841,22 +1845,25 @@ div.canvas {
   height: 100%;
   position: relative;
   border-right: 1px solid #222326;
-  z-index: 1; }
+  z-index: 3; }
   div.canvas div.blueprint-form {
     width: 100%;
     height: 675px;
     overflow: auto;
-    position: relative; }
+    position: relative;
+    z-index: 1; }
   div.canvas div.position-overlay {
     width: 100%;
     height: 100%;
     position: relative;
+    z-index: 2;
     cursor: move; }
     div.canvas div.position-overlay div.drag-item {
       position: absolute;
       width: 30px;
       height: 30px;
-      transition: all 0.5s ease; }
+      transition: all 0.5s ease;
+      z-index: 2; }
     div.canvas div.position-overlay div.drag-item span {
       position: absolute;
       top: 120%;
@@ -1867,13 +1874,56 @@ div.canvas {
       padding: 4px;
       display: flex;
       align-items: center;
-      font-size: 10pt; }
+      font-size: 10pt;
+      z-index: 2; }
     div.canvas div.position-overlay div.drag-item:hover {
       cursor: grab;
       transition: all 0s ease; }
+    div.canvas div.position-overlay button.drag-item__button {
+      position: absolute;
+      top: -12px;
+      right: -12px;
+      padding: 2px;
+      font-weight: bold;
+      background: none;
+      text-align: center;
+      border-radius: 0;
+      font-size: 9pt;
+      color: #C93434;
+      border: none;
+      width: 18px;
+      height: 18px;
+      background: white;
+      border-radius: 4px;
+      z-index: 3;
+      filter: opacity(1); }
     div.canvas div.position-overlay div.drag-item.drag {
       cursor: grabbing;
       transition: all 0s ease; }
+    div.canvas div.position-overlay div.drag-item--selected::before {
+      content: "";
+      display: block;
+      position: relative;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 150%;
+      height: 150%;
+      border: 3px dotted black;
+      z-index: 3;
+      border-radius: 4px;
+      animation-name: blink;
+      animation-duration: 0.5s;
+      animation-timing-function: ease-in-out;
+      animation-iteration-count: infinite; }
+
+@keyframes blink {
+  0% {
+    filter: opacity(0.3); }
+  50% {
+    filter: opacity(1); }
+  100% {
+    filter: opacity(0.3); } }
     div.canvas div.position-overlay div.drag-operator {
       border: 2px solid #0040D6; }
     div.canvas div.position-overlay div.drag-drone, div.canvas div.position-overlay div.drag-reinforcement {

@@ -43,13 +43,19 @@ class Canvas extends React.Component {
         <BlueprintForm type={this.props.type}
           operators={this.props.operators}
           operatorPositions={this.props.operatorPositions}
+          removeOperator={this.props.removeOperator}
           gadgets={this.props.gadgets}
           gadgetPositions={this.props.gadgetPositions}
+          removeGadget={this.props.removeGadget}
           utility={this.props.utility}
           utilityPositions={this.props.utilityPositions}
+          removeUtility={this.props.removeUtility}
           drones={this.props.drones}
+          removeDrone={this.props.removeDrone}
           rotates={this.props.rotates}
+          removeRotate={this.props.removeRotate}
           reinforcements={this.props.reinforcements}
+          removeReinforcement={this.props.removeReinforcement}
           map={this.props.map} site={this.props.site} floorIndex={this.props.floorIndex}
           breaches={this.props.breaches}
           floor={this.props.floor}
