@@ -79,10 +79,10 @@ class PositionOverlay extends React.Component {
           newPositions = [...this.state.drones];
           break;
         case "GADGET":
-          newPositions = [...this.state.gadgetPositions][this.state.index];
+          newPositions = [...this.state.gadgetPositions][this.state.selected.index];
           break;
         case "UTILITY":
-          newPositions = [...this.state.utilityPositions][this.state.index];
+          newPositions = [...this.state.utilityPositions][this.state.selected.index];
           break;
         case "ROTATE":
           newPositions = [...this.state.rotates];
@@ -97,12 +97,12 @@ class PositionOverlay extends React.Component {
 
       let newX;
       let newY;
-      if (this.state.type === "GADGET" || this.state.type === "UTILITY") {
-        newX = newPositions[this.state.gi].x;
-        newY = newPositions[this.state.gi].y;
+      if (this.state.selected.type === "GADGET" || this.state.selected.type === "UTILITY") {
+        newX = newPositions[this.state.selected.gi].x;
+        newY = newPositions[this.state.selected.gi].y;
       } else {
-        newX = newPositions[this.state.index].x;
-        newY = newPositions[this.state.index].y;
+        newX = newPositions[this.state.selected.index].x;
+        newY = newPositions[this.state.selected.index].y;
       }
 
       if (e.keyCode === 37) {
@@ -118,12 +118,12 @@ class PositionOverlay extends React.Component {
         newY += 2;
       }
 
-      if (this.state.type === "GADGET" || this.state.type === "UTILITY") {
-        newPositions[this.state.gi].x = newX;
-        newPositions[this.state.gi].y = newY;
+      if (this.state.selected.type === "GADGET" || this.state.selected.type === "UTILITY") {
+        newPositions[this.state.selected.gi].x = newX;
+        newPositions[this.state.selected.gi].y = newY;
       } else {
-        newPositions[this.state.index].x = newX;
-        newPositions[this.state.index].y = newY;
+        newPositions[this.state.selected.index].x = newX;
+        newPositions[this.state.selected.index].y = newY;
       }
 
       let positions;
@@ -140,14 +140,14 @@ class PositionOverlay extends React.Component {
           break;
         case "GADGET":
           positions = [...this.state.gadgetPositions];
-          positions[this.state.index] = newPositions;
+          positions[this.state.selected.index] = newPositions;
           this.setState({
             gadgetPositions: positions
           });
           break;
         case "UTILITY":
           positions = [...this.state.utilityPositions];
-          positions[this.state.index] = newPositions;
+          positions[this.state.selected.index] = newPositions;
           this.setState({
             utilityPositions: positions
           });
