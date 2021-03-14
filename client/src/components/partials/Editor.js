@@ -132,6 +132,7 @@ class Editor extends React.Component {
       floors: FLOORS[this.props.map.name],
       floorIndex: floorIndex,
       type: type,
+      mounted: false
     }
   }
   selectSite(index) {
@@ -175,11 +176,13 @@ class Editor extends React.Component {
       map.attack[this.state.strategyIndex].roles[index] = e.target.value;
       map.attack[this.state.strategyIndex].operators[index] = "OPERATOR";
       map.attack[this.state.strategyIndex].gadgets[index] = "";
+      map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].gadgetPositions = [[], [], [], [], []];
       map.attack[this.state.strategyIndex].utility[index] = "UTILITY";
     } else {
       map.defense[this.state.site][this.state.strategyIndex].roles[index] = e.target.value;
       map.defense[this.state.site][this.state.strategyIndex].operators[index] = "OPERATOR";
       map.defense[this.state.site][this.state.strategyIndex].gadgets[index] = "";
+      map.defense[this.state.site][this.state.strategyIndex].gadgetPositions = [[], [], [], [], []];
       map.defense[this.state.site][this.state.strategyIndex].utility[index] = "UTILITY";
     }
     this.setState({
@@ -435,8 +438,8 @@ class Editor extends React.Component {
   insertDrone() {
     if (this.state.map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].drones.length + 1 <= 10) {
       let drone = {
-        x: 0,
-        y: 0,
+        x: Math.floor(900 / 2), // taken from blueprint form values
+        y: Math.floor(675 / 2), // taken from blueprint form values
         floor: this.state.floorIndex
       };
       let map = this.state.map;
@@ -473,8 +476,8 @@ class Editor extends React.Component {
   insertGadget(index) {
     let map = this.state.map;
     let gadget = {
-      x: 0,
-      y: 0,
+      x: Math.floor(900 / 2), // taken from blueprint form values
+      y: Math.floor(675 / 2), // taken from blueprint form values
       floor: this.state.floorIndex
     };
     if (this.state.type === "ATTACK") {
@@ -551,8 +554,8 @@ class Editor extends React.Component {
   insertUtility(index) {
     let map = this.state.map;
     let utility = {
-      x: 0,
-      y: 0,
+      x: Math.floor(900 / 2), // taken from blueprint form values
+      y: Math.floor(675 / 2), // taken from blueprint form values
       floor: this.state.floorIndex
     };
     if (this.state.type === "ATTACK") {
@@ -594,8 +597,8 @@ class Editor extends React.Component {
   insertRotate() {
     let map = this.state.map;
     let rotate = {
-      x: 0,
-      y: 0,
+      x: Math.floor(900 / 2), // taken from blueprint form values
+      y: Math.floor(675 / 2), // taken from blueprint form values
       floor: this.state.floorIndex
     };
     map.defense[this.state.site][this.state.strategyIndex].rotates.push(rotate);
@@ -625,8 +628,8 @@ class Editor extends React.Component {
   insertReinforcement() {
     let map = this.state.map;
     let reinforcement = {
-      x: 0,
-      y: 0,
+      x: Math.floor(900 / 2), // taken from blueprint form values
+      y: Math.floor(675 / 2), // taken from blueprint form values
       floor: this.state.floorIndex
     };
     map.defense[this.state.site][this.state.strategyIndex].reinforcements.push(reinforcement);
@@ -659,8 +662,8 @@ class Editor extends React.Component {
   insertBreach() {
     if (this.state.map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].breaches.length + 1 <= 10) {
       let breach = {
-        x: 0,
-        y: 0,
+        x: Math.floor(900 / 2), // taken from blueprint form values
+        y: Math.floor(675 / 2), // taken from blueprint form values
         floor: this.state.floorIndex
       };
       let map = this.state.map;
@@ -739,6 +742,32 @@ class Editor extends React.Component {
     });
   }
 
+  componentDidMount() {
+    if (!this.state.mounted) {
+      window.addEventListener("scroll", (e) => {
+        const nav = document.querySelector("nav.nav");
+        const toolbar = document.querySelector("div.toolbar");
+        const main = document.querySelector("main");
+        const sidebar = document.querySelector("div.sidebar");
+        const lineup = document.querySelector("div.lineup");
+        if (window.scrollY > nav.offsetTop + nav.offsetHeight) {
+          toolbar.classList.add("toolbar--scroll");
+          sidebar.classList.add("sidebar--scroll");
+          lineup.classList.add("lineup--scroll");
+          main.style.marginTop = toolbar.offsetHeight + "px";
+        } else {
+          toolbar.classList.remove("toolbar--scroll");
+          sidebar.classList.remove("sidebar--scroll");
+          lineup.classList.remove("lineup--scroll");
+          main.style.marginTop = 0;
+        }
+      });
+      this.setState({
+        mounted: true
+      });
+    }
+  }
+
   render() {
     return (
       <div id="Editor">
@@ -782,14 +811,6 @@ class Editor extends React.Component {
           removeBreach={this.removeBreach}
           alert={this.props.alert} save={this.save}
           fetchStrategies={this.props.fetchStrategies}
-          gadgets={(this.state.type === "ATTACK" ? (
-            this.state.map.attack[this.state.strategyIndex].gadgets
-          ) : (this.state.map.defense[this.state.site][this.state.strategyIndex].gadgets))}
-          utility={(this.state.type === "ATTACK" ? (
-            this.state.map.attack[this.state.strategyIndex].utility
-          ) : (this.state.map.defense[this.state.site][this.state.strategyIndex].utility))}
-          insertUtility={this.insertUtility} removeUtility={this.removeUtility}
-          insertGadget={this.insertGadget} removeGadget={this.removeGadget}
           />
         <main>
           <Sidebar
@@ -876,12 +897,25 @@ class Editor extends React.Component {
             operators={(this.state.type === "ATTACK" ? (
               this.state.map.attack[this.state.strategyIndex].operators
             ) : (this.state.map.defense[this.state.site][this.state.strategyIndex].operators))}
-            utility={(this.state.type === "ATTACK" ? (
-              this.state.map.attack[this.state.strategyIndex].utility
-            ) : (this.state.map.defense[this.state.site][this.state.strategyIndex].utility))}
             updateRoles={this.updateRoles} updateOperators={this.updateOperators} updateUtility={this.updateUtility}
             selectOperator={this.selectOperator} activeOperator={this.state.activeOperator}
             insertOperator={this.insertOperator} removeOperator={this.removeOperator}
+            gadgets={(this.state.type === "ATTACK" ? (
+              this.state.map.attack[this.state.strategyIndex].gadgets
+            ) : (this.state.map.defense[this.state.site][this.state.strategyIndex].gadgets))}
+            gadgetPositions={(this.state.type === "ATTACK" ? (
+              this.state.map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].gadgetPositions) : (
+              this.state.map.defense[this.state.site][this.state.strategyIndex].gadgetPositions
+            ))}
+            utility={(this.state.type === "ATTACK" ? (
+              this.state.map.attack[this.state.strategyIndex].utility
+            ) : (this.state.map.defense[this.state.site][this.state.strategyIndex].utility))}
+            utilityPositions={(this.state.type === "ATTACK" ? (
+              this.state.map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].utilityPositions) : (
+              this.state.map.defense[this.state.site][this.state.strategyIndex].utilityPositions
+            ))}
+            insertUtility={this.insertUtility}
+            insertGadget={this.insertGadget}
             />
         </main>
       </div>

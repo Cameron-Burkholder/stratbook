@@ -164,12 +164,18 @@ div.blueprint-form {
   overflow: hidden !important;
 }
 
-
+div.toolbar--scroll {
+  position: fixed !important;
+  top: 0;
+}
 div.toolbar {
   border-bottom: $border-primary;
   display: flex;
   align-items: center;
   padding: 4px 0px;
+  z-index: 3;
+  width: 100%;
+  background-color: $background-primary;
   position: relative;
   * {
     margin: 0 $margin-s;
@@ -353,6 +359,11 @@ button.toolbar__navigation-button--active {
   background: transparent;
   border: $border-secondary;
 }
+div.sidebar--scroll div.sidebar-body {
+  position: fixed;
+  top: 64px;
+  width: calc(256px - (2 * #{$padding-s}));
+}
 div.sidebar {
   padding: $padding-s;
   max-height: 100VH;
@@ -498,8 +509,14 @@ div.sidebar {
     }
   }
 }
+div.lineup--scroll div.lineup-body {
+  position: fixed;
+  top: 64px;
+  padding-right: $padding-s;
+}
 div.lineup {
   padding: $padding-s;
+  padding-top: 8px;
   > button {
     display: none;
   }
@@ -509,16 +526,16 @@ div.lineup {
   }
   div.role {
     border-radius: 0;
-    display: grid;
-    grid-template-columns: 1fr 64px;
-    grid-gap: 8px;
-    padding: $padding-s;
+    padding: 8px;
     background: $background-secondary;
     margin-bottom: $margin-s;
     div.role__head {
       width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 96px;
+      grid-gap: 4px;
       select {
-        padding: 8px;
+        padding: 4px;
         font-size: $font-small;
         width: 100%;
         margin-bottom: 4px;
@@ -529,9 +546,16 @@ div.lineup {
       }
     }
     div.role__image {
+      p {
+        font-size: $font-small;
+        text-align: center;
+      }
       img {
-        width: 100%;
-        height: 100%;
+        width: 40%;
+        max-width: 64px;
+        display: block;
+        margin: auto;
+        overflow: hidden;
       }
       img:hover {
         cursor: pointer;
@@ -539,38 +563,33 @@ div.lineup {
     }
     div.role__body {
       width: 100%;
-      div.role__operator {
-        width: 100%;
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        align-items: center;
-        margin-bottom: 4px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-gap: 4px;
+      padding-top: 8px;
+      div.role__gadget, div.role__utility {
         p {
-          font-size: $font-small;
+          text-align: center;
+          font-size: 9pt;
+          text-transform: uppercase;
         }
-        button {
-          padding: 8px;
-          font-size: $font-small;
+        img.role__gadget-image, img.role__utility-image {
+          width: 40%;
+          max-width: 48px;
+          display: block;
+          margin: auto;
         }
-        button:hover {
-          background: linear-gradient(to right, #{$color-tertiary}, #{$color-primary});
-        }
-      }
-      div.role__utility {
-        select {
-          padding: 8px;
-          font-size: $font-small;
-          border: none;
-          width: 100%;
-          option {
-            color: $text-dark;
-          }
+        img.role__gadget-image:hover, img.role__utility-image:hover {
+          cursor: pointer;
         }
       }
     }
   }
   div.role--active {
     border-left: 3px solid $color-tertiary;
+    div.role__image img {
+      width: 80%;
+    }
   }
 }
 

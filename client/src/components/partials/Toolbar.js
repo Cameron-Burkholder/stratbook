@@ -65,39 +65,6 @@ class Toolbar extends React.Component {
       )
     });
 
-    let gadgets = [];
-    let gadgetActions = [];
-    this.props.gadgets.map((gadget, index) => {
-      if (gadget.gadget && gadget.count > 0) {
-        gadgets.push(`Insert ${gadget.gadget}`);
-        gadgets.push(`Remove ${gadget.gadget}`);
-
-        gadgetActions.push(() => {
-          this.props.insertGadget(index);
-        });
-        gadgetActions.push(() => {
-          this.props.removeGadget(index);
-        });
-      }
-    });
-
-    let utility = [];
-    let utilityActions = [];
-    this.props.utility.map((util, index) => {
-      if (util !== "UTILITY" && utility.indexOf(util) < 0) {
-        utility.push(`Insert ${util}`);
-        utility.push(`Remove ${util}`);
-
-        utilityActions.push(() => {
-          this.props.insertUtility(index);
-        });
-        utilityActions.push(() => {
-          this.props.removeUtility(index);
-        });
-
-      }
-    })
-
     return (
       <div className="toolbar">
         <button onClick={this.toggleStrategyNavigation} className={"toolbar__navigation-button" + (this.state.nav ? " toolbar__navigation-button--active" : "")}>&#9776;</button>
@@ -113,15 +80,11 @@ class Toolbar extends React.Component {
           <div className="dropdown-container">
             <Dropdown title="Drones" links={["Insert drone", "Remove drone"]} actions={[this.props.insertDrone, this.props.removeDrone]}/>
             <Dropdown title="Breaches" links={["Insert breach", "Remove breach"]} actions={[this.props.insertBreach, this.props.removeBreach]}/>
-            <Dropdown title="Gadgets" links={gadgets} actions={gadgetActions}/>
-            <Dropdown title="Utility" links={utility} actions={utilityActions}/>
           </div>
         ) : (
           <div className="dropdown-container">
             <Dropdown title="Rotates" links={["Insert rotate", "Remove rotate"]} actions={[this.props.insertRotate, this.props.removeRotate]}/>
             <Dropdown title="Reinforcements" links={["Insert reinforcements", "Remove reinforcements"]} actions={[this.props.insertReinforcement, this.props.removeReinforcement]}/>
-            <Dropdown title="Gadgets" links={gadgets} actions={gadgetActions}/>
-            <Dropdown title="Utility" links={utility} actions={utilityActions}/>
           </div>
         )}
         <div className={"toolbar__navigation" + (this.state.nav ? " toolbar__navigation--active" : "")}>

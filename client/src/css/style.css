@@ -1478,11 +1478,18 @@ div.objectives textarea {
 div.blueprint-form {
   overflow: hidden !important; }
 
+div.toolbar--scroll {
+  position: fixed !important;
+  top: 0; }
+
 div.toolbar {
   border-bottom: 1px solid #222326;
   display: flex;
   align-items: center;
   padding: 4px 0px;
+  z-index: 3;
+  width: 100%;
+  background-color: #1A1D27;
   position: relative; }
   div.toolbar * {
     margin: 0 16px; }
@@ -1641,6 +1648,11 @@ button.toolbar__navigation-button--active {
   background: transparent;
   border: 1px solid #E0E8FF; }
 
+div.sidebar--scroll div.sidebar-body {
+  position: fixed;
+  top: 64px;
+  width: calc(256px - (2 * 16px)); }
+
 div.sidebar {
   padding: 16px;
   max-height: 100VH;
@@ -1760,8 +1772,14 @@ div.sidebar {
     div.sidebar div.scene-controls button:nth-child(1) {
       border-right: 1px solid #222326; }
 
+div.lineup--scroll div.lineup-body {
+  position: fixed;
+  top: 64px;
+  padding-right: 16px; }
+
 div.lineup {
-  padding: 16px; }
+  padding: 16px;
+  padding-top: 8px; }
   div.lineup > button {
     display: none; }
   div.lineup h3 {
@@ -1769,51 +1787,54 @@ div.lineup {
     margin-bottom: 16px; }
   div.lineup div.role {
     border-radius: 0;
-    display: grid;
-    grid-template-columns: 1fr 64px;
-    grid-gap: 8px;
-    padding: 16px;
+    padding: 8px;
     background: #20232F;
     margin-bottom: 16px; }
     div.lineup div.role div.role__head {
-      width: 100%; }
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 96px;
+      grid-gap: 4px; }
       div.lineup div.role div.role__head select {
-        padding: 8px;
+        padding: 4px;
         font-size: 10pt;
         width: 100%;
         margin-bottom: 4px;
         border: none; }
         div.lineup div.role div.role__head select option {
           color: #19191a; }
+    div.lineup div.role div.role__image p {
+      font-size: 10pt;
+      text-align: center; }
     div.lineup div.role div.role__image img {
-      width: 100%;
-      height: 100%; }
+      width: 40%;
+      max-width: 64px;
+      display: block;
+      margin: auto;
+      overflow: hidden; }
     div.lineup div.role div.role__image img:hover {
       cursor: pointer; }
     div.lineup div.role div.role__body {
-      width: 100%; }
-      div.lineup div.role div.role__body div.role__operator {
-        width: 100%;
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        align-items: center;
-        margin-bottom: 4px; }
-        div.lineup div.role div.role__body div.role__operator p {
-          font-size: 10pt; }
-        div.lineup div.role div.role__body div.role__operator button {
-          padding: 8px;
-          font-size: 10pt; }
-        div.lineup div.role div.role__body div.role__operator button:hover {
-          background: linear-gradient(to right, #4915D6, #0040D6); }
-      div.lineup div.role div.role__body div.role__utility select {
-        padding: 8px;
-        font-size: 10pt;
-        border: none;
-        width: 100%; }
-        div.lineup div.role div.role__body div.role__utility select option {
-          color: #19191a; }
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-gap: 4px;
+      padding-top: 8px; }
+      div.lineup div.role div.role__body div.role__gadget p, div.lineup div.role div.role__body div.role__utility p {
+        text-align: center;
+        font-size: 9pt;
+        text-transform: uppercase; }
+      div.lineup div.role div.role__body div.role__gadget img.role__gadget-image, div.lineup div.role div.role__body div.role__gadget img.role__utility-image, div.lineup div.role div.role__body div.role__utility img.role__gadget-image, div.lineup div.role div.role__body div.role__utility img.role__utility-image {
+        width: 40%;
+        max-width: 48px;
+        display: block;
+        margin: auto; }
+      div.lineup div.role div.role__body div.role__gadget img.role__gadget-image:hover, div.lineup div.role div.role__body div.role__gadget img.role__utility-image:hover, div.lineup div.role div.role__body div.role__utility img.role__gadget-image:hover, div.lineup div.role div.role__body div.role__utility img.role__utility-image:hover {
+        cursor: pointer; }
   div.lineup div.role--active {
     border-left: 3px solid #4915D6; }
+    div.lineup div.role--active div.role__image img {
+      width: 80%; }
 
 div.canvas {
   width: 100%;
