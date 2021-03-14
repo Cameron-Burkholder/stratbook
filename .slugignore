@@ -1,0 +1,10 @@
+git_command_guide.txt
+env_guide.txt
+README.md
+rsa_keygen.js
+testing
+git
+client/README.md
+client/debug.log
+client/build
+client/node_modules
