@@ -13,6 +13,8 @@ class PositionOverlay extends React.Component {
 
     // Handle drag items
     this.selectElement = this.selectElement.bind(this);
+    this.deselectElement = this.deselectElement.bind(this);
+    this.translateElement = this.translateElement.bind(this);
     this.onMouseMove = this.onMouseMove.bind(this);
     this.onMouseUp = this.onMouseUp.bind(this);
     this.onTouchMove = this.onTouchMove.bind(this);
@@ -56,19 +58,125 @@ class PositionOverlay extends React.Component {
       document.addEventListener("mouseup", this.onMouseUp);
       document.addEventListener("touchmove", this.onTouchMove);
       document.addEventListener("touchend", this.onMouseUp);
+      document.addEventListener("keydown", this.translateElement);
     });
+  }
+  deselectElement() {
+    this.setState({
+      selected: {}
+    });
+    document.removeEventListener("keydown", this.translateElement);
+  }
+  translateElement(e) {
+    if (37 <= e.keyCode <= 40) {
+      e.preventDefault();
+      let newPositions;
+      switch (this.state.selected.type) {
+        case "OPERATOR":
+          newPositions = [...this.state.operatorPositions];
+          break;
+        case "DRONE":
+          newPositions = [...this.state.drones];
+          break;
+        case "GADGET":
+          newPositions = [...this.state.gadgetPositions][this.state.index];
+          break;
+        case "UTILITY":
+          newPositions = [...this.state.utilityPositions][this.state.index];
+          break;
+        case "ROTATE":
+          newPositions = [...this.state.rotates];
+          break;
+        case "REINFORCEMENT":
+          newPositions = [...this.state.reinforcements];
+          break;
+        case "BREACH":
+          newPositions = [...this.state.breaches];
+          break;
+      }
+
+      let newX;
+      let newY;
+      if (this.state.type === "GADGET" || this.state.type === "UTILITY") {
+        newX = newPositions[this.state.gi].x;
+        newY = newPositions[this.state.gi].y;
+      } else {
+        newX = newPositions[this.state.index].x;
+        newY = newPositions[this.state.index].y;
+      }
+
+      if (e.keyCode === 37) {
+        newX -= 2;
+      }
+      if (e.keyCode === 38) {
+        newY -= 2;
+      }
+      if (e.keyCode === 39) {
+        newX += 2;
+      }
+      if (e.keyCode === 40) {
+        newY += 2;
+      }
+
+      if (this.state.type === "GADGET" || this.state.type === "UTILITY") {
+        newPositions[this.state.gi].x = newX;
+        newPositions[this.state.gi].y = newY;
+      } else {
+        newPositions[this.state.index].x = newX;
+        newPositions[this.state.index].y = newY;
+      }
+
+      let positions;
+      switch (this.state.selected.type) {
+        case "OPERATOR":
+          this.setState({
+            operatorPositions: newPositions
+          });
+          break;
+        case "DRONE":
+          this.setState({
+            drones: newPositions
+          });
+          break;
+        case "GADGET":
+          positions = [...this.state.gadgetPositions];
+          positions[this.state.index] = newPositions;
+          this.setState({
+            gadgetPositions: positions
+          });
+          break;
+        case "UTILITY":
+          positions = [...this.state.utilityPositions];
+          positions[this.state.index] = newPositions;
+          this.setState({
+            utilityPositions: positions
+          });
+          break;
+        case "ROTATE":
+          this.setState({
+            rotates: newPositions
+          });
+          break;
+        case "REINFORCEMENT":
+          this.setState({
+            reinforcements: newPositions
+          });
+          break;
+        case "BREACH":
+          this.setState({
+            breaches: newPositions
+          });
+          break;
+      }
+    }
   }
   onDrag(e) {
     this.props.onDragStart(e);
-    this.setState({
-      selected: {}
-    });
+    this.deselectElement();
   }
   onDragTouch(t) {
     this.props.onDragTouch(t);
-    this.setState({
-      selected: {}
-    })
+    this.deselectElement();
   }
   onMouseMove(e) {
     let newPositions;
