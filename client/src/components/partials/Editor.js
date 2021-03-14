@@ -894,6 +894,8 @@ class Editor extends React.Component {
             addObjective={this.addObjective}
             removeObjective={this.removeObjective}
             updateNotes={this.updateNotes}
+            scenes={this.state.scenes}
+            sceneIndex={this.state.sceneIndex}
             />
           <Lineup
             type={this.state.type}

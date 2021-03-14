@@ -70,7 +70,7 @@ class Canvas extends React.Component {
           labels={this.state.labels}/>
         <div className="canvas__body">
           <Objectives objectives={this.props.objectives} addObjective={this.props.addObjective} removeObjective={this.props.removeObjective}
-            notes={this.props.notes} updateNotes={this.props.updateNotes}/>
+            notes={this.props.notes} updateNotes={this.props.updateNotes} scenes={this.props.scenes} sceneIndex={this.props.sceneIndex}/>
         </div>
       </div>
     )

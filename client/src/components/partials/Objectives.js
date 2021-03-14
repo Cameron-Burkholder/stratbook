@@ -28,9 +28,9 @@ class Objectives extends React.Component {
     });
     return (
       <div className="objectives">
-        <h3>Objectives</h3>
+        <h3>Objectives: {this.props.scenes[this.props.sceneIndex].name}</h3>
         <input onChange={this.onChange} value={this.state.newObj} placeholder="New Objective"/>
-        <button onClick={() => { 
+        <button onClick={() => {
           this.props.addObjective(this.state.newObj);
           this.setState({
             newObj: ""
