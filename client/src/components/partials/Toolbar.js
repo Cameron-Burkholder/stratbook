@@ -77,14 +77,26 @@ class Toolbar extends React.Component {
           <h4 className="toolbar__strategy" onClick={this.changeName}>{this.state.strategy}</h4>
         )}
         { this.props.type === "ATTACK" ? (
-          <div className="dropdown-container">
-            <Dropdown title="Drones" links={["Insert drone", "Remove drone"]} actions={[this.props.insertDrone, this.props.removeDrone]}/>
-            <Dropdown title="Breaches" links={["Insert breach", "Remove breach"]} actions={[this.props.insertBreach, this.props.removeBreach]}/>
+          <div className="action-container">
+            <div className="action" onClick={this.props.insertDrone}>
+              <img className="action__img" src="../../media/drone.png"/>
+              <p>Drones ({this.props.drones.length}/{10})</p>
+            </div>
+            <div className="action" onClick={this.props.insertBreach}>
+              <img className="action__img" src="../../media/breach.png"/>
+              <p>Breaches ({this.props.breaches.length})</p>
+            </div>
           </div>
         ) : (
-          <div className="dropdown-container">
-            <Dropdown title="Rotates" links={["Insert rotate", "Remove rotate"]} actions={[this.props.insertRotate, this.props.removeRotate]}/>
-            <Dropdown title="Reinforcements" links={["Insert reinforcements", "Remove reinforcements"]} actions={[this.props.insertReinforcement, this.props.removeReinforcement]}/>
+          <div className="action-container">
+            <div className="action" onClick={this.props.insertReinforcement}>
+              <img className="action__img" src="../../media/reinforcement.png"/>
+              <p>Reinforcements ({this.props.reinforcements.length}/{10})</p>
+            </div>
+            <div className="action" onClick={this.props.insertRotate}>
+              <img className="action__img" src="../../media/rotate.png"/>
+              <p>Rotates ({this.props.rotates.length})</p>
+            </div>
           </div>
         )}
         <div className={"toolbar__navigation" + (this.state.nav ? " toolbar__navigation--active" : "")}>

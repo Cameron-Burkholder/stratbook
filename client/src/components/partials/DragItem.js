@@ -29,6 +29,15 @@ class DragItem extends React.Component {
     if (this.props.type === "DRONE") {
       this.props.removeDrone(this.props.index);
     }
+    if (this.props.type === "BREACH") {
+      this.props.removeBreach(this.props.index);
+    }
+    if (this.props.type === "REINFORCEMENT") {
+      this.props.removeReinforcement(this.props.index);
+    }
+    if (this.props.type === "ROTATE") {
+      this.props.removeRotate(this.props.index);
+    }
   }
   componentDidUpdate(prevProps, prevState) {
     let selected = this.props.selected && (this.props.type === this.props.selected.type) && (this.props.index === this.props.selected.index) && (!this.props.selected.gi || this.props.selected.gi && this.props.gi === this.props.selected.gi);

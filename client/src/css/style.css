@@ -492,40 +492,6 @@ button.button--danger {
 button.button--danger:hover {
   background: #C93434; }
 
-/* client/src/scss/components/_dropdown.scss */
-div.dropdown {
-  margin: 0 !important;
-  padding: 0;
-  position: relative;
-  z-index: 2; }
-  div.dropdown p.dropdown-title {
-    cursor: pointer; }
-  div.dropdown p.dropdown-title:hover {
-    text-decoration: underline; }
-
-div.dropdown-body {
-  position: absolute;
-  top: 36px;
-  left: 0;
-  background: #1A1D27;
-  padding: 16px 4px;
-  margin: 0 !important;
-  border: 1px solid #222326;
-  display: none;
-  visibility: hidden;
-  width: 144px; }
-
-div.dropdown--active p.dropdown-title {
-  text-decoration: underline; }
-
-div.dropdown--active div.dropdown-body {
-  display: block;
-  visibility: visible;
-  box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.17); }
-  div.dropdown--active div.dropdown-body p:hover {
-    text-decoration: underline;
-    cursor: pointer; }
-
 /* client/src/scss/components/_footer.scss */
 footer.footer {
   width: 100%;
@@ -1462,16 +1428,16 @@ div.objectives input {
   max-width: 600px; }
 
 div.objectives ul {
-  padding: 16px;
-  list-style-type: circle; }
+  padding: 16px; }
 
 div.objectives li {
-  display: flex;
-  align-items: center;
-  padding: 16px; }
+  font-size: 14pt; }
+  div.objectives li div {
+    display: flex;
+    align-items: center; }
   div.objectives li button {
     margin-left: 40px;
-    padding: 8px; }
+    padding: 4px 8px; }
   div.objectives li button:hover {
     background: #C93434; }
 
@@ -1491,7 +1457,7 @@ div.toolbar {
   display: flex;
   align-items: center;
   padding: 4px 0px;
-  z-index: 3;
+  z-index: 4;
   width: 100%;
   background-color: #1A1D27;
   position: relative; }
@@ -1517,10 +1483,31 @@ div.toolbar {
   div.toolbar h4:hover {
     cursor: pointer;
     text-decoration: underline; }
-  div.toolbar div.dropdown-container {
-    display: flex; }
-    div.toolbar div.dropdown-container p {
-      margin: 0; }
+  div.toolbar div.action-container {
+    display: flex;
+    align-items: center; }
+    div.toolbar div.action-container div.action {
+      display: flex;
+      align-items: center;
+      border-bottom: 3px solid transparent;
+      padding: 0 4px;
+      transition: all 0.3s ease;
+      margin: 0;
+      margin-right: 8px;
+      background-color: white;
+      cursor: pointer; }
+      div.toolbar div.action-container div.action img {
+        width: 32px;
+        margin: 0; }
+      div.toolbar div.action-container div.action p {
+        margin: 0;
+        color: #19191a; }
+    div.toolbar div.action-container div.action:hover {
+      border-bottom: 3px solid #0040D6;
+      transition: all 0.3s ease;
+      cursor: pointer; }
+      div.toolbar div.action-container div.action:hover * {
+        cursor: pointer; }
   div.toolbar div.strategy__name-input {
     position: relative; }
     div.toolbar div.strategy__name-input input.strategy__input {
@@ -1778,7 +1765,7 @@ div.sidebar {
 
 div.lineup--scroll div.lineup-body {
   position: fixed;
-  top: 64px;
+  top: 48px;
   padding-right: 16px; }
 
 div.lineup {
@@ -1881,18 +1868,18 @@ div.canvas {
       transition: all 0s ease; }
     div.canvas div.position-overlay button.drag-item__button {
       position: absolute;
-      top: -12px;
-      right: -12px;
+      top: -24px;
+      right: -24px;
       padding: 2px;
       font-weight: bold;
       background: none;
       text-align: center;
       border-radius: 0;
-      font-size: 9pt;
+      font-size: 10pt;
       color: #C93434;
       border: none;
-      width: 18px;
-      height: 18px;
+      width: 22px;
+      height: 22px;
       background: white;
       border-radius: 4px;
       z-index: 3;

@@ -133,11 +133,12 @@ class BlueprintForm extends React.Component {
           drones={this.props.drones}
           removeDrone={this.props.removeDrone}
           rotates={this.props.rotates}
-          removeRotate={this.removeRotate}
+          removeRotate={this.props.removeRotate}
           reinforcements={this.props.reinforcements}
           removeReinforcement={this.props.removeReinforcement}
           floorIndex={this.props.floorIndex}
           breaches={this.props.breaches}
+          removeBreach={this.props.removeBreach}
           updateOperatorPositions={this.props.updateOperatorPositions}
           updateGadgetPositions={this.props.updateGadgetPositions}
           updateDronePositions={this.props.updateDronePositions}

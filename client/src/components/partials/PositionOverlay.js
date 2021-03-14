@@ -60,9 +60,15 @@ class PositionOverlay extends React.Component {
   }
   onDrag(e) {
     this.props.onDragStart(e);
+    this.setState({
+      selected: {}
+    });
   }
   onDragTouch(t) {
     this.props.onDragTouch(t);
+    this.setState({
+      selected: {}
+    })
   }
   onMouseMove(e) {
     let newPositions;
@@ -353,7 +359,6 @@ class PositionOverlay extends React.Component {
     }
   }
   render() {
-
     let breaches = [];
     this.state.breaches.map((pos, index) => {
       if (pos.floor === this.props.floorIndex) {

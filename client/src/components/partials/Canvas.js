@@ -58,6 +58,7 @@ class Canvas extends React.Component {
           removeReinforcement={this.props.removeReinforcement}
           map={this.props.map} site={this.props.site} floorIndex={this.props.floorIndex}
           breaches={this.props.breaches}
+          removeBreach={this.props.removeBreach}
           floor={this.props.floor}
           updateOperatorPositions={this.props.updateOperatorPositions}
           updateGadgetPositions={this.props.updateGadgetPositions}
@@ -70,7 +71,8 @@ class Canvas extends React.Component {
           labels={this.state.labels}/>
         <div className="canvas__body">
           <Objectives objectives={this.props.objectives} addObjective={this.props.addObjective} removeObjective={this.props.removeObjective}
-            notes={this.props.notes} updateNotes={this.props.updateNotes} scenes={this.props.scenes} sceneIndex={this.props.sceneIndex}/>
+            notes={this.props.notes} updateNotes={this.props.updateNotes} scenes={this.props.scenes} sceneIndex={this.props.sceneIndex}
+            video={this.props.video} updateVideo={this.props.updateVideo}/>
         </div>
       </div>
     )

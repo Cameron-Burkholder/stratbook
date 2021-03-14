@@ -87,6 +87,7 @@ class Editor extends React.Component {
     this.addObjective = this.addObjective.bind(this);
     this.removeObjective = this.removeObjective.bind(this);
     this.updateNotes = this.updateNotes.bind(this);
+    this.updateVideo = this.updateVideo.bind(this);
 
     // Declare initial state
     let siteIndex;
@@ -606,9 +607,9 @@ class Editor extends React.Component {
       map: map
     });
   }
-  removeRotate() {
+  removeRotate(index) {
     let map = this.state.map;
-    map.defense[this.state.site][this.state.strategyIndex].rotates.pop();
+    map.defense[this.state.site][this.state.strategyIndex].rotates.splice(index, 1);
     this.setState({
       map: map
     });
@@ -626,20 +627,22 @@ class Editor extends React.Component {
     });
   }
   insertReinforcement() {
-    let map = this.state.map;
-    let reinforcement = {
-      x: Math.floor(900 / 2), // taken from blueprint form values
-      y: Math.floor(675 / 2), // taken from blueprint form values
-      floor: this.state.floorIndex
-    };
-    map.defense[this.state.site][this.state.strategyIndex].reinforcements.push(reinforcement);
-    this.setState({
-      map: map
-    });
+    if (this.state.map.defense[this.state.site][this.state.strategyIndex].reinforcements.length + 1 <= 10) {
+      let map = this.state.map;
+      let reinforcement = {
+        x: Math.floor(900 / 2), // taken from blueprint form values
+        y: Math.floor(675 / 2), // taken from blueprint form values
+        floor: this.state.floorIndex
+      };
+      map.defense[this.state.site][this.state.strategyIndex].reinforcements.push(reinforcement);
+      this.setState({
+        map: map
+      });
+    }
   }
-  removeReinforcement() {
+  removeReinforcement(index) {
     let map = this.state.map;
-    map.defense[this.state.site][this.state.strategyIndex].reinforcements.pop();
+    map.defense[this.state.site][this.state.strategyIndex].reinforcements.splice(index, 1);
     this.setState({
       map: map
     });
@@ -673,10 +676,10 @@ class Editor extends React.Component {
       });
     }
   }
-  removeBreach() {
+  removeBreach(index) {
     if (this.state.map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].breaches.length - 1 >= 0) {
       let map = this.state.map;
-      map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].breaches.pop();
+      map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].breaches.splice(index, 1);
       this.setState({
         map: map
       });
@@ -741,6 +744,25 @@ class Editor extends React.Component {
       strategies: strategies
     });
   }
+  updateVideo(e) {
+    let map = this.state.map;
+    let scenes;
+    let strategies;
+    if (this.state.type === "ATTACK") {
+      map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].video = e.target.value;
+      scenes = map.attack[this.state.strategyIndex][this.state.site];
+      strategies = map.attack;
+    } else {
+      map.defense[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].video = e.target.value;
+      scenes = map.defense[this.state.site][this.state.strategyIndex].scenes;
+      strategies = map.defense[this.state.site];
+    }
+    this.setState({
+      map: map,
+      scenes: scenes,
+      strategies: strategies
+    });
+  }
 
   componentDidMount() {
     if (!this.state.mounted) {
@@ -793,22 +815,18 @@ class Editor extends React.Component {
           drones={this.state.type === "ATTACK" ? (
             this.state.map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].drones) : undefined}
           insertDrone={this.insertDrone}
-          removeDrone={this.removeDrone}
           rotates={this.state.type === "ATTACK"? (
             undefined
           ) : (this.state.map.defense[this.state.site][this.state.strategyIndex].rotates)}
           insertRotate={this.insertRotate}
-          removeRotate={this.removeRotate}
           reinforcements={this.state.type === "ATTACK" ? (
             undefined
           ) : (this.state.map.defense[this.state.site][this.state.strategyIndex].reinforcements)}
           insertReinforcement={this.insertReinforcement}
-          removeReinforcement={this.removeReinforcement}
           breaches={(this.state.type === "ATTACK" ? (
             this.state.map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].breaches
           ) : undefined)}
           insertBreach={this.insertBreach}
-          removeBreach={this.removeBreach}
           alert={this.props.alert} save={this.save}
           fetchStrategies={this.props.fetchStrategies}
           />
@@ -875,6 +893,7 @@ class Editor extends React.Component {
             breaches={(this.state.type === "ATTACK" ? (
               this.state.map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].breaches
             ) : undefined)}
+            removeBreach={this.removeBreach}
             floor={this.state.floors[this.state.floorIndex]}
             updateOperatorPositions={this.updateOperatorPositions}
             updateGadgetPositions={this.updateGadgetPositions}
@@ -896,6 +915,10 @@ class Editor extends React.Component {
             updateNotes={this.updateNotes}
             scenes={this.state.scenes}
             sceneIndex={this.state.sceneIndex}
+            video={this.state.type === "ATTACK" ? (
+              this.state.map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].video
+            ) : ( this.state.map.defense[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].video)}
+            updateVideo={this.updateVideo}
             />
           <Lineup
             type={this.state.type}

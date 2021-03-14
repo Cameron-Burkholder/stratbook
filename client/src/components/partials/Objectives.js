@@ -9,7 +9,7 @@ class Objectives extends React.Component {
     this.onChange = this.onChange.bind(this);
 
     this.state = {
-      newObj: ""
+      newObj: "",
     }
   }
   onChange(e) {
@@ -21,8 +21,10 @@ class Objectives extends React.Component {
     const objectives = this.props.objectives.map((obj, index) => {
       return (
         <li key={index}>
-          <p>- {obj}</p>
-          <button onClick={() => { this.props.removeObjective(index) }}>X</button>
+          <div>
+            <p>{obj}</p>
+            <button onClick={() => { this.props.removeObjective(index) }}>X</button>
+          </div>
         </li>
       )
     });
@@ -39,8 +41,10 @@ class Objectives extends React.Component {
         <ul>
           { objectives }
         </ul>
-        <h3>Notes</h3>
+        <h3>Notes: {this.props.scenes[this.props.sceneIndex].name}</h3>
         <textarea value={this.props.notes} onChange={this.props.updateNotes} rows={7}></textarea>
+        <h3>Video Link</h3>
+        <input onChange={this.props.updateVideo} value={this.props.video}/>
       </div>
     )
   }

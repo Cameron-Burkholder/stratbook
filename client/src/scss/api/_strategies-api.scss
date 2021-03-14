@@ -143,15 +143,16 @@ div.objectives {
   }
   ul {
     padding: $padding-s;
-    list-style-type: circle;
   }
   li {
-    display: flex;
-    align-items: center;
-    padding: $padding-s;
+    font-size: $font-heading3;
+    div {
+      display: flex;
+      align-items: center;
+    }
     button {
       margin-left: $margin-m;
-      padding: 8px;
+      padding: 4px 8px;
     }
     button:hover {
       background: $color-danger;
@@ -176,7 +177,7 @@ div.toolbar {
   display: flex;
   align-items: center;
   padding: 4px 0px;
-  z-index: 3;
+  z-index: 4;
   width: 100%;
   background-color: $background-primary;
   position: relative;
@@ -208,10 +209,35 @@ div.toolbar {
     cursor: pointer;
     text-decoration: underline;
   }
-  div.dropdown-container {
+  div.action-container {
     display: flex;
-    p {
+    align-items: center;
+    div.action {
+      display: flex;
+      align-items: center;
+      border-bottom: 3px solid transparent;
+      padding: 0 4px;
+      transition: all 0.3s ease;
       margin: 0;
+      margin-right: 8px;
+      background-color: white;
+      cursor: pointer;
+      img {
+        width: 32px;
+        margin: 0;
+      }
+      p {
+        margin: 0;
+        color: $text-dark;
+      }
+    }
+    div.action:hover {
+      border-bottom: 3px solid $color-primary;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      * {
+        cursor: pointer;
+      }
     }
   }
   div.strategy__name-input {
@@ -514,7 +540,7 @@ div.sidebar {
 }
 div.lineup--scroll div.lineup-body {
   position: fixed;
-  top: 64px;
+  top: 48px;
   padding-right: $padding-s;
 }
 div.lineup {
@@ -641,18 +667,18 @@ div.canvas {
     }
     button.drag-item__button {
       position: absolute;
-      top: -12px;
-      right: -12px;
+      top: -24px;
+      right: -24px;
       padding: 2px;
       font-weight: bold;
       background: none;
       text-align: center;
       border-radius: 0;
-      font-size: 9pt;
+      font-size: 10pt;
       color: $color-danger;
       border: none;
-      width: 18px;
-      height: 18px;
+      width: 22px;
+      height: 22px;
       background: white;
       border-radius: $border-radius;
       z-index: 3;
