@@ -781,7 +781,6 @@ class Editor extends React.Component {
     const main = document.querySelector("main");
     const sidebar = document.querySelector("div.sidebar");
     const lineup = document.querySelector("div.lineup");
-    console.log(window.pageYOffset);
     if (window.scrollY > nav.offsetTop + nav.offsetHeight) {
       toolbar.classList.add("toolbar--scroll");
       sidebar.classList.add("sidebar--scroll");

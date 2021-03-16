@@ -9,3 +9,9 @@ footer.footer {
   justify-content: flex-end;
   border-top: $border-primary;
 }
+
+@media screen and (max-width: #{$phone-max-width}) {
+  footer.footer {
+    margin-top: 156px;
+  }
+}

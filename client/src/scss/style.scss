@@ -47,6 +47,10 @@ div#root, div.container {
   height: 100%;
 }
 
+html {
+  height: 100%;
+}
+
 html, body {
   background: $background-primary;
   overflow-x: hidden;
@@ -54,14 +58,14 @@ html, body {
 p {
   color: $text-body;
   font-size: $font-body;
-}
+}/*
 ::-webkit-scrollbar {
   width: 4px;
   height: 4px;
 }
 ::-webkit-scrollbar-thumb {
   background: linear-gradient(#{$color-primary}, #{$color-secondary});
-}
+}*/
 
 // Import components
 @import "./components/_navigation.scss";

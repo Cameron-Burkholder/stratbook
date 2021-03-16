@@ -4,9 +4,13 @@ $canvas-width: 900px;
 $canvas-height: 675px;
 $drag-item-width: 30px;
 
+div#edit-strategies {
+  height: 100%;
+}
 div#EditStrategiesAPI {
   div.edit-container {
     padding: $padding-m !important;
+    height: 100%;
     h1 {
       text-align: center;
     }
@@ -919,6 +923,8 @@ div#Viewer {
       }
   }
   div#Editor, div#Viewer {
+    width: 100%;
+    height: 100%;
     div.toolbar {
       overflow-x: auto;
       div.strategy__name-input {
@@ -935,12 +941,13 @@ div#Viewer {
       height: 100%;
       display: grid;
       grid-template-columns: repeat(2, 1fr) !important;
+      overflow: hidden;
       div.canvas {
         grid-row: 1;
         grid-column: span 2;
         width: 100%;
         div.blueprint-form {
-          width: auto;
+          width: 100%;
           overflow: hidden;
           touch-action: none;
           div.position-overlay {
@@ -951,7 +958,7 @@ div#Viewer {
         div.canvas__controls {
           left: 50%;
           transform: translateX(-50%);
-          top: 500px;
+          top: $canvas-height;
         }
       }
       div.sidebar {
@@ -1049,6 +1056,7 @@ div#Viewer {
       height: 100%;
       display: grid;
       grid-template-columns: 1fr !important;
+      overflow: hidden;
       div.canvas {
         grid-row: 1;
         width: 100%;
@@ -1078,6 +1086,7 @@ div#Viewer {
       div.sidebar {
         grid-row: 3;
         margin-top: 64px;
+        grid-template-rows: 400px 400px;
         > button {
           display: none;
         }
@@ -1085,6 +1094,7 @@ div#Viewer {
           transform: none;
           top: 0;
           width: 100%;
+          padding-bottom: 200px;
         }
       }
       div.lineup {
