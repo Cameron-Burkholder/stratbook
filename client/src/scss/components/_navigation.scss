@@ -6,7 +6,7 @@ nav.nav {
   border-bottom: $border-primary;
   height: 64px;
   background: $background-primary;
-  z-index: 2;
+  z-index: 4;
 }
 
 ul.nav__head {
@@ -61,6 +61,7 @@ a.nav__link--active::after {
 
 button#nav__button {
   display: none;
+  z-index: 5;
 }
 
 div.user-dropdown {

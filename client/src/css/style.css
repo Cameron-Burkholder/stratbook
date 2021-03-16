@@ -62,7 +62,7 @@ nav.nav {
   border-bottom: 1px solid #222326;
   height: 64px;
   background: #1A1D27;
-  z-index: 2; }
+  z-index: 4; }
 
 ul.nav__head {
   display: flex;
@@ -111,7 +111,8 @@ a.nav__link--active::after {
   left: 0; }
 
 button#nav__button {
-  display: none; }
+  display: none;
+  z-index: 5; }
 
 div.user-dropdown {
   position: relative;
@@ -1534,10 +1535,13 @@ div.toolbar {
       box-shadow: none;
       border-right: 4px solid #00C851; }
 
+div.toolbar--active {
+  z-index: 4; }
+
 div.toolbar__navigation {
   position: fixed;
   background: white;
-  z-index: 3;
+  z-index: 4;
   padding: 40px;
   top: 0;
   left: 0;
@@ -1624,6 +1628,7 @@ div.toolbar__navigation {
 div.toolbar__navigation--active {
   transform: translateX(0);
   box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.17);
+  z-index: 4;
   transition: all 0.3s ease; }
 
 button.toolbar__navigation-button {
@@ -1635,7 +1640,7 @@ button.toolbar__navigation-button--active {
   top: 16px;
   left: 240px;
   color: #19191a;
-  z-index: 4;
+  z-index: 5;
   background: transparent;
   border: 1px solid #E0E8FF; }
 
@@ -2062,8 +2067,7 @@ div#Viewer img.role__image:hover {
       border: 1px solid #C93434;
       background: #C93434; }
   div#Editor div.toolbar, div#Viewer div.toolbar {
-    overflow-x: auto;
-    z-index: 4; }
+    overflow-x: auto; }
     div#Editor div.toolbar div.strategy__name-input, div#Viewer div.toolbar div.strategy__name-input {
       position: fixed;
       max-width: 600px;
@@ -2081,8 +2085,7 @@ div#Viewer img.role__image:hover {
       grid-column: span 2;
       width: 100%; }
       div#Editor main div.canvas div.blueprint-form, div#Viewer main div.canvas div.blueprint-form {
-        width: 100%;
-        height: 675px;
+        width: auto;
         overflow: hidden;
         touch-action: none; }
         div#Editor main div.canvas div.blueprint-form div.position-overlay, div#Viewer main div.canvas div.blueprint-form div.position-overlay {
@@ -2090,7 +2093,8 @@ div#Viewer img.role__image:hover {
           height: 100%; }
       div#Editor main div.canvas div.canvas__controls, div#Viewer main div.canvas div.canvas__controls {
         left: 50%;
-        transform: translateX(-50%); }
+        transform: translateX(-50%);
+        top: 500px; }
     div#Editor main div.sidebar, div#Viewer main div.sidebar {
       grid-row: 2;
       grid-column: span 1;
@@ -2136,8 +2140,19 @@ div#Viewer img.role__image:hover {
 
 @media screen and (max-width: 600px) {
   div#Editor div.toolbar, div#Viewer div.toolbar {
-    overflow-x: auto;
-    z-index: 4; }
+    overflow-x: auto; }
+    div#Editor div.toolbar div.toolbar__navigation, div#Viewer div.toolbar div.toolbar__navigation {
+      width: 100VW;
+      transform: translateX(-100VW); }
+    div#Editor div.toolbar div.toolbar__navigation--active, div#Viewer div.toolbar div.toolbar__navigation--active {
+      transform: translateX(0); }
+    div#Editor div.toolbar button.toolbar__navigation-button, div#Viewer div.toolbar button.toolbar__navigation-button {
+      left: 16px; }
+    div#Editor div.toolbar div.action, div#Viewer div.toolbar div.action {
+      padding: 2px; }
+      div#Editor div.toolbar div.action p, div#Viewer div.toolbar div.action p {
+        font-size: 8pt;
+        padding: 0; }
     div#Editor div.toolbar div.strategy__name-input, div#Viewer div.toolbar div.strategy__name-input {
       position: fixed;
       max-width: 600px;
@@ -2164,8 +2179,13 @@ div#Viewer img.role__image:hover {
       div#Editor main div.canvas div.canvas__controls, div#Viewer main div.canvas div.canvas__controls {
         left: 50%;
         transform: translateX(-50%); }
+      div#Editor main div.canvas div.canvas__body, div#Viewer main div.canvas div.canvas__body {
+        padding: 16px; }
+      div#Editor main div.canvas div.objectives button, div#Viewer main div.canvas div.objectives button {
+        width: 100%; }
     div#Editor main div.sidebar, div#Viewer main div.sidebar {
-      grid-row: 2; }
+      grid-row: 3;
+      margin-top: 64px; }
       div#Editor main div.sidebar > button, div#Viewer main div.sidebar > button {
         display: none; }
       div#Editor main div.sidebar div.sidebar-body, div#Viewer main div.sidebar div.sidebar-body {
@@ -2173,8 +2193,9 @@ div#Viewer img.role__image:hover {
         top: 0;
         width: 100%; }
     div#Editor main div.lineup, div#Viewer main div.lineup {
-      grid-row: 3;
-      width: 100%; }
+      grid-row: 2;
+      width: 100%;
+      padding-top: 32px; }
       div#Editor main div.lineup > button, div#Viewer main div.lineup > button {
         display: none; }
       div#Editor main div.lineup div.lineup-body, div#Viewer main div.lineup div.lineup-body {
@@ -2194,14 +2215,27 @@ div#Viewer img.role__image:hover {
           grid-template-columns: 1fr;
           padding: 4px; }
           div#Editor main div.lineup div.lineup-body div.role div.role__head, div#Viewer main div.lineup div.lineup-body div.role div.role__head {
-            display: none; }
+            display: block !important;
+            font-size: 8pt; }
+            div#Editor main div.lineup div.lineup-body div.role div.role__head div.role__options, div#Viewer main div.lineup div.lineup-body div.role div.role__head div.role__options {
+              display: none; }
+          div#Editor main div.lineup div.lineup-body div.role div.role__image p, div#Viewer main div.lineup div.lineup-body div.role div.role__image p {
+            font-size: 8pt; }
           div#Editor main div.lineup div.lineup-body div.role div.role__image img, div#Viewer main div.lineup div.lineup-body div.role div.role__image img {
             width: 100%;
             height: auto; }
         div#Editor main div.lineup div.lineup-body div.role--active, div#Viewer main div.lineup div.lineup-body div.role--active {
           border: 3px solid #4915D6; }
-          div#Editor main div.lineup div.lineup-body div.role--active div.role__body, div#Viewer main div.lineup div.lineup-body div.role--active div.role__body {
+          div#Editor main div.lineup div.lineup-body div.role--active div.role__options, div#Viewer main div.lineup div.lineup-body div.role--active div.role__options {
+            display: block !important;
             position: absolute;
             top: 100%;
+            background: #1A1D27;
+            width: calc(100VW - (2 * 16px));
+            left: 8px; }
+          div#Editor main div.lineup div.lineup-body div.role--active div.role__body, div#Viewer main div.lineup div.lineup-body div.role--active div.role__body {
+            position: absolute;
+            top: 170%;
+            left: 8px;
             background: #1A1D27;
             width: calc(100VW - 16px); } }

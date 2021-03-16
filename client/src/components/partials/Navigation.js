@@ -32,6 +32,13 @@ class Navigation extends React.Component {
       active: !this.state.active,
       loggedIn: this.props.loggedIn
     });
+    if (this.state.active) {
+      setTimeout(() => {
+        document.querySelector("nav.nav").style.zIndex = 4;
+      }, 300);
+    } else {
+      document.querySelector("nav.nav").style.zIndex = 5;
+    }
   }
   /*
     @desc: update loggedIn state if App changes

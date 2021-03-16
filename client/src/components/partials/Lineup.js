@@ -64,7 +64,7 @@ class Lineup extends React.Component {
         <div className={"role" + (this.props.activeOperator === index ? " role--active" : "")} key={index}>
           <div className="role__head">
             { this.props.activeOperator === index ? (
-              <div>
+              <div className="role__options">
                 <select className="form__select" onChange={(e) => { this.props.updateRoles(e, index) }} value={this.props.roles[index]}>
                   { roleOptions }
                 </select>
@@ -80,7 +80,7 @@ class Lineup extends React.Component {
                 </div>
               </div>
             ) : (
-              <div>
+              <div className="role__options">
                 <p className="role__role">Role: {this.props.roles[index]}</p>
                 <p className="role__utility">Utility: {this.props.utility[index]}</p>
               </div>

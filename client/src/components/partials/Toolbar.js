@@ -66,7 +66,7 @@ class Toolbar extends React.Component {
     });
 
     return (
-      <div className="toolbar">
+      <div className={"toolbar" + (this.state.nav ? " toolbar--active" : "")}>
         <button onClick={this.toggleStrategyNavigation} className={"toolbar__navigation-button" + (this.state.nav ? " toolbar__navigation-button--active" : "")}>&#9776;</button>
         { this.state.active ? (
           <div className="strategy__name-input">

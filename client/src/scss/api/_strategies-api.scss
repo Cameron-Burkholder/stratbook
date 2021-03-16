@@ -270,10 +270,13 @@ div.toolbar {
     }
   }
 }
+div.toolbar--active {
+  z-index: 4;
+}
 div.toolbar__navigation {
   position: fixed;
   background: $background-tertiary;
-  z-index: 3;
+  z-index: 4;
   padding: $padding-m;
   top: 0;
   left: 0;
@@ -373,6 +376,7 @@ div.toolbar__navigation {
 div.toolbar__navigation--active {
   transform: translateX(0);
   box-shadow: $box-shadow-primary;
+  z-index: 4;
   transition: all 0.3s ease;
 }
 button.toolbar__navigation-button {
@@ -384,7 +388,7 @@ button.toolbar__navigation-button--active {
   top: 16px;
   left: 240px;
   color: $text-dark;
-  z-index: 4;
+  z-index: 5;
   background: transparent;
   border: $border-secondary;
 }
@@ -917,7 +921,6 @@ div#Viewer {
   div#Editor, div#Viewer {
     div.toolbar {
       overflow-x: auto;
-      z-index: 4;
       div.strategy__name-input {
         position: fixed;
         max-width: $phone-max-width;
@@ -937,8 +940,7 @@ div#Viewer {
         grid-column: span 2;
         width: 100%;
         div.blueprint-form {
-          width: 100%;
-          height: $canvas-height;
+          width: auto;
           overflow: hidden;
           touch-action: none;
           div.position-overlay {
@@ -949,6 +951,7 @@ div#Viewer {
         div.canvas__controls {
           left: 50%;
           transform: translateX(-50%);
+          top: 500px;
         }
       }
       div.sidebar {
@@ -1015,7 +1018,23 @@ div#Viewer {
   div#Editor, div#Viewer {
     div.toolbar {
       overflow-x: auto;
-      z-index: 4;
+      div.toolbar__navigation {
+        width: 100VW;
+        transform: translateX(-100VW);
+      }
+      div.toolbar__navigation--active {
+        transform: translateX(0);
+      }
+      button.toolbar__navigation-button {
+        left: 16px;
+      }
+      div.action {
+        padding: 2px;
+        p {
+          font-size: 8pt;
+          padding: 0;
+        }
+      }
       div.strategy__name-input {
         position: fixed;
         max-width: $phone-max-width;
@@ -1047,9 +1066,18 @@ div#Viewer {
           left: 50%;
           transform: translateX(-50%);
         }
+        div.canvas__body {
+          padding: 16px;
+        }
+        div.objectives {
+          button {
+            width: 100%;
+          }
+        }
       }
       div.sidebar {
-        grid-row: 2;
+        grid-row: 3;
+        margin-top: 64px;
         > button {
           display: none;
         }
@@ -1060,8 +1088,9 @@ div#Viewer {
         }
       }
       div.lineup {
-        grid-row: 3;
+        grid-row: 2;
         width: 100%;
+        padding-top: 32px;
         > button {
           display: none;
         }
@@ -1083,9 +1112,16 @@ div#Viewer {
             grid-template-columns: 1fr;
             padding: 4px;
             div.role__head {
-              display: none;
+              display: block !important;
+              font-size: 8pt;
+              div.role__options {
+                display: none;
+              }
             }
             div.role__image {
+              p {
+                font-size: 8pt;
+              }
               img {
                 width: 100%;
                 height: auto;
@@ -1094,9 +1130,19 @@ div#Viewer {
           }
           div.role--active {
             border: 3px solid $color-tertiary;
-            div.role__body {
+            div.role__options {
+              display: block !important;
               position: absolute;
               top: 100%;
+              background: $background-primary;
+              width: calc(100VW - (2 * #{$padding-s}));
+              left: 8px;
+
+            }
+            div.role__body {
+              position: absolute;
+              top: 170%;
+              left: 8px;
               background: $background-primary;
               width: calc(100VW - #{$padding-s});
             }
