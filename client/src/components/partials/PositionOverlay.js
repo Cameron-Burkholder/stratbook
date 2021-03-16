@@ -436,8 +436,9 @@ class PositionOverlay extends React.Component {
   }
   detectChange(prevProps, prevState) {
     let bool = false;
-    if (prevProps != this.props) {
+    if (prevProps !== this.props || prevProps.zoom !== this.props.zoom) {
       bool = true;
+      console.log("zoom changed");
     }
     return bool;
   }
@@ -451,6 +452,7 @@ class PositionOverlay extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     if (this.detectChange(prevProps, prevState)) {
       const bounds = this.state.bounds;
+      console.log(bounds);
       this.setState({
         index: 0,
         type: "",
@@ -463,6 +465,8 @@ class PositionOverlay extends React.Component {
         breaches: (this.props.breaches ? [...this.props.breaches] : []),
         bounds: (this.props.zoom !== prevProps.zoom || this.props.offsetX !== prevProps.offsetX || this.props.offsetY !== prevProps.offsetY ?
                 this.innerSelector.current.getBoundingClientRect() : bounds)
+      }, () => {
+        console.log(this.state.bounds);
       });
     }
   }
