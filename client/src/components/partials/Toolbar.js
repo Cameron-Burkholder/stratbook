@@ -79,22 +79,22 @@ class Toolbar extends React.Component {
         { this.props.type === "ATTACK" ? (
           <div className="action-container">
             <div className="action" onClick={this.props.insertDrone}>
-              <img className="action__img" src="../../media/drone.png"/>
+              <img className="action__img" src="../../media/min/drone.png"/>
               <p>Drones ({this.props.drones.length}/{10})</p>
             </div>
             <div className="action" onClick={this.props.insertBreach}>
-              <img className="action__img" src="../../media/breach.png"/>
+              <img className="action__img" src="../../media/min/breach.png"/>
               <p>Breaches ({this.props.breaches.length})</p>
             </div>
           </div>
         ) : (
           <div className="action-container">
             <div className="action" onClick={this.props.insertReinforcement}>
-              <img className="action__img" src="../../media/reinforcement.png"/>
+              <img className="action__img" src="../../media/min/reinforcement.png"/>
               <p>Reinforcements ({this.props.reinforcements.length}/{10})</p>
             </div>
             <div className="action" onClick={this.props.insertRotate}>
-              <img className="action__img" src="../../media/rotate.png"/>
+              <img className="action__img" src="../../media/min/rotate.png"/>
               <p>Rotates ({this.props.rotates.length})</p>
             </div>
           </div>

@@ -89,6 +89,9 @@ class Editor extends React.Component {
     this.updateNotes = this.updateNotes.bind(this);
     this.updateVideo = this.updateVideo.bind(this);
 
+    // Handle scroll
+    this.handleScroll = this.handleScroll.bind(this);
+
     // Declare initial state
     let siteIndex;
     let sceneIndex;
@@ -766,28 +769,33 @@ class Editor extends React.Component {
 
   componentDidMount() {
     if (!this.state.mounted) {
-      window.addEventListener("scroll", (e) => {
-        const nav = document.querySelector("nav.nav");
-        const toolbar = document.querySelector("div.toolbar");
-        const main = document.querySelector("main");
-        const sidebar = document.querySelector("div.sidebar");
-        const lineup = document.querySelector("div.lineup");
-        if (window.scrollY > nav.offsetTop + nav.offsetHeight) {
-          toolbar.classList.add("toolbar--scroll");
-          sidebar.classList.add("sidebar--scroll");
-          lineup.classList.add("lineup--scroll");
-          main.style.marginTop = toolbar.offsetHeight + "px";
-        } else {
-          toolbar.classList.remove("toolbar--scroll");
-          sidebar.classList.remove("sidebar--scroll");
-          lineup.classList.remove("lineup--scroll");
-          main.style.marginTop = 0;
-        }
-      });
+      window.addEventListener("scroll", this.handleScroll);
       this.setState({
         mounted: true
       });
     }
+  }
+  handleScroll(e) {
+    const nav = document.querySelector("nav.nav");
+    const toolbar = document.querySelector("div.toolbar");
+    const main = document.querySelector("main");
+    const sidebar = document.querySelector("div.sidebar");
+    const lineup = document.querySelector("div.lineup");
+    console.log(window.pageYOffset);
+    if (window.scrollY > nav.offsetTop + nav.offsetHeight) {
+      toolbar.classList.add("toolbar--scroll");
+      sidebar.classList.add("sidebar--scroll");
+      lineup.classList.add("lineup--scroll");
+      main.style.marginTop = toolbar.offsetHeight + "px";
+    } else {
+      toolbar.classList.remove("toolbar--scroll");
+      sidebar.classList.remove("sidebar--scroll");
+      lineup.classList.remove("lineup--scroll");
+      main.style.marginTop = 0;
+    }
+  }
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this.handleScroll);
   }
 
   render() {

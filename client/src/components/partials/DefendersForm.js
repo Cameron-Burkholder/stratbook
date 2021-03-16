@@ -20,7 +20,7 @@ const DefendersForm = (props) => {
       <div className="defenders-form__defender" key={index}>
         <input onChange={() => { props.onChange(defender); } } className={"defenders-form__input " + (props.defenders.indexOf(defender) >= 0 ? "defenders-form__input--checked" : "")} type="checkbox" id={"defenders-form__defender--" + defender.toLowerCase()} checked={props.defenders.indexOf(defender) >= 0}/>
         <label className="defenders-form__label" htmlFor={"defenders-form__defender--" + defender.toLowerCase()}>
-          <img className="defenders-form__image" alt={defender + " Image"} src={"https://cdn.r6stats.com/badges/" + defender.toLowerCase() + "_badge.png"}/>
+          <img className="defenders-form__image" alt={defender + " Image"} src={`../../media/min/operators/${defender.toLowerCase()}.png`}/>
         </label>
       </div>
     )

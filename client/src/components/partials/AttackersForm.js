@@ -20,7 +20,7 @@ const AttackersForm = (props) => {
       <div className="attackers-form__attacker" key={index}>
         <input onChange={() => { props.onChange(attacker); } } className={"attackers-form__input " + (props.attackers.indexOf(attacker) >= 0 ? "attackers-form__input--checked" : "")} type="checkbox" id={"attackers-form__input--" + attacker.toLowerCase()} checked={props.attackers.indexOf(attacker) >= 0} key={index}/>
         <label className="attackers-form__label" htmlFor={"attackers-form__input--" + attacker.toLowerCase()}>
-          <img className="attackers-form__image" alt={attacker + " Image"} src={"https://cdn.r6stats.com/badges/" + attacker.toLowerCase() + "_badge.png"}/>
+          <img className="attackers-form__image" alt={attacker + " Image"} src={`../../media/min/operators/${attacker.toLowerCase()}.png`}/>
         </label>
       </div>
     )

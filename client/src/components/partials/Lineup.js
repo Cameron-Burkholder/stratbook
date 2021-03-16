@@ -87,7 +87,7 @@ class Lineup extends React.Component {
             )}
             <div className="role__image" onClick={() => { this.props.selectOperator(index) }}>
               <p>{this.props.operators[index]}</p>
-              <img className="role__image" src={`../../media/operators/${this.props.operators[index]}.png`}
+              <img className="role__image" src={`../../media/min/operators/${this.props.operators[index]}.png`}
                 onClick={() => {
                   if (this.props.activeOperator === index) {
                     this.props.insertOperator(this.props.activeOperator);
@@ -104,7 +104,7 @@ class Lineup extends React.Component {
                 { this.props.gadgets[index].gadget && this.props.gadgets[index].count !== 0 ? (
                   <div className="role__gadget">
                     <p>{this.props.gadgets[index].gadget} ({this.props.gadgets[index].count - this.props.gadgetPositions[index].length})</p>
-                    <img className="role__gadget-image" src={`../../media/gadgets/${this.props.gadgets[index].gadget.toUpperCase().replace(" ", "_").replace(" ", "_")}.png`}
+                    <img className="role__gadget-image" src={`../../media/min/gadgets/${this.props.gadgets[index].gadget.toUpperCase().replace(" ", "_").replace(" ", "_")}.png`}
                       onClick={() => {
                         if (this.props.gadgets[index].count - this.props.gadgetPositions[index].length> 0) {
                           this.props.insertGadget(index)
@@ -117,7 +117,7 @@ class Lineup extends React.Component {
                 { this.props.utility[index] && this.props.utility[index] !== "UTILITY" ? (
                   <div className="role__utility">
                     <p>{this.props.utility[index]} ({UTILITY_GUIDE[this.props.utility[index]] - this.props.utilityPositions[index].length})</p>
-                    <img className="role__utility-image" src={`../../media/utility/${this.props.utility[index].toUpperCase().replace(" ", "_")}.png`}
+                    <img className="role__utility-image" src={`../../media/min/utility/${this.props.utility[index].toUpperCase().replace(" ", "_")}.png`}
                       onClick={() => {
                         if (UTILITY_GUIDE[this.props.utility[index]] - this.props.utilityPositions[index].length) {
                           this.props.insertUtility(index);

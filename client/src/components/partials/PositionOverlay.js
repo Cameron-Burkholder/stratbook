@@ -204,8 +204,8 @@ class PositionOverlay extends React.Component {
         break;
     }
 
-    let newX = e.pageX - this.state.bounds.left;
-    let newY = e.pageY - this.state.bounds.top;
+    let newX = e.pageX - (this.state.bounds.left);
+    let newY = e.pageY - (this.state.bounds.top);
 
     if (this.props.zoom > 1) {
       const centerX = this.state.bounds.width / 2;
@@ -438,21 +438,41 @@ class PositionOverlay extends React.Component {
     let bool = false;
     if (prevProps !== this.props || prevProps.zoom !== this.props.zoom) {
       bool = true;
-      console.log("zoom changed");
     }
     return bool;
   }
   componentDidMount() {
     if (!this.state.bounds) {
+      let bounds = this.innerSelector.current.getBoundingClientRect();
+      let newBounds = {
+        top: bounds.top + window.pageYOffset,
+        left: bounds.left + window.pageXOffset,
+        x: bounds.x + window.pageXOffset,
+        y: bounds.y + window.pageYOffset,
+        width: bounds.width,
+        height: bounds.height
+      }
       this.setState({
-        bounds: this.innerSelector.current.getBoundingClientRect()
+        bounds: newBounds
       });
     }
   }
   componentDidUpdate(prevProps, prevState) {
     if (this.detectChange(prevProps, prevState)) {
-      const bounds = this.state.bounds;
-      console.log(bounds);
+      let bounds;
+      if (this.props.zoom !== prevProps.zoom || this.props.offsetX !== prevProps.offsetX || this.props.offsetY !== prevProps.offsetY) {
+        let newBounds = this.innerSelector.current.getBoundingClientRect();
+        bounds = {
+          top: newBounds.top + window.pageYOffset,
+          left: newBounds.left + window.pageXOffset,
+          x: newBounds.x + window.pageXOffset,
+          y: newBounds.y + window.pageYOffset,
+          width: newBounds.width,
+          height: newBounds.height
+        }
+      } else {
+        bounds = this.state.bounds;
+      }
       this.setState({
         index: 0,
         type: "",
@@ -463,10 +483,7 @@ class PositionOverlay extends React.Component {
         rotates: (this.props.rotates ? [...this.props.rotates] : []),
         reinforcements: (this.props.reinforcements ? [...this.props.reinforcements] : []),
         breaches: (this.props.breaches ? [...this.props.breaches] : []),
-        bounds: (this.props.zoom !== prevProps.zoom || this.props.offsetX !== prevProps.offsetX || this.props.offsetY !== prevProps.offsetY ?
-                this.innerSelector.current.getBoundingClientRect() : bounds)
-      }, () => {
-        console.log(this.state.bounds);
+        bounds: bounds
       });
     }
   }

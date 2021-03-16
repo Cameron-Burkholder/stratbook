@@ -110,7 +110,7 @@ class BlueprintForm extends React.Component {
     }
   }
   render() {
-    const url = `../../media/maps/${this.props.map.replace(" ", "_")}-${this.props.floor.toUpperCase().replace(" ", "_")}-min.jpg`;
+    const url = `../../media/min/maps/${this.props.map.replace(" ", "_")}-${this.props.floor.toUpperCase().replace(" ", "_")}-min.jpg`;
     const style = {
       backgroundImage: `url(${url})`,
       backgroundPosition: "center",

@@ -220,7 +220,7 @@ class EditStrategiesAPI extends React.Component {
       } else {
         const maps = this.state.maps.map((map, index) => {
           return (
-            <Link to={`/strategies/edit/${map}`} className="map-option" key={index} style={{ backgroundImage: `url(../../media/maps/${map.toUpperCase().replace(" ", "_")}-min.png)` }}
+            <Link to={`/strategies/edit/${map}`} className="map-option" key={index} style={{ backgroundImage: `url(../../media/min/maps/${map.toUpperCase().replace(" ", "_")}-min.png)` }}
               onClick={() => { this.fetchMap(map) }}>
               <div className="map-overlay">
                 { map.toUpperCase().replace("_", " ") }

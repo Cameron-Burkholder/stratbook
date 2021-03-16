@@ -26,7 +26,7 @@ class UserDropdown extends React.Component {
   render() {
     return (
       <div className={"user-dropdown " + (this.state.active ? "user-dropdown--active" : "user-dropdown--inactive")}>
-        <img className="user-dropdown__icon" onClick={this.toggleDropdown} alt="User Icon" src="../media/min/User Icon.png"/>
+        <img className="user-dropdown__icon" onClick={this.toggleDropdown} alt="User Icon" src="../../media/min/User Icon.png"/>
         <div className="user-dropdown__body">
           <span id="user-dropdown-title">{this.props.username}</span>
           <Link onClick={() => { this.toggleDropdown(); this.props.toggleMenu(); }} className="user-dropdown__link" to="/user">Account</Link>
