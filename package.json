@@ -46,10 +46,5 @@
     "imagemin-pngquant": "^9.0.2",
     "nodemon": "^2.0.4"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run build"
-    }
-  },
   "proxy": "http://localhost:5000"
 }
