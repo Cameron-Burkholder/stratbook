@@ -912,15 +912,24 @@ div#Viewer {
 }
 
 @media screen and (max-width: #{$tablet-max-width}) {
+  div#EditStrategiesAPI div.edit-container {
+    padding: 8px !important;
+  }
+  div.edit-buttons {
+    padding: $padding-s;
+  }
   div.map-selector {
     grid-template-columns: 1fr;
     padding: 8px;
     padding-top: $padding-m;
-      button.delete-button {
-        filter: none;
-        border: 1px solid $color-danger;
-        background: $color-danger;
-      }
+    div.map-overlay {
+      font-size: $font-heading2;
+    }
+    button.delete-button {
+      filter: none;
+      border: 1px solid $color-danger;
+      background: $color-danger;
+    }
   }
   div#Editor, div#Viewer {
     width: 100%;

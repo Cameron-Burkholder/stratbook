@@ -63,7 +63,7 @@ p {
 nav.nav {
   display: grid;
   grid-template-columns: 300px 1fr;
-  border-bottom: 1px solid #222326;
+  border-bottom: 1px solid #33363E;
   height: 64px;
   background: #1A1D27;
   z-index: 4; }
@@ -91,7 +91,7 @@ li.nav__item {
     color: #B1B3BE; }
 
 li.nav__item:hover {
-  background: #20232F;
+  background: #292C38;
   transition: all 0.3s ease; }
   li.nav__item:hover a.nav__link {
     color: white;
@@ -133,7 +133,7 @@ div.user-dropdown {
     flex-direction: column;
     top: 50px;
     right: 12px;
-    border: 1px solid #222326;
+    border: 1px solid #33363E;
     padding: 16px;
     background: #1A1D27;
     z-index: 1; }
@@ -178,7 +178,7 @@ div.user-dropdown--active div.user-dropdown__body {
     position: absolute;
     right: 16px;
     font-size: 20pt;
-    border: 1px solid #222326;
+    border: 1px solid #33363E;
     height: 64px; }
   ul.nav__body {
     position: fixed;
@@ -476,7 +476,7 @@ div.loading-modal {
 /* client/src/scss/components/_button.scss */
 button {
   background: linear-gradient(to right, #1A1D27, #1A1D27);
-  border: 1px solid #222326;
+  border: 1px solid #33363E;
   outline: none;
   padding: 16px;
   color: rgba(255, 255, 255, 0.95);
@@ -505,7 +505,7 @@ footer.footer {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  border-top: 1px solid #222326; }
+  border-top: 1px solid #33363E; }
 
 @media screen and (max-width: 600px) {
   footer.footer {
@@ -587,7 +587,7 @@ div#OperatorStatisticsAPI {
     div#OperatorStatisticsAPI div.statistics div.operator-statistics {
       display: grid;
       grid-template-columns: 72px 1fr;
-      background: #20232F;
+      background: #292C38;
       transition: all 0.3s ease; }
       div#OperatorStatisticsAPI div.statistics div.operator-statistics div.operator-info {
         padding: 8px; }
@@ -612,7 +612,7 @@ div#OperatorStatisticsAPI {
 
 div.statistics-api {
   padding: 40px;
-  border: 1px solid #222326; }
+  border: 1px solid #33363E; }
 
 h2.statistics-title, h3.statistics-title {
   text-align: center; }
@@ -632,7 +632,7 @@ div.stats-grid {
 
 div.stats-box {
   padding: 40px;
-  border: 1px solid #222326;
+  border: 1px solid #33363E;
   transition: all 0.3s ease;
   display: flex;
   flex-direction: column;
@@ -653,7 +653,7 @@ div.progress-circle {
   display: flex;
   border-radius: 100%;
   margin: 16px auto;
-  border: 1px solid #222326;
+  border: 1px solid #33363E;
   width: 128px;
   height: 128px;
   flex-direction: column;
@@ -696,8 +696,8 @@ div.statistics-api--rows div.statistics {
   margin: auto; }
   div.statistics-api--rows div.statistics div.operator-statistics {
     background: transparent !important;
-    border-top: 1px solid #222326;
-    border-bottom: 1px solid #222326;
+    border-top: 1px solid #33363E;
+    border-bottom: 1px solid #33363E;
     margin: 0; }
     div.statistics-api--rows div.statistics div.operator-statistics div.operator-info img {
       width: 48px !important;
@@ -813,8 +813,8 @@ div.statistics-api--rows div.statistics {
         background: transparent;
         margin: 0;
         padding: 2px 16px;
-        border-top: 1px solid #222326;
-        border-bottom: 1px solid #222326;
+        border-top: 1px solid #33363E;
+        border-bottom: 1px solid #33363E;
         grid-template-columns: 40px 1fr;
         overflow-x: auto; }
         div#OperatorStatisticsAPI div.statistics div.operator-statistics div.operator-info {
@@ -855,14 +855,14 @@ div#LoginAPI, div#RegisterAPI, div#ForgotPasswordAPI, div#ResetPasswordAPI {
 
 div.account-section {
   padding: 40px;
-  border: 1px solid #222326;
+  border: 1px solid #33363E;
   border-bottom: 3px solid #0040D6;
   border-top: 3px solid #0040D6;
   margin-bottom: 128px;
   box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.17); }
   div.account-section button {
     background: #1A1D27;
-    border: 1px solid #222326; }
+    border: 1px solid #33363E; }
   div.account-section button:hover {
     background: linear-gradient(#0040D6, #0098A6); }
   div.account-section h3 {
@@ -978,7 +978,7 @@ div.account-section--danger {
 /* client/src/scss/api/_team-api.scss */
 a.button {
   background: linear-gradient(to right, #1A1D27, #1A1D27);
-  border: 1px solid #222326;
+  border: 1px solid #33363E;
   outline: none;
   padding: 16px;
   color: rgba(255, 255, 255, 0.95);
@@ -1025,7 +1025,7 @@ div#ViewTeamAPI {
   border-top: 3px solid #0040D6; }
   div#ViewTeamAPI div.team {
     padding: 40px;
-    border: 1px solid #222326;
+    border: 1px solid #33363E;
     box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.17); }
     div#ViewTeamAPI div.team h2, div#ViewTeamAPI div.team h3.team-description {
       text-align: center; }
@@ -1033,7 +1033,7 @@ div#ViewTeamAPI {
       margin-top: 40px; }
       div#ViewTeamAPI div.team div.roster div.team-member {
         padding: 16px;
-        border: 1px solid #222326;
+        border: 1px solid #33363E;
         display: grid;
         grid-template-columns: repeat(4, 1fr);
         border-left: 3px solid #0040D6;
@@ -1058,7 +1058,7 @@ div#ViewTeamStatisticsAPI {
   border-top: 3px solid #0098A6; }
   div#ViewTeamStatisticsAPI div.team-statistics {
     box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.17);
-    border: 1px solid #222326;
+    border: 1px solid #33363E;
     padding: 40px; }
     div#ViewTeamStatisticsAPI div.team-statistics h2 {
       text-align: center;
@@ -1088,7 +1088,7 @@ div#ViewTeamStatisticsAPI {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       padding: 16px;
-      border: 1px solid #222326;
+      border: 1px solid #33363E;
       border-right: none;
       border-left: 3px solid #0098A6;
       align-items: center;
@@ -1146,7 +1146,7 @@ div#ManageTeamAPI {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     padding: 16px;
-    border: 1px solid #222326;
+    border: 1px solid #33363E;
     margin-bottom: 16px;
     align-items: center;
     justify-content: center;
@@ -1372,7 +1372,7 @@ div.map-selector {
     grid-column: span 3;
     text-align: center; }
   div.map-selector div.map-option, div.map-selector a.map-option {
-    background: #20232F;
+    background: #292C38;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1406,7 +1406,7 @@ div.map-selector {
     right: 0;
     height: 100%;
     border: none;
-    border-left: 1px solid #222326;
+    border-left: 1px solid #33363E;
     filter: opacity(0);
     transition: all 0.3s ease; }
   div.map-selector button.delete-button:hover {
@@ -1466,7 +1466,7 @@ div.toolbar--scroll {
   top: 0; }
 
 div.toolbar {
-  border-bottom: 1px solid #222326;
+  border-bottom: 1px solid #33363E;
   display: flex;
   align-items: center;
   padding: 4px 0px;
@@ -1666,7 +1666,7 @@ div.sidebar {
   max-height: 100VH;
   display: grid;
   grid-template-rows: 400px 1fr;
-  border-right: 1px solid #222326; }
+  border-right: 1px solid #33363E; }
   div.sidebar button {
     display: none; }
   div.sidebar h3.site-container__heading, div.sidebar h3.scene-container__heading, div.sidebar h3.strategy-container__heading {
@@ -1682,7 +1682,7 @@ div.sidebar {
     padding: 16px;
     margin-top: 4px;
     transition: all 0.3s ease;
-    background: #20232F; }
+    background: #292C38; }
     div.sidebar div.strategy-container div.strategy p.strategy__name {
       color: #E6E6E6;
       margin-bottom: 2px;
@@ -1700,7 +1700,7 @@ div.sidebar {
     padding: 16px;
     margin-top: 4px;
     transition: all 0.3s ease;
-    background: #20232F; }
+    background: #292C38; }
     div.sidebar div.site span.site__number, div.sidebar div.site span.scene__number, div.sidebar div.scene span.site__number, div.sidebar div.scene span.scene__number {
       font-size: 10pt; }
     div.sidebar div.site span:hover, div.sidebar div.scene span:hover {
@@ -1756,7 +1756,7 @@ div.sidebar {
     left: 0;
     width: 256px;
     height: 50px;
-    border: 1px solid #222326;
+    border: 1px solid #33363E;
     display: grid;
     grid-template-columns: repeat(2, 1fr); }
     div.sidebar div.scene-controls button {
@@ -1778,7 +1778,7 @@ div.sidebar {
       background: linear-gradient(to right, #0040D6, #4915D6);
       cursor: pointer; }
     div.sidebar div.scene-controls button:nth-child(1) {
-      border-right: 1px solid #222326; }
+      border-right: 1px solid #33363E; }
 
 div.lineup--scroll div.lineup-body {
   position: fixed;
@@ -1796,7 +1796,7 @@ div.lineup {
   div.lineup div.role {
     border-radius: 0;
     padding: 8px;
-    background: #20232F;
+    background: #292C38;
     margin-bottom: 16px; }
     div.lineup div.role div.role__head {
       width: 100%;
@@ -1848,7 +1848,7 @@ div.canvas {
   width: 100%;
   height: 100%;
   position: relative;
-  border-right: 1px solid #222326;
+  border-right: 1px solid #33363E;
   z-index: 3; }
   div.canvas div.blueprint-form {
     width: 100%;
@@ -2070,10 +2070,16 @@ div#Viewer img.role__image:hover {
     transform: translate(0); } }
 
 @media screen and (max-width: 850px) {
+  div#EditStrategiesAPI div.edit-container {
+    padding: 8px !important; }
+  div.edit-buttons {
+    padding: 16px; }
   div.map-selector {
     grid-template-columns: 1fr;
     padding: 8px;
     padding-top: 40px; }
+    div.map-selector div.map-overlay {
+      font-size: 16pt; }
     div.map-selector button.delete-button {
       filter: none;
       border: 1px solid #C93434;
