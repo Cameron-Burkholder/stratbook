@@ -2186,7 +2186,9 @@ div#Viewer img.role__image:hover {
       grid-row: 1;
       width: 100%; }
       div#Editor main div.canvas div.blueprint-form, div#Viewer main div.canvas div.blueprint-form {
-        width: 100%;
+        width: calc(100% - 2 * 16px);
+        display: block;
+        margin: auto;
         height: 675px;
         overflow: hidden;
         touch-action: none; }
@@ -2195,9 +2197,22 @@ div#Viewer img.role__image:hover {
           height: 100%; }
       div#Editor main div.canvas div.canvas__controls, div#Viewer main div.canvas div.canvas__controls {
         left: 50%;
-        transform: translateX(-50%); }
+        transform: translateX(-50%);
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        width: 100%;
+        height: auto; }
+        div#Editor main div.canvas div.canvas__controls select.form__select, div#Viewer main div.canvas div.canvas__controls select.form__select {
+          display: block !important;
+          grid-row: 2; }
+        div#Editor main div.canvas div.canvas__controls div.zoom-selector, div#Viewer main div.canvas div.canvas__controls div.zoom-selector {
+          grid-row: 1;
+          grid-column: span 2; }
+        div#Editor main div.canvas div.canvas__controls div.labels, div#Viewer main div.canvas div.canvas__controls div.labels {
+          grid-row: 2; }
       div#Editor main div.canvas div.canvas__body, div#Viewer main div.canvas div.canvas__body {
-        padding: 16px; }
+        padding: 16px;
+        margin-top: 128px; }
       div#Editor main div.canvas div.objectives button, div#Viewer main div.canvas div.objectives button {
         width: 100%; }
     div#Editor main div.sidebar, div#Viewer main div.sidebar {

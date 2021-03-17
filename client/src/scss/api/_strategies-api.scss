@@ -1061,7 +1061,9 @@ div#Viewer {
         grid-row: 1;
         width: 100%;
         div.blueprint-form {
-          width: 100%;
+          width: calc(100% - 2 * #{$padding-s});
+          display: block;
+          margin: auto;
           height: $canvas-height;
           overflow: hidden;
           touch-action: none;
@@ -1073,9 +1075,25 @@ div#Viewer {
         div.canvas__controls {
           left: 50%;
           transform: translateX(-50%);
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          width: 100%;
+          height: auto;
+          select.form__select {
+            display: block !important;
+            grid-row: 2;
+          }
+          div.zoom-selector {
+            grid-row: 1;
+            grid-column: span 2;
+          }
+          div.labels {
+            grid-row: 2;
+          }
         }
         div.canvas__body {
           padding: 16px;
+          margin-top: 128px;
         }
         div.objectives {
           button {
