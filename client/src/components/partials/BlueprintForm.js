@@ -39,7 +39,6 @@ class BlueprintForm extends React.Component {
       startY: t.touches[0].clientY,
       move: true
     }, () => {
-      console.log(this.state);
       document.addEventListener("touchmove", this.onDrag);
       document.addEventListener("touchend", this.onDragStop);
     })

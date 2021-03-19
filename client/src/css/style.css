@@ -2079,7 +2079,8 @@ div#Viewer img.role__image:hover {
     padding: 8px;
     padding-top: 40px; }
     div.map-selector div.map-overlay {
-      font-size: 16pt; }
+      font-size: 16pt;
+      background: rgba(0, 0, 0, 0.47); }
     div.map-selector button.delete-button {
       filter: none;
       border: 1px solid #C93434;
@@ -2192,22 +2193,23 @@ div#Viewer img.role__image:hover {
       grid-row: 1;
       width: 100%; }
       div#Editor main div.canvas div.blueprint-form, div#Viewer main div.canvas div.blueprint-form {
-        width: calc(100% - 2 * 16px);
+        width: 100%;
+        height: 450px;
         display: block;
         margin: auto;
-        height: 675px;
         overflow: hidden;
         touch-action: none; }
         div#Editor main div.canvas div.blueprint-form div.position-overlay, div#Viewer main div.canvas div.blueprint-form div.position-overlay {
           width: 900px;
-          height: 100%; }
+          height: 675px; }
       div#Editor main div.canvas div.canvas__controls, div#Viewer main div.canvas div.canvas__controls {
         left: 50%;
         transform: translateX(-50%);
         display: grid;
         grid-template-columns: 1fr 1fr;
         width: 100%;
-        height: auto; }
+        height: auto;
+        top: 450px; }
         div#Editor main div.canvas div.canvas__controls select.form__select, div#Viewer main div.canvas div.canvas__controls select.form__select {
           display: block !important;
           grid-row: 2; }

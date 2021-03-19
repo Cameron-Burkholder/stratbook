@@ -68,6 +68,7 @@ class SeasonalStatisticsAPI extends React.Component {
   render() {
     const season_arr = CURRENT_SEASON.split("_");
     const season = season_arr[0].charAt(0).toUpperCase() + season_arr[0].slice(1) + " " + season_arr[1].charAt(0).toUpperCase() + season_arr[1].slice(1);
+    console.log(this.state.stats);
     return (
       <div id="SeasonalStatisticsAPI" className="statistics-api">
         <h2 className="statistics-title">Operation {season}</h2>

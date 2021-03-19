@@ -924,6 +924,7 @@ div#Viewer {
     padding-top: $padding-m;
     div.map-overlay {
       font-size: $font-heading2;
+      background: rgba(0, 0, 0, 0.47);
     }
     button.delete-button {
       filter: none;
@@ -1070,15 +1071,15 @@ div#Viewer {
         grid-row: 1;
         width: 100%;
         div.blueprint-form {
-          width: calc(100% - 2 * #{$padding-s});
+          width: 100%;
+          height: 450px;
           display: block;
           margin: auto;
-          height: $canvas-height;
           overflow: hidden;
           touch-action: none;
           div.position-overlay {
             width: $canvas-width;
-            height: 100%;
+            height: $canvas-height;
           }
         }
         div.canvas__controls {
@@ -1088,6 +1089,7 @@ div#Viewer {
           grid-template-columns: 1fr 1fr;
           width: 100%;
           height: auto;
+          top: 450px;
           select.form__select {
             display: block !important;
             grid-row: 2;
