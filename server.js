@@ -8,6 +8,7 @@ const passport = require("passport");         // For use in authentication
 const path = require("path");                 // For use in directory management
 const email = require("./config/email");      // For use in sending emails
 const morgan = require("morgan");             // For use in loggin requests
+const helmet = require("helmet");             // For security
 
 require("dotenv").config();                   // For using environment variables
 
@@ -47,6 +48,9 @@ require("./config/email.js");
 // IMPLEMENT PASSPORT
 app.use(passport.initialize());
 require("./config/auth.js")(passport, app);
+
+// IMPLEMENT HELMETJS
+app.use(helmet());
 
 // IMPLEMENT ROUTES
 require("./routes/users.js")(app, passport);
