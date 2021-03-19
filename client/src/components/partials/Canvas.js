@@ -4,6 +4,7 @@ import React from "react";
 
 import FloorSelector from "./FloorSelector.js";
 import ZoomSelector from "./ZoomSelector.js";
+import Pagination from "./Pagination.js";
 import BlueprintForm from "./BlueprintForm.js";
 import Objectives from "./Objectives.js";
 
@@ -39,6 +40,8 @@ class Canvas extends React.Component {
             <span>Show Labels</span>
             <input type="checkbox" onChange={this.toggleLabels} checked={this.state.labels}/>
           </div>
+          <Pagination onChange={this.props.selectScene} index={this.props.sceneIndex} labels={this.props.scenes}
+            activeLabel={this.props.scenes[this.props.sceneIndex].name}/>
         </div>
         <BlueprintForm type={this.props.type}
           operators={this.props.operators}

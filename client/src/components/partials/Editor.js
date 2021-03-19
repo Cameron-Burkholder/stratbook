@@ -922,6 +922,7 @@ class Editor extends React.Component {
             updateNotes={this.updateNotes}
             scenes={this.state.scenes}
             sceneIndex={this.state.sceneIndex}
+            selectScene={this.selectScene}
             video={this.state.type === "ATTACK" ? (
               this.state.map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].video
             ) : ( this.state.map.defense[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].video)}

@@ -7,11 +7,20 @@ import React from "react";
   @desc: allow a user to page through content
 */
 const Pagination = (props) => {
+  console.log(props);
   return (
     <div className="pagination">
-      <button className="pagination__button" onClick={props.decrement}> &lt; </button>
-      <p className="pagination__title">{props.title} {props.index + 1}</p>
-      <button className="pagination__button" onClick={props.increment}> &gt; </button>
+      <button className="pagination__button" onClick={() => {
+        if (props.index - 1 > 0) {
+          props.onChange(props.index - 1);
+        }
+      }}> &lt; </button>
+      <p className="pagination__title">{props.activeLabel}</p>
+      <button className="pagination__button" onClick={() => {
+        if (props.index + 1 < props.labels.length) {
+          props.onChange(props.index + 1);
+        }
+      }}> &gt; </button>
     </div>
   )
 }

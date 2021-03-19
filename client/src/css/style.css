@@ -411,6 +411,20 @@ div.alert--success {
     right: 0; } }
 
 /* client/src/scss/components/_pagination.scss */
+div.pagination {
+  display: flex; }
+  div.pagination button.pagination__button {
+    background: white;
+    color: #19191a;
+    border: none;
+    border-radius: 0; }
+  div.pagination p.pagination__title {
+    color: #19191a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 8px; }
+
 /* client/src/scss/comopnents/_loading.scss */
 .loader {
   position: relative;
@@ -2194,7 +2208,7 @@ div#Viewer img.role__image:hover {
       width: 100%; }
       div#Editor main div.canvas div.blueprint-form, div#Viewer main div.canvas div.blueprint-form {
         width: 100%;
-        height: 450px;
+        height: 500px;
         display: block;
         margin: auto;
         overflow: hidden;
@@ -2209,18 +2223,29 @@ div#Viewer img.role__image:hover {
         grid-template-columns: 1fr 1fr;
         width: 100%;
         height: auto;
-        top: 450px; }
+        top: 500px; }
         div#Editor main div.canvas div.canvas__controls select.form__select, div#Viewer main div.canvas div.canvas__controls select.form__select {
           display: block !important;
           grid-row: 2; }
         div#Editor main div.canvas div.canvas__controls div.zoom-selector, div#Viewer main div.canvas div.canvas__controls div.zoom-selector {
           grid-row: 1;
           grid-column: span 2; }
+          div#Editor main div.canvas div.canvas__controls div.zoom-selector input, div#Viewer main div.canvas div.canvas__controls div.zoom-selector input {
+            width: 100%; }
+        div#Editor main div.canvas div.canvas__controls select.form__select, div#Viewer main div.canvas div.canvas__controls select.form__select {
+          padding: 8px; }
         div#Editor main div.canvas div.canvas__controls div.labels, div#Viewer main div.canvas div.canvas__controls div.labels {
-          grid-row: 2; }
+          grid-row: 2;
+          flex-direction: row; }
+          div#Editor main div.canvas div.canvas__controls div.labels input, div#Viewer main div.canvas div.canvas__controls div.labels input {
+            margin-left: 8px; }
+        div#Editor main div.canvas div.canvas__controls div.pagination, div#Viewer main div.canvas div.canvas__controls div.pagination {
+          grid-column: span 2;
+          display: flex;
+          justify-content: center; }
       div#Editor main div.canvas div.canvas__body, div#Viewer main div.canvas div.canvas__body {
         padding: 16px;
-        margin-top: 128px; }
+        margin-top: 196px; }
       div#Editor main div.canvas div.objectives button, div#Viewer main div.canvas div.objectives button {
         width: 100%; }
     div#Editor main div.sidebar, div#Viewer main div.sidebar {
