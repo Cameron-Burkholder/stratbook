@@ -87,7 +87,7 @@ class Lineup extends React.Component {
             )}
             <div className="role__image" onClick={() => { this.props.selectOperator(index) }}>
               <p>{this.props.operators[index]}</p>
-              <img className="role__image" src={`../../media/min/operators/${this.props.operators[index]}.png`}
+              <img className="role__image" src={`../../media/min/operators/${this.props.operators[index].toLowerCase()}.png`}
                 onClick={() => {
                   if (this.props.activeOperator === index) {
                     this.props.insertOperator(this.props.activeOperator);

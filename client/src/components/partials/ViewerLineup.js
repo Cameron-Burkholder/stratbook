@@ -33,7 +33,7 @@ class ViewerLineup extends React.Component {
             </div>
             <div className="role__image" onClick={() => { this.props.selectOperator(index) }}>
               <p>{this.props.operators[index]}</p>
-              <img className="role__image" src={`../../media/min/operators/${this.props.operators[index]}.png`}/>
+              <img className="role__image" src={`../../media/min/operators/${this.props.operators[index].toLowerCase()}.png`}/>
             </div>
           </div>
 
