@@ -58,14 +58,14 @@ html, body {
 p {
   color: $text-body;
   font-size: $font-body;
-}/*
+}
 ::-webkit-scrollbar {
   width: 4px;
   height: 4px;
 }
 ::-webkit-scrollbar-thumb {
   background: linear-gradient(#{$color-primary}, #{$color-secondary});
-}*/
+}
 
 // Import components
 @import "./components/_navigation.scss";
@@ -74,6 +74,7 @@ p {
 @import "./components/_form.scss";
 @import "./components/_alert.scss";
 @import "./components/_pagination.scss";
+@import "./components/_toggle.scss";
 @import "./components/_loading.scss";
 @import "./components/_button.scss";
 @import "./components/_footer.scss";

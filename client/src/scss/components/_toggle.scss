@@ -1,0 +1,88 @@
+/* client/src/scss/components/_toggle.scss */
+
+div.toggle {
+  margin-top: $margin-s !important;
+  margin-bottom: $margin-s !important;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  * {
+    margin: auto !important;
+  }
+  a.toggle__link {
+    font-size: $font-small;
+  }
+  a.toggle__link:hover {
+    cursor: pointer;
+  }
+
+  /* The switch - the box around the slider */
+  .switch {
+   position: relative;
+   display: inline-block;
+   width: 60px;
+   height: 24px;
+   margin: 0 !important;
+   margin-right: $margin-s;
+  }
+
+  p {
+    margin: 0 !important;
+    margin-left: $margin-s !important;
+  }
+
+  /* Hide default HTML checkbox */
+  .switch input {
+   opacity: 0;
+   width: 0;
+   height: 0;
+  }
+
+  /* The slider */
+  .slider {
+   position: absolute;
+   cursor: pointer;
+   top: 0;
+   left: 0;
+   right: 0;
+   bottom: 0;
+   background: linear-gradient(to right, #ccc, #ccc);
+   -webkit-transition: .4s;
+   transition: .4s;
+  }
+
+  .slider:before {
+   position: absolute;
+   content: "";
+   height: 20px;
+   width: 20px;
+   left: 2px;
+   bottom: 2px;
+   background-color: white;
+   -webkit-transition: .4s;
+   transition: .4s;
+  }
+
+  input:checked + .slider {
+   background: linear-gradient(to right, #{$color-primary}, #{$color-secondary});
+  }
+
+  input:focus + .slider {
+   box-shadow: 0 0 1px $color-primary;
+  }
+
+  input:checked + .slider:before {
+   -webkit-transform: translateX(35px);
+   -ms-transform: translateX(35px);
+   transform: translateX(35px);
+  }
+
+  /* Rounded sliders */
+  .slider.round {
+   border-radius: 24px;
+  }
+
+  .slider.round:before {
+   border-radius: 50%;
+  }
+}

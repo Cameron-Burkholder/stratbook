@@ -85,6 +85,10 @@ module.exports = {
     status: "ERROR",
     message: "An error occurred while attempting to reset password."
   },
+  ERROR_SHARED_STRATEGY: {
+    status: "ERROR",
+    message: "An error occurred while attempting to share strategy."
+  },
   ERROR_TEAM: {
     status: "ERROR",
     message: "An error occurred while attempting to find the requested team."

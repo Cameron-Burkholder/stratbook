@@ -8,6 +8,7 @@ const randomize = require("randomatic");
 const saltRounds = 10;
 const axios = require("axios");
 const email = require("./email.js");
+const randomWords = require("random-words");
 require("dotenv").config();
 
 // Load push notifications
@@ -179,4 +180,15 @@ exports.getStats = async function(username, platform, type) {
     return null;
   });
   return data;
+}
+
+/**
+* Generate random word-based key
+* @name genWordCode
+* @function
+* @async
+* @returns {string} word-based key string
+*/
+exports.genWordCode = function() {
+  return randomWords({ exactly: 3, join: "-" });
 }

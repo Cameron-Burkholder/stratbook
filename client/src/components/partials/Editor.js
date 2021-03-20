@@ -33,6 +33,8 @@ class Editor extends React.Component {
     this.updateName = this.updateName.bind(this);
     this.updateFloor = this.updateFloor.bind(this);
     this.save = this.save.bind(this);
+    this.share = this.share.bind(this);
+    this.unshare = this.unshare.bind(this);
 
     // Strategies
     this.addStrategy = this.addStrategy.bind(this);
@@ -223,6 +225,45 @@ class Editor extends React.Component {
       type: this.state.type
     };
     this.props.save(JSON.stringify(this.state.map), position);
+  }
+  share() {
+    let map = this.state.map;
+    let strategies;
+    let strategy;
+    let shared;
+    if (this.state.type === "ATTACK") {
+      shared = map.attack[this.state.strategyIndex].shared === true;
+    } else {
+      shared = map.defense[this.state.site][this.state.strategyIndex].shared === true;
+    }
+
+    if (!shared) {
+      if (this.state.type === "ATTACK") {
+        map.attack[this.state.strategyIndex].shared = true;
+        strategies = map.attack;
+      } else {
+        map.defense[this.state.site][this.state.strategyIndex].shared = true;
+        strategies = map.defense[this.state.site];
+      }
+      strategy = strategies[this.state.strategyIndex];
+      const position = {
+        siteIndex: this.state.siteIndex,
+        strategyIndex: this.state.strategyIndex,
+        sceneIndex: this.state.sceneIndex,
+        floorIndex: this.state.floorIndex,
+        type: this.state.type
+      };
+
+      this.setState({
+        map: map,
+        strategies: strategies
+      }, () => {
+        this.props.shareStrategy(strategy, map, position);
+      });
+    }
+  }
+  unshare() {
+
   }
 
   // Strategies
@@ -857,7 +898,12 @@ class Editor extends React.Component {
             addScene={this.addScene}
             removeScene={this.removeScene}
             updateSceneName={this.updateSceneName}
-            type={this.state.type}/>
+            type={this.state.type}
+            shared={this.state.strategies[this.state.strategyIndex].shared}
+            shared_key={this.state.strategies[this.state.strategyIndex].shared_key}
+            share={this.share}
+            unshare={this.unshare}
+            />
           <Canvas
             type={this.state.type}
             operators={(this.state.type === "ATTACK" ? (

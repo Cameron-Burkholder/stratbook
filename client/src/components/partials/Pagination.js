@@ -7,7 +7,6 @@ import React from "react";
   @desc: allow a user to page through content
 */
 const Pagination = (props) => {
-  console.log(props);
   return (
     <div className="pagination">
       <button className="pagination__button" onClick={() => {

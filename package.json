@@ -33,6 +33,7 @@
     "nodemailer": "^6.4.11",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
+    "random-words": "^1.1.1",
     "randomatic": "^3.1.1",
     "socket.io": "^3.0.5",
     "socket.io-client": "^3.0.5",

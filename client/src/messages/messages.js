@@ -184,6 +184,14 @@ module.exports = {
     status: "Strategies Found",
     message: "Strategies found."
   },
+  STRATEGY_SHARED: {
+    status: "Strategy Shared",
+    message: "Your strategy has been shared successfully."
+  },
+  STRATEGY_UNSHARED: {
+    status: "Strategy Unshared",
+    message: "Your strategy has been unshared successfully."
+  },
   TEAM_CREATED: {
     status: "Team Created",
     message: "You have created a team."

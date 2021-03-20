@@ -240,7 +240,7 @@ div#ManageTeamAPI {
     box-shadow: $box-shadow-primary;
     transition: all 0.3s ease;
   }
-  div.team-status, div.team-platform {
+  div.team-status, div.team-platform, div.team-mmr {
     margin-top: $margin-m;
     select {
       width: 100%;

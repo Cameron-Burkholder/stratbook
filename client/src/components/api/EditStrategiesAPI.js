@@ -3,8 +3,8 @@
 import React from "react";
 import axios from "axios";
 import { Redirect } from "react-router-dom";
-import { STRATEGIES_FOUND, MAP_FOUND, MAP_UPDATED, MAP_DELETED } from "../../messages/messages.js";
-import { ERROR_VIEW_STRATEGIES, ERROR_VIEW_MAP, ERROR_UPDATE_MAP, ERROR_DELETE_MAP } from "../../messages/errors.js";
+import { STRATEGIES_FOUND, MAP_FOUND, MAP_UPDATED, MAP_DELETED, STRATEGY_SHARED } from "../../messages/messages.js";
+import { ERROR_VIEW_STRATEGIES, ERROR_VIEW_MAP, ERROR_UPDATE_MAP, ERROR_DELETE_MAP, ERROR_SHARED_STRATEGY } from "../../messages/errors.js";
 
 import CreateStrategiesAPI from "./CreateStrategiesAPI";
 import LoadingModal from "../partials/LoadingModal.js";
@@ -26,6 +26,7 @@ class EditStrategiesAPI extends React.Component {
     this.fetchMap = this.fetchMap.bind(this);
     this.updateStrategy = this.updateStrategy.bind(this);
     this.deleteMap = this.deleteMap.bind(this);
+    this.shareStrategy = this.shareStrategy.bind(this);
 
     this.state = {
       map_name: this.props.map,
@@ -149,6 +150,46 @@ class EditStrategiesAPI extends React.Component {
         component.props.alert(ERROR_UPDATE_MAP.message, ERROR_UPDATE_MAP.status);
       })
   }
+  shareStrategy(strategy, map, position) {
+    const component = this;
+    this.setState({
+      loading: true,
+      position: position
+    });
+    axios.defaults.headers.common["Authorization"] = this.props.getAuthToken();
+    axios.post(`/api/strategies/share`, {
+      strategy: strategy
+      })
+      .then((response) => {
+        switch (response.data.status) {
+          case STRATEGY_SHARED.status:
+            component.setState({
+              loading: false,
+            }, () => {
+              if (position.type === "ATTACK") {
+                map.attack[position.strategyIndex].shared_key = response.data.shared_key;
+              } else {
+                map.defense[position.siteIndex][position.strategyIndex].shared_key = response.data.shared_key;
+              }
+              this.updateStrategy(JSON.stringify(map), position);
+            });
+            break;
+          default:
+            component.setState({
+              loading: false,
+            }, component.props.fetchStrategies);
+            component.props.alert(response.data.message, response.data.status);
+            break;
+        }
+      }).catch((error) => {
+        console.log(error);
+        component.setState({
+          loading: false,
+          hasLoaded: true
+        });
+        component.props.alert(ERROR_SHARED_STRATEGY.message, ERROR_SHARED_STRATEGY.status);
+      })
+  }
   deleteMap(e, map) {
     e.preventDefault();
     e.stopPropagation();
@@ -208,7 +249,7 @@ class EditStrategiesAPI extends React.Component {
     } else {
       if (this.state.map_name) {
         if (this.state.hasLoaded && this.state.map) {
-          contents = <Editor map={this.state.map} alert={this.props.alert} save={this.updateStrategy} fetchStrategies={this.fetchStrategies} position={this.state.position}/>;
+          contents = <Editor map={this.state.map} alert={this.props.alert} save={this.updateStrategy} shareStrategy={this.shareStrategy} fetchStrategies={this.fetchStrategies} position={this.state.position}/>;
         } else {
           contents = (
             <div>

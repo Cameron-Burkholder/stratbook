@@ -51,14 +51,13 @@ p {
   color: #B1B3BE;
   font-size: 12pt; }
 
-/*
 ::-webkit-scrollbar {
   width: 4px;
-  height: 4px;
-}
+  height: 4px; }
+
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(#0040D6, #0098A6);
-}*/
+  background: linear-gradient(#0040D6, #0098A6); }
+
 /* scss/components/_navigation.scss */
 nav.nav {
   display: grid;
@@ -412,18 +411,88 @@ div.alert--success {
 
 /* client/src/scss/components/_pagination.scss */
 div.pagination {
-  display: flex; }
+  display: flex;
+  justify-content: space-between; }
   div.pagination button.pagination__button {
     background: white;
     color: #19191a;
     border: none;
-    border-radius: 0; }
+    border-radius: 0;
+    border: 1px solid #33363E;
+    padding: 16px 40px; }
   div.pagination p.pagination__title {
     color: #19191a;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0 8px; }
+    padding: 0 8px;
+    border-top: 1px solid #33363E;
+    border-bottom: 1px solid #33363E;
+    width: 100%; }
+
+/* client/src/scss/components/_toggle.scss */
+div.toggle {
+  margin-top: 16px !important;
+  margin-bottom: 16px !important;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  /* The switch - the box around the slider */
+  /* Hide default HTML checkbox */
+  /* The slider */
+  /* Rounded sliders */ }
+  div.toggle * {
+    margin: auto !important; }
+  div.toggle a.toggle__link {
+    font-size: 10pt; }
+  div.toggle a.toggle__link:hover {
+    cursor: pointer; }
+  div.toggle .switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 24px;
+    margin: 0 !important;
+    margin-right: 16px; }
+  div.toggle p {
+    margin: 0 !important;
+    margin-left: 16px !important; }
+  div.toggle .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0; }
+  div.toggle .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to right, #ccc, #ccc);
+    -webkit-transition: .4s;
+    transition: .4s; }
+  div.toggle .slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s; }
+  div.toggle input:checked + .slider {
+    background: linear-gradient(to right, #0040D6, #0098A6); }
+  div.toggle input:focus + .slider {
+    box-shadow: 0 0 1px #0040D6; }
+  div.toggle input:checked + .slider:before {
+    -webkit-transform: translateX(35px);
+    -ms-transform: translateX(35px);
+    transform: translateX(35px); }
+  div.toggle .slider.round {
+    border-radius: 24px; }
+  div.toggle .slider.round:before {
+    border-radius: 50%; }
 
 /* client/src/scss/comopnents/_loading.scss */
 .loader {
@@ -1184,12 +1253,12 @@ div#ManageTeamAPI {
   div#ManageTeamAPI div.manage-team-member:hover {
     box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.17);
     transition: all 0.3s ease; }
-  div#ManageTeamAPI div.team-status, div#ManageTeamAPI div.team-platform {
+  div#ManageTeamAPI div.team-status, div#ManageTeamAPI div.team-platform, div#ManageTeamAPI div.team-mmr {
     margin-top: 40px; }
-    div#ManageTeamAPI div.team-status select, div#ManageTeamAPI div.team-platform select {
+    div#ManageTeamAPI div.team-status select, div#ManageTeamAPI div.team-platform select, div#ManageTeamAPI div.team-mmr select {
       width: 100%;
       max-width: 256px; }
-    div#ManageTeamAPI div.team-status option, div#ManageTeamAPI div.team-platform option {
+    div#ManageTeamAPI div.team-status option, div#ManageTeamAPI div.team-platform option, div#ManageTeamAPI div.team-mmr option {
       color: #19191a; }
 
 div#BlockedUsersAPI {
@@ -2208,7 +2277,7 @@ div#Viewer img.role__image:hover {
       width: 100%; }
       div#Editor main div.canvas div.blueprint-form, div#Viewer main div.canvas div.blueprint-form {
         width: 100%;
-        height: 500px;
+        height: 450px;
         display: block;
         margin: auto;
         overflow: hidden;
@@ -2223,15 +2292,14 @@ div#Viewer img.role__image:hover {
         grid-template-columns: 1fr 1fr;
         width: 100%;
         height: auto;
-        top: 500px; }
+        top: 450px; }
         div#Editor main div.canvas div.canvas__controls select.form__select, div#Viewer main div.canvas div.canvas__controls select.form__select {
           display: block !important;
           grid-row: 2; }
         div#Editor main div.canvas div.canvas__controls div.zoom-selector, div#Viewer main div.canvas div.canvas__controls div.zoom-selector {
           grid-row: 1;
-          grid-column: span 2; }
-          div#Editor main div.canvas div.canvas__controls div.zoom-selector input, div#Viewer main div.canvas div.canvas__controls div.zoom-selector input {
-            width: 100%; }
+          grid-column: span 2;
+          display: none; }
         div#Editor main div.canvas div.canvas__controls select.form__select, div#Viewer main div.canvas div.canvas__controls select.form__select {
           padding: 8px; }
         div#Editor main div.canvas div.canvas__controls div.labels, div#Viewer main div.canvas div.canvas__controls div.labels {
@@ -2240,9 +2308,7 @@ div#Viewer img.role__image:hover {
           div#Editor main div.canvas div.canvas__controls div.labels input, div#Viewer main div.canvas div.canvas__controls div.labels input {
             margin-left: 8px; }
         div#Editor main div.canvas div.canvas__controls div.pagination, div#Viewer main div.canvas div.canvas__controls div.pagination {
-          grid-column: span 2;
-          display: flex;
-          justify-content: center; }
+          grid-column: span 2; }
       div#Editor main div.canvas div.canvas__body, div#Viewer main div.canvas div.canvas__body {
         padding: 16px;
         margin-top: 196px; }

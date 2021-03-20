@@ -2,6 +2,8 @@
 
 import React from "react";
 
+import Toggle from "./Toggle.js";
+
 class Sidebar extends React.Component {
   constructor(props) {
     super(props);
@@ -22,12 +24,14 @@ class Sidebar extends React.Component {
       e.stopPropagation();
     }
     if (this.state.active) {
-      this.props.updateSceneName(this.state.name, this.state.index);
-      this.setState({
-        index: 0,
-        name: "",
-        active: false
-      });
+      if (this.state.name !== "") {
+        this.props.updateSceneName(this.state.name, this.state.index);
+        this.setState({
+          index: 0,
+          name: "",
+          active: false
+        });
+      }
     } else {
       this.setState({
         index: index,
@@ -92,12 +96,14 @@ class Sidebar extends React.Component {
             <div className="site-container">
               <h3 className="site-container__heading">{this.props.map}: {this.props.type}</h3>
               <h4 className="site-container__subtitle">{this.props.strategy}</h4>
+              <Toggle inactiveState="Private" activeState="Shared" activeAction={this.props.unshare} inactiveAction={this.props.share} active={this.props.shared} link={( this.props.shared ? window.location.protocol + "//" + window.location.host + "/shared/" + this.props.shared_key : "")}/>
               { sites }
             </div>
           ) : (
             <div className="strategy-container">
               <h3 className="strategy-container__heading">{this.props.map}: {this.props.type}</h3>
               <h4 className="strategy-container__subtitle">{this.props.sites[this.props.siteIndex]}</h4>
+              <Toggle inactiveState="Private" activeState="Shared" activeAction={this.props.unshare} inactiveAction={this.props.share} active={this.props.shared} link={( this.props.shared ? window.location.protocol + "//" + window.location.host + "/shared/" + this.props.shared_key : "")}/>
               { strategies }
             </div>
           )}

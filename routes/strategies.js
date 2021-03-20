@@ -1,7 +1,7 @@
 /* routes/strategies.js */
 
 const email = require("../config/email.js");
-const { log, genJoinCode, notify } = require("../config/utilities.js");
+const { log, genJoinCode, genWordCode, notify } = require("../config/utilities.js");
 const mongoose = require("mongoose");
 const messages = require("../client/src/messages/messages.js");
 const emails = require("../client/src/messages/emails.js");
@@ -24,6 +24,10 @@ const User = require("../models/User.js");
 // Load Strategies model
 require("../models/Strategies.js");
 const Strategies = require("../models/Strategies.js");
+
+// Load SharedStrategies model
+require("../models/SharedStrategies.js");
+const SharedStrategies = require("../models/SharedStrategies.js");
 
 // Load Team model
 require("../models/Team.js");
@@ -154,6 +158,42 @@ module.exports = async (app, passport) => {
     }
 
     response.json(messages.MAP_ADDED);
+  });
+
+  /**
+  *
+  */
+  app.post("/api/strategies/share", (request, response, done) => {
+    log("POST REQUEST AT /api/strategies/share");
+    done();
+  }, passport.authenticate("jwt", { session: false }), middleware.userIsVerified, middleware.userHasTeam, async (request, response) => {
+    if (request.team.editors.indexOf(String(request.user._id)) < 0 && request.team.admins.indexOf(String(request.user._id)) < 0) {
+      return response.json(messages.PERMISSION_DENIED);
+    }
+
+    const strategy = request.body.strategy;
+    const shared_key = genWordCode();
+
+    strategy.shared_key = shared_key;
+
+    const newSharedStrategy = new SharedStrategies({
+      team_code: request.team.join_code,
+      shared_key: shared_key,
+      strategy: strategy
+    });
+
+    try {
+      newSharedStrategy.save();
+    } catch(error) {
+      console.log(error);
+      return response.json(errors.ERROR_SHARED_STRATEGY);
+    }
+
+    let packet = messages.STRATEGY_SHARED;
+    packet.shared_key = shared_key;
+
+    return response.json(messages.STRATEGY_SHARED);
+
   });
 
   /**
