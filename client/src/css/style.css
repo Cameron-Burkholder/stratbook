@@ -492,6 +492,11 @@ div.toggle, div.viewer-toggle {
     border-radius: 24px; }
   div.toggle .slider.round:before, div.viewer-toggle .slider.round:before {
     border-radius: 50%; }
+  div.toggle button.toggle__button, div.viewer-toggle button.toggle__button {
+    display: block;
+    padding: 2px 4px; }
+  div.toggle button.toggle__button:hover, div.viewer-toggle button.toggle__button:hover {
+    background: #1A1D27; }
 
 /* client/src/scss/comopnents/_loading.scss */
 .loader {

@@ -183,7 +183,6 @@ class Viewer extends React.Component {
   }
 
   render() {
-    console.log(this.state);
     return (
       <div id="Viewer">
         <ViewerToolbar
@@ -235,6 +234,7 @@ class Viewer extends React.Component {
             type={this.state.type}
             shared={this.state.strategies[this.state.strategyIndex].shared}
             shared_key={this.state.strategies[this.state.strategyIndex].shared_key}
+            alert={this.props.alert}
             />
           <ViewerCanvas
             type={this.state.type}

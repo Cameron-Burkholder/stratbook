@@ -96,14 +96,16 @@ class Sidebar extends React.Component {
             <div className="site-container">
               <h3 className="site-container__heading">{this.props.map}: {this.props.type}</h3>
               <h4 className="site-container__subtitle">{this.props.strategy}</h4>
-              <Toggle inactiveState="Private" activeState="Shared" activeAction={this.props.unshare} inactiveAction={this.props.share} active={this.props.shared} link={( this.props.shared ? window.location.protocol + "//" + window.location.host + "/shared/" + this.props.shared_key : "")}/>
+              <Toggle inactiveState="Private" activeState="Shared" activeAction={this.props.unshare} inactiveAction={this.props.share} active={this.props.shared}
+              link={( this.props.shared ? window.location.protocol + "//" + window.location.host + "/shared/" + this.props.shared_key : "")} alert={this.props.alert}/>
               { sites }
             </div>
           ) : (
             <div className="strategy-container">
               <h3 className="strategy-container__heading">{this.props.map}: {this.props.type}</h3>
               <h4 className="strategy-container__subtitle">{this.props.sites[this.props.siteIndex]}</h4>
-              <Toggle inactiveState="Private" activeState="Shared" activeAction={this.props.unshare} inactiveAction={this.props.share} active={this.props.shared} link={( this.props.shared ? window.location.protocol + "//" + window.location.host + "/shared/" + this.props.shared_key : "")}/>
+              <Toggle inactiveState="Private" activeState="Shared" activeAction={this.props.unshare} inactiveAction={this.props.share} active={this.props.shared}
+              link={( this.props.shared ? window.location.protocol + "//" + window.location.host + "/shared/" + this.props.shared_key : "")} alert={this.props.alert}/>
               { strategies }
             </div>
           )}

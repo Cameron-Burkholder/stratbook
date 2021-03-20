@@ -938,6 +938,7 @@ class Editor extends React.Component {
             shared_key={this.state.strategies[this.state.strategyIndex].shared_key}
             share={this.share}
             unshare={this.unshare}
+            alert={this.props.alert}
             />
           <Canvas
             type={this.state.type}

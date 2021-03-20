@@ -85,4 +85,12 @@ div.toggle, div.viewer-toggle {
   .slider.round:before {
    border-radius: 50%;
   }
+
+  button.toggle__button {
+    display: block;
+    padding: 2px 4px;
+  }
+  button.toggle__button:hover {
+    background: $background-primary;
+  }
 }
