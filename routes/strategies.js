@@ -190,7 +190,7 @@ module.exports = async (app, passport) => {
         console.log(error);
         return response.json(messages.PERMISSION_DENIED);
       }
-    } while (shared_key_unique)
+    } while (typeof(shared_key_unique) != "undefined")
 
     strategy.shared_key = shared_key;
 

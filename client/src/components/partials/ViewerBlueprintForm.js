@@ -24,7 +24,6 @@ class ViewerBlueprintForm extends React.Component {
     };
   }
   onDragStart(e) {
-    console.log("starting");
     this.setState({
       startX: e.clientX,
       startY: e.clientY,
@@ -40,7 +39,6 @@ class ViewerBlueprintForm extends React.Component {
       startY: t.touches[0].clientY,
       move: true
     }, () => {
-      console.log(this.state);
       document.addEventListener("touchmove", this.onDrag);
       document.addEventListener("touchend", this.onDragStop);
     })
@@ -111,7 +109,7 @@ class ViewerBlueprintForm extends React.Component {
     }
   }
   render() {
-    const url = `../../media/maps/${this.props.map.replace(" ", "_")}-${this.props.floor.toUpperCase().replace(" ", "_")}-min.jpg`;
+    const url = `../../media/min/maps/${this.props.map.replace(" ", "_")}-${this.props.floor.toUpperCase().replace(" ", "_")}-min.jpg`;
     const style = {
       backgroundImage: `url(${url})`,
       backgroundPosition: "center",
@@ -139,7 +137,8 @@ class ViewerBlueprintForm extends React.Component {
           onDragStart={this.onDragStart}
           onDragTouch={this.onDragTouch}
           offsetX={this.state.offsetX}
-          offsetY={this.state.offsetY}/>
+          offsetY={this.state.offsetY}
+          labels={this.props.labels}/>
       </div>
     )
   }

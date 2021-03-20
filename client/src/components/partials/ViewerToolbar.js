@@ -40,10 +40,34 @@ class ViewerToolbar extends React.Component {
         <button onClick={() => { this.props.selectStrategy(index) }} className={(index === this.props.strategyIndex ? "strategy--active" : "")} key={index}>{strat.name}</button>
       )
     });
+
     return (
-      <div className="toolbar">
+      <div className={"toolbar" + (this.state.nav ? " toolbar--active" : "")}>
         <button onClick={this.toggleStrategyNavigation} className={"toolbar__navigation-button" + (this.state.nav ? " toolbar__navigation-button--active" : "")}>&#9776;</button>
-        <h4 className="toolbar__strategy">{this.state.strategy}</h4>
+        <h4 className="toolbar__strategy" onClick={this.changeName}>{this.state.strategy}</h4>
+        { this.props.type === "ATTACK" ? (
+          <div className="action-container">
+            <div className="action" onClick={this.props.insertDrone}>
+              <img className="action__img" src="../../media/min/drone.png"/>
+              <p>Drones ({this.props.drones.length}/{10})</p>
+            </div>
+            <div className="action" onClick={this.props.insertBreach}>
+              <img className="action__img" src="../../media/min/breach.png"/>
+              <p>Breaches ({this.props.breaches.length})</p>
+            </div>
+          </div>
+        ) : (
+          <div className="action-container">
+            <div className="action" onClick={this.props.insertReinforcement}>
+              <img className="action__img" src="../../media/min/reinforcement.png"/>
+              <p>Reinforcements ({this.props.reinforcements.length}/{10})</p>
+            </div>
+            <div className="action" onClick={this.props.insertRotate}>
+              <img className="action__img" src="../../media/min/rotate.png"/>
+              <p>Rotates ({this.props.rotates.length})</p>
+            </div>
+          </div>
+        )}
         <div className={"toolbar__navigation" + (this.state.nav ? " toolbar__navigation--active" : "")}>
           <h3>{this.props.map.name}</h3>
           <Link to="/strategies" onClick={this.props.fetchStrategies} id="showMaps">Back to Maps</Link>

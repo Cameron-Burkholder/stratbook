@@ -820,9 +820,21 @@ div#Viewer {
   p.scene__name:hover {
     text-decoration: none;
   }
-  img.role__image:hover {
-    cursor: default !important;
+  img.role__utility-image:hover, img.role__gadget-image:hover {
+    cursor: default;
   }
+  a.objectives__video {
+    padding: $padding-s;
+    background: linear-gradient(to right, #{$color-primary}, #{$color-secondary});
+    margin-top: $margin-m !important;
+    display: block;
+    width: 100%;
+    max-width: 128px;
+    color: white;
+    border-radius: $border-radius;
+    cursor: pointer;
+  }
+
 }
 
 @media screen and (max-width: 1400px) {
@@ -912,7 +924,7 @@ div#Viewer {
 }
 
 @media screen and (max-width: #{$tablet-max-width}) {
-  div#EditStrategiesAPI div.edit-container {
+  div#EditStrategiesAPI div.edit-container, div#ViewStrategiesAPI div.view-container {
     padding: 8px !important;
   }
   div.edit-buttons {

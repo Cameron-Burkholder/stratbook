@@ -2,6 +2,8 @@
 
 import React from "react";
 
+import Toggle from "./Toggle.js";
+
 class ViewerSidebar extends React.Component {
   constructor(props) {
     super(props);
@@ -10,6 +12,7 @@ class ViewerSidebar extends React.Component {
 
     this.state = {
       index: 0,
+      name: "",
       showSidebar: false
     }
   }
@@ -57,12 +60,30 @@ class ViewerSidebar extends React.Component {
             <div className="site-container">
               <h3 className="site-container__heading">{this.props.map}: {this.props.type}</h3>
               <h4 className="site-container__subtitle">{this.props.strategy}</h4>
+              { this.props.shared ? (
+                <div className="viewer-toggle">
+                  <label className="switch">
+                    <span className={"slider slider--active round"}></span>
+                  </label>
+                  <p>Shared</p>
+                  <a className="toggle__link" href={( this.props.shared ? window.location.protocol + "//" + window.location.host + "/shared/" + this.props.shared_key : "")} target="_blank">view</a>
+                </div>
+              ) : ""}
               { sites }
             </div>
           ) : (
             <div className="strategy-container">
               <h3 className="strategy-container__heading">{this.props.map}: {this.props.type}</h3>
               <h4 className="strategy-container__subtitle">{this.props.sites[this.props.siteIndex]}</h4>
+              { this.props.shared ? (
+                <div className="viewer-toggle">
+                  <label className="switch">
+                    <span className={"slider slider--active round"}></span>
+                  </label>
+                  <p>Shared</p>
+                  <a className="toggle__link" href={( this.props.shared ? window.location.protocol + "//" + window.location.host + "/shared/" + this.props.shared_key : "")} target="_blank">view</a>
+                </div>
+              ) : ""}
               { strategies }
             </div>
           )}

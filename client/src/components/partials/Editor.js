@@ -874,7 +874,6 @@ class Editor extends React.Component {
   }
 
   render() {
-    console.log(this.state.map);
     return (
       <div id="Editor">
         <Toolbar

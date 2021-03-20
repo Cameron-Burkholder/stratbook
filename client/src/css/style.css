@@ -430,7 +430,7 @@ div.pagination {
     width: 100%; }
 
 /* client/src/scss/components/_toggle.scss */
-div.toggle {
+div.toggle, div.viewer-toggle {
   margin-top: 16px !important;
   margin-bottom: 16px !important;
   display: flex;
@@ -440,27 +440,27 @@ div.toggle {
   /* Hide default HTML checkbox */
   /* The slider */
   /* Rounded sliders */ }
-  div.toggle * {
+  div.toggle *, div.viewer-toggle * {
     margin: auto !important; }
-  div.toggle a.toggle__link {
+  div.toggle a.toggle__link, div.viewer-toggle a.toggle__link {
     font-size: 10pt; }
-  div.toggle a.toggle__link:hover {
+  div.toggle a.toggle__link:hover, div.viewer-toggle a.toggle__link:hover {
     cursor: pointer; }
-  div.toggle .switch {
+  div.toggle .switch, div.viewer-toggle .switch {
     position: relative;
     display: inline-block;
     width: 60px;
     height: 24px;
     margin: 0 !important;
     margin-right: 16px; }
-  div.toggle p {
+  div.toggle p, div.viewer-toggle p {
     margin: 0 !important;
     margin-left: 16px !important; }
-  div.toggle .switch input {
+  div.toggle .switch input, div.viewer-toggle .switch input {
     opacity: 0;
     width: 0;
     height: 0; }
-  div.toggle .slider {
+  div.toggle .slider, div.viewer-toggle .slider {
     position: absolute;
     cursor: pointer;
     top: 0;
@@ -470,7 +470,7 @@ div.toggle {
     background: linear-gradient(to right, #ccc, #ccc);
     -webkit-transition: .4s;
     transition: .4s; }
-  div.toggle .slider:before {
+  div.toggle .slider:before, div.viewer-toggle .slider:before {
     position: absolute;
     content: "";
     height: 20px;
@@ -480,17 +480,17 @@ div.toggle {
     background-color: white;
     -webkit-transition: .4s;
     transition: .4s; }
-  div.toggle input:checked + .slider {
+  div.toggle input:checked + .slider, div.toggle .slider--active, div.viewer-toggle input:checked + .slider, div.viewer-toggle .slider--active {
     background: linear-gradient(to right, #0040D6, #0098A6); }
-  div.toggle input:focus + .slider {
+  div.toggle input:focus + .slider, div.toggle .slider--active, div.viewer-toggle input:focus + .slider, div.viewer-toggle .slider--active {
     box-shadow: 0 0 1px #0040D6; }
-  div.toggle input:checked + .slider:before {
+  div.toggle input:checked + .slider:before, div.toggle .slider--active:before, div.viewer-toggle input:checked + .slider:before, div.viewer-toggle .slider--active:before {
     -webkit-transform: translateX(35px);
     -ms-transform: translateX(35px);
     transform: translateX(35px); }
-  div.toggle .slider.round {
+  div.toggle .slider.round, div.viewer-toggle .slider.round {
     border-radius: 24px; }
-  div.toggle .slider.round:before {
+  div.toggle .slider.round:before, div.viewer-toggle .slider.round:before {
     border-radius: 50%; }
 
 /* client/src/scss/comopnents/_loading.scss */
@@ -2085,8 +2085,19 @@ div#Viewer div.drag-item {
 div#Viewer p.scene__name:hover {
   text-decoration: none; }
 
-div#Viewer img.role__image:hover {
-  cursor: default !important; }
+div#Viewer img.role__utility-image:hover, div#Viewer img.role__gadget-image:hover {
+  cursor: default; }
+
+div#Viewer a.objectives__video {
+  padding: 16px;
+  background: linear-gradient(to right, #0040D6, #0098A6);
+  margin-top: 40px !important;
+  display: block;
+  width: 100%;
+  max-width: 128px;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer; }
 
 @media screen and (max-width: 1400px) {
   div#Editor main, div#Viewer main {
@@ -2152,7 +2163,7 @@ div#Viewer img.role__image:hover {
     transform: translate(0); } }
 
 @media screen and (max-width: 850px) {
-  div#EditStrategiesAPI div.edit-container {
+  div#EditStrategiesAPI div.edit-container, div#ViewStrategiesAPI div.view-container {
     padding: 8px !important; }
   div.edit-buttons {
     padding: 16px; }

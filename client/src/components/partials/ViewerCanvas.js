@@ -4,6 +4,7 @@ import React from "react";
 
 import FloorSelector from "./FloorSelector.js";
 import ZoomSelector from "./ZoomSelector.js";
+import Pagination from "./Pagination.js";
 import ViewerBlueprintForm from "./ViewerBlueprintForm.js";
 import ViewerObjectives from "./ViewerObjectives.js";
 
@@ -16,7 +17,7 @@ class ViewerCanvas extends React.Component {
 
     this.state = {
       zoom: 1,
-      labels: true
+      labels: false
     }
   }
   toggleLabels() {
@@ -39,6 +40,8 @@ class ViewerCanvas extends React.Component {
             <span>Show Labels</span>
             <input type="checkbox" onChange={this.toggleLabels} checked={this.state.labels}/>
           </div>
+          <Pagination onChange={this.props.selectScene} index={this.props.sceneIndex} labels={this.props.scenes}
+            activeLabel={this.props.scenes[this.props.sceneIndex].name}/>
         </div>
         <ViewerBlueprintForm type={this.props.type}
           operators={this.props.operators}
@@ -52,12 +55,14 @@ class ViewerCanvas extends React.Component {
           reinforcements={this.props.reinforcements}
           map={this.props.map} site={this.props.site} floorIndex={this.props.floorIndex}
           breaches={this.props.breaches}
+          removeBreach={this.props.removeBreach}
           floor={this.props.floor}
           zoom={this.state.zoom}
           labels={this.state.labels}/>
         <div className="canvas__body">
           <ViewerObjectives objectives={this.props.objectives}
-            notes={this.props.notes}/>
+            notes={this.props.notes} scenes={this.props.scenes} sceneIndex={this.props.sceneIndex}
+            video={this.props.video}/>
         </div>
       </div>
     )
