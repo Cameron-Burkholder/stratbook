@@ -11,14 +11,14 @@ class Toggle extends React.Component {
     return (
       <div className="toggle">
         <label className="switch">
-          <input type="checkbox" checked={this.props.active} onChange={() => {
+          <input type="checkbox" checked={(this.props.active && this.props.active !== "" ? true : false)} onChange={() => {
             if (this.props.active) {
               this.props.activeAction();
             } else {
               this.props.inactiveAction();
             }
           }}/>
-          <span class="slider round"></span>
+          <span className="slider round"></span>
         </label>
         <p>{(this.props.active ? this.props.activeState : this.props.inactiveState )}</p>
         { this.props.link && this.props.link !== "" ? (

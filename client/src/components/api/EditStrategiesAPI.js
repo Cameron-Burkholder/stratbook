@@ -3,15 +3,15 @@
 import React from "react";
 import axios from "axios";
 import { Redirect } from "react-router-dom";
-import { STRATEGIES_FOUND, MAP_FOUND, MAP_UPDATED, MAP_DELETED, STRATEGY_SHARED } from "../../messages/messages.js";
-import { ERROR_VIEW_STRATEGIES, ERROR_VIEW_MAP, ERROR_UPDATE_MAP, ERROR_DELETE_MAP, ERROR_SHARED_STRATEGY } from "../../messages/errors.js";
+import { STRATEGIES_FOUND, MAP_FOUND, MAP_UPDATED, MAP_DELETED, STRATEGY_SHARED, STRATEGY_UNSHARED } from "../../messages/messages.js";
+import { ERROR_VIEW_STRATEGIES, ERROR_VIEW_MAP, ERROR_UPDATE_MAP, ERROR_DELETE_MAP, ERROR_SHARED_STRATEGY, ERROR_UNSHARE_STRATEGY } from "../../messages/errors.js";
 
 import CreateStrategiesAPI from "./CreateStrategiesAPI";
 import LoadingModal from "../partials/LoadingModal.js";
 import ErrorLoading from "../partials/ErrorLoading.js";
 import Editor from "../partials/Editor.js";
 import { Link } from "react-router-dom";
-import { MAP_NAMES } from "../../data.js";
+import { MAP_NAMES, SITES } from "../../data.js";
 
 /*
   @prop getAuthToken: function
@@ -27,6 +27,7 @@ class EditStrategiesAPI extends React.Component {
     this.updateStrategy = this.updateStrategy.bind(this);
     this.deleteMap = this.deleteMap.bind(this);
     this.shareStrategy = this.shareStrategy.bind(this);
+    this.unshareStrategy = this.unshareStrategy.bind(this);
 
     this.state = {
       map_name: this.props.map,
@@ -85,7 +86,8 @@ class EditStrategiesAPI extends React.Component {
   fetchMap(map) {
     const component = this;
     this.setState({
-      loading: true
+      loading: true,
+      position: undefined
     });
     let map_name = map ? map : this.state.map_name;
     axios.defaults.headers.common["Authorization"] = this.props.getAuthToken();
@@ -169,7 +171,7 @@ class EditStrategiesAPI extends React.Component {
               if (position.type === "ATTACK") {
                 map.attack[position.strategyIndex].shared_key = response.data.shared_key;
               } else {
-                map.defense[position.siteIndex][position.strategyIndex].shared_key = response.data.shared_key;
+                map.defense[SITES[map.name][position.siteIndex]][position.strategyIndex].shared_key = response.data.shared_key;
               }
               this.updateStrategy(JSON.stringify(map), position);
             });
@@ -188,6 +190,41 @@ class EditStrategiesAPI extends React.Component {
           hasLoaded: true
         });
         component.props.alert(ERROR_SHARED_STRATEGY.message, ERROR_SHARED_STRATEGY.status);
+      })
+  }
+  unshareStrategy(shared_key, map, position) {
+    const component = this;
+    this.setState({
+      loading: true,
+      position: position
+    });
+    axios.defaults.headers.common["Authorization"] = this.props.getAuthToken();
+    axios.patch(`/api/strategies/unshare`, {
+      shared_key: shared_key
+      })
+      .then((response) => {
+        switch (response.data.status) {
+          case STRATEGY_UNSHARED.status:
+            component.setState({
+              loading: false,
+            }, () => {
+              this.updateStrategy(JSON.stringify(map), position);
+            });
+            break;
+          default:
+            component.setState({
+              loading: false,
+            }, component.props.fetchStrategies);
+            component.props.alert(response.data.message, response.data.status);
+            break;
+        }
+      }).catch((error) => {
+        console.log(error);
+        component.setState({
+          loading: false,
+          hasLoaded: true
+        });
+        component.props.alert(ERROR_UNSHARE_STRATEGY.message, ERROR_UNSHARE_STRATEGY.status);
       })
   }
   deleteMap(e, map) {
@@ -249,7 +286,8 @@ class EditStrategiesAPI extends React.Component {
     } else {
       if (this.state.map_name) {
         if (this.state.hasLoaded && this.state.map) {
-          contents = <Editor map={this.state.map} alert={this.props.alert} save={this.updateStrategy} shareStrategy={this.shareStrategy} fetchStrategies={this.fetchStrategies} position={this.state.position}/>;
+          contents = <Editor map={this.state.map} alert={this.props.alert} save={this.updateStrategy} shareStrategy={this.shareStrategy} unshareStrategy={this.unshareStrategy}
+          fetchStrategies={this.fetchStrategies} position={this.state.position}/>;
         } else {
           contents = (
             <div>

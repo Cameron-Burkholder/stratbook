@@ -246,6 +246,7 @@ class Editor extends React.Component {
         strategies = map.defense[this.state.site];
       }
       strategy = strategies[this.state.strategyIndex];
+      strategy.type = this.state.type;
       const position = {
         siteIndex: this.state.siteIndex,
         strategyIndex: this.state.strategyIndex,
@@ -263,7 +264,41 @@ class Editor extends React.Component {
     }
   }
   unshare() {
+    let map = this.state.map;
+    let strategies;
+    let shared;
+    if (this.state.type === "ATTACK") {
+      shared = map.attack[this.state.strategyIndex].shared === true;
+    } else {
+      shared = map.defense[this.state.site][this.state.strategyIndex].shared === true;
+    }
 
+    let shared_key;
+    if (shared) {
+      if (this.state.type === "ATTACK") {
+        map.attack[this.state.strategyIndex].shared = undefined;
+        shared_key = map.attack[this.state.strategyIndex].shared_key;
+        strategies = map.attack;
+      } else {
+        map.defense[this.state.site][this.state.strategyIndex].shared = undefined;
+        shared_key = map.defense[this.state.site][this.state.strategyIndex].shared_key;
+        strategies = map.defense[this.state.site];
+      }
+      const position = {
+        siteIndex: this.state.siteIndex,
+        strategyIndex: this.state.strategyIndex,
+        sceneIndex: this.state.sceneIndex,
+        floorIndex: this.state.floorIndex,
+        type: this.state.type
+      };
+
+      this.setState({
+        map: map,
+        strategies: strategies
+      }, () => {
+        this.props.unshareStrategy(shared_key, map, position);
+      });
+    }
   }
 
   // Strategies
@@ -839,6 +874,7 @@ class Editor extends React.Component {
   }
 
   render() {
+    console.log(this.state.map);
     return (
       <div id="Editor">
         <Toolbar

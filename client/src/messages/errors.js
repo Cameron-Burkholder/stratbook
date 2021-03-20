@@ -101,6 +101,10 @@ module.exports = {
     status: "ERROR",
     message: "An error has occurred while attempting to unblock a user."
   },
+  ERROR_UNSHARE_STRATEGY: {
+    status: "ERROR",
+    message: "An error has occurred while attempting to unshared a strategy."
+  },
   ERROR_UPDATE_MAP: {
     status: "ERROR",
     message: "An error has occurred while attempting to update map."

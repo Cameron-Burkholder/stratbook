@@ -8,7 +8,8 @@ div.pagination {
     color: $text-dark;
     border: none;
     border-radius: 0;
-    border: $border-primary;
+    border-left: $border-primary;
+    border-right: $border-primary;
     padding: $padding-s $padding-m;
   }
   p.pagination__title {
@@ -17,8 +18,6 @@ div.pagination {
     align-items: center;
     justify-content: center;
     padding: 0 8px;
-    border-top: $border-primary;
-    border-bottom: $border-primary;
     width: 100%;
   }
 }

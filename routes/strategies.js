@@ -5,6 +5,7 @@ const { log, genJoinCode, genWordCode, notify } = require("../config/utilities.j
 const mongoose = require("mongoose");
 const messages = require("../client/src/messages/messages.js");
 const emails = require("../client/src/messages/emails.js");
+const { SITES } = require("../client/src/data.js");
 
 // Load input validation
 const validation = require("../validation.js");
@@ -161,7 +162,13 @@ module.exports = async (app, passport) => {
   });
 
   /**
-  *
+  * Share a strategy
+  * @name /api/strategies/share
+  * @function
+  * @async
+  * @description The user submits a request to share a strategy
+  *   If the user is not an editor or admin on the team, this returns a permission denied object.
+  * @param {object} request.body.strategy the strategy to share
   */
   app.post("/api/strategies/share", (request, response, done) => {
     log("POST REQUEST AT /api/strategies/share");
@@ -172,7 +179,18 @@ module.exports = async (app, passport) => {
     }
 
     const strategy = request.body.strategy;
-    const shared_key = genWordCode();
+
+    let shared_key;
+    let shared_key_exists;
+    do {
+      shared_key = genWordCode();
+      try {
+        shared_key_exists = await SharedStrategies.findOne({ shared_key: shared_key }).exec();
+      } catch(error) {
+        console.log(error);
+        return response.json(messages.PERMISSION_DENIED);
+      }
+    } while (shared_key_unique)
 
     strategy.shared_key = shared_key;
 
@@ -194,6 +212,47 @@ module.exports = async (app, passport) => {
 
     return response.json(messages.STRATEGY_SHARED);
 
+  });
+
+  /**
+  * Unshare a strategy
+  * @name /api/strategies/unshare
+  * @function
+  * @async
+  * @description The user submits a request to unshare a strategy
+  *   If the user is not an editor or admin on the team, this returns a permission denied object.
+  *   If the shared strategy cannot be found, this returns a shared strategy not found object.
+  * @param {string} request.body.shared_key the key of the strategy to unshare
+  */
+  app.patch("/api/strategies/unshare", (request, response, done) => {
+    log("DELETE REQUEST AT /api/strategies/unshare");
+    done();
+  }, passport.authenticate("jwt", { session: false }), middleware.userIsVerified, middleware.userHasTeam, async (request, response) => {
+    if (request.team.editors.indexOf(String(request.user._id)) < 0 && request.team.admins.indexOf(String(request.user._id)) < 0) {
+      return response.json(messages.PERMISSION_DENIED);
+    }
+
+    let shared_strategy;
+
+    try {
+      shared_strategy = await SharedStrategies.findOne({ shared_key: request.body.shared_key }).exec();
+    } catch(error) {
+      console.log(error);
+      return response.json(errors.ERROR_UNSHARE_STRATEGY);
+    }
+
+    if (!shared_strategy) {
+      return response.json(messages.SHARED_STRATEGY_NOT_FOUND);
+    }
+
+    try {
+      await SharedStrategies.deleteOne({ shared_key: request.body.shared_key }).exec();
+    } catch(error) {
+      console.log(error);
+      return response.json(errors.ERROR_UNSHARE_STRATEGY);
+    }
+
+    return response.json(messages.STRATEGY_UNSHARED);
   });
 
   /**
@@ -237,6 +296,57 @@ module.exports = async (app, passport) => {
       return response.json(errors.ERROR_UPDATE_MAP);
     }
 
+    let map = JSON.parse(request.body.map);
+
+    let index = 0;
+    while (index < map.attack.length) {
+      if (map.attack[index].shared) {
+        let shared_strategy;
+        try {
+          shared_strategy = await SharedStrategies.findOne({ shared_key: map.attack[index].shared_key }).exec();
+        } catch(error) {
+          console.log(error);
+          return response.json(errors.ERROR_UPDATE_MAP);
+        }
+
+        shared_strategy.strategy = map.attack[index];
+
+        try {
+          shared_strategy.save();
+        } catch(error) {
+          console.log(error);
+          return response.json(errors.ERROR_UPDATE_MAP);
+        }
+      }
+      index++;
+    }
+
+    for (let i = 0; i < 4; i++) {
+      index = 0;
+      let site = SITES[map.name][i];
+      while (index < map.defense[site].length) {
+        if (map.defense[site][index].shared) {
+          let shared_strategy;
+          try {
+            shared_strategy = await SharedStrategies.findOne({ shared_key: map.defense[site][index].shared_key }).exec();
+          } catch(error) {
+            console.log(error);
+            return response.json(errors.ERROR_UPDATE_MAP);
+          }
+
+          shared_strategy.strategy = map.defense[site][index];
+
+          try {
+            shared_strategy.save();
+          } catch(error) {
+            console.log(error);
+            return response.json(errors.ERROR_UPDATE_MAP);
+          }
+        }
+        index++;
+      }
+    }
+
     response.json(messages.MAP_UPDATED);
   });
 
@@ -271,6 +381,37 @@ module.exports = async (app, passport) => {
       return response.json(messages.MAP_DOES_NOT_EXIST);
     }
 
+    let map = strategies[request.params.map];
+
+    let index = 0;
+    while (index < map.attack.length) {
+      if (map.attack[index].shared) {
+        try {
+          await SharedStrategies.deleteOne({ shared_key: map.attack[index].shared_key }).exec();
+        } catch(error) {
+          console.log(error);
+          return response.json(errors.ERROR_DELETE_MAP);
+        }
+      }
+      index++;
+    }
+
+    for (let i = 0; i < 4; i++) {
+      index = 0;
+      let site = SITES[map.name][i];
+      while (index < map.defense[site].length) {
+        if (map.defense[site][index].shared) {
+          try {
+            await SharedStrategies.deleteOne({ shared_key: map.defense[site][index].shared_key }).exec();
+          } catch(error) {
+            console.log(error);
+            return response.json(errors.ERROR_DELETE_MAP);
+          }
+        }
+        index++;
+      }
+    }
+
     strategies[request.params.map] = undefined;
     strategies.maps.splice(strategies.maps.indexOf(request.params.map), 1);
 
@@ -281,7 +422,7 @@ module.exports = async (app, passport) => {
       return response.json(errors.ERROR_DELETE_MAP);
     }
 
-    let index = 0;
+    index = 0;
     while (index < request.team.admins.length) {
       let user;
       try {
