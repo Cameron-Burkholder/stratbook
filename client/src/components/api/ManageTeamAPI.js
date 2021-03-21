@@ -273,13 +273,13 @@ class ManageTeamAPI extends React.Component {
       } else {
         let teamMembers = [];
         let index = 0;
-        this.state.team.admins.map((admin) => {
+        this.state.team.admins.forEach((admin) => {
           teamMembers.push(<ManageTeamMember username={admin.username} status={admin.status} updateUserStatus={this.updateUserStatus} blockUser={this.blockUser} key={index++}/>);
         });
-        this.state.team.editors.map((editor) => {
+        this.state.team.editors.forEach((editor) => {
           teamMembers.push(<ManageTeamMember username={editor.username} status={editor.status} updateUserStatus={this.updateUserStatus} blockUser={this.blockUser} key={index++}/>);
         });
-        this.state.team.members.map((member) => {
+        this.state.team.members.forEach((member) => {
           teamMembers.push(<ManageTeamMember username={member.username} status={member.status} updateUserStatus={this.updateUserStatus} blockUser={this.blockUser} key={index++}/>);
         })
         contents = (

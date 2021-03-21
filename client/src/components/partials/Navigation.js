@@ -1,7 +1,7 @@
 /* client/components/partials/Navigation.js */
 
 import React from "react";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 import UserDropdown from "./UserDropdown.js";
 

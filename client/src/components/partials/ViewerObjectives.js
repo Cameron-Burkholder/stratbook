@@ -29,7 +29,7 @@ class ViewerObjectives extends React.Component {
         <h3>Notes: {this.props.scenes[this.props.sceneIndex].name}</h3>
         <p>{this.props.notes}</p>
         <h3>Video Link</h3>
-        <a className="objectives__video" href={this.props.video} target="_blank">Watch Video</a>
+        <a className="objectives__video" href={this.props.video} rel="noopener noreferrer" target="_blank">Watch Video</a>
       </div>
     )
   }

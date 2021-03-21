@@ -3,7 +3,6 @@
 import React from "react";
 
 import ResetPasswordAPI from "../api/ResetPasswordAPI.js";
-import { useParams } from "react-router";
 
 /*
   @func: Reset password

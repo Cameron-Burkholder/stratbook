@@ -1,7 +1,6 @@
 /* client/src/components/partials/ViewerToolbar.js */
 
 import React from "react";
-import Dropdown from "./Dropdown.js";
 import { Link } from "react-router-dom";
 
 class ViewerToolbar extends React.Component {
@@ -48,22 +47,22 @@ class ViewerToolbar extends React.Component {
         { this.props.type === "ATTACK" ? (
           <div className="action-container">
             <div className="action" onClick={this.props.insertDrone}>
-              <img className="action__img" src="../../media/min/drone.png"/>
+              <img className="action__img" src="../../media/min/drone.png" alt="Drone"/>
               <p>Drones ({this.props.drones.length}/{10})</p>
             </div>
             <div className="action" onClick={this.props.insertBreach}>
-              <img className="action__img" src="../../media/min/breach.png"/>
+              <img className="action__img" src="../../media/min/breach.png" alt="Breach"/>
               <p>Breaches ({this.props.breaches.length})</p>
             </div>
           </div>
         ) : (
           <div className="action-container">
             <div className="action" onClick={this.props.insertReinforcement}>
-              <img className="action__img" src="../../media/min/reinforcement.png"/>
+              <img className="action__img" src="../../media/min/reinforcement.png" alt="Reinforcement"/>
               <p>Reinforcements ({this.props.reinforcements.length}/{10})</p>
             </div>
             <div className="action" onClick={this.props.insertRotate}>
-              <img className="action__img" src="../../media/min/rotate.png"/>
+              <img className="action__img" src="../../media/min/rotate.png" alt="Rotate"/>
               <p>Rotates ({this.props.rotates.length})</p>
             </div>
           </div>

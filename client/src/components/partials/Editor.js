@@ -1,16 +1,13 @@
 /* client/components/partials/Editor.js */
 
 import React from "react";
-import axios from "axios";
 
-import Loading from "./Loading.js";
-import MapSelector from "./MapSelector.js";
 import Toolbar from "./Toolbar.js";
 import Sidebar from "./Sidebar.js";
 import Canvas from "./Canvas.js";
 import Lineup from "./Lineup.js";
 
-import { MAP_NAMES, SITES, FLOORS, GADGETS, UTILITY_GUIDE } from "../../data.js";
+import { SITES, FLOORS, GADGETS, UTILITY_GUIDE } from "../../data.js";
 
 /*
   @func: Editor
@@ -178,6 +175,7 @@ class Editor extends React.Component {
   }
   updateRoles(e, index) {
     let map = this.state.map;
+    console.log(map);
     if (this.state.type === "ATTACK") {
       map.attack[this.state.strategyIndex].roles[index] = e.target.value;
       map.attack[this.state.strategyIndex].operators[index] = "OPERATOR";
@@ -193,6 +191,8 @@ class Editor extends React.Component {
     }
     this.setState({
       map: map
+    }, () => {
+      console.log(this.state.map);
     });
   }
   updateName(name) {
@@ -316,7 +316,7 @@ class Editor extends React.Component {
         utility: ["UTILITY", "UTILITY", "UTILITY", "UTILITY", "UTILITY"],
         gadgets: ["", "", "", "", ""]
       };
-      SITES[this.state.map.name].map((site) => {
+      SITES[this.state.map.name].forEach((site) => {
         attackStrategy[site] = [
           {
             objectives: [],

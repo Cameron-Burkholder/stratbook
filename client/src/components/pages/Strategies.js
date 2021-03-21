@@ -3,7 +3,6 @@
 import React from "react";
 
 import ViewStrategiesAPI from "../api/ViewStrategiesAPI.js";
-import { Link } from "react-router-dom";
 
 /*
   @func: Strategies

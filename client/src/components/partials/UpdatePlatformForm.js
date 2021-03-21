@@ -2,8 +2,6 @@
 
 import React from "react";
 
-import Loading from "./Loading.js"
-
 /*
   @func: UpdatePlatformForm
   @desc: render update platform form for user to interact with

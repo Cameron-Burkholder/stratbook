@@ -64,7 +64,7 @@ class ViewerSidebar extends React.Component {
                     <span className={"slider slider--active round"}></span>
                   </label>
                   <p>Shared</p>
-                  <a className="toggle__link" href={( this.props.shared ? window.location.protocol + "//" + window.location.host + "/shared/" + this.props.shared_key : "")} target="_blank">view</a>
+                  <a className="toggle__link" rel="noopener noreferrer" href={( this.props.shared ? window.location.protocol + "//" + window.location.host + "/shared/" + this.props.shared_key : "")} target="_blank">view</a>
                   <button className="toggle__button" onClick={() => {
                     const temp = document.createElement("textarea");
                     temp.value = window.location.protocol + "//" + window.location.host + "/shared/" + this.props.shared_key;
@@ -89,7 +89,7 @@ class ViewerSidebar extends React.Component {
                     <span className={"slider slider--active round"}></span>
                   </label>
                   <p>Shared</p>
-                  <a className="toggle__link" href={( this.props.shared ? window.location.protocol + "//" + window.location.host + "/shared/" + this.props.shared_key : "")} target="_blank">view</a>
+                  <a className="toggle__link" rel="noopener noreferrer" href={( this.props.shared ? window.location.protocol + "//" + window.location.host + "/shared/" + this.props.shared_key : "")} target="_blank">view</a>
                   <button className="toggle__button" onClick={() => {
                     const temp = document.createElement("textarea");
                     temp.value = window.location.protocol + "//" + window.location.host + "/shared/" + this.props.shared_key;

@@ -1,7 +1,6 @@
 /* client/src/components/partials/Toolbar.js */
 
 import React from "react";
-import Dropdown from "./Dropdown.js";
 import { Link } from "react-router-dom";
 
 class Toolbar extends React.Component {

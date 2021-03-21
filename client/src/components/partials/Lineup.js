@@ -31,11 +31,6 @@ class Lineup extends React.Component {
         return <option key={index}>{option}</option>
       })
     ));
-    const roles = (this.props.type === "ATTACK" ? (
-      ATTACKER_ROLES
-    ) : (
-      DEFENDER_ROLES
-    ));
     const operators = (this.props.type === "ATTACK" ? (
       ATTACKER_OPERATORS
     ) : (
@@ -88,6 +83,7 @@ class Lineup extends React.Component {
             <div className="role__image" onClick={() => { this.props.selectOperator(index) }}>
               <p>{this.props.operators[index]}</p>
               <img className="role__image" src={`../../media/min/operators/${this.props.operators[index].toLowerCase()}.png`}
+                alt="Operator"
                 onClick={() => {
                   if (this.props.activeOperator === index) {
                     this.props.insertOperator(this.props.activeOperator);
@@ -105,6 +101,7 @@ class Lineup extends React.Component {
                   <div className="role__gadget">
                     <p>{this.props.gadgets[index].gadget} ({this.props.gadgets[index].count - this.props.gadgetPositions[index].length})</p>
                     <img className="role__gadget-image" src={`../../media/min/gadgets/${this.props.gadgets[index].gadget.toUpperCase().replace(" ", "_").replace(" ", "_")}.png`}
+                      alt="Operator Gadget"
                       onClick={() => {
                         if (this.props.gadgets[index].count - this.props.gadgetPositions[index].length> 0) {
                           this.props.insertGadget(index)
@@ -118,6 +115,7 @@ class Lineup extends React.Component {
                   <div className="role__utility">
                     <p>{this.props.utility[index]} ({UTILITY_GUIDE[this.props.utility[index]] - this.props.utilityPositions[index].length})</p>
                     <img className="role__utility-image" src={`../../media/min/utility/${this.props.utility[index].toUpperCase().replace(" ", "_")}.png`}
+                      alt="Operator Utility"
                       onClick={() => {
                         if (UTILITY_GUIDE[this.props.utility[index]] - this.props.utilityPositions[index].length) {
                           this.props.insertUtility(index);

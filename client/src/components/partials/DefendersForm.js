@@ -2,7 +2,6 @@
 
 import React from "react";
 
-import Loading from "./Loading.js"
 import { DEFENDERS } from "../../data.js";
 
 /*

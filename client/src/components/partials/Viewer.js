@@ -1,16 +1,13 @@
 /* client/components/partials/Viewer.js */
 
 import React from "react";
-import axios from "axios";
 
-import Loading from "./Loading.js";
-import MapSelector from "./MapSelector.js";
 import ViewerToolbar from "./ViewerToolbar.js";
 import ViewerSidebar from "./ViewerSidebar.js";
 import ViewerCanvas from "./ViewerCanvas.js";
 import ViewerLineup from "./ViewerLineup.js";
 
-import { MAP_NAMES, SITES, FLOORS, GADGETS, UTILITY_GUIDE } from "../../data.js";
+import { SITES, FLOORS } from "../../data.js";
 
 /*
   @func: Viewer

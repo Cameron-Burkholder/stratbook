@@ -3,7 +3,6 @@
 import React from "react";
 import axios from "axios";
 import { GENERAL_STATS_FOUND } from "../../messages/messages.js";
-import { USER_NOT_FOUND } from "../../messages/messages.js";
 
 import Loading from "../partials/Loading.js";
 import ProgressCircle from "../partials/ProgressCircle.js";

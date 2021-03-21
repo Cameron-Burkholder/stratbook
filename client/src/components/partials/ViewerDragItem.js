@@ -1,7 +1,6 @@
 /* client/src/components/partials/ViewerDragItem.js */
 
 import React from "react";
-import r6operators from "r6operators";
 
 class ViewerDragItem extends React.Component {
   constructor(props) {

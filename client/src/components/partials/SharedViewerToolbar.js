@@ -1,7 +1,6 @@
 /* client/src/components/partials/SharedViewerToolbar.js */
 
 import React from "react";
-import { Link } from "react-router-dom";
 
 class SharedViewerToolbar extends React.Component {
   constructor(props) {
@@ -26,22 +25,22 @@ class SharedViewerToolbar extends React.Component {
         { this.props.type === "ATTACK" ? (
           <div className="action-container">
             <div className="action">
-              <img className="action__img" src="../../media/min/drone.png"/>
+              <img className="action__img" src="../../media/min/drone.png" alt="Drone"/>
               <p>Drones ({this.props.drones.length}/{10})</p>
             </div>
             <div className="action">
-              <img className="action__img" src="../../media/min/breach.png"/>
+              <img className="action__img" src="../../media/min/breach.png" alt="Breach"/>
               <p>Breaches ({this.props.breaches.length})</p>
             </div>
           </div>
         ) : (
           <div className="action-container">
             <div className="action">
-              <img className="action__img" src="../../media/min/reinforcement.png"/>
+              <img className="action__img" src="../../media/min/reinforcement.png" alt="Reinforcement"/>
               <p>Reinforcements ({this.props.reinforcements.length}/{10})</p>
             </div>
             <div className="action">
-              <img className="action__img" src="../../media/min/rotate.png"/>
+              <img className="action__img" src="../../media/min/rotate.png" alt="Rotate"/>
               <p>Rotates ({this.props.rotates.length})</p>
             </div>
           </div>

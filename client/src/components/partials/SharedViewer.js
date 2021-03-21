@@ -1,15 +1,13 @@
 /* client/components/partials/SharedViewer.js */
 
 import React from "react";
-import axios from "axios";
 
-import Loading from "./Loading.js";
 import SharedViewerToolbar from "./SharedViewerToolbar.js";
 import SharedViewerSidebar from "./SharedViewerSidebar.js";
 import SharedViewerCanvas from "./SharedViewerCanvas.js";
 import SharedViewerLineup from "./SharedViewerLineup.js";
 
-import { MAP_NAMES, SITES, FLOORS, GADGETS, UTILITY_GUIDE } from "../../data.js";
+import { SITES, FLOORS } from "../../data.js";
 
 /*
   @func: SharedViewer
@@ -39,9 +37,6 @@ class SharedViewer extends React.Component {
     this.handleScroll = this.handleScroll.bind(this);
 
     // Declare initial state
-    let siteIndex;
-    let sceneIndex;
-    let strategyIndex;
     let scenes;
 
     if (this.props.strategy.type === "ATTACK") {

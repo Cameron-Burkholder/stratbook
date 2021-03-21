@@ -1,7 +1,6 @@
 /* client/components/api/ViewStrategiesAPI.js */
 
 import React from "react";
-import { Redirect } from "react-router";
 import axios from "axios";
 import { STRATEGIES_FOUND, MAP_FOUND } from "../../messages/messages.js";
 import { ERROR_VIEW_STRATEGIES, ERROR_VIEW_MAP } from "../../messages/errors.js";

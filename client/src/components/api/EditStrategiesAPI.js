@@ -2,16 +2,14 @@
 
 import React from "react";
 import axios from "axios";
-import { Redirect } from "react-router-dom";
 import { STRATEGIES_FOUND, MAP_FOUND, MAP_UPDATED, MAP_DELETED, STRATEGY_SHARED, STRATEGY_UNSHARED } from "../../messages/messages.js";
 import { ERROR_VIEW_STRATEGIES, ERROR_VIEW_MAP, ERROR_UPDATE_MAP, ERROR_DELETE_MAP, ERROR_SHARED_STRATEGY, ERROR_UNSHARE_STRATEGY } from "../../messages/errors.js";
 
 import CreateStrategiesAPI from "./CreateStrategiesAPI";
 import LoadingModal from "../partials/LoadingModal.js";
-import ErrorLoading from "../partials/ErrorLoading.js";
 import Editor from "../partials/Editor.js";
 import { Link } from "react-router-dom";
-import { MAP_NAMES, SITES } from "../../data.js";
+import { SITES } from "../../data.js";
 
 /*
   @prop getAuthToken: function
@@ -57,7 +55,6 @@ class EditStrategiesAPI extends React.Component {
       .then((response) => {
       switch (response.data.status) {
         case STRATEGIES_FOUND.status:
-          const maps = Object.keys(response.data.maps).filter((map) => MAP_NAMES.indexOf(map) >= 0);
           component.setState({
             loading: false,
             hasLoaded: true,

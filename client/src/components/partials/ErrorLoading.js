@@ -11,7 +11,7 @@ const ErrorLoading = () => {
         <br/><br/>
         If you have a network connection and are still unable to retrieve the necessary data, there is likely a bug or other problem with the servers.
         If you suspect this is the case, please email the lead developer at
-        <a id="email" target="_blank" href="mailto:cameron@burkholderwd.com">cameron@burkholderwd.com</a>.</p>
+        <a id="email" target="_blank" rel="noopener noreferrer" href="mailto:cameron@burkholderwd.com">cameron@burkholderwd.com</a>.</p>
         <a id="refresh" href="/">Refresh</a>
       </div>
     </div>

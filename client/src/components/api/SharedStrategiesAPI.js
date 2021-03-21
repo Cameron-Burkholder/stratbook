@@ -3,7 +3,7 @@
 import React from "react";
 import { Redirect } from "react-router";
 import axios from "axios";
-import { SHARED_STRATEGY_FOUND, SHARED_STRATEGY_NOT_FOUND } from "../../messages/messages.js";
+import { SHARED_STRATEGY_FOUND } from "../../messages/messages.js";
 import { ERROR_VIEW_SHARED_STRATEGY } from "../../messages/errors.js";
 
 import Editor from "../partials/Editor.js";

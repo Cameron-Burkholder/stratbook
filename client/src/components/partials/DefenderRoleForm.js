@@ -2,8 +2,6 @@
 
 import React from "react";
 
-import Loading from "./Loading.js"
-
 /*
   @func: DefenderRoleForm
   @desc: render defender role form
