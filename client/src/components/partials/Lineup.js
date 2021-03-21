@@ -91,6 +91,9 @@ class Lineup extends React.Component {
                     this.props.selectOperator(index);
                   }
                 }}/>
+              { this.props.activeOperator === index ? (
+                <p style={{ fontSize: "8pt" }}>Click to insert</p>
+              ) : "" }
             </div>
           </div>
 
@@ -107,6 +110,7 @@ class Lineup extends React.Component {
                           this.props.insertGadget(index)
                         }
                       }}/>
+                    <p style={{ fontSize: "8pt", textTransform: "none" }}>Click to insert</p>
                   </div>
                 ) : ""}
               </div>
@@ -121,6 +125,7 @@ class Lineup extends React.Component {
                           this.props.insertUtility(index);
                         }
                       }}/>
+                    <p style={{ fontSize: "8pt", textTransform: "none" }}>Click to insert</p>
                   </div>
                 ) : ""}
               </div>

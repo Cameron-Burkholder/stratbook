@@ -128,7 +128,7 @@ module.exports = {
       count: 0
     },
     "CAPITAO": {
-      gadget: "Tactical Crossbolt",
+      gadget: "Tactical Crossbow",
       count: 4
     },
     "CAVEIRA": {

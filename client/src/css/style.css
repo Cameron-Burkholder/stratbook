@@ -1952,7 +1952,7 @@ div.lineup {
       padding-top: 8px; }
       div.lineup div.role div.role__body div.role__gadget p, div.lineup div.role div.role__body div.role__utility p {
         text-align: center;
-        font-size: 9pt;
+        font-size: 8pt;
         text-transform: uppercase; }
       div.lineup div.role div.role__body div.role__gadget img.role__gadget-image, div.lineup div.role div.role__body div.role__gadget img.role__utility-image, div.lineup div.role div.role__body div.role__utility img.role__gadget-image, div.lineup div.role div.role__body div.role__utility img.role__utility-image {
         width: 40%;
