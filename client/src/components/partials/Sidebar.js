@@ -98,7 +98,10 @@ class Sidebar extends React.Component {
               <h4 className="site-container__subtitle">{this.props.strategy}</h4>
               <Toggle inactiveState="Private" activeState="Shared" activeAction={this.props.unshare} inactiveAction={this.props.share} active={this.props.shared}
               link={( this.props.shared ? window.location.protocol + "//" + window.location.host + "/shared/" + this.props.shared_key : "")} alert={this.props.alert}/>
-              { sites }
+              <h3 className="site-container__heading">Sites</h3>
+              <div className="select-container">
+                { sites }
+              </div>
             </div>
           ) : (
             <div className="strategy-container">
@@ -106,12 +109,17 @@ class Sidebar extends React.Component {
               <h4 className="strategy-container__subtitle">{this.props.sites[this.props.siteIndex]}</h4>
               <Toggle inactiveState="Private" activeState="Shared" activeAction={this.props.unshare} inactiveAction={this.props.share} active={this.props.shared}
               link={( this.props.shared ? window.location.protocol + "//" + window.location.host + "/shared/" + this.props.shared_key : "")} alert={this.props.alert}/>
-              { strategies }
+              <h3 className="strategy-container__heading">Strategies</h3>
+              <div className="select-container">
+                { strategies }
+              </div>
             </div>
           )}
           <div className="scene-container">
             <h3 className="scene-container__heading">Scenes</h3>
-            { scenes }
+              <div className="select-container">
+                { scenes }
+              </div>
           </div>
           <div className="scene-controls">
             <button onClick={this.props.addScene}>Add Scene</button>

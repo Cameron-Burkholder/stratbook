@@ -2,9 +2,10 @@
 
 div.toggle, div.viewer-toggle {
   margin-top: $margin-s !important;
-  margin-bottom: $margin-s !important;
+  margin-bottom: $margin-m !important;
   display: flex;
   align-items: center;
+  justify-content: center;
   flex-wrap: wrap;
   * {
     margin: auto !important;
@@ -29,6 +30,7 @@ div.toggle, div.viewer-toggle {
   p {
     margin: 0 !important;
     margin-left: $margin-s !important;
+    font-size: 11pt;
   }
 
   /* Hide default HTML checkbox */

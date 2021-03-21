@@ -412,16 +412,37 @@ button.toolbar__navigation-button--active {
   border: $border-secondary;
 }
 div.sidebar--scroll div.sidebar-body {
+  height: 100%;
+  background: $background-primary;
   position: fixed;
-  top: 64px;
-  width: calc(256px - (2 * #{$padding-s}));
+  top: 48px;
+  width: 256px;
+  max-height: calc(100VH - 64px);
 }
 div.sidebar {
-  padding: $padding-s;
-  max-height: 100VH;
-  display: grid;
-  grid-template-rows: 400px 1fr;
   border-right: $border-primary;
+  background: $background-primary;
+  height: 100VH;;
+  max-height: calc(100VH - 128px);
+  overflow-y: hidden;
+  div.sidebar-body {
+    padding: $padding-s;
+    border-right: $border-primary;
+    height: 100%;
+    display: grid;
+    grid-template-rows: 400px 1fr;
+    grid-row-gap: $padding-s;
+    div.site-container, div.scene-container, div.strategy-container {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      div.select-container {
+        flex-grow: 100;
+        overflow-y: auto;
+        padding-bottom: $margin-m;
+      }
+    }
+  }
   button {
     display: none;
   }
@@ -429,12 +450,18 @@ div.sidebar {
     text-align: center;
     margin-bottom: $margin-s;
   }
+  h4.site-container__subtitle {
+    font-size: 11pt;
+    text-align: center;
+    margin-bottom: 8px;
+  }
   div.scene-container {
     height: 100%;
     overflow-y: auto;
     padding-bottom: $padding-m;
   }
   div.strategy-container {
+    overflow-y: auto;
     div.strategy {
       display: flex;
       flex-direction: column;
@@ -524,11 +551,8 @@ div.sidebar {
   div.site--active, div.scene--active {
     border-left: 3px solid $color-primary;
   }
-  div.scene-container {
-    margin-top: $margin-m;
-  }
   div.scene-controls {
-    position: fixed;
+    position: absolute;
     bottom: 0;
     left: 0;
     width: 256px;
@@ -1004,6 +1028,7 @@ div#Viewer, div#SharedViewer {
         grid-row: 2;
         grid-column: span 1;
         width: 100%;
+        max-height: none;
         > button {
           display: none;
         }
@@ -1011,6 +1036,7 @@ div#Viewer, div#SharedViewer {
           transform: none;
           top: 0;
           width: 100%;
+          max-height: none;
         }
       }
       div.lineup {
@@ -1064,6 +1090,9 @@ div#Viewer, div#SharedViewer {
   div#Editor, div#Viewer, div#SharedViewer {
     div.toolbar {
       overflow-x: auto;
+      h4.toolbar__label {
+        display: none;
+      }
       div.toolbar__navigation {
         width: 100VW;
         transform: translateX(-100VW);
@@ -1073,6 +1102,10 @@ div#Viewer, div#SharedViewer {
       }
       button.toolbar__navigation-button {
         left: 16px;
+      }
+      div.action-container {
+        padding: 0;
+        margin: 0;
       }
       div.action {
         padding: 2px;
@@ -1144,7 +1177,7 @@ div#Viewer, div#SharedViewer {
         }
         div.canvas__body {
           padding: 16px;
-          margin-top: 196px;
+          margin-top: 128px;
         }
         div.objectives {
           button {
@@ -1154,8 +1187,8 @@ div#Viewer, div#SharedViewer {
       }
       div.sidebar {
         grid-row: 3;
-        margin-top: 64px;
-        grid-template-rows: 400px 400px;
+        margin-top: 128px;
+        height: 856px;
         > button {
           display: none;
         }
@@ -1164,6 +1197,13 @@ div#Viewer, div#SharedViewer {
           top: 0;
           width: 100%;
           padding-bottom: 200px;
+          grid-template-rows: 400px 400px;
+        }
+        div.scene-controls {
+          bottom: 0 !important;
+          left: 0;
+          top: calc(100% - 50px) !important;
+          position: absolute !important;
         }
       }
       div.lineup {
