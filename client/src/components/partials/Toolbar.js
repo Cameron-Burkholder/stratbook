@@ -98,10 +98,17 @@ class Toolbar extends React.Component {
             </div>
           </div>
         )}
+        <h4 className="toolbar__label">Viewing in Editor</h4>
         <div className={"toolbar__navigation" + (this.state.nav ? " toolbar__navigation--active" : "")}>
           <h3>{this.props.map.name}</h3>
           <button className="button toolbar__button" onClick={this.props.save}>Save</button>
-          <Link to="/strategies/edit" onClick={this.props.fetchStrategies} id="showMaps">Back to Maps</Link>
+          <Link to="/strategies/edit" onClick={() => {
+            if (this.props.updated) {
+
+            } else {
+              this.props.fetchStrategies();
+            }
+          }} id="showMaps">Back to Maps</Link>
           <div className="strategy__navigation">
             <h4>Mode</h4>
             <div className="type-selector">

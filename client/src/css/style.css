@@ -1603,9 +1603,17 @@ div.toolbar {
     padding: 8px; }
   div.toolbar h4 {
     font-size: 12pt; }
-  div.toolbar h4:hover {
+  div.toolbar h4.toolbar__strategy {
+    color: #B1B3BE;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    padding: 4px 6px; }
+  div.toolbar h4.toolbar__strategy:hover {
     cursor: pointer;
-    text-decoration: underline; }
+    border: 1px solid #393939; }
+  div.toolbar h4.toolbar__label {
+    text-align: center;
+    width: auto; }
   div.toolbar div.action-container {
     display: flex;
     align-items: center; }
@@ -1620,7 +1628,7 @@ div.toolbar {
       background-color: white;
       cursor: pointer; }
       div.toolbar div.action-container div.action img {
-        width: 32px;
+        width: 24px;
         margin: 0; }
       div.toolbar div.action-container div.action p {
         margin: 0;

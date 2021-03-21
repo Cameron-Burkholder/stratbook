@@ -45,6 +45,7 @@ class SharedViewerToolbar extends React.Component {
             </div>
           </div>
         )}
+        <h4 className="toolbar__label">Viewing</h4>
       </div>
     )
   }

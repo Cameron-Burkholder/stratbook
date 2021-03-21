@@ -6,6 +6,7 @@ import Toolbar from "./Toolbar.js";
 import Sidebar from "./Sidebar.js";
 import Canvas from "./Canvas.js";
 import Lineup from "./Lineup.js";
+import { Prompt } from 'react-router'
 
 import { SITES, FLOORS, GADGETS, UTILITY_GUIDE } from "../../data.js";
 
@@ -135,7 +136,8 @@ class Editor extends React.Component {
       floors: FLOORS[this.props.map.name],
       floorIndex: floorIndex,
       type: type,
-      mounted: false
+      mounted: false,
+      updated: false
     }
   }
   selectSite(index) {
@@ -175,7 +177,6 @@ class Editor extends React.Component {
   }
   updateRoles(e, index) {
     let map = this.state.map;
-    console.log(map);
     if (this.state.type === "ATTACK") {
       map.attack[this.state.strategyIndex].roles[index] = e.target.value;
       map.attack[this.state.strategyIndex].operators[index] = "OPERATOR";
@@ -191,8 +192,6 @@ class Editor extends React.Component {
     }
     this.setState({
       map: map
-    }, () => {
-      console.log(this.state.map);
     });
   }
   updateName(name) {
@@ -879,6 +878,9 @@ class Editor extends React.Component {
   render() {
     return (
       <div id="Editor">
+        <Prompt
+          when={this.state.updated}
+          message="You have unsaved changes. Are you sure you want to leave this page?"/>
         <Toolbar
           showMaps={this.showMaps}
           map={this.state.map}

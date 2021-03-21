@@ -209,9 +209,19 @@ div.toolbar {
   h4 {
     font-size: $font-body;
   }
-  h4:hover {
+  h4.toolbar__strategy {
+    color: $text-body;
+    border: 1px solid transparent;
+    border-radius: $border-radius;
+    padding: 4px 6px;
+  }
+  h4.toolbar__strategy:hover {
     cursor: pointer;
-    text-decoration: underline;
+    border: 1px solid #393939;
+  }
+  h4.toolbar__label {
+    text-align: center;
+    width: auto;
   }
   div.action-container {
     display: flex;
@@ -227,7 +237,7 @@ div.toolbar {
       background-color: white;
       cursor: pointer;
       img {
-        width: 32px;
+        width: 24px;
         margin: 0;
       }
       p {

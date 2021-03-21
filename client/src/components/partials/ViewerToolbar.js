@@ -67,6 +67,7 @@ class ViewerToolbar extends React.Component {
             </div>
           </div>
         )}
+        <h4 className="toolbar__label">Viewing</h4>
         <div className={"toolbar__navigation" + (this.state.nav ? " toolbar__navigation--active" : "")}>
           <h3>{this.props.map.name}</h3>
           <Link to="/strategies" onClick={this.props.fetchStrategies} id="showMaps">Back to Maps</Link>
