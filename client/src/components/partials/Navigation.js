@@ -60,15 +60,15 @@ class Navigation extends React.Component {
           <span className="nav__subtitle">[Beta]</span>
         </ul>
         <ul className="nav__body">
+          <li className="nav__item">
+            <NavLink exact activeClassName="nav__link--active" onClick={this.toggleMenu} className="nav__link" to="/">Home</NavLink>
+          </li>
           { this.state.loggedIn ? (
             <li className="nav__item">
               <NavLink exact activeClassName="nav__link--active" onClick={this.toggleMenu} className="nav__link" to="/dashboard">Dashboard</NavLink>
             </li>
-          ) : (
-            <li className="nav__item">
-              <NavLink exact activeClassName="nav__link--active" onClick={this.toggleMenu} className="nav__link" to="/">Home</NavLink>
-            </li>
-          )}
+          ) : ( "" )
+          }
           {
             this.state.loggedIn ? "" : (
               <li className="nav__item">
@@ -94,13 +94,6 @@ class Navigation extends React.Component {
             this.state.loggedIn && this.props.team ? (
               <li className="nav__item">
                 <NavLink activeClassName="nav__link--active" onClick={this.toggleMenu} className="nav__link" to="/strategies">Strategies</NavLink>
-              </li>
-            ) : ( "" )
-          }
-          {
-            this.state.loggedIn && this.props.team ? (
-              <li className="nav__item">
-                <NavLink activeClassName="nav__link--active" onClick={this.toggleMenu} className="nav__link" to="/chat">Chat</NavLink>
               </li>
             ) : ( "" )
           }

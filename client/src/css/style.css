@@ -584,6 +584,16 @@ button.button--danger {
 button.button--danger:hover {
   background: #C93434; }
 
+/* client/src/scss/components/_header.scss */
+header div.header__overlay {
+  background: linear-gradient(to right, #0040D6, #4915D6);
+  padding: 40px;
+  filter: opacity(0.85); }
+
+header h1, header h2 {
+  text-shadow: 1px 1px #19191a;
+  text-align: center; }
+
 /* client/src/scss/components/_footer.scss */
 footer.footer {
   width: 100%;
@@ -1510,11 +1520,11 @@ div.map-selector {
       filter: opacity(1);
       transition: all 0.3s ease; }
 
-div#Editor, div#Viewer {
+div#Editor, div#Viewer, div#SharedViewer {
   max-width: 1600px;
   display: block;
   margin: auto; }
-  div#Editor main, div#Viewer main {
+  div#Editor main, div#Viewer main, div#SharedViewer main {
     width: 100%;
     height: 100%;
     display: grid;
@@ -2078,22 +2088,22 @@ div.zoom-selector {
     margin: 0;
     transform: scale(0.8); }
 
-div#Viewer h4.toolbar__strategy {
+div#Viewer h4.toolbar__strategy, div#SharedViewer h4.toolbar__strategy {
   cursor: default; }
 
-div#Viewer h4.toolbar__strategy:hover {
+div#Viewer h4.toolbar__strategy:hover, div#SharedViewer h4.toolbar__strategy:hover {
   text-decoration: none; }
 
-div#Viewer div.drag-item {
+div#Viewer div.drag-item, div#SharedViewer div.drag-item {
   cursor: default; }
 
-div#Viewer p.scene__name:hover {
+div#Viewer p.scene__name:hover, div#SharedViewer p.scene__name:hover {
   text-decoration: none; }
 
-div#Viewer img.role__utility-image:hover, div#Viewer img.role__gadget-image:hover {
+div#Viewer img.role__utility-image:hover, div#Viewer img.role__gadget-image:hover, div#SharedViewer img.role__utility-image:hover, div#SharedViewer img.role__gadget-image:hover {
   cursor: default; }
 
-div#Viewer a.objectives__video {
+div#Viewer a.objectives__video, div#SharedViewer a.objectives__video {
   padding: 16px;
   background: linear-gradient(to right, #0040D6, #0098A6);
   margin-top: 40px !important;
@@ -2105,21 +2115,21 @@ div#Viewer a.objectives__video {
   cursor: pointer; }
 
 @media screen and (max-width: 1400px) {
-  div#Editor main, div#Viewer main {
+  div#Editor main, div#Viewer main, div#SharedViewer main {
     width: 100%;
     height: 100%;
     display: grid;
     grid-template-columns: 48px 900px 1fr !important; }
-  div#Editor div.sidebar, div#Viewer div.sidebar {
+  div#Editor div.sidebar, div#Viewer div.sidebar, div#SharedViewer div.sidebar {
     padding: 8px;
     position: relative;
     z-index: 2; }
-    div#Editor div.sidebar button, div#Viewer div.sidebar button {
+    div#Editor div.sidebar button, div#Viewer div.sidebar button, div#SharedViewer div.sidebar button {
       display: block;
       padding: 0;
       margin: 0;
       height: 48px; }
-    div#Editor div.sidebar div.sidebar-body, div#Viewer div.sidebar div.sidebar-body {
+    div#Editor div.sidebar div.sidebar-body, div#Viewer div.sidebar div.sidebar-body, div#SharedViewer div.sidebar div.sidebar-body {
       padding: 16px;
       position: absolute;
       top: 64px;
@@ -2128,14 +2138,14 @@ div#Viewer a.objectives__video {
       background: #1A1D27;
       transform: translateX(-100%);
       transition: all 0.3s ease; }
-      div#Editor div.sidebar div.sidebar-body div.scene-controls, div#Viewer div.sidebar div.sidebar-body div.scene-controls {
+      div#Editor div.sidebar div.sidebar-body div.scene-controls, div#Viewer div.sidebar div.sidebar-body div.scene-controls, div#SharedViewer div.sidebar div.sidebar-body div.scene-controls {
         position: relative;
         top: 0;
         left: 0;
         width: 100%; }
-  div#Editor div.sidebar--active > button, div#Viewer div.sidebar--active > button {
+  div#Editor div.sidebar--active > button, div#Viewer div.sidebar--active > button, div#SharedViewer div.sidebar--active > button {
     transform: rotate(180deg); }
-  div#Editor div.sidebar--active div.sidebar-body, div#Viewer div.sidebar--active div.sidebar-body {
+  div#Editor div.sidebar--active div.sidebar-body, div#Viewer div.sidebar--active div.sidebar-body, div#SharedViewer div.sidebar--active div.sidebar-body {
     transform: translate(0);
     transition: all 0.3s ease; } }
 
@@ -2183,54 +2193,54 @@ div#Viewer a.objectives__video {
       filter: none;
       border: 1px solid #C93434;
       background: #C93434; }
-  div#Editor, div#Viewer {
+  div#Editor, div#Viewer, div#SharedViewer {
     width: 100%;
     height: 100%; }
-    div#Editor div.toolbar, div#Viewer div.toolbar {
+    div#Editor div.toolbar, div#Viewer div.toolbar, div#SharedViewer div.toolbar {
       overflow-x: auto; }
-      div#Editor div.toolbar div.strategy__name-input, div#Viewer div.toolbar div.strategy__name-input {
+      div#Editor div.toolbar div.strategy__name-input, div#Viewer div.toolbar div.strategy__name-input, div#SharedViewer div.toolbar div.strategy__name-input {
         position: fixed;
         max-width: 600px;
         margin: 0;
         top: 112px;
         left: 50%;
         transform: translateX(-50%); }
-    div#Editor main, div#Viewer main {
+    div#Editor main, div#Viewer main, div#SharedViewer main {
       width: 100%;
       height: 100%;
       display: grid;
       grid-template-columns: repeat(2, 1fr) !important;
       overflow: hidden; }
-      div#Editor main div.canvas, div#Viewer main div.canvas {
+      div#Editor main div.canvas, div#Viewer main div.canvas, div#SharedViewer main div.canvas {
         grid-row: 1;
         grid-column: span 2;
         width: 100%; }
-        div#Editor main div.canvas div.blueprint-form, div#Viewer main div.canvas div.blueprint-form {
+        div#Editor main div.canvas div.blueprint-form, div#Viewer main div.canvas div.blueprint-form, div#SharedViewer main div.canvas div.blueprint-form {
           width: 100%;
           overflow: hidden;
           touch-action: none; }
-          div#Editor main div.canvas div.blueprint-form div.position-overlay, div#Viewer main div.canvas div.blueprint-form div.position-overlay {
+          div#Editor main div.canvas div.blueprint-form div.position-overlay, div#Viewer main div.canvas div.blueprint-form div.position-overlay, div#SharedViewer main div.canvas div.blueprint-form div.position-overlay {
             width: 900px;
             height: 100%; }
-        div#Editor main div.canvas div.canvas__controls, div#Viewer main div.canvas div.canvas__controls {
+        div#Editor main div.canvas div.canvas__controls, div#Viewer main div.canvas div.canvas__controls, div#SharedViewer main div.canvas div.canvas__controls {
           left: 50%;
           transform: translateX(-50%);
           top: 675px; }
-      div#Editor main div.sidebar, div#Viewer main div.sidebar {
+      div#Editor main div.sidebar, div#Viewer main div.sidebar, div#SharedViewer main div.sidebar {
         grid-row: 2;
         grid-column: span 1;
         width: 100%; }
-        div#Editor main div.sidebar > button, div#Viewer main div.sidebar > button {
+        div#Editor main div.sidebar > button, div#Viewer main div.sidebar > button, div#SharedViewer main div.sidebar > button {
           display: none; }
-        div#Editor main div.sidebar div.sidebar-body, div#Viewer main div.sidebar div.sidebar-body {
+        div#Editor main div.sidebar div.sidebar-body, div#Viewer main div.sidebar div.sidebar-body, div#SharedViewer main div.sidebar div.sidebar-body {
           transform: none;
           top: 0;
           width: 100%; }
-      div#Editor main div.lineup, div#Viewer main div.lineup {
+      div#Editor main div.lineup, div#Viewer main div.lineup, div#SharedViewer main div.lineup {
         width: 100%; }
-        div#Editor main div.lineup > button, div#Viewer main div.lineup > button {
+        div#Editor main div.lineup > button, div#Viewer main div.lineup > button, div#SharedViewer main div.lineup > button {
           display: none; }
-        div#Editor main div.lineup div.lineup-body, div#Viewer main div.lineup div.lineup-body {
+        div#Editor main div.lineup div.lineup-body, div#Viewer main div.lineup div.lineup-body, div#SharedViewer main div.lineup div.lineup-body {
           position: relative;
           top: 0;
           left: 0;
@@ -2241,66 +2251,66 @@ div#Viewer a.objectives__video {
           grid-template-columns: repeat(5, 1fr);
           padding: 0;
           margin-bottom: 128px; }
-          div#Editor main div.lineup div.lineup-body h3, div#Viewer main div.lineup div.lineup-body h3 {
+          div#Editor main div.lineup div.lineup-body h3, div#Viewer main div.lineup div.lineup-body h3, div#SharedViewer main div.lineup div.lineup-body h3 {
             grid-column: span 5; }
-          div#Editor main div.lineup div.lineup-body div.role, div#Viewer main div.lineup div.lineup-body div.role {
+          div#Editor main div.lineup div.lineup-body div.role, div#Viewer main div.lineup div.lineup-body div.role, div#SharedViewer main div.lineup div.lineup-body div.role {
             grid-template-columns: 1fr;
             padding: 4px; }
-            div#Editor main div.lineup div.lineup-body div.role div.role__head, div#Viewer main div.lineup div.lineup-body div.role div.role__head {
+            div#Editor main div.lineup div.lineup-body div.role div.role__head, div#Viewer main div.lineup div.lineup-body div.role div.role__head, div#SharedViewer main div.lineup div.lineup-body div.role div.role__head {
               display: none; }
-            div#Editor main div.lineup div.lineup-body div.role div.role__image img, div#Viewer main div.lineup div.lineup-body div.role div.role__image img {
+            div#Editor main div.lineup div.lineup-body div.role div.role__image img, div#Viewer main div.lineup div.lineup-body div.role div.role__image img, div#SharedViewer main div.lineup div.lineup-body div.role div.role__image img {
               width: 100%;
               height: auto; }
-          div#Editor main div.lineup div.lineup-body div.role--active, div#Viewer main div.lineup div.lineup-body div.role--active {
+          div#Editor main div.lineup div.lineup-body div.role--active, div#Viewer main div.lineup div.lineup-body div.role--active, div#SharedViewer main div.lineup div.lineup-body div.role--active {
             border: 3px solid #4915D6; }
-            div#Editor main div.lineup div.lineup-body div.role--active div.role__body, div#Viewer main div.lineup div.lineup-body div.role--active div.role__body {
+            div#Editor main div.lineup div.lineup-body div.role--active div.role__body, div#Viewer main div.lineup div.lineup-body div.role--active div.role__body, div#SharedViewer main div.lineup div.lineup-body div.role--active div.role__body {
               position: absolute;
               top: 100%;
               background: #1A1D27;
               width: 100%; } }
 
 @media screen and (max-width: 600px) {
-  div#Editor div.toolbar, div#Viewer div.toolbar {
+  div#Editor div.toolbar, div#Viewer div.toolbar, div#SharedViewer div.toolbar {
     overflow-x: auto; }
-    div#Editor div.toolbar div.toolbar__navigation, div#Viewer div.toolbar div.toolbar__navigation {
+    div#Editor div.toolbar div.toolbar__navigation, div#Viewer div.toolbar div.toolbar__navigation, div#SharedViewer div.toolbar div.toolbar__navigation {
       width: 100VW;
       transform: translateX(-100VW); }
-    div#Editor div.toolbar div.toolbar__navigation--active, div#Viewer div.toolbar div.toolbar__navigation--active {
+    div#Editor div.toolbar div.toolbar__navigation--active, div#Viewer div.toolbar div.toolbar__navigation--active, div#SharedViewer div.toolbar div.toolbar__navigation--active {
       transform: translateX(0); }
-    div#Editor div.toolbar button.toolbar__navigation-button, div#Viewer div.toolbar button.toolbar__navigation-button {
+    div#Editor div.toolbar button.toolbar__navigation-button, div#Viewer div.toolbar button.toolbar__navigation-button, div#SharedViewer div.toolbar button.toolbar__navigation-button {
       left: 16px; }
-    div#Editor div.toolbar div.action, div#Viewer div.toolbar div.action {
+    div#Editor div.toolbar div.action, div#Viewer div.toolbar div.action, div#SharedViewer div.toolbar div.action {
       padding: 2px; }
-      div#Editor div.toolbar div.action p, div#Viewer div.toolbar div.action p {
+      div#Editor div.toolbar div.action p, div#Viewer div.toolbar div.action p, div#SharedViewer div.toolbar div.action p {
         font-size: 8pt;
         padding: 0; }
-    div#Editor div.toolbar div.strategy__name-input, div#Viewer div.toolbar div.strategy__name-input {
+    div#Editor div.toolbar div.strategy__name-input, div#Viewer div.toolbar div.strategy__name-input, div#SharedViewer div.toolbar div.strategy__name-input {
       position: fixed;
       max-width: 600px;
       margin: 0;
       top: 112px;
       left: 50%;
       transform: translateX(-50%); }
-  div#Editor main, div#Viewer main {
+  div#Editor main, div#Viewer main, div#SharedViewer main {
     width: 100%;
     height: 100%;
     display: grid;
     grid-template-columns: 1fr !important;
     overflow: hidden; }
-    div#Editor main div.canvas, div#Viewer main div.canvas {
+    div#Editor main div.canvas, div#Viewer main div.canvas, div#SharedViewer main div.canvas {
       grid-row: 1;
       width: 100%; }
-      div#Editor main div.canvas div.blueprint-form, div#Viewer main div.canvas div.blueprint-form {
+      div#Editor main div.canvas div.blueprint-form, div#Viewer main div.canvas div.blueprint-form, div#SharedViewer main div.canvas div.blueprint-form {
         width: 100%;
         height: 450px;
         display: block;
         margin: auto;
         overflow: hidden;
         touch-action: none; }
-        div#Editor main div.canvas div.blueprint-form div.position-overlay, div#Viewer main div.canvas div.blueprint-form div.position-overlay {
+        div#Editor main div.canvas div.blueprint-form div.position-overlay, div#Viewer main div.canvas div.blueprint-form div.position-overlay, div#SharedViewer main div.canvas div.blueprint-form div.position-overlay {
           width: 900px;
           height: 675px; }
-      div#Editor main div.canvas div.canvas__controls, div#Viewer main div.canvas div.canvas__controls {
+      div#Editor main div.canvas div.canvas__controls, div#Viewer main div.canvas div.canvas__controls, div#SharedViewer main div.canvas div.canvas__controls {
         left: 50%;
         transform: translateX(-50%);
         display: grid;
@@ -2308,45 +2318,45 @@ div#Viewer a.objectives__video {
         width: 100%;
         height: auto;
         top: 450px; }
-        div#Editor main div.canvas div.canvas__controls select.form__select, div#Viewer main div.canvas div.canvas__controls select.form__select {
+        div#Editor main div.canvas div.canvas__controls select.form__select, div#Viewer main div.canvas div.canvas__controls select.form__select, div#SharedViewer main div.canvas div.canvas__controls select.form__select {
           display: block !important;
           grid-row: 2; }
-        div#Editor main div.canvas div.canvas__controls div.zoom-selector, div#Viewer main div.canvas div.canvas__controls div.zoom-selector {
+        div#Editor main div.canvas div.canvas__controls div.zoom-selector, div#Viewer main div.canvas div.canvas__controls div.zoom-selector, div#SharedViewer main div.canvas div.canvas__controls div.zoom-selector {
           grid-row: 1;
           grid-column: span 2;
           display: none; }
-        div#Editor main div.canvas div.canvas__controls select.form__select, div#Viewer main div.canvas div.canvas__controls select.form__select {
+        div#Editor main div.canvas div.canvas__controls select.form__select, div#Viewer main div.canvas div.canvas__controls select.form__select, div#SharedViewer main div.canvas div.canvas__controls select.form__select {
           padding: 8px; }
-        div#Editor main div.canvas div.canvas__controls div.labels, div#Viewer main div.canvas div.canvas__controls div.labels {
+        div#Editor main div.canvas div.canvas__controls div.labels, div#Viewer main div.canvas div.canvas__controls div.labels, div#SharedViewer main div.canvas div.canvas__controls div.labels {
           grid-row: 2;
           flex-direction: row; }
-          div#Editor main div.canvas div.canvas__controls div.labels input, div#Viewer main div.canvas div.canvas__controls div.labels input {
+          div#Editor main div.canvas div.canvas__controls div.labels input, div#Viewer main div.canvas div.canvas__controls div.labels input, div#SharedViewer main div.canvas div.canvas__controls div.labels input {
             margin-left: 8px; }
-        div#Editor main div.canvas div.canvas__controls div.pagination, div#Viewer main div.canvas div.canvas__controls div.pagination {
+        div#Editor main div.canvas div.canvas__controls div.pagination, div#Viewer main div.canvas div.canvas__controls div.pagination, div#SharedViewer main div.canvas div.canvas__controls div.pagination {
           grid-column: span 2; }
-      div#Editor main div.canvas div.canvas__body, div#Viewer main div.canvas div.canvas__body {
+      div#Editor main div.canvas div.canvas__body, div#Viewer main div.canvas div.canvas__body, div#SharedViewer main div.canvas div.canvas__body {
         padding: 16px;
         margin-top: 196px; }
-      div#Editor main div.canvas div.objectives button, div#Viewer main div.canvas div.objectives button {
+      div#Editor main div.canvas div.objectives button, div#Viewer main div.canvas div.objectives button, div#SharedViewer main div.canvas div.objectives button {
         width: 100%; }
-    div#Editor main div.sidebar, div#Viewer main div.sidebar {
+    div#Editor main div.sidebar, div#Viewer main div.sidebar, div#SharedViewer main div.sidebar {
       grid-row: 3;
       margin-top: 64px;
       grid-template-rows: 400px 400px; }
-      div#Editor main div.sidebar > button, div#Viewer main div.sidebar > button {
+      div#Editor main div.sidebar > button, div#Viewer main div.sidebar > button, div#SharedViewer main div.sidebar > button {
         display: none; }
-      div#Editor main div.sidebar div.sidebar-body, div#Viewer main div.sidebar div.sidebar-body {
+      div#Editor main div.sidebar div.sidebar-body, div#Viewer main div.sidebar div.sidebar-body, div#SharedViewer main div.sidebar div.sidebar-body {
         transform: none;
         top: 0;
         width: 100%;
         padding-bottom: 200px; }
-    div#Editor main div.lineup, div#Viewer main div.lineup {
+    div#Editor main div.lineup, div#Viewer main div.lineup, div#SharedViewer main div.lineup {
       grid-row: 2;
       width: 100%;
       padding-top: 32px; }
-      div#Editor main div.lineup > button, div#Viewer main div.lineup > button {
+      div#Editor main div.lineup > button, div#Viewer main div.lineup > button, div#SharedViewer main div.lineup > button {
         display: none; }
-      div#Editor main div.lineup div.lineup-body, div#Viewer main div.lineup div.lineup-body {
+      div#Editor main div.lineup div.lineup-body, div#Viewer main div.lineup div.lineup-body, div#SharedViewer main div.lineup div.lineup-body {
         position: relative;
         top: 0;
         left: 0;
@@ -2357,31 +2367,31 @@ div#Viewer a.objectives__video {
         grid-template-columns: repeat(5, 1fr);
         padding: 0;
         margin-bottom: 128px; }
-        div#Editor main div.lineup div.lineup-body h3, div#Viewer main div.lineup div.lineup-body h3 {
+        div#Editor main div.lineup div.lineup-body h3, div#Viewer main div.lineup div.lineup-body h3, div#SharedViewer main div.lineup div.lineup-body h3 {
           grid-column: span 5; }
-        div#Editor main div.lineup div.lineup-body div.role, div#Viewer main div.lineup div.lineup-body div.role {
+        div#Editor main div.lineup div.lineup-body div.role, div#Viewer main div.lineup div.lineup-body div.role, div#SharedViewer main div.lineup div.lineup-body div.role {
           grid-template-columns: 1fr;
           padding: 4px; }
-          div#Editor main div.lineup div.lineup-body div.role div.role__head, div#Viewer main div.lineup div.lineup-body div.role div.role__head {
+          div#Editor main div.lineup div.lineup-body div.role div.role__head, div#Viewer main div.lineup div.lineup-body div.role div.role__head, div#SharedViewer main div.lineup div.lineup-body div.role div.role__head {
             display: block !important;
             font-size: 8pt; }
-            div#Editor main div.lineup div.lineup-body div.role div.role__head div.role__options, div#Viewer main div.lineup div.lineup-body div.role div.role__head div.role__options {
+            div#Editor main div.lineup div.lineup-body div.role div.role__head div.role__options, div#Viewer main div.lineup div.lineup-body div.role div.role__head div.role__options, div#SharedViewer main div.lineup div.lineup-body div.role div.role__head div.role__options {
               display: none; }
-          div#Editor main div.lineup div.lineup-body div.role div.role__image p, div#Viewer main div.lineup div.lineup-body div.role div.role__image p {
+          div#Editor main div.lineup div.lineup-body div.role div.role__image p, div#Viewer main div.lineup div.lineup-body div.role div.role__image p, div#SharedViewer main div.lineup div.lineup-body div.role div.role__image p {
             font-size: 8pt; }
-          div#Editor main div.lineup div.lineup-body div.role div.role__image img, div#Viewer main div.lineup div.lineup-body div.role div.role__image img {
+          div#Editor main div.lineup div.lineup-body div.role div.role__image img, div#Viewer main div.lineup div.lineup-body div.role div.role__image img, div#SharedViewer main div.lineup div.lineup-body div.role div.role__image img {
             width: 100%;
             height: auto; }
-        div#Editor main div.lineup div.lineup-body div.role--active, div#Viewer main div.lineup div.lineup-body div.role--active {
+        div#Editor main div.lineup div.lineup-body div.role--active, div#Viewer main div.lineup div.lineup-body div.role--active, div#SharedViewer main div.lineup div.lineup-body div.role--active {
           border: 3px solid #4915D6; }
-          div#Editor main div.lineup div.lineup-body div.role--active div.role__options, div#Viewer main div.lineup div.lineup-body div.role--active div.role__options {
+          div#Editor main div.lineup div.lineup-body div.role--active div.role__options, div#Viewer main div.lineup div.lineup-body div.role--active div.role__options, div#SharedViewer main div.lineup div.lineup-body div.role--active div.role__options {
             display: block !important;
             position: absolute;
             top: 100%;
             background: #1A1D27;
             width: calc(100VW - (2 * 16px));
             left: 8px; }
-          div#Editor main div.lineup div.lineup-body div.role--active div.role__body, div#Viewer main div.lineup div.lineup-body div.role--active div.role__body {
+          div#Editor main div.lineup div.lineup-body div.role--active div.role__body, div#Viewer main div.lineup div.lineup-body div.role--active div.role__body, div#SharedViewer main div.lineup div.lineup-body div.role--active div.role__body {
             position: absolute;
             top: 170%;
             left: 8px;

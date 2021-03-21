@@ -16,6 +16,7 @@ import Team from "./components/pages/Team.js";
 import ManageTeam from "./components/pages/ManageTeam.js";
 import Strategies from "./components/pages/Strategies.js";
 import EditStrategies from "./components/pages/EditStrategies.js";
+import SharedStrategies from "./components/pages/SharedStrategies.js";
 import NotFound from "./components/pages/NotFound.js";
 import ForgotPassword from "./components/pages/ForgotPassword.js";
 import ResetPassword from "./components/pages/ResetPassword.js";
@@ -167,12 +168,9 @@ class App extends React.Component {
           <Navigation loggedIn={this.state.loggedIn} username={(this.state.user ? this.state.user.username : "")} status={this.state.user ? this.state.user.status : ""} team={(this.state.user ? this.state.user.team_code : undefined)}/>
           <Switch>
             <Route exact path="/">
-              { this.state.loggedIn ? ( <Redirect to="/dashboard"/> )
-              : (
-                <div className="page-wrapper">
-                  <Home/>
-                </div>
-              )}
+              <div className="page-wrapper">
+                <Home/>
+              </div>
             </Route>
             <Route exact path="/user">
               { this.state.loggedIn ? (
@@ -260,14 +258,16 @@ class App extends React.Component {
                   return <Redirect to="/"/>
                 }
               }}/>
-            <Route exact path="/chat">
-              { this.state.loggedIn && this.state.user.team_code ? (
-                <div className="page-wrapper">
-                </div>
-              )
-              : ( <Redirect to="/"/> )
-              }
-            </Route>
+            <Route exact path="/shared/:shared_key"
+              render={(props) => {
+                const shared_key = props.match.params.shared_key;
+                return (
+                  <div className="page-wrapper">
+                    <SharedStrategies shared_key={shared_key} {...props} alert={this.alert}/>
+                  </div>
+                )
+              }}
+            />
             <Route exact path="/login">
               { this.state.loggedIn ? ( <Redirect to="/"/> )
               : (

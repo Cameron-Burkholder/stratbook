@@ -125,7 +125,7 @@ div.map-selector {
   }
 }
 
-div#Editor, div#Viewer {
+div#Editor, div#Viewer, div#SharedViewer {
   max-width: 1600px;
   display: block;
   margin: auto;
@@ -807,7 +807,7 @@ div.zoom-selector {
   }
 }
 
-div#Viewer {
+div#Viewer, div#SharedViewer {
   h4.toolbar__strategy {
     cursor: default;
   }
@@ -839,7 +839,7 @@ div#Viewer {
 
 @media screen and (max-width: 1400px) {
 
-  div#Editor, div#Viewer {
+  div#Editor, div#Viewer, div#SharedViewer {
     main {
       width: 100%;
       height: 100%;
@@ -944,7 +944,7 @@ div#Viewer {
       background: $color-danger;
     }
   }
-  div#Editor, div#Viewer {
+  div#Editor, div#Viewer, div#SharedViewer {
     width: 100%;
     height: 100%;
     div.toolbar {
@@ -1044,7 +1044,7 @@ div#Viewer {
 }
 
 @media screen and (max-width: #{$phone-max-width}) {
-  div#Editor, div#Viewer {
+  div#Editor, div#Viewer, div#SharedViewer {
     div.toolbar {
       overflow-x: auto;
       div.toolbar__navigation {

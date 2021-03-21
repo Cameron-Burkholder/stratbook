@@ -1,4 +1,4 @@
-/* client/components/partials/Editor.js */
+/* client/components/partials/Viewer.js */
 
 import React from "react";
 import axios from "axios";
@@ -13,7 +13,7 @@ import ViewerLineup from "./ViewerLineup.js";
 import { MAP_NAMES, SITES, FLOORS, GADGETS, UTILITY_GUIDE } from "../../data.js";
 
 /*
-  @func: Editor
+  @func: Viewer
   @desc: manage state of new strategies and make requests to server
   @prop map
   @prop save (function)
@@ -296,7 +296,6 @@ class Viewer extends React.Component {
             operators={(this.state.type === "ATTACK" ? (
               this.state.map.attack[this.state.strategyIndex].operators
             ) : (this.state.map.defense[this.state.site][this.state.strategyIndex].operators))}
-            updateRoles={this.updateRoles} updateOperators={this.updateOperators} updateUtility={this.updateUtility}
             selectOperator={this.selectOperator} activeOperator={this.state.activeOperator}
             gadgets={(this.state.type === "ATTACK" ? (
               this.state.map.attack[this.state.strategyIndex].gadgets
@@ -312,8 +311,7 @@ class Viewer extends React.Component {
               this.state.map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].utilityPositions) : (
               this.state.map.defense[this.state.site][this.state.strategyIndex].utilityPositions
             ))}
-            insertUtility={this.insertUtility}
-            insertGadget={this.insertGadget}/>
+            />
         </main>
       </div>
     )

@@ -2,8 +2,6 @@
 
 import React from "react";
 
-import Toggle from "./Toggle.js";
-
 class ViewerSidebar extends React.Component {
   constructor(props) {
     super(props);
@@ -69,7 +67,7 @@ class ViewerSidebar extends React.Component {
                   <a className="toggle__link" href={( this.props.shared ? window.location.protocol + "//" + window.location.host + "/shared/" + this.props.shared_key : "")} target="_blank">view</a>
                   <button className="toggle__button" onClick={() => {
                     const temp = document.createElement("textarea");
-                    temp.value = this.props.link;
+                    temp.value = window.location.protocol + "//" + window.location.host + "/shared/" + this.props.shared_key;
                     document.body.appendChild(temp);
                     temp.select();
                     temp.setSelectionRange(0, 99999);
@@ -94,7 +92,7 @@ class ViewerSidebar extends React.Component {
                   <a className="toggle__link" href={( this.props.shared ? window.location.protocol + "//" + window.location.host + "/shared/" + this.props.shared_key : "")} target="_blank">view</a>
                   <button className="toggle__button" onClick={() => {
                     const temp = document.createElement("textarea");
-                    temp.value = this.props.link;
+                    temp.value = window.location.protocol + "//" + window.location.host + "/shared/" + this.props.shared_key;
                     document.body.appendChild(temp);
                     temp.select();
                     temp.setSelectionRange(0, 99999);

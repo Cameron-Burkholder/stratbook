@@ -1,4 +1,4 @@
-/* client/src/components/partials/ViewerCanvas.js */
+/* client/src/components/partials/SharedViewerCanvas.js */
 
 import React from "react";
 
@@ -8,7 +8,7 @@ import Pagination from "./Pagination.js";
 import ViewerBlueprintForm from "./ViewerBlueprintForm.js";
 import ViewerObjectives from "./ViewerObjectives.js";
 
-class ViewerCanvas extends React.Component {
+class SharedViewerCanvas extends React.Component {
   constructor(props) {
     super(props);
 
@@ -68,4 +68,4 @@ class ViewerCanvas extends React.Component {
   }
 }
 
-export default ViewerCanvas;
+export default SharedViewerCanvas;

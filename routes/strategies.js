@@ -67,6 +67,40 @@ module.exports = async (app, passport) => {
   });
 
   /**
+  * Fetch shared strategy
+  * @name /api/strategies/shared/:shared_key
+  * @async
+  * @description The user submits a request to view a shared strategy
+  */
+  app.get("/api/strategies/shared/:shared_key", (request, response, done) => {
+    log("GET REQUEST AT /api/strategyes/shared/:shared_key");
+    done();
+  }, async (request, response) => {
+
+    const shared_key = request.params.shared_key;
+
+    if (!shared_key) {
+      return response.json(messages.SHARED_STRATEGY_NOT_FOUND);
+    }
+
+    let shared_strategy;
+    try {
+      shared_strategy = await SharedStrategies.findOne({ shared_key: shared_key }).exec();
+    } catch(error) {
+      console.log(error);
+      return response.json(errors.ERROR_VIEW_SHARED_STRATEGY);
+    }
+
+    if (!shared_strategy) {
+      return response.json(messages.SHARED_STRATEGY_NOT_FOUND);
+    }
+
+    let packet = messages.SHARED_STRATEGY_FOUND;
+    packet.strategy = shared_strategy.strategy;
+    response.json(packet);
+  });
+
+  /**
   * Fetch a map
   * @name /api/strategies/view/:map
   * @function

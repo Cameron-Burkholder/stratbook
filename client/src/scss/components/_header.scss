@@ -1,0 +1,13 @@
+/* client/src/scss/components/_header.scss */
+
+header {
+  div.header__overlay {
+    background: linear-gradient(to right, #{$color-primary}, #{$color-tertiary});
+    padding: $padding-m;
+    filter: opacity(0.85);
+  }
+  h1, h2 {
+    text-shadow: 1px 1px $text-dark;
+    text-align: center;
+  }
+}

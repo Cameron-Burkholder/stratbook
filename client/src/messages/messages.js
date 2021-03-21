@@ -180,9 +180,13 @@ module.exports = {
     status: "Seasonal Statistics Found",
     message: "Seasonal statistics found."
   },
+  SHARED_STRATEGY_FOUND: {
+    status: "Shared Strategy Found",
+    message: "The strategy requested has been found."
+  },
   SHARED_STRATEGY_NOT_FOUND: {
     status: "Shared Strategy Not Found",
-    message: "The strategy you requested to unshared could not be found."
+    message: "The strategy you requested could not be found."
   },
   STRATEGIES_FOUND: {
     status: "Strategies Found",

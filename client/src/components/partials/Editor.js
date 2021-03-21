@@ -247,6 +247,9 @@ class Editor extends React.Component {
       }
       strategy = strategies[this.state.strategyIndex];
       strategy.type = this.state.type;
+      strategy.map = this.state.map.name;
+      strategy.floorIndex = this.state.floorIndex;
+      strategy.siteIndex = this.state.siteIndex;
       const position = {
         siteIndex: this.state.siteIndex,
         strategyIndex: this.state.strategyIndex,

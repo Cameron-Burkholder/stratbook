@@ -145,6 +145,10 @@ module.exports = {
     status: "ERROR",
     message: "An error occurred while attempting to view the requested map."
   },
+  ERROR_VIEW_SHARED_STRATEGY: {
+    status: "ERROR",
+    message: "An error occurred while attempting to view the requested shared strategy."
+  },
   ERROR_VIEW_STRATEGIES: {
     status: "ERROR",
     message: "An error occurred while attempting to view strategies."
