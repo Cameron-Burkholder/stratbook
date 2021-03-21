@@ -180,13 +180,13 @@ class Editor extends React.Component {
       map.attack[this.state.strategyIndex].roles[index] = e.target.value;
       map.attack[this.state.strategyIndex].operators[index] = "OPERATOR";
       map.attack[this.state.strategyIndex].gadgets[index] = "";
-      map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].gadgetPositions = [[], [], [], [], []];
+      map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].gadgetPositions[index] = [];
       map.attack[this.state.strategyIndex].utility[index] = "UTILITY";
     } else {
       map.defense[this.state.site][this.state.strategyIndex].roles[index] = e.target.value;
       map.defense[this.state.site][this.state.strategyIndex].operators[index] = "OPERATOR";
       map.defense[this.state.site][this.state.strategyIndex].gadgets[index] = "";
-      map.defense[this.state.site][this.state.strategyIndex].gadgetPositions = [[], [], [], [], []];
+      map.defense[this.state.site][this.state.strategyIndex].gadgetPositions[index] = [];
       map.defense[this.state.site][this.state.strategyIndex].utility[index] = "UTILITY";
     }
     this.setState({
