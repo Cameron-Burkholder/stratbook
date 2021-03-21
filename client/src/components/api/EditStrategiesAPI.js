@@ -308,8 +308,8 @@ class EditStrategiesAPI extends React.Component {
         contents = (
           <div className="edit-container">
             <h1>Edit Strategies</h1>
+            <Link className="button" to="/strategies">Back to view</Link>
             <div className="edit-buttons">
-              <Link className="button" to="/strategies">Back to view</Link>
               <button className="button" onClick={this.addMap}>Add Map</button>
             </div>
             <div className="map-selector">

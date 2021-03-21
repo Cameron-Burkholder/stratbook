@@ -15,14 +15,15 @@ div#EditStrategiesAPI {
       text-align: center;
     }
   }
+  a.button {
+    display: block;
+    width: 100%;
+    margin: $margin-s auto !important;
+  }
   div.edit-buttons {
     display: flex;
     justify-content: flex-start;
-    a.button {
-      display: block;
-      width: 100%;
-      margin: 0;
-    }
+
     button.button {
       max-width: 172px;
       display: block;
@@ -36,6 +37,10 @@ div#EditStrategiesAPI {
 div#ViewStrategiesAPI {
   div.view-container {
     padding: $padding-m !important;
+    a.button {
+      margin: auto;
+      margin-top: $margin-s;
+    }
     h1 {
       text-align: center;
     }
@@ -936,9 +941,11 @@ div#Viewer, div#SharedViewer {
 @media screen and (max-width: #{$tablet-max-width}) {
   div#EditStrategiesAPI div.edit-container, div#ViewStrategiesAPI div.view-container {
     padding: 8px !important;
-  }
-  div.edit-buttons {
-    padding: $padding-s;
+    button.button {
+      width: 100%;
+      max-width: 100VW;
+      margin-left: 0;
+    }
   }
   div.map-selector {
     grid-template-columns: 1fr;
