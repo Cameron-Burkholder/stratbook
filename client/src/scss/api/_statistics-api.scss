@@ -1,15 +1,28 @@
 /* client/src/scss/api/_statistics-api.scss */
 
+p.statistics-failure {
+  padding: $padding-s;
+  background: $background-primary;
+  margin-top: $margin-m;
+}
 div#GeneralStatisticsAPI {
   grid-column: span 2;
+  background: linear-gradient(to bottom, #{$color-primary}, #{$color-secondary});
 }
 div#SeasonalStatisticsAPI {
+  background: linear-gradient(to bottom, #{$color-tertiary}, #{$color-warning});
+  div#seasonal-stats-inside {
+    background: $background-primary;
+    padding: $padding-s;
+    padding-top: $padding-m;
+    height: 100%;
+  }
   div.statistics {
     display: flex;
     flex-direction: column;
   }
   div.stat--main {
-    background: linear-gradient(#{$color-primary}, #{$color-secondary});
+    background: linear-gradient(#{$color-tertiary}, #{$color-warning});
     width: 256px;
     height: 256px;
     border-radius: 100%;
@@ -59,13 +72,19 @@ div#SeasonalStatisticsAPI {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     margin-top: $margin-s;
+    margin-left: $margin-s;
     h3.stat__value--main {
       grid-column: span 2;
+    }
+    p.stat__label {
+      color: white;
+      opacity: 0.7;
     }
   }
 }
 div#OperatorStatisticsAPI {
   grid-column: span 3;
+  background: linear-gradient(to bottom, #{$color-tertiary}, #{$color-secondary});
   div.statistics {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -121,7 +140,6 @@ div#OperatorStatisticsAPI {
 
 div.statistics-api {
   padding: $padding-m;
-  border: $border-primary;
 }
 h2.statistics-title, h3.statistics-title {
   text-align: center;
@@ -147,6 +165,7 @@ div.stats-box {
   flex-direction: column;
   justify-content: space-between;
   box-shadow: $box-shadow-primary;
+  background: $background-primary;
 }
 div.stats-box:hover {
   transform: translateY(-8px);
@@ -220,7 +239,7 @@ div.statistics-api--rows {
           margin: auto;
         }
         h3 {
-          display: none;
+          font-size: $font-small;
         }
       }
       div.operator-stats {

@@ -70,43 +70,45 @@ class SeasonalStatisticsAPI extends React.Component {
     const season = season_arr[0].charAt(0).toUpperCase() + season_arr[0].slice(1) + " " + season_arr[1].charAt(0).toUpperCase() + season_arr[1].slice(1);
     return (
       <div id="SeasonalStatisticsAPI" className="statistics-api">
-        <h2 className="statistics-title">Operation {season}</h2>
-        <h3 className="statistics-title">Seasonal Performance</h3>
-        { this.state.loading ? (
-          <Loading/>
-        ) : (
-          <div>
-          { this.state.stats ? (
-            <div className="statistics">
-              <div className="stat--main">
-                <h3 className="stat__value">{this.state.stats.seasons[CURRENT_SEASON].regions.ncsa[0].rank_text}</h3>
-                <p className="stat__label">{this.state.stats.seasons[CURRENT_SEASON].regions.ncsa[0].mmr} MMR</p>
-                <p className="stat__label stat__label--secondary">MMR Change: {this.state.stats.seasons[CURRENT_SEASON].regions.ncsa[0].last_match_mmr_change}</p>
-              </div>
-              <div className="stat">
-                <h3 className="stat__value--main">{Math.floor(100 * (this.state.stats.seasons[CURRENT_SEASON].regions.ncsa[0].kills / this.state.stats.seasons[CURRENT_SEASON].regions.ncsa[0].deaths)) / 100} KD</h3>
-                <p className="stat__label">Kills</p>
-                <h4 className="stat__value">{this.state.stats.seasons[CURRENT_SEASON].regions.ncsa[0].kills}</h4>
-                <p className="stat__label">Deaths</p>
-                <h4 className="stat__value">{this.state.stats.seasons[CURRENT_SEASON].regions.ncsa[0].deaths}</h4>
-                <p className="stat__label">K/D Spread</p>
-                <h4 className="stat__value">{this.state.stats.seasons[CURRENT_SEASON].regions.ncsa[0].kills - this.state.stats.seasons[CURRENT_SEASON].regions.ncsa[0].deaths}</h4>
-              </div>
-              <div className="stat">
-                <h3 className="stat__value--main">{Math.floor(100 * (this.state.stats.seasons[CURRENT_SEASON].regions.ncsa[0].wins / this.state.stats.seasons[CURRENT_SEASON].regions.ncsa[0].losses)) / 100} WL</h3>
-                <p className="stat__label">Wins</p>
-                <h4 className="stat__value">{this.state.stats.seasons[CURRENT_SEASON].regions.ncsa[0].wins}</h4>
-                <p className="stat__label">Losses</p>
-                <h4 className="stat__value">{this.state.stats.seasons[CURRENT_SEASON].regions.ncsa[0].losses}</h4>
-                <p className="stat__label">W/L Spread</p>
-                <h4 className="stat__value">{this.state.stats.seasons[CURRENT_SEASON].regions.ncsa[0].wins - this.state.stats.seasons[CURRENT_SEASON].regions.ncsa[0].losses}</h4>
-              </div>
-            </div>
+        <div id="seasonal-stats-inside">
+          <h2 className="statistics-title">Operation {season}</h2>
+          <h3 className="statistics-title">Seasonal Performance</h3>
+          { this.state.loading ? (
+            <Loading/>
           ) : (
-            <p>Unable to load statistics. Make sure your username matches the account for the platform you signed up with.</p>
+            <div>
+            { this.state.stats ? (
+              <div className="statistics">
+                <div className="stat--main">
+                  <h3 className="stat__value">{this.state.stats.seasons[CURRENT_SEASON].regions.ncsa[0].rank_text}</h3>
+                  <p className="stat__label">{this.state.stats.seasons[CURRENT_SEASON].regions.ncsa[0].mmr} MMR</p>
+                  <p className="stat__label stat__label--secondary">MMR Change: {this.state.stats.seasons[CURRENT_SEASON].regions.ncsa[0].last_match_mmr_change}</p>
+                </div>
+                <div className="stat">
+                  <h3 className="stat__value--main">{Math.floor(100 * (this.state.stats.seasons[CURRENT_SEASON].regions.ncsa[0].kills / this.state.stats.seasons[CURRENT_SEASON].regions.ncsa[0].deaths)) / 100} KD</h3>
+                  <p className="stat__label">Kills</p>
+                  <h4 className="stat__value">{this.state.stats.seasons[CURRENT_SEASON].regions.ncsa[0].kills}</h4>
+                  <p className="stat__label">Deaths</p>
+                  <h4 className="stat__value">{this.state.stats.seasons[CURRENT_SEASON].regions.ncsa[0].deaths}</h4>
+                  <p className="stat__label">K/D Spread</p>
+                  <h4 className="stat__value">{this.state.stats.seasons[CURRENT_SEASON].regions.ncsa[0].kills - this.state.stats.seasons[CURRENT_SEASON].regions.ncsa[0].deaths}</h4>
+                </div>
+                <div className="stat">
+                  <h3 className="stat__value--main">{Math.floor(100 * (this.state.stats.seasons[CURRENT_SEASON].regions.ncsa[0].wins / this.state.stats.seasons[CURRENT_SEASON].regions.ncsa[0].losses)) / 100} WL</h3>
+                  <p className="stat__label">Wins</p>
+                  <h4 className="stat__value">{this.state.stats.seasons[CURRENT_SEASON].regions.ncsa[0].wins}</h4>
+                  <p className="stat__label">Losses</p>
+                  <h4 className="stat__value">{this.state.stats.seasons[CURRENT_SEASON].regions.ncsa[0].losses}</h4>
+                  <p className="stat__label">W/L Spread</p>
+                  <h4 className="stat__value">{this.state.stats.seasons[CURRENT_SEASON].regions.ncsa[0].wins - this.state.stats.seasons[CURRENT_SEASON].regions.ncsa[0].losses}</h4>
+                </div>
+              </div>
+            ) : (
+              <p className="statistics-failure">Unable to load statistics. Make sure your username matches the account for the platform you signed up with.</p>
+            )}
+            </div>
           )}
-          </div>
-        )}
+        </div>
       </div>
     )
   }

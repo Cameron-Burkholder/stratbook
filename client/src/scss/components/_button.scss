@@ -12,7 +12,6 @@ button {
 }
 button:hover {
   cursor: pointer;
-  background: linear-gradient(to right, #{$color-primary}, #{$color-secondary});
   box-shadow: $box-shadow-primary;
   filter: opacity(1.0);
   transition: all 0.3s ease;

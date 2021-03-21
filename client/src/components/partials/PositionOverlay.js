@@ -107,15 +107,14 @@ class PositionOverlay extends React.Component {
 
       if (e.keyCode === 37) {
         newX -= 2;
-      }
-      if (e.keyCode === 38) {
+      } else if (e.keyCode === 38) {
         newY -= 2;
-      }
-      if (e.keyCode === 39) {
+      } else if (e.keyCode === 39) {
         newX += 2;
-      }
-      if (e.keyCode === 40) {
+      } else if (e.keyCode === 40) {
         newY += 2;
+      } else {
+        return this.deselectElement();
       }
 
       if (this.state.selected.type === "GADGET" || this.state.selected.type === "UTILITY") {

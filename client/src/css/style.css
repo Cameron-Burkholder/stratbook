@@ -56,7 +56,7 @@ p {
   height: 4px; }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(#0040D6, #0098A6); }
+  background: linear-gradient(#0031A4, #0098A6); }
 
 /* scss/components/_navigation.scss */
 nav.nav {
@@ -108,7 +108,7 @@ a.nav__link--active::after {
   position: absolute;
   width: 100%;
   height: 2px;
-  background: linear-gradient(#0040D6, #0098A6);
+  background: linear-gradient(#0031A4, #0098A6);
   content: "";
   top: 100%;
   left: 0; }
@@ -185,7 +185,7 @@ div.user-dropdown--active div.user-dropdown__body {
     left: -100VW;
     width: 80VW;
     height: 100VH;
-    background: linear-gradient(#0040D6, #0098A6);
+    background: linear-gradient(#0031A4, #0098A6);
     flex-direction: column;
     justify-content: center; }
     ul.nav__body li.nav__item {
@@ -298,7 +298,7 @@ input:hover, textarea:hover {
 input:focus, textarea:focus {
   border: none;
   outline: none;
-  box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.17);
+  box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.25);
   border-bottom: 4px solid #0098A6;
   transition: all 0.3s ease; }
 
@@ -325,7 +325,7 @@ fieldset {
   padding: 16px; }
 
 fieldset a {
-  color: #0040D6;
+  color: #0031A4;
   margin-top: 4px; }
 
 fieldset a:hover {
@@ -340,7 +340,7 @@ form button {
   margin: auto;
   width: 128px;
   margin-top: 40px;
-  background: linear-gradient(#0040D6, #0098A6);
+  background: linear-gradient(#0031A4, #0098A6);
   border: none;
   transition: all 0.3s ease; }
 
@@ -374,8 +374,8 @@ div.alert {
   padding: 16px;
   padding-right: 56px;
   background: #1A1D27;
-  border: 3px solid #0040D6;
-  box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.17);
+  border: 3px solid #0031A4;
+  box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.25);
   right: calc(-100% - 16px);
   margin-top: 16px;
   animation-name: alert-appear;
@@ -481,9 +481,9 @@ div.toggle, div.viewer-toggle {
     -webkit-transition: .4s;
     transition: .4s; }
   div.toggle input:checked + .slider, div.toggle .slider--active, div.viewer-toggle input:checked + .slider, div.viewer-toggle .slider--active {
-    background: linear-gradient(to right, #0040D6, #0098A6); }
+    background: linear-gradient(to right, #0031A4, #0098A6); }
   div.toggle input:focus + .slider, div.toggle .slider--active, div.viewer-toggle input:focus + .slider, div.viewer-toggle .slider--active {
-    box-shadow: 0 0 1px #0040D6; }
+    box-shadow: 0 0 1px #0031A4; }
   div.toggle input:checked + .slider:before, div.toggle .slider--active:before, div.viewer-toggle input:checked + .slider:before, div.viewer-toggle .slider--active:before {
     -webkit-transform: translateX(35px);
     -ms-transform: translateX(35px);
@@ -544,7 +544,7 @@ div.toggle, div.viewer-toggle {
 @keyframes color {
   100%,
   0% {
-    stroke: #0040D6; }
+    stroke: #0031A4; }
   50% {
     stroke: #0098A6; } }
 
@@ -573,8 +573,7 @@ button {
 
 button:hover {
   cursor: pointer;
-  background: linear-gradient(to right, #0040D6, #0098A6);
-  box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.17);
+  box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.25);
   filter: opacity(1);
   transition: all 0.3s ease; }
 
@@ -586,7 +585,7 @@ button.button--danger:hover {
 
 /* client/src/scss/components/_header.scss */
 header div.header__overlay {
-  background: linear-gradient(to right, #0040D6, #4915D6);
+  background: linear-gradient(to right, #0031A4, #4915D6);
   padding: 40px;
   filter: opacity(0.85); }
 
@@ -609,66 +608,80 @@ footer.footer {
     margin-top: 156px; } }
 
 /* client/src/scss/api/_statistics-api.scss */
-div#GeneralStatisticsAPI {
-  grid-column: span 2; }
-
-div#SeasonalStatisticsAPI div.statistics {
-  display: flex;
-  flex-direction: column; }
-
-div#SeasonalStatisticsAPI div.stat--main {
-  background: linear-gradient(#0040D6, #0098A6);
-  width: 256px;
-  height: 256px;
-  border-radius: 100%;
-  margin: 40px auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.17);
-  position: relative;
-  z-index: 1;
-  transition: all 0.3s ease; }
-  div#SeasonalStatisticsAPI div.stat--main h3 {
-    font-size: 20pt;
-    z-index: 2; }
-  div#SeasonalStatisticsAPI div.stat--main p {
-    font-size: 16pt;
-    z-index: 2;
-    margin-top: 4px;
-    color: #E6E6E6; }
-  div#SeasonalStatisticsAPI div.stat--main p.stat__label--secondary {
-    font-size: 12pt;
-    margin-top: 0;
-    color: #E6E6E6;
-    z-index: 2; }
-
-div#SeasonalStatisticsAPI div.stat--main::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 244px;
-  height: 244px;
-  border-radius: 100%;
+p.statistics-failure {
+  padding: 16px;
   background: #1A1D27;
-  z-index: 1; }
+  margin-top: 40px; }
 
-div#SeasonalStatisticsAPI div.stat--main:hover {
-  transform: translateY(-8px);
-  transition: all 0.3s ease; }
+div#GeneralStatisticsAPI {
+  grid-column: span 2;
+  background: linear-gradient(to bottom, #0031A4, #0098A6); }
 
-div#SeasonalStatisticsAPI div.stat {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  margin-top: 16px; }
-  div#SeasonalStatisticsAPI div.stat h3.stat__value--main {
-    grid-column: span 2; }
+div#SeasonalStatisticsAPI {
+  background: linear-gradient(to bottom, #4915D6, #ffbb33); }
+  div#SeasonalStatisticsAPI div#seasonal-stats-inside {
+    background: #1A1D27;
+    padding: 16px;
+    padding-top: 40px;
+    height: 100%; }
+  div#SeasonalStatisticsAPI div.statistics {
+    display: flex;
+    flex-direction: column; }
+  div#SeasonalStatisticsAPI div.stat--main {
+    background: linear-gradient(#4915D6, #ffbb33);
+    width: 256px;
+    height: 256px;
+    border-radius: 100%;
+    margin: 40px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.25);
+    position: relative;
+    z-index: 1;
+    transition: all 0.3s ease; }
+    div#SeasonalStatisticsAPI div.stat--main h3 {
+      font-size: 20pt;
+      z-index: 2; }
+    div#SeasonalStatisticsAPI div.stat--main p {
+      font-size: 16pt;
+      z-index: 2;
+      margin-top: 4px;
+      color: #E6E6E6; }
+    div#SeasonalStatisticsAPI div.stat--main p.stat__label--secondary {
+      font-size: 12pt;
+      margin-top: 0;
+      color: #E6E6E6;
+      z-index: 2; }
+  div#SeasonalStatisticsAPI div.stat--main::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 244px;
+    height: 244px;
+    border-radius: 100%;
+    background: #1A1D27;
+    z-index: 1; }
+  div#SeasonalStatisticsAPI div.stat--main:hover {
+    transform: translateY(-8px);
+    transition: all 0.3s ease; }
+  div#SeasonalStatisticsAPI div.stat {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    margin-top: 16px;
+    margin-left: 16px; }
+    div#SeasonalStatisticsAPI div.stat h3.stat__value--main {
+      grid-column: span 2; }
+    div#SeasonalStatisticsAPI div.stat p.stat__label {
+      color: white;
+      opacity: 0.7; }
 
 div#OperatorStatisticsAPI {
-  grid-column: span 3; }
+  grid-column: span 3;
+  background: linear-gradient(to bottom, #4915D6, #0098A6); }
   div#OperatorStatisticsAPI div.statistics {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -703,13 +716,12 @@ div#OperatorStatisticsAPI {
         div#OperatorStatisticsAPI div.statistics div.operator-statistics div.operator-stats div.operator-stats__stat span {
           color: #E6E6E6; }
     div#OperatorStatisticsAPI div.statistics div.operator-statistics:hover {
-      box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.17);
+      box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.25);
       transform: translateY(-2px);
       transition: all 0.3s ease; }
 
 div.statistics-api {
-  padding: 40px;
-  border: 1px solid #33363E; }
+  padding: 40px; }
 
 h2.statistics-title, h3.statistics-title {
   text-align: center; }
@@ -734,7 +746,8 @@ div.stats-box {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.17); }
+  box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.25);
+  background: #1A1D27; }
 
 div.stats-box:hover {
   transform: translateY(-8px);
@@ -757,7 +770,7 @@ div.progress-circle {
   justify-content: center;
   align-items: center;
   position: relative;
-  background: linear-gradient(#0040D6, #0098A6);
+  background: linear-gradient(#0031A4, #0098A6);
   z-index: 1;
   transition: all 0.5s ease; }
   div.progress-circle p {
@@ -801,7 +814,7 @@ div.statistics-api--rows div.statistics {
       display: block;
       margin: auto; }
     div.statistics-api--rows div.statistics div.operator-statistics div.operator-info h3 {
-      display: none; }
+      font-size: 10pt; }
     div.statistics-api--rows div.statistics div.operator-statistics div.operator-stats {
       grid-template-columns: repeat(8, 1fr) !important; }
       div.statistics-api--rows div.statistics div.operator-statistics div.operator-stats div.operator-stats__stat {
@@ -942,7 +955,7 @@ div#LoginAPI, div#RegisterAPI, div#ForgotPasswordAPI, div#ResetPasswordAPI {
   max-width: 600px;
   background: white;
   padding: 40px;
-  box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.17);
+  box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.25);
   margin: auto;
   z-index: 1; }
 
@@ -953,15 +966,15 @@ div#LoginAPI, div#RegisterAPI, div#ForgotPasswordAPI, div#ResetPasswordAPI {
 div.account-section {
   padding: 40px;
   border: 1px solid #33363E;
-  border-bottom: 3px solid #0040D6;
-  border-top: 3px solid #0040D6;
+  border-bottom: 3px solid #0031A4;
+  border-top: 3px solid #0031A4;
   margin-bottom: 128px;
-  box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.17); }
+  box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.25); }
   div.account-section button {
     background: #1A1D27;
     border: 1px solid #33363E; }
   div.account-section button:hover {
-    background: linear-gradient(#0040D6, #0098A6); }
+    background: linear-gradient(#0031A4, #0098A6); }
   div.account-section h3 {
     text-align: center; }
   div.account-section div.role {
@@ -1088,12 +1101,12 @@ a.button {
   margin-bottom: 16px;
   max-width: 172px;
   text-align: center;
-  background: linear-gradient(to right, #0040D6, #0098A6);
+  background: linear-gradient(to right, #0031A4, #0098A6);
   grid-column: span 3; }
 
 a.button:hover {
   cursor: pointer;
-  box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.17);
+  box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.25);
   filter: opacity(1);
   transition: all 0.3s ease; }
 
@@ -1109,21 +1122,21 @@ div.hasNoTeam div.team-grid {
   grid-gap: 40px; }
   div.hasNoTeam div.team-grid div {
     padding: 40px;
-    box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.17); }
+    box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.25); }
     div.hasNoTeam div.team-grid div label {
       color: #E6E6E6; }
   div.hasNoTeam div.team-grid div#CreateTeamAPI button {
-    background: #0040D6; }
+    background: #0031A4; }
   div.hasNoTeam div.team-grid div#JoinTeamAPI button {
     background: #0098A6; }
 
 div#ViewTeamAPI {
   grid-column: span 2;
-  border-top: 3px solid #0040D6; }
+  border-top: 3px solid #0031A4; }
   div#ViewTeamAPI div.team {
     padding: 40px;
     border: 1px solid #33363E;
-    box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.17); }
+    box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.25); }
     div#ViewTeamAPI div.team h2, div#ViewTeamAPI div.team h3.team-description {
       text-align: center; }
     div#ViewTeamAPI div.team div.roster {
@@ -1133,7 +1146,7 @@ div#ViewTeamAPI {
         border: 1px solid #33363E;
         display: grid;
         grid-template-columns: repeat(4, 1fr);
-        border-left: 3px solid #0040D6;
+        border-left: 3px solid #0031A4;
         margin-top: 16px; }
         div#ViewTeamAPI div.team div.roster div.team-member h4 {
           font-weight: bold;
@@ -1154,7 +1167,7 @@ div#ViewTeamAPI {
 div#ViewTeamStatisticsAPI {
   border-top: 3px solid #0098A6; }
   div#ViewTeamStatisticsAPI div.team-statistics {
-    box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.17);
+    box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.25);
     border: 1px solid #33363E;
     padding: 40px; }
     div#ViewTeamStatisticsAPI div.team-statistics h2 {
@@ -1169,7 +1182,7 @@ div#ViewTeamStatisticsAPI {
       div#ViewTeamStatisticsAPI div.team-statistics div.overview div.progress-circle {
         width: 96px;
         height: 96px;
-        box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.17); }
+        box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.25); }
         div#ViewTeamStatisticsAPI div.team-statistics div.overview div.progress-circle p {
           font-size: 10pt; }
         div#ViewTeamStatisticsAPI div.team-statistics div.overview div.progress-circle p.progress-circle__value {
@@ -1197,7 +1210,7 @@ div#ViewTeamStatisticsAPI {
         font-size: 10pt;
         text-align: right; }
     div#ViewTeamStatisticsAPI div.team-statistics div.member-statistics div.team-member-stats:hover {
-      box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.17);
+      box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.25);
       transition: all 0.3s ease; }
 
 #ViewTeamStatisticsAPI > div > div > div.member-statistics p:nth-child(4) {
@@ -1205,7 +1218,7 @@ div#ViewTeamStatisticsAPI {
 
 div#UpdateTeamNameAPI {
   padding: 40px;
-  box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.17);
+  box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.25);
   border-left: 3px solid #0098A6; }
   div#UpdateTeamNameAPI h3 {
     text-align: center; }
@@ -1218,8 +1231,8 @@ div#UpdateTeamNameAPI {
 
 div#TeamAnnouncementAPI {
   padding: 40px;
-  box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.17);
-  border-left: 3px solid #0040D6;
+  box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.25);
+  border-left: 3px solid #0031A4;
   margin-top: 16px; }
   div#TeamAnnouncementAPI h3 {
     text-align: center; }
@@ -1235,7 +1248,7 @@ div#TeamAnnouncementAPI {
 div#ManageTeamAPI {
   grid-column: span 2;
   padding: 40px;
-  box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.17);
+  box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.25);
   border-left: 3px solid #4915D6; }
   div#ManageTeamAPI h3 {
     text-align: center; }
@@ -1265,7 +1278,7 @@ div#ManageTeamAPI {
     div#ManageTeamAPI div.manage-team-member button:hover {
       background: #C93434; }
   div#ManageTeamAPI div.manage-team-member:hover {
-    box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.17);
+    box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.25);
     transition: all 0.3s ease; }
   div#ManageTeamAPI div.team-status, div#ManageTeamAPI div.team-platform, div#ManageTeamAPI div.team-mmr {
     margin-top: 40px; }
@@ -1276,7 +1289,7 @@ div#ManageTeamAPI {
       color: #19191a; }
 
 div#BlockedUsersAPI {
-  box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.17);
+  box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.25);
   padding: 40px;
   border-left: 3px solid #C93434; }
   div#BlockedUsersAPI div.blocked-user {
@@ -1443,7 +1456,7 @@ div#EditStrategiesAPI div.edit-buttons {
     margin: 0;
     width: 100%;
     margin-left: 16px;
-    background: linear-gradient(to right, #4915D6, #0040D6); }
+    background: linear-gradient(to right, #4915D6, #0031A4); }
 
 div#ViewStrategiesAPI div.view-container {
   padding: 40px !important; }
@@ -1510,7 +1523,7 @@ div.map-selector {
     box-shadow: none;
     background: #C93434; }
   div.map-selector div.map-option:hover, div.map-selector a.map-option:hover {
-    box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.17);
+    box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.25);
     cursor: pointer;
     transition: all 0.3s ease; }
     div.map-selector div.map-option:hover div.map-overlay, div.map-selector a.map-option:hover div.map-overlay {
@@ -1580,7 +1593,7 @@ div.toolbar {
     width: 100%;
     border: 1px solid #E0E8FF;
     transition: all 0.3s ease;
-    background: linear-gradient(to right, #4915D6, #0040D6); }
+    background: linear-gradient(to right, #4915D6, #0031A4); }
   div.toolbar button.toolbar__button:hover {
     transition: all 0.3s ease; }
   div.toolbar p {
@@ -1613,7 +1626,7 @@ div.toolbar {
         margin: 0;
         color: #19191a; }
     div.toolbar div.action-container div.action:hover {
-      border-bottom: 3px solid #0040D6;
+      border-bottom: 3px solid #0031A4;
       transition: all 0.3s ease;
       cursor: pointer; }
       div.toolbar div.action-container div.action:hover * {
@@ -1688,7 +1701,7 @@ div.toolbar__navigation {
     transition: all 0.3s ease;
     cursor: pointer; }
   div.toolbar__navigation a#showMaps:hover {
-    box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.17);
+    box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.25);
     transition: all 0.3s ease; }
   div.toolbar__navigation div.type-selector, div.toolbar__navigation div.strategy-selector, div.toolbar__navigation div.site-container, div.toolbar__navigation div.site-container div {
     margin: 0;
@@ -1703,7 +1716,7 @@ div.toolbar__navigation {
       border: 1px solid #E0E8FF; }
     div.toolbar__navigation div.type-selector button.type--active, div.toolbar__navigation div.type-selector button.strategy--active, div.toolbar__navigation div.type-selector button.site--active, div.toolbar__navigation div.strategy-selector button.type--active, div.toolbar__navigation div.strategy-selector button.strategy--active, div.toolbar__navigation div.strategy-selector button.site--active, div.toolbar__navigation div.site-container button.type--active, div.toolbar__navigation div.site-container button.strategy--active, div.toolbar__navigation div.site-container button.site--active, div.toolbar__navigation div.site-container div button.type--active, div.toolbar__navigation div.site-container div button.strategy--active, div.toolbar__navigation div.site-container div button.site--active {
       color: white;
-      background: linear-gradient(to right, #0040D6, #0098A6); }
+      background: linear-gradient(to right, #0031A4, #0098A6); }
   div.toolbar__navigation div.strategy-selector {
     padding-bottom: 80px; }
   div.toolbar__navigation div.strategy-control {
@@ -1730,13 +1743,13 @@ div.toolbar__navigation {
       font-size: 10pt; }
     div.toolbar__navigation div.strategy-control button:hover {
       box-shadow: none;
-      background: linear-gradient(to right, #0040D6, #4915D6);
+      background: linear-gradient(to right, #0031A4, #4915D6);
       color: white;
       cursor: pointer; }
 
 div.toolbar__navigation--active {
   transform: translateX(0);
-  box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.17);
+  box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.25);
   z-index: 4;
   transition: all 0.3s ease; }
 
@@ -1787,10 +1800,10 @@ div.sidebar {
       display: inline; }
   div.sidebar div.strategy-container div.strategy:hover {
     cursor: pointer;
-    box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.17);
+    box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.25);
     transition: all 0.3s ease; }
   div.sidebar div.strategy-container div.strategy--active {
-    border-left: 3px solid #0040D6; }
+    border-left: 3px solid #0031A4; }
   div.sidebar div.site, div.sidebar div.scene {
     display: flex;
     flex-direction: column;
@@ -1841,10 +1854,10 @@ div.sidebar {
     cursor: pointer; }
   div.sidebar div.site:hover, div.sidebar div.scene:hover {
     cursor: pointer;
-    box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.17);
+    box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.25);
     transition: all 0.3s ease; }
   div.sidebar div.site--active, div.sidebar div.scene--active {
-    border-left: 3px solid #0040D6; }
+    border-left: 3px solid #0031A4; }
   div.sidebar div.scene-container {
     margin-top: 40px; }
   div.sidebar div.scene-controls {
@@ -1872,7 +1885,7 @@ div.sidebar {
       font-size: 10pt; }
     div.sidebar div.scene-controls button:hover {
       box-shadow: none;
-      background: linear-gradient(to right, #0040D6, #4915D6);
+      background: linear-gradient(to right, #0031A4, #4915D6);
       cursor: pointer; }
     div.sidebar div.scene-controls button:nth-child(1) {
       border-right: 1px solid #33363E; }
@@ -2026,7 +2039,7 @@ div.canvas {
   100% {
     filter: opacity(0.3); } }
     div.canvas div.position-overlay div.drag-operator {
-      border: 2px solid #0040D6; }
+      border: 2px solid #0031A4; }
     div.canvas div.position-overlay div.drag-drone, div.canvas div.position-overlay div.drag-reinforcement {
       border: 2px solid #ffbb33;
       transform: scale(0.8); }
@@ -2105,7 +2118,7 @@ div#Viewer img.role__utility-image:hover, div#Viewer img.role__gadget-image:hove
 
 div#Viewer a.objectives__video, div#SharedViewer a.objectives__video {
   padding: 16px;
-  background: linear-gradient(to right, #0040D6, #0098A6);
+  background: linear-gradient(to right, #0031A4, #0098A6);
   margin-top: 40px !important;
   display: block;
   width: 100%;
