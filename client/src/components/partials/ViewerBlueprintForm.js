@@ -3,9 +3,7 @@
 import React from "react";
 
 import ViewerPositionOverlay from "./ViewerPositionOverlay.js";
-
-const width = 900;
-const height = 675;
+import { CANVAS_WIDTH, CANVAS_HEIGHT } from "../../data.js";
 
 class ViewerBlueprintForm extends React.Component {
   constructor(props) {
@@ -52,10 +50,10 @@ class ViewerBlueprintForm extends React.Component {
     }
 
     if (!this.state.isMobile) {
-      const xLowerBound = this.props.zoom * (((this.props.zoom * this.state.bounds.width) - this.state.bounds.width) / 2);
-      const xUpperBound = this.props.zoom * ((this.state.bounds.width - (this.props.zoom * this.state.bounds.width)) / 2);
-      const yLowerBound = this.props.zoom * (((this.props.zoom * this.state.bounds.height) - this.state.bounds.height) / 2);
-      const yUpperBound = this.props.zoom * ((this.state.bounds.height - (this.props.zoom * this.state.bounds.height)) / 2);
+      const xLowerBound = this.props.zoom * (((this.props.zoom * this.state.bounds.CANVAS_WIDTH) - this.state.bounds.CANVAS_WIDTH) / 2);
+      const xUpperBound = this.props.zoom * ((this.state.bounds.CANVAS_WIDTH - (this.props.zoom * this.state.bounds.CANVAS_WIDTH)) / 2);
+      const yLowerBound = this.props.zoom * (((this.props.zoom * this.state.bounds.CANVAS_HEIGHT) - this.state.bounds.CANVAS_HEIGHT) / 2);
+      const yUpperBound = this.props.zoom * ((this.state.bounds.CANVAS_HEIGHT - (this.props.zoom * this.state.bounds.CANVAS_HEIGHT)) / 2);
 
       if (offsetX > xLowerBound) {
         offsetX = xLowerBound;
@@ -90,16 +88,16 @@ class ViewerBlueprintForm extends React.Component {
   componentDidMount() {
     if (!this.state.bounds) {
       let bounds = this.selector.current.getBoundingClientRect();
-      const isMobile = (Math.abs(bounds.width - width) < 20 && Math.abs(bounds.height - height) < 20 ? false : true);
-      bounds.width = width;
-      bounds.height = height;
+      const isMobile = (Math.abs(bounds.CANVAS_WIDTH - CANVAS_WIDTH) < 20 && Math.abs(bounds.CANVAS_HEIGHT - CANVAS_HEIGHT) < 20 ? false : true);
+      bounds.CANVAS_WIDTH = CANVAS_WIDTH;
+      bounds.CANVAS_HEIGHT = CANVAS_HEIGHT;
       this.setState({
         bounds: bounds,
         isMobile: isMobile
       }, () => {
         if (this.state.isMobile) {
           let bounds = this.selector.current.getBoundingClientRect();
-          let mobileOffset = -((this.state.bounds.width / 2) - (bounds.width / 2));
+          let mobileOffset = -((this.state.bounds.CANVAS_WIDTH / 2) - (bounds.CANVAS_WIDTH / 2));
           this.setState({
             offsetX: mobileOffset,
             mobileOffset: mobileOffset

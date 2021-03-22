@@ -5,7 +5,7 @@ import axios from "axios";
 
 import LoadingModal from "../partials/LoadingModal.js";
 
-import { MAP_NAMES, SITES, FLOORS, GADGETS, UTILITY_GUIDE } from "../../data.js";
+import { MAP_NAMES, SITES, FLOORS, GADGETS, UTILITY_GUIDE, CANVAS_WIDTH, CANVAS_HEIGHT } from "../../data.js";
 import { MAP_ADDED } from "../../messages/messages.js";
 import { ERROR_ADD_MAP } from "../../messages/errors.js";
 
@@ -49,7 +49,7 @@ class CreateStrategiesAPI extends React.Component {
             utilityPositions: [[], [], [], [], []],
             gadgetPositions: [[], [], [], [], []],
             breaches: [],
-            operatorPositions: [{x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}],
+            operatorPositions: [{x: CANVAS_WIDTH, y: CANVAS_HEIGHT}, {x: CANVAS_WIDTH, y: CANVAS_HEIGHT}, {x: CANVAS_WIDTH, y: CANVAS_HEIGHT}, {x: CANVAS_WIDTH, y: CANVAS_HEIGHT}, {x: CANVAS_WIDTH, y: CANVAS_HEIGHT}],
             drones: [],
             notes: "",
             name: "Unnamed"
@@ -73,7 +73,7 @@ class CreateStrategiesAPI extends React.Component {
             scenes: [
               {
                 objectives: [],
-                operatorPositions: [{x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}],
+                operatorPositions: [{x: CANVAS_WIDTH, y: CANVAS_HEIGHT}, {x: CANVAS_WIDTH, y: CANVAS_HEIGHT}, {x: CANVAS_WIDTH, y: CANVAS_HEIGHT}, {x: CANVAS_WIDTH, y: CANVAS_HEIGHT}, {x: CANVAS_WIDTH, y: CANVAS_HEIGHT}],
                 notes: "",
                 name: "Unnamed"
               }

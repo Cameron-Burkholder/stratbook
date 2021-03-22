@@ -399,5 +399,7 @@ module.exports = {
     3600: "Platinum II",
     4000: "Platinum I",
     4400: "Diamond"
-  }
+  },
+  CANVAS_WIDTH: 900,
+  CANVAS_HEIGHT: 675
 }

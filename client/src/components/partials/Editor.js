@@ -8,7 +8,8 @@ import Canvas from "./Canvas.js";
 import Lineup from "./Lineup.js";
 import { Prompt } from 'react-router'
 
-import { SITES, FLOORS, GADGETS, UTILITY_GUIDE } from "../../data.js";
+import { SITES, FLOORS, GADGETS, UTILITY_GUIDE, CANVAS_WIDTH, CANVAS_HEIGHT } from "../../data.js";
+
 
 /*
   @func: Editor
@@ -322,7 +323,7 @@ class Editor extends React.Component {
             utilityPositions: [[], [], [], [], []],
             gadgetPositions: [[], [], [], [], []],
             breaches: [],
-            operatorPositions: [{x: 0, y: 0, floor: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}],
+            operatorPositions: [{x: Math.floor(CANVAS_WIDTH / 2), y: 0}, {x: Math.floor(CANVAS_WIDTH / 2), y: 0}, {x: Math.floor(CANVAS_WIDTH / 2), y: 0}, {x: Math.floor(CANVAS_WIDTH / 2), y: 0}, {x: Math.floor(CANVAS_WIDTH / 2), y: Math.floor(CANVAS_HEIGHT / 2)}],
             drones: [],
             notes: "",
             name: "Unnamed"
@@ -345,7 +346,7 @@ class Editor extends React.Component {
         scenes: [
           {
             objectives: [],
-            operatorPositions: [{x: null, y: null}, {x: null, y: null}, {x: null, y: null}, {x: null, y: null}, {x: null, y: null}],
+            operatorPositions: [{x: Math.floor(CANVAS_WIDTH / 2), y: Math.floor(CANVAS_HEIGHT / 2)}, {x: Math.floor(CANVAS_WIDTH / 2), y: Math.floor(CANVAS_HEIGHT / 2)}, {x: Math.floor(CANVAS_WIDTH / 2), y: Math.floor(CANVAS_HEIGHT / 2)}, {x: Math.floor(CANVAS_WIDTH / 2), y: Math.floor(CANVAS_HEIGHT / 2)}, {x: Math.floor(CANVAS_WIDTH / 2), y: Math.floor(CANVAS_HEIGHT / 2)}],
             notes: "",
             name: "Unnamed"
           }
@@ -463,8 +464,18 @@ class Editor extends React.Component {
     let map = this.state.map;
     if (this.state.type === "ATTACK") {
       map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].operatorPositions[index].floor = this.state.floorIndex;
+      let opPosition = map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].operatorPositions[index];
+      if (opPosition.x === 0 && opPosition.y === 0) {
+        map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].operatorPositions[index].x = Math.floor(CANVAS_WIDTH / 2);
+        map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].operatorPositions[index].y = Math.floor(CANVAS_HEIGHT / 2);
+      }
     } else {
       map.defense[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].operatorPositions[index].floor = this.state.floorIndex;
+      let opPosition = map.defense[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].operatorPositions[index];
+      if (opPosition.x === 0 && opPosition.y === 0) {
+        map.defense[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].operatorPositions[index].x = Math.floor(CANVAS_WIDTH / 2);
+        map.defense[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].operatorPositions[index].y = Math.floor(CANVAS_HEIGHT / 2);
+      }
     }
     this.setState({
       map: map
@@ -520,8 +531,8 @@ class Editor extends React.Component {
   insertDrone() {
     if (this.state.map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].drones.length + 1 <= 10) {
       let drone = {
-        x: Math.floor(900 / 2), // taken from blueprint form values
-        y: Math.floor(675 / 2), // taken from blueprint form values
+        x: Math.floor(CANVAS_WIDTH / 2), // taken from blueprint form values
+        y: Math.floor(CANVAS_HEIGHT / 2), // taken from blueprint form values
         floor: this.state.floorIndex
       };
       let map = this.state.map;
@@ -558,8 +569,8 @@ class Editor extends React.Component {
   insertGadget(index) {
     let map = this.state.map;
     let gadget = {
-      x: Math.floor(900 / 2), // taken from blueprint form values
-      y: Math.floor(675 / 2), // taken from blueprint form values
+      x: Math.floor(CANVAS_WIDTH / 2), // taken from blueprint form values
+      y: Math.floor(CANVAS_HEIGHT / 2), // taken from blueprint form values
       floor: this.state.floorIndex
     };
     if (this.state.type === "ATTACK") {
@@ -636,8 +647,8 @@ class Editor extends React.Component {
   insertUtility(index) {
     let map = this.state.map;
     let utility = {
-      x: Math.floor(900 / 2), // taken from blueprint form values
-      y: Math.floor(675 / 2), // taken from blueprint form values
+      x: Math.floor(CANVAS_WIDTH / 2), // taken from blueprint form values
+      y: Math.floor(CANVAS_HEIGHT / 2), // taken from blueprint form values
       floor: this.state.floorIndex
     };
     if (this.state.type === "ATTACK") {
@@ -679,8 +690,8 @@ class Editor extends React.Component {
   insertRotate() {
     let map = this.state.map;
     let rotate = {
-      x: Math.floor(900 / 2), // taken from blueprint form values
-      y: Math.floor(675 / 2), // taken from blueprint form values
+      x: Math.floor(CANVAS_HEIGHT / 2), // taken from blueprint form values
+      y: Math.floor(CANVAS_HEIGHT / 2), // taken from blueprint form values
       floor: this.state.floorIndex
     };
     map.defense[this.state.site][this.state.strategyIndex].rotates.push(rotate);
@@ -711,8 +722,8 @@ class Editor extends React.Component {
     if (this.state.map.defense[this.state.site][this.state.strategyIndex].reinforcements.length + 1 <= 10) {
       let map = this.state.map;
       let reinforcement = {
-        x: Math.floor(900 / 2), // taken from blueprint form values
-        y: Math.floor(675 / 2), // taken from blueprint form values
+        x: Math.floor(CANVAS_WIDTH / 2), // taken from blueprint form values
+        y: Math.floor(CANVAS_HEIGHT / 2), // taken from blueprint form values
         floor: this.state.floorIndex
       };
       map.defense[this.state.site][this.state.strategyIndex].reinforcements.push(reinforcement);
@@ -746,8 +757,8 @@ class Editor extends React.Component {
   insertBreach() {
     if (this.state.map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].breaches.length + 1 <= 10) {
       let breach = {
-        x: Math.floor(900 / 2), // taken from blueprint form values
-        y: Math.floor(675 / 2), // taken from blueprint form values
+        x: Math.floor(CANVAS_WIDTH / 2), // taken from blueprint form values
+        y: Math.floor(CANVAS_HEIGHT / 2), // taken from blueprint form values
         floor: this.state.floorIndex
       };
       let map = this.state.map;
