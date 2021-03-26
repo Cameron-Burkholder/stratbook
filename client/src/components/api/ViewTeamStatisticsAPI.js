@@ -81,7 +81,6 @@ class ViewTeamStatisticsAPI extends React.Component {
       if (this.state.error) {
         contents = <ErrorLoading/>
       } else {
-        let index = 0;
         if (this.state.stats.team) {
           const teamMembers = this.state.stats.team.map((member) => {
             return (

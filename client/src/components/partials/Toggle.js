@@ -18,7 +18,7 @@ class Toggle extends React.Component {
         </label>
         <p>{(this.props.active ? this.props.activeState : this.props.inactiveState )}</p>
         { this.props.link && this.props.link !== "" ? (
-          <a className="toggle__link" href={this.props.link} target="_blank">view</a>
+          <a className="toggle__link" rel="noopener noreferrer" href={this.props.link} target="_blank">view</a>
         ) : ""}
         { this.props.link && this.props.link !== "" ? (
           <button className="toggle__button" onClick={() => {

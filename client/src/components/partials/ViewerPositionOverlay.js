@@ -4,9 +4,6 @@ import React from "react";
 
 import ViewerDragItem from "./ViewerDragItem.js";
 
-let width = 30;
-let height = 30;
-
 class ViewerPositionOverlay extends React.Component {
   constructor(props) {
     super(props);

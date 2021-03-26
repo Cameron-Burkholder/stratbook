@@ -1,6 +1,7 @@
 /* client/src/components/partials/Viewer.js */
 
 import React from "react";
+import { clean } from "diacritic";
 import { ATTACKER_ROLES, ATTACKER_OPERATORS, DEFENDER_ROLES, DEFENDER_OPERATORS, UTILITY_GUIDE, UTILITY } from "../../data.js";
 const attackRoles = ATTACKER_ROLES;
 const defenderRoles = DEFENDER_ROLES;
@@ -82,7 +83,7 @@ class Lineup extends React.Component {
             )}
             <div className="role__image" onClick={() => { this.props.selectOperator(index) }}>
               <p>{this.props.operators[index]}</p>
-              <img className="role__image" src={`../../media/min/operators/${this.props.operators[index].toLowerCase()}.png`}
+              <img className="role__image" src={`../../media/min/operators/${clean(this.props.operators[index].toLowerCase())}.png`}
                 alt="Operator"
                 onClick={() => {
                   if (this.props.activeOperator === index) {
@@ -118,7 +119,7 @@ class Lineup extends React.Component {
                 { this.props.utility[index] && this.props.utility[index] !== "UTILITY" ? (
                   <div className="role__utility">
                     <p>{this.props.utility[index]} ({UTILITY_GUIDE[this.props.utility[index]] - this.props.utilityPositions[index].length})</p>
-                    <img className="role__utility-image" src={`../../media/min/utility/${this.props.utility[index].toUpperCase().replace(" ", "_")}.png`}
+                    <img className="role__utility-image" src={`../../media/min/utility/${this.props.utility[index].toUpperCase().replace(" ", "_").replace(" ", "_")}.png`}
                       alt="Operator Utility"
                       onClick={() => {
                         if (UTILITY_GUIDE[this.props.utility[index]] - this.props.utilityPositions[index].length) {

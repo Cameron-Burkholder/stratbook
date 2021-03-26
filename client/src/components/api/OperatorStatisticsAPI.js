@@ -2,6 +2,7 @@
 
 import React from "react";
 import axios from "axios";
+import { clean } from "diacritic";
 import { OPERATOR_STATS_FOUND } from "../../messages/messages.js";
 
 import Loading from "../partials/Loading.js";
@@ -105,8 +106,8 @@ class OperatorStatisticsAPI extends React.Component {
     let operators = []
     if (this.state.stats) {
       this.state.operators.map((operator, index) => {
-        if (!operator.name.includes("Recruit") && (this.state.search === "" || operator.name.toUpperCase().includes(this.state.search.toUpperCase()))) {
-          operators.push(<OperatorStatistics image={`../media/min/operators/${operator.name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")}.png`} name={operator.name} kd={Math.round(operator.kd * 100) / 100} kills={operator.kills} deaths={operator.deaths} wl={Math.round(operator.wl * 100) / 100} wins={operator.wins} losses={operator.losses} playtime={Math.round(operator.playtime * 100) / 100} hsp={Math.round(operator.headshots / operator.kills * 100) / 100} key={index}/>)
+        if (!operator.name.includes("Recruit") && (this.state.search === "" || clean(operator.name.toUpperCase()).includes(this.state.search.toUpperCase()))) {
+          operators.push(<OperatorStatistics image={`../media/min/operators/${clean(operator.name.toLowerCase())}.png`} name={operator.name} kd={Math.round(operator.kd * 100) / 100} kills={operator.kills} deaths={operator.deaths} wl={Math.round(operator.wl * 100) / 100} wins={operator.wins} losses={operator.losses} playtime={Math.round(operator.playtime * 100) / 100} hsp={Math.round(operator.headshots / operator.kills * 100) / 100} key={index}/>)
         }
       });
     }

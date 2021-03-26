@@ -48,6 +48,7 @@ class Viewer extends React.Component {
     let strategies;
     let floorIndex;
     let type;
+    let sites = SITES[this.props.map.name];
     if (this.props.position) {
       type = this.props.position.type;
       siteIndex = this.props.position.siteIndex;
@@ -65,7 +66,11 @@ class Viewer extends React.Component {
       siteIndex = 0;
       strategyIndex = 0;
       sceneIndex = 0;
-      floorIndex = 0;
+      if (sites[siteIndex][0] === 'B') {
+        floorIndex = 0;
+      } else {
+        floorIndex = parseInt(sites[siteIndex][0]);
+      }
       type = "ATTACK";
       scenes = this.props.map.attack[0][SITES[this.props.map.name][0]];
       strategies = this.props.map.attack;
@@ -88,13 +93,21 @@ class Viewer extends React.Component {
     }
   }
   selectSite(index) {
+    let sites = this.state.sites;
+    let floorIndex;
+    if (sites[index][0] === 'B') {
+      floorIndex = 0;
+    } else {
+      floorIndex = parseInt(sites[index][0]);
+    }
     this.setState({
       site: this.state.sites[index],
       siteIndex: index,
       sceneIndex: 0,
       scenes: (this.state.type === "ATTACK" ? this.state.map.attack[this.state.strategyIndex][this.state.sites[index]] : this.state.map.defense[this.state.sites[index]][0].scenes),
       strategyIndex: (this.state.type === "ATTACK" ? this.state.strategyIndex : 0),
-      strategies: (this.state.type === "ATTACK" ? this.state.strategies : this.state.map.defense[this.state.sites[index]])
+      strategies: (this.state.type === "ATTACK" ? this.state.strategies : this.state.map.defense[this.state.sites[index]]),
+      floorIndex: floorIndex
     });
   }
   updateType(type) {

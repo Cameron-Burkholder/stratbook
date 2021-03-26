@@ -38,7 +38,6 @@ class SharedViewer extends React.Component {
 
     // Declare initial state
     let scenes;
-
     if (this.props.strategy.type === "ATTACK") {
       scenes = this.props.strategy[SITES[this.props.strategy.map][this.props.strategy.siteIndex]];
     } else {
@@ -60,11 +59,21 @@ class SharedViewer extends React.Component {
     }
   }
   selectSite(index) {
+    let sites = this.state.sites;
+    let floorIndex;
+    if (sites[index][0] === 'B') {
+      floorIndex = 0;
+    } else {
+      floorIndex = parseInt(sites[index][0]);
+    }
     this.setState({
       site: this.state.sites[index],
       siteIndex: index,
       sceneIndex: 0,
-      scenes: (this.state.type === "ATTACK" ? this.state.strategy[this.state.sites[index]] : this.state.scenes)
+      scenes: (this.state.type === "ATTACK" ? this.state.map.attack[this.state.strategyIndex][this.state.sites[index]] : this.state.map.defense[this.state.sites[index]][0].scenes),
+      strategyIndex: (this.state.type === "ATTACK" ? this.state.strategyIndex : 0),
+      strategies: (this.state.type === "ATTACK" ? this.state.strategies : this.state.map.defense[this.state.sites[index]]),
+      floorIndex: floorIndex
     });
   }
   updateFloor(e) {

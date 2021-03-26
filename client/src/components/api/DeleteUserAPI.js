@@ -5,7 +5,6 @@ import axios from "axios";
 import { USER_DELETED } from "../../messages/emails.js";
 import { USER_AND_TEAM_DELETED } from "../../messages/emails.js";
 import { ERROR_DELETE_USER } from "../../messages/errors.js";
-import { ERROR_DELETE_TEAM_AND_USER } from "../../messages/errors.js";
 
 import Loading from "../partials/Loading.js";
 

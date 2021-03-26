@@ -5,12 +5,10 @@ import axios from "axios";
 import { STRATEGIES_FOUND, MAP_FOUND } from "../../messages/messages.js";
 import { ERROR_VIEW_STRATEGIES, ERROR_VIEW_MAP } from "../../messages/errors.js";
 
-import Editor from "../partials/Editor.js";
 import Viewer from "../partials/Viewer.js";
 import { Link } from "react-router-dom";
 
 import LoadingModal from "../partials/LoadingModal.js";
-import ErrorLoading from "../partials/ErrorLoading.js";
 import { MAP_NAMES } from "../../data.js";
 
 /*

@@ -5,7 +5,7 @@ import axios from "axios";
 
 import LoadingModal from "../partials/LoadingModal.js";
 
-import { MAP_NAMES, SITES, FLOORS, GADGETS, UTILITY_GUIDE, CANVAS_WIDTH, CANVAS_HEIGHT } from "../../data.js";
+import { MAP_NAMES, SITES, CANVAS_WIDTH, CANVAS_HEIGHT } from "../../data.js";
 import { MAP_ADDED } from "../../messages/messages.js";
 import { ERROR_ADD_MAP } from "../../messages/errors.js";
 

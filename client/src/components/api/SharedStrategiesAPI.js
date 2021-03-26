@@ -6,14 +6,8 @@ import axios from "axios";
 import { SHARED_STRATEGY_FOUND } from "../../messages/messages.js";
 import { ERROR_VIEW_SHARED_STRATEGY } from "../../messages/errors.js";
 
-import Editor from "../partials/Editor.js";
-import Viewer from "../partials/Viewer.js";
 import SharedViewer from "../partials/SharedViewer.js";
-import { Link } from "react-router-dom";
-
 import LoadingModal from "../partials/LoadingModal.js";
-import ErrorLoading from "../partials/ErrorLoading.js";
-import { MAP_NAMES } from "../../data.js";
 
 /*
   @func: SharedStrategiesAPI

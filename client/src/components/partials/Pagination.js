@@ -10,7 +10,7 @@ const Pagination = (props) => {
   return (
     <div className="pagination">
       <button className="pagination__button" onClick={() => {
-        if (props.index - 1 > 0) {
+        if (props.index - 1 >= 0) {
           props.onChange(props.index - 1);
         }
       }}> &lt; </button>

@@ -1,6 +1,7 @@
 /* client/src/components/partials/SharedViewerLineup.js */
 
 import React from "react";
+import { clean } from "diacritic";
 import { UTILITY_GUIDE } from "../../data.js";
 
 class SharedViewerLineup extends React.Component {
@@ -29,7 +30,7 @@ class SharedViewerLineup extends React.Component {
             </div>
             <div className="role__image" onClick={() => { this.props.selectOperator(index) }}>
               <p>{this.props.operators[index]}</p>
-              <img className="role__image" src={`../../media/min/operators/${this.props.operators[index].toLowerCase()}.png`} alt="Operator"/>
+              <img className="role__image" src={`../../media/min/operators/${clean(this.props.operators[index].toLowerCase())}.png`} alt="Operator"/>
             </div>
           </div>
 
@@ -47,7 +48,7 @@ class SharedViewerLineup extends React.Component {
                 { this.props.utility[index] && this.props.utility[index] !== "UTILITY" ? (
                   <div className="role__utility">
                     <p>{this.props.utility[index]} ({UTILITY_GUIDE[this.props.utility[index]] - this.props.utilityPositions[index].length})</p>
-                    <img className="role__utility-image" src={`../../media/min/utility/${this.props.utility[index].toUpperCase().replace(" ", "_")}.png`} alt="Utility"/>
+                    <img className="role__utility-image" src={`../../media/min/utility/${this.props.utility[index].toUpperCase().replace(" ", "_").replace(" ", "_")}.png`} alt="Utility"/>
                   </div>
                 ) : ""}
               </div>

@@ -774,20 +774,6 @@ module.exports = async (app, passport) => {
     response.json(messages.DEFENDERS_SET);
   });
 
-  /*
-    @route /api/users/delete
-    @method DELETE
-
-    @outputs:
-    If at any point there is an error
-      packet: Object (status: ERROR_WHILE_DELETING_USER)
-
-    If user is sole person on team
-      packet: Object (status: USER_AND_TEAM_DELETED)
-
-    If user is deleted (even on a team)
-      packet: Object (status: USER_DELETED)
-  */
   /**
   * Delete user
   * @name /api/users/delete
