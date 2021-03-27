@@ -236,7 +236,6 @@ class App extends React.Component {
               render={(props) => {
                 if (this.state.loggedIn && (this.state.user.status === "ADMIN" || this.state.user.status === "EDITOR")) {
                   const map_name = props.match.params.map.toUpperCase();
-                  console.log(props);
                   return (
                     <div className="page-wrapper">
                       <EditStrategies getAuthToken={this.getAuthToken} alert={this.alert} map={map_name} {...props}/>

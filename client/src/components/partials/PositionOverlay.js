@@ -236,7 +236,7 @@ class PositionOverlay extends React.Component {
     }
 
     // Initial testing for snap
-    console.log(`(${newX}, ${newY})`);
+    //console.log(`(${newX}, ${newY})`);
     if (true) {
       if (Math.abs(newX - 412) < 5 && Math.abs(newY - 298) < 5) {
         newX = 412;
