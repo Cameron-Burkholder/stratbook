@@ -1,10 +1,14 @@
 /* validation.js */
 
+// Load string validator
 const Validator = require("validator");
+// Load/configure word filter
 const Filter = require("bad-words");
 const filter = new Filter();
 filter.addWords("fuckboy", "fuckboys", "penisboy", "penisboys");
+// Load empty checker
 const isEmpty = require("is-empty");
+
 const messages = require("./client/src/messages/messages.js");
 const { ATTACKERS, ATTACKER_ROLES, DEFENDERS, DEFENDER_ROLES, MMR_THRESHOLDS } = require("./client/src/data.js");
 
@@ -58,19 +62,20 @@ exports.validateTeamStatus = function(request, response, done) {
   }
 }
 
+/**
+* Validate team platform field
+*/
 exports.validateTeamPlatform = function(request, response, done) {
   let data = request.body;
   let packet = messages.INVALID_TEAM_PLATFORM;
-  data.platform = data.platform.toUpperCase();
+  data.platform = data.platform ? data.platform.toUpperCase() : "";
 
   let errors = {};
   data.platform = !isEmpty(data.platform) ? data.platform : "";
 
   if (Validator.isEmpty(data.platform)) {
-    errors.platform = "Status may not be empty.";
-  }
-
-  if (data.platform !== "PC" && data.platform !== "XBOX" && data.platform !== "PS4") {
+    errors.platform = "Platform may not be empty.";
+  } else if (data.platform !== "PC" && data.platform !== "XBOX" && data.platform !== "PS4") {
     errors.platform = "Platform is not valid.";
   }
 
@@ -186,7 +191,6 @@ exports.validateRegisterInput = function(request, response, done) {
     return packet;
   } else {
     request.body.email = request.body.email.toLowerCase();
-    request.body.username = request.body.username.toUpperCase();
     done();
     return null;
   }
@@ -220,6 +224,7 @@ exports.validateAttackerRole = function(request, response, done) {
     response.end();
     return packet;
   } else {
+    request.body.role = request.body.role.toUpperCase();
     done();
     return null;
   }
@@ -536,7 +541,6 @@ exports.validateStatusInput = function(request, response, done) {
     return packet;
   } else {
     request.body.status = request.body.status.toUpperCase();
-    request.body.username = request.body.username.toUpperCase();
     done();
     return null;
   }
@@ -606,24 +610,25 @@ exports.validateUsernameInput = function(request, response, done) {
     response.end();
     return packet;
   } else {
-    request.body.username = request.body.username.toUpperCase();
     done();
     return null;
   }
 }
 
+/**
+*   Validate team mmr threshold
+*/
 exports.validateTeamMMR = function(request, response, done) {
   let data = request.body;
   let packet = messages.INVALID_MMR;
+
+  data.mmr = data.mmr ? data.mmr : "";
 
   let errors = {};
 
   if (typeof data.mmr !== "number") {
     errors.mmr = "MMR field must be a number";
   }
-
-  console.log(MMR_THRESHOLDS);
-  console.log(Object.keys(MMR_THRESHOLDS));
 
   if (Object.keys(MMR_THRESHOLDS).indexOf(String(data.mmr)) < 0) {
     errors.mmr = "MMR field is invalid"

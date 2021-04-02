@@ -235,31 +235,6 @@ class PositionOverlay extends React.Component {
       newY = this.props.bounds.height - height;
     }
 
-    // Initial testing for snap
-    //console.log(`(${newX}, ${newY})`);
-    if (true) {
-      if (Math.abs(newX - 412) < 5 && Math.abs(newY - 298) < 5) {
-        newX = 412;
-        newY = 298;
-      }
-
-      if (Math.abs(newX - 467) < 5 && Math.abs(newY - 298) < 5) {
-        newX = 467;
-        newY = 298;
-      }
-
-      if (Math.abs(newX - 491) < 5 && Math.abs(newY - 298) < 5) {
-        newX = 491;
-        newY = 298;
-      }
-
-      if (Math.abs(newX - 366) < 5 && Math.abs(newY - 380) < 5) {
-        newX = 366;
-        newY = 380;
-      }
-    }
-
-
     if (this.state.type === "GADGET" || this.state.type === "UTILITY") {
       newPositions[this.state.gi].x = newX;
       newPositions[this.state.gi].y = newY;

@@ -1,10 +1,14 @@
 /* config/email.js */
 
+// Load email utility
 const nodemailer = require("nodemailer");
+// Load google apis for email
 const { google } = require("googleapis");
 const googleapis = require("googleapis");
+// Load logging function
 const { log } = require("./utilities.js");
 
+// Configure OAuth client
 const OAuth2Client = new google.auth.OAuth2(
   process.env.OAUTH_CLIENT_ID,
   process.env.OAUTH_CLIENT_SECRET,

@@ -1,16 +1,20 @@
 /* config/utilities.js */
 
+// Load password hashing libraries
 const bcrypt = require("bcryptjs");
-const jsonwebtoken = require("jsonwebtoken");
-const fs = require("fs");
-const path = require("path");
-const randomize = require("randomatic");
 const saltRounds = 10;
+// Load JWT library
+const jsonwebtoken = require("jsonwebtoken");
+// Load axios request library
 const axios = require("axios");
+// Load email function
 const email = require("./email.js");
+// Load random string generator
+const randomize = require("randomatic");
+// Load random word generator
 const randomWords = require("random-words");
+// Config .env variables
 require("dotenv").config();
-
 // Load push notifications
 const webpush = require("web-push");
 webpush.setGCMAPIKey(process.env.CLOUD_MESSAGING_API);
@@ -142,15 +146,16 @@ exports.genJoinCode = async function() {
   let isUnique = false;
   do {
     newCode = randomize("0", 8);
-    await Team.findOne({ join_code: newCode }, (error, team) => {
-      if (error) {
-        console.log(error);
-      }
+    let team;
+    try {
+      team = await Team.findOne({ join_code: newCode }).exec();
+    } catch(error) {
+      console.log(error);
+    }
 
-      if (!team) {
-        isUnique = true;
-      }
-    });
+    if (!team) {
+      isUnique = true;
+    }
   } while (!isUnique);
   return newCode;
 }

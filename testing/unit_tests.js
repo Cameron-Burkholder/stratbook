@@ -4,19 +4,167 @@ const chai = require("chai");
 const assert = chai.assert;
 const validation = require("../validation.js");
 
-const messages = require("../messages/messages.js");
-const errors = require("../messages/errors.js");
-const emails = require("../messages/emails.js");
+const messages = require("../client/src/messages/messages.js");
+const errors = require("../client/src/messages/errors.js");
+const emails = require("../client/src/messages/emails.js");
 
 suite("UNIT TESTS", function() {
 
-  suite("Login", function() {
+  // Validation
+  let response = {
+    json: function() {},
+    end: function() {}
+  }
+  let done = function() {};
+  suite("Announcement Validation", function() {
+    const validateAnnouncement = validation.validateAnnouncement;
+
+    test("# Announcement field not provided", function() {
+      let request = {
+        body: {}
+      };
+      assert.equal(validateAnnouncement(request, response, done).status, messages.INVALID_ANNOUNCEMENT.status, "Response should be invalid if announcement field is not provided in request.");
+      assert.equal(validateAnnouncement(request, response, done).errors.announcement, "Announcement may not be empty.", "Errors should list announcement field as required.");
+    });
+    test("# Announcement field empty", function() {
+      let request = {
+        body: {
+          announcement: ""
+        }
+      };
+      assert.equal(validateAnnouncement(request, response, done).status, messages.INVALID_ANNOUNCEMENT.status, "Response should be invalid if announcement field is empty in request.");
+      assert.equal(validateAnnouncement(request, response, done).errors.announcement, "Announcement may not be empty.", "Errors should list announcement field as required.");
+    });
+    test("# Valid Announcement", function() {
+      let request = {
+        body: {
+          announcement: "Something to say: blah"
+        }
+      }
+      assert.equal(validateAnnouncement(request, response, done), null, "Response should be valid if announcement is valid.");
+    });
+  });
+  suite("Team Status Validation", function() {
+    const validateTeamStatus = validation.validateTeamStatus;
+
+    test("# Status is not provided", function() {
+      let request = {
+        body: {}
+      };
+      assert.equal(validateTeamStatus(request, response, done).status, messages.INVALID_TEAM_STATUS.status, "Response should be invalid if team status field is not provided.");
+      assert.equal(validateTeamStatus(request, response, done).errors.status, "Status must be a Boolean value.", "Errors should list status as invalid if it is not provided.");
+    });
+    test("# Status is empty", function() {
+      let request = {
+        body: {
+          status: ""
+        }
+      };
+      assert.equal(validateTeamStatus(request, response, done).status, messages.INVALID_TEAM_STATUS.status, "Response should be invalid if team status field is empty.");
+      assert.equal(validateTeamStatus(request, response, done).errors.status, "Status must be a Boolean value.", "Errors should list status as invalid if it is empty.");
+    });
+    test("# Status is not a Boolean (String)", function() {
+      let request = {
+        body: {
+          status: "string"
+        }
+      };
+      assert.equal(validateTeamStatus(request, response, done).status, messages.INVALID_TEAM_STATUS.status, "Response should be invalid if team status field is a string.");
+      assert.equal(validateTeamStatus(request, response, done).errors.status, "Status must be a Boolean value.", "Errors should list status as invalid if it is a string.");
+    });
+    test("# Status is not a Boolean (Number)", function() {
+      let request = {
+        body: {
+          status: 34
+        }
+      };
+      assert.equal(validateTeamStatus(request, response, done).status, messages.INVALID_TEAM_STATUS.status, "Response should be invalid if team status field is a number.");
+      assert.equal(validateTeamStatus(request, response, done).errors.status, "Status must be a Boolean value.", "Errors should list status as invalid if it is a number.");
+    });
+    test("# Status is not a Boolean (Object)", function() {
+      let request = {
+        body: {
+          status: {
+            message: "Something"
+          }
+        }
+      };
+      assert.equal(validateTeamStatus(request, response, done).status, messages.INVALID_TEAM_STATUS.status, "Response should be invalid if team status field is an object.");
+      assert.equal(validateTeamStatus(request, response, done).errors.status, "Status must be a Boolean value.", "Errors should list status as invalid if it is an object.");
+    });
+    test("# Status is true", function() {
+      let request = {
+        body: {
+          status: true
+        }
+      }
+      assert.equal(validateTeamStatus(request, response, done), null, "Response should be valid if true value is provided.");
+    });
+    test("# Status is false", function() {
+      let request = {
+        body: {
+          status: false
+        }
+      }
+      assert.equal(validateTeamStatus(request, response, done), null, "Response should be valid if false value is provided.");
+    });
+  });
+  suite("Team Platform Validation", function() {
+    const validateTeamPlatform = validation.validateTeamPlatform;
+
+    test("# Platform is not provided", function() {
+      let request = {
+        body: {}
+      };
+      assert.equal(validateTeamPlatform(request, response, done).status, messages.INVALID_TEAM_PLATFORM.status, "Response should be invalid if team platform field is not provided.");
+      assert.equal(validateTeamPlatform(request, response, done).errors.platform, "Platform may not be empty.", "Errors should list platform as invalid if it is not provided.");
+    });
+    test("# Platform is empty", function() {
+      let request = {
+        body: {
+          platform: ""
+        }
+      };
+      assert.equal(validateTeamPlatform(request, response, done).status, messages.INVALID_TEAM_PLATFORM.status, "Response should be invalid if team platform field is empty.");
+      assert.equal(validateTeamPlatform(request, response, done).errors.platform, "Platform may not be empty.", "Errors should list platform as invalid if it is empty.");
+    });
+    test("# Platform is not valid", function() {
+      let request = {
+        body: {
+          platform: "SOMETHING"
+        }
+      }
+      assert.equal(validateTeamPlatform(request, response, done).status, messages.INVALID_TEAM_PLATFORM.status, "Response should be invalid if platform is invalid.");
+      assert.isOk(validateTeamPlatform(request, response, done).errors.platform, "Errors should list platform as invalid if not valid.");
+    });
+    test("# Platform is XBOX", function() {
+      let request = {
+        body: {
+          platform: "xbox"
+        }
+      }
+      assert.equal(validateTeamPlatform(request, response, done), null, "Response should be valid if platform is xbox.");
+    });
+    test("# Platform is PC", function() {
+      let request = {
+        body: {
+          platform: "pc"
+        }
+      }
+      assert.equal(validateTeamPlatform(request, response, done), null, "Response should be valid if platform is pc.");
+    });
+    test("# Platform is PS4", function() {
+      let request = {
+        body: {
+          platform: "ps4"
+        }
+      }
+      assert.equal(validateTeamPlatform(request, response, done), null, "Response should be valid if platform is ps4.");
+    });
+  });
+  suite("Login Validation", function() {
     const validateLoginInput = validation.validateLoginInput;
-    let response = {
-      json: function() {},
-      end: function() {}
-    }
-    let done = function() {};
+
     test("# Email field not provided", function() {
       let request = {
         body: {}
@@ -110,15 +258,20 @@ suite("UNIT TESTS", function() {
 
     });
 
-  });
+    test("# Valid login", function() {
+      let request = {
+        body: {
+          email: "testing@gmail.com",
+          password: "something"
+        }
+      }
 
-  suite("Registration", function() {
+      assert.equal(validateLoginInput(request, response, done), null, "Response should be valid if input is valid.");
+    });
+  });
+  suite("Registration Validation", function() {
     const validateRegisterInput = validation.validateRegisterInput;
-    let response = {
-      json: function() {},
-      end: function() {}
-    }
-    let done = function() {};
+
     test("# Username field not provided", function() {
       let request = {
         body: []
@@ -335,204 +488,146 @@ suite("UNIT TESTS", function() {
       assert.equal(validateRegisterInput(request7, response, done).errors.platform, null, "ps4 should be an accepted value.");
     });
 
-  });
+    test("# Valid Registration", function() {
+      let request = {
+        body: {
+          username: "something",
+          platform: "pc",
+          email: "testing@gmail.com",
+          password1: "abcdefgh",
+          password2: "abcdefgh"
+        }
+      }
 
-  suite("Team Name", function() {
-    const validateTeamName = validation.validateTeamInput;
-    let response = {
-      json: function() {},
-      end: function() {}
-    }
-    let done = function() {};
-    test("# Name field not provided", function() {
+      assert.equal(validateRegisterInput(request, response, done), null, "Response should be valid if input is valid.");
+    });
+  });
+  suite("Attacker Role Validation", function() {
+    let validateAttackerInput = validation.validateAttackerRole;
+
+    test("# Role field not provided", function() {
       let request = {
         body: {}
-      };
-      assert.equal(validateTeamName(request, response, done).status, messages.INVALID_TEAM_INPUT.status, "Response should be invalid if name field is not provided in request.");
-      assert.equal(validateTeamName(request, response, done).errors.name, "Name field is required", "Errors should list name as invalid if not provided in request.");
+      }
+      assert.equal(validateAttackerInput(request, response, done).status, messages.INVALID_ATTACKER_ROLE.status, "Response should be invalid if attacker role field is not present.");
+      assert.equal(validateAttackerInput(request, response, done).errors.role, "Role field is invalid", "Errors should indicate attacker role is required.");
     });
-    test("# Name field is empty", function() {
+    test("# Role field is empty", function() {
       let request = {
-        body: {}
+        body: { role: "" }
       };
-      assert.equal(validateTeamName(request, response, done).status, messages.INVALID_TEAM_INPUT.status, "Response should be invalid if name field is empty in request.");
-      assert.equal(validateTeamName(request, response, done).errors.name, "Name field is required", "Errors should list name as invalid if empty in request.");
+      assert.equal(validateAttackerInput(request, response, done).status, messages.INVALID_ATTACKER_ROLE.status, "Response should be invalid if attacker role field is empty.");
+      assert.equal(validateAttackerInput(request, response, done).errors.role, "Role field is invalid", "Errors should indicate attacker role is required.");
     });
-    test("# Name is inappropriate", function() {
+    test("# Role field is invalid", function() {
       let request = {
-        body: { name: "Fuck" }
-      };
-      assert.equal(validateTeamName(request, response, done).status, messages.PROFANE_TEAM_INPUT.status, "Response should indicate that profanity is not accepted if found in team names.");
-      assert.equal(validateTeamName(request, response, done).errors.name, "Name may not be inappropriate", "Errors should list name is invalid if it is in appropriate.");
+        body: { role: "SOMETHING" }
+      }
+      assert.equal(validateAttackerInput(request, response, done).status, messages.INVALID_ATTACKER_ROLE.status, "Response should be invalid if attacker role is invalid.");
+      assert.equal(validateAttackerInput(request, response, done).errors.role, "Role field is invalid", "Errors should indicate attacker role is invalid.");
+    });
+    test("# Role field is valid", function() {
+      let request = {
+        body: { role: "HARD BREACH" }
+      }
+      assert.equal(validateAttackerInput(request, response, done), null, "Response should be valid if attacker role is valid.");
     })
   });
+  suite("Defender Role Validation", function() {
+    let validateDefenderInput = validation.validateDefenderRole;
 
-  suite("Join Code", function() {
-    const validateJoinCode = validation.validateJoinCode;
-    let response = {
-      json: function() {},
-      end: function() {}
-    }
-    let done = function() {};
-    test("# Join code field not provded", function() {
+    test("# Role field not provided", function() {
       let request = {
         body: {}
-      };
-      assert.equal(validateJoinCode(request, response, done).status, messages.INVALID_JOIN_CODE.status, "Response should be invalid if join code is not included in request.");
-      assert.equal(validateJoinCode(request, response, done).errors.join_code, "Join code field is required", "Errors should list join code as invalid if not included in request.");
+      }
+      assert.equal(validateDefenderInput(request, response, done).status, messages.INVALID_DEFENDER_ROLE.status, "Response should be invalid if attacker role field is not present.");
+      assert.equal(validateDefenderInput(request, response, done).errors.role, "Role field is invalid", "Errors should indicate attacker role is required.");
     });
-    test("# Join code field is empty", function() {
+    test("# Role field is empty", function() {
       let request = {
-        body: { join_code: "" }
+        body: { role: "" }
       };
-      assert.equal(validateJoinCode(request, response, done).status, messages.INVALID_JOIN_CODE.status, "Response should be invalid if join code is empty in request.");
-      assert.equal(validateJoinCode(request, response, done).errors.join_code, "Join code field is required", "Errors should list join code as invalid if it is empty in request.");
+      assert.equal(validateDefenderInput(request, response, done).status, messages.INVALID_DEFENDER_ROLE.status, "Response should be invalid if attacker role field is empty.");
+      assert.equal(validateDefenderInput(request, response, done).errors.role, "Role field is invalid", "Errors should indicate attacker role is required.");
     });
-    test("# Join code is not 8 digits", function() {
-      let request1 = {
-        body: { join_code: "7777777" }
-      };
-      let request2 = {
-        body: { join_code: "999999999" }
+    test("# Role field is invalid", function() {
+      let request = {
+        body: { role: "SOMETHING" }
       }
-      let request3 = {
-        body: { join_code: "88888888" }
-      }
-      assert.equal(validateJoinCode(request1, response, done).status, messages.INVALID_JOIN_CODE.status, "Response should be invalid if join code is less than 8 digits.");
-      assert.equal(validateJoinCode(request1, response, done).errors.join_code, "Join code must be exactly 8 digits", "Errors should list join code as invalid if it is less than 8 digits.");
-
-      assert.equal(validateJoinCode(request2, response, done).status, messages.INVALID_JOIN_CODE.status, "Response should be invalid if join code is more than 8 digits.");
-      assert.equal(validateJoinCode(request2, response, done).errors.join_code, "Join code must be exactly 8 digits", "Errors should list join code as invalid if it is more than 8 digits.");
-
-      assert.equal(validateJoinCode(request3, response, done), null, "Errors should be empty if join code is valid.");
+      assert.equal(validateDefenderInput(request, response, done).status, messages.INVALID_DEFENDER_ROLE.status, "Response should be invalid if attacker role is invalid.");
+      assert.equal(validateDefenderInput(request, response, done).errors.role, "Role field is invalid", "Errors should indicate attacker role is invalid.");
     });
-    test("# Join code contains non-numeric digits", function() {
-      let request1 = {
-        body: { join_code: "abcdefgh" }
-      };
-      let request2 = {
-        body: { join_code: "abcd1234" }
+    test("# Role field is valid", function() {
+      let request = {
+        body: { role: "HARD BREACH DENIAL" }
       }
-      let request3 = {
-        body: { join_code: "/.<>^%*&" }
-      }
-      let request4 = {
-        body: { join_code: "abcd!@#$" }
-      }
-      let request5 = {
-        body: { join_code: "12345678" }
-      }
-      assert.equal(validateJoinCode(request1, response, done).status, messages.INVALID_JOIN_CODE.status, "Response should be invalid if join code only contains alphabet characters.");
-      assert.equal(validateJoinCode(request1, response, done).errors.join_code, "Join code may not contain non-number characters", "Errors should list join code as invalid if it is only letter characters.");
-
-      assert.equal(validateJoinCode(request2, response, done).status, messages.INVALID_JOIN_CODE.status, "Response should be invalid if join code contains any letters.");
-      assert.equal(validateJoinCode(request2, response, done).errors.join_code, "Join code may not contain non-number characters", "Errors should list join code as invalid if it contains any letters.");
-
-      assert.equal(validateJoinCode(request3, response, done).status, messages.INVALID_JOIN_CODE.status, "Response should be invalid if join code contains all non-alphanumeric characters.");
-      assert.equal(validateJoinCode(request3, response, done).errors.join_code, "Join code may not contain non-number characters", "Errors should list join code as invalid if it contains all non-alphanumeric characters.");
-
-      assert.equal(validateJoinCode(request4, response, done).status, messages.INVALID_JOIN_CODE.status, "Response should be invalid if join code contains any non-alphanumeric characters.");
-      assert.equal(validateJoinCode(request4, response, done).errors.join_code, "Join code may not contain non-number characters", "Errors should list join code as invalid if it contains any non-alphanumeric characters.");
-
-      assert.equal(validateJoinCode(request5, response, done), null, "Response should be valid if join code is 8 numerical digits.");
-    });
+      assert.equal(validateDefenderInput(request, response, done), null, "Response should be valid if attacker role is valid.");
+    })
   });
+  suite("Attackers Validation", function() {
+    let validateAttackersInput = validation.validateAttackersInput;
 
-  suite("Update Platform", function() {
-    const validatePlatformInput = validation.validatePlatformInput;
-    let response = {
-      json: function() {},
-      end: function() {}
-    }
-    let done = function() {};
-    test("# Platform field not provided", function() {
+    test("# Attackers field not provided", function() {
       let request = {
         body: {}
-      };
-      assert.equal(validatePlatformInput(request, response, done).status, messages.INVALID_PLATFORM.status, "Response should be invalid if platform field is not provided in request.");
-      assert.equal(validatePlatformInput(request, response, done).errors.platform, "Platform field is required", "Errors should list platform is required if not provided in request.");
-    });
-    test("# Platform field is empty", function() {
-      let request = {
-        body: { platform: "" }
       }
-      assert.equal(validatePlatformInput(request, response, done).status, messages.INVALID_PLATFORM.status, "Response should be invalid if platform field is empty.");
-      assert.equal(validatePlatformInput(request, response, done).errors.platform, "Platform field is required", "Errors should list platform field as required if it is empty.");
+      assert.equal(validateAttackersInput(request, response, done).status, messages.INVALID_ATTACKERS.status, "Response should be invalid if attackers list not provided in request.");
+      assert.equal(validateAttackersInput(request, response, done).errors.attackers, "Attackers list is required", "Response should indicate attackers list is required if not provided in request.");
     });
-    test("# Platform field is invalid", function() {
-      let request1 = {
-        body: { platform: "something" }
-      };
-      let request2 = {
-        body: { platform: "XBOX" }
-      };
-      let request3 = {
-        body: { platform: "PC" }
-      };
-      let request4 = {
-        body: { platform: "PS4" }
-      };
-      let request5 = {
-        body: { platform: "xbox" }
-      };
-      let request6 = {
-        body: { platform: "pc" }
-      };
-      let request7 = {
-        body: { platform: "ps4" }
-      };
-      assert.equal(validatePlatformInput(request1, response, done).status, messages.INVALID_PLATFORM.status, "Response should be invalid if platform is not one of the accepted values.");
-      assert.equal(validatePlatformInput(request1, response, done).errors.platform, "The only platforms accepted are Xbox, PC, or PS4", "Errors should list platform as invalid if not one of the accepted values.");
-
-      assert.equal(validatePlatformInput(request2, response, done), null, "XBOX should be an accepted value.");
-      assert.equal(validatePlatformInput(request3, response, done), null, "PC should be an accepted value.");
-      assert.equal(validatePlatformInput(request4, response, done), null, "PS4 should be an accepted value.");
-
-      assert.equal(validatePlatformInput(request5, response, done), null, "xbox should be an accepted value.");
-      assert.equal(validatePlatformInput(request6, response, done), null, "pc should be an accepted value.");
-      assert.equal(validatePlatformInput(request7, response, done), null, "ps4 should be an accepted value.");
+    test("# Attackers field is empty", function() {
+      let request = {
+        body: { attackers: [] }
+      }
+      assert.equal(validateAttackersInput(request, response, done).status, messages.INVALID_ATTACKERS.status, "Response should be invalid if attackers list is empty.");
+      assert.equal(validateAttackersInput(request, response, done).errors.attackers, "Attackers list is required", "Response should indiciate attackers list cannot be empty.");
+    });
+    test("# Attackers field is invalid", function() {
+      let request = {
+        body: { attackers: ["MARU", "MAVERICKK", "BUUCK"] }
+      }
+      assert.equal(validateAttackersInput(request, response, done).status, messages.INVALID_ATTACKERS.status, "Response should be invalid if attackers list is.");
+      assert.equal(validateAttackersInput(request, response, done).errors.attackers, "Attackers list is invalid", "Response should indicate attackers list is invalid.");
+    });
+    test("# Attackers field is valid", function() {
+      let request = {
+        body: { attackers: ["MAVERICK", "THERMITE"] }
+      }
+      assert.equal(validateAttackersInput(request, response, done), null, "Response should be valid if attackers list is.");
     });
   });
+  suite("Defenders Validation", function() {
+    let validateDefendersInput = validation.validateDefendersInput;
 
-  suite("Update Username", function() {
-    const validateUsernameInput = validation.validateUsernameInput;
-    let response = {
-      json: function() {},
-      end: function() {}
-    }
-    let done = function() {};
-    test("# Username field not provided", function() {
+    test("# Defenders field not provided", function() {
       let request = {
         body: {}
-      };
-      assert.equal(validateUsernameInput(request, response, done).status, messages.INVALID_USERNAME.status, "Response should be invalid if username field is not provided in request.");
-      assert.equal(validateUsernameInput(request, response, done).errors.username, "Username field is required", "Errors should list username is required if not provided in request.");
-    });
-    test("# Username field is empty", function() {
-      let request = {
-        body: { platform: "" }
       }
-      assert.equal(validateUsernameInput(request, response, done).status, messages.INVALID_USERNAME.status, "Response should be invalid if username field is empty.");
-      assert.equal(validateUsernameInput(request, response, done).errors.username, "Username field is required", "Errors should list username field as required if it is empty.");
+      assert.equal(validateDefendersInput(request, response, done).status, messages.INVALID_DEFENDERS.status, "Response should be invalid if defenders list not provided in request.");
+      assert.equal(validateDefendersInput(request, response, done).errors.defenders, "Defenders list is required", "Response should indicate defenders list is required if not provided in request.");
     });
-    test("# Platform field is profane", function() {
+    test("# Defenders field is empty", function() {
       let request = {
-        body: { username: "something bitch" }
-      };
-
-      assert.equal(validateUsernameInput(request, response, done).status, messages.PROFANE_INPUT.status, "Response should be invalid if input is profane.");
-      assert.equal(validateUsernameInput(request, response, done).errors.username, "Username may not be inappropriate", "Errors should indicate username is inappropriate.");
-
+        body: { defenders: [] }
+      }
+      assert.equal(validateDefendersInput(request, response, done).status, messages.INVALID_DEFENDERS.status, "Response should be invalid if defenders list is empty.");
+      assert.equal(validateDefendersInput(request, response, done).errors.defenders, "Defenders list is required", "Response should indiciate defenders list cannot be empty.");
+    });
+    test("# Defenders field is invalid", function() {
+      let request = {
+        body: { defenders: ["MUTTE", "MEERA", "ARUUNI"] }
+      }
+      assert.equal(validateDefendersInput(request, response, done).status, messages.INVALID_DEFENDERS.status, "Response should be invalid if defenders list is.");
+      assert.equal(validateDefendersInput(request, response, done).errors.defenders, "Defenders list is invalid", "Response should indicate defenders list is invalid.");
+    });
+    test("# Defenders field is valid", function() {
+      let request = {
+        body: { defenders: ["MUTE", "SMOKE"] }
+      }
+      assert.equal(validateDefendersInput(request, response, done), null, "Response should be valid if defenders list is.");
     });
   });
-
-  suite("Block User", function() {
+  suite("Block User Validation", function() {
     const validateBlockUser = validation.validateBlockUser;
-    let response = {
-      json: function() {},
-      end: function() {}
-    }
-    let done = function() {};
 
     test("# Username field not provided", function() {
       let request = {
@@ -547,67 +642,34 @@ suite("UNIT TESTS", function() {
       };
       assert.equal(validateBlockUser(request, response, done).status, messages.INVALID_BLOCK_USER_INPUT.status, "Response should be invalid if username is empty in request.");
       assert.equal(validateBlockUser(request, response, done).errors.username, "Username field is required", "Errors should list username as invalid if it is empty in request.");
-    })
-  });
-
-  suite("Update User Status", function() {
-    const validateStatusInput = validation.validateStatusInput;
-    let response = {
-      json: function() {},
-      end: function() {}
-    }
-    let done = function() {};
-    test("# Username field not provided", function() {
-      let request = {
-        body: {}
-      };
-      assert.equal(validateStatusInput(request, response, done).status, messages.INVALID_STATUS_INPUT.status, "Response should be invalid if username field is not provided in request.");
-      assert.equal(validateStatusInput(request, response, done).errors.username, "Username field is required", "Errors should list username is required if not provided in request.");
     });
-    test("# Username field is empty", function() {
+    test("# Username field is same as user", function() {
       let request = {
-        body: { platform: "" }
+        user: {
+          username: "username"
+        },
+        body: {
+          username: "username"
+        }
       }
-      assert.equal(validateStatusInput(request, response, done).status, messages.INVALID_STATUS_INPUT.status, "Response should be invalid if username field is empty.");
-      assert.equal(validateStatusInput(request, response, done).errors.username, "Username field is required", "Errors should list username field as required if it is empty.");
-    });
-    test("# Status field not provided", function() {
-      let request = {
-        body: {}
-      };
-      assert.equal(validateStatusInput(request, response, done).status, messages.INVALID_STATUS_INPUT.status, "Response should be invalid if status is not provided.");
-      assert.equal(validateStatusInput(request, response, done).errors.status, "Status field is required", "Response should indiciate status field is required.");
-    });
-    test("# Status field empty", function() {
-      let request = {
-        body: { status: "" }
-      };
-      assert.equal(validateStatusInput(request, response, done).status, messages.INVALID_STATUS_INPUT.status, "Response should be invalid if status is not provided.");
-      assert.equal(validateStatusInput(request, response, done).errors.status, "Status field is required", "Response should indiciate status field is required.");
-    });
-    test("# Status field is invalid", function() {
-      let request = {
-        body: { status: "not member" }
-      };
-      assert.equal(validateStatusInput(request, response, done).status, messages.INVALID_STATUS_INPUT.status, "Response should indicate status is invalid.");
-      assert.equal(validateStatusInput(request, response, done).errors.status, "Status field invalid", "Response should indiciate status is invalid.");
-    });
-    test("# Valid status update", function() {
-      let request = {
-        body: { status: "ADMIN", username: "something" }
-      };
-      assert.equal(validateStatusInput(request, response, done), null, "Response should be OK if input is valid.");
-    });
 
+      assert.equal(validateBlockUser(request, response, done).status, messages.CANNOT_REMOVE_SELF.status, "Response should indicate user cannot remove self if usernames are equal.");
+    });
+    test("# Username is valid", function() {
+      let request = {
+        user: {
+          username: "something"
+        },
+        body: {
+          username: "username"
+        }
+      }
+      assert.equal(validateBlockUser(request, response, done), null, "Response should be valid if the username provided is valid.");
+    });
   });
-
-  suite("Update Email", function() {
+  suite("Email Validation", function() {
     const validateEmailInput = validation.validateEmailInput;
-    let response = {
-      json: function() {},
-      end: function() {}
-    }
-    let done = function() {};
+
     test("# Email field not provided", function() {
       let request = {
         body: {}
@@ -693,15 +755,89 @@ suite("UNIT TESTS", function() {
       assert.equal(validateEmailInput(request, response, done).errors.email, "Email may not be inappropriate", "Errors should indicate email is inappropriate.");
 
     });
+    test("# Email is valid", function() {
+      let request = {
+        body: {
+          email: "valid_email@gmail.com"
+        }
+      }
+      assert.equal(validateEmailInput(request, response, done), null, "Response should be valid if email is valid.");
+    });
   });
+  suite("Join Code Validation", function() {
+    const validateJoinCode = validation.validateJoinCode;
 
-  suite("Update Password", function() {
+    test("# Join code field not provided", function() {
+      let request = {
+        body: {}
+      };
+      assert.equal(validateJoinCode(request, response, done).status, messages.INVALID_JOIN_CODE.status, "Response should be invalid if join code is not included in request.");
+      assert.equal(validateJoinCode(request, response, done).errors.join_code, "Join code field is required", "Errors should list join code as invalid if not included in request.");
+    });
+    test("# Join code field is empty", function() {
+      let request = {
+        body: { join_code: "" }
+      };
+      assert.equal(validateJoinCode(request, response, done).status, messages.INVALID_JOIN_CODE.status, "Response should be invalid if join code is empty in request.");
+      assert.equal(validateJoinCode(request, response, done).errors.join_code, "Join code field is required", "Errors should list join code as invalid if it is empty in request.");
+    });
+    test("# Join code is not 8 digits", function() {
+      let request1 = {
+        body: { join_code: "7777777" }
+      };
+      let request2 = {
+        body: { join_code: "999999999" }
+      }
+      let request3 = {
+        body: { join_code: "88888888" }
+      }
+      assert.equal(validateJoinCode(request1, response, done).status, messages.INVALID_JOIN_CODE.status, "Response should be invalid if join code is less than 8 digits.");
+      assert.equal(validateJoinCode(request1, response, done).errors.join_code, "Join code must be exactly 8 digits", "Errors should list join code as invalid if it is less than 8 digits.");
+
+      assert.equal(validateJoinCode(request2, response, done).status, messages.INVALID_JOIN_CODE.status, "Response should be invalid if join code is more than 8 digits.");
+      assert.equal(validateJoinCode(request2, response, done).errors.join_code, "Join code must be exactly 8 digits", "Errors should list join code as invalid if it is more than 8 digits.");
+
+      assert.equal(validateJoinCode(request3, response, done), null, "Errors should be empty if join code is valid.");
+    });
+    test("# Join code contains non-numeric digits", function() {
+      let request1 = {
+        body: { join_code: "abcdefgh" }
+      };
+      let request2 = {
+        body: { join_code: "abcd1234" }
+      }
+      let request3 = {
+        body: { join_code: "/.<>^%*&" }
+      }
+      let request4 = {
+        body: { join_code: "abcd!@#$" }
+      }
+      let request5 = {
+        body: { join_code: "12345678" }
+      }
+      assert.equal(validateJoinCode(request1, response, done).status, messages.INVALID_JOIN_CODE.status, "Response should be invalid if join code only contains alphabet characters.");
+      assert.equal(validateJoinCode(request1, response, done).errors.join_code, "Join code may not contain non-number characters", "Errors should list join code as invalid if it is only letter characters.");
+
+      assert.equal(validateJoinCode(request2, response, done).status, messages.INVALID_JOIN_CODE.status, "Response should be invalid if join code contains any letters.");
+      assert.equal(validateJoinCode(request2, response, done).errors.join_code, "Join code may not contain non-number characters", "Errors should list join code as invalid if it contains any letters.");
+
+      assert.equal(validateJoinCode(request3, response, done).status, messages.INVALID_JOIN_CODE.status, "Response should be invalid if join code contains all non-alphanumeric characters.");
+      assert.equal(validateJoinCode(request3, response, done).errors.join_code, "Join code may not contain non-number characters", "Errors should list join code as invalid if it contains all non-alphanumeric characters.");
+
+      assert.equal(validateJoinCode(request4, response, done).status, messages.INVALID_JOIN_CODE.status, "Response should be invalid if join code contains any non-alphanumeric characters.");
+      assert.equal(validateJoinCode(request4, response, done).errors.join_code, "Join code may not contain non-number characters", "Errors should list join code as invalid if it contains any non-alphanumeric characters.");
+
+      assert.equal(validateJoinCode(request5, response, done), null, "Response should be valid if join code is 8 numerical digits.");
+    });
+    test("# Join code is valid", function() {
+      let request = {
+        body: { join_code: "18382975" }
+      }
+      assert.equal(validateJoinCode(request, response, done), null, "Response should be valid if join code is valid.");
+    });
+  });
+  suite("Password Validation", function() {
     const validatePasswordInput = validation.validatePasswordInput;
-    let response = {
-      json: function() {},
-      end: function() {}
-    }
-    let done = function() {};
 
     test("# Password field not provided", function() {
       let request = {
@@ -764,168 +900,214 @@ suite("UNIT TESTS", function() {
 
       assert.equal(validatePasswordInput(request2, response, done), null, "If passwords match, password2 should not list any errors.");
     });
-  })
+  });
+  suite("Platform Validation", function() {
+    const validatePlatformInput = validation.validatePlatformInput;
 
-  suite("Set Attacker Role", function() {
-    let validateAttackerInput = validation.validateAttackerRole;
-    let response = {
-      json: function() {},
-      end: function() {}
-    }
-    let done = function() {};
-
-    test("# Role field not provided", function() {
+    test("# Platform field not provided", function() {
       let request = {
         body: {}
-      }
-      assert.equal(validateAttackerInput(request, response, done).status, messages.INVALID_ATTACKER_ROLE.status, "Response should be invalid if attacker role field is not present.");
-      assert.equal(validateAttackerInput(request, response, done).errors.role, "Role field is invalid", "Errors should indicate attacker role is required.");
-    });
-
-    test("# Role field is empty", function() {
-      let request = {
-        body: { role: "" }
       };
-      assert.equal(validateAttackerInput(request, response, done).status, messages.INVALID_ATTACKER_ROLE.status, "Response should be invalid if attacker role field is empty.");
-      assert.equal(validateAttackerInput(request, response, done).errors.role, "Role field is invalid", "Errors should indicate attacker role is required.");
+      assert.equal(validatePlatformInput(request, response, done).status, messages.INVALID_PLATFORM.status, "Response should be invalid if platform field is not provided in request.");
+      assert.equal(validatePlatformInput(request, response, done).errors.platform, "Platform field is required", "Errors should list platform is required if not provided in request.");
     });
-
-    test("# Role field is invalid", function() {
+    test("# Platform field is empty", function() {
       let request = {
-        body: { role: "SOMETHING" }
+        body: { platform: "" }
       }
-      assert.equal(validateAttackerInput(request, response, done).status, messages.INVALID_ATTACKER_ROLE.status, "Response should be invalid if attacker role is invalid.");
-      assert.equal(validateAttackerInput(request, response, done).errors.role, "Role field is invalid", "Errors should indicate attacker role is invalid.");
+      assert.equal(validatePlatformInput(request, response, done).status, messages.INVALID_PLATFORM.status, "Response should be invalid if platform field is empty.");
+      assert.equal(validatePlatformInput(request, response, done).errors.platform, "Platform field is required", "Errors should list platform field as required if it is empty.");
     });
-
-    test("# Role field is valid", function() {
-      let request = {
-        body: { role: "HARD BREACH" }
-      }
-      assert.equal(validateAttackerInput(request, response, done), null, "Response should be valid if attacker role is valid.");
-    })
-  });
-
-  suite("Set Defender Role", function() {
-    let validateDefenderInput = validation.validateDefenderRole;
-    let response = {
-      json: function() {},
-      end: function() {}
-    }
-    let done = function() {};
-
-    test("# Role field not provided", function() {
-      let request = {
-        body: {}
-      }
-      assert.equal(validateDefenderInput(request, response, done).status, messages.INVALID_DEFENDER_ROLE.status, "Response should be invalid if attacker role field is not present.");
-      assert.equal(validateDefenderInput(request, response, done).errors.role, "Role field is invalid", "Errors should indicate attacker role is required.");
-    });
-
-    test("# Role field is empty", function() {
-      let request = {
-        body: { role: "" }
+    test("# Platform field is invalid", function() {
+      let request1 = {
+        body: { platform: "something" }
       };
-      assert.equal(validateDefenderInput(request, response, done).status, messages.INVALID_DEFENDER_ROLE.status, "Response should be invalid if attacker role field is empty.");
-      assert.equal(validateDefenderInput(request, response, done).errors.role, "Role field is invalid", "Errors should indicate attacker role is required.");
-    });
+      let request2 = {
+        body: { platform: "XBOX" }
+      };
+      let request3 = {
+        body: { platform: "PC" }
+      };
+      let request4 = {
+        body: { platform: "PS4" }
+      };
+      let request5 = {
+        body: { platform: "xbox" }
+      };
+      let request6 = {
+        body: { platform: "pc" }
+      };
+      let request7 = {
+        body: { platform: "ps4" }
+      };
+      assert.equal(validatePlatformInput(request1, response, done).status, messages.INVALID_PLATFORM.status, "Response should be invalid if platform is not one of the accepted values.");
+      assert.equal(validatePlatformInput(request1, response, done).errors.platform, "The only platforms accepted are Xbox, PC, or PS4", "Errors should list platform as invalid if not one of the accepted values.");
 
-    test("# Role field is invalid", function() {
-      let request = {
-        body: { role: "SOMETHING" }
-      }
-      assert.equal(validateDefenderInput(request, response, done).status, messages.INVALID_DEFENDER_ROLE.status, "Response should be invalid if attacker role is invalid.");
-      assert.equal(validateDefenderInput(request, response, done).errors.role, "Role field is invalid", "Errors should indicate attacker role is invalid.");
-    });
+      assert.equal(validatePlatformInput(request2, response, done), null, "XBOX should be an accepted value.");
+      assert.equal(validatePlatformInput(request3, response, done), null, "PC should be an accepted value.");
+      assert.equal(validatePlatformInput(request4, response, done), null, "PS4 should be an accepted value.");
 
-    test("# Role field is valid", function() {
-      let request = {
-        body: { role: "HARD BREACH DENIAL" }
-      }
-      assert.equal(validateDefenderInput(request, response, done), null, "Response should be valid if attacker role is valid.");
-    })
+      assert.equal(validatePlatformInput(request5, response, done), null, "xbox should be an accepted value.");
+      assert.equal(validatePlatformInput(request6, response, done), null, "pc should be an accepted value.");
+      assert.equal(validatePlatformInput(request7, response, done), null, "ps4 should be an accepted value.");
+    });
   });
+  suite("Update User Status", function() {
+    const validateStatusInput = validation.validateStatusInput;
 
-  suite("Set Attackers", function() {
-    let validateAttackersInput = validation.validateAttackersInput;
+    test("# Username field not provided", function() {
+      let request = {
+        body: {}
+      };
+      assert.equal(validateStatusInput(request, response, done).status, messages.INVALID_STATUS_INPUT.status, "Response should be invalid if username field is not provided in request.");
+      assert.equal(validateStatusInput(request, response, done).errors.username, "Username field is required", "Errors should list username is required if not provided in request.");
+    });
+    test("# Username field is empty", function() {
+      let request = {
+        body: { platform: "" }
+      }
+      assert.equal(validateStatusInput(request, response, done).status, messages.INVALID_STATUS_INPUT.status, "Response should be invalid if username field is empty.");
+      assert.equal(validateStatusInput(request, response, done).errors.username, "Username field is required", "Errors should list username field as required if it is empty.");
+    });
+    test("# Status field not provided", function() {
+      let request = {
+        body: {}
+      };
+      assert.equal(validateStatusInput(request, response, done).status, messages.INVALID_STATUS_INPUT.status, "Response should be invalid if status is not provided.");
+      assert.equal(validateStatusInput(request, response, done).errors.status, "Status field is required", "Response should indiciate status field is required.");
+    });
+    test("# Status field empty", function() {
+      let request = {
+        body: { status: "" }
+      };
+      assert.equal(validateStatusInput(request, response, done).status, messages.INVALID_STATUS_INPUT.status, "Response should be invalid if status is not provided.");
+      assert.equal(validateStatusInput(request, response, done).errors.status, "Status field is required", "Response should indiciate status field is required.");
+    });
+    test("# Status field is invalid", function() {
+      let request = {
+        body: { status: "not member" }
+      };
+      assert.equal(validateStatusInput(request, response, done).status, messages.INVALID_STATUS_INPUT.status, "Response should indicate status is invalid.");
+      assert.equal(validateStatusInput(request, response, done).errors.status, "Status field invalid", "Response should indiciate status is invalid.");
+    });
+    test("# Valid status update", function() {
+      let request = {
+        body: { status: "ADMIN", username: "something" }
+      };
+      assert.equal(validateStatusInput(request, response, done), null, "Response should be OK if input is valid.");
+    });
+  });
+  suite("Team Name Validation", function() {
+    const validateTeamName = validation.validateTeamInput;
     let response = {
       json: function() {},
       end: function() {}
     }
     let done = function() {};
-    test("# Attackers field not provided", function() {
+    test("# Name field not provided", function() {
+      let request = {
+        body: {}
+      };
+      assert.equal(validateTeamName(request, response, done).status, messages.INVALID_TEAM_INPUT.status, "Response should be invalid if name field is not provided in request.");
+      assert.equal(validateTeamName(request, response, done).errors.name, "Name field is required", "Errors should list name as invalid if not provided in request.");
+    });
+    test("# Name field is empty", function() {
+      let request = {
+        body: {}
+      };
+      assert.equal(validateTeamName(request, response, done).status, messages.INVALID_TEAM_INPUT.status, "Response should be invalid if name field is empty in request.");
+      assert.equal(validateTeamName(request, response, done).errors.name, "Name field is required", "Errors should list name as invalid if empty in request.");
+    });
+    test("# Name is inappropriate", function() {
+      let request = {
+        body: { name: "Fuck" }
+      };
+      assert.equal(validateTeamName(request, response, done).status, messages.PROFANE_TEAM_INPUT.status, "Response should indicate that profanity is not accepted if found in team names.");
+      assert.equal(validateTeamName(request, response, done).errors.name, "Name may not be inappropriate", "Errors should list name is invalid if it is in appropriate.");
+    });
+    test("# Valid Team Name", function() {
+      let request = {
+        body: {
+          name: "SomeTeam"
+        }
+      }
+      assert.equal(validateTeamName(request, response, done), null, "Response should be valid if team name is.");
+    });
+  });
+  suite("Update Username", function() {
+    const validateUsernameInput = validation.validateUsernameInput;
+
+    test("# Username field not provided", function() {
+      let request = {
+        body: {}
+      };
+      assert.equal(validateUsernameInput(request, response, done).status, messages.INVALID_USERNAME.status, "Response should be invalid if username field is not provided in request.");
+      assert.equal(validateUsernameInput(request, response, done).errors.username, "Username field is required", "Errors should list username is required if not provided in request.");
+    });
+    test("# Username field is empty", function() {
+      let request = {
+        body: { platform: "" }
+      }
+      assert.equal(validateUsernameInput(request, response, done).status, messages.INVALID_USERNAME.status, "Response should be invalid if username field is empty.");
+      assert.equal(validateUsernameInput(request, response, done).errors.username, "Username field is required", "Errors should list username field as required if it is empty.");
+    });
+    test("# Username field is profane", function() {
+      let request = {
+        body: { username: "something bitch" }
+      };
+
+      assert.equal(validateUsernameInput(request, response, done).status, messages.PROFANE_INPUT.status, "Response should be invalid if input is profane.");
+      assert.equal(validateUsernameInput(request, response, done).errors.username, "Username may not be inappropriate", "Errors should indicate username is inappropriate.");
+    });
+    test("# Username field is valid", function() {
+      let request = {
+        body: { username: "username" }
+      }
+      assert.equal(validateUsernameInput(request, response, done), null, "Response should be valid if input is valid.");
+    });
+  });
+  suite("Team MMR Validation", function() {
+    let validateTeamMMR = validation.validateTeamMMR;
+
+    test("# MMR field is not provided", function() {
       let request = {
         body: {}
       }
-      assert.equal(validateAttackersInput(request, response, done).status, messages.INVALID_ATTACKERS.status, "Response should be invalid if attackers list not provided in request.");
-      assert.equal(validateAttackersInput(request, response, done).errors.attackers, "Attackers list is required", "Response should indicate attackers list is required if not provided in request.");
+      assert.equal(validateTeamMMR(request, response, done).status, messages.INVALID_MMR.status, "Response should be invalid if mmr is not provided.");
+      assert.isOk(validateTeamMMR(request, response, done).errors.mmr, "Errors should indicate mmr is invalid if mmr is not provided.");
     });
-
-    test("# Attackers field is empty", function() {
+    test("# MMR field is empty", function() {
       let request = {
-        body: { attackers: [] }
+        body: {
+          mmr: ""
+        }
       }
-      assert.equal(validateAttackersInput(request, response, done).status, messages.INVALID_ATTACKERS.status, "Response should be invalid if attackers list is empty.");
-      assert.equal(validateAttackersInput(request, response, done).errors.attackers, "Attackers list is required", "Response should indiciate attackers list cannot be empty.");
+      assert.equal(validateTeamMMR(request, response, done).status, messages.INVALID_MMR.status, "Response should be invalid if mmr is empty.");
+      assert.isOk(validateTeamMMR(request, response, done).errors.mmr, "Errors should indicate mmr is invalid if mmr is empty.");
     });
-
-    test("# Attackers field is invalid", function() {
+    test("# MMR field is invalid", function() {
       let request = {
-        body: { attackers: ["MARU", "MAVERICKK", "BUUCK"] }
+        body: {
+          mmr: 1234
+        }
       }
-      assert.equal(validateAttackersInput(request, response, done).status, messages.INVALID_ATTACKERS.status, "Response should be invalid if attackers list is.");
-      assert.equal(validateAttackersInput(request, response, done).errors.attackers, "Attackers list is invalid", "Response should indicate attackers list is invalid.");
+      assert.equal(validateTeamMMR(request, response, done).status, messages.INVALID_MMR.status, "Response should be invalid if mmr is invalid.");
+      assert.isOk(validateTeamMMR(request, response, done).errors.mmr, "Errors should indicate mmr is invalid if mmr is invalid.");
     });
-
-    test("# Attackers list is valid", function() {
+    test("# MMR field is valid", function() {
       let request = {
-        body: { attackers: ["MAVERICK"] }
+        body: {
+          mmr: 3200
+        }
       }
-      assert.equal(validateAttackersInput(request, response, done), null, "Response should be valid if attackers list is.");
-    })
+      assert.equal(validateTeamMMR(request, response, done), null, "Response should be valid if mmr is valid.");
+    });
   });
 
-  suite("Set Defenders", function() {
-    let validateDefendersInput = validation.validateDefendersInput;
-    let response = {
-      json: function() {},
-      end: function() {}
-    }
-    let done = function() {};
-    test("# Defenders field not provided", function() {
-      let request = {
-        body: {}
-      }
-      assert.equal(validateDefendersInput(request, response, done).status, messages.INVALID_DEFENDERS.status, "Response should be invalid if defenders list not provided in request.");
-      assert.equal(validateDefendersInput(request, response, done).errors.defenders, "Defenders list is required", "Response should indicate defenders list is required if not provided in request.");
-    });
+  // Utilities
+  suite("Utilities", function() {
+    const { verifyPassword, hashPassword, issueJWT, genVerificationLink, genJoinCode, genWordCode } = require("../config/utilities.js");
 
-    test("# Defenders field is empty", function() {
-      let request = {
-        body: { defenders: [] }
-      }
-      assert.equal(validateDefendersInput(request, response, done).status, messages.INVALID_DEFENDERS.status, "Response should be invalid if defenders list is empty.");
-      assert.equal(validateDefendersInput(request, response, done).errors.defenders, "Defenders list is required", "Response should indiciate defenders list cannot be empty.");
-    });
-
-    test("# Defenders field is invalid", function() {
-      let request = {
-        body: { defenders: ["MARU", "MAVERICKK", "BUUCK"] }
-      }
-      assert.equal(validateDefendersInput(request, response, done).status, messages.INVALID_DEFENDERS.status, "Response should be invalid if defenders list is.");
-      assert.equal(validateDefendersInput(request, response, done).errors.defenders, "Defenders list is invalid", "Response should indicate defenders list is invalid.");
-    });
-
-    test("# Defenders list is valid", function() {
-      let request = {
-        body: { defenders: ["MUTE"] }
-      }
-      assert.equal(validateDefendersInput(request, response, done), null, "Response should be valid if defenders list is.");
-    })
-  });
-
-  suite("Utility Functions", function() {
-    const { verifyPassword, hashPassword, issueJWT, genVerificationLink, genJoinCode } = require("../config/utilities.js");
     // UNIT TEST ACCOUNT
     const user = {
       _id: "5f4ae417264fca06f0d74d3c",
@@ -958,13 +1140,17 @@ suite("UNIT TESTS", function() {
     });
 
     test("# genVerificationLink", function() {
+      assert.isOk(genVerificationLink(), "genVerificationLink should return a value.");
       assert.equal(genVerificationLink().length, 128, "Verification link should be 128 characters in length.");
-    })
+    });
 
     test("# genJoinCode", function() {
       assert.isOk(genJoinCode(), "genJoinCode should return a value.");
       assert.notEqual(genJoinCode(), user.team_code, "genJoinCode should not allow duplicates.");
-    })
-  });
+    });
 
+    test("# genWordCode", function() {
+      assert.isOk(genWordCode(), "genWordCode should return a value.");
+    });
+  });
 });

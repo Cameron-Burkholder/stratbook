@@ -1,16 +1,15 @@
 /* config/auth.js */
 
+// Configure passport to use jwt
 const JwtStrategy = require("passport-jwt").Strategy;
 const ExtractJwt = require("passport-jwt").ExtractJwt;
+// Load mongoose
 const mongoose = require("mongoose");
+// Load User models
 require("../models/User.js");
 const User = mongoose.model("users");
-const path = require("path");
-const fs = require("fs");
-const opts = {};
 
 const PUB_KEY = process.env.RSA_PUBLIC_KEY.replace(/\\n/g, "\n");
-
 const options = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
   secretOrKey: PUB_KEY,

@@ -17,11 +17,7 @@ const { log, hashPassword } = require("./config/utilities");
 
 // SETUP EXPRESS
 const app = express();
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "client", "build")));
-} else {
-  app.use(express.static(path.join(__dirname, "client", "public")));
-}
+app.use(express.static(path.join(__dirname, "client", (process.env.NODE_ENV === "production" ? "build" : "public") )));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 if (process.env.NODE_ENV === "production") {
