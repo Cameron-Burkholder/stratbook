@@ -435,7 +435,7 @@ class PositionOverlay extends React.Component {
   }
   detectChange(prevProps, prevState) {
     let bool = false;
-    if (prevProps !== this.props || prevProps.zoom !== this.props.zoom) {
+    if (prevProps !== this.props || prevProps.zoom !== this.props.zoom || JSON.stringify(prevProps) !== JSON.stringify(this.props)) {
       bool = true;
     }
     return bool;
@@ -576,7 +576,7 @@ class PositionOverlay extends React.Component {
     let utility = [];
     this.state.utilityPositions.map((pos, index) => {
       pos.forEach((u, uindex) => {
-        if (u.floor === this.props.floorIndex) {
+        if (u.floor === this.props.floorIndex && this.props.utility[index]) {
           let url = `../../media/min/utility/${this.props.utility[index].replace(" ", "_").replace(" ", "_")}.png`;
           utility.push(
             <DragItem url={url}
@@ -599,7 +599,7 @@ class PositionOverlay extends React.Component {
     let gadgets = [];
     this.state.gadgetPositions.map((pos, index) => {
       pos.forEach((g, gindex) => {
-        if (g.floor === this.props.floorIndex) {
+        if (g.floor === this.props.floorIndex && this.props.gadgets[index]) {
           let gadget = this.props.gadgets[index].gadget.replace(" ", "_").replace(" ", "_").toUpperCase();
           let url = `../../media/min/gadgets/${gadget}.png`;
           gadgets.push(

@@ -337,7 +337,7 @@ class Editor extends React.Component {
             utilityPositions: [[], [], [], [], []],
             gadgetPositions: [[], [], [], [], []],
             breaches: [],
-            operatorPositions: [{x: Math.floor(CANVAS_WIDTH / 2), y: 0}, {x: Math.floor(CANVAS_WIDTH / 2), y: 0}, {x: Math.floor(CANVAS_WIDTH / 2), y: 0}, {x: Math.floor(CANVAS_WIDTH / 2), y: 0}, {x: Math.floor(CANVAS_WIDTH / 2), y: Math.floor(CANVAS_HEIGHT / 2)}],
+            operatorPositions: [{x: Math.floor(CANVAS_WIDTH / 2), y: Math.floor(CANVAS_HEIGHT / 2)}, {x: Math.floor(CANVAS_WIDTH / 2), y: Math.floor(CANVAS_HEIGHT / 2)}, {x: Math.floor(CANVAS_WIDTH / 2), y: Math.floor(CANVAS_HEIGHT / 2)}, {x: Math.floor(CANVAS_WIDTH / 2), y: Math.floor(CANVAS_HEIGHT / 2)}, {x: Math.floor(CANVAS_WIDTH / 2), y: Math.floor(CANVAS_HEIGHT / 2)}],
             drones: [],
             notes: "",
             name: "Unnamed"
@@ -479,17 +479,13 @@ class Editor extends React.Component {
     if (this.state.type === "ATTACK") {
       map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].operatorPositions[index].floor = this.state.floorIndex;
       let opPosition = map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].operatorPositions[index];
-      if (opPosition.x === 0 && opPosition.y === 0) {
-        map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].operatorPositions[index].x = Math.floor(CANVAS_WIDTH / 2);
-        map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].operatorPositions[index].y = Math.floor(CANVAS_HEIGHT / 2);
-      }
+      map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].operatorPositions[index].x = Math.floor(CANVAS_WIDTH / 2);
+      map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].operatorPositions[index].y = Math.floor(CANVAS_HEIGHT / 2);
     } else {
       map.defense[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].operatorPositions[index].floor = this.state.floorIndex;
       let opPosition = map.defense[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].operatorPositions[index];
-      if (opPosition.x === 0 && opPosition.y === 0) {
-        map.defense[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].operatorPositions[index].x = Math.floor(CANVAS_WIDTH / 2);
-        map.defense[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].operatorPositions[index].y = Math.floor(CANVAS_HEIGHT / 2);
-      }
+      map.defense[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].operatorPositions[index].x = Math.floor(CANVAS_WIDTH / 2);
+      map.defense[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].operatorPositions[index].y = Math.floor(CANVAS_HEIGHT / 2);
     }
     this.setState({
       map: map
@@ -901,6 +897,7 @@ class Editor extends React.Component {
   }
 
   render() {
+    console.log(this.state);
     return (
       <div id="Editor">
         <Prompt
