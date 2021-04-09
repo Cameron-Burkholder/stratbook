@@ -504,7 +504,8 @@ div.toggle, div.viewer-toggle {
 .loader {
   position: relative;
   margin: 40px auto;
-  width: 100px; }
+  width: 100px;
+  background: #1A1D27; }
   .loader:before {
     content: '';
     display: block;

@@ -4,12 +4,6 @@ import React from "react";
 
 import EditStrategiesAPI from "../api/EditStrategiesAPI.js";
 
-/*
-  @func: EditStrategies
-  @desc: render manage team page
-  @prop getAuthToken: function
-  @prop alert: function
-*/
 const EditStrategies = (props) => {
   return (
     <div id="edit-strategies">

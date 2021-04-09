@@ -4,10 +4,6 @@ import React from "react";
 
 import Header from "../partials/Header.js";
 
-/*
-  @func: Home
-  @desc: render home page
-*/
 const Home = () => {
   return (
     <div className="page" id="home">

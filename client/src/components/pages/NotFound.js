@@ -2,10 +2,6 @@
 
 import React from "react";
 
-/*
-  @func: NotFound
-  @desc: render 404 page
-*/
 const NotFound = () => {
   return (
     <div className="page" id="not-found">

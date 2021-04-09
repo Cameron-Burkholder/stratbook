@@ -9,15 +9,6 @@ import ViewTeamStatisticsAPI from "../api/ViewTeamStatisticsAPI.js";
 import LeaveTeamAPI from "../api/LeaveTeamAPI.js";
 import { Link } from "react-router-dom";
 
-/*
-  @func: Team
-  @desc: render team page
-  @prop getAuthToken: function
-  @prop updateAuthToken: function
-  @prop team_code: String
-  @prop alert: function
-  @prop status: String
-*/
 const Team = (props) => {
   return (
     <div className="page" id="team">

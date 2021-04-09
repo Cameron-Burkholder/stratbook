@@ -6,12 +6,6 @@ import GeneralStatisticsAPI from "../api/GeneralStatisticsAPI.js";
 import SeasonalStatisticsAPI from "../api/SeasonalStatisticsAPI.js";
 import OperatorStatisticsAPI from "../api/OperatorStatisticsAPI.js";
 
-/*
-  @func: Dashboard
-  @desc: render dashboard
-  @prop getAuthToken: function
-  @prop alert: function
-*/
 const Dashboard = (props) => {
   return (
     <div className="page" id="dashboard">

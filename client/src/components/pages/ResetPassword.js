@@ -4,11 +4,6 @@ import React from "react";
 
 import ResetPasswordAPI from "../api/ResetPasswordAPI.js";
 
-/*
-  @func: Reset password
-  @desc: render Reset password
-  @prop alert: function
-*/
 const ResetPassword = (props) => {
   return (
     <div className="page" id="Reset-password">

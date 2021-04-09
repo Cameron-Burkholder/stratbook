@@ -4,13 +4,6 @@ import React from "react";
 
 import ViewStrategiesAPI from "../api/ViewStrategiesAPI.js";
 
-/*
-  @func: Strategies
-  @desc: render strategies page
-  @prop team_code: String
-  @prop getAuthToken: function
-  @prop alert: function
-*/
 const Strategies = (props) => {
   return (
     <div className="page" id="strategies">

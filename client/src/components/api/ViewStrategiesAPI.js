@@ -5,7 +5,7 @@ import axios from "axios";
 import { STRATEGIES_FOUND, MAP_FOUND } from "../../messages/messages.js";
 import { ERROR_VIEW_STRATEGIES, ERROR_VIEW_MAP } from "../../messages/errors.js";
 
-import Viewer from "../partials/Viewer.js";
+import Editor from "../partials/Editor.js";
 import { Link } from "react-router-dom";
 
 import LoadingModal from "../partials/LoadingModal.js";
@@ -127,7 +127,7 @@ class ViewStrategiesAPI extends React.Component {
     } else {
       if (this.state.map_name) {
         if (this.state.hasLoaded && this.state.map) {
-          contents = <Viewer map={this.state.map} alert={this.props.alert} fetchStrategies={this.fetchStrategies}/>;
+          contents = <Editor function="Viewer" map={this.state.map} alert={this.props.alert} fetchStrategies={this.fetchStrategies}/>;
         } else {
           contents = "Waiting for server";
         }

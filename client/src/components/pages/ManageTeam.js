@@ -9,13 +9,6 @@ import DeleteTeamAPI from "../api/DeleteTeamAPI.js";
 import BlockedUsersAPI from "../api/BlockedUsersAPI.js";
 import { Link } from "react-router-dom";
 
-/*
-  @func: ManageTeam
-  @desc: render manage team page
-  @prop getAuthToken: function
-  @prop updateAuthToken: function
-  @prop alert: function
-*/
 const ManageTeam = (props) => {
   return (
     <div className="page" id="manage-team">

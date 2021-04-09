@@ -10,18 +10,6 @@ import { Prompt } from 'react-router'
 
 import { SITES, FLOORS, GADGETS, UTILITY_GUIDE, CANVAS_WIDTH, CANVAS_HEIGHT } from "../../data.js";
 
-
-/*
-  @func: Editor
-  @desc: manage state of new strategies and make requests to server
-  @prop map
-  @prop save (function)
-  @prop getAuthToken: function
-  @prop alert: function
-  @prop fetchStrategies: function
-  @state:
-    name: String
-*/
 class Editor extends React.Component {
   constructor(props) {
     super(props);
@@ -897,12 +885,8 @@ class Editor extends React.Component {
   }
 
   render() {
-    console.log(this.state);
     return (
-      <div id="Editor">
-        <Prompt
-          when={this.state.updated}
-          message="You have unsaved changes. Are you sure you want to leave this page?"/>
+      <div id={this.props.function}>
         <Toolbar
           showMaps={this.showMaps}
           map={this.state.map}
@@ -939,6 +923,7 @@ class Editor extends React.Component {
           insertBreach={this.insertBreach}
           alert={this.props.alert} save={this.save}
           fetchStrategies={this.props.fetchStrategies}
+          function={this.props.function}
           />
         <main>
           <Sidebar
@@ -966,6 +951,7 @@ class Editor extends React.Component {
             share={this.share}
             unshare={this.unshare}
             alert={this.props.alert}
+            function={this.props.function}
             />
           <Canvas
             type={this.state.type}
@@ -1036,6 +1022,7 @@ class Editor extends React.Component {
               this.state.map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].video
             ) : ( this.state.map.defense[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].video)}
             updateVideo={this.updateVideo}
+            function={this.props.function}
             />
           <Lineup
             type={this.state.type}
@@ -1064,6 +1051,7 @@ class Editor extends React.Component {
             ))}
             insertUtility={this.insertUtility}
             insertGadget={this.insertGadget}
+            function={this.props.function}
             />
         </main>
       </div>
