@@ -6,7 +6,7 @@ import axios from "axios";
 import { SHARED_STRATEGY_FOUND } from "../../messages/messages.js";
 import { ERROR_VIEW_SHARED_STRATEGY } from "../../messages/errors.js";
 
-import SharedViewer from "../partials/SharedViewer.js";
+import Editor from "../partials/Editor.js";
 import LoadingModal from "../partials/LoadingModal.js";
 
 /*
@@ -71,7 +71,7 @@ class SharedStrategiesAPI extends React.Component {
     } else {
       if (this.state.strategy) {
         if (this.state.hasLoaded) {
-          contents = <SharedViewer strategy={this.state.strategy} type={this.state.strategy.type} alert={this.props.alert}/>
+          contents = <Editor function="SharedViewer" strategy={this.state.strategy} type={this.state.strategy.type} alert={this.props.alert}/>
         } else {
           contents = "Waiting for server";
         }

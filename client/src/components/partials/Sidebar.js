@@ -74,57 +74,76 @@ class Sidebar extends React.Component {
               <button onClick={this.changeName}>&#10003;</button>
             </div>
           ) : (
-            <p className="scene__name" onClick={(e) => { this.changeName(e, index) }}>{scene.name}</p>
+            <p className="scene__name" onClick={(e) => {
+              if (this.props.function === "Editor") {
+                this.changeName(e, index);
+              }
+            }}>{scene.name}</p>
           )}
         </div>
       )
     });
-    const strategies = (this.props.type === "ATTACK" ? "" : (
-      this.props.strategies.map((strat, index) => {
+    let strategies;
+    if (this.props.function !== "SharedViewer") {
+      strategies = this.props.strategies.map((strat, index) => {
         return (
           <div className={"strategy" + (this.props.strategyIndex === index ? " strategy--active" : "")} onClick={() => { this.props.selectStrategy(index) }} key={index}>
             <p className="strategy__name">{strat.name}</p>
           </div>
         )
-      })
-    ));
+      });
+    }
     return (
       <div className={"sidebar" + (this.state.showSidebar ? " sidebar--active" : "")}>
         <button onClick={this.toggleSidebar}>&#8594;</button>
         <div className="sidebar-body">
-          { this.props.type === "ATTACK" ? (
-            <div className="site-container">
-              <h3 className="site-container__heading">{this.props.map}: {this.props.type}</h3>
-              <h4 className="site-container__subtitle">{this.props.strategy}</h4>
+          <div className="strategy-container">
+            <h3 className="strategy-container__heading">{this.props.map}: {this.props.type}</h3>
+            <h4 className="strategy-container__subtitle">{this.props.sites[this.props.siteIndex]}</h4>
+            { this.props.function !== "Editor" && this.props.shared ? (
+              <div className="viewer-toggle">
+                <label className="switch">
+                  <span className={"slider slider--active round"}></span>
+                </label>
+                <p>Shared</p>
+                <a className="toggle__link" rel="noopener noreferrer" href={( this.props.shared ? window.location.protocol + "//" + window.location.host + "/shared/" + this.props.shared_key : "")} target="_blank">view</a>
+                <button className="toggle__button" onClick={() => {
+                  const temp = document.createElement("textarea");
+                  temp.value = window.location.protocol + "//" + window.location.host + "/shared/" + this.props.shared_key;
+                  document.body.appendChild(temp);
+                  temp.select();
+                  temp.setSelectionRange(0, 99999);
+                  document.execCommand("copy");
+                  document.body.removeChild(temp);
+                  this.props.alert("The link to your shared strategy has been copied.", "Strategy Link Copied");
+                }}>&#128203;</button>
+              </div>
+            ) : ""}
+            { this.props.function === "Editor" ? (
               <Toggle inactiveState="Private" activeState="Shared" activeAction={this.props.unshare} inactiveAction={this.props.share} active={this.props.shared}
               link={( this.props.shared ? window.location.protocol + "//" + window.location.host + "/shared/" + this.props.shared_key : "")} alert={this.props.alert}/>
-              <h3 className="site-container__heading">Sites</h3>
-              <div className="select-container">
-                { sites }
+            ) : ""}
+            { this.props.function !== "SharedViewer" ? (
+              <div>
+                <h3 className="strategy-container__heading">Strategies</h3>
+                <div className="select-container">
+                  { strategies }
+                </div>
               </div>
-            </div>
-          ) : (
-            <div className="strategy-container">
-              <h3 className="strategy-container__heading">{this.props.map}: {this.props.type}</h3>
-              <h4 className="strategy-container__subtitle">{this.props.sites[this.props.siteIndex]}</h4>
-              <Toggle inactiveState="Private" activeState="Shared" activeAction={this.props.unshare} inactiveAction={this.props.share} active={this.props.shared}
-              link={( this.props.shared ? window.location.protocol + "//" + window.location.host + "/shared/" + this.props.shared_key : "")} alert={this.props.alert}/>
-              <h3 className="strategy-container__heading">Strategies</h3>
-              <div className="select-container">
-                { strategies }
-              </div>
-            </div>
-          )}
+            ) : ""}
+          </div>
           <div className="scene-container">
             <h3 className="scene-container__heading">Scenes</h3>
               <div className="select-container">
                 { scenes }
               </div>
           </div>
-          <div className="scene-controls">
-            <button onClick={this.props.addScene}>Add Scene</button>
-            <button onClick={this.props.removeScene}>Remove Scene</button>
-          </div>
+          { this.props.function === "Editor" ? (
+            <div className="scene-controls">
+              <button onClick={this.props.addScene}>Add Scene</button>
+              <button onClick={this.props.removeScene}>Remove Scene</button>
+            </div>
+          ) : ""}
         </div>
       </div>
     )

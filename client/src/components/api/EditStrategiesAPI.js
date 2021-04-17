@@ -166,7 +166,7 @@ class EditStrategiesAPI extends React.Component {
               loading: false,
             }, () => {
               if (position.type === "ATTACK") {
-                map.attack[position.strategyIndex].shared_key = response.data.shared_key;
+                map.attack[SITES[map.name][position.siteIndex]][position.strategyIndex].shared_key = response.data.shared_key;
               } else {
                 map.defense[SITES[map.name][position.siteIndex]][position.strategyIndex].shared_key = response.data.shared_key;
               }

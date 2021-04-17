@@ -81,58 +81,77 @@ class Editor extends React.Component {
     this.handleScroll = this.handleScroll.bind(this);
 
     // Declare initial state
-    let siteIndex;
-    let sceneIndex;
-    let strategyIndex;
-    let scenes;
-    let strategies;
-    let floorIndex;
-    let type;
-    let floors = FLOORS[this.props.map.name];
-    let sites = SITES[this.props.map.name];
-    if (this.props.position) {
-      type = this.props.position.type;
-      siteIndex = this.props.position.siteIndex;
-      sceneIndex = this.props.position.sceneIndex;
-      strategyIndex = this.props.position.strategyIndex;
-      floorIndex = this.props.position.floorIndex;
-      if (this.props.position.type === "ATTACK") {
-        strategies = this.props.map.attack[SITES[this.props.map.name][siteIndex]]
-        scenes = this.props.map.attack[SITES[this.props.map.name][siteIndex]][strategyIndex].scenes;
+
+    if (this.props.function === "Editor" || this.props.function === "Viewer") {
+      let siteIndex;
+      let sceneIndex;
+      let strategyIndex;
+      let scenes;
+      let strategies;
+      let floorIndex;
+      let type;
+      let floors = FLOORS[this.props.map.name];
+      let sites = SITES[this.props.map.name];
+      if (this.props.position) {
+        type = this.props.position.type;
+        siteIndex = this.props.position.siteIndex;
+        sceneIndex = this.props.position.sceneIndex;
+        strategyIndex = this.props.position.strategyIndex;
+        floorIndex = this.props.position.floorIndex;
+        if (this.props.position.type === "ATTACK") {
+          strategies = this.props.map.attack[SITES[this.props.map.name][siteIndex]]
+          scenes = this.props.map.attack[SITES[this.props.map.name][siteIndex]][strategyIndex].scenes;
+        } else {
+          strategies = this.props.map.defense[SITES[this.props.map.name][siteIndex]];
+          scenes = this.props.map.defense[SITES[this.props.map.name][siteIndex]][strategyIndex].scenes;
+        }
       } else {
-        strategies = this.props.map.defense[SITES[this.props.map.name][siteIndex]];
-        scenes = this.props.map.defense[SITES[this.props.map.name][siteIndex]][strategyIndex].scenes;
+        siteIndex = 0;
+        strategyIndex = 0;
+        sceneIndex = 0;
+        if (sites[siteIndex][0] === 'B') {
+          floorIndex = 0;
+        } else {
+          floorIndex = parseInt(sites[siteIndex][0]);
+        }
+        type = "ATTACK";
+        scenes = this.props.map.attack[SITES[this.props.map.name][0]][0].scenes;
+        strategies = this.props.map.attack[SITES[this.props.map.name][0]]
+      }
+
+      this.state = {
+        activeOperator: 0,
+        map: this.props.map,
+        sites: sites,
+        site: SITES[this.props.map.name][siteIndex],
+        siteIndex: siteIndex,
+        strategyIndex: strategyIndex,
+        strategies: strategies,
+        sceneIndex: sceneIndex,
+        scenes: scenes,
+        floors: floors,
+        floorIndex: floorIndex,
+        type: type,
+        mounted: false
       }
     } else {
-      siteIndex = 0;
-      strategyIndex = 0;
-      sceneIndex = 0;
-      if (sites[siteIndex][0] === 'B') {
-        floorIndex = 0;
-      } else {
-        floorIndex = parseInt(sites[siteIndex][0]);
+
+      this.state = {
+        activeOperator: 0,
+        sites: SITES[this.props.strategy.map],
+        site: SITES[this.props.strategy.map][this.props.strategy.siteIndex],
+        siteIndex: this.props.strategy.siteIndex,
+        sceneIndex: 0,
+        scenes: this.props.strategy.scenes,
+        floors: FLOORS[this.props.strategy.map],
+        floorIndex: this.props.strategy.floorIndex,
+        strategy: this.props.strategy,
+        type: this.props.strategy.type,
+        mounted: false
       }
-      type = "ATTACK";
-      scenes = this.props.map.attack[SITES[this.props.map.name][0]][0].scenes;
-      strategies = this.props.map.attack[SITES[this.props.map.name][0]]
     }
 
-    this.state = {
-      activeOperator: 0,
-      map: this.props.map,
-      sites: sites,
-      site: SITES[this.props.map.name][siteIndex],
-      siteIndex: siteIndex,
-      strategyIndex: strategyIndex,
-      strategies: strategies,
-      sceneIndex: sceneIndex,
-      scenes: scenes,
-      floors: floors,
-      floorIndex: floorIndex,
-      type: type,
-      mounted: false,
-      updated: false
-    }
+
   }
   selectSite(index) {
     let sites = this.state.sites;
@@ -875,7 +894,6 @@ class Editor extends React.Component {
   }
 
   render() {
-    console.log(this.state.map);
     let toolbarProps = {};
     let sidebarProps = {};
     let canvasProps = {};
@@ -887,48 +905,206 @@ class Editor extends React.Component {
       toolbarProps.insertRotate = this.insertRotate;
       toolbarProps.insertReinforcement = this.insertReinforcement;
       toolbarProps.insertBreach = this.insertBreach;
+      toolbarProps.addStrategy = this.addStrategy;
+      toolbarProps.removeStrategy = this.removeStrategy;
       toolbarProps.save = this.save;
-    } else if (this.props.function === "Viewer") {
+
+      sidebarProps.addScene = this.addScene;
+      sidebarProps.removeScene = this.removeScene;
+      sidebarProps.updateSceneName = this.updateSceneName;
+      sidebarProps.share = this.share;
+      sidebarProps.unshare = this.unshare;
+
+      canvasProps.removeOperator = this.removeOperator;
+      canvasProps.removeGadget = this.removeGadget;
+      canvasProps.removeUtility = this.removeUtility;
+      canvasProps.removeDrone = this.removeDrone;
+      canvasProps.removeRotate = this.removeRotate;
+      canvasProps.removeReinforcement = this.removeReinforcement;
+      canvasProps.removeBreach = this.removeBreach;
+      canvasProps.updateOperatorPositions = this.updateOperatorPositions;
+      canvasProps.updateGadgetPositions = this.updateGadgetPositions;
+      canvasProps.updateUtilityPositions = this.updateUtilityPositions;
+      canvasProps.updateDronePositions = this.updateDronePositions;
+      canvasProps.updateBreachPositions = this.updateBreachPositions;
+      canvasProps.updateRotatePositions = this.updateRotatePositions;
+      canvasProps.updateReinforcementPositions = this.updateReinforcementPositions;
+      canvasProps.addObjective = this.addObjective;
+      canvasProps.removeObjective = this.removeObjective;
+      canvasProps.updateNotes = this.updateNotes;
+      canvasProps.updateVideo = this.updateVideo;
+
+      lineupProps.updateOperators = this.updateOperators;
+      lineupProps.insertOperator = this.insertOperator;
+      lineupProps.updateUtility = this.updateUtility;
+      lineupProps.insertOperator = this.insertOperator;
+      lineupProps.insertUtility = this.insertUtility;
+      lineupProps.insertGadget = this.insertGadget;
+
+    }
+
+    if (this.props.function === "Editor" || this.props.function === "Viewer") {
+      toolbarProps.strategy = this.state.type === "ATTACK" ? (
+        this.state.map.attack[this.state.site][this.state.strategyIndex].name
+      ): (
+        this.state.map.defense[this.state.site][this.state.strategyIndex].name
+      );
+      toolbarProps.showMaps = this.showMaps;
+      toolbarProps.map = this.state.map;
+      toolbarProps.strategies = this.state.strategies;
+      toolbarProps.strategyIndex = this.state.strategyIndex;
+      toolbarProps.selectStrategy = this.selectStrategy;
+      toolbarProps.updateType = this.updateType;
+      toolbarProps.siteIndex = this.state.siteIndex;
+      toolbarProps.sites = this.state.sites;
+      toolbarProps.selectSite = this.selectSite;
+      toolbarProps.drones = this.state.type === "ATTACK" ? (
+        this.state.map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].drones
+      ) : undefined;
+      toolbarProps.rotates = this.state.type === "ATTACK"? (
+        undefined
+      ) : (
+        this.state.map.defense[this.state.site][this.state.strategyIndex].rotates
+      );
+      toolbarProps.reinforcements = this.state.type === "ATTACK" ? (
+        undefined
+      ) : (
+        this.state.map.defense[this.state.site][this.state.strategyIndex].reinforcements
+      );
+      toolbarProps.breaches = this.state.type === "ATTACK" ? (
+        this.state.map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].breaches
+      ) : undefined;
+
+      sidebarProps.strategies = this.state.strategies;
+      sidebarProps.selectStrategy = this.selectStrategy;
+      sidebarProps.strategyIndex = this.state.strategyIndex;
+      sidebarProps.shared = this.state.strategies[this.state.strategyIndex].shared;
+      sidebarProps.shared_key = this.state.strategies[this.state.strategyIndex].shared_key;
+
+      canvasProps.map = toolbarProps.map.name;
+      canvasProps.operators = (this.state.type === "ATTACK" ? (
+        this.state.map.attack[this.state.site][this.state.strategyIndex].operators
+      ) : (
+        this.state.map.defense[this.state.site][this.state.strategyIndex].operators
+      ));
+      canvasProps.operatorPositions = (this.state.type === "ATTACK" ? (
+        this.state.map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].operatorPositions
+      ) : (
+        this.state.map.defense[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].operatorPositions
+      ));
+      canvasProps.gadgets = (this.state.type === "ATTACK" ? (
+        this.state.map.attack[this.state.site][this.state.strategyIndex].gadgets
+      ) : (
+        this.state.map.defense[this.state.site][this.state.strategyIndex].gadgets
+      ));
+      canvasProps.gadgetPositions = (this.state.type === "ATTACK" ? (
+        this.state.map.defense[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].gadgetPositions
+      ) : (
+        this.state.map.defense[this.state.site][this.state.strategyIndex].gadgetPositions
+      ));
+      canvasProps.utility = (this.state.type === "ATTACK" ? (
+        this.state.map.attack[this.state.site][this.state.strategyIndex].utility
+      ) : (
+        this.state.map.defense[this.state.site][this.state.strategyIndex].utility
+      ));
+      canvasProps.utilityPositions = (this.state.type === "ATTACK" ? (
+        this.state.map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].utilityPositions
+      ) : (
+        this.state.map.defense[this.state.site][this.state.strategyIndex].utilityPositions
+      ));
+      canvasProps.drones = (this.state.type === "ATTACK" ? (
+        this.state.map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].drones
+      ) : undefined);
+      canvasProps.rotates = (this.state.type === "ATTACK" ? (
+        undefined
+      ) : this.state.map.defense[this.state.site][this.state.strategyIndex].rotates);
+      canvasProps.reinforcements = (this.state.type === "ATTACK" ? (
+        undefined
+      ) : this.state.map.defense[this.state.site][this.state.strategyIndex].reinforcements);
+      canvasProps.breaches = (this.state.type === "ATTACK" ? (
+        this.state.map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].breaches
+      ) : undefined);
+      canvasProps.objectives = (this.state.type === "ATTACK" ? (
+        this.state.map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].objectives
+      ) : (
+        this.state.map.defense[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].objectives
+      ));
+      canvasProps.notes = (this.state.type === "ATTACK" ? (
+        this.state.map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].notes
+      ) : (
+        this.state.map.defense[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].notes
+      ));
+      canvasProps.video = this.state.type === "ATTACK" ? (
+        this.state.map.attack[this.state.site][this.state.strategyIndex].video
+      ) : (
+        this.state.map.defense[this.state.site][this.state.strategyIndex].video
+      );
+
+      lineupProps.operators = (this.state.type === "ATTACK" ? (
+        this.state.map.attack[this.state.site][this.state.strategyIndex].operators
+      ) : (
+        this.state.map.defense[this.state.site][this.state.strategyIndex].operators
+      ));
 
     } else {
+      toolbarProps.strategy = this.state.strategy.name;
+      toolbarProps.map = this.state.strategy.map;
+      console.log(this.state.strategy);
+      toolbarProps.drones = this.state.type === "ATTACK" ? (
+        this.state.strategy.scenes[this.state.sceneIndex].drones
+      ) : undefined;
+      toolbarProps.rotates = this.state.type === "ATTACK" ? (
+        undefined
+      ) : (
+        this.state.strategy.rotates
+      )
+      toolbarProps.reinforcements = this.state.type === "ATTACK" ? (
+        undefined
+      ) : (
+        this.state.strategy.reinforcements
+      )
+      toolbarProps.breaches = this.state.type === "ATTACK" ? (
+        this.state.strategy.scenes[this.state.sceneIndex].breaches
+      ) : undefined;
+      toolbarProps.utility = this.state.strategy.utility;
+      toolbarProps.sites = this.state.sites;
+
+      sidebarProps.map = toolbarProps.map;
+
+      canvasProps.operators = this.state.strategy.operators;
+      canvasProps.operatorPositions = this.state.strategy.scenes[this.state.sceneIndex].operatorPositions;
+      canvasProps.gadgets = this.state.strategy.gadgets;
+      canvasProps.gadgetPositions = this.state.strategy.scenes[this.state.sceneIndex].utilityPositions;
+      canvasProps.drones = this.state.type === "ATTACK" ? (
+        this.state.strategy.scenes[this.state.sceneIndex].drones
+      ) : (
+        undefined
+      );
+      canvasProps.rotates = this.state.type === "ATTACK" ? (
+        undefined
+      ) : (
+        this.state.strategy.rotates
+      );
+      canvasProps.reinforcements = this.state.type === "ATTACK" ? (
+        undefined
+      ) : (
+        this.state.strategy.reinforcements
+      );
+      canvasProps.breaches = this.state.type === "ATTACK" ? (
+        this.state.strategy.scenes[this.state.sceneIndex].breaches
+      ) : undefined;
+      canvasProps.map = this.state.strategy.map;
+      canvasProps.objectives = this.state.strategy.scenes[this.state.sceneIndex].objectives;
+      canvasProps.notes = this.state.strategy.scenes[this.state.sceneIndex].notes;
+      canvasProps.video = this.state.strategy.video;
+
+      lineupProps.utility = this.state.strategy.utility;
 
     }
     return (
       <div id={this.props.function}>
         <Toolbar
-          showMaps={this.showMaps}
-          map={this.state.map}
-          strategies={this.state.strategies}
-          strategyIndex={this.state.strategyIndex}
-          selectStrategy={this.selectStrategy}
           type={this.state.type}
-          updateType={this.updateType}
-          siteIndex={this.state.siteIndex}
-          sites={this.state.sites}
-          selectSite={this.selectSite}
-          addStrategy={this.addStrategy}
-          removeStrategy={this.removeStrategy}
-          strategy={this.state.type === "ATTACK" ? (
-            this.state.map.attack[this.state.site][this.state.strategyIndex].name
-          ): (
-            this.state.map.defense[this.state.site][this.state.strategyIndex].name
-          )}
-          drones={this.state.type === "ATTACK" ? (
-            this.state.map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].drones
-          ) : undefined}
-          rotates={this.state.type === "ATTACK"? (
-            undefined
-          ) : (
-            this.state.map.defense[this.state.site][this.state.strategyIndex].rotates
-          )}
-          reinforcements={this.state.type === "ATTACK" ? (
-            undefined
-          ) : (
-            this.state.map.defense[this.state.site][this.state.strategyIndex].reinforcements
-          )}
-          breaches={(this.state.type === "ATTACK" ? (
-            this.state.map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].breaches
-          ) : undefined )}
           alert={this.props.alert}
           fetchStrategies={this.props.fetchStrategies}
           function={this.props.function}
@@ -936,151 +1112,41 @@ class Editor extends React.Component {
           />
         <main>
           <Sidebar
-            map={this.state.map.name}
-            strategy={this.state.type === "ATTACK" ? (
-              this.state.map.attack[this.state.site][this.state.strategyIndex].name
-            ): (
-              this.state.map.defense[this.state.site][this.state.strategyIndex].name
-            )}
-            strategies={this.state.strategies}
-            selectStrategy={this.selectStrategy}
-            strategyIndex={this.state.strategyIndex}
+            map={toolbarProps.map.name}
+            strategy={toolbarProps.strategy}
             sites={this.state.sites}
             selectSite={this.selectSite}
             siteIndex={this.state.siteIndex}
             scenes={this.state.scenes}
             selectScene={this.selectScene}
             sceneIndex={this.state.sceneIndex}
-            addScene={this.addScene}
-            removeScene={this.removeScene}
-            updateSceneName={this.updateSceneName}
             type={this.state.type}
-            shared={this.state.strategies[this.state.strategyIndex].shared}
-            shared_key={this.state.strategies[this.state.strategyIndex].shared_key}
-            share={this.share}
-            unshare={this.unshare}
             alert={this.props.alert}
             function={this.props.function}
+            {...sidebarProps}
             />
           <Canvas
             type={this.state.type}
-            operators={(this.state.type === "ATTACK" ? (
-              this.state.map.attack[this.state.site][this.state.strategyIndex].operators
-            ) : (
-              this.state.map.defense[this.state.site][this.state.strategyIndex].operators
-            ))}
-            operatorPositions={(this.state.type === "ATTACK" ? (
-              this.state.map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].operatorPositions
-            ) : (
-              this.state.map.defense[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].operatorPositions
-            ))}
-            removeOperator={this.removeOperator}
-            gadgets={(this.state.type === "ATTACK" ? (
-              this.state.map.attack[this.state.site][this.state.strategyIndex].gadgets
-            ) : (
-              this.state.map.defense[this.state.site][this.state.strategyIndex].gadgets
-            ))}
-            gadgetPositions={(this.state.type === "ATTACK" ? (
-              this.state.map.defense[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].gadgetPositions
-            ) : (
-              this.state.map.defense[this.state.site][this.state.strategyIndex].gadgetPositions
-            ))}
-            removeGadget={this.removeGadget}
-            utility={(this.state.type === "ATTACK" ? (
-              this.state.map.attack[this.state.site][this.state.strategyIndex].utility
-            ) : (
-              this.state.map.defense[this.state.site][this.state.strategyIndex].utility
-            ))}
-            utilityPositions={(this.state.type === "ATTACK" ? (
-              this.state.map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].utilityPositions
-            ) : (
-              this.state.map.defense[this.state.site][this.state.strategyIndex].utilityPositions
-            ))}
-            removeUtility={this.removeUtility}
-            drones={(this.state.type === "ATTACK" ? (
-              this.state.map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].drones
-            ) : undefined)}
-            removeDrone={this.removeDrone}
-            rotates={(this.state.type === "ATTACK" ? (
-              undefined
-            ) : this.state.map.defense[this.state.site][this.state.strategyIndex].rotates)}
-            removeRotate={this.removeRotate}
-            reinforcements={(this.state.type === "ATTACK" ? (
-              undefined
-            ) : this.state.map.defense[this.state.site][this.state.strategyIndex].reinforcements)}
-            removeReinforcement={this.removeReinforcement}
-            map={this.state.map.name} site={this.state.site} floorIndex={this.state.floorIndex}
-            breaches={(this.state.type === "ATTACK" ? (
-              this.state.map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].breaches
-            ) : undefined)}
-            removeBreach={this.removeBreach}
+            site={this.state.site} floorIndex={this.state.floorIndex}
             floor={this.state.floors[this.state.floorIndex]}
-            updateOperatorPositions={this.updateOperatorPositions}
-            updateGadgetPositions={this.updateGadgetPositions}
-            updateDronePositions={this.updateDronePositions}
-            updateUtilityPositions={this.updateUtilityPositions}
-            updateRotatePositions={this.updateRotatePositions}
-            updateReinforcementPositions={this.updateReinforcementPositions}
-            updateBreachPositions={this.updateBreachPositions}
             updateFloor={this.updateFloor}
             floors={this.state.floors}
-            objectives={(this.state.type === "ATTACK" ? (
-              this.state.map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].objectives
-            ) : (
-              this.state.map.defense[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].objectives
-            ))}
-            notes={(this.state.type === "ATTACK" ? (
-              this.state.map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].notes
-            ) : (
-              this.state.map.defense[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].notes
-            ))}
-            addObjective={this.addObjective}
-            removeObjective={this.removeObjective}
-            updateNotes={this.updateNotes}
             scenes={this.state.scenes}
             sceneIndex={this.state.sceneIndex}
             selectScene={this.selectScene}
-            video={this.state.type === "ATTACK" ? (
-              this.state.map.attack[this.state.site][this.state.strategyIndex].video
-            ) : (
-              this.state.map.defense[this.state.site][this.state.strategyIndex].video
-            )}
-            updateVideo={this.updateVideo}
             function={this.props.function}
+            {...canvasProps}
             />
           <Lineup
             type={this.state.type}
-            operators={(this.state.type === "ATTACK" ? (
-              this.state.map.attack[this.state.site][this.state.strategyIndex].operators
-            ) : (
-              this.state.map.defense[this.state.site][this.state.strategyIndex].operators
-            ))}
-            updateRoles={this.updateRoles} updateOperators={this.updateOperators} updateUtility={this.updateUtility}
             selectOperator={this.selectOperator} activeOperator={this.state.activeOperator}
-            insertOperator={this.insertOperator} removeOperator={this.removeOperator}
-            gadgets={(this.state.type === "ATTACK" ? (
-              this.state.map.attack[this.state.site][this.state.strategyIndex].gadgets
-            ) : (
-              this.state.map.defense[this.state.site][this.state.strategyIndex].gadgets
-            ))}
-            gadgetPositions={(this.state.type === "ATTACK" ? (
-              this.state.map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].gadgetPositions
-            ) : (
-              this.state.map.defense[this.state.site][this.state.strategyIndex].gadgetPositions
-            ))}
-            utility={(this.state.type === "ATTACK" ? (
-              this.state.map.attack[this.state.site][this.state.strategyIndex].utility
-            ) : (
-              this.state.map.defense[this.state.site][this.state.strategyIndex].utility
-            ))}
-            utilityPositions={(this.state.type === "ATTACK" ? (
-              this.state.map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].utilityPositions
-            ) : (
-              this.state.map.defense[this.state.site][this.state.strategyIndex].utilityPositions
-            ))}
-            insertUtility={this.insertUtility}
-            insertGadget={this.insertGadget}
+            operators={canvasProps.operators}
+            gadgets={canvasProps.gadgets}
+            gadgetPositions={canvasProps.gadgetPositions}
+            utility={canvasProps.utility}
+            utilityPositions={canvasProps.utilityPositions}
             function={this.props.function}
+            {...lineupProps}
             />
         </main>
       </div>
