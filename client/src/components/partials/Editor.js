@@ -16,7 +16,6 @@ class Editor extends React.Component {
 
     this.selectSite = this.selectSite.bind(this);
     this.updateType = this.updateType.bind(this);
-    this.updateRoles = this.updateRoles.bind(this);
     this.updateName = this.updateName.bind(this);
     this.updateFloor = this.updateFloor.bind(this);
     this.save = this.save.bind(this);
@@ -98,8 +97,8 @@ class Editor extends React.Component {
       strategyIndex = this.props.position.strategyIndex;
       floorIndex = this.props.position.floorIndex;
       if (this.props.position.type === "ATTACK") {
-        strategies = this.props.map.attack;
-        scenes = this.props.map.attack[strategyIndex][SITES[this.props.map.name][siteIndex]];
+        strategies = this.props.map.attack[SITES[this.props.map.name][siteIndex]]
+        scenes = this.props.map.attack[SITES[this.props.map.name][siteIndex]][strategyIndex].scenes;
       } else {
         strategies = this.props.map.defense[SITES[this.props.map.name][siteIndex]];
         scenes = this.props.map.defense[SITES[this.props.map.name][siteIndex]][strategyIndex].scenes;
@@ -114,8 +113,8 @@ class Editor extends React.Component {
         floorIndex = parseInt(sites[siteIndex][0]);
       }
       type = "ATTACK";
-      scenes = this.props.map.attack[0][SITES[this.props.map.name][0]];
-      strategies = this.props.map.attack;
+      scenes = this.props.map.attack[SITES[this.props.map.name][0]][0].scenes;
+      strategies = this.props.map.attack[SITES[this.props.map.name][0]]
     }
 
     this.state = {
@@ -147,9 +146,9 @@ class Editor extends React.Component {
       site: this.state.sites[index],
       siteIndex: index,
       sceneIndex: 0,
-      scenes: (this.state.type === "ATTACK" ? this.state.map.attack[this.state.strategyIndex][this.state.sites[index]] : this.state.map.defense[this.state.sites[index]][0].scenes),
-      strategyIndex: (this.state.type === "ATTACK" ? this.state.strategyIndex : 0),
-      strategies: (this.state.type === "ATTACK" ? this.state.strategies : this.state.map.defense[this.state.sites[index]]),
+      scenes: (this.state.type === "ATTACK" ? this.state.map.attack[this.state.sites[index]][0].scenes : this.state.map.defense[this.state.sites[index]][0].scenes),
+      strategyIndex: 0,
+      strategies: (this.state.type === "ATTACK" ? this.state.map.attack[this.state.sites[index]] : this.state.map.defense[this.state.sites[index]]),
       floorIndex: floorIndex
     });
   }
@@ -159,9 +158,9 @@ class Editor extends React.Component {
         type: "ATTACK",
         site: this.state.sites[0],
         siteIndex: 0,
-        strategies: this.state.map.attack,
+        strategies: this.state.map.attack[this.state.sites[0]],
         strategyIndex: 0,
-        scenes: this.state.map.attack[0][this.state.sites[0]],
+        scenes: this.state.map.attack[this.state.sites[0]][0].scenes,
         sceneIndex: 0,
         floorIndex: 0
       });
@@ -178,29 +177,10 @@ class Editor extends React.Component {
       });
     }
   }
-  updateRoles(e, index) {
-    let map = this.state.map;
-    if (this.state.type === "ATTACK") {
-      map.attack[this.state.strategyIndex].roles[index] = e.target.value;
-      map.attack[this.state.strategyIndex].operators[index] = "OPERATOR";
-      map.attack[this.state.strategyIndex].gadgets[index] = "";
-      map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].gadgetPositions[index] = [];
-      map.attack[this.state.strategyIndex].utility[index] = "UTILITY";
-    } else {
-      map.defense[this.state.site][this.state.strategyIndex].roles[index] = e.target.value;
-      map.defense[this.state.site][this.state.strategyIndex].operators[index] = "OPERATOR";
-      map.defense[this.state.site][this.state.strategyIndex].gadgets[index] = "";
-      map.defense[this.state.site][this.state.strategyIndex].gadgetPositions[index] = [];
-      map.defense[this.state.site][this.state.strategyIndex].utility[index] = "UTILITY";
-    }
-    this.setState({
-      map: map
-    });
-  }
   updateName(name) {
     let map = this.state.map;
     if (this.state.type === "ATTACK") {
-      map.attack[this.state.strategyIndex].name = name;
+      map.attack[this.state.site][this.state.strategyIndex].name = name;
     } else {
       map.defense[this.state.site][this.state.strategyIndex].name = name;
     }
@@ -234,15 +214,15 @@ class Editor extends React.Component {
     let strategy;
     let shared;
     if (this.state.type === "ATTACK") {
-      shared = map.attack[this.state.strategyIndex].shared === true;
+      shared = map.attack[this.state.site][this.state.strategyIndex].shared === true;
     } else {
       shared = map.defense[this.state.site][this.state.strategyIndex].shared === true;
     }
 
     if (!shared) {
       if (this.state.type === "ATTACK") {
-        map.attack[this.state.strategyIndex].shared = true;
-        strategies = map.attack;
+        map.attack[this.state.site][this.state.strategyIndex].shared = true;
+        strategies = map.attack[this.state.site];
       } else {
         map.defense[this.state.site][this.state.strategyIndex].shared = true;
         strategies = map.defense[this.state.site];
@@ -273,7 +253,7 @@ class Editor extends React.Component {
     let strategies;
     let shared;
     if (this.state.type === "ATTACK") {
-      shared = map.attack[this.state.strategyIndex].shared === true;
+      shared = map.attack[this.state.site][this.state.strategyIndex].shared === true;
     } else {
       shared = map.defense[this.state.site][this.state.strategyIndex].shared === true;
     }
@@ -281,9 +261,9 @@ class Editor extends React.Component {
     let shared_key;
     if (shared) {
       if (this.state.type === "ATTACK") {
-        map.attack[this.state.strategyIndex].shared = undefined;
-        shared_key = map.attack[this.state.strategyIndex].shared_key;
-        strategies = map.attack;
+        map.attack[this.state.site][this.state.strategyIndex].shared = undefined;
+        shared_key = map.attack[this.state.site][this.state.strategyIndex].shared_key;
+        strategies = map.attack[this.state.site]
       } else {
         map.defense[this.state.site][this.state.strategyIndex].shared = undefined;
         shared_key = map.defense[this.state.site][this.state.strategyIndex].shared_key;
@@ -313,31 +293,28 @@ class Editor extends React.Component {
     if (this.state.type === "ATTACK") {
       let attackStrategy = {
         name: "Unnamed",
-        roles: ["ROLE", "ROLE", "ROLE", "ROLE", "ROLE"],
         operators: ["OPERATOR", "OPERATOR", "OPERATOR", "OPERATOR", "OPERATOR"],
         utility: ["UTILITY", "UTILITY", "UTILITY", "UTILITY", "UTILITY"],
-        gadgets: ["", "", "", "", ""]
-      };
-      SITES[this.state.map.name].forEach((site) => {
-        attackStrategy[site] = [
+        gadgets: ["", "", "", "", ""],
+        video: "",
+        scenes: [
           {
             objectives: [],
+            operatorPositions: [{x: CANVAS_WIDTH / 2, y: CANVAS_HEIGHT / 2}, {x: CANVAS_WIDTH / 2, y: CANVAS_HEIGHT / 2}, {x: CANVAS_WIDTH / 2, y: CANVAS_HEIGHT / 2}, {x: CANVAS_WIDTH / 2, y: CANVAS_HEIGHT / 2}, {x: CANVAS_WIDTH / 2, y: CANVAS_HEIGHT / 2}],
+            drones: [],
+            breaches: [],
             utilityPositions: [[], [], [], [], []],
             gadgetPositions: [[], [], [], [], []],
-            breaches: [],
-            operatorPositions: [{x: Math.floor(CANVAS_WIDTH / 2), y: Math.floor(CANVAS_HEIGHT / 2)}, {x: Math.floor(CANVAS_WIDTH / 2), y: Math.floor(CANVAS_HEIGHT / 2)}, {x: Math.floor(CANVAS_WIDTH / 2), y: Math.floor(CANVAS_HEIGHT / 2)}, {x: Math.floor(CANVAS_WIDTH / 2), y: Math.floor(CANVAS_HEIGHT / 2)}, {x: Math.floor(CANVAS_WIDTH / 2), y: Math.floor(CANVAS_HEIGHT / 2)}],
-            drones: [],
             notes: "",
             name: "Unnamed"
           }
         ]
-      });
-      map.attack.push(attackStrategy);
-      newStrategies = map.attack;
+      };
+      map.attack[this.state.sites[this.state.siteIndex]].push(attackStrategy);
+      newStrategies = map.attack[this.state.sites[this.state.siteIndex]];
     } else {
       let defenseStrategy = {
         name: "Unnamed",
-        roles: ["ROLE", "ROLE", "ROLE", "ROLE", "ROLE"],
         operators: ["OPERATOR", "OPERATOR", "OPERATOR", "OPERATOR", "OPERATOR"],
         utility: ["UTILITY", "UTILITY", "UTILITY", "UTILITY", "UTILITY"],
         gadgets: ["", "", "", "", ""],
@@ -345,6 +322,7 @@ class Editor extends React.Component {
         rotates: [],
         utilityPositions: [[], [], [], [], []],
         gadgetPositions: [[], [], [], [], []],
+        video: "",
         scenes: [
           {
             objectives: [],
@@ -394,13 +372,13 @@ class Editor extends React.Component {
     let map = this.state.map;
     let name = "Unnamed";
     if (this.state.type === "ATTACK") {
-      scenes = [...map.attack[this.state.strategyIndex][this.state.site]];
+      scenes = [...map.attack[this.state.site][this.state.strategyIndex].scenes];
       let newScene = JSON.parse(JSON.stringify(scenes[scenes.length - 1]));
       newScene.notes = "";
-      newScene.name = name;
       newScene.objectives = [];
+      newScene.name = name;
       scenes.push(newScene);
-      map.attack[this.state.strategyIndex][this.state.site] = scenes;
+      map.attack[this.state.site][this.state.strategyIndex].scenes = scenes;
     } else {
       scenes = [...map.defense[this.state.site][this.state.strategyIndex].scenes];
       let newScene = JSON.parse(JSON.stringify(scenes[scenes.length - 1]));
@@ -421,9 +399,9 @@ class Editor extends React.Component {
       let scenes;
       let map = this.state.map;
       if (this.state.type === "ATTACK") {
-        scenes = [...map.attack[this.state.strategyIndex][this.state.site]];
+        scenes = [...map.attack[this.state.site][this.state.strategyIndex].scenes];
         scenes.splice(this.state.sceneIndex, 1);
-        map.attack[this.state.strategyIndex][this.state.site] = scenes;
+        map.attack[this.state.site][this.state.strategyIndex].scenes = scenes;
       } else {
         scenes = [...map.defense[this.state.site][this.state.strategyIndex].scenes];
         scenes.splice(this.state.sceneIndex, 1);
@@ -446,9 +424,9 @@ class Editor extends React.Component {
     let scenes;
     let strategies;
     if (this.state.type === "ATTACK") {
-      map.attack[this.state.strategyIndex][this.state.site][index].name = name;
-      scenes = map.attack[this.state.strategyIndex][this.state.site];
-      strategies = map.attack;
+      map.attack[this.state.site][this.state.strategyIndex].scenes[index].name = name;
+      scenes = map.attack[this.state.site][this.state.strategyIndex].scenes;
+      strategies = map.attack[this.state.site];
     } else {
       map.defense[this.state.site][this.state.strategyIndex].scenes[index].name = name;
       scenes = map.defense[this.state.site][this.state.strategyIndex].scenes;
@@ -465,10 +443,10 @@ class Editor extends React.Component {
   insertOperator(index) {
     let map = this.state.map;
     if (this.state.type === "ATTACK") {
-      map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].operatorPositions[index].floor = this.state.floorIndex;
-      let opPosition = map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].operatorPositions[index];
-      map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].operatorPositions[index].x = Math.floor(CANVAS_WIDTH / 2);
-      map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].operatorPositions[index].y = Math.floor(CANVAS_HEIGHT / 2);
+      map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].operatorPositions[index].floor = this.state.floorIndex;
+      let opPosition = map.defense[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].operatorPositions[index];
+      map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].operatorPositions[index].x = Math.floor(CANVAS_WIDTH / 2);
+      map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].operatorPositions[index].y = Math.floor(CANVAS_HEIGHT / 2);
     } else {
       map.defense[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].operatorPositions[index].floor = this.state.floorIndex;
       let opPosition = map.defense[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].operatorPositions[index];
@@ -482,7 +460,7 @@ class Editor extends React.Component {
   removeOperator(index) {
     let map = this.state.map;
     if (this.state.type === "ATTACK") {
-      map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].operatorPositions[index].floor = undefined;
+      map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].operatorPositions[index].floor = undefined;
     } else {
       map.defense[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].operatorPositions[index].floor = undefined;
     }
@@ -493,9 +471,9 @@ class Editor extends React.Component {
   updateOperators(e, index) {
     let map = this.state.map;
     if (this.state.type === "ATTACK") {
-      map.attack[this.state.strategyIndex].operators[index] = e.target.value;
-      map.attack[this.state.strategyIndex].gadgets[index] = GADGETS[e.target.value];
-      map.attack[this.state.strategyIndex].utility[index] = "UTILITY";
+      map.attack[this.state.site][this.state.strategyIndex].operators[index] = e.target.value;
+      map.attack[this.state.site][this.state.strategyIndex].gadgets[index] = GADGETS[e.target.value];
+      map.attack[this.state.site][this.state.strategyIndex].utility[index] = "UTILITY";
     } else {
       map.defense[this.state.site][this.state.strategyIndex].operators[index] = e.target.value;
       map.defense[this.state.site][this.state.strategyIndex].gadgets[index] = GADGETS[e.target.value];
@@ -510,9 +488,9 @@ class Editor extends React.Component {
     let scenes;
     let strategies;
     if (this.state.type === "ATTACK") {
-      map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].operatorPositions = positions;
-      scenes = map.attack[this.state.strategyIndex][this.state.site];
-      strategies = map.attack;
+      map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].operatorPositions = positions;
+      scenes = map.attack[this.state.site][this.state.strategyIndex].scenes;
+      strategies = map.attack[this.state.site];
     } else {
       map.defense[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].operatorPositions = positions;
       scenes = map.defense[this.state.site][this.state.strategyIndex].scenes;
@@ -527,23 +505,23 @@ class Editor extends React.Component {
 
   // Drones
   insertDrone() {
-    if (this.state.map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].drones.length + 1 <= 10) {
+    if (this.state.map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].drones.length + 1 <= 10) {
       let drone = {
         x: Math.floor(CANVAS_WIDTH / 2), // taken from blueprint form values
         y: Math.floor(CANVAS_HEIGHT / 2), // taken from blueprint form values
         floor: this.state.floorIndex
       };
       let map = this.state.map;
-      map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].drones.push(drone);
+      this.state.map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].drones.push(drone);
       this.setState({
         map: map
       });
     }
   }
   removeDrone(index) {
-    if (this.state.map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].drones.length - 1 >= 0) {
+    if (this.state.map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].drones.length - 1 >= 0) {
       let map = this.state.map;
-      map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].drones.splice(index, 1);
+      this.state.map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].drones.splice(index, 1);
       this.setState({
         map: map
       });
@@ -553,9 +531,9 @@ class Editor extends React.Component {
     let map = this.state.map;
     let scenes;
     let strategies;
-    map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].drones = positions;
-    scenes = map.attack[this.state.strategyIndex][this.state.site];
-    strategies = map.attack;
+    map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].drones = positions;
+    strategies = map.attack[this.state.site];
+    scenes = map.attack[this.state.site][this.state.strategyIndex].scenes;
     this.setState({
       map: map,
       scenes: scenes,
@@ -572,7 +550,7 @@ class Editor extends React.Component {
       floor: this.state.floorIndex
     };
     if (this.state.type === "ATTACK") {
-      map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].gadgetPositions[index].push(gadget);
+      map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].gadgetPositions[index].push(gadget);
     } else {
       map.defense[this.state.site][this.state.strategyIndex].gadgetPositions[index].push(gadget);
     }
@@ -583,7 +561,7 @@ class Editor extends React.Component {
   removeGadget(index, gi) {
     let map = this.state.map;
     if (this.state.type === "ATTACK") {
-      map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].gadgetPositions[index].splice(gi, 1);
+      map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].gadgetPositions[index].splice(gi, 1);
     } else {
       map.defense[this.state.site][this.state.strategyIndex].gadgetPositions[index].splice(gi, 1);
     }
@@ -596,9 +574,9 @@ class Editor extends React.Component {
     let scenes;
     let strategies;
     if (this.state.type === "ATTACK") {
-      map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].gadgetPositions = positions;
-      scenes = map.attack[this.state.strategyIndex][this.state.site];
-      strategies = map.attack;
+      map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].gadgetPositions = positions;
+      scenes = map.attack[this.state.site][this.state.strategyIndex].scenes;
+      strategies = map.attack[this.state.site];
     } else {
       map.defense[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].gadgetPositions = positions;
       scenes = map.defense[this.state.site][this.state.strategyIndex].scenes;
@@ -615,7 +593,7 @@ class Editor extends React.Component {
   updateUtility(e, index) {
     let map = this.state.map;
     if (this.state.type === "ATTACK") {
-      map.attack[this.state.strategyIndex].utility[index] = e.target.value;
+      map.attack[this.state.site][this.state.strategyIndex].utility[index] = e.target.value;
     } else {
       map.defense[this.state.site][this.state.strategyIndex].utility[index] = e.target.value;
     }
@@ -628,11 +606,11 @@ class Editor extends React.Component {
     let scenes;
     let strategies;
     if (this.state.type === "ATTACK") {
-      map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].utilityPositions = positions;
-      scenes = map.attack[this.state.strategyIndex][this.state.site];
-      strategies = map.attack;
+      map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].utilityPositions = positions;
+      scenes = map.attack[this.state.site][this.state.strategyIndex].scenes;
+      strategies = map.attack[this.state.site];
     } else {
-      map.defense[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].utilityPositions = positions;
+      map.defense[this.state.site][this.state.strategyIndex].utilityPositions = positions;
       scenes = map.defense[this.state.site][this.state.strategyIndex].scenes;
       strategies = map.defense[this.state.site];
     }
@@ -650,8 +628,8 @@ class Editor extends React.Component {
       floor: this.state.floorIndex
     };
     if (this.state.type === "ATTACK") {
-      if (map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].utilityPositions[index].length + 1 <= UTILITY_GUIDE[map.attack[this.state.strategyIndex].utility[index]]) {
-        map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].utilityPositions[index].push(utility);
+      if (map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].utilityPositions[index].length + 1 <= UTILITY_GUIDE[map.attack[this.state.site][this.state.strategyIndex].utility[index]]) {
+        map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].utilityPositions[index].push(utility);
       }
     } else {
       if (map.defense[this.state.site][this.state.strategyIndex].utilityPositions[index].length + 1 <= UTILITY_GUIDE[map.defense[this.state.site][this.state.strategyIndex].utility[index]]) {
@@ -665,7 +643,7 @@ class Editor extends React.Component {
   removeUtility(index, gi) {
     let map = this.state.map;
     if (this.state.type === "ATTACK") {
-      map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].utilityPositions[index].splice(gi, 1);
+      map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].utilityPositions[index].splice(gi, 1);
     } else {
       map.defense[this.state.site][this.state.strategyIndex].utilityPositions[index].splice(gi, 1);
     }
@@ -743,9 +721,9 @@ class Editor extends React.Component {
     let map = this.state.map;
     let scenes;
     let strategies;
-    map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].breaches = positions;
-    scenes = map.attack[this.state.strategyIndex][this.state.site];
-    strategies = map.attack;
+    this.state.map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].breaches = positions;
+    scenes = map.attack[this.state.site][this.state.strategyIndex].scenes;
+    strategies = map.attack[this.state.site];
     this.setState({
       map: map,
       scenes: scenes,
@@ -753,25 +731,37 @@ class Editor extends React.Component {
     });
   }
   insertBreach() {
-    if (this.state.map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].breaches.length + 1 <= 10) {
+    if (this.state.map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].breaches.length + 1 <= 10) {
       let breach = {
         x: Math.floor(CANVAS_WIDTH / 2), // taken from blueprint form values
         y: Math.floor(CANVAS_HEIGHT / 2), // taken from blueprint form values
         floor: this.state.floorIndex
       };
       let map = this.state.map;
-      map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].breaches.push(breach);
+      let scenes;
+      let strategies;
+      this.state.map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].breaches.push(breach);
+      scenes = map.attack[this.state.site][this.state.strategyIndex].scenes;
+      strategies = map.attack[this.state.site];
       this.setState({
-        map: map
+        map: map,
+        scenes: scenes,
+        strategies: strategies
       });
     }
   }
   removeBreach(index) {
-    if (this.state.map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].breaches.length - 1 >= 0) {
+    if (this.state.map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].breaches.length - 1 >= 0) {
       let map = this.state.map;
-      map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].breaches.splice(index, 1);
+      let scenes;
+      let strategies;
+      this.state.map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].breaches.splice(index, 1);
+      scenes = map.attack[this.state.site][this.state.strategyIndex].scenes;
+      strategies = map.attack[this.state.site];
       this.setState({
-        map: map
+        map: map,
+        scenes: scenes,
+        strategies: strategies
       });
     }
   }
@@ -782,9 +772,9 @@ class Editor extends React.Component {
     let scenes;
     let strategies;
     if (this.state.type === "ATTACK") {
-      map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].objectives.push(msg);
-      scenes = map.attack[this.state.strategyIndex][this.state.site];
-      strategies = map.attack;
+      map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].objectives.push(msg);
+      scenes = map.attack[this.state.site][this.state.strategyIndex].scenes;
+      strategies = map.attack[this.state.site];
     } else {
       map.defense[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].objectives.push(msg);
       scenes = map.defense[this.state.site][this.state.strategyIndex].scenes;
@@ -801,9 +791,9 @@ class Editor extends React.Component {
     let scenes;
     let strategies;
     if (this.state.type === "ATTACK") {
-      map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].objectives.splice(index, 1);
-      scenes = map.attack[this.state.strategyIndex][this.state.site];
-      strategies = map.attack;
+      map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].objectives.splice(index, 1);
+      scenes = map.attack[this.state.site][this.state.strategyIndex].scenes;
+      strategies = map.attack[this.state.site];
     } else {
       map.defense[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].objectives.splice(index, 1);
       scenes = map.defense[this.state.site][this.state.strategyIndex].scenes;
@@ -820,9 +810,9 @@ class Editor extends React.Component {
     let scenes;
     let strategies;
     if (this.state.type === "ATTACK") {
-      map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].notes = e.target.value;
-      scenes = map.attack[this.state.strategyIndex][this.state.site];
-      strategies = map.attack;
+      map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].notes = e.target.value;
+      scenes = map.attack[this.state.site][this.state.strategyIndex].scenes;
+      strategies = map.attack[this.state.site];
     } else {
       map.defense[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].notes = e.target.value;
       scenes = map.defense[this.state.site][this.state.strategyIndex].scenes;
@@ -839,11 +829,11 @@ class Editor extends React.Component {
     let scenes;
     let strategies;
     if (this.state.type === "ATTACK") {
-      map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].video = e.target.value;
-      scenes = map.attack[this.state.strategyIndex][this.state.site];
-      strategies = map.attack;
+      map.attack[this.state.site][this.state.strategyIndex].video = e.target.value;
+      scenes = map.attack[this.state.site][this.state.strategyIndex].scenes;
+      strategies = map.attack[this.state.site];
     } else {
-      map.defense[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].video = e.target.value;
+      map.defense[this.state.site][this.state.strategyIndex].video = e.target.value;
       scenes = map.defense[this.state.site][this.state.strategyIndex].scenes;
       strategies = map.defense[this.state.site];
     }
@@ -885,6 +875,24 @@ class Editor extends React.Component {
   }
 
   render() {
+    console.log(this.state.map);
+    let toolbarProps = {};
+    let sidebarProps = {};
+    let canvasProps = {};
+    let lineupProps = {};
+
+    if (this.props.function === "Editor") {
+      toolbarProps.updateStrategyName = this.updateName;
+      toolbarProps.insertDrone = this.insertDrone;
+      toolbarProps.insertRotate = this.insertRotate;
+      toolbarProps.insertReinforcement = this.insertReinforcement;
+      toolbarProps.insertBreach = this.insertBreach;
+      toolbarProps.save = this.save;
+    } else if (this.props.function === "Viewer") {
+
+    } else {
+
+    }
     return (
       <div id={this.props.function}>
         <Toolbar
@@ -901,35 +909,36 @@ class Editor extends React.Component {
           addStrategy={this.addStrategy}
           removeStrategy={this.removeStrategy}
           strategy={this.state.type === "ATTACK" ? (
-            this.state.map.attack[this.state.strategyIndex].name
+            this.state.map.attack[this.state.site][this.state.strategyIndex].name
           ): (
             this.state.map.defense[this.state.site][this.state.strategyIndex].name
           )}
-          updateStrategyName={this.updateName}
           drones={this.state.type === "ATTACK" ? (
-            this.state.map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].drones) : undefined}
-          insertDrone={this.insertDrone}
+            this.state.map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].drones
+          ) : undefined}
           rotates={this.state.type === "ATTACK"? (
             undefined
-          ) : (this.state.map.defense[this.state.site][this.state.strategyIndex].rotates)}
-          insertRotate={this.insertRotate}
+          ) : (
+            this.state.map.defense[this.state.site][this.state.strategyIndex].rotates
+          )}
           reinforcements={this.state.type === "ATTACK" ? (
             undefined
-          ) : (this.state.map.defense[this.state.site][this.state.strategyIndex].reinforcements)}
-          insertReinforcement={this.insertReinforcement}
+          ) : (
+            this.state.map.defense[this.state.site][this.state.strategyIndex].reinforcements
+          )}
           breaches={(this.state.type === "ATTACK" ? (
-            this.state.map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].breaches
-          ) : undefined)}
-          insertBreach={this.insertBreach}
-          alert={this.props.alert} save={this.save}
+            this.state.map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].breaches
+          ) : undefined )}
+          alert={this.props.alert}
           fetchStrategies={this.props.fetchStrategies}
           function={this.props.function}
+          {...toolbarProps}
           />
         <main>
           <Sidebar
             map={this.state.map.name}
             strategy={this.state.type === "ATTACK" ? (
-              this.state.map.attack[this.state.strategyIndex].name
+              this.state.map.attack[this.state.site][this.state.strategyIndex].name
             ): (
               this.state.map.defense[this.state.site][this.state.strategyIndex].name
             )}
@@ -956,31 +965,40 @@ class Editor extends React.Component {
           <Canvas
             type={this.state.type}
             operators={(this.state.type === "ATTACK" ? (
-              this.state.map.attack[this.state.strategyIndex].operators
-            ) : (this.state.map.defense[this.state.site][this.state.strategyIndex].operators))}
+              this.state.map.attack[this.state.site][this.state.strategyIndex].operators
+            ) : (
+              this.state.map.defense[this.state.site][this.state.strategyIndex].operators
+            ))}
             operatorPositions={(this.state.type === "ATTACK" ? (
-              this.state.map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].operatorPositions) : (
+              this.state.map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].operatorPositions
+            ) : (
               this.state.map.defense[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].operatorPositions
             ))}
             removeOperator={this.removeOperator}
             gadgets={(this.state.type === "ATTACK" ? (
-              this.state.map.attack[this.state.strategyIndex].gadgets
-            ) : (this.state.map.defense[this.state.site][this.state.strategyIndex].gadgets))}
+              this.state.map.attack[this.state.site][this.state.strategyIndex].gadgets
+            ) : (
+              this.state.map.defense[this.state.site][this.state.strategyIndex].gadgets
+            ))}
             gadgetPositions={(this.state.type === "ATTACK" ? (
-              this.state.map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].gadgetPositions) : (
+              this.state.map.defense[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].gadgetPositions
+            ) : (
               this.state.map.defense[this.state.site][this.state.strategyIndex].gadgetPositions
             ))}
             removeGadget={this.removeGadget}
             utility={(this.state.type === "ATTACK" ? (
-              this.state.map.attack[this.state.strategyIndex].utility
-            ) : (this.state.map.defense[this.state.site][this.state.strategyIndex].utility))}
+              this.state.map.attack[this.state.site][this.state.strategyIndex].utility
+            ) : (
+              this.state.map.defense[this.state.site][this.state.strategyIndex].utility
+            ))}
             utilityPositions={(this.state.type === "ATTACK" ? (
-              this.state.map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].utilityPositions) : (
+              this.state.map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].utilityPositions
+            ) : (
               this.state.map.defense[this.state.site][this.state.strategyIndex].utilityPositions
             ))}
             removeUtility={this.removeUtility}
             drones={(this.state.type === "ATTACK" ? (
-              this.state.map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].drones
+              this.state.map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].drones
             ) : undefined)}
             removeDrone={this.removeDrone}
             rotates={(this.state.type === "ATTACK" ? (
@@ -993,7 +1011,7 @@ class Editor extends React.Component {
             removeReinforcement={this.removeReinforcement}
             map={this.state.map.name} site={this.state.site} floorIndex={this.state.floorIndex}
             breaches={(this.state.type === "ATTACK" ? (
-              this.state.map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].breaches
+              this.state.map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].breaches
             ) : undefined)}
             removeBreach={this.removeBreach}
             floor={this.state.floors[this.state.floorIndex]}
@@ -1007,11 +1025,15 @@ class Editor extends React.Component {
             updateFloor={this.updateFloor}
             floors={this.state.floors}
             objectives={(this.state.type === "ATTACK" ? (
-              this.state.map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].objectives
-            ) : ( this.state.map.defense[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].objectives))}
+              this.state.map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].objectives
+            ) : (
+              this.state.map.defense[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].objectives
+            ))}
             notes={(this.state.type === "ATTACK" ? (
-              this.state.map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].notes
-            ) : ( this.state.map.defense[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].notes))}
+              this.state.map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].notes
+            ) : (
+              this.state.map.defense[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].notes
+            ))}
             addObjective={this.addObjective}
             removeObjective={this.removeObjective}
             updateNotes={this.updateNotes}
@@ -1019,34 +1041,41 @@ class Editor extends React.Component {
             sceneIndex={this.state.sceneIndex}
             selectScene={this.selectScene}
             video={this.state.type === "ATTACK" ? (
-              this.state.map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].video
-            ) : ( this.state.map.defense[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].video)}
+              this.state.map.attack[this.state.site][this.state.strategyIndex].video
+            ) : (
+              this.state.map.defense[this.state.site][this.state.strategyIndex].video
+            )}
             updateVideo={this.updateVideo}
             function={this.props.function}
             />
           <Lineup
             type={this.state.type}
-            roles={(this.state.type === "ATTACK" ? (
-              this.state.map.attack[this.state.strategyIndex].roles
-            ) : (this.state.map.defense[this.state.site][this.state.strategyIndex].roles ))}
             operators={(this.state.type === "ATTACK" ? (
-              this.state.map.attack[this.state.strategyIndex].operators
-            ) : (this.state.map.defense[this.state.site][this.state.strategyIndex].operators))}
+              this.state.map.attack[this.state.site][this.state.strategyIndex].operators
+            ) : (
+              this.state.map.defense[this.state.site][this.state.strategyIndex].operators
+            ))}
             updateRoles={this.updateRoles} updateOperators={this.updateOperators} updateUtility={this.updateUtility}
             selectOperator={this.selectOperator} activeOperator={this.state.activeOperator}
             insertOperator={this.insertOperator} removeOperator={this.removeOperator}
             gadgets={(this.state.type === "ATTACK" ? (
-              this.state.map.attack[this.state.strategyIndex].gadgets
-            ) : (this.state.map.defense[this.state.site][this.state.strategyIndex].gadgets))}
+              this.state.map.attack[this.state.site][this.state.strategyIndex].gadgets
+            ) : (
+              this.state.map.defense[this.state.site][this.state.strategyIndex].gadgets
+            ))}
             gadgetPositions={(this.state.type === "ATTACK" ? (
-              this.state.map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].gadgetPositions) : (
+              this.state.map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].gadgetPositions
+            ) : (
               this.state.map.defense[this.state.site][this.state.strategyIndex].gadgetPositions
             ))}
             utility={(this.state.type === "ATTACK" ? (
-              this.state.map.attack[this.state.strategyIndex].utility
-            ) : (this.state.map.defense[this.state.site][this.state.strategyIndex].utility))}
+              this.state.map.attack[this.state.site][this.state.strategyIndex].utility
+            ) : (
+              this.state.map.defense[this.state.site][this.state.strategyIndex].utility
+            ))}
             utilityPositions={(this.state.type === "ATTACK" ? (
-              this.state.map.attack[this.state.strategyIndex][this.state.site][this.state.sceneIndex].utilityPositions) : (
+              this.state.map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].utilityPositions
+            ) : (
               this.state.map.defense[this.state.site][this.state.strategyIndex].utilityPositions
             ))}
             insertUtility={this.insertUtility}

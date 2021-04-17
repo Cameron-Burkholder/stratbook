@@ -2,7 +2,7 @@
 
 import React from "react";
 import { clean } from "diacritic";
-import { ATTACKER_ROLES, ATTACKER_OPERATORS, DEFENDER_ROLES, DEFENDER_OPERATORS, UTILITY_GUIDE, UTILITY } from "../../data.js";
+import { ATTACKER_ROLES, ATTACKERS, DEFENDER_ROLES, DEFENDERS, UTILITY_GUIDE, UTILITY } from "../../data.js";
 const attackRoles = ATTACKER_ROLES;
 const defenderRoles = DEFENDER_ROLES;
 const utility_guide = UTILITY;
@@ -23,37 +23,31 @@ class Lineup extends React.Component {
     })
   }
   render() {
-    const roleOptions = (this.props.type === "ATTACK" ? (
-      attackRoles.map((option, index) => {
-        return <option key={index}>{option}</option>
-      })
-    ) : (
-      defenderRoles.map((option, index) => {
-        return <option key={index}>{option}</option>
-      })
-    ));
     const operators = (this.props.type === "ATTACK" ? (
-      ATTACKER_OPERATORS
+      ATTACKERS
     ) : (
-      DEFENDER_OPERATORS
+      DEFENDERS
+    ));
+    const roles = (this.props.type === "ATTACK" ? (
+      ATTACKER_ROLES
+    ) : (
+      DEFENDER_ROLES
     ));
 
-    const lineup = this.props.roles.map((role, index) => {
+    const lineup = this.props.operators.map((operator, index) => {
       const i = index;
-      const operatorOptions = (this.props.roles[index] !== "ROLE" ? (
-        operators[this.props.roles[index]].map((operator, index) => {
-          if (this.props.operators.indexOf(operator) < 0 || this.props.operators.indexOf(operator) === i) {
-            return <option key={index}>{operator.toUpperCase()}</option>
-          }
-        })
-      ) : "");
+      const operatorOptions = operators.map((op, index) => {
+        if (this.props.operators.indexOf(op) < 0 || this.props.operators.indexOf(op) === i) {
+          return <option key={index}>{op.toUpperCase()}</option>
+        }
+      });
       const utilityOptions = (this.props.type === "ATTACK" ? (
-        utility_guide.attack[this.props.operators[index]].map((gadget, index) => {
-          return <option key={index}>{gadget}</option>
+        utility_guide.attack[this.props.operators[index]].map((utility, index) => {
+          return <option key={index}>{utility}</option>
         })
       ) : (
-        utility_guide.defense[this.props.operators[index]].map((gadget, index) => {
-          return <option key={index}>{gadget}</option>
+        utility_guide.defense[this.props.operators[index]].map((utility, index) => {
+          return <option key={index}>{utility}</option>
         })
       ));
       return (
@@ -61,10 +55,7 @@ class Lineup extends React.Component {
           <div className="role__head">
             { this.props.activeOperator === index ? (
               <div className="role__options">
-                <select className="form__select" onChange={(e) => { this.props.updateRoles(e, index) }} value={this.props.roles[index]}>
-                  { roleOptions }
-                </select>
-                <select className="form__select" onChange={(e) => { this.props.updateOperators(e, index) }} value={this.props.operators[index]} disabled={this.props.roles[index] === "ROLE"}>
+                <select className="form__select" onChange={(e) => { this.props.updateOperators(e, index) }} value={this.props.operators[index]}>
                   <option>OPERATOR</option>
                   { operatorOptions }
                 </select>
@@ -77,7 +68,6 @@ class Lineup extends React.Component {
               </div>
             ) : (
               <div className="role__options">
-                <p className="role__role">Role: {this.props.roles[index]}</p>
                 <p className="role__utility">Utility: {this.props.utility[index]}</p>
               </div>
             )}
@@ -134,7 +124,8 @@ class Lineup extends React.Component {
           ) : ""}
         </div>
       )
-    })
+    });
+
     return (
       <div className={"lineup" + (this.state.active ? " lineup--active" : "")}>
         <button onClick={this.toggleLineup}>&#8594;</button>

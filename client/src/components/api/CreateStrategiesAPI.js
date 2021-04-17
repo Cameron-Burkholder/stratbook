@@ -32,37 +32,14 @@ class CreateStrategiesAPI extends React.Component {
   selectMap(name) {
     if (MAP_NAMES.indexOf(name) >= 0) {
       let map = {
-        name: name,
-        attack: []
+        name: name
       };
-      let attackStrategy = {
-        name: "Unnamed",
-        roles: ["ROLE", "ROLE", "ROLE", "ROLE", "ROLE"],
-        operators: ["OPERATOR", "OPERATOR", "OPERATOR", "OPERATOR", "OPERATOR"],
-        utility: ["UTILITY", "UTILITY", "UTILITY", "UTILITY", "UTILITY"],
-        gadgets: ["", "", "", "", ""]
-      };
-      SITES[name].map((site) => {
-        attackStrategy[site] = [
-          {
-            objectives: [],
-            utilityPositions: [[], [], [], [], []],
-            gadgetPositions: [[], [], [], [], []],
-            breaches: [],
-            operatorPositions: [{x: CANVAS_WIDTH, y: CANVAS_HEIGHT}, {x: CANVAS_WIDTH, y: CANVAS_HEIGHT}, {x: CANVAS_WIDTH, y: CANVAS_HEIGHT}, {x: CANVAS_WIDTH, y: CANVAS_HEIGHT}, {x: CANVAS_WIDTH, y: CANVAS_HEIGHT}],
-            drones: [],
-            notes: "",
-            name: "Unnamed"
-          }
-        ]
-      });
-      map.attack.push(attackStrategy);
+      let attackStrategy = {};
       let defenseStrategy = {};
       SITES[name].map((site) => {
         defenseStrategy[site] = [
           {
             name: "Unnamed",
-            roles: ["ROLE", "ROLE", "ROLE", "ROLE", "ROLE"],
             operators: ["OPERATOR", "OPERATOR", "OPERATOR", "OPERATOR", "OPERATOR"],
             utility: ["UTILITY", "UTILITY", "UTILITY", "UTILITY", "UTILITY"],
             gadgets: ["", "", "", "", ""],
@@ -70,10 +47,32 @@ class CreateStrategiesAPI extends React.Component {
             rotates: [],
             utilityPositions: [[], [], [], [], []],
             gadgetPositions: [[], [], [], [], []],
+            video: "",
             scenes: [
               {
                 objectives: [],
-                operatorPositions: [{x: CANVAS_WIDTH, y: CANVAS_HEIGHT}, {x: CANVAS_WIDTH, y: CANVAS_HEIGHT}, {x: CANVAS_WIDTH, y: CANVAS_HEIGHT}, {x: CANVAS_WIDTH, y: CANVAS_HEIGHT}, {x: CANVAS_WIDTH, y: CANVAS_HEIGHT}],
+                operatorPositions: [{x: CANVAS_WIDTH / 2, y: CANVAS_HEIGHT / 2}, {x: CANVAS_WIDTH / 2, y: CANVAS_HEIGHT / 2}, {x: CANVAS_WIDTH / 2, y: CANVAS_HEIGHT / 2}, {x: CANVAS_WIDTH / 2, y: CANVAS_HEIGHT / 2}, {x: CANVAS_WIDTH / 2, y: CANVAS_HEIGHT / 2}],
+                notes: "",
+                name: "Unnamed"
+              }
+            ]
+          }
+        ]
+        attackStrategy[site] = [
+          {
+            name: "Unnamed",
+            operators: ["OPERATOR", "OPERATOR", "OPERATOR", "OPERATOR", "OPERATOR"],
+            utility: ["UTILITY", "UTILITY", "UTILITY", "UTILITY", "UTILITY"],
+            gadgets: ["", "", "", "", ""],
+            video: "",
+            scenes: [
+              {
+                objectives: [],
+                operatorPositions: [{x: CANVAS_WIDTH / 2, y: CANVAS_HEIGHT / 2}, {x: CANVAS_WIDTH / 2, y: CANVAS_HEIGHT / 2}, {x: CANVAS_WIDTH / 2, y: CANVAS_HEIGHT / 2}, {x: CANVAS_WIDTH / 2, y: CANVAS_HEIGHT / 2}, {x: CANVAS_WIDTH / 2, y: CANVAS_HEIGHT / 2}],
+                drones: [],
+                breaches: [],
+                utilityPositions: [[], [], [], [], []],
+                gadgetPositions: [[], [], [], [], []],
                 notes: "",
                 name: "Unnamed"
               }
@@ -82,6 +81,7 @@ class CreateStrategiesAPI extends React.Component {
         ]
       });
       map.defense = defenseStrategy;
+      map.attack = attackStrategy;
       this.setState({
         map: map,
       }, this.addMap);

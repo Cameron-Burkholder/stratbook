@@ -283,7 +283,7 @@ class EditStrategiesAPI extends React.Component {
     } else {
       if (this.state.map_name) {
         if (this.state.hasLoaded && this.state.map) {
-          contents = <Editor map={this.state.map} alert={this.props.alert} save={this.updateStrategy} shareStrategy={this.shareStrategy} unshareStrategy={this.unshareStrategy}
+          contents = <Editor function="Editor" map={this.state.map} alert={this.props.alert} save={this.updateStrategy} shareStrategy={this.shareStrategy} unshareStrategy={this.unshareStrategy}
           fetchStrategies={this.fetchStrategies} position={this.state.position}/>;
         } else {
           contents = (
