@@ -333,27 +333,6 @@ module.exports = async (app, passport) => {
     let map = JSON.parse(request.body.map);
 
     let index = 0;
-    while (index < map.attack.length) {
-      if (map.attack[index].shared) {
-        let shared_strategy;
-        try {
-          shared_strategy = await SharedStrategies.findOne({ shared_key: map.attack[index].shared_key }).exec();
-        } catch(error) {
-          console.log(error);
-          return response.json(errors.ERROR_UPDATE_MAP);
-        }
-
-        shared_strategy.strategy = map.attack[index];
-
-        try {
-          shared_strategy.save();
-        } catch(error) {
-          console.log(error);
-          return response.json(errors.ERROR_UPDATE_MAP);
-        }
-      }
-      index++;
-    }
 
     for (let i = 0; i < 4; i++) {
       index = 0;
@@ -369,6 +348,28 @@ module.exports = async (app, passport) => {
           }
 
           shared_strategy.strategy = map.defense[site][index];
+
+          try {
+            shared_strategy.save();
+          } catch(error) {
+            console.log(error);
+            return response.json(errors.ERROR_UPDATE_MAP);
+          }
+        }
+        index++;
+      }
+      index = 0;
+      while (index < map.attack[site].length) {
+        if (map.attack[site][index].shared) {
+          let shared_strategy;
+          try {
+            shared_strategy = await SharedStrategies.findOne({ shared_key: map.attack[site][index].shared_key }).exec();
+          } catch(error) {
+            console.log(error);
+            return response.json(errors.ERROR_UPDATE_MAP);
+          }
+
+          shared_strategy.strategy = map.attack[site][index];
 
           try {
             shared_strategy.save();
@@ -418,17 +419,6 @@ module.exports = async (app, passport) => {
     let map = strategies[request.params.map];
 
     let index = 0;
-    while (index < map.attack.length) {
-      if (map.attack[index].shared) {
-        try {
-          await SharedStrategies.deleteOne({ shared_key: map.attack[index].shared_key }).exec();
-        } catch(error) {
-          console.log(error);
-          return response.json(errors.ERROR_DELETE_MAP);
-        }
-      }
-      index++;
-    }
 
     for (let i = 0; i < 4; i++) {
       index = 0;
@@ -437,6 +427,18 @@ module.exports = async (app, passport) => {
         if (map.defense[site][index].shared) {
           try {
             await SharedStrategies.deleteOne({ shared_key: map.defense[site][index].shared_key }).exec();
+          } catch(error) {
+            console.log(error);
+            return response.json(errors.ERROR_DELETE_MAP);
+          }
+        }
+        index++;
+      }
+      index = 0;
+      while (index < map.attack[site].length) {
+        if (map.attack[site][index].shared) {
+          try {
+            await SharedStrategies.deleteOne({ shared_key: map.attack[site][index].shared_key }).exec();
           } catch(error) {
             console.log(error);
             return response.json(errors.ERROR_DELETE_MAP);

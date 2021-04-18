@@ -53,7 +53,6 @@ class Toolbar extends React.Component {
     }
   }
   render() {
-    console.log(this.props);
     let sites = this.props.sites.map((site, index) => {
       return (
         <option onClick={() => { this.props.selectSite(index) }} className={(index === this.props.siteIndex ? "site--active" : "")} key={index}>{site}</option>
@@ -139,10 +138,12 @@ class Toolbar extends React.Component {
             ) : ""}
             <div className="strategy__navigation">
               <h4>Mode</h4>
-              <div className="type-selector">
-                <button onClick={() => { this.props.updateType("ATTACK") }} className={this.props.type === "ATTACK" ? "type--active" : ""}>Attack</button>
-                <button onClick={() => { this.props.updateType("DEFENSE") }} className={this.props.type === "ATTACK" ? "" : "type--active"}>Defense</button>
-              </div>
+              <select className="type-selector" onChange={(e) => {
+                this.props.updateType(e.target.value);
+              }}>
+                <option>ATTACK</option>
+                <option>DEFENSE</option>
+              </select>
               <div className="site-container">
                 <h4>Site</h4>
                 <select>

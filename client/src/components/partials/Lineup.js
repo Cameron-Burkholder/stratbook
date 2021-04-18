@@ -55,20 +55,28 @@ class Lineup extends React.Component {
           <div className="role__head">
             { this.props.activeOperator === index ? (
               <div className="role__options">
-                <select className="form__select" onChange={(e) => { this.props.updateOperators(e, index) }} value={this.props.operators[index]}>
-                  <option>OPERATOR</option>
-                  { operatorOptions }
-                </select>
-                <div className="role__utility">
+                { this.props.function === "Editor" ? (
+                  <select className="form__select" onChange={(e) => { this.props.updateOperators(e, index) }} value={this.props.operators[index]}>
+                    <option>OPERATOR</option>
+                    { operatorOptions }
+                  </select>
+                ) : (
+                  ""
+                )}
+              <div className="role__utility">
+                { this.props.function === "Editor" ? (
                   <select className="form__select" onChange={(e) => { this.props.updateUtility(e, index) }} value={this.props.utility[index]}>
                     <option>UTILITY</option>
                     { utilityOptions }
                   </select>
-                </div>
+                ) : (
+                  ""
+                )}
               </div>
+            </div>
             ) : (
               <div className="role__options">
-                <p className="role__utility">Utility: {this.props.utility[index]}</p>
+
               </div>
             )}
             <div className="role__image" onClick={() => { this.props.selectOperator(index) }}>
@@ -76,13 +84,13 @@ class Lineup extends React.Component {
               <img className="role__image" src={`../../media/min/operators/${clean(this.props.operators[index].toLowerCase())}.png`}
                 alt="Operator"
                 onClick={() => {
-                  if (this.props.activeOperator === index) {
+                  if (this.props.activeOperator === index && this.props.function === "Editor") {
                     this.props.insertOperator(this.props.activeOperator);
                   } else {
                     this.props.selectOperator(index);
                   }
                 }}/>
-              { this.props.activeOperator === index ? (
+              { this.props.activeOperator === index && this.props.function === "Editor" ? (
                 <p style={{ fontSize: "8pt" }}>Click to insert</p>
               ) : "" }
             </div>
@@ -97,11 +105,13 @@ class Lineup extends React.Component {
                     <img className="role__gadget-image" src={`../../media/min/gadgets/${this.props.gadgets[index].gadget.toUpperCase().replace(" ", "_").replace(" ", "_")}.png`}
                       alt="Operator Gadget"
                       onClick={() => {
-                        if (this.props.gadgets[index].count - this.props.gadgetPositions[index].length> 0) {
+                        if (this.props.function === "Editor" && this.props.gadgets[index].count - this.props.gadgetPositions[index].length> 0) {
                           this.props.insertGadget(index)
                         }
                       }}/>
-                    <p style={{ fontSize: "8pt", textTransform: "none" }}>Click to insert</p>
+                    { this.props.function === "Editor" ? (
+                      <p style={{ fontSize: "8pt", textTransform: "none" }}>Click to insert</p>
+                    ) : ""}
                   </div>
                 ) : ""}
               </div>
@@ -112,11 +122,13 @@ class Lineup extends React.Component {
                     <img className="role__utility-image" src={`../../media/min/utility/${this.props.utility[index].toUpperCase().replace(" ", "_").replace(" ", "_")}.png`}
                       alt="Operator Utility"
                       onClick={() => {
-                        if (UTILITY_GUIDE[this.props.utility[index]] - this.props.utilityPositions[index].length) {
+                        if (this.props.function === "Editor" && UTILITY_GUIDE[this.props.utility[index]] - this.props.utilityPositions[index].length) {
                           this.props.insertUtility(index);
                         }
                       }}/>
-                    <p style={{ fontSize: "8pt", textTransform: "none" }}>Click to insert</p>
+                    { this.props.function === "Editor" ? (
+                      <p style={{ fontSize: "8pt", textTransform: "none" }}>Click to insert</p>
+                    ) : ""}
                   </div>
                 ) : ""}
               </div>

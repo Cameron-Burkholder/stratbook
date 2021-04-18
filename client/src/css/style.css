@@ -1718,10 +1718,10 @@ div.toolbar__navigation {
   div.toolbar__navigation a#showMaps:hover {
     box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.25);
     transition: all 0.3s ease; }
-  div.toolbar__navigation div.type-selector, div.toolbar__navigation div.strategy-selector, div.toolbar__navigation div.site-container, div.toolbar__navigation div.site-container div {
+  div.toolbar__navigation div.strategy-selector, div.toolbar__navigation div.site-container {
     margin: 0;
     position: relative; }
-    div.toolbar__navigation div.type-selector button, div.toolbar__navigation div.strategy-selector button, div.toolbar__navigation div.site-container button, div.toolbar__navigation div.site-container div button {
+    div.toolbar__navigation div.strategy-selector button, div.toolbar__navigation div.site-container button {
       margin: 0;
       display: block;
       width: 100%;
@@ -1729,11 +1729,19 @@ div.toolbar__navigation {
       color: #19191a;
       margin-bottom: 4px;
       border: 1px solid #E0E8FF; }
-    div.toolbar__navigation div.type-selector button.type--active, div.toolbar__navigation div.type-selector button.strategy--active, div.toolbar__navigation div.type-selector button.site--active, div.toolbar__navigation div.strategy-selector button.type--active, div.toolbar__navigation div.strategy-selector button.strategy--active, div.toolbar__navigation div.strategy-selector button.site--active, div.toolbar__navigation div.site-container button.type--active, div.toolbar__navigation div.site-container button.strategy--active, div.toolbar__navigation div.site-container button.site--active, div.toolbar__navigation div.site-container div button.type--active, div.toolbar__navigation div.site-container div button.strategy--active, div.toolbar__navigation div.site-container div button.site--active {
+    div.toolbar__navigation div.strategy-selector button.type--active, div.toolbar__navigation div.strategy-selector button.strategy--active, div.toolbar__navigation div.strategy-selector button.site--active, div.toolbar__navigation div.site-container button.type--active, div.toolbar__navigation div.site-container button.strategy--active, div.toolbar__navigation div.site-container button.site--active {
       color: white;
       background: linear-gradient(to right, #0031A4, #0098A6); }
   div.toolbar__navigation div.strategy-selector {
     padding-bottom: 80px; }
+  div.toolbar__navigation div.site-container select, div.toolbar__navigation select.type-selector {
+    border: 1px solid #E0E8FF;
+    margin: 0;
+    width: 100%;
+    padding: 16px;
+    border-radius: 4px; }
+    div.toolbar__navigation div.site-container select option, div.toolbar__navigation select.type-selector option {
+      color: #19191a; }
   div.toolbar__navigation div.strategy-control {
     position: absolute;
     margin: 0;

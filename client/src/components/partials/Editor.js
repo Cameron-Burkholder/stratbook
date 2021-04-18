@@ -367,7 +367,7 @@ class Editor extends React.Component {
         newStrategies.splice(this.state.strategyIndex, 1);
         let map = this.state.map;
         if (this.state.type === "ATTACK") {
-          map.attack = newStrategies;
+          map.attack[this.state.sites[this.state.siteIndex]] = newStrategies;
         } else {
           map.defense[this.state.sites[this.state.siteIndex]] = newStrategies;
         }
@@ -463,7 +463,7 @@ class Editor extends React.Component {
     let map = this.state.map;
     if (this.state.type === "ATTACK") {
       map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].operatorPositions[index].floor = this.state.floorIndex;
-      let opPosition = map.defense[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].operatorPositions[index];
+      let opPosition = map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].operatorPositions[index];
       map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].operatorPositions[index].x = Math.floor(CANVAS_WIDTH / 2);
       map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].operatorPositions[index].y = Math.floor(CANVAS_HEIGHT / 2);
     } else {
@@ -998,7 +998,7 @@ class Editor extends React.Component {
         this.state.map.defense[this.state.site][this.state.strategyIndex].gadgets
       ));
       canvasProps.gadgetPositions = (this.state.type === "ATTACK" ? (
-        this.state.map.defense[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].gadgetPositions
+        this.state.map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].gadgetPositions
       ) : (
         this.state.map.defense[this.state.site][this.state.strategyIndex].gadgetPositions
       ));
@@ -1045,11 +1045,11 @@ class Editor extends React.Component {
       ) : (
         this.state.map.defense[this.state.site][this.state.strategyIndex].operators
       ));
+      lineupProps.gadgetPositions = canvasProps.gadgetPositions;
 
     } else {
       toolbarProps.strategy = this.state.strategy.name;
       toolbarProps.map = this.state.strategy.map;
-      console.log(this.state.strategy);
       toolbarProps.drones = this.state.type === "ATTACK" ? (
         this.state.strategy.scenes[this.state.sceneIndex].drones
       ) : undefined;
@@ -1074,7 +1074,9 @@ class Editor extends React.Component {
       canvasProps.operators = this.state.strategy.operators;
       canvasProps.operatorPositions = this.state.strategy.scenes[this.state.sceneIndex].operatorPositions;
       canvasProps.gadgets = this.state.strategy.gadgets;
-      canvasProps.gadgetPositions = this.state.strategy.scenes[this.state.sceneIndex].utilityPositions;
+      canvasProps.gadgetPositions = this.state.strategy.scenes[this.state.sceneIndex].gadgetPositions;
+      canvasProps.utility = this.state.strategy.utility;
+      canvasProps.utilityPositions = this.state.strategy.scenes[this.state.sceneIndex].utilityPositions;
       canvasProps.drones = this.state.type === "ATTACK" ? (
         this.state.strategy.scenes[this.state.sceneIndex].drones
       ) : (
@@ -1099,6 +1101,8 @@ class Editor extends React.Component {
       canvasProps.video = this.state.strategy.video;
 
       lineupProps.utility = this.state.strategy.utility;
+      lineupProps.utilityPositions = canvasProps.utilityPositions;
+      lineupProps.gadgetPositions = canvasProps.gadgetPositions;
 
     }
     return (

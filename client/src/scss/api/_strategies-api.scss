@@ -341,7 +341,7 @@ div.toolbar__navigation {
     box-shadow: $box-shadow-primary;
     transition: all 0.3s ease;
   }
-  div.type-selector, div.strategy-selector, div.site-container, div.site-container div {
+  div.strategy-selector, div.site-container {
     margin: 0;
     position: relative;
     button {
@@ -360,6 +360,16 @@ div.toolbar__navigation {
   }
   div.strategy-selector {
     padding-bottom: 80px;
+  }
+  div.site-container select, select.type-selector {
+    border: $border-secondary;
+    margin: 0;
+    width: 100%;
+    padding: $padding-s;
+    border-radius: $border-radius;
+    option {
+      color: $text-dark;
+    }
   }
   div.strategy-control {
     position: absolute;
