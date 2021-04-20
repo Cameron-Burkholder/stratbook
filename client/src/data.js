@@ -3,7 +3,7 @@
 //["ROLE", "HARD BREACH DENIAL", "INTEL DENIAL", "INTEL", "AREA DENIAL", "TRAPS", "UTILITY SOAK", "SUPPORT", "ROAM"]
 //"PULSE", "ROOK","SMOKE", "TACHANKA", "VALKYRIE", "VIGIL", "WAMAI", "WARDEN"
 module.exports = {
-  MAP_NAMES: ["BANK", "OREGON"],
+  MAP_NAMES: ["BANK", "BORDER", "CHALET", "CLUBHOUSE", "COASTLINE", "CONSULATE", "KAFE DOSTOYEVSKY", "KANAL", "OREGON", "SKYSCRAPER", "THEME PARK", "VILLA"],
   SITES: {
     "BANK": ["B Lockers/B CCTV Room", "1F Teller's Office/1F Archives", "1F Staff Room/1F Open Area", "2F Executive Lounge/2F CEO Office"],
     "BORDER": ["1F Customs Inspection/1F Supply Room", "1F Ventilation Room/1F Workshop", "1F Bathroom/1F Tellers", "2F Armory Lockers/2F Archives"],
