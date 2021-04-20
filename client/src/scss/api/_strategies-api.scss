@@ -1,7 +1,7 @@
 /* client/src/scss/api/_strategies-api.scss */
 
 $canvas-width: 900px;
-$canvas-height: 675px;
+$canvas-height: 480px;
 $drag-item-width: 30px;
 
 div#edit-strategies {
@@ -752,8 +752,8 @@ div.canvas {
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 150%;
-      height: 150%;
+      width: 120%;
+      height: 120%;
       border: 3px dotted black;
       z-index: 3;
       border-radius: $border-radius;
@@ -774,7 +774,7 @@ div.canvas {
       }
     }
     div.drag-operator {
-      border: 2px solid $color-primary;
+
     }
     div.drag-drone, div.drag-reinforcement {
       border: 2px solid $color-warning;

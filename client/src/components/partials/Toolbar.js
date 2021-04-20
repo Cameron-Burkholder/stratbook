@@ -55,7 +55,7 @@ class Toolbar extends React.Component {
   render() {
     let sites = this.props.sites.map((site, index) => {
       return (
-        <option onClick={() => { this.props.selectSite(index) }} className={(index === this.props.siteIndex ? "site--active" : "")} key={index}>{site}</option>
+        <option className={(index === this.props.siteIndex ? "site--active" : "")} key={index}>{site}</option>
       )
     });
     let strategies;
@@ -146,7 +146,9 @@ class Toolbar extends React.Component {
               </select>
               <div className="site-container">
                 <h4>Site</h4>
-                <select>
+                <select onChange={(e) => {
+                  this.props.selectSite(this.props.sites.indexOf(e.target.value));
+                }} value={this.props.sites[this.props.siteIndex]}>
                   { sites }
                 </select>
               </div>
