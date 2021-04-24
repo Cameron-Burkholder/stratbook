@@ -214,7 +214,9 @@ class DragItem extends React.Component {
         }
       }
       this.setState({
-        selected: selected
+        selected: selected,
+        x: this.props.x,
+        y: this.props.y
       });
     }
   }
