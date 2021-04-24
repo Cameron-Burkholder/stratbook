@@ -121,7 +121,8 @@ class PositionOverlay extends React.Component {
             { ...dragItemProps}
             selected={this.state.selected}
             floor={this.props.floorIndex}
-            function={this.props.function}/>
+            function={this.props.function}
+            zoom={this.props.zoom}/>
         )
       }
     });
@@ -138,7 +139,8 @@ class PositionOverlay extends React.Component {
             { ...dragItemProps}
             selected={this.state.selected}
             floor={this.props.floorIndex}
-            function={this.props.function}/>
+            function={this.props.function}
+            zoom={this.props.zoom}/>
         )
       }
     });
@@ -155,7 +157,8 @@ class PositionOverlay extends React.Component {
             { ...dragItemProps}
             selected={this.state.selected}
             floor={this.props.floorIndex}
-            function={this.props.function}/>
+            function={this.props.function}
+            zoom={this.props.zoom}/>
         )
       }
     });
@@ -172,7 +175,8 @@ class PositionOverlay extends React.Component {
             { ...dragItemProps}
             selected={this.state.selected}
             floor={this.props.floorIndex}
-            function={this.props.function}/>
+            function={this.props.function}
+            zoom={this.props.zoom}/>
         )
       } else {
         return "";
@@ -187,12 +191,13 @@ class PositionOverlay extends React.Component {
           utility.push(
             <DragItem url={url}
             x={u.x} y={u.y}
-            selectElement={this.selectElement} index={index} gi={uindex} key={uindex * index + uindex} drag={this.state.drag}
+            selectElement={this.selectElement} index={index} gi={uindex} key={(index * 6) + (uindex)} drag={this.state.drag}
             type="UTILITY" bounds={this.state.bounds} parentBounds={this.props.bounds} value={this.props.utility[index]} labels={this.props.labels}
             { ...dragItemProps}
             selected={this.state.selected}
             floor={this.props.floorIndex}
-            function={this.props.function}/>
+            function={this.props.function}
+            zoom={this.props.zoom}/>
           );
         }
       });
@@ -207,12 +212,13 @@ class PositionOverlay extends React.Component {
           gadgets.push(
             <DragItem url={url}
             x={g.x} y={g.y}
-            selectElement={this.selectElement} index={index} gi={gindex} key={gindex * index + gindex} drag={this.state.drag}
+            selectElement={this.selectElement} index={index} gi={gindex} key={(6 * index) + (gindex)} drag={this.state.drag}
             type="GADGET" bounds={this.state.bounds} parentBounds={this.props.bounds} value={this.props.gadgets[index].gadget} labels={this.props.labels}
             { ...dragItemProps}
             selected={this.state.selected}
             floor={this.props.floorIndex}
-            function={this.props.function}/>
+            function={this.props.function}
+            zoom={this.props.zoom}/>
           );
         }
       });
@@ -229,7 +235,8 @@ class PositionOverlay extends React.Component {
             { ...dragItemProps}
             selected={this.state.selected}
             floor={this.props.floorIndex}
-            function={this.props.function}/>
+            function={this.props.function}
+            zoom={this.props.zoom}/>
         );
       }
     });

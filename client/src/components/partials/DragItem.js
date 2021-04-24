@@ -202,8 +202,17 @@ class DragItem extends React.Component {
     this.props.deselectElement();
   }
   componentDidUpdate(prevProps, prevState) {
-    let selected = this.props.selected && (this.props.type === this.props.selected.type) && (this.props.index === this.props.selected.index) && (!this.props.selected.gi || this.props.selected.gi && this.props.gi === this.props.selected.gi);
-    if (this.state.selected !== selected) {
+    if (this.props !== prevProps) {
+      let selected = false;
+      if (this.props.selected && this.props.type === this.props.selected.type && this.props.index === this.props.selected.index) {
+        if (typeof(this.props.selected.gi) !== "undefined") {
+          if (this.props.gi === this.props.selected.gi) {
+            selected = true;
+          }
+        } else {
+          selected = true;
+        }
+      }
       this.setState({
         selected: selected
       });
@@ -217,7 +226,7 @@ class DragItem extends React.Component {
           if (this.props.function === "Editor") {
             e.preventDefault();
             e.stopPropagation();
-            this.props.selectElement(this.props.index, this.props.type, (this.props.gi ? this.props.gi : null));
+            this.props.selectElement(this.props.index, this.props.type, this.props.gi);
           }
         }}
         onMouseDown={(e) => {

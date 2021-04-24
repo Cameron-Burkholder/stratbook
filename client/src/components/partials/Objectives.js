@@ -47,13 +47,11 @@ class Objectives extends React.Component {
         <ul>
           { objectives.length > 0 ? objectives : <li>None to show</li> }
         </ul>
-        { this.props.function === "Editor" || this.props.notes !== "" ? (
-          <h3>Notes: {this.props.scenes[this.props.sceneIndex].name}</h3>
-        ) : ""}
+        <h3>Notes: {this.props.scenes[this.props.sceneIndex].name}</h3>
         { this.props.function === "Editor" ? (
           <textarea value={this.props.notes} onChange={this.props.updateNotes} rows={7}></textarea>
         ) : (
-          <p>{this.props.notes}</p>
+          <p>{this.props.notes ? this.props.notes : "No notes to show."}</p>
         )}
         { this.props.function === "Editor" || this.props.video !== "" ? (
           <h3>Video Link</h3>
