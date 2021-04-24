@@ -131,6 +131,8 @@ class EditStrategiesAPI extends React.Component {
           case MAP_UPDATED.status:
             component.setState({
               loading: false,
+            }, () => {
+              this.props.alert("Your strategy has been updated.", "SUCCESS");
             });
             break;
           default:

@@ -31,6 +31,29 @@ class Canvas extends React.Component {
     });
   }
   render() {
+    let blueprintProps = {};
+    let objectiveProps = {};
+    if (this.props.function === "Editor") {
+      blueprintProps.removeOperator = this.props.removeOperator;
+      blueprintProps.removeGadget = this.props.removeGadget;
+      blueprintProps.removeUtility = this.props.removeUtility;
+      blueprintProps.removeDrone = this.props.removeDrone;
+      blueprintProps.removeRotate = this.props.removeRotate;
+      blueprintProps.removeReinforcement = this.props.removeReinforcement;
+      blueprintProps.removeBreach = this.props.removeBreach;
+      blueprintProps.updateOperatorPositions = this.props.updateOperatorPositions;
+      blueprintProps.updateGadgetPositions = this.props.updateGadgetPositions;
+      blueprintProps.updateDronePositions = this.props.updateDronePositions;
+      blueprintProps.updateUtilityPositions = this.props.updateUtilityPositions;
+      blueprintProps.updateRotatePositions = this.props.updateRotatePositions;
+      blueprintProps.updateReinforcementPositions = this.props.updateReinforcementPositions;
+      blueprintProps.updateBreachPositions = this.props.updateBreachPositions;
+
+      objectiveProps.addObjective = this.props.addObjective;
+      objectiveProps.removeObjective = this.props.removeObjective;
+      objectiveProps.updateNotes = this.props.updateNotes;
+      objectiveProps.updateVideo = this.props.updateVideo;
+    }
     return (
       <div className="canvas">
         <div className="canvas__controls">
@@ -46,36 +69,26 @@ class Canvas extends React.Component {
         <BlueprintForm type={this.props.type}
           operators={this.props.operators}
           operatorPositions={this.props.operatorPositions}
-          removeOperator={this.props.removeOperator}
           gadgets={this.props.gadgets}
           gadgetPositions={this.props.gadgetPositions}
-          removeGadget={this.props.removeGadget}
           utility={this.props.utility}
           utilityPositions={this.props.utilityPositions}
-          removeUtility={this.props.removeUtility}
           drones={this.props.drones}
-          removeDrone={this.props.removeDrone}
           rotates={this.props.rotates}
-          removeRotate={this.props.removeRotate}
           reinforcements={this.props.reinforcements}
-          removeReinforcement={this.props.removeReinforcement}
           map={this.props.map} site={this.props.site} floorIndex={this.props.floorIndex}
           breaches={this.props.breaches}
-          removeBreach={this.props.removeBreach}
           floor={this.props.floor}
-          updateOperatorPositions={this.props.updateOperatorPositions}
-          updateGadgetPositions={this.props.updateGadgetPositions}
-          updateDronePositions={this.props.updateDronePositions}
-          updateUtilityPositions={this.props.updateUtilityPositions}
-          updateRotatePositions={this.props.updateRotatePositions}
-          updateReinforcementPositions={this.props.updateReinforcementPositions}
-          updateBreachPositions={this.props.updateBreachPositions}
           zoom={this.state.zoom}
-          labels={this.state.labels}/>
+          labels={this.state.labels}
+          function={this.props.function}
+          blueprintProps={blueprintProps}/>
         <div className="canvas__body">
-          <Objectives objectives={this.props.objectives} addObjective={this.props.addObjective} removeObjective={this.props.removeObjective}
-            notes={this.props.notes} updateNotes={this.props.updateNotes} scenes={this.props.scenes} sceneIndex={this.props.sceneIndex}
-            video={this.props.video} updateVideo={this.props.updateVideo}/>
+          <Objectives objectives={this.props.objectives}
+            notes={this.props.notes} scenes={this.props.scenes} sceneIndex={this.props.sceneIndex}
+            video={this.props.video}
+            function={this.props.function}
+            {...objectiveProps}/>
         </div>
       </div>
     )

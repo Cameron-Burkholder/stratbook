@@ -112,35 +112,22 @@ class BlueprintForm extends React.Component {
       backgroundSize: "cover",
       transform: `scale(${parseFloat(this.props.zoom)}) translate(${this.state.offsetX}px, ${this.state.offsetY}px)`
     };
+    let positionProps = this.props.blueprintProps;
     return (
       <div className="blueprint-form" ref={this.selector}>
         <PositionOverlay
           style={style}
           operators={this.props.operators}
           operatorPositions={this.props.operatorPositions}
-          removeOperator={this.props.removeOperator}
           gadgets={this.props.gadgets}
           gadgetPositions={this.props.gadgetPositions}
-          removeGadget={this.props.removeGadget}
           utility={this.props.utility}
           utilityPositions={this.props.utilityPositions}
-          removeUtility={this.props.removeUtility}
           drones={this.props.drones}
-          removeDrone={this.props.removeDrone}
           rotates={this.props.rotates}
-          removeRotate={this.props.removeRotate}
           reinforcements={this.props.reinforcements}
-          removeReinforcement={this.props.removeReinforcement}
           floorIndex={this.props.floorIndex}
           breaches={this.props.breaches}
-          removeBreach={this.props.removeBreach}
-          updateOperatorPositions={this.props.updateOperatorPositions}
-          updateGadgetPositions={this.props.updateGadgetPositions}
-          updateDronePositions={this.props.updateDronePositions}
-          updateUtilityPositions={this.props.updateUtilityPositions}
-          updateRotatePositions={this.props.updateRotatePositions}
-          updateReinforcementPositions={this.props.updateReinforcementPositions}
-          updateBreachPositions={this.props.updateBreachPositions}
           type={this.props.type}
           zoom={this.props.zoom}
           bounds={this.state.bounds}
@@ -148,7 +135,9 @@ class BlueprintForm extends React.Component {
           onDragTouch={this.onDragTouch}
           offsetX={this.state.offsetX}
           offsetY={this.state.offsetY}
-          labels={this.props.labels}/>
+          labels={this.props.labels}
+          function={this.props.function}
+          positionProps={positionProps}/>
       </div>
     )
   }

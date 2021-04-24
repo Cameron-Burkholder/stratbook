@@ -55,7 +55,7 @@ class Navigation extends React.Component {
     return (
       <nav className={"nav " + (this.state.active ? "nav--active" : inactiveClass)}>
         <ul className="nav__head">
-          <img className="nav__image" alt="Logo" src=""/>
+          <img className="nav__image" alt="Logo" src="../../media/min/Stratbook_Logo.png"/>
           <h3 className="nav__heading">Stratbook</h3>
           <span className="nav__subtitle">[Beta]</span>
         </ul>

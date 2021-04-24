@@ -71,6 +71,8 @@ ul.nav__head {
   display: flex;
   align-items: center;
   padding-left: 16px; }
+  ul.nav__head img.nav__image {
+    width: 48px; }
 
 h3.nav__heading {
   margin-left: 16px; }
@@ -504,8 +506,7 @@ div.toggle, div.viewer-toggle {
 .loader {
   position: relative;
   margin: 40px auto;
-  width: 100px;
-  background: #1A1D27; }
+  width: 100px; }
   .loader:before {
     content: '';
     display: block;

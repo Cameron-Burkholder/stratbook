@@ -6,7 +6,6 @@ $width: 100px;
   position: relative;
   margin: $margin-m auto;
   width: $width;
-  background: $background-primary;
   &:before {
     content: '';
     display: block;

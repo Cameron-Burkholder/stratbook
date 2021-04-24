@@ -21,7 +21,7 @@ const imageminPngquant = require('imagemin-pngquant');
             })
         ]
     });
-    const maps = await imagemin(['client/public/media/maps/*.{jpg,png}'], {
+    const maps = await imagemin(['C:/Users/cburk/Documents/WORKSPACE/Design/Stratbook/Map Images/*.{jpg,png}'], {
         destination: 'client/public/media/min/maps',
         plugins: [
             imageminJpegtran(),

@@ -23,7 +23,9 @@ class Objectives extends React.Component {
         <li key={index}>
           <div>
             <p>{obj}</p>
-            <button onClick={() => { this.props.removeObjective(index) }}>X</button>
+            { this.props.function === "Editor" ? (
+              <button onClick={() => { this.props.removeObjective(index) }}>X</button>
+            ) : ""}
           </div>
         </li>
       )
@@ -31,20 +33,40 @@ class Objectives extends React.Component {
     return (
       <div className="objectives">
         <h3>Objectives: {this.props.scenes[this.props.sceneIndex].name}</h3>
-        <input onChange={this.onChange} value={this.state.newObj} placeholder="New Objective"/>
-        <button onClick={() => {
-          this.props.addObjective(this.state.newObj);
-          this.setState({
-            newObj: ""
-          });
-        }}>Add</button>
+        { this.props.function === "Editor" ? (
+          <div>
+            <input onChange={this.onChange} value={this.state.newObj} placeholder="New Objective"/>
+            <button onClick={() => {
+              this.props.addObjective(this.state.newObj);
+              this.setState({
+                newObj: ""
+              });
+            }}>Add</button>
+          </div>
+        ) : ""}
         <ul>
-          { objectives }
+          { objectives.length > 0 ? objectives : <li>None to show</li> }
         </ul>
-        <h3>Notes: {this.props.scenes[this.props.sceneIndex].name}</h3>
-        <textarea value={this.props.notes} onChange={this.props.updateNotes} rows={7}></textarea>
-        <h3>Video Link</h3>
-        <input onChange={this.props.updateVideo} value={this.props.video}/>
+        { this.props.function === "Editor" || this.props.notes !== "" ? (
+          <h3>Notes: {this.props.scenes[this.props.sceneIndex].name}</h3>
+        ) : ""}
+        { this.props.function === "Editor" ? (
+          <textarea value={this.props.notes} onChange={this.props.updateNotes} rows={7}></textarea>
+        ) : (
+          <p>{this.props.notes}</p>
+        )}
+        { this.props.function === "Editor" || this.props.video !== "" ? (
+          <h3>Video Link</h3>
+        ) : ""}
+        { this.props.function === "Editor" ? (
+          <input onChange={this.props.updateVideo} value={this.props.video}/>
+        ) : (
+          <div>
+            { this.props.video !== "" ? (
+              <a className="objectives__video" href={this.props.video} rel="noopener noreferrer" target="_blank">Watch Video</a>
+            ) : ""}
+          </div>
+        )}
       </div>
     )
   }

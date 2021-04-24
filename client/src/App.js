@@ -142,6 +142,14 @@ class App extends React.Component {
     newAlerts.push({ message: msg, status: status });
     this.setState({
       alerts: newAlerts
+    }, () => {
+      setTimeout(() => {
+        let newAlerts = this.state.alerts;
+        newAlerts.shift();
+        this.setState({
+          alerts: newAlerts
+        });
+      }, 5000)
     });
   }
   /*

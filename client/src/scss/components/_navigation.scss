@@ -9,10 +9,15 @@ nav.nav {
   z-index: 4;
 }
 
+
+
 ul.nav__head {
   display: flex;
   align-items: center;
   padding-left: $padding-s;
+  img.nav__image {
+    width: 48px;
+  }
 }
 h3.nav__heading {
   margin-left: $margin-s;

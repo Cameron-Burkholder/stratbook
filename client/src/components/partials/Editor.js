@@ -502,16 +502,16 @@ class Editor extends React.Component {
       map: map
     });
   }
-  updateOperatorPositions(positions) {
+  updateOperatorPositions(index, position) {
     let map = this.state.map;
     let scenes;
     let strategies;
     if (this.state.type === "ATTACK") {
-      map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].operatorPositions = positions;
+      map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].operatorPositions[index] = position;
       scenes = map.attack[this.state.site][this.state.strategyIndex].scenes;
       strategies = map.attack[this.state.site];
     } else {
-      map.defense[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].operatorPositions = positions;
+      map.defense[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].operatorPositions[index] = position;
       scenes = map.defense[this.state.site][this.state.strategyIndex].scenes;
       strategies = map.defense[this.state.site];
     }
@@ -546,11 +546,11 @@ class Editor extends React.Component {
       });
     }
   }
-  updateDronePositions(positions) {
+  updateDronePositions(index, position) {
     let map = this.state.map;
     let scenes;
     let strategies;
-    map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].drones = positions;
+    map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].drones[index] = position;
     strategies = map.attack[this.state.site];
     scenes = map.attack[this.state.site][this.state.strategyIndex].scenes;
     this.setState({
@@ -588,16 +588,16 @@ class Editor extends React.Component {
       map: map
     });
   }
-  updateGadgetPositions(positions) {
+  updateGadgetPositions(index, gi, position) {
     let map = this.state.map;
     let scenes;
     let strategies;
     if (this.state.type === "ATTACK") {
-      map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].gadgetPositions = positions;
+      map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].gadgetPositions[index][gi] = position;
       scenes = map.attack[this.state.site][this.state.strategyIndex].scenes;
       strategies = map.attack[this.state.site];
     } else {
-      map.defense[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].gadgetPositions = positions;
+      map.defense[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].gadgetPositions[index][gi] = position;
       scenes = map.defense[this.state.site][this.state.strategyIndex].scenes;
       strategies = map.defense[this.state.site];
     }
@@ -620,16 +620,16 @@ class Editor extends React.Component {
       map: map
     });
   }
-  updateUtilityPositions(positions) {
+  updateUtilityPositions(index, gi, position) {
     let map = this.state.map;
     let scenes;
     let strategies;
     if (this.state.type === "ATTACK") {
-      map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].utilityPositions = positions;
+      map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].utilityPositions[index][gi] = position;
       scenes = map.attack[this.state.site][this.state.strategyIndex].scenes;
       strategies = map.attack[this.state.site];
     } else {
-      map.defense[this.state.site][this.state.strategyIndex].utilityPositions = positions;
+      map.defense[this.state.site][this.state.strategyIndex].utilityPositions[index][gi] = position;
       scenes = map.defense[this.state.site][this.state.strategyIndex].scenes;
       strategies = map.defense[this.state.site];
     }
@@ -672,10 +672,10 @@ class Editor extends React.Component {
   }
 
   // Rotates
-  updateRotatePositions(positions) {
+  updateRotatePositions(index, position) {
     let map = this.state.map;
     let strategies;
-    map.defense[this.state.site][this.state.strategyIndex].rotates = positions;
+    map.defense[this.state.site][this.state.strategyIndex].rotates[index] = position;
     strategies = map.defense[this.state.site];
     this.setState({
       map: map,
@@ -703,10 +703,10 @@ class Editor extends React.Component {
   }
 
   // Reinforcements
-  updateReinforcementPositions(positions) {
+  updateReinforcementPositions(index, position) {
     let map = this.state.map;
     let strategies;
-    map.defense[this.state.site][this.state.strategyIndex].reinforcements = positions;
+    map.defense[this.state.site][this.state.strategyIndex].reinforcements[index] = position;
     strategies = map.defense[this.state.site];
     this.setState({
       map: map,
@@ -736,11 +736,11 @@ class Editor extends React.Component {
   }
 
   // Breaches
-  updateBreachPositions(positions) {
+  updateBreachPositions(index, position) {
     let map = this.state.map;
     let scenes;
     let strategies;
-    this.state.map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].breaches = positions;
+    this.state.map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].breaches[index] = position;
     scenes = map.attack[this.state.site][this.state.strategyIndex].scenes;
     strategies = map.attack[this.state.site];
     this.setState({
@@ -1014,16 +1014,16 @@ class Editor extends React.Component {
       ));
       canvasProps.drones = (this.state.type === "ATTACK" ? (
         this.state.map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].drones
-      ) : undefined);
+      ) : []);
       canvasProps.rotates = (this.state.type === "ATTACK" ? (
-        undefined
+        []
       ) : this.state.map.defense[this.state.site][this.state.strategyIndex].rotates);
       canvasProps.reinforcements = (this.state.type === "ATTACK" ? (
-        undefined
+        []
       ) : this.state.map.defense[this.state.site][this.state.strategyIndex].reinforcements);
       canvasProps.breaches = (this.state.type === "ATTACK" ? (
         this.state.map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].breaches
-      ) : undefined);
+      ) : []);
       canvasProps.objectives = (this.state.type === "ATTACK" ? (
         this.state.map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].objectives
       ) : (
@@ -1080,21 +1080,21 @@ class Editor extends React.Component {
       canvasProps.drones = this.state.type === "ATTACK" ? (
         this.state.strategy.scenes[this.state.sceneIndex].drones
       ) : (
-        undefined
+        []
       );
       canvasProps.rotates = this.state.type === "ATTACK" ? (
-        undefined
+        []
       ) : (
         this.state.strategy.rotates
       );
       canvasProps.reinforcements = this.state.type === "ATTACK" ? (
-        undefined
+        []
       ) : (
         this.state.strategy.reinforcements
       );
       canvasProps.breaches = this.state.type === "ATTACK" ? (
         this.state.strategy.scenes[this.state.sceneIndex].breaches
-      ) : undefined;
+      ) : [];
       canvasProps.map = this.state.strategy.map;
       canvasProps.objectives = this.state.strategy.scenes[this.state.sceneIndex].objectives;
       canvasProps.notes = this.state.strategy.scenes[this.state.sceneIndex].notes;
