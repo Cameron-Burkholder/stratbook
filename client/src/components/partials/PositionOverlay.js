@@ -120,7 +120,8 @@ class PositionOverlay extends React.Component {
             type="BREACH" bounds={this.state.bounds} parentBounds={this.props.bounds} labels={this.props.labels}
             { ...dragItemProps}
             selected={this.state.selected}
-            floor={this.props.floorIndex}/>
+            floor={this.props.floorIndex}
+            function={this.props.function}/>
         )
       }
     });
@@ -136,7 +137,8 @@ class PositionOverlay extends React.Component {
             type="REINFORCEMENT" bounds={this.state.bounds} parentBounds={this.props.bounds} labels={this.props.labels}
             { ...dragItemProps}
             selected={this.state.selected}
-            floor={this.props.floorIndex}/>
+            floor={this.props.floorIndex}
+            function={this.props.function}/>
         )
       }
     });
@@ -152,7 +154,8 @@ class PositionOverlay extends React.Component {
             type="ROTATE" bounds={this.state.bounds} parentBounds={this.props.bounds} labels={this.props.labels}
             { ...dragItemProps}
             selected={this.state.selected}
-            floor={this.props.floorIndex}/>
+            floor={this.props.floorIndex}
+            function={this.props.function}/>
         )
       }
     });
@@ -168,7 +171,8 @@ class PositionOverlay extends React.Component {
             type="DRONE" bounds={this.state.bounds} parentBounds={this.props.bounds} labels={this.props.labels}
             { ...dragItemProps}
             selected={this.state.selected}
-            floor={this.props.floorIndex}/>
+            floor={this.props.floorIndex}
+            function={this.props.function}/>
         )
       } else {
         return "";
@@ -187,7 +191,8 @@ class PositionOverlay extends React.Component {
             type="UTILITY" bounds={this.state.bounds} parentBounds={this.props.bounds} value={this.props.utility[index]} labels={this.props.labels}
             { ...dragItemProps}
             selected={this.state.selected}
-            floor={this.props.floorIndex}/>
+            floor={this.props.floorIndex}
+            function={this.props.function}/>
           );
         }
       });
@@ -206,7 +211,8 @@ class PositionOverlay extends React.Component {
             type="GADGET" bounds={this.state.bounds} parentBounds={this.props.bounds} value={this.props.gadgets[index].gadget} labels={this.props.labels}
             { ...dragItemProps}
             selected={this.state.selected}
-            floor={this.props.floorIndex}/>
+            floor={this.props.floorIndex}
+            function={this.props.function}/>
           );
         }
       });
@@ -222,7 +228,8 @@ class PositionOverlay extends React.Component {
             type="OPERATOR" bounds={this.state.bounds} parentBounds={this.props.bounds} value={this.props.operators[index]} labels={this.props.labels}
             { ...dragItemProps}
             selected={this.state.selected}
-            floor={this.props.floorIndex}/>
+            floor={this.props.floorIndex}
+            function={this.props.function}/>
         );
       }
     });

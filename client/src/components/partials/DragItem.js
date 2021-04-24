@@ -178,7 +178,6 @@ class DragItem extends React.Component {
     });
   }
   removeItem() {
-    console.log("remove click");
     if (this.props.type === "OPERATOR") {
       this.props.removeOperator(this.props.index);
     }
@@ -215,39 +214,45 @@ class DragItem extends React.Component {
       <div style={{ top: (this.state.y ? this.state.y : 0), left: (this.state.x ? this.state.x : 0), backgroundImage: `url(${this.props.url})`, backgroundSize: "cover", backgroundPosition: "center" }}
       className={"drag-item" + ` drag-${this.props.type.toLowerCase()}` + (this.props.drag ? " drag" : "") + (this.state.selected ? " drag-item--selected" : "")}
         onClick={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          this.props.selectElement(this.props.index, this.props.type, (this.props.gi ? this.props.gi : null));
+          if (this.props.function === "Editor") {
+            e.preventDefault();
+            e.stopPropagation();
+            this.props.selectElement(this.props.index, this.props.type, (this.props.gi ? this.props.gi : null));
+          }
         }}
         onMouseDown={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          this.setState({
-            drag: true
-          }, () => {
-            if (this.props.type === "GADGET") {
-              this.props.selectElement(this.props.index, this.props.type, this.props.gi, this.setCallbacks);
-            } else if (this.props.type === "UTILITY") {
-              this.props.selectElement(this.props.index, this.props.type, this.props.gi, this.setCallbacks);
-            } else {
-              this.props.selectElement(this.props.index, this.props.type, null, this.setCallbacks);
-            }
-          });
+          if (this.props.function === "Editor") {
+            e.preventDefault();
+            e.stopPropagation();
+            this.setState({
+              drag: true
+            }, () => {
+              if (this.props.type === "GADGET") {
+                this.props.selectElement(this.props.index, this.props.type, this.props.gi, this.setCallbacks);
+              } else if (this.props.type === "UTILITY") {
+                this.props.selectElement(this.props.index, this.props.type, this.props.gi, this.setCallbacks);
+              } else {
+                this.props.selectElement(this.props.index, this.props.type, null, this.setCallbacks);
+              }
+            });
+          }
         }}
         onTouchStart={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          this.setState({
-            drag: true
-          }, () => {
-            if (this.props.type === "GADGET") {
-              this.props.selectElement(this.props.index, this.props.type, this.props.gi, this.setCallbacks);
-            } else if (this.props.type === "UTILITY") {
-              this.props.selectElement(this.props.index, this.props.type, this.props.gi, this.setCallbacks);
-            } else {
-              this.props.selectElement(this.props.index, this.props.type, null, this.setCallbacks);
-            }
-          })
+          if (this.props.function === "Editor") {
+            e.preventDefault();
+            e.stopPropagation();
+            this.setState({
+              drag: true
+            }, () => {
+              if (this.props.type === "GADGET") {
+                this.props.selectElement(this.props.index, this.props.type, this.props.gi, this.setCallbacks);
+              } else if (this.props.type === "UTILITY") {
+                this.props.selectElement(this.props.index, this.props.type, this.props.gi, this.setCallbacks);
+              } else {
+                this.props.selectElement(this.props.index, this.props.type, null, this.setCallbacks);
+              }
+            })
+          }
         }}
         data-type={this.props.type}>
         { this.props.labels ? (

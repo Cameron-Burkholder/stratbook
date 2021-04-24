@@ -13,6 +13,7 @@ class BlueprintForm extends React.Component {
     this.onDragTouch = this.onDragTouch.bind(this);
     this.onDrag = this.onDrag.bind(this);
     this.onDragStop = this.onDragStop.bind(this);
+    this.handleScroll = this.handleScroll.bind(this);
 
     this.selector = React.createRef();
 
@@ -22,9 +23,15 @@ class BlueprintForm extends React.Component {
     };
   }
   onDragStart(e) {
+    let startX = e.clientX;
+    let startY = e.clientY;
+    if (this.state.offsetX) {
+      startX = startX - this.state.offsetX;
+      startY = startY - this.state.offsetY;
+    }
     this.setState({
-      startX: e.clientX,
-      startY: e.clientY,
+      startX: startX,
+      startY: startY,
       move: true
     }, () => {
       document.addEventListener("mousemove", this.onDrag);
@@ -83,12 +90,27 @@ class BlueprintForm extends React.Component {
     document.removeEventListener("touchmove", this.onDrag);
     document.addEventListener("touchend", this.onDragStop);
   }
+  handleScroll(e) {
+    e.preventDefault();
+    let newX = e.pageX - (this.state.bounds.left);
+    let newY = e.pageY - (this.state.bounds.top);
+
+    if (newX > 0 && newX < this.state.bounds.width && newY > 0 && newY < this.state.bounds.height) {
+      this.props.scrollZoom(e);
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  }
   componentDidMount() {
     if (!this.state.bounds) {
       let bounds = this.selector.current.getBoundingClientRect();
       const isMobile = (Math.abs(bounds.width - CANVAS_WIDTH) < 20 && Math.abs(bounds.height - CANVAS_HEIGHT) < 20 ? false : true);
       bounds.width = CANVAS_WIDTH;
       bounds.height = CANVAS_HEIGHT;
+
+      const el = document.querySelector("div.blueprint-form");
+      el.onwheel = this.handleScroll;
+
       this.setState({
         bounds: bounds,
         isMobile: isMobile
@@ -103,6 +125,10 @@ class BlueprintForm extends React.Component {
         }
       })
     }
+  }
+  componentWillUnmount() {
+    const el = document.querySelector("div.blueprint-form");
+    el.onwheel = undefined;
   }
   render() {
     const url = `../../media/min/maps/${this.props.map.replace(" ", "_")}-${this.props.floor.toUpperCase().replace(" ", "_")}.jpg`;

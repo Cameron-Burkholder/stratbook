@@ -8,16 +8,20 @@ import Pagination from "./Pagination.js";
 import BlueprintForm from "./BlueprintForm.js";
 import Objectives from "./Objectives.js";
 
+const ZOOM_TOLERANCE = 0.2;
+
 class Canvas extends React.Component {
   constructor(props) {
     super(props);
 
     this.updateZoom = this.updateZoom.bind(this);
+    this.scrollZoom = this.scrollZoom.bind(this);
     this.toggleLabels = this.toggleLabels.bind(this);
 
     this.state = {
       zoom: 1,
-      labels: false
+      labels: false,
+      mounted: false
     }
   }
   toggleLabels() {
@@ -29,6 +33,22 @@ class Canvas extends React.Component {
     this.setState({
       zoom: e.target.value
     });
+  }
+  scrollZoom(e) {
+    let newZoom = parseFloat(this.state.zoom);
+    e.preventDefault();
+    e.stopPropagation();
+    if (e.deltaY >= 0) {
+      newZoom -= ZOOM_TOLERANCE;
+    } else {
+      newZoom += ZOOM_TOLERANCE;
+    }
+    newZoom = Math.round(newZoom * 100) / 100;
+    if (newZoom >= 1 && newZoom <= 3) {
+      this.setState({
+        zoom: newZoom
+      });
+    }
   }
   render() {
     let blueprintProps = {};
@@ -82,7 +102,8 @@ class Canvas extends React.Component {
           zoom={this.state.zoom}
           labels={this.state.labels}
           function={this.props.function}
-          blueprintProps={blueprintProps}/>
+          blueprintProps={blueprintProps}
+          scrollZoom={this.scrollZoom}/>
         <div className="canvas__body">
           <Objectives objectives={this.props.objectives}
             notes={this.props.notes} scenes={this.props.scenes} sceneIndex={this.props.sceneIndex}
