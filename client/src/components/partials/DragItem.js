@@ -1,6 +1,7 @@
 /* client/src/components/partials/DragItem.js */
 
 import React from "react";
+import { SNAPS, SNAP_TOLERANCE } from "../../data.js";
 
 let width = 30;
 let height = 30;
@@ -18,13 +19,15 @@ class DragItem extends React.Component {
     this.onMouseMove = this.onMouseMove.bind(this);
     this.onMouseUp = this.onMouseUp.bind(this);
     this.onTouchMove = this.onTouchMove.bind(this);
+    this.checkSnap = this.checkSnap.bind(this);
 
     this.state = {
       drag: false,
       x: this.props.x,
       y: this.props.y,
       floor: this.props.floor,
-      selected: (this.props.selected && (this.props.type === this.props.selected.type) && (this.props.index === this.props.selected.index) && (!this.props.selected.gi || this.props.selected.gi && this.props.gi === this.props.selected.gi))
+      selected: (this.props.selected && (this.props.type === this.props.selected.type) && (this.props.index === this.props.selected.index) && (!this.props.selected.gi || this.props.selected.gi && this.props.gi === this.props.selected.gi)),
+      snaps: (this.props.map ? SNAPS[this.props.map][this.props.floor] : undefined)
     }
   }
   setCallbacks() {
@@ -93,9 +96,18 @@ class DragItem extends React.Component {
       newY = this.props.parentBounds.height - height;
     }
 
+    console.log("NewX: " + newX);
+    console.log("NewY: " + newY);
+
+    let newBounds = this.checkSnap(newX, newY);
+    /*let newBounds = {
+      newX: newX,
+      newY: newY
+    }*/
+
     this.setState({
-      x: newX,
-      y: newY
+      x: newBounds.newX,
+      y: newBounds.newY
     });
   }
   onTouchMove(t) {
@@ -133,9 +145,11 @@ class DragItem extends React.Component {
       newY = this.props.parentBounds.height - height;
     }
 
+    let newBounds = this.checkSnap(newX, newY);
+
     this.setState({
-      x: newX,
-      y: newY
+      x: newBounds.newX,
+      y: newBounds.newY
     });
   }
   onMouseUp(e) {
@@ -201,6 +215,26 @@ class DragItem extends React.Component {
     }
     this.props.deselectElement();
   }
+  checkSnap(newX, newY) {
+
+    if (this.props.map) {
+      this.state.snaps.forEach((region, index) => {
+        if (newX >= region.x0 && newX <= region.x && newY >= region.y0 && newY <= region.y) {
+          this.state.snaps[index].locations.forEach((snap) => {
+            if (newX >= (snap.x - SNAP_TOLERANCE) && newX <= (snap.x + SNAP_TOLERANCE) && newY >= (snap.y - SNAP_TOLERANCE) && newY <= (snap.y + SNAP_TOLERANCE)) {
+              newX = snap.x;
+              newY = snap.y;
+            }
+          });
+        }
+      })
+    }
+
+    return {
+      newX: newX,
+      newY: newY
+    }
+  }
   componentDidUpdate(prevProps, prevState) {
     if (this.props !== prevProps) {
       let selected = false;
@@ -216,7 +250,8 @@ class DragItem extends React.Component {
       this.setState({
         selected: selected,
         x: this.props.x,
-        y: this.props.y
+        y: this.props.y,
+        snaps: (this.props.map ? SNAPS[this.props.map][this.props.floor] : undefined)
       });
     }
   }

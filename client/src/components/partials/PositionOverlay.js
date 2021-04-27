@@ -106,6 +106,7 @@ class PositionOverlay extends React.Component {
     }
   }
   render() {
+
     let dragItemProps = this.props.positionProps;
     dragItemProps.deselectElement = this.deselectElement;
 
@@ -140,7 +141,8 @@ class PositionOverlay extends React.Component {
             selected={this.state.selected}
             floor={this.props.floorIndex}
             function={this.props.function}
-            zoom={this.props.zoom}/>
+            zoom={this.props.zoom}
+            map={this.props.map}/>
         )
       }
     });
@@ -158,7 +160,8 @@ class PositionOverlay extends React.Component {
             selected={this.state.selected}
             floor={this.props.floorIndex}
             function={this.props.function}
-            zoom={this.props.zoom}/>
+            zoom={this.props.zoom}
+            map={this.props.map}/>
         )
       }
     });

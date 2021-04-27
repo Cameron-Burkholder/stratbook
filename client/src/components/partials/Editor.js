@@ -597,7 +597,7 @@ class Editor extends React.Component {
       scenes = map.attack[this.state.site][this.state.strategyIndex].scenes;
       strategies = map.attack[this.state.site];
     } else {
-      map.defense[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].gadgetPositions[index][gi] = position;
+      map.defense[this.state.site][this.state.strategyIndex].gadgetPositions[index][gi] = position;
       scenes = map.defense[this.state.site][this.state.strategyIndex].scenes;
       strategies = map.defense[this.state.site];
     }

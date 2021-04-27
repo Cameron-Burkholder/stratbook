@@ -163,7 +163,8 @@ class BlueprintForm extends React.Component {
           offsetY={this.state.offsetY}
           labels={this.props.labels}
           function={this.props.function}
-          positionProps={positionProps}/>
+          positionProps={positionProps}
+          map={this.props.map}/>
       </div>
     )
   }
