@@ -7,8 +7,7 @@ import ZoomSelector from "./ZoomSelector.js";
 import Pagination from "./Pagination.js";
 import BlueprintForm from "./BlueprintForm.js";
 import Objectives from "./Objectives.js";
-
-const ZOOM_TOLERANCE = 0.2;
+import { ZOOM_TOLERANCE } from "../../data.js";
 
 class Canvas extends React.Component {
   constructor(props) {

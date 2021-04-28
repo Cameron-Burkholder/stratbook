@@ -1210,5 +1210,6 @@ module.exports = {
       ]
     }
   },
-  SNAP_TOLERANCE: 5
+  SNAP_TOLERANCE: 5,
+  ZOOM_TOLERANCE: 0.1
 }
