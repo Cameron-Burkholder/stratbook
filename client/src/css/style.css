@@ -1734,14 +1734,14 @@ div.toolbar__navigation {
       color: white;
       background: linear-gradient(to right, #0031A4, #0098A6); }
   div.toolbar__navigation div.strategy-selector {
-    padding-bottom: 80px; }
-  div.toolbar__navigation div.site-container select, div.toolbar__navigation select.type-selector {
+    padding-bottom: 42px; }
+  div.toolbar__navigation div.site-container select, div.toolbar__navigation select.type-selector, div.toolbar__navigation div.strategy-selector select {
     border: 1px solid #E0E8FF;
     margin: 0;
     width: 100%;
     padding: 16px;
     border-radius: 4px; }
-    div.toolbar__navigation div.site-container select option, div.toolbar__navigation select.type-selector option {
+    div.toolbar__navigation div.site-container select option, div.toolbar__navigation select.type-selector option, div.toolbar__navigation div.strategy-selector select option {
       color: #19191a; }
   div.toolbar__navigation div.strategy-control {
     position: absolute;
@@ -1749,7 +1749,6 @@ div.toolbar__navigation {
     left: 0;
     bottom: 0;
     width: 100%;
-    height: 64px;
     display: grid;
     grid-template-columns: repeat(2, 1fr); }
     div.toolbar__navigation div.strategy-control button {
@@ -1758,13 +1757,13 @@ div.toolbar__navigation {
       width: 100%;
       height: 100%;
       margin: 0 !important;
-      padding: 8px;
+      padding: 4px;
+      font-size: 14pt;
       display: flex;
       align-items: center;
       justify-content: center;
       transition: all 0s ease;
-      filter: opacity(1);
-      font-size: 10pt; }
+      filter: opacity(1); }
     div.toolbar__navigation div.strategy-control button:hover {
       box-shadow: none;
       background: linear-gradient(to right, #0031A4, #4915D6);
@@ -1808,20 +1807,14 @@ div.sidebar {
     padding: 16px;
     border-right: 1px solid #33363E;
     height: 100%;
-    display: grid;
-    grid-template-rows: 400px 1fr;
-    grid-row-gap: 16px; }
-    div.sidebar div.sidebar-body div.site-container, div.sidebar div.sidebar-body div.scene-container, div.sidebar div.sidebar-body div.strategy-container {
-      height: 100%;
+    display: flex;
+    flex-direction: column; }
+    div.sidebar div.sidebar-body div.scene-container, div.sidebar div.sidebar-body div.strategy-container {
       display: flex;
       flex-direction: column; }
-      div.sidebar div.sidebar-body div.site-container div.select-container, div.sidebar div.sidebar-body div.scene-container div.select-container, div.sidebar div.sidebar-body div.strategy-container div.select-container {
-        flex-grow: 100;
-        overflow-y: auto;
-        padding-bottom: 40px; }
   div.sidebar button {
     display: none; }
-  div.sidebar h3.site-container__heading, div.sidebar h3.scene-container__heading, div.sidebar h3.strategy-container__heading {
+  div.sidebar h3.scene-container__heading, div.sidebar h3.strategy-container__heading {
     text-align: center;
     margin-bottom: 16px; }
   div.sidebar h4.site-container__subtitle {
@@ -1831,51 +1824,46 @@ div.sidebar {
   div.sidebar div.scene-container {
     height: 100%;
     overflow-y: auto;
-    padding-bottom: 40px; }
+    padding-bottom: 40px;
+    margin-top: 0; }
   div.sidebar div.strategy-container {
-    overflow-y: auto; }
-    div.sidebar div.strategy-container div.strategy {
-      display: flex;
-      flex-direction: column;
-      padding: 16px;
-      margin-top: 4px;
-      transition: all 0.3s ease;
-      background: #292C38; }
-      div.sidebar div.strategy-container div.strategy p.strategy__name {
-        color: #E6E6E6;
-        margin-bottom: 2px;
-        font-size: 14px;
-        display: inline; }
-    div.sidebar div.strategy-container div.strategy:hover {
-      cursor: pointer;
-      box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.25);
-      transition: all 0.3s ease; }
-    div.sidebar div.strategy-container div.strategy--active {
-      border-left: 3px solid #0031A4; }
-  div.sidebar div.site, div.sidebar div.scene {
+    overflow-y: auto;
+    padding-bottom: 16px;
+    min-height: 300px; }
+    div.sidebar div.strategy-container select.select-container {
+      width: 100%;
+      display: block;
+      background: #1A1D27;
+      border-bottom: none;
+      border: 1px solid #33363E;
+      border-radius: 4px;
+      color: #E6E6E6; }
+      div.sidebar div.strategy-container select.select-container option.strategy {
+        color: white; }
+  div.sidebar div.scene {
     display: flex;
     flex-direction: column;
     padding: 16px;
     margin-top: 4px;
     transition: all 0.3s ease;
     background: #292C38; }
-    div.sidebar div.site span.site__number, div.sidebar div.site span.scene__number, div.sidebar div.scene span.site__number, div.sidebar div.scene span.scene__number {
+    div.sidebar div.scene span.scene__number {
       font-size: 10pt; }
-    div.sidebar div.site span:hover, div.sidebar div.scene span:hover {
+    div.sidebar div.scene span:hover {
       cursor: pointer; }
-    div.sidebar div.site p.site__name, div.sidebar div.site p.scene__name, div.sidebar div.scene p.site__name, div.sidebar div.scene p.scene__name {
+    div.sidebar div.scene p.scene__name {
       color: #E6E6E6;
       margin-bottom: 2px;
       font-size: 14px;
       display: inline;
       width: auto; }
-    div.sidebar div.site div.scene__name-input, div.sidebar div.scene div.scene__name-input {
+    div.sidebar div.scene div.scene__name-input {
       position: relative; }
-      div.sidebar div.site div.scene__name-input input.scene__input, div.sidebar div.scene div.scene__name-input input.scene__input {
+      div.sidebar div.scene div.scene__name-input input.scene__input {
         padding: 4px;
         padding-top: 8px;
         width: 100%; }
-      div.sidebar div.site div.scene__name-input button, div.sidebar div.scene div.scene__name-input button {
+      div.sidebar div.scene div.scene__name-input button {
         margin: 0 !important;
         position: absolute;
         top: 50%;
@@ -1891,7 +1879,7 @@ div.sidebar {
         align-items: center;
         justify-content: center;
         text-align: right; }
-      div.sidebar div.site div.scene__name-input button:hover, div.sidebar div.scene div.scene__name-input button:hover {
+      div.sidebar div.scene div.scene__name-input button:hover {
         cursor: pointer;
         border-right: 3px solid #00C851;
         box-shadow: none; }
@@ -1900,11 +1888,11 @@ div.sidebar {
   div.sidebar p.scene__name:hover {
     text-decoration: underline;
     cursor: pointer; }
-  div.sidebar div.site:hover, div.sidebar div.scene:hover {
+  div.sidebar div.scene:hover {
     cursor: pointer;
     box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.25);
     transition: all 0.3s ease; }
-  div.sidebar div.site--active, div.sidebar div.scene--active {
+  div.sidebar div.scene--active {
     border-left: 3px solid #0031A4; }
   div.sidebar div.scene-controls {
     position: absolute;

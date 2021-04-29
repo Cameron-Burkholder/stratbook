@@ -622,7 +622,7 @@ exports.validateTeamMMR = function(request, response, done) {
   let data = request.body;
   let packet = messages.INVALID_MMR;
 
-  data.mmr = data.mmr ? data.mmr : "";
+  data.mmr = typeof(data.mmr) !== "undefined" ? parseInt(data.mmr) : "";
 
   let errors = {};
 
@@ -631,6 +631,7 @@ exports.validateTeamMMR = function(request, response, done) {
   }
 
   if (Object.keys(MMR_THRESHOLDS).indexOf(String(data.mmr)) < 0) {
+    console.log("here");
     errors.mmr = "MMR field is invalid"
   }
 

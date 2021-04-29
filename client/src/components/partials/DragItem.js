@@ -1,7 +1,7 @@
 /* client/src/components/partials/DragItem.js */
 
 import React from "react";
-import { SNAPS, SNAP_TOLERANCE } from "../../data.js";
+import { SNAPS, SNAP_TOLERANCE, CANVAS_WIDTH, CANVAS_HEIGHT } from "../../data.js";
 
 let width = 30;
 let height = 30;
@@ -35,7 +35,6 @@ class DragItem extends React.Component {
     document.addEventListener("mouseup", this.onMouseUp);
     document.addEventListener("touchmove", this.onTouchMove);
     document.addEventListener("touchend", this.onMouseUp);
-    document.addEventListener("keydown", this.translateElement);
   }
   translateElement(e) {
     if (37 <= e.keyCode <= 40) {
@@ -90,7 +89,8 @@ class DragItem extends React.Component {
       newX = 0;
     } else if (newX > this.props.parentBounds.width - width) {
       newX = this.props.parentBounds.width - width;
-    } else if (newY < 0) {
+    }
+    if (newY < 0) {
       newY = 0;
     } else if (newY > this.props.parentBounds.height - height) {
       newY = this.props.parentBounds.height - height;
@@ -100,10 +100,6 @@ class DragItem extends React.Component {
     console.log("NewY: " + newY);
 
     let newBounds = this.checkSnap(newX, newY);
-    /*let newBounds = {
-      newX: newX,
-      newY: newY
-    }*/
 
     this.setState({
       x: newBounds.newX,
@@ -136,7 +132,8 @@ class DragItem extends React.Component {
 
     if (newX < 0) {
       newX = 0;
-    } else if (newX > this.props.parentBounds.width - width) {
+    }
+    if (newX > this.props.parentBounds.width - width) {
       newX = this.props.parentBounds.width - width;
     }
     if (newY < 0) {
@@ -165,6 +162,18 @@ class DragItem extends React.Component {
         y: this.state.y,
         floor: this.state.floor
       };
+      if (position.x < 0) {
+        position.x = Math.floor(CANVAS_WIDTH / 2);
+      }
+      if (position.x >= CANVAS_WIDTH) {
+        position.x = Math.floor(CANVAS_WIDTH / 2);
+      }
+      if (position.y < 0) {
+        position.y = Math.floor(CANVAS_HEIGHT / 2);
+      }
+      if (position.y >= CANVAS_HEIGHT) {
+        position.y = Math.floor(CANVAS_HEIGHT / 2);
+      }
       switch (this.props.type) {
         case "OPERATOR":
           this.props.updateOperatorPositions(this.props.index, position);
@@ -247,10 +256,19 @@ class DragItem extends React.Component {
           selected = true;
         }
       }
+      let newX = this.props.x;
+      let newY = this.props.y;
+      if (newX < 0 || newX > CANVAS_WIDTH) {
+        newX = Math.floor(CANVAS_WIDTH / 2);
+      }
+      if (newY < 0 || newY > CANVAS_HEIGHT) {
+        newY = Math.floor(CANVAS_HEIGHT / 2);
+      }
       this.setState({
         selected: selected,
-        x: this.props.x,
-        y: this.props.y,
+        x: newX,
+        y: newY,
+        floor: this.props.floor,
         snaps: (this.props.map ? SNAPS[this.props.map][this.props.floor] : undefined)
       });
     }

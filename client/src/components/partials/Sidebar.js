@@ -87,9 +87,7 @@ class Sidebar extends React.Component {
     if (this.props.function !== "SharedViewer") {
       strategies = this.props.strategies.map((strat, index) => {
         return (
-          <div className={"strategy" + (this.props.strategyIndex === index ? " strategy--active" : "")} onClick={() => { this.props.selectStrategy(index) }} key={index}>
-            <p className="strategy__name">{strat.name}</p>
-          </div>
+          <option className="strategy" key={index}>{strat.name}</option>
         )
       });
     }
@@ -126,9 +124,11 @@ class Sidebar extends React.Component {
             { this.props.function !== "SharedViewer" ? (
               <div>
                 <h3 className="strategy-container__heading">Strategies</h3>
-                <div className="select-container">
+                <select className="select-container" onChange={(e) => {
+                  this.props.selectStrategy(e.target.options.selectedIndex);
+                }} value={this.props.strategies[this.props.strategyIndex].name}>
                   { strategies }
-                </div>
+                </select>
               </div>
             ) : ""}
           </div>

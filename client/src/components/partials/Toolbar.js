@@ -62,7 +62,7 @@ class Toolbar extends React.Component {
     if (this.props.function !== "SharedViewer") {
       strategies = this.props.strategies.map((strat, index) => {
         return (
-          <button onClick={() => { this.props.selectStrategy(index) }} className={(index === this.props.strategyIndex ? "strategy--active" : "")} key={index}>{strat.name}</button>
+          <option key={index}>{strat.name}</option>
         )
       });
     }
@@ -154,11 +154,15 @@ class Toolbar extends React.Component {
               </div>
               <h4>Strategies</h4>
               <div className="strategy-selector">
-                { strategies }
+                <select onChange={(e) => {
+                  this.props.selectStrategy(e.target.options.selectedIndex);
+                }} value={this.props.strategies[this.props.strategyIndex].name}>
+                  { strategies }
+                </select>
                 { this.props.function === "Editor" ? (
                   <div className="strategy-control">
-                    <button onClick={this.props.addStrategy}>Add Strategy</button>
-                    <button onClick={this.props.removeStrategy}>Remove Strategy</button>
+                    <button onClick={this.props.addStrategy}>+</button>
+                    <button onClick={this.props.removeStrategy}>-</button>
                   </div>
                 ) : ""}
               </div>

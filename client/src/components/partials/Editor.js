@@ -112,7 +112,23 @@ class Editor extends React.Component {
         if (sites[siteIndex][0] === 'B') {
           floorIndex = 0;
         } else {
-          floorIndex = parseInt(sites[siteIndex][0]);
+          let target;
+          switch (parseInt(sites[siteIndex][0])) {
+            case 1:
+              target = "First";
+              break;
+            case 2:
+              target = "Second";
+              break;
+            case 3:
+              target = "Third";
+              break;
+          }
+          floors.forEach((floor, index) => {
+            if (floor.includes(target)) {
+              floorIndex = index;
+            }
+          })
         }
         type = "ATTACK";
         scenes = this.props.map.attack[SITES[this.props.map.name][0]][0].scenes;
@@ -159,7 +175,23 @@ class Editor extends React.Component {
     if (sites[index][0] === 'B') {
       floorIndex = 0;
     } else {
-      floorIndex = parseInt(sites[index][0]);
+      let target;
+      switch (parseInt(sites[index][0])) {
+        case 1:
+          target = "First";
+          break;
+        case 2:
+          target = "Second";
+          break;
+        case 3:
+          target = "Third";
+          break;
+      }
+      this.state.floors.forEach((floor, index) => {
+        if (floor.includes(target)) {
+          floorIndex = index;
+        }
+      })
     }
     this.setState({
       site: this.state.sites[index],

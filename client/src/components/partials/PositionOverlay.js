@@ -49,7 +49,6 @@ class PositionOverlay extends React.Component {
     this.setState({
       selected: {}
     });
-    document.removeEventListener("keydown", this.translateElement);
   }
   onDrag(e) {
     this.props.onDragStart(e);
