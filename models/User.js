@@ -72,7 +72,7 @@ const UserSchema = new Schema({
   },
   premium: {
     type: Boolean,
-    required: fase
+    required: false
   }
 });
 
