@@ -1167,6 +1167,14 @@ div#ViewTeamAPI {
             grid-column: span 6; }
           div#ViewTeamAPI div.team div.roster div.team-member div.attackers div img, div#ViewTeamAPI div.team div.roster div.team-member div.defenders div img {
             width: 100%; }
+      div#ViewTeamAPI div.team div.roster div.team-member--premium {
+        border: 3px solid gold;
+        background: linear-gradient(to right, #F9F295, #E0A330); }
+        div#ViewTeamAPI div.team div.roster div.team-member--premium em {
+          font-size: 8pt;
+          margin-left: 8px; }
+        div#ViewTeamAPI div.team div.roster div.team-member--premium * {
+          color: #1A1505; }
 
 div#ViewTeamStatisticsAPI {
   border-top: 3px solid #0098A6; }

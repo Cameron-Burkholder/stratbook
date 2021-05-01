@@ -207,7 +207,7 @@ class App extends React.Component {
               { this.state.loggedIn ? (
                 <div className="page-wrapper">
                   <Team getAuthToken={this.getAuthToken} updateAuthToken={this.updateAuthToken}
-                        team_code={this.state.user.team_code} alert={this.alert} status={this.state.user.status}/>
+                        team_code={this.state.user.team_code} alert={this.alert} status={this.state.user.status} premium={this.state.user.premium}/>
                 </div>
               )
               : ( <Redirect to="/"/> )

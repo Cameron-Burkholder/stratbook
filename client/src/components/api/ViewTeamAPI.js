@@ -77,13 +77,13 @@ class ViewTeamAPI extends React.Component {
         let index = 0;
         if (this.state.team) {
           this.state.team.admins.map((admin) => {
-            teamMembers.push(<TeamMember username={admin.username} status={admin.status} attacker_role={admin.attacker_role} attackers={admin.attackers} defender_role={admin.defender_role} defenders={admin.defenders} key={index++}/>);
+            teamMembers.push(<TeamMember username={admin.username} status={admin.status} attacker_role={admin.attacker_role} attackers={admin.attackers} defender_role={admin.defender_role} defenders={admin.defenders} key={index++} premium={admin.premium}/>);
           });
           this.state.team.editors.map((editor) => {
-            teamMembers.push(<TeamMember username={editor.username} status={editor.status} attacker_role={editor.attacker_role} attackers={editor.attackers} defender_role={editor.defender_role} defenders={editor.defenders} key={index++}/>);
+            teamMembers.push(<TeamMember username={editor.username} status={editor.status} attacker_role={editor.attacker_role} attackers={editor.attackers} defender_role={editor.defender_role} defenders={editor.defenders} key={index++} premium={editor.premium}/>);
           });
           this.state.team.members.map((member) => {
-            teamMembers.push(<TeamMember username={member.username} status={member.status} attacker_role={member.attacker_role} attackers={member.attackers} defender_role={member.defender_role} defenders={member.defenders} key={index++}/>);
+            teamMembers.push(<TeamMember username={member.username} status={member.status} attacker_role={member.attacker_role} attackers={member.attackers} defender_role={member.defender_role} defenders={member.defenders} key={index++} premium={member.premium}/>);
           })
           contents = (
             <div className="team">

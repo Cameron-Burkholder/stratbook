@@ -29,8 +29,8 @@ const TeamMember = (props) => {
     )
   });
   return (
-    <div className="team-member">
-      <h4 className="team-member__username">{props.username}</h4>
+    <div className={"team-member" + (props.premium ? " team-member--premium" : "")}>
+      <h4 className="team-member__username">{props.username}<em>{props.premium ? "PREMIUM USER" : ""}</em></h4>
       <p className="team-member__status">{props.status}</p>
       <p className="team-member__quality">{props.attacker_role}</p>
       <p className="team-member__quality">{props.defender_role}</p>

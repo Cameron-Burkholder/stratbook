@@ -69,6 +69,10 @@ const UserSchema = new Schema({
   subscription: {
     type: Object,
     required: false
+  },
+  premium: {
+    type: Boolean,
+    required: fase
   }
 });
 

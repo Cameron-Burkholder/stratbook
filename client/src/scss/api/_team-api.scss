@@ -91,6 +91,17 @@ div#ViewTeamAPI {
           }
         }
       }
+      div.team-member--premium {
+        border: 3px solid gold;
+        background: linear-gradient(to right, #F9F295, #E0A330);
+        em {
+          font-size: 8pt;
+          margin-left: 8px;
+        }
+        * {
+          color: #1A1505;
+        }
+      }
     }
   }
 }
