@@ -1,7 +1,7 @@
 /* data.js */
 // ["BANK", "BORDER", "CHALET", "CLUBHOUSE", "COASTLINE", "CONSULATE", "KAFE DOSTOYEVSKY", "KANAL", "OREGON", "SKYSCRAPER", "THEME PARK", "VILLA"],
 module.exports = {
-  MAP_NAMES: ["BANK", "BORDER", "CLUBHOUSE", "CONSULATE", "OREGON"],
+  MAP_NAMES: ["BANK", "BORDER", "CHALET", "CLUBHOUSE", "CONSULATE", "OREGON"],
   SITES: {
     "BANK": ["B Lockers/B CCTV Room", "1F Teller's Office/1F Archives", "1F Staff Room/1F Open Area", "2F Executive Lounge/2F CEO Office"],
     "BORDER": ["1F Customs Inspection/1F Supply Room", "1F Ventilation Room/1F Workshop", "1F Bathroom/1F Tellers", "2F Armory Lockers/2F Archives"],
@@ -1187,6 +1187,342 @@ module.exports = {
         }
       ]
     },
+    "CHALET": {
+      0: [
+        {
+          x0: 443,
+          x: 453,
+          y0: 0,
+          y: 67,
+          locations: [
+            {
+              x: 448,
+              y: 3
+            },
+            {
+              x: 448,
+              y: 22
+            },
+            {
+              x: 448,
+              y: 43
+            },
+            {
+              x: 448,
+              y: 62
+            }
+          ]
+        },
+        {
+          x0: 450,
+          x: 478,
+          y0: 321,
+          y: 454,
+          locations: [
+            {
+              x: 473,
+              y: 449
+            },
+            {
+              x: 455,
+              y: 449
+            },
+            {
+              x: 471,
+              y: 356
+            },
+            {
+              x: 460,
+              y: 346
+            },
+            {
+              x: 460,
+              y: 326
+            },
+          ]
+        },
+        {
+          x0: 502,
+          x: 582,
+          y0: 218,
+          y: 303,
+          locations: [
+            {
+              x: 577,
+              y: 278
+            },
+            {
+              x: 577,
+              y: 298
+            },
+            {
+              x: 525,
+              y: 223
+            },
+            {
+              x: 507,
+              y: 223
+            }
+          ]
+        },
+      ],
+      1: [
+        {
+          x0: 315,
+          x: 516,
+          y0: 355,
+          y: 446,
+          locations: [
+            {
+              x: 320,
+              y: 425
+            },
+            {
+              x: 343,
+              y: 425
+            },
+            {
+              x: 373,
+              y: 441
+            },
+            {
+              x: 354,
+              y: 418
+            },
+            {
+              x: 354,
+              y: 394
+            },
+            {
+              x: 354,
+              y: 378
+            },
+            {
+              x: 354,
+              y: 360
+            },
+            {
+              x: 511,
+              y: 405
+            }
+          ]
+        },
+        {
+          x0: 379,
+          x: 564,
+          y0: 231,
+          y: 303,
+          locations: [
+            {
+              x: 428,
+              y: 298
+            },
+            {
+              x: 384,
+              y: 298
+            },
+            {
+              x: 492,
+              y: 264
+            },
+            {
+              x: 515,
+              y: 264
+            },
+            {
+              x: 480,
+              y: 236
+            },
+            {
+              x: 480,
+              y: 255
+            },
+            {
+              x: 559,
+              y: 252
+            }
+          ]
+        },
+        {
+          x0: 497,
+          x: 534,
+          y0: 105,
+          y: 176,
+          locations: [
+            {
+              x: 529,
+              y: 171
+            },
+            {
+              x: 529,
+              y: 151
+            },
+            {
+              x: 503,
+              y: 142
+            },
+            {
+              x: 519,
+              y: 142
+            },
+            {
+              x: 529,
+              y: 131
+            },
+            {
+              x: 529,
+              y: 110
+            }
+          ]
+        },
+        {
+          x0: 456,
+          x: 570,
+          y0: 0,
+          y: 73,
+          locations: [
+            {
+              x: 461,
+              y: 68
+            },
+            {
+              x: 482,
+              y: 68
+            },
+            {
+              x: 540,
+              y: 68
+            },
+            {
+              x: 565,
+              y: 68
+            },
+            {
+              x: 559,
+              y: 6
+            }
+          ]
+        },
+      ],
+      2: [
+        {
+          x0: 287,
+          x: 404,
+          y0: 327,
+          y: 399,
+          locations: [
+            {
+              x: 292,
+              y: 372
+            },
+            {
+              x: 352,
+              y: 363
+            },
+            {
+              x: 388,
+              y: 363
+            },
+            {
+              x: 387,
+              y: 332
+            },
+            {
+              x: 399,
+              y: 332
+            },
+            {
+              x: 399,
+              y: 349
+            },
+            {
+              x: 399,
+              y: 374
+            },
+            {
+              x: 399,
+              y: 394
+            }
+          ]
+        },
+        {
+          x0: 482,
+          x: 578,
+          y0: 183,
+          y: 326,
+          locations: [
+            {
+              x: 500,
+              y: 321
+            },
+            {
+              x: 523,
+              y: 321
+            },
+            {
+              x: 487,
+              y: 309
+            },
+            {
+              x: 487,
+              y: 286
+            },
+            {
+              x: 573,
+              y: 187
+            },
+            {
+              x: 551,
+              y: 187
+            }
+          ]
+        },
+        {
+          x0: 496,
+          x: 575,
+          y0: 66,
+          y: 173,
+          locations: [
+            {
+              x: 570,
+              y: 168
+            },
+            {
+              x: 527,
+              y: 149
+            },
+            {
+              x: 510,
+              y: 149
+            },
+            {
+              x: 501,
+              y: 121
+            },
+            {
+              x: 501,
+              y: 140
+            },
+            {
+              x: 501,
+              y: 102
+            },
+            {
+              x: 501,
+              y: 82
+            },
+            {
+              x: 513,
+              y: 71
+            },
+            {
+              x: 527,
+              y: 71
+            }
+          ]
+        },
+      ]
+    },
     "CLUBHOUSE": {
       0: [
         {
@@ -1488,8 +1824,16 @@ module.exports = {
               y: 135
             },
             {
+              x: 463,
+              y: 207
+            },
+            {
               x: 473,
               y: 178
+            },
+            {
+              x: 475,
+              y: 148
             },
             {
               x: 485,

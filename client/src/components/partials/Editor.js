@@ -389,7 +389,7 @@ class Editor extends React.Component {
     this.setState({
       map: map,
       strategies: newStrategies,
-      strategyIndex: this.state.strategyIndex + 1
+      strategyIndex: newStrategies.length - 1
     });
   }
   removeStrategy() {

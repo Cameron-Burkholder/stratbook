@@ -140,7 +140,7 @@ class Toolbar extends React.Component {
               <h4>Mode</h4>
               <select className="type-selector" onChange={(e) => {
                 this.props.updateType(e.target.value);
-              }}>
+              }} value={this.props.type}>
                 <option>ATTACK</option>
                 <option>DEFENSE</option>
               </select>

@@ -323,7 +323,7 @@ class DragItem extends React.Component {
           <span>{(this.props.type === "GADGET" || this.props.type === "UTILITY" || this.props.type === "OPERATOR" ? this.props.value.replace("_", " ").replace("_", " ").toUpperCase() : "")}</span>
         ) : ""}
         { this.state.selected ? (
-          <button className="drag-item__button" onClick={this.removeItem} onMouseDown={this.removeItem}>X</button>
+          <button className="drag-item__button" onClick={this.removeItem} onMouseDown={this.removeItem} onTouchStart={this.removeItem}>X</button>
         ) : ""}
       </div>
     )
