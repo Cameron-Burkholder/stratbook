@@ -1,7 +1,7 @@
 /* data.js */
 // ["BANK", "BORDER", "CHALET", "CLUBHOUSE", "COASTLINE", "CONSULATE", "KAFE DOSTOYEVSKY", "KANAL", "OREGON", "SKYSCRAPER", "THEME PARK", "VILLA"],
 module.exports = {
-  MAP_NAMES: ["BANK", "BORDER", "CHALET", "CLUBHOUSE", "COASTLINE", "CONSULATE", "OREGON"],
+  MAP_NAMES: ["BANK", "BORDER", "CHALET", "CLUBHOUSE", "COASTLINE", "CONSULATE", "KAFE DOSTOYEVSKY", "OREGON"],
   SITES: {
     "BANK": ["B Lockers/B CCTV Room", "1F Teller's Office/1F Archives", "1F Staff Room/1F Open Area", "2F Executive Lounge/2F CEO Office"],
     "BORDER": ["1F Customs Inspection/1F Supply Room", "1F Ventilation Room/1F Workshop", "1F Bathroom/1F Tellers", "2F Armory Lockers/2F Archives"],
@@ -2651,6 +2651,342 @@ module.exports = {
             }
           ]
         }
+      ]
+    },
+    "KAFE DOSTOYEVSKY": {
+      0: [
+        {
+          x0: 276,
+          x: 354,
+          y0: 197,
+          y: 338,
+          locations: [
+            {
+              x: 306,
+              y: 310
+            },
+            {
+              x: 306,
+              y: 333
+            },
+            {
+              x: 281,
+              y: 202
+            },
+            {
+              x: 316,
+              y: 203
+            },
+            {
+              x: 349,
+              y: 240
+            },
+            {
+              x: 349,
+              y: 262
+            }
+          ]
+        },
+        {
+          x0: 378,
+          x: 468,
+          y0: 204,
+          y: 266,
+          locations: [
+            {
+              x: 383,
+              y: 209
+            },
+            {
+              x: 403,
+              y: 209
+            },
+            {
+              x: 438,
+              y: 238
+            },
+            {
+              x: 438,
+              y: 261
+            },
+            {
+              x: 463,
+              y: 214
+            }
+          ]
+        },
+        {
+          x0: 533,
+          x: 603,
+          y0: 213,
+          y: 377,
+          locations: [
+            {
+              x: 567,
+              y: 218
+            },
+            {
+              x: 538,
+              y: 308
+            },
+            {
+              x: 538,
+              y: 327
+            },
+            {
+              x: 579,
+              y: 372
+            },
+            {
+              x: 598,
+              y: 372
+            }
+          ]
+        },
+      ],
+      1: [
+        {
+          x0: 356,
+          x: 444,
+          y0: 192,
+          y: 262,
+          locations: [
+            {
+              x: 361,
+              y: 257
+            },
+            {
+              x: 381,
+              y: 257
+            },
+            {
+              x: 423,
+              y: 257
+            },
+            {
+              x: 439,
+              y: 257
+            },
+            {
+              x: 359,
+              y: 197
+            },
+            {
+              x: 378,
+              y: 197
+            },
+            {
+              x: 394,
+              y: 197
+            },
+            {
+              x: 408,
+              y: 197
+            }
+          ]
+        },
+        {
+          x0: 403,
+          x: 453,
+          y0: 164,
+          y: 187,
+          locations: [
+            {
+              x: 408,
+              y: 169
+            },
+            {
+              x: 428,
+              y: 169
+            },
+            {
+              x: 448,
+              y: 182
+            }
+          ]
+        },
+        {
+          x0: 492,
+          x: 607,
+          y0: 201,
+          y: 271,
+          locations: [
+            {
+              x: 497,
+              y: 206
+            },
+            {
+              x: 515,
+              y: 206
+            },
+            {
+              x: 497,
+              y: 266
+            },
+            {
+              x: 515,
+              y: 266
+            },
+            {
+              x: 583,
+              y: 266
+            },
+            {
+              x: 602,
+              y: 266
+            }
+          ]
+        },
+        {
+          x0: 445,
+          x: 546,
+          y0: 287,
+          y: 347,
+          locations: [
+            {
+              x: 450,
+              y: 300
+            },
+            {
+              x: 450,
+              y: 342
+            },
+            {
+              x: 514,
+              y: 334
+            },
+            {
+              x: 541,
+              y: 330
+            },
+            {
+              x: 541,
+              y: 307
+            },
+            {
+              x: 463,
+              y: 292
+            },
+            {
+              x: 477,
+              y: 292
+            },
+            {
+              x: 511,
+              y: 292
+            },
+            {
+              x: 524,
+              y: 292
+            }
+          ]
+        },
+      ],
+      2: [
+        {
+          x0: 360,
+          x: 481,
+          y0: 168,
+          y: 251,
+          locations: [
+            {
+              x: 365,
+              y: 203
+            },
+            {
+              x: 386,
+              y: 203
+            },
+            {
+              x: 437,
+              y: 181
+            },
+            {
+              x: 421,
+              y: 173
+            },
+            {
+              x: 421,
+              y: 187
+            },
+            {
+              x: 459,
+              y: 246
+            },
+            {
+              x: 476,
+              y: 246
+            }
+          ]
+        },
+        {
+          x0: 418,
+          x: 512,
+          y0: 248,
+          y: 318,
+          locations: [
+            {
+              x: 422,
+              y: 313
+            },
+            {
+              x: 482,
+              y: 253
+            },
+            {
+              x: 482,
+              y: 270
+            },
+            {
+              x: 482,
+              y: 288
+            },
+            {
+              x: 482,
+              y: 307
+            },
+            {
+              x: 488,
+              y: 281
+            },
+            {
+              x: 507,
+              y: 281
+            }
+          ]
+        },
+        {
+          x0: 543,
+          x: 604,
+          y0: 169,
+          y: 293,
+          locations: [
+            {
+              x: 548,
+              y: 253
+            },
+            {
+              x: 548,
+              y: 269
+            },
+            {
+              x: 599,
+              y: 288
+            },
+            {
+              x: 575,
+              y: 230
+            },
+            {
+              x: 575,
+              y: 191
+            },
+            {
+              x: 575,
+              y: 174
+            }
+          ]
+        },
       ]
     },
     "OREGON": {
