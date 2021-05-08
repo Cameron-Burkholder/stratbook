@@ -1,7 +1,7 @@
 /* data.js */
 // ["BANK", "BORDER", "CHALET", "CLUBHOUSE", "COASTLINE", "CONSULATE", "KAFE DOSTOYEVSKY", "KANAL", "OREGON", "SKYSCRAPER", "THEME PARK", "VILLA"],
 module.exports = {
-  MAP_NAMES: ["BANK", "BORDER", "CHALET", "CLUBHOUSE", "CONSULATE", "OREGON"],
+  MAP_NAMES: ["BANK", "BORDER", "CHALET", "CLUBHOUSE", "COASTLINE", "CONSULATE", "OREGON"],
   SITES: {
     "BANK": ["B Lockers/B CCTV Room", "1F Teller's Office/1F Archives", "1F Staff Room/1F Open Area", "2F Executive Lounge/2F CEO Office"],
     "BORDER": ["1F Customs Inspection/1F Supply Room", "1F Ventilation Room/1F Workshop", "1F Bathroom/1F Tellers", "2F Armory Lockers/2F Archives"],
@@ -1854,6 +1854,328 @@ module.exports = {
           ]
         }
       ]
+    },
+    "COASTLINE": {
+      0: [
+        {
+          x0: 239,
+          x: 304,
+          y0: 121,
+          y: 131,
+          locations: [
+            {
+              x: 244,
+              y: 126
+            },
+            {
+              x: 257,
+              y: 126
+            },
+            {
+              x: 283,
+              y: 126
+            },
+            {
+              x: 299,
+              y: 126
+            }
+          ]
+        },
+        {
+          x0: 295,
+          x: 356,
+          y0: 193,
+          y: 294,
+          locations: [
+            {
+              x: 352,
+              y: 198
+            },
+            {
+              x: 352,
+              y: 214
+            },
+            {
+              x: 300,
+              y: 222
+            },
+            {
+              x: 316,
+              y: 222
+            },
+            {
+              x: 328,
+              y: 222
+            },
+            {
+              x: 343,
+              y: 222
+            },
+            {
+              x: 331,
+              y: 289
+            },
+            {
+              x: 346,
+              y: 289
+            }
+          ]
+        },
+        {
+          x0: 385,
+          x: 488,
+          y0: 106,
+          y: 286,
+          locations: [
+            {
+              x: 390,
+              y: 230
+            },
+            {
+              x: 390,
+              y: 249
+            },
+            {
+              x: 390,
+              y: 263
+            },
+            {
+              x: 390,
+              y: 281
+            },
+            {
+              x: 415,
+              y: 194
+            },
+            {
+              x: 433,
+              y: 194
+            },
+            {
+              x: 444,
+              y: 194
+            },
+            {
+              x: 457,
+              y: 194
+            },
+            {
+              x: 483,
+              y: 129
+            },
+            {
+              x: 483,
+              y: 111
+            }
+          ]
+        },
+        {
+          x0: 486,
+          x: 601,
+          y0: 142,
+          y: 199,
+          locations: [
+            {
+              x: 491,
+              y: 194
+            },
+            {
+              x: 505,
+              y: 194
+            },
+            {
+              x: 519,
+              y: 194
+            },
+            {
+              x: 538,
+              y: 147
+            },
+            {
+              x: 559,
+              y: 147
+            },
+            {
+              x: 577,
+              y: 147
+            },
+            {
+              x: 596,
+              y: 147
+            }
+          ]
+        },
+      ],
+      1: [
+        {
+          x0: 300,
+          x: 361,
+          y0: 127,
+          y: 231,
+          locations: [
+            {
+              x: 356,
+              y: 132
+            },
+            {
+              x: 356,
+              y: 156
+            },
+            {
+              x: 356,
+              y: 193
+            },
+            {
+              x: 356,
+              y: 215
+            },
+            {
+              x: 315,
+              y: 200
+            },
+            {
+              x: 305,
+              y: 226
+            },
+            {
+              x: 323,
+              y: 226
+            },
+            {
+              x: 338,
+              y: 226
+            }
+          ]
+        },
+        {
+          x0: 298,
+          x: 480,
+          y0: 229,
+          y: 348,
+          locations: [
+            {
+              x: 305,
+              y: 343
+            },
+            {
+              x: 303,
+              y: 312
+            },
+            {
+              x: 319,
+              y: 312
+            },
+            {
+              x: 394,
+              y: 234
+            },
+            {
+              x: 394,
+              y: 250
+            },
+            {
+              x: 394,
+              y: 263
+            },
+            {
+              x: 394,
+              y: 281
+            },
+            {
+              x: 475,
+              y: 321
+            }
+          ]
+        },
+        {
+          x0: 400,
+          x: 561,
+          y0: 106,
+          y: 210,
+          locations: [
+            {
+              x: 405,
+              y: 196
+            },
+            {
+              x: 422,
+              y: 196
+            },
+            {
+              x: 460,
+              y: 196
+            },
+            {
+              x: 476,
+              y: 196
+            },
+            {
+              x: 488,
+              y: 186
+            },
+            {
+              x: 488,
+              y: 169
+            },
+            {
+              x: 488,
+              y: 150
+            },
+            {
+              x: 556,
+              y: 111
+            },
+            {
+              x: 556,
+              y: 133
+            },
+            {
+              x: 528,
+              y: 205
+            }
+          ]
+        },
+        {
+          x0: 513,
+          x: 572,
+          y0: 220,
+          y: 314,
+          locations: [
+            {
+              x: 567,
+              y: 225
+            },
+            {
+              x: 530,
+              y: 225
+            },
+            {
+              x: 559,
+              y: 309
+            },
+            {
+              x: 538,
+              y: 309
+            },
+            {
+              x: 518,
+              y: 305
+            },
+            {
+              x: 518,
+              y: 288
+            },
+            {
+              x: 518,
+              y: 258
+            },
+            {
+              x: 518,
+              y: 236
+            }
+          ]
+        },
+      ],
     },
     "CONSULATE": {
       0: [
