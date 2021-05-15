@@ -1,7 +1,7 @@
 /* data.js */
 // ["BANK", "BORDER", "CHALET", "CLUBHOUSE", "COASTLINE", "CONSULATE", "KAFE DOSTOYEVSKY", "KANAL", "OREGON", "SKYSCRAPER", "THEME PARK", "VILLA"],
 module.exports = {
-  MAP_NAMES: ["BANK", "BORDER", "CHALET", "CLUBHOUSE", "COASTLINE", "CONSULATE", "KAFE DOSTOYEVSKY", "OREGON"],
+  MAP_NAMES: ["BANK", "BORDER", "CHALET", "CLUBHOUSE", "COASTLINE", "CONSULATE", "KAFE DOSTOYEVSKY", "OREGON", "VILLA"],
   SITES: {
     "BANK": ["B Lockers/B CCTV Room", "1F Teller's Office/1F Archives", "1F Staff Room/1F Open Area", "2F Executive Lounge/2F CEO Office"],
     "BORDER": ["1F Customs Inspection/1F Supply Room", "1F Ventilation Room/1F Workshop", "1F Bathroom/1F Tellers", "2F Armory Lockers/2F Archives"],
@@ -3315,6 +3315,354 @@ module.exports = {
         y0: 0,
         y: 0
       }]
+    },
+    "VILLA": {
+      0: [
+        {
+          x0: 387,
+          x: 599,
+          y0: 5,
+          y: 285,
+          locations: [
+            {
+              x: 392,
+              y: 280
+            },
+            {
+              x: 411,
+              y: 280
+            },
+            {
+              x: 421,
+              y: 164
+            },
+            {
+              x: 527,
+              y: 164
+            },
+            {
+              x: 508,
+              y: 164
+            },
+            {
+              x: 413,
+              y: 102
+            },
+            {
+              x: 427,
+              y: 102
+            },
+            {
+              x: 458,
+              y: 102
+            },
+            {
+              x: 472,
+              y: 102
+            },
+            {
+              x: 423,
+              y: 10
+            },
+            {
+              x: 594,
+              y: 21
+            }
+          ]
+        }
+      ],
+      1: [
+        {
+          x0: 346,
+          x: 441,
+          y0: 277,
+          y: 359,
+          locations: [
+            {
+              x: 351,
+              y: 354
+            },
+            {
+              x: 351,
+              y: 334
+            },
+            {
+              x: 378,
+              y: 334
+            },
+            {
+              x: 378,
+              y: 354
+            },
+            {
+              x: 378,
+              y: 314
+            },
+            {
+              x: 378,
+              y: 294
+            },
+            {
+              x: 413,
+              y: 282
+            },
+            {
+              x: 436,
+              y: 282
+            }
+          ]
+        },
+        {
+          x0: 318,
+          x: 421,
+          y0: 123,
+          y: 251,
+          locations: [
+            {
+              x: 323,
+              y: 253
+            },
+            {
+              x: 340,
+              y: 253
+            },
+            {
+              x: 416,
+              y: 246
+            },
+            {
+              x: 416,
+              y: 228
+            },
+            {
+              x: 416,
+              y: 211
+            },
+            {
+              x: 396,
+              y: 179
+            },
+            {
+              x: 367,
+              y: 128
+            },
+            {
+              x: 405,
+              y: 128
+            }
+          ]
+        },
+        {
+          x0: 454,
+          x: 540,
+          y0: 98,
+          y: 137,
+          locations: [
+            {
+              x: 459,
+              y: 132
+            },
+            {
+              x: 476,
+              y: 132
+            },
+            {
+              x: 508,
+              y: 132
+            },
+            {
+              x: 526,
+              y: 132
+            },
+            {
+              x: 535,
+              y: 125
+            },
+            {
+              x: 535,
+              y: 103
+            }
+          ]
+        },
+        {
+          x0: 447,
+          x: 547,
+          y0: 21,
+          y: 94,
+          locations: [
+            {
+              x: 452,
+              y: 89
+            },
+            {
+              x: 452,
+              y: 74
+            },
+            {
+              x: 452,
+              y: 58
+            },
+            {
+              x: 523,
+              y: 42
+            },
+            {
+              x: 542,
+              y: 26
+            }
+          ]
+        },
+      ],
+      2: [
+        {
+          x0: 274,
+          x: 432,
+          y0: 335,
+          y: 408,
+          locations: [
+            {
+              x: 427,
+              y: 403
+            },
+            {
+              x: 358,
+              y: 369
+            },
+            {
+              x: 358,
+              y: 350
+            },
+            {
+              x: 368,
+              y: 340
+            },
+            {
+              x: 387,
+              y: 340
+            },
+            {
+              x: 279,
+              y: 373
+            },
+            {
+              x: 279,
+              y: 352
+            }
+          ]
+        },
+        {
+          x0: 253,
+          x: 363,
+          y0: 213,
+          y: 337,
+          locations: [
+            {
+              x: 358,
+              y: 332
+            },
+            {
+              x: 358,
+              y: 316
+            },
+            {
+              x: 358,
+              y: 300
+            },
+            {
+              x: 358,
+              y: 284
+            },
+            {
+              x: 278,
+              y: 306
+            },
+            {
+              x: 278,
+              y: 285
+            },
+            {
+              x: 320,
+              y: 253
+            },
+            {
+              x: 258,
+              y: 218
+            }
+          ]
+        },
+        {
+          x0: 358,
+          x: 439,
+          y0: 46,
+          y: 197,
+          locations: [
+            {
+              x: 399,
+              y: 192
+            },
+            {
+              x: 399,
+              y: 172
+            },
+            {
+              x: 385,
+              y: 51
+            },
+            {
+              x: 362,
+              y: 71
+            },
+            {
+              x: 377,
+              y: 71
+            },
+            {
+              x: 393,
+              y: 71
+            },
+            {
+              x: 408,
+              y: 71
+            },
+            {
+              x: 434,
+              y: 96
+            }
+          ]
+        },
+        {
+          x0: 489,
+          x: 564,
+          y0: 23,
+          y: 148,
+          locations: [
+            {
+              x: 494,
+              y: 78
+            },
+            {
+              x: 494,
+              y: 96
+            },
+            {
+              x: 494,
+              y: 114
+            },
+            {
+              x: 522,
+              y: 28
+            },
+            {
+              x: 522,
+              y: 53
+            },
+            {
+              x: 559,
+              y: 143
+            }
+          ]
+        }
+      ]
     }
   },
   SNAP_TOLERANCE: 5,

@@ -204,6 +204,31 @@ class Editor extends React.Component {
     });
   }
   updateType(type) {
+    let floorIndex = 0;
+    let sites = this.state.sites;
+    let siteIndex = 0;
+    let floors = this.state.floors;
+    if (sites[siteIndex][0] === 'B') {
+      floorIndex = 0;
+    } else {
+      let target;
+      switch (parseInt(sites[siteIndex][0])) {
+        case 1:
+          target = "First";
+          break;
+        case 2:
+          target = "Second";
+          break;
+        case 3:
+          target = "Third";
+          break;
+      }
+      floors.forEach((floor, index) => {
+        if (floor.includes(target)) {
+          floorIndex = index;
+        }
+      })
+    }
     if (type === "ATTACK") {
       this.setState({
         type: "ATTACK",
@@ -213,7 +238,7 @@ class Editor extends React.Component {
         strategyIndex: 0,
         scenes: this.state.map.attack[this.state.sites[0]][0].scenes,
         sceneIndex: 0,
-        floorIndex: 0
+        floorIndex: floorIndex
       });
     } else {
       this.setState({
@@ -224,7 +249,7 @@ class Editor extends React.Component {
         strategyIndex: 0,
         scenes: this.state.map.defense[this.state.sites[0]][0].scenes,
         sceneIndex: 0,
-        floorIndex: 0
+        floorIndex: floorIndex
       });
     }
   }
