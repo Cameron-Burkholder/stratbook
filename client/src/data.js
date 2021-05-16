@@ -1,7 +1,7 @@
 /* data.js */
 // ["BANK", "BORDER", "CHALET", "CLUBHOUSE", "COASTLINE", "CONSULATE", "KAFE DOSTOYEVSKY", "KANAL", "OREGON", "SKYSCRAPER", "THEME PARK", "VILLA"],
 module.exports = {
-  MAP_NAMES: ["BANK", "BORDER", "CHALET", "CLUBHOUSE", "COASTLINE", "CONSULATE", "KAFE DOSTOYEVSKY", "OREGON", "VILLA"],
+  MAP_NAMES: ["BANK", "BORDER", "CHALET", "CLUBHOUSE", "COASTLINE", "CONSULATE", "KAFE DOSTOYEVSKY", "KANAL", "OREGON", "VILLA"],
   SITES: {
     "BANK": ["B Lockers/B CCTV Room", "1F Teller's Office/1F Archives", "1F Staff Room/1F Open Area", "2F Executive Lounge/2F CEO Office"],
     "BORDER": ["1F Customs Inspection/1F Supply Room", "1F Ventilation Room/1F Workshop", "1F Bathroom/1F Tellers", "2F Armory Lockers/2F Archives"],
@@ -268,7 +268,7 @@ module.exports = {
       count: 2
     }
   },
-  ATTACKER_ROLES: ["HARD BREACH", "SOFT BREACH", "ENTRY FRAG", "AREA DENIAL/FLANK WATCH", "INTEL", "UTILIY CLEAR", "SUPPORT", "ROAM CLEAR"],
+  ATTACKER_ROLES: ["NONE", "HARD BREACH", "SOFT BREACH", "ENTRY FRAG", "AREA DENIAL/FLANK WATCH", "INTEL", "UTILIY CLEAR", "SUPPORT", "ROAM CLEAR"],
   ATTACKER_ROLE_GUIDE: {
     "ACE": "HARD BREACH",
     "AMARU": "ENTRY FRAG",
@@ -302,7 +302,7 @@ module.exports = {
     "ZOFIA": "UTILITY CLEAR"
   },
   ATTACKERS: ["ACE", "AMARU", "ASH", "BLACKBEARD", "BLITZ", "BUCK", "CAPITAO", "DOKKAEBI", "FINKA", "FLORES", "FUZE", "GLAZ", "GRIDLOCK", "HIBANA", "IANA", "IQ", "JACKAL", "KALI", "LION", "MAVERICK", "MONTAGNE", "NOKK", "NOMAD", "SLEDGE", "THATCHER", "THERMITE", "TWITCH", "YING", "ZERO", "ZOFIA"],
-  DEFENDER_ROLES: ["HARD BREACH DENIAL", "INTEL DENIAL", "INTEL", "AREA DENIAL", "TRAPS", "UTILITY SOAK", "SUPPORT", "ROAM"],
+  DEFENDER_ROLES: ["NONE", "HARD BREACH DENIAL", "INTEL DENIAL", "INTEL", "AREA DENIAL", "TRAPS", "UTILITY SOAK", "SUPPORT", "ROAM"],
   DEFENDER_ROLE_GUIDE: {
     "ALIBI": "ROAM",
     "ARUNI": "UTILITY SOAK",
@@ -2986,6 +2986,270 @@ module.exports = {
             {
               x: 575,
               y: 174
+            }
+          ]
+        },
+      ]
+    },
+    "KANAL": {
+      0: [
+        {
+          x0: 241,
+          x: 295,
+          y0: 190,
+          y: 355,
+          locations: [
+            {
+              x: 248,
+              y: 350
+            },
+            {
+              x: 290,
+              y: 299
+            },
+            {
+              x: 290,
+              y: 280
+            },
+            {
+              x: 277,
+              y: 264
+            },
+            {
+              x: 259,
+              y: 264
+            },
+            {
+              x: 289,
+              y: 253
+            },
+            {
+              x: 289,
+              y: 234
+            },
+            {
+              x: 269,
+              y: 195
+            },
+            {
+              x: 246,
+              y: 195
+            }
+          ]
+        }
+      ],
+      1: [
+        {
+          x0: 272,
+          x: 365,
+          y0: 110,
+          y: 200,
+          locations: [
+            {
+              x: 339,
+              y: 130
+            },
+            {
+              x: 319,
+              y: 130
+            },
+            {
+              x: 277,
+              y: 115
+            },
+            {
+              x: 277,
+              y: 132
+            },
+            {
+              x: 277,
+              y: 166
+            },
+            {
+              x: 312,
+              y: 173
+            },
+            {
+              x: 289,
+              y: 195
+            },
+            {
+              x: 360,
+              y: 193
+            }
+          ]
+        },
+        {
+          x0: 217,
+          x: 329,
+          y0: 215,
+          y: 305,
+          locations: [
+            {
+              x: 324,
+              y: 220
+            },
+            {
+              x: 222,
+              y: 255
+            },
+            {
+              x: 301,
+              y: 256
+            },
+            {
+              x: 301,
+              y: 275
+            },
+            {
+              x: 260,
+              y: 300
+            },
+            {
+              x: 279,
+              y: 300
+            }
+          ]
+        },
+        {
+          x0: 464,
+          x: 635,
+          y0: 176,
+          y: 235,
+          locations: [
+            {
+              x: 511,
+              y: 230
+            },
+            {
+              x: 526,
+              y: 211
+            },
+            {
+              x: 469,
+              y: 193
+            },
+            {
+              x: 489,
+              y: 193
+            },
+            {
+              x: 579,
+              y: 181
+            },
+            {
+              x: 579,
+              y: 202
+            },
+            {
+              x: 579,
+              y: 222
+            },
+            {
+              x: 630,
+              y: 216
+            }
+          ]
+        },
+      ],
+      2: [
+        {
+          x0: 459,
+          x: 505,
+          y0: 135,
+          y: 285,
+          locations: [
+            {
+              x: 464,
+              y: 251
+            },
+            {
+              x: 472,
+              y: 280
+            },
+            {
+              x: 490,
+              y: 280
+            },
+            {
+              x: 500,
+              y: 269
+            },
+            {
+              x: 500,
+              y: 250
+            },
+            {
+              x: 469,
+              y: 170
+            },
+            {
+              x: 486,
+              y: 140
+            }
+          ]
+        },
+        {
+          x0: 513,
+          x: 567,
+          y0: 165,
+          y: 229,
+          locations: [
+            {
+              x: 518,
+              y: 170
+            },
+            {
+              x: 533,
+              y: 177
+            },
+            {
+              x: 533,
+              y: 199
+            },
+            {
+              x: 562,
+              y: 211
+            },
+            {
+              x: 562,
+              y: 224
+            }
+          ]
+        },
+        {
+          x0: 581,
+          x: 620,
+          y0: 135,
+          y: 241,
+          locations: [
+            {
+              x: 586,
+              y: 141
+            },
+            {
+              x: 615,
+              y: 140
+            },
+            {
+              x: 615,
+              y: 160
+            },
+            {
+              x: 615,
+              y: 206
+            },
+            {
+              x: 615,
+              y: 226
+            },
+            {
+              x: 606,
+              y: 236
+            },
+            {
+              x: 586,
+              y: 236
             }
           ]
         },
