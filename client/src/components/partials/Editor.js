@@ -1128,12 +1128,13 @@ class Editor extends React.Component {
 
       sidebarProps.map = toolbarProps.map;
 
+      console.log(this.state.strategy);
       canvasProps.operators = this.state.strategy.operators;
       canvasProps.operatorPositions = this.state.strategy.scenes[this.state.sceneIndex].operatorPositions;
       canvasProps.gadgets = this.state.strategy.gadgets;
-      canvasProps.gadgetPositions = this.state.strategy.scenes[this.state.sceneIndex].gadgetPositions;
+      canvasProps.gadgetPositions = (this.state.type === "ATTACK" ? this.state.strategy.scenes[this.state.sceneIndex].gadgetPositions : this.state.strategy.gadgetPositions);
       canvasProps.utility = this.state.strategy.utility;
-      canvasProps.utilityPositions = this.state.strategy.scenes[this.state.sceneIndex].utilityPositions;
+      canvasProps.utilityPositions = (this.state.type === "ATTACK" ? this.state.strategy.scenes[this.state.sceneIndex].utilityPositions : this.state.strategy.utilityPositions);
       canvasProps.drones = this.state.type === "ATTACK" ? (
         this.state.strategy.scenes[this.state.sceneIndex].drones
       ) : (

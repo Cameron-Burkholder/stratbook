@@ -115,7 +115,7 @@ class Toolbar extends React.Component {
                 this.props.insertRotate();
               }
             }}>
-              <img className="action__img" src="../../media/min/rotate.png" alt="Rotate"/>
+              <img className="action__img" src="../../media/min/rotate-0.png" alt="Rotate"/>
               <p>Rotates ({this.props.rotates.length})</p>
             </div>
           </div>
