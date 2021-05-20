@@ -2053,6 +2053,16 @@ div.canvas {
       border-radius: 4px;
       z-index: 3;
       filter: opacity(1); }
+    div.canvas div.position-overlay select.drag-item__select {
+      position: absolute;
+      left: 50%;
+      top: 36px;
+      transform: translateX(-50%);
+      display: block;
+      z-index: 5; }
+      div.canvas div.position-overlay select.drag-item__select option {
+        font-size: 10pt;
+        color: #19191a; }
     div.canvas div.position-overlay div.drag-item.drag {
       cursor: grabbing;
       transition: all 0s ease; }

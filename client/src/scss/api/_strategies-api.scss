@@ -726,6 +726,18 @@ div.canvas {
       z-index: 3;
       filter: opacity(1);
     }
+    select.drag-item__select {
+      position: absolute;
+      left: 50%;
+      top: 36px;
+      transform: translateX(-50%);
+      display: block;
+      z-index: 5;
+      option {
+        font-size: $font-small;
+        color: $text-dark;
+      }
+    }
     div.drag-item.drag {
       cursor: grabbing;
       transition: all 0s ease;

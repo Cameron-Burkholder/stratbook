@@ -1,7 +1,7 @@
 /* client/src/components/partials/DragItem.js */
 
 import React from "react";
-import { SNAPS, SNAP_TOLERANCE, CANVAS_WIDTH, CANVAS_HEIGHT } from "../../data.js";
+import { SNAPS, SNAP_TOLERANCE, CANVAS_WIDTH, CANVAS_HEIGHT, ATTRIBUTES } from "../../data.js";
 
 let width = 30;
 let height = 30;
@@ -15,11 +15,14 @@ class DragItem extends React.Component {
 
     // Handle drag/touch
     this.removeItem = this.removeItem.bind(this);
-    this.translateElement = this.translateElement.bind(this);
     this.onMouseMove = this.onMouseMove.bind(this);
     this.onMouseUp = this.onMouseUp.bind(this);
     this.onTouchMove = this.onTouchMove.bind(this);
     this.checkSnap = this.checkSnap.bind(this);
+
+    // Manage attributes
+    this.toggleAttributeMenu = this.toggleAttributeMenu.bind(this);
+    this.updatePropAttributes = this.updatePropAttributes.bind(this);
 
     this.state = {
       drag: false,
@@ -27,39 +30,21 @@ class DragItem extends React.Component {
       y: this.props.y,
       floor: this.props.floor,
       selected: (this.props.selected && (this.props.type === this.props.selected.type) && (this.props.index === this.props.selected.index) && (!this.props.selected.gi || this.props.selected.gi && this.props.gi === this.props.selected.gi)),
-      snaps: (this.props.map ? SNAPS[this.props.map][this.props.floor] : undefined)
+      snaps: (this.props.map ? SNAPS[this.props.map][this.props.floor] : undefined),
+      attribute: this.props.attribute ? this.props.attribute : ATTRIBUTES[this.props.type][0],
+      attributeMenu: false
     }
+  }
+  toggleAttributeMenu(e) {
+    this.setState({
+      attributeMenu: !this.state.attributeMenu
+    });
   }
   setCallbacks() {
     document.addEventListener("mousemove", this.onMouseMove);
     document.addEventListener("mouseup", this.onMouseUp);
     document.addEventListener("touchmove", this.onTouchMove);
     document.addEventListener("touchend", this.onMouseUp);
-  }
-  translateElement(e) {
-    if (37 <= e.keyCode <= 40) {
-      e.preventDefault();
-
-      let newX;
-      let newY;
-
-      if (e.keyCode === 37) {
-        newX -= 2;
-      } else if (e.keyCode === 38) {
-        newY -= 2;
-      } else if (e.keyCode === 39) {
-        newX += 2;
-      } else if (e.keyCode === 40) {
-        newY += 2;
-      } else {
-        return this.props.deselectElement();
-      }
-
-      this.setState({
-        x: newX,
-        y: newY
-      });
-    }
   }
   onMouseMove(e) {
 
@@ -95,9 +80,6 @@ class DragItem extends React.Component {
     } else if (newY > this.props.parentBounds.height - height) {
       newY = this.props.parentBounds.height - height;
     }
-
-    console.log("NewX: " + newX);
-    console.log("NewY: " + newY);
 
     let newBounds = this.checkSnap(newX, newY);
 
@@ -160,7 +142,8 @@ class DragItem extends React.Component {
       let position = {
         x: this.state.x,
         y: this.state.y,
-        floor: this.state.floor
+        floor: this.state.floor,
+        attribute: this.state.attribute
       };
       if (position.x < 0) {
         position.x = Math.floor(CANVAS_WIDTH / 2);
@@ -244,6 +227,18 @@ class DragItem extends React.Component {
       newY: newY
     }
   }
+  updatePropAttributes(e) {
+    let position = {
+      x: this.state.x,
+      y: this.state.y,
+      floor: this.state.floor,
+      attribute: e.target.value
+    };
+
+    if (this.props.type === "ROTATE") {
+      this.props.updateRotatePositions(this.props.index, position);
+    }
+  }
   componentDidUpdate(prevProps, prevState) {
     if (this.props !== prevProps) {
       let selected = false;
@@ -269,23 +264,38 @@ class DragItem extends React.Component {
         x: newX,
         y: newY,
         floor: this.props.floor,
-        snaps: (this.props.map ? SNAPS[this.props.map][this.props.floor] : undefined)
+        snaps: (this.props.map ? SNAPS[this.props.map][this.props.floor] : undefined),
+        attributeMenu: (!selected ? false : this.state.attributeMenu),
+        attribute: this.props.attribute ? this.props.attribute : ATTRIBUTES[this.props.type][0]
       });
     }
   }
   render() {
+    const options = ATTRIBUTES[this.props.type].map((attr, index) => {
+      return <option key={index}>{attr}</option>
+    });
+    let url;
+    if (this.props.type === "ROTATE") {
+      let splitUrl = this.props.url.split("\.");
+      url = "../.." + splitUrl[4] + "-" + ATTRIBUTES[this.props.type].indexOf(this.state.attribute) + "." + splitUrl[5];
+    } else {
+      url = this.props.url;
+    }
     return (
-      <div style={{ top: (this.state.y ? this.state.y : 0), left: (this.state.x ? this.state.x : 0), backgroundImage: `url(${this.props.url})`, backgroundSize: "cover", backgroundPosition: "center" }}
+      <div style={{ top: (this.state.y ? this.state.y : 0), left: (this.state.x ? this.state.x : 0), backgroundImage: `url(${url})`, backgroundSize: "cover", backgroundPosition: "center" }}
       className={"drag-item" + ` drag-${this.props.type.toLowerCase()}` + (this.props.drag ? " drag" : "") + (this.state.selected ? " drag-item--selected" : "")}
+        onDoubleClick={(e) => {
+          if (this.props.function === "Editor" && this.props.type === "ROTATE") {
+            this.toggleAttributeMenu();
+          }
+        }}
         onClick={(e) => {
-          if (this.props.function === "Editor") {
-            e.preventDefault();
-            e.stopPropagation();
+          if (this.props.function === "Editor" && !this.state.attributeMenu) {
             this.props.selectElement(this.props.index, this.props.type, this.props.gi);
           }
         }}
         onMouseDown={(e) => {
-          if (this.props.function === "Editor") {
+          if (this.props.function === "Editor" && !this.state.attributeMenu) {
             e.preventDefault();
             e.stopPropagation();
             this.setState({
@@ -299,10 +309,12 @@ class DragItem extends React.Component {
                 this.props.selectElement(this.props.index, this.props.type, null, this.setCallbacks);
               }
             });
+          } else {
+            e.stopPropagation();
           }
         }}
         onTouchStart={(e) => {
-          if (this.props.function === "Editor") {
+          if (this.props.function === "Editor" && !this.state.attributeMenu) {
             e.preventDefault();
             e.stopPropagation();
             this.setState({
@@ -324,6 +336,11 @@ class DragItem extends React.Component {
         ) : ""}
         { this.state.selected ? (
           <button className="drag-item__button" onClick={this.removeItem} onMouseDown={this.removeItem} onTouchStart={this.removeItem}>X</button>
+        ) : ""}
+        { this.state.attributeMenu ? (
+          <select className="drag-item__select" onChange={this.updatePropAttributes} value={this.state.attribute}>
+            { options }
+          </select>
         ) : ""}
       </div>
     )

@@ -1,7 +1,7 @@
 /* data.js */
 //           ["BANK", "BORDER", "CHALET", "CLUBHOUSE", "COASTLINE", "CONSULATE", "KAFE DOSTOYEVSKY", "KANAL", "OREGON", "SKYSCRAPER", "THEME PARK", "VILLA"],
 module.exports = {
-  MAP_NAMES: ["BANK", "BORDER", "CHALET", "CLUBHOUSE", "COASTLINE", "CONSULATE", "KAFE DOSTOYEVSKY", "KANAL", "OREGON", "SKYSCRAPER", "VILLA"],
+  MAP_NAMES: ["BANK", "BORDER", "CHALET", "CLUBHOUSE", "COASTLINE", "CONSULATE", "KAFE DOSTOYEVSKY", "KANAL", "OREGON", "SKYSCRAPER", "THEME PARK", "VILLA"],
   SITES: {
     "BANK": ["B Lockers/B CCTV Room", "1F Teller's Office/1F Archives", "1F Staff Room/1F Open Area", "2F Executive Lounge/2F CEO Office"],
     "BORDER": ["1F Customs Inspection/1F Supply Room", "1F Ventilation Room/1F Workshop", "1F Bathroom/1F Tellers", "2F Armory Lockers/2F Archives"],
@@ -3888,6 +3888,288 @@ module.exports = {
         }
       ],
     },
+    "THEME PARK": {
+      0: [
+        {
+          x0: 382,
+          x: 562,
+          y0: 244,
+          y: 361,
+          locations: [
+            {
+              x: 499,
+              y: 340
+            },
+            {
+              x: 499,
+              y: 356
+            },
+            {
+              x: 387,
+              y: 333
+            },
+            {
+              x: 387,
+              y: 321
+            },
+            {
+              x: 557,
+              y: 281
+            },
+            {
+              x: 557,
+              y: 261
+            },
+            {
+              x: 463,
+              y: 249
+            },
+            {
+              x: 421,
+              y: 249
+            }
+          ]
+        },
+        {
+          x0: 236,
+          x: 532,
+          y0: 126,
+          y: 165,
+          locations: [
+            {
+              x: 527,
+              y: 146
+            },
+            {
+              x: 526,
+              y: 131
+            },
+            {
+              x: 460,
+              y: 155
+            },
+            {
+              x: 439,
+              y: 155
+            },
+            {
+              x: 320,
+              y: 131
+            },
+            {
+              x: 241,
+              y: 141
+            },
+            {
+              x: 361,
+              y: 160
+            }
+          ]
+        },
+        {
+          x0: 298,
+          x: 384,
+          y0: 176,
+          y: 262,
+          locations: [
+            {
+              x: 361,
+              y: 181
+            },
+            {
+              x: 361,
+              y: 198
+            },
+            {
+              x: 361,
+              y: 214
+            },
+            {
+              x: 349,
+              y: 225
+            },
+            {
+              x: 329,
+              y: 225
+            },
+            {
+              x: 379,
+              y: 257
+            },
+            {
+              x: 363,
+              y: 257
+            },
+            {
+              x: 319,
+              y: 257
+            },
+            {
+              x: 303,
+              y: 257
+            }
+          ]
+        },
+      ],
+      1: [
+        {
+          x0: 375,
+          x: 582,
+          y0: 75,
+          y: 149,
+          locations: [
+            {
+              x: 380,
+              y: 80
+            },
+            {
+              x: 439,
+              y: 80
+            },
+            {
+              x: 440,
+              y: 129
+            },
+            {
+              x: 440,
+              y: 144
+            },
+            {
+              x: 577,
+              y: 123
+            }
+          ]
+        },
+        {
+          x0: 425,
+          x: 606,
+          y0: 164,
+          y: 258,
+          locations: [
+            {
+              x: 507,
+              y: 169
+            },
+            {
+              x: 507,
+              y: 189
+            },
+            {
+              x: 601,
+              y: 200
+            },
+            {
+              x: 587,
+              y: 200
+            },
+            {
+              x: 541,
+              y: 200
+            },
+            {
+              x: 520,
+              y: 200
+            },
+            {
+              x: 451,
+              y: 201
+            },
+            {
+              x: 430,
+              y: 201
+            },
+            {
+              x: 483,
+              y: 253
+            }
+          ]
+        },
+        {
+          x0: 305,
+          x: 498,
+          y0: 300,
+          y: 367,
+          locations: [
+            {
+              x: 493,
+              y: 344
+            },
+            {
+              x: 493,
+              y: 361
+            },
+            {
+              x: 421,
+              y: 321
+            },
+            {
+              x: 421,
+              y: 305
+            },
+            {
+              x: 411,
+              y: 331
+            },
+            {
+              x: 390,
+              y: 331
+            },
+            {
+              x: 310,
+              y: 344
+            },
+            {
+              x: 310,
+              y: 361
+            }
+          ]
+        },
+        {
+          x0: 312,
+          x: 395,
+          y0: 176,
+          y: 325,
+          locations: [
+            {
+              x: 325,
+              y: 320
+            },
+            {
+              x: 341,
+              y: 270
+            },
+            {
+              x: 359,
+              y: 270
+            },
+            {
+              x: 371,
+              y: 270
+            },
+            {
+              x: 390,
+              y: 223
+            },
+            {
+              x: 370,
+              y: 181
+            },
+            {
+              x: 353,
+              y: 181
+            },
+            {
+              x: 334,
+              y: 181
+            },
+            {
+              x: 317,
+              y: 181
+            }
+          ]
+        }
+      ],
+    },
     "VILLA": {
       0: [
         {
@@ -4238,5 +4520,14 @@ module.exports = {
     }
   },
   SNAP_TOLERANCE: 5,
-  ZOOM_TOLERANCE: 0.1
+  ZOOM_TOLERANCE: 0.1,
+  ATTRIBUTES: {
+    "OPERATOR" : [],
+    "GADGET": [],
+    "UTILITY": [],
+    "DRONE": [],
+    "BREACH": [],
+    "ROTATE": ["Full Rotate", "Crouch Rotate", "Vault Rotate", "Footholes", "Line of sight", "Vertical holes"],
+    "REINFORCEMENT": []
+  }
 }

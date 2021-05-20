@@ -122,7 +122,8 @@ class PositionOverlay extends React.Component {
             selected={this.state.selected}
             floor={this.props.floorIndex}
             function={this.props.function}
-            zoom={this.props.zoom}/>
+            zoom={this.props.zoom}
+            attribute={pos.attribute}/>
         )
       }
     });
@@ -141,7 +142,8 @@ class PositionOverlay extends React.Component {
             floor={this.props.floorIndex}
             function={this.props.function}
             zoom={this.props.zoom}
-            map={this.props.map}/>
+            map={this.props.map}
+            attribute={pos.attribute}/>
         )
       }
     });
@@ -160,7 +162,8 @@ class PositionOverlay extends React.Component {
             floor={this.props.floorIndex}
             function={this.props.function}
             zoom={this.props.zoom}
-            map={this.props.map}/>
+            map={this.props.map}
+            attribute={pos.attribute}/>
         )
       }
     });
@@ -178,7 +181,8 @@ class PositionOverlay extends React.Component {
             selected={this.state.selected}
             floor={this.props.floorIndex}
             function={this.props.function}
-            zoom={this.props.zoom}/>
+            zoom={this.props.zoom}
+            attribute={pos.attribute}/>
         )
       } else {
         return "";
@@ -199,7 +203,8 @@ class PositionOverlay extends React.Component {
             selected={this.state.selected}
             floor={this.props.floorIndex}
             function={this.props.function}
-            zoom={this.props.zoom}/>
+            zoom={this.props.zoom}
+            attribute={pos.attribute}/>
           );
         }
       });
@@ -220,7 +225,8 @@ class PositionOverlay extends React.Component {
             selected={this.state.selected}
             floor={this.props.floorIndex}
             function={this.props.function}
-            zoom={this.props.zoom}/>
+            zoom={this.props.zoom}
+            attribute={pos.attribute}/>
           );
         }
       });
@@ -238,7 +244,8 @@ class PositionOverlay extends React.Component {
             selected={this.state.selected}
             floor={this.props.floorIndex}
             function={this.props.function}
-            zoom={this.props.zoom}/>
+            zoom={this.props.zoom}
+            attribute={pos.attribute}/>
         );
       }
     });
