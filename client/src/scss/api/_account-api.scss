@@ -3,11 +3,16 @@
 div#LoginAPI, div#RegisterAPI, div#ForgotPasswordAPI, div#ResetPasswordAPI {
   width: 100%;
   max-width: $phone-max-width;
-  background: $background-tertiary;
+  background: $background-quaternary;
   padding: $padding-m;
-  box-shadow: $box-shadow-primary;
+  box-shadow: $box-shadow-secondary;
   margin: auto;
   z-index: 1;
+  a {
+    text-align: center;
+    color: $text-subtle;
+    margin-top: $margin-xs;
+  }
 }
 
 @media screen and (max-width: #{$tablet-max-width}) {
@@ -18,20 +23,20 @@ div#LoginAPI, div#RegisterAPI, div#ForgotPasswordAPI, div#ResetPasswordAPI {
 
 div.account-section {
   padding: $padding-m;
-  border: $border-primary;
-  border-bottom: 3px solid $color-primary;
-  border-top: 3px solid $color-primary;
+  border-radius: $border-radius;
   margin-bottom: $margin-l;
-  box-shadow: $box-shadow-primary;
+  border-bottom: $border-primary;
+  padding-bottom: $padding-l;
+  //box-shadow: $box-shadow-primary;
+  //background: $background-quaternary;
   button {
-    background: $background-primary;
-    border: $border-primary;
-  }
-  button:hover {
-    background: linear-gradient(#{$color-primary}, #{$color-secondary});
+    background: $color-primary;
+    padding: $button-padding-big;
   }
   h3 {
     text-align: center;
+    font-size: $font-heading2;
+    margin-top: $margin-s;
   }
   div.role {
     display: grid;
@@ -57,6 +62,10 @@ div.account-section {
 }
 div#notifications {
   margin-top: $margin-l;
+}
+div#PushNotificationsAPI button {
+  margin: $margin-s auto;
+  display: block;
 }
 div#SetDefendersAPI, div#SetAttackersAPI {
   fieldset > div {

@@ -295,38 +295,39 @@ class ManageTeamAPI extends React.Component {
           <Loading/>
         ) : (
           <div>
-            <h3>Roster</h3>
             { contents }
-            <div className="team-status">
-              <p>Team Status</p>
-              <select onChange={this.onChange} value={this.state.status}>
-                <option>Allow New Members</option>
-                <option>No New Members</option>
-              </select>
-            </div>
-            <div className="team-platform">
-              <p>Team Platform</p>
-              <select onChange={this.changeTeamPlatform} value={this.state.platform}>
-                <option>XBOX</option>
-                <option>PC</option>
-                <option>PS4</option>
-              </select>
-            </div>
-            <div className="team-mmr">
-              <p>MMR Threshold</p>
-              <select onChange={this.changeTeamMMR} value={MMR_THRESHOLDS[this.state.mmr]}>
-                <option>None</option>
-                <option>Silver III</option>
-                <option>Silver II</option>
-                <option>Silver I</option>
-                <option>Gold III</option>
-                <option>Gold II</option>
-                <option>Gold I</option>
-                <option>Platinum III</option>
-                <option>Platinum II</option>
-                <option>Platinum I</option>
-                <option>Diamond</option>
-              </select>
+            <div className="team-controls">
+              <div className="team-status">
+                <p>Team Status</p>
+                <select onChange={this.onChange} value={this.state.status}>
+                  <option>Allow New Members</option>
+                  <option>No New Members</option>
+                </select>
+              </div>
+              <div className="team-platform">
+                <p>Team Platform</p>
+                <select onChange={this.changeTeamPlatform} value={this.state.platform}>
+                  <option>XBOX</option>
+                  <option>PC</option>
+                  <option>PS4</option>
+                </select>
+              </div>
+              <div className="team-mmr">
+                <p>MMR Threshold</p>
+                <select onChange={this.changeTeamMMR} value={MMR_THRESHOLDS[this.state.mmr]}>
+                  <option>None</option>
+                  <option>Silver III</option>
+                  <option>Silver II</option>
+                  <option>Silver I</option>
+                  <option>Gold III</option>
+                  <option>Gold II</option>
+                  <option>Gold I</option>
+                  <option>Platinum III</option>
+                  <option>Platinum II</option>
+                  <option>Platinum I</option>
+                  <option>Diamond</option>
+                </select>
+              </div>
             </div>
           </div>
         )}

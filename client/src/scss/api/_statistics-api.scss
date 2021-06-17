@@ -1,18 +1,29 @@
 /* client/src/scss/api/_statistics-api.scss */
 
-p.statistics-failure {
+div.page#dashboard h1 {
+  background: $color-primary;
+  border-radius: $border-radius;
+  padding: $padding-m;
+  box-shadow: $box-shadow-secondary;
+}
+
+p.statistics-failure, p.text-error {
   padding: $padding-s;
-  background: $background-primary;
   margin-top: $margin-m;
+  text-align: center;
 }
 div#GeneralStatisticsAPI {
   grid-column: span 2;
-  background: linear-gradient(to bottom, #{$color-primary}, #{$color-secondary});
 }
 div#SeasonalStatisticsAPI {
-  background: linear-gradient(to bottom, #{$color-tertiary}, #{$color-warning});
+  background-color: $background-quaternary;
+  filter: blur(1);
+  border-radius: $border-radius;
+  box-shadow: $box-shadow-secondary;
+  h2.statistics-title {
+    color: $text-heading;
+  }
   div#seasonal-stats-inside {
-    background: $background-primary;
     padding: $padding-s;
     padding-top: $padding-m;
     height: 100%;
@@ -22,31 +33,31 @@ div#SeasonalStatisticsAPI {
     flex-direction: column;
   }
   div.stat--main {
-    background: linear-gradient(#{$color-tertiary}, #{$color-warning});
-    width: 256px;
+    width: 100%;
     height: 256px;
-    border-radius: 100%;
+    border-radius: $border-radius;
     margin: $margin-m auto;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    box-shadow: $box-shadow-primary;
     position: relative;
     z-index: 1;
     transition: all 0.3s ease;
+    background-color: $color-primary;
+    overflow: hidden;
     h3 {
-      font-size: $font-heading1;
+      font-size: $font-title;
       z-index: 2;
     }
     p {
-      font-size: $font-heading2;
+      font-size: $font-heading1;
       z-index: 2;
       margin-top: 4px;
       color: $text-heading;
     }
     p.stat__label--secondary {
-      font-size: $font-body;
+      font-size: $font-heading3;
       margin-top: 0;
       color: $text-heading;
       z-index: 2;
@@ -57,16 +68,14 @@ div#SeasonalStatisticsAPI {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
-    width: 244px;
-    height: 244px;
-    border-radius: 100%;
-    background: $background-primary;
+    transform: scale(1.1) translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    background: $OPERATION_BACKGROUND_IMAGE;
+    background-size: cover;
+    background-position: center;
     z-index: 1;
-  }
-  div.stat--main:hover {
-    transform: translateY(-8px);
-    transition: all 0.3s ease;
+    opacity: 0.15;
   }
   div.stat {
     display: grid;
@@ -75,6 +84,7 @@ div#SeasonalStatisticsAPI {
     margin-left: $margin-s;
     h3.stat__value--main {
       grid-column: span 2;
+      font-weight: 500;
     }
     p.stat__label {
       color: white;
@@ -84,7 +94,6 @@ div#SeasonalStatisticsAPI {
 }
 div#OperatorStatisticsAPI {
   grid-column: span 3;
-  background: linear-gradient(to bottom, #{$color-tertiary}, #{$color-secondary});
   div.statistics {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -95,9 +104,17 @@ div#OperatorStatisticsAPI {
       width: 100%;
       button {
         margin: $margin-s;
+        padding: $button-padding-big;
+        background: $background-secondary;
+      }
+      button:hover {
+        box-shadow: $box-shadow-secondary;
       }
       input {
         margin-right: $margin-s;
+      }
+      input:focus {
+        box-shadow: $box-shadow-secondary;
       }
     }
     div.operator-statistics {
@@ -105,6 +122,7 @@ div#OperatorStatisticsAPI {
       grid-template-columns: 72px 1fr;
       background: $background-secondary;
       transition: all 0.3s ease;
+      border-radius: $border-radius;
       div.operator-info {
         padding: 8px;
         img {
@@ -131,8 +149,7 @@ div#OperatorStatisticsAPI {
       }
     }
     div.operator-statistics:hover {
-      box-shadow: $box-shadow-primary;
-      transform: translateY(-2px);
+      box-shadow: $box-shadow-secondary;
       transition: all 0.3s ease;
     }
   }
@@ -142,13 +159,17 @@ div.statistics-api {
   padding: $padding-m;
 }
 h2.statistics-title, h3.statistics-title {
+  color: $text-dark;
   text-align: center;
+  font-weight: 500;
 }
 img.user-image {
   width: 64px;
 }
 h3.stats-grid__heading {
   width: 100%;
+  color: $text-dark;
+  font-weight: 500;
   margin-bottom: $margin-s;
 }
 div.stats-grid {
@@ -159,37 +180,34 @@ div.stats-grid {
 }
 div.stats-box {
   padding: $padding-m;
-  border: $border-primary;
   transition: all 0.3s ease;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  box-shadow: $box-shadow-primary;
-  background: $background-primary;
-}
-div.stats-box:hover {
-  transform: translateY(-8px);
-  transition: all 0.5s ease;
+  border-radius: $border-radius;
 }
 div.stat {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  margin-bottom: $margin-xs;
+  p.stat__label {
+    color: $text-dark;
+    font-weight: 500;
+  }
   span.stat__value {
-    color: $text-heading;
+    color: $text-subtle;
   }
 }
 div.progress-circle {
   display: flex;
-  border-radius: 100%;
   margin: $margin-s auto;
-  border: $border-primary;
-  width: 128px;
-  height: 128px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   position: relative;
-  background: linear-gradient(#{$color-primary}, #{$color-secondary});
+  border-radius: $border-radius;
+  background: $background-quaternary;
+  width: 100%;
+  padding: $padding-s;
   z-index: 1;
   transition: all 0.5s ease;
   p {
@@ -201,18 +219,6 @@ div.progress-circle {
     color: $text-heading;
     z-index: 2;
   }
-}
-div.progress-circle::after {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 124px;
-  height: 124px;
-  content: "";
-  background: $background-primary;
-  border-radius: 100%;
-  z-index: 1;
 }
 h4.stats__heading {
   text-align: center;
@@ -229,8 +235,6 @@ div.statistics-api--rows {
     margin: auto;
     div.operator-statistics {
       background: transparent !important;
-      border-top: $border-primary;
-      border-bottom: $border-primary;
       margin: 0;
       div.operator-info {
         img {
@@ -240,6 +244,7 @@ div.statistics-api--rows {
         }
         h3 {
           font-size: $font-small;
+          color: $text-dark;
         }
       }
       div.operator-stats {
@@ -248,6 +253,13 @@ div.statistics-api--rows {
           display: flex;
           flex-direction: column;
           justify-content: center;
+          p {
+            color: $text-subtle;
+          }
+          span {
+            color: $text-dark !important;
+            font-weight: 500;
+          }
         }
       }
     }

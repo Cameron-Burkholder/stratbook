@@ -30,8 +30,19 @@ div.page#manage-team {
   }
 }
 
+div.page#team, div.page#manage-team {
+  background: $background-tertiary;
+  h1 {
+    color: $text-dark;
+  }
+}
+
 div.page#strategies {
   padding: 0;
+}
+
+div.page#dashboard {
+  background: $background-tertiary;
 }
 
 

@@ -17,8 +17,5 @@ button:hover {
   transition: all 0.3s ease;
 }
 button.button--danger {
-  border: 1px solid $color-danger;
-}
-button.button--danger:hover {
-  background: $color-danger;
+  background: $color-danger !important;
 }

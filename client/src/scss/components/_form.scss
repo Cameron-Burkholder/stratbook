@@ -2,13 +2,14 @@
 
 input, select, textarea {
   display: inline-block;
-  padding: $padding-s;
+  padding: $padding-m;
   border: none;
-  color: $text-dark;
+  outline: none;
+  color: $text-subtle;
   font-size: $font-body;
-  padding-bottom: calc(#{$padding-s} - 4px);
-  border-bottom: 4px solid white;
   transition: all 0.3s ease;
+  border-radius: $border-radius;
+  background-color: $background-secondary;
 }
 input:hover, textarea:hover {
   cursor: text;
@@ -16,25 +17,26 @@ input:hover, textarea:hover {
 input:focus, textarea:focus {
   border: none;
   outline: none;
-  box-shadow: $box-shadow-primary;
-  border-bottom: 4px solid $color-secondary;
   transition: all 0.3s ease;
+  box-shadow: $box-shadow-primary;
 }
 
 .form__heading {
-  color: $text-dark;
   font-size: $font-heading1;
   text-align: center;
   font-weight: bold;
+  margin-top: $margin-s;
   margin-bottom: $margin-s;
 }
 .form__error {
   color: $color-danger;
   font-size: $font-small;
+  margin-top: $margin-xs;
 }
 .form__description {
-  color: $text-dark;
+  color: $text-subtle;
   font-size: $font-small;
+  margin-top: $margin-xs;
 }
 
 fieldset {
@@ -54,31 +56,24 @@ fieldset a:hover {
 }
 
 label {
-  color: $text-dark;
+  color: $text-subtle;
+  font-size: $font-subtitle;
   filter: opacity(0.9);
+  margin-bottom: $margin-xs;
 }
 
 form button {
   display: block;
   margin: auto;
   width: 128px;
+  padding: $button-padding-big;
   margin-top: $margin-m;
   background: linear-gradient(#{$color-primary}, #{$color-secondary});
   border: none;
   transition: all 0.3s ease;
 }
-form button:hover {
-  transform: translateY(-4px);
-}
-form input, form select {
-  border: $border-secondary;
-  border-bottom-width: 3px;
-}
 form select option {
-  color: $text-dark;
+  color: $text-subtle;
   padding: $padding-s;
-}
-form input:focus {
-  border: $border-secondary;
-  border-bottom: 3px solid $color-secondary;
+  font-family: "Roboto";
 }

@@ -3,13 +3,10 @@
 nav.nav {
   display: grid;
   grid-template-columns: 300px 1fr;
-  border-bottom: $border-primary;
-  height: 64px;
+  height: 68px;
   background: $background-primary;
   z-index: 4;
 }
-
-
 
 ul.nav__head {
   display: flex;
@@ -31,11 +28,15 @@ ul.nav__body {
 li.nav__item {
   display: flex;
   margin-right: $margin-s;
-  height: 100%;
   align-items: center;
-  padding: $padding-s;
+  background-color: $background-quaternary;
+  border-radius: $border-radius;
   a.nav__link {
-    color: $text-accent;
+    color: $text-subtle;
+    font-size: 12px;
+    height: 100%;
+    padding: $button-padding;
+    box-shadow: $box-shadow-secondary;
   }
 }
 li.nav__item:hover {
@@ -45,6 +46,7 @@ li.nav__item:hover {
     color: white;
     transition: all 0.3s ease;
     cursor: pointer;
+    box-shadow: $box-shadow-primary;
   }
 }
 a.nav__link {
@@ -53,15 +55,9 @@ a.nav__link {
 }
 a.nav__link--active {
   position: relative;
-}
-a.nav__link--active::after {
-  position: absolute;
-  width: 100%;
-  height: 2px;
-  background: linear-gradient(#{$color-primary}, #{$color-secondary});
-  content: "";
-  top: 100%;
-  left: 0;
+  background-color: $color-primary;
+  border-radius: $border-radius;
+  color: $text-heading;
 }
 
 button#nav__button {
@@ -84,10 +80,11 @@ div.user-dropdown {
     position: absolute;
     display: flex;
     flex-direction: column;
-    top: 50px;
+    top: 58px;
     right: 12px;
-    border: $border-primary;
-    padding: $padding-s;
+    min-width: 200px;
+    padding: $padding-m;
+    border-radius: $border-radius;
     background: $background-primary;
     z-index: 1;
   }
@@ -99,14 +96,21 @@ div.user-dropdown {
   a.user-dropdown__link {
     text-decoration: none;
     text-align: center;
+    padding: $button-padding;
+    background: $background-quaternary;
+    border-radius: $border-radius;
+    transition: all 0.3s ease;
   }
   a#logout-link {
-    color: $color-danger;
+    background: $color-danger;
     margin-top: 8px;
   }
   a.user-dropdown__link:hover {
     cursor: pointer;
-    text-decoration: underline;
+    text-decoration: none;
+    box-shadow: $box-shadow-secondary;
+    color: $text-heading;
+    transition: all 0.3s ease;
   }
 }
 div.user-dropdown--inactive {

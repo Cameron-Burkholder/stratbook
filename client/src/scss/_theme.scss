@@ -1,53 +1,61 @@
 /* scss/_theme.scss */
 
+// VARIABLES
+$OPERATION_BACKGROUND_IMAGE: url("https://staticctf.akamaized.net/J3yJr34U2pZ2Ieem48Dwy9uqj5PNUQTn/5YZNi7RKUzIYeKntMB4RJE/caa9a35889f5333f83acdd02a131ac36/r6s-northstar-bg-characters-thunderbird__1_.jpg");
+
 // MARGINS AND PADDING
-$padding-s: 16px;
-$padding-m: 40px;
-$padding-l: 128px;
+$padding-s: 8px;
+$padding-m: 20px;
+$padding-l: 72px;
+$margin-xs: 4px;
 $margin-s: 16px;
 $margin-m: 40px;
-$margin-l: 128px;
+$margin-l: 72px;
+$button-padding: 10px 16px;
+$button-padding-big: 16px 24px;
 
 // COLORS
-$background-primary: #1A1D27;
-$background-secondary: #292C38;
-$background-tertiary: white;
+$background-primary: #0b0c1b;
+$background-secondary: rgb(61, 63, 70);
+$background-tertiary: rgb(249, 252, 254);
+$background-quaternary: rgb(23, 24, 28);
 $text-body: #B1B3BE;
-$text-heading: #E6E6E6;
+$text-heading: rgb(252, 252, 252);
+$text-subtle: rgb(135, 137, 143);
 $text-accent: #B1B3BE;
-$text-dark: rgb(25, 25, 26);
+$text-dark: rgb(53, 53, 53);
 $text-light: #E0E8FF;
-$color-primary: #0031A4;
-$color-secondary: #0098A6;
+$color-primary: rgb(33, 45, 169);
+$color-secondary: rgb(28, 49, 239);
 $color-tertiary: #4915D6;
-$color-danger: #C93434;
+$color-danger: rgb(169, 33, 33);
 $color-warning: #ffbb33;
 $color-success: #00C851;
 
 // BORDERS
-$border-primary: 1px solid #33363E;
+$border-primary: 1px solid rgb(21, 24, 33);
 $border-secondary: 1px solid #E0E8FF;
 
 // BORDER RADIUS
-$border-radius: 4px;
+$border-radius: 8px;
 
 // BOX SHADOW
-$box-shadow-primary: 0px 30px 50px rgba(0, 0, 0, 0.25);
-$box-shadow-secondary: 0px 0px 3px rgba(0, 0, 0, 0.7);
+$box-shadow-primary: 0px 8px 30px rgb(0, 0, 0);
+$box-shadow-secondary: 0px 4px 8px rgba(0, 0, 0, 0.3);
 
 // TEXT SHADOW
 $text-shadow-primary: 0px 2px rgba(0, 0, 0, 0.17);
 
 // FONTS
-$font-primary: "Overpass", sans-serif;
+$font-primary: "Roboto";
 
 // FONT SIZES
-$font-title: 28pt;
-$font-subtitle: 11pt;
+$font-title: 30pt;
+$font-subtitle: 12pt;
 $font-heading1: 20pt;
-$font-heading2: 16pt;
-$font-heading3: 14pt;
-$font-body: 12pt;
+$font-heading2: 14pt;
+$font-heading3: 12pt;
+$font-body: 10pt;
 $font-small: 10pt;
 
 // MEDIA QUERIES

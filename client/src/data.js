@@ -49,7 +49,7 @@ module.exports = {
     },
     "ASH": {
       gadget: "Breaching Round",
-      count: 3
+      count: 2
     },
     "THERMITE": {
       gadget: "Exothermic Charge",
@@ -266,6 +266,10 @@ module.exports = {
     "FLORES": {
       gadget: "RCE Ratero Charge",
       count: 2
+    },
+    "THUNDERBIRD": {
+      gadget: "Kona Station",
+      count: 3
     }
   },
   ATTACKER_ROLES: ["NONE", "HARD BREACH", "SOFT BREACH", "ENTRY FRAG", "AREA DENIAL/FLANK WATCH", "INTEL", "UTILIY CLEAR", "SUPPORT", "ROAM CLEAR"],
@@ -329,12 +333,13 @@ module.exports = {
     "ROOK": "SUPPORT",
     "SMOKE": "AREA DENIAL",
     "TACHANKA": "AREA DENIAL",
+    "THUNDERBIRD": "SUPPORT",
     "VALKYRIE": "INTEL",
     "VIGIL": "ROAM",
     "WAMAI": "UTILITY SOAK",
     "WARDEN": "SUPPORT"
   },
-  DEFENDERS: ["ALIBI", "ARUNI", "BANDIT", "CASTLE", "CAVEIRA", "CLASH", "DOC", "ECHO", "ELA", "FROST", "GOYO", "JAGER", "KAID", "KAPKAN", "LESION", "MAESTRO", "MELUSI", "MIRA", "MOZZIE", "MUTE", "ORYX", "PULSE", "ROOK","SMOKE", "TACHANKA", "VALKYRIE", "VIGIL", "WAMAI", "WARDEN"],
+  DEFENDERS: ["ALIBI", "ARUNI", "BANDIT", "CASTLE", "CAVEIRA", "CLASH", "DOC", "ECHO", "ELA", "FROST", "GOYO", "JAGER", "KAID", "KAPKAN", "LESION", "MAESTRO", "MELUSI", "MIRA", "MOZZIE", "MUTE", "ORYX", "PULSE", "ROOK","SMOKE", "TACHANKA", "THUNDERBIRD", "VALKYRIE", "VIGIL", "WAMAI", "WARDEN"],
   MAPS: ["BANK", "BORDER", "CHALET", "CLUBHOUSE", "COASTLINE", "CONSULATE", "KAFE DOSTOYEVSKY", "KANAL", "OREGON", "OUTBACK", "THEME PARK", "VILLA"],
   UTILITY: {
     attack: {
@@ -400,7 +405,8 @@ module.exports = {
       "WAMAI": ["IMPACT GRENADES", "PROXIMITY ALARMS"],
       "ORYX": ["BARBED WIRE", "PROXIMITY ALARMS"],
       "MELUSI": ["IMPACT GRENADES", "NITRO CELL"],
-      "ARUNI": ["BULLETPROOF CAMERA", "BARBED WIRE"]
+      "ARUNI": ["BULLETPROOF CAMERA", "BARBED WIRE"],
+      "THUNDERBIRD": ["IMPACT GRENADES", "NITRO CELL"]
     }
   },
   UTILITY_GUIDE: {

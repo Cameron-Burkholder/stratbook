@@ -145,10 +145,17 @@ class App extends React.Component {
     }, () => {
       setTimeout(() => {
         let newAlerts = this.state.alerts;
-        newAlerts.shift();
-        this.setState({
-          alerts: newAlerts
-        });
+        let allAlerts = document.querySelectorAll("div.alert");
+        let targetAlert = allAlerts[allAlerts.length - 1];
+        if (targetAlert) {
+          targetAlert.classList.add("alert--remove");
+          setTimeout(() => {
+            newAlerts.shift();
+            this.setState({
+              alerts: newAlerts
+            });
+          }, 300)
+        }
       }, 5000)
     });
   }

@@ -31,21 +31,14 @@ const TeamMember = (props) => {
   return (
     <div className={"team-member" + (props.premium ? " team-member--premium" : "")}>
       <h4 className="team-member__username">{props.username}<em>{props.premium ? "PREMIUM USER" : ""}</em></h4>
-      <p className="team-member__status">{props.status}</p>
-      <p className="team-member__quality">{props.attacker_role}</p>
-      <p className="team-member__quality">{props.defender_role}</p>
-      { attackers.length > 0 ? (
-        <div className="attackers">
-          <p className="team-member__attackers">Preferred Attackers</p>
-          { attackers }
-        </div>
-      ) : "" }
-      { defenders.length > 0 ? (
-        <div className="defenders">
-          <p className="team-member__defenders">Preferred Defenders</p>
-          { defenders }
-        </div>
-      ) : "" }
+      <p className="team-member__status"><span>Permissions</span>{props.status}</p>
+      <p className="team-member__quality"><span>Attacker Role</span>{props.attacker_role}</p>
+      <p className="team-member__quality"><span>Defender Role</span>{props.defender_role}</p>
+      { props.stats ? (<p className="team-member-stats__stat"><span>Level</span>{props.stats.level}</p>) : ""}
+      { props.stats ? (<p className="team-member-stats__stat"><span>K/D</span>{props.stats.kd}</p>) : ""}
+      { props.stats ? (<p className="team-member-stats__stat"><span>W/L</span>{props.stats.wl}</p>) : ""}
+      { props.stats ? (<p className="team-member-stats__stat"><span>MMR</span>{props.stats.mmr}</p>) : ""}
+      { props.stats ? (<p className="team-member-stats__stat"><span>MMR Change</span>{props.stats.mmrchange}</p>) : ""}
 
     </div>
   )

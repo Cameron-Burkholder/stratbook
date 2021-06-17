@@ -20,7 +20,7 @@ import Loading from "./Loading.js"
 const RegisterForm = (props) => {
   return (
     <form className="form" id="register-form" onSubmit={props.onSubmit}>
-      <h4 className="form__heading">Register Form</h4>
+      <h4 className="form__heading">Create an Account</h4>
       <fieldset className="form__fieldset" id="username-field">
         <label className="form__label" htmlFor="username">Username</label>
         <input onChange={props.onChange} className={"form__input" + (props.errors && props.errors.username == null ? "" : " form__input--error")} value={props.username} id="username" type="name" required/>

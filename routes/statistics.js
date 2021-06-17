@@ -144,7 +144,7 @@ module.exports = async (app, passport) => {
           kd += new_user.kd;
           wl += new_user.wl;
           mmr += new_user.mmr;
-          mmrchange += new_user.mmrchange;
+          mmrchange += Math.abs(new_user.mmrchange);
           level += new_user.level;
           members.push(new_user);
         }
@@ -180,7 +180,7 @@ module.exports = async (app, passport) => {
           kd += new_user.kd;
           wl += new_user.wl;
           mmr += new_user.mmr;
-          mmrchange += new_user.mmrchange;
+          mmrchange += Math.abs(new_user.mmrchange);
           level += new_user.level;
           members.push(new_user);
         }
@@ -216,7 +216,7 @@ module.exports = async (app, passport) => {
           kd += new_user.kd;
           wl += new_user.wl;
           mmr += new_user.mmr;
-          mmrchange += new_user.mmrchange;
+          mmrchange += Math.abs(new_user.mmrchange);
           level += new_user.level;
           members.push(new_user);
         }

@@ -5,7 +5,6 @@ import React from "react";
 import CreateTeamAPI from "../api/CreateTeamAPI.js";
 import JoinTeamAPI from "../api/JoinTeamAPI.js";
 import ViewTeamAPI from "../api/ViewTeamAPI.js";
-import ViewTeamStatisticsAPI from "../api/ViewTeamStatisticsAPI.js";
 import LeaveTeamAPI from "../api/LeaveTeamAPI.js";
 import { Link } from "react-router-dom";
 
@@ -19,7 +18,6 @@ const Team = (props) => {
             <Link className="button" to="/team/manage">Manage Team</Link>
           ) : ""}
           <ViewTeamAPI getAuthToken={props.getAuthToken} updateAuthToken={props.updateAuthToken} alert={props.alert}/>
-          <ViewTeamStatisticsAPI getAuthToken={props.getAuthToken} updateAuthToken={props.updateAuthToken} alert={props.alert}/>
           <LeaveTeamAPI getAuthToken={props.getAuthToken} updateAuthToken={props.updateAuthToken} alert={props.alert}/>
         </div>
       ) : (

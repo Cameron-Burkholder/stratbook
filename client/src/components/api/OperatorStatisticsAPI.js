@@ -30,7 +30,7 @@ class OperatorStatisticsAPI extends React.Component {
       loading: true,
       hasLoaded: false,
       search: "",
-      rows: false,
+      rows: true,
     }
   }
   fetchStats() {
@@ -126,12 +126,11 @@ class OperatorStatisticsAPI extends React.Component {
                 <button onClick={this.sortOperators} id="name">Sort By Name</button>
                 <button onClick={this.sortOperators} id="kd">Sort By KD</button>
                 <button onClick={this.sortOperators} id="playtime">Sort By Playtime</button>
-                <button onClick={this.toggleRows} id="rows">{ this.state.rows ? "Display Cards" : "Display Rows" }</button>
               </div>
               { operators }
             </div>
           ) : (
-            <p>Unable to load statistics. Make sure your username matches the account for the platform you signed up with.</p>
+            <p className="text-error">Unable to load statistics. Make sure your username matches the account for the platform you signed up with.</p>
           )}
           </div>
         )}

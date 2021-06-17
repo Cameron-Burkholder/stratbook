@@ -18,7 +18,7 @@ import { Link } from "react-router-dom";
 const LoginForm = (props) => {
   return (
     <form className="form" id="login-form" onSubmit={props.onSubmit}>
-      <h4 className="form__heading">Login Form</h4>
+      <h4 className="form__heading">Login</h4>
       <fieldset className="form__fieldset" id="email-field">
         <label className="form__label" htmlFor="email">Email</label>
         <input onChange={props.onChange} className={"form__input" + (props.errors && props.errors.email == null ? "" : " form__input--error")} value={props.email} id="email" type="email" required/>

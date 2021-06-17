@@ -48,7 +48,6 @@ class SeasonalStatisticsAPI extends React.Component {
             loading: false,
             hasLoaded: true
           });
-          component.props.alert(response.data.message, response.data.status);
           break;
       }
     }).catch((error) => {

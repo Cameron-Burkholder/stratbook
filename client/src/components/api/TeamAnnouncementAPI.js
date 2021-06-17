@@ -64,7 +64,7 @@ class TeamAnnouncementAPI extends React.Component {
         <Loading/>
       ) : (
         <div>
-          <h3>Make Announcement</h3>
+          <h3>Make an Announcement</h3>
           <div className="announcement-input">
             <textarea onChange={this.onChange} type="text" value={this.state.message} rows={5}/>
             <button onClick={this.onSubmit}>Send</button>

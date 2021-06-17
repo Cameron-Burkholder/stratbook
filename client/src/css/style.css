@@ -6,33 +6,33 @@
   min-width: 0;
   min-height: 0;
   box-sizing: border-box;
-  font-family: "Overpass", sans-serif;
-  font-weight: 400;
-  font-size: 12pt;
+  font-family: "Roboto";
+  font-weight: 300;
+  font-size: 10pt;
   color: #B1B3BE; }
 
 *:hover {
   cursor: default; }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: "Overpass", sans-serif;
-  font-weight: 600;
-  color: #E6E6E6; }
+  font-family: "Roboto";
+  font-weight: 400;
+  color: #fcfcfc; }
 
 h1 {
-  font-size: 28pt; }
+  font-size: 30pt; }
 
 h2 {
   font-size: 20pt; }
 
 h3 {
-  font-size: 16pt; }
-
-h4 {
   font-size: 14pt; }
 
+h4 {
+  font-size: 12pt; }
+
 h5 {
-  font-size: 11pt; }
+  font-size: 12pt; }
 
 h6 {
   font-size: 10pt; }
@@ -44,33 +44,32 @@ html {
   height: 100%; }
 
 html, body {
-  background: #1A1D27;
+  background: #0b0c1b;
   overflow-x: hidden; }
 
 p {
   color: #B1B3BE;
-  font-size: 12pt; }
+  font-size: 10pt; }
 
 ::-webkit-scrollbar {
   width: 4px;
   height: 4px; }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(#0031A4, #0098A6); }
+  background: linear-gradient(#212da9, #1c31ef); }
 
 /* scss/components/_navigation.scss */
 nav.nav {
   display: grid;
   grid-template-columns: 300px 1fr;
-  border-bottom: 1px solid #33363E;
-  height: 64px;
-  background: #1A1D27;
+  height: 68px;
+  background: #0b0c1b;
   z-index: 4; }
 
 ul.nav__head {
   display: flex;
   align-items: center;
-  padding-left: 16px; }
+  padding-left: 8px; }
   ul.nav__head img.nav__image {
     width: 48px; }
 
@@ -85,35 +84,34 @@ ul.nav__body {
 li.nav__item {
   display: flex;
   margin-right: 16px;
-  height: 100%;
   align-items: center;
-  padding: 16px; }
+  background-color: #17181c;
+  border-radius: 8px; }
   li.nav__item a.nav__link {
-    color: #B1B3BE; }
+    color: #87898f;
+    font-size: 12px;
+    height: 100%;
+    padding: 10px 16px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); }
 
 li.nav__item:hover {
-  background: #292C38;
+  background: #3d3f46;
   transition: all 0.3s ease; }
   li.nav__item:hover a.nav__link {
     color: white;
     transition: all 0.3s ease;
-    cursor: pointer; }
+    cursor: pointer;
+    box-shadow: 0px 8px 30px black; }
 
 a.nav__link {
   text-decoration: none;
   transition: all 0.3s ease; }
 
 a.nav__link--active {
-  position: relative; }
-
-a.nav__link--active::after {
-  position: absolute;
-  width: 100%;
-  height: 2px;
-  background: linear-gradient(#0031A4, #0098A6);
-  content: "";
-  top: 100%;
-  left: 0; }
+  position: relative;
+  background-color: #212da9;
+  border-radius: 8px;
+  color: #fcfcfc; }
 
 button#nav__button {
   display: none;
@@ -132,25 +130,33 @@ div.user-dropdown {
     position: absolute;
     display: flex;
     flex-direction: column;
-    top: 50px;
+    top: 58px;
     right: 12px;
-    border: 1px solid #33363E;
-    padding: 16px;
-    background: #1A1D27;
+    min-width: 200px;
+    padding: 20px;
+    border-radius: 8px;
+    background: #0b0c1b;
     z-index: 1; }
   div.user-dropdown span#user-dropdown-title {
     text-align: center;
-    color: #E6E6E6;
+    color: #fcfcfc;
     margin-bottom: 16px; }
   div.user-dropdown a.user-dropdown__link {
     text-decoration: none;
-    text-align: center; }
+    text-align: center;
+    padding: 10px 16px;
+    background: #17181c;
+    border-radius: 8px;
+    transition: all 0.3s ease; }
   div.user-dropdown a#logout-link {
-    color: #C93434;
+    background: #a92121;
     margin-top: 8px; }
   div.user-dropdown a.user-dropdown__link:hover {
     cursor: pointer;
-    text-decoration: underline; }
+    text-decoration: none;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+    color: #fcfcfc;
+    transition: all 0.3s ease; }
 
 div.user-dropdown--inactive div.user-dropdown__body {
   opacity: 0;
@@ -179,7 +185,7 @@ div.user-dropdown--active div.user-dropdown__body {
     position: absolute;
     right: 16px;
     font-size: 20pt;
-    border: 1px solid #33363E;
+    border: 1px solid #151821;
     height: 64px; }
   ul.nav__body {
     position: fixed;
@@ -187,7 +193,7 @@ div.user-dropdown--active div.user-dropdown__body {
     left: -100VW;
     width: 80VW;
     height: 100VH;
-    background: linear-gradient(#0031A4, #0098A6);
+    background: linear-gradient(#212da9, #1c31ef);
     flex-direction: column;
     justify-content: center; }
     ul.nav__body li.nav__item {
@@ -196,7 +202,7 @@ div.user-dropdown--active div.user-dropdown__body {
       transition: all 0.3s ease; }
       ul.nav__body li.nav__item a.nav__link {
         font-size: 20pt;
-        color: #E6E6E6; }
+        color: #fcfcfc; }
     ul.nav__body li.nav__item:hover {
       background: none; }
     ul.nav__body a.nav__link--active {
@@ -206,7 +212,7 @@ div.user-dropdown--active div.user-dropdown__body {
       ul.nav__body div.user-dropdown img {
         display: none; }
       ul.nav__body div.user-dropdown div.user-dropdown__body {
-        margin-top: 128px;
+        margin-top: 72px;
         position: relative;
         top: 0;
         right: 0;
@@ -218,7 +224,7 @@ div.user-dropdown--active div.user-dropdown__body {
           display: none; }
         ul.nav__body div.user-dropdown div.user-dropdown__body a.user-dropdown__link {
           font-size: 20pt;
-          color: #E6E6E6;
+          color: #fcfcfc;
           text-align: right;
           margin-right: 40px; }
         ul.nav__body div.user-dropdown div.user-dropdown__body a#logout-link {
@@ -256,8 +262,8 @@ div.page-wrapper {
   height: 100%; }
 
 div.page {
-  background: #1A1D27;
-  padding: 40px;
+  background: #0b0c1b;
+  padding: 20px;
   z-index: 0; }
   div.page h1 {
     text-align: center; }
@@ -276,23 +282,32 @@ div.page#manage-team {
   div.page#manage-team h1 {
     grid-column: span 3; }
 
+div.page#team, div.page#manage-team {
+  background: #f9fcfe; }
+  div.page#team h1, div.page#manage-team h1 {
+    color: #353535; }
+
 div.page#strategies {
   padding: 0; }
 
+div.page#dashboard {
+  background: #f9fcfe; }
+
 @media screen and (max-width: 850px) {
   div.page {
-    padding: 16px; } }
+    padding: 8px; } }
 
 /* scss/components/_form.scss */
 input, select, textarea {
   display: inline-block;
-  padding: 16px;
+  padding: 20px;
   border: none;
-  color: #19191a;
-  font-size: 12pt;
-  padding-bottom: calc(16px - 4px);
-  border-bottom: 4px solid white;
-  transition: all 0.3s ease; }
+  outline: none;
+  color: #87898f;
+  font-size: 10pt;
+  transition: all 0.3s ease;
+  border-radius: 8px;
+  background-color: #3d3f46; }
 
 input:hover, textarea:hover {
   cursor: text; }
@@ -300,66 +315,60 @@ input:hover, textarea:hover {
 input:focus, textarea:focus {
   border: none;
   outline: none;
-  box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.25);
-  border-bottom: 4px solid #0098A6;
-  transition: all 0.3s ease; }
+  transition: all 0.3s ease;
+  box-shadow: 0px 8px 30px black; }
 
 .form__heading {
-  color: #19191a;
   font-size: 20pt;
   text-align: center;
   font-weight: bold;
+  margin-top: 16px;
   margin-bottom: 16px; }
 
 .form__error {
-  color: #C93434;
-  font-size: 10pt; }
+  color: #a92121;
+  font-size: 10pt;
+  margin-top: 4px; }
 
 .form__description {
-  color: #19191a;
-  font-size: 10pt; }
+  color: #87898f;
+  font-size: 10pt;
+  margin-top: 4px; }
 
 fieldset {
   display: flex;
   flex-direction: column;
   border: none;
   margin: 16px auto;
-  padding: 16px; }
+  padding: 8px; }
 
 fieldset a {
-  color: #0031A4;
+  color: #212da9;
   margin-top: 4px; }
 
 fieldset a:hover {
   cursor: pointer; }
 
 label {
-  color: #19191a;
-  filter: opacity(0.9); }
+  color: #87898f;
+  font-size: 12pt;
+  filter: opacity(0.9);
+  margin-bottom: 4px; }
 
 form button {
   display: block;
   margin: auto;
   width: 128px;
+  padding: 16px 24px;
   margin-top: 40px;
-  background: linear-gradient(#0031A4, #0098A6);
+  background: linear-gradient(#212da9, #1c31ef);
   border: none;
   transition: all 0.3s ease; }
 
-form button:hover {
-  transform: translateY(-4px); }
-
-form input, form select {
-  border: 1px solid #E0E8FF;
-  border-bottom-width: 3px; }
-
 form select option {
-  color: #19191a;
-  padding: 16px; }
-
-form input:focus {
-  border: 1px solid #E0E8FF;
-  border-bottom: 3px solid #0098A6; }
+  color: #87898f;
+  padding: 8px;
+  font-family: "Roboto"; }
 
 /* client/src/scss/components/_alert.scss */
 div.alert-container {
@@ -368,22 +377,28 @@ div.alert-container {
   right: 0;
   width: 100VW;
   max-width: 600px;
-  padding: 16px;
+  padding: 8px;
   z-index: 5; }
 
 div.alert {
   position: relative;
-  padding: 16px;
+  padding: 20px;
   padding-right: 56px;
-  background: #1A1D27;
-  border: 3px solid #0031A4;
-  box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.25);
-  right: calc(-100% - 16px);
+  background: #0b0c1b;
+  box-shadow: 0px 8px 30px black;
+  border-radius: 8px;
+  right: calc(-100% - 8px);
   margin-top: 16px;
   animation-name: alert-appear;
   animation-duration: 0.3s;
   animation-fill-mode: forwards;
   animation-timing-function: ease-in-out; }
+
+div.alert--remove {
+  animation-name: alert-disappear !important;
+  animation-duration: 0.3s !important;
+  animation-fill-mode: forwards !important;
+  animation-timing-function: ease-in-out !important; }
 
 button.alert__button {
   position: absolute;
@@ -391,25 +406,41 @@ button.alert__button {
   right: 0;
   border: none;
   height: 100%;
-  border-radius: 0; }
+  border-radius: 0;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  width: 32px; }
 
 button.alert__button:hover {
-  background: #C93434;
+  background: #212da9;
   box-shadow: none; }
 
 div.alert--error {
-  border: 3px solid #C93434; }
+  border-left: 3px solid #a92121; }
+  div.alert--error button.alert__button:hover {
+    background: #a92121; }
 
 div.alert--success {
-  border: 3px solid #00C851; }
+  border-left: 3px solid #00C851; }
   div.alert--success button.alert__button:hover {
     background: #00C851; }
 
 @keyframes alert-appear {
   0% {
-    right: calc(-100% - 16px); }
+    right: calc(-100% - 8px); }
   100% {
     right: 0; } }
+
+@keyframes alert-disappear {
+  0% {
+    right: 0;
+    display: block; }
+  99% {
+    right: calc(-100% - 8px);
+    display: block; }
+  100% {
+    right: calc(-100% - 8px);
+    display: none; } }
 
 /* client/src/scss/components/_pagination.scss */
 div.pagination {
@@ -417,14 +448,14 @@ div.pagination {
   justify-content: space-between; }
   div.pagination button.pagination__button {
     background: white;
-    color: #19191a;
+    color: #353535;
     border: none;
     border-radius: 0;
-    border-left: 1px solid #33363E;
-    border-right: 1px solid #33363E;
-    padding: 16px 40px; }
+    border-left: 1px solid #151821;
+    border-right: 1px solid #151821;
+    padding: 8px 20px; }
   div.pagination p.pagination__title {
-    color: #19191a;
+    color: #353535;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -485,9 +516,9 @@ div.toggle, div.viewer-toggle {
     -webkit-transition: .4s;
     transition: .4s; }
   div.toggle input:checked + .slider, div.toggle .slider--active, div.viewer-toggle input:checked + .slider, div.viewer-toggle .slider--active {
-    background: linear-gradient(to right, #0031A4, #0098A6); }
+    background: linear-gradient(to right, #212da9, #1c31ef); }
   div.toggle input:focus + .slider, div.toggle .slider--active, div.viewer-toggle input:focus + .slider, div.viewer-toggle .slider--active {
-    box-shadow: 0 0 1px #0031A4; }
+    box-shadow: 0 0 1px #212da9; }
   div.toggle input:checked + .slider:before, div.toggle .slider--active:before, div.viewer-toggle input:checked + .slider:before, div.viewer-toggle .slider--active:before {
     -webkit-transform: translateX(35px);
     -ms-transform: translateX(35px);
@@ -500,7 +531,7 @@ div.toggle, div.viewer-toggle {
     display: block;
     padding: 2px 4px; }
   div.toggle button.toggle__button:hover, div.viewer-toggle button.toggle__button:hover {
-    background: #1A1D27; }
+    background: #0b0c1b; }
 
 /* client/src/scss/comopnents/_loading.scss */
 .loader {
@@ -548,9 +579,9 @@ div.toggle, div.viewer-toggle {
 @keyframes color {
   100%,
   0% {
-    stroke: #0031A4; }
+    stroke: #212da9; }
   50% {
-    stroke: #0098A6; } }
+    stroke: #1c31ef; } }
 
 div.loading-modal {
   position: fixed;
@@ -566,126 +597,131 @@ div.loading-modal {
 
 /* client/src/scss/components/_button.scss */
 button {
-  background: linear-gradient(to right, #1A1D27, #1A1D27);
-  border: 1px solid #33363E;
+  background: linear-gradient(to right, #0b0c1b, #0b0c1b);
+  border: 1px solid #151821;
   outline: none;
-  padding: 16px;
+  padding: 8px;
   color: rgba(255, 255, 255, 0.95);
-  border-radius: 4px;
+  border-radius: 8px;
   filter: opacity(0.95);
   transition: all 0.3s ease; }
 
 button:hover {
   cursor: pointer;
-  box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 8px 30px black;
   filter: opacity(1);
   transition: all 0.3s ease; }
 
 button.button--danger {
-  border: 1px solid #C93434; }
-
-button.button--danger:hover {
-  background: #C93434; }
+  background: #a92121 !important; }
 
 /* client/src/scss/components/_header.scss */
 header div.header__overlay {
-  background: linear-gradient(to right, #0031A4, #4915D6);
-  padding: 40px;
+  background: linear-gradient(to right, #212da9, #4915D6);
+  padding: 20px;
   filter: opacity(0.85); }
 
 header h1, header h2 {
-  text-shadow: 1px 1px #19191a;
+  text-shadow: 1px 1px #353535;
   text-align: center; }
 
 /* client/src/scss/components/_footer.scss */
 footer.footer {
   width: 100%;
-  padding: 16px;
+  padding: 8px;
   z-index: 1;
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  border-top: 1px solid #33363E; }
+  border-top: 1px solid #151821; }
 
 @media screen and (max-width: 600px) {
   footer.footer {
     margin-top: 156px; } }
 
 /* client/src/scss/api/_statistics-api.scss */
-p.statistics-failure {
-  padding: 16px;
-  background: #1A1D27;
-  margin-top: 40px; }
+div.page#dashboard h1 {
+  background: #212da9;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); }
+
+p.statistics-failure, p.text-error {
+  padding: 8px;
+  margin-top: 40px;
+  text-align: center; }
 
 div#GeneralStatisticsAPI {
-  grid-column: span 2;
-  background: linear-gradient(to bottom, #0031A4, #0098A6); }
+  grid-column: span 2; }
 
 div#SeasonalStatisticsAPI {
-  background: linear-gradient(to bottom, #4915D6, #ffbb33); }
+  background-color: #17181c;
+  filter: blur(1);
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); }
+  div#SeasonalStatisticsAPI h2.statistics-title {
+    color: #fcfcfc; }
   div#SeasonalStatisticsAPI div#seasonal-stats-inside {
-    background: #1A1D27;
-    padding: 16px;
-    padding-top: 40px;
+    padding: 8px;
+    padding-top: 20px;
     height: 100%; }
   div#SeasonalStatisticsAPI div.statistics {
     display: flex;
     flex-direction: column; }
   div#SeasonalStatisticsAPI div.stat--main {
-    background: linear-gradient(#4915D6, #ffbb33);
-    width: 256px;
+    width: 100%;
     height: 256px;
-    border-radius: 100%;
+    border-radius: 8px;
     margin: 40px auto;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.25);
     position: relative;
     z-index: 1;
-    transition: all 0.3s ease; }
+    transition: all 0.3s ease;
+    background-color: #212da9;
+    overflow: hidden; }
     div#SeasonalStatisticsAPI div.stat--main h3 {
-      font-size: 20pt;
+      font-size: 30pt;
       z-index: 2; }
     div#SeasonalStatisticsAPI div.stat--main p {
-      font-size: 16pt;
+      font-size: 20pt;
       z-index: 2;
       margin-top: 4px;
-      color: #E6E6E6; }
+      color: #fcfcfc; }
     div#SeasonalStatisticsAPI div.stat--main p.stat__label--secondary {
       font-size: 12pt;
       margin-top: 0;
-      color: #E6E6E6;
+      color: #fcfcfc;
       z-index: 2; }
   div#SeasonalStatisticsAPI div.stat--main::after {
     content: "";
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
-    width: 244px;
-    height: 244px;
-    border-radius: 100%;
-    background: #1A1D27;
-    z-index: 1; }
-  div#SeasonalStatisticsAPI div.stat--main:hover {
-    transform: translateY(-8px);
-    transition: all 0.3s ease; }
+    transform: scale(1.1) translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    background: url("https://staticctf.akamaized.net/J3yJr34U2pZ2Ieem48Dwy9uqj5PNUQTn/5YZNi7RKUzIYeKntMB4RJE/caa9a35889f5333f83acdd02a131ac36/r6s-northstar-bg-characters-thunderbird__1_.jpg");
+    background-size: cover;
+    background-position: center;
+    z-index: 1;
+    opacity: 0.15; }
   div#SeasonalStatisticsAPI div.stat {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     margin-top: 16px;
     margin-left: 16px; }
     div#SeasonalStatisticsAPI div.stat h3.stat__value--main {
-      grid-column: span 2; }
+      grid-column: span 2;
+      font-weight: 500; }
     div#SeasonalStatisticsAPI div.stat p.stat__label {
       color: white;
       opacity: 0.7; }
 
 div#OperatorStatisticsAPI {
-  grid-column: span 3;
-  background: linear-gradient(to bottom, #4915D6, #0098A6); }
+  grid-column: span 3; }
   div#OperatorStatisticsAPI div.statistics {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -695,46 +731,56 @@ div#OperatorStatisticsAPI {
       margin: 40px auto;
       width: 100%; }
       div#OperatorStatisticsAPI div.statistics div.controls button {
-        margin: 16px; }
+        margin: 16px;
+        padding: 16px 24px;
+        background: #3d3f46; }
+      div#OperatorStatisticsAPI div.statistics div.controls button:hover {
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); }
       div#OperatorStatisticsAPI div.statistics div.controls input {
         margin-right: 16px; }
+      div#OperatorStatisticsAPI div.statistics div.controls input:focus {
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); }
     div#OperatorStatisticsAPI div.statistics div.operator-statistics {
       display: grid;
       grid-template-columns: 72px 1fr;
-      background: #292C38;
-      transition: all 0.3s ease; }
+      background: #3d3f46;
+      transition: all 0.3s ease;
+      border-radius: 8px; }
       div#OperatorStatisticsAPI div.statistics div.operator-statistics div.operator-info {
         padding: 8px; }
         div#OperatorStatisticsAPI div.statistics div.operator-statistics div.operator-info img {
           width: 100%; }
         div#OperatorStatisticsAPI div.statistics div.operator-statistics div.operator-info h3 {
-          font-size: 12pt;
+          font-size: 10pt;
           text-align: center; }
       div#OperatorStatisticsAPI div.statistics div.operator-statistics div.operator-stats {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
         grid-row-gap: 8px;
-        padding: 16px; }
+        padding: 8px; }
         div#OperatorStatisticsAPI div.statistics div.operator-statistics div.operator-stats div.operator-stats__stat p {
           font-size: 10pt; }
         div#OperatorStatisticsAPI div.statistics div.operator-statistics div.operator-stats div.operator-stats__stat span {
-          color: #E6E6E6; }
+          color: #fcfcfc; }
     div#OperatorStatisticsAPI div.statistics div.operator-statistics:hover {
-      box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.25);
-      transform: translateY(-2px);
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
       transition: all 0.3s ease; }
 
 div.statistics-api {
-  padding: 40px; }
+  padding: 20px; }
 
 h2.statistics-title, h3.statistics-title {
-  text-align: center; }
+  color: #353535;
+  text-align: center;
+  font-weight: 500; }
 
 img.user-image {
   width: 64px; }
 
 h3.stats-grid__heading {
   width: 100%;
+  color: #353535;
+  font-weight: 500;
   margin-bottom: 16px; }
 
 div.stats-grid {
@@ -744,37 +790,33 @@ div.stats-grid {
   margin-bottom: 40px; }
 
 div.stats-box {
-  padding: 40px;
-  border: 1px solid #33363E;
+  padding: 20px;
   transition: all 0.3s ease;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.25);
-  background: #1A1D27; }
-
-div.stats-box:hover {
-  transform: translateY(-8px);
-  transition: all 0.5s ease; }
+  border-radius: 8px; }
 
 div.stat {
   display: flex;
-  justify-content: space-between; }
+  flex-direction: column;
+  margin-bottom: 4px; }
+  div.stat p.stat__label {
+    color: #353535;
+    font-weight: 500; }
   div.stat span.stat__value {
-    color: #E6E6E6; }
+    color: #87898f; }
 
 div.progress-circle {
   display: flex;
-  border-radius: 100%;
   margin: 16px auto;
-  border: 1px solid #33363E;
-  width: 128px;
-  height: 128px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   position: relative;
-  background: linear-gradient(#0031A4, #0098A6);
+  border-radius: 8px;
+  background: #17181c;
+  width: 100%;
+  padding: 8px;
   z-index: 1;
   transition: all 0.5s ease; }
   div.progress-circle p {
@@ -782,20 +824,8 @@ div.progress-circle {
     z-index: 2; }
   div.progress-circle p.progress-circle__value {
     font-size: 20pt;
-    color: #E6E6E6;
+    color: #fcfcfc;
     z-index: 2; }
-
-div.progress-circle::after {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 124px;
-  height: 124px;
-  content: "";
-  background: #1A1D27;
-  border-radius: 100%;
-  z-index: 1; }
 
 h4.stats__heading {
   text-align: center;
@@ -810,21 +840,25 @@ div.statistics-api--rows div.statistics {
   margin: auto; }
   div.statistics-api--rows div.statistics div.operator-statistics {
     background: transparent !important;
-    border-top: 1px solid #33363E;
-    border-bottom: 1px solid #33363E;
     margin: 0; }
     div.statistics-api--rows div.statistics div.operator-statistics div.operator-info img {
       width: 48px !important;
       display: block;
       margin: auto; }
     div.statistics-api--rows div.statistics div.operator-statistics div.operator-info h3 {
-      font-size: 10pt; }
+      font-size: 10pt;
+      color: #353535; }
     div.statistics-api--rows div.statistics div.operator-statistics div.operator-stats {
       grid-template-columns: repeat(8, 1fr) !important; }
       div.statistics-api--rows div.statistics div.operator-statistics div.operator-stats div.operator-stats__stat {
         display: flex;
         flex-direction: column;
         justify-content: center; }
+        div.statistics-api--rows div.statistics div.operator-statistics div.operator-stats div.operator-stats__stat p {
+          color: #87898f; }
+        div.statistics-api--rows div.statistics div.operator-statistics div.operator-stats div.operator-stats__stat span {
+          color: #353535 !important;
+          font-weight: 500; }
   div.statistics-api--rows div.statistics div.operator-statistics:hover {
     transform: none !important; }
 
@@ -859,12 +893,12 @@ div.statistics-api--rows div.statistics {
 
 @media screen and (max-width: 850px) {
   div#GeneralStatisticsAPI {
-    padding: 16px; }
+    padding: 8px; }
     div#GeneralStatisticsAPI div.stats-box {
-      padding: 16px;
-      padding-top: 40px; }
+      padding: 8px;
+      padding-top: 20px; }
   div#SeasonalStatisticsAPI {
-    padding: 16px; }
+    padding: 8px; }
     div#SeasonalStatisticsAPI div.stat--main {
       width: 200px;
       height: 200px; }
@@ -872,9 +906,9 @@ div.statistics-api--rows div.statistics {
       width: 192px;
       height: 192px; }
     div#SeasonalStatisticsAPI div.stat {
-      padding-left: 16px; }
+      padding-left: 8px; }
   div#OperatorStatisticsAPI {
-    padding: 16px; }
+    padding: 8px; }
     div#OperatorStatisticsAPI div.statistics {
       grid-template-columns: 1fr; }
       div#OperatorStatisticsAPI div.statistics div.controls {
@@ -926,9 +960,9 @@ div.statistics-api--rows div.statistics {
       div#OperatorStatisticsAPI div.statistics div.operator-statistics {
         background: transparent;
         margin: 0;
-        padding: 2px 16px;
-        border-top: 1px solid #33363E;
-        border-bottom: 1px solid #33363E;
+        padding: 2px 8px;
+        border-top: 1px solid #151821;
+        border-bottom: 1px solid #151821;
         grid-template-columns: 40px 1fr;
         overflow-x: auto; }
         div#OperatorStatisticsAPI div.statistics div.operator-statistics div.operator-info {
@@ -957,30 +991,33 @@ div.statistics-api--rows div.statistics {
 div#LoginAPI, div#RegisterAPI, div#ForgotPasswordAPI, div#ResetPasswordAPI {
   width: 100%;
   max-width: 600px;
-  background: white;
-  padding: 40px;
-  box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.25);
+  background: #17181c;
+  padding: 20px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
   margin: auto;
   z-index: 1; }
+  div#LoginAPI a, div#RegisterAPI a, div#ForgotPasswordAPI a, div#ResetPasswordAPI a {
+    text-align: center;
+    color: #87898f;
+    margin-top: 4px; }
 
 @media screen and (max-width: 850px) {
   div#LoginAPI, div#RegisterAPI, div#ForgotPasswordAPI, div#ResetPasswordAPI {
-    padding: 16px; } }
+    padding: 8px; } }
 
 div.account-section {
-  padding: 40px;
-  border: 1px solid #33363E;
-  border-bottom: 3px solid #0031A4;
-  border-top: 3px solid #0031A4;
-  margin-bottom: 128px;
-  box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.25); }
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 72px;
+  border-bottom: 1px solid #151821;
+  padding-bottom: 72px; }
   div.account-section button {
-    background: #1A1D27;
-    border: 1px solid #33363E; }
-  div.account-section button:hover {
-    background: linear-gradient(#0031A4, #0098A6); }
+    background: #212da9;
+    padding: 16px 24px; }
   div.account-section h3 {
-    text-align: center; }
+    text-align: center;
+    font-size: 14pt;
+    margin-top: 16px; }
   div.account-section div.role {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -998,7 +1035,11 @@ div.account-section {
       grid-column: span 2; }
 
 div#notifications {
-  margin-top: 128px; }
+  margin-top: 72px; }
+
+div#PushNotificationsAPI button {
+  margin: 16px auto;
+  display: block; }
 
 div#SetDefendersAPI fieldset > div, div#SetAttackersAPI fieldset > div {
   display: grid;
@@ -1030,8 +1071,8 @@ div.account-section#account-info {
   div.account-section#account-info h3 {
     grid-column: span 2; }
   div.account-section#account-info div.update p {
-    color: #E6E6E6;
-    font-size: 14pt;
+    color: #fcfcfc;
+    font-size: 12pt;
     text-align: left;
     margin-bottom: 0; }
   div.account-section#account-info div.update fieldset {
@@ -1042,8 +1083,8 @@ div.account-section#account-info {
     margin-top: 0; }
 
 div.account-section--danger {
-  margin-top: 128px;
-  border: 3px solid #C93434; }
+  margin-top: 72px;
+  border: 3px solid #a92121; }
   div.account-section--danger p {
     text-align: center; }
   div.account-section--danger button {
@@ -1051,7 +1092,7 @@ div.account-section--danger {
     display: block;
     margin-top: 16px; }
   div.account-section--danger button:hover {
-    background: #C93434; }
+    background: #a92121; }
 
 @media screen and (max-width: 1300px) {
   div.operators {
@@ -1075,7 +1116,7 @@ div.account-section--danger {
 
 @media screen and (max-width: 600px) {
   div.account-section {
-    padding: 16px; }
+    padding: 8px; }
     div.account-section div.role {
       display: flex;
       flex-direction: column; }
@@ -1091,33 +1132,26 @@ div.account-section--danger {
 
 /* client/src/scss/api/_team-api.scss */
 a.button {
-  background: linear-gradient(to right, #1A1D27, #1A1D27);
-  border: 1px solid #33363E;
   outline: none;
-  padding: 16px;
-  color: rgba(255, 255, 255, 0.95);
-  border-radius: 4px;
+  padding: 8px;
+  color: #fcfcfc;
+  background: #212da9;
+  padding: 16px 24px;
+  border-radius: 8px;
   filter: opacity(0.95);
   transition: all 0.3s ease;
   text-decoration: none;
   display: block;
-  margin-right: auto;
-  margin-bottom: 16px;
+  margin: 16px auto;
   max-width: 172px;
   text-align: center;
-  background: linear-gradient(to right, #0031A4, #0098A6);
   grid-column: span 3; }
 
 a.button:hover {
   cursor: pointer;
-  box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
   filter: opacity(1);
   transition: all 0.3s ease; }
-
-div.hasTeam {
-  display: grid;
-  grid-gap: 40px;
-  grid-template-columns: repeat(3, 1fr); }
 
 div.hasNoTeam div.team-grid {
   margin-top: 40px;
@@ -1125,198 +1159,211 @@ div.hasNoTeam div.team-grid {
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 40px; }
   div.hasNoTeam div.team-grid div {
-    padding: 40px;
-    box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.25); }
+    padding: 20px;
+    box-shadow: 0px 8px 30px black;
+    background: #17181c;
+    border-radius: 8px; }
     div.hasNoTeam div.team-grid div label {
-      color: #E6E6E6; }
+      color: #fcfcfc; }
   div.hasNoTeam div.team-grid div#CreateTeamAPI button {
-    background: #0031A4; }
+    background: #212da9; }
   div.hasNoTeam div.team-grid div#JoinTeamAPI button {
-    background: #0098A6; }
+    background: #1c31ef; }
 
-div#ViewTeamAPI {
-  grid-column: span 2;
-  border-top: 3px solid #0031A4; }
-  div#ViewTeamAPI div.team {
-    padding: 40px;
-    border: 1px solid #33363E;
-    box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.25); }
-    div#ViewTeamAPI div.team h2, div#ViewTeamAPI div.team h3.team-description {
-      text-align: center; }
-    div#ViewTeamAPI div.team div.roster {
-      margin-top: 40px; }
-      div#ViewTeamAPI div.team div.roster div.team-member {
-        padding: 16px;
-        border: 1px solid #33363E;
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        border-left: 3px solid #0031A4;
-        margin-top: 16px; }
-        div#ViewTeamAPI div.team div.roster div.team-member h4 {
-          font-weight: bold;
-          font-size: 10pt; }
-        div#ViewTeamAPI div.team div.roster div.team-member p {
-          font-size: 10pt; }
-        div#ViewTeamAPI div.team div.roster div.team-member div.attackers, div#ViewTeamAPI div.team div.roster div.team-member div.defenders {
-          margin-top: 16px;
-          grid-column: span 2;
-          display: grid;
-          grid-template-columns: repeat(6, 1fr);
-          align-items: center; }
-          div#ViewTeamAPI div.team div.roster div.team-member div.attackers p, div#ViewTeamAPI div.team div.roster div.team-member div.defenders p {
-            grid-column: span 6; }
-          div#ViewTeamAPI div.team div.roster div.team-member div.attackers div img, div#ViewTeamAPI div.team div.roster div.team-member div.defenders div img {
-            width: 100%; }
-      div#ViewTeamAPI div.team div.roster div.team-member--premium {
-        border: 3px solid gold;
-        background: linear-gradient(to right, #F9F295, #E0A330); }
-        div#ViewTeamAPI div.team div.roster div.team-member--premium em {
-          font-size: 8pt;
-          margin-left: 8px; }
-        div#ViewTeamAPI div.team div.roster div.team-member--premium * {
-          color: #1A1505; }
-
-div#ViewTeamStatisticsAPI {
-  border-top: 3px solid #0098A6; }
-  div#ViewTeamStatisticsAPI div.team-statistics {
-    box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.25);
-    border: 1px solid #33363E;
-    padding: 40px; }
-    div#ViewTeamStatisticsAPI div.team-statistics h2 {
-      text-align: center;
-      margin-bottom: 16px; }
-    div#ViewTeamStatisticsAPI div.team-statistics div.overview {
+div#ViewTeamAPI div.team {
+  padding: 20px;
+  border-radius: 8px;
+  padding-top: 20px; }
+  div#ViewTeamAPI div.team h2, div#ViewTeamAPI div.team h3.team-description {
+    text-align: center;
+    margin-top: 16px;
+    color: #353535; }
+    div#ViewTeamAPI div.team h2 button.toggle__button, div#ViewTeamAPI div.team h3.team-description button.toggle__button {
+      margin-left: 8px;
+      padding: 4px;
+      background: #212da9;
+      color: #fcfcfc; }
+    div#ViewTeamAPI div.team h2 button.toggle__button:hover, div#ViewTeamAPI div.team h3.team-description button.toggle__button:hover {
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); }
+  div#ViewTeamAPI div.team h3 {
+    color: #353535; }
+  div#ViewTeamAPI div.team div.overview {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 20px;
+    padding: 8px 72px; }
+  div#ViewTeamAPI div.team div.roster {
+    margin-top: 40px; }
+    div#ViewTeamAPI div.team div.roster div.team-member {
+      padding: 20px;
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      margin-bottom: 16px; }
-      div#ViewTeamStatisticsAPI div.team-statistics div.overview h3 {
-        grid-column: span 3; }
-      div#ViewTeamStatisticsAPI div.team-statistics div.overview div.progress-circle {
-        width: 96px;
-        height: 96px;
-        box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.25); }
-        div#ViewTeamStatisticsAPI div.team-statistics div.overview div.progress-circle p {
-          font-size: 10pt; }
-        div#ViewTeamStatisticsAPI div.team-statistics div.overview div.progress-circle p.progress-circle__value {
-          font-size: 12pt; }
-      div#ViewTeamStatisticsAPI div.team-statistics div.overview div.progress-circle::after {
-        width: 92px;
-        height: 92px; }
-      div#ViewTeamStatisticsAPI div.team-statistics div.overview p.team-stat-label, div#ViewTeamStatisticsAPI div.team-statistics div.overview span {
-        grid-column: span 3;
-        text-align: right;
+      background: #17181c;
+      border-radius: 8px;
+      grid-template-columns: repeat(9, 1fr);
+      margin-top: 16px; }
+      div#ViewTeamAPI div.team div.roster div.team-member h4 {
+        font-weight: bold;
         font-size: 10pt; }
-    div#ViewTeamStatisticsAPI div.team-statistics div.member-statistics div.team-member-stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      padding: 16px;
-      border: 1px solid #33363E;
-      border-right: none;
-      border-left: 3px solid #0098A6;
-      align-items: center;
-      margin-top: 16px;
-      transition: all 0.3s ease; }
-      div#ViewTeamStatisticsAPI div.team-statistics div.member-statistics div.team-member-stats h4 {
-        font-size: 10pt; }
-      div#ViewTeamStatisticsAPI div.team-statistics div.member-statistics div.team-member-stats p {
+      div#ViewTeamAPI div.team div.roster div.team-member p {
         font-size: 10pt;
-        text-align: right; }
-    div#ViewTeamStatisticsAPI div.team-statistics div.member-statistics div.team-member-stats:hover {
-      box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.25);
-      transition: all 0.3s ease; }
+        color: #fcfcfc; }
+        div#ViewTeamAPI div.team div.roster div.team-member p span {
+          display: block;
+          color: 12pt; }
+      div#ViewTeamAPI div.team div.roster div.team-member div.attackers, div#ViewTeamAPI div.team div.roster div.team-member div.defenders {
+        margin-top: 16px;
+        grid-column: span 2;
+        display: grid;
+        grid-template-columns: repeat(8, 1fr);
+        align-items: center; }
+        div#ViewTeamAPI div.team div.roster div.team-member div.attackers p, div#ViewTeamAPI div.team div.roster div.team-member div.defenders p {
+          grid-column: span 8; }
+        div#ViewTeamAPI div.team div.roster div.team-member div.attackers div img, div#ViewTeamAPI div.team div.roster div.team-member div.defenders div img {
+          width: 100%; }
+    div#ViewTeamAPI div.team div.roster div.team-member--premium {
+      border: 3px solid gold;
+      background: linear-gradient(to right, #F9F295, #E0A330); }
+      div#ViewTeamAPI div.team div.roster div.team-member--premium em {
+        font-size: 8pt;
+        position: absolute;
+        top: 16px;
+        left: 0;
+        color: #353535; }
+      div#ViewTeamAPI div.team div.roster div.team-member--premium h4 {
+        font-weight: bold;
+        font-size: 10pt;
+        color: #353535;
+        position: relative; }
+      div#ViewTeamAPI div.team div.roster div.team-member--premium p {
+        font-size: 10pt;
+        color: #353535;
+        font-weight: 500; }
+        div#ViewTeamAPI div.team div.roster div.team-member--premium p span {
+          display: block;
+          color: #353535; }
+
+div#LeaveTeamAPI {
+  grid-column: span 3; }
+  div#LeaveTeamAPI button {
+    margin: 16px auto;
+    display: block;
+    padding: 16px 24px;
+    border: none; }
+  div#LeaveTeamAPI button:hover {
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); }
 
 #ViewTeamStatisticsAPI > div > div > div.member-statistics p:nth-child(4) {
   text-align: left !important; }
 
 div#UpdateTeamNameAPI {
-  padding: 40px;
-  box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.25);
-  border-left: 3px solid #0098A6; }
+  padding: 20px; }
   div#UpdateTeamNameAPI h3 {
-    text-align: center; }
+    color: #353535;
+    margin-bottom: 4px; }
   div#UpdateTeamNameAPI input {
     width: 100%; }
+  div#UpdateTeamNameAPI input:focus {
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); }
   div#UpdateTeamNameAPI button {
     margin: auto;
     display: block;
-    margin-top: 40px; }
+    margin-top: 40px;
+    padding: 10px 16px;
+    background: #212da9; }
+  div#UpdateTeamNameAPI button:hover {
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); }
 
 div#TeamAnnouncementAPI {
-  padding: 40px;
-  box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.25);
-  border-left: 3px solid #0031A4;
+  padding: 20px;
   margin-top: 16px; }
   div#TeamAnnouncementAPI h3 {
-    text-align: center; }
+    color: #353535;
+    margin-bottom: 4px; }
   div#TeamAnnouncementAPI textarea {
     width: 100%; }
   div#TeamAnnouncementAPI textarea:focus {
-    cursor: text; }
+    cursor: text;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); }
   div#TeamAnnouncementAPI button {
     margin: auto;
     display: block;
-    margin-top: 40px; }
+    margin-top: 40px;
+    padding: 10px 16px;
+    background: #212da9; }
+  div#TeamAnnouncementAPI button:hover {
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); }
 
 div#ManageTeamAPI {
   grid-column: span 2;
-  padding: 40px;
-  box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.25);
-  border-left: 3px solid #4915D6; }
+  padding: 20px;
+  border-left: 3px solid 1px solid #151821; }
   div#ManageTeamAPI h3 {
     text-align: center; }
   div#ManageTeamAPI div.manage-team-member {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    padding: 16px;
-    border: 1px solid #33363E;
+    padding: 20px;
+    border-radius: 8px;
+    background: #17181c;
     margin-bottom: 16px;
     align-items: center;
     justify-content: center;
     grid-gap: 16px;
     transition: all 0.3s ease; }
     div#ManageTeamAPI div.manage-team-member h4 {
-      font-size: 12pt;
+      font-size: 10pt;
       text-align: left; }
-    div#ManageTeamAPI div.manage-team-member option {
-      color: #19191a; }
     div#ManageTeamAPI div.manage-team-member p {
       text-align: center; }
     div#ManageTeamAPI div.manage-team-member button {
-      border: 1px solid #C93434;
       max-width: 300px;
       display: block;
       margin: auto;
-      width: 100%; }
+      width: 100%;
+      background: #a92121; }
     div#ManageTeamAPI div.manage-team-member button:hover {
-      background: #C93434; }
+      background: #a92121; }
   div#ManageTeamAPI div.manage-team-member:hover {
-    box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.25);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
     transition: all 0.3s ease; }
+  div#ManageTeamAPI div.team-controls {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); }
   div#ManageTeamAPI div.team-status, div#ManageTeamAPI div.team-platform, div#ManageTeamAPI div.team-mmr {
-    margin-top: 40px; }
+    margin-top: 4px; }
+    div#ManageTeamAPI div.team-status p, div#ManageTeamAPI div.team-platform p, div#ManageTeamAPI div.team-mmr p {
+      color: #353535; }
     div#ManageTeamAPI div.team-status select, div#ManageTeamAPI div.team-platform select, div#ManageTeamAPI div.team-mmr select {
       width: 100%;
       max-width: 256px; }
-    div#ManageTeamAPI div.team-status option, div#ManageTeamAPI div.team-platform option, div#ManageTeamAPI div.team-mmr option {
-      color: #19191a; }
 
 div#BlockedUsersAPI {
-  box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.25);
-  padding: 40px;
-  border-left: 3px solid #C93434; }
+  padding: 20px; }
+  div#BlockedUsersAPI h3 {
+    color: #353535; }
   div#BlockedUsersAPI div.blocked-user {
     display: flex;
     justify-content: space-between;
     align-items: center; }
     div#BlockedUsersAPI div.blocked-user h4 {
-      font-size: 12pt; }
+      font-size: 10pt;
+      color: #353535; }
     div#BlockedUsersAPI div.blocked-user button {
-      border: 1px solid #C93434; }
+      background: #a92121;
+      border: none;
+      padding: 10px 16px; }
     div#BlockedUsersAPI div.blocked-user button:hover {
-      background: #C93434; }
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); }
 
 div#DeleteTeamAPI {
   grid-column: span 3; }
+  div#DeleteTeamAPI button {
+    padding: 16px 24px;
+    display: block;
+    margin: auto;
+    border: none; }
+  div#DeleteTeamAPI button:hover {
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); }
 
 @media screen and (max-width: 1300px) {
   div.hasTeam {
@@ -1346,7 +1393,7 @@ div#DeleteTeamAPI {
     grid-column: span 3;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-gap: 40px; }
+    grid-gap: 20px; }
   div#BlockedUsersAPI {
     grid-column: span 3; }
   div#DeleteTeamAPI {
@@ -1434,7 +1481,7 @@ div#DeleteTeamAPI {
     display: block;
     margin: auto; }
   div#ManageTeamAPI {
-    padding: 16px; }
+    padding: 8px; }
     div#ManageTeamAPI div.manage-team-member {
       grid-template-columns: repeat(2, 1fr); }
       div#ManageTeamAPI div.manage-team-member h4 {
@@ -1450,7 +1497,7 @@ div#edit-strategies {
   height: 100%; }
 
 div#EditStrategiesAPI div.edit-container {
-  padding: 40px !important;
+  padding: 20px !important;
   height: 100%; }
   div#EditStrategiesAPI div.edit-container h1 {
     text-align: center; }
@@ -1469,10 +1516,10 @@ div#EditStrategiesAPI div.edit-buttons {
     margin: 0;
     width: 100%;
     margin-left: 16px;
-    background: linear-gradient(to right, #4915D6, #0031A4); }
+    background: linear-gradient(to right, #4915D6, #212da9); }
 
 div#ViewStrategiesAPI div.view-container {
-  padding: 40px !important; }
+  padding: 20px !important; }
   div#ViewStrategiesAPI div.view-container a.button {
     margin: auto;
     margin-top: 16px; }
@@ -1480,11 +1527,11 @@ div#ViewStrategiesAPI div.view-container {
     text-align: center; }
 
 div.add-strategy {
-  padding: 40px; }
+  padding: 20px; }
   div.add-strategy button#cancel {
-    border: 2px solid #C93434; }
+    border: 2px solid #a92121; }
   div.add-strategy button#cancel:hover {
-    background: #C93434; }
+    background: #a92121; }
 
 div#CreateStrategiesAPI h1, div#CreateStrategiesAPI h4 {
   text-align: center; }
@@ -1493,16 +1540,16 @@ div.map-selector {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 40px;
-  padding: 40px; }
+  padding: 20px; }
   div.map-selector h3 {
     grid-column: span 3;
     text-align: center; }
   div.map-selector div.map-option, div.map-selector a.map-option {
-    background: #292C38;
+    background: #3d3f46;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 40px;
+    padding: 20px;
     transition: all 0.3s ease;
     background-size: cover;
     background-position: center;
@@ -1526,20 +1573,20 @@ div.map-selector {
     transition: all 0.3s ease; }
   div.map-selector button.delete-button {
     border-radius: 0px !important;
-    background: #1A1D27;
+    background: #0b0c1b;
     position: absolute;
     top: 0;
     right: 0;
     height: 100%;
     border: none;
-    border-left: 1px solid #33363E;
+    border-left: 1px solid #151821;
     filter: opacity(0);
     transition: all 0.3s ease; }
   div.map-selector button.delete-button:hover {
     box-shadow: none;
-    background: #C93434; }
+    background: #a92121; }
   div.map-selector div.map-option:hover, div.map-selector a.map-option:hover {
-    box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.25);
+    box-shadow: 0px 8px 30px black;
     cursor: pointer;
     transition: all 0.3s ease; }
     div.map-selector div.map-option:hover div.map-overlay, div.map-selector a.map-option:hover div.map-overlay {
@@ -1567,10 +1614,10 @@ div.objectives input {
   max-width: 600px; }
 
 div.objectives ul {
-  padding: 16px; }
+  padding: 8px; }
 
 div.objectives li {
-  font-size: 14pt; }
+  font-size: 12pt; }
   div.objectives li div {
     display: flex;
     align-items: center; }
@@ -1578,7 +1625,7 @@ div.objectives li {
     margin-left: 40px;
     padding: 4px 8px; }
   div.objectives li button:hover {
-    background: #C93434; }
+    background: #a92121; }
 
 div.objectives textarea {
   width: 100%;
@@ -1592,13 +1639,13 @@ div.toolbar--scroll {
   top: 0; }
 
 div.toolbar {
-  border-bottom: 1px solid #33363E;
+  border-bottom: 1px solid #151821;
   display: flex;
   align-items: center;
   padding: 4px 0px;
   z-index: 4;
   width: 100%;
-  background-color: #1A1D27;
+  background-color: #0b0c1b;
   position: relative; }
   div.toolbar * {
     margin: 0 16px; }
@@ -1609,20 +1656,20 @@ div.toolbar {
     width: 100%;
     border: 1px solid #E0E8FF;
     transition: all 0.3s ease;
-    background: linear-gradient(to right, #4915D6, #0031A4); }
+    background: linear-gradient(to right, #4915D6, #212da9); }
   div.toolbar button.toolbar__button:hover {
     transition: all 0.3s ease; }
   div.toolbar p {
     color: #B1B3BE;
     font-size: 10pt;
-    border-radius: 4px;
+    border-radius: 8px;
     padding: 8px; }
   div.toolbar h4 {
-    font-size: 12pt; }
+    font-size: 10pt; }
   div.toolbar h4.toolbar__strategy {
     color: #B1B3BE;
     border: 1px solid transparent;
-    border-radius: 4px;
+    border-radius: 8px;
     padding: 4px 6px; }
   div.toolbar h4.toolbar__strategy:hover {
     cursor: pointer;
@@ -1648,9 +1695,9 @@ div.toolbar {
         margin: 0; }
       div.toolbar div.action-container div.action p {
         margin: 0;
-        color: #19191a; }
+        color: #353535; }
     div.toolbar div.action-container div.action:hover {
-      border-bottom: 3px solid #0031A4;
+      border-bottom: 3px solid #212da9;
       transition: all 0.3s ease;
       cursor: pointer; }
       div.toolbar div.action-container div.action:hover * {
@@ -1686,9 +1733,9 @@ div.toolbar--active {
 
 div.toolbar__navigation {
   position: fixed;
-  background: white;
+  background: #f9fcfe;
   z-index: 4;
-  padding: 40px;
+  padding: 20px;
   top: 0;
   left: 0;
   height: 100VH;
@@ -1702,10 +1749,10 @@ div.toolbar__navigation {
     margin-top: 40px; }
   div.toolbar__navigation h3 {
     text-align: center;
-    color: #19191a;
+    color: #353535;
     margin-top: 16px; }
   div.toolbar__navigation h4 {
-    color: #19191a;
+    color: #353535;
     text-align: left;
     margin: 0;
     margin-top: 16px; }
@@ -1714,18 +1761,18 @@ div.toolbar__navigation {
   div.toolbar__navigation a#showMaps {
     display: block;
     background: transparent;
-    color: #19191a;
+    color: #353535;
     border: 1px solid #E0E8FF;
     margin: 0;
     margin-top: 16px;
-    padding: 16px;
+    padding: 8px;
     width: 100%;
     text-decoration: none;
     text-align: center;
     transition: all 0.3s ease;
     cursor: pointer; }
   div.toolbar__navigation a#showMaps:hover {
-    box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.25);
+    box-shadow: 0px 8px 30px black;
     transition: all 0.3s ease; }
   div.toolbar__navigation div.strategy-selector, div.toolbar__navigation div.site-container {
     margin: 0;
@@ -1735,22 +1782,22 @@ div.toolbar__navigation {
       display: block;
       width: 100%;
       background: transparent;
-      color: #19191a;
+      color: #353535;
       margin-bottom: 4px;
       border: 1px solid #E0E8FF; }
     div.toolbar__navigation div.strategy-selector button.type--active, div.toolbar__navigation div.strategy-selector button.strategy--active, div.toolbar__navigation div.strategy-selector button.site--active, div.toolbar__navigation div.site-container button.type--active, div.toolbar__navigation div.site-container button.strategy--active, div.toolbar__navigation div.site-container button.site--active {
       color: white;
-      background: linear-gradient(to right, #0031A4, #0098A6); }
+      background: linear-gradient(to right, #212da9, #1c31ef); }
   div.toolbar__navigation div.strategy-selector {
     padding-bottom: 42px; }
   div.toolbar__navigation div.site-container select, div.toolbar__navigation select.type-selector, div.toolbar__navigation div.strategy-selector select {
     border: 1px solid #E0E8FF;
     margin: 0;
     width: 100%;
-    padding: 16px;
-    border-radius: 4px; }
+    padding: 8px;
+    border-radius: 8px; }
     div.toolbar__navigation div.site-container select option, div.toolbar__navigation select.type-selector option, div.toolbar__navigation div.strategy-selector select option {
-      color: #19191a; }
+      color: #353535; }
   div.toolbar__navigation div.strategy-control {
     position: absolute;
     margin: 0;
@@ -1760,13 +1807,13 @@ div.toolbar__navigation {
     display: grid;
     grid-template-columns: repeat(2, 1fr); }
     div.toolbar__navigation div.strategy-control button {
-      background: white;
+      background: #f9fcfe;
       border: 1px solid #E0E8FF;
       width: 100%;
       height: 100%;
       margin: 0 !important;
       padding: 4px;
-      font-size: 14pt;
+      font-size: 12pt;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -1774,13 +1821,13 @@ div.toolbar__navigation {
       filter: opacity(1); }
     div.toolbar__navigation div.strategy-control button:hover {
       box-shadow: none;
-      background: linear-gradient(to right, #0031A4, #4915D6);
+      background: linear-gradient(to right, #212da9, #4915D6);
       color: white;
       cursor: pointer; }
 
 div.toolbar__navigation--active {
   transform: translateX(0);
-  box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 8px 30px black;
   z-index: 4;
   transition: all 0.3s ease; }
 
@@ -1792,28 +1839,28 @@ button.toolbar__navigation-button--active {
   position: fixed;
   top: 16px;
   left: 240px;
-  color: #19191a;
+  color: #353535;
   z-index: 5;
   background: transparent;
   border: 1px solid #E0E8FF; }
 
 div.sidebar--scroll div.sidebar-body {
   height: 100%;
-  background: #1A1D27;
+  background: #0b0c1b;
   position: fixed;
   top: 48px;
   width: 256px;
   max-height: calc(100VH - 64px); }
 
 div.sidebar {
-  border-right: 1px solid #33363E;
-  background: #1A1D27;
+  border-right: 1px solid #151821;
+  background: #0b0c1b;
   height: 100VH;
   max-height: calc(100VH - 128px);
   overflow-y: hidden; }
   div.sidebar div.sidebar-body {
-    padding: 16px;
-    border-right: 1px solid #33363E;
+    padding: 8px;
+    border-right: 1px solid #151821;
     height: 100%;
     display: flex;
     flex-direction: column; }
@@ -1832,35 +1879,35 @@ div.sidebar {
   div.sidebar div.scene-container {
     height: 100%;
     overflow-y: auto;
-    padding-bottom: 40px;
+    padding-bottom: 20px;
     margin-top: 0; }
   div.sidebar div.strategy-container {
     overflow-y: auto;
-    padding-bottom: 16px;
+    padding-bottom: 8px;
     min-height: 300px; }
     div.sidebar div.strategy-container select.select-container {
       width: 100%;
       display: block;
-      background: #1A1D27;
+      background: #0b0c1b;
       border-bottom: none;
-      border: 1px solid #33363E;
-      border-radius: 4px;
-      color: #E6E6E6; }
+      border: 1px solid #151821;
+      border-radius: 8px;
+      color: #fcfcfc; }
       div.sidebar div.strategy-container select.select-container option.strategy {
         color: white; }
   div.sidebar div.scene {
     display: flex;
     flex-direction: column;
-    padding: 16px;
+    padding: 8px;
     margin-top: 4px;
     transition: all 0.3s ease;
-    background: #292C38; }
+    background: #3d3f46; }
     div.sidebar div.scene span.scene__number {
       font-size: 10pt; }
     div.sidebar div.scene span:hover {
       cursor: pointer; }
     div.sidebar div.scene p.scene__name {
-      color: #E6E6E6;
+      color: #fcfcfc;
       margin-bottom: 2px;
       font-size: 14px;
       display: inline;
@@ -1898,21 +1945,21 @@ div.sidebar {
     cursor: pointer; }
   div.sidebar div.scene:hover {
     cursor: pointer;
-    box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.25);
+    box-shadow: 0px 8px 30px black;
     transition: all 0.3s ease; }
   div.sidebar div.scene--active {
-    border-left: 3px solid #0031A4; }
+    border-left: 3px solid #212da9; }
   div.sidebar div.scene-controls {
     position: absolute;
     bottom: 0;
     left: 0;
     width: 256px;
     height: 50px;
-    border: 1px solid #33363E;
+    border: 1px solid #151821;
     display: grid;
     grid-template-columns: repeat(2, 1fr); }
     div.sidebar div.scene-controls button {
-      background: #1A1D27;
+      background: #0b0c1b;
       border: none;
       width: 100%;
       height: 100%;
@@ -1927,18 +1974,18 @@ div.sidebar {
       font-size: 10pt; }
     div.sidebar div.scene-controls button:hover {
       box-shadow: none;
-      background: linear-gradient(to right, #0031A4, #4915D6);
+      background: linear-gradient(to right, #212da9, #4915D6);
       cursor: pointer; }
     div.sidebar div.scene-controls button:nth-child(1) {
-      border-right: 1px solid #33363E; }
+      border-right: 1px solid #151821; }
 
 div.lineup--scroll div.lineup-body {
   position: fixed;
   top: 48px;
-  padding-right: 16px; }
+  padding-right: 8px; }
 
 div.lineup {
-  padding: 16px;
+  padding: 8px;
   padding-top: 8px; }
   div.lineup > button {
     display: none; }
@@ -1948,7 +1995,7 @@ div.lineup {
   div.lineup div.role {
     border-radius: 0;
     padding: 8px;
-    background: #292C38;
+    background: #3d3f46;
     margin-bottom: 16px; }
     div.lineup div.role div.role__head {
       width: 100%;
@@ -1962,7 +2009,7 @@ div.lineup {
         margin-bottom: 4px;
         border: none; }
         div.lineup div.role div.role__head select option {
-          color: #19191a; }
+          color: #353535; }
     div.lineup div.role div.role__image p {
       font-size: 10pt;
       text-align: center; }
@@ -2000,7 +2047,7 @@ div.canvas {
   width: 100%;
   height: 100%;
   position: relative;
-  border-right: 1px solid #33363E;
+  border-right: 1px solid #151821;
   z-index: 3; }
   div.canvas div.blueprint-form {
     width: 100%;
@@ -2025,8 +2072,8 @@ div.canvas {
       top: 120%;
       left: 50%;
       transform: translate(-50%);
-      color: #E6E6E6;
-      background: #1A1D27;
+      color: #fcfcfc;
+      background: #0b0c1b;
       padding: 4px;
       display: flex;
       align-items: center;
@@ -2045,12 +2092,12 @@ div.canvas {
       text-align: center;
       border-radius: 0;
       font-size: 10pt;
-      color: #C93434;
+      color: #a92121;
       border: none;
       width: 22px;
       height: 22px;
       background: white;
-      border-radius: 4px;
+      border-radius: 8px;
       z-index: 3;
       filter: opacity(1); }
     div.canvas div.position-overlay select.drag-item__select {
@@ -2062,7 +2109,7 @@ div.canvas {
       z-index: 5; }
       div.canvas div.position-overlay select.drag-item__select option {
         font-size: 10pt;
-        color: #19191a; }
+        color: #353535; }
     div.canvas div.position-overlay div.drag-item.drag {
       cursor: grabbing;
       transition: all 0s ease; }
@@ -2077,7 +2124,7 @@ div.canvas {
       height: 120%;
       border: 3px dotted black;
       z-index: 3;
-      border-radius: 4px;
+      border-radius: 8px;
       animation-name: blink;
       animation-duration: 0.5s;
       animation-timing-function: ease-in-out;
@@ -2094,7 +2141,7 @@ div.canvas {
       border: 2px solid #ffbb33;
       transform: scale(0.8); }
     div.canvas div.position-overlay div.drag-breach, div.canvas div.position-overlay div.drag-rotate {
-      border: 2px solid #C93434;
+      border: 2px solid #a92121;
       transform: scale(0.8); }
     div.canvas div.position-overlay div.drag-utility {
       transform: scale(0.8); }
@@ -2111,7 +2158,7 @@ div.canvas {
     display: flex;
     z-index: 2;
     left: 0;
-    background: white; }
+    background: #f9fcfe; }
     div.canvas div.canvas__controls div.labels {
       display: flex;
       align-items: center;
@@ -2119,19 +2166,19 @@ div.canvas {
       flex-direction: column;
       padding: 8px; }
       div.canvas div.canvas__controls div.labels span {
-        color: #19191a;
+        color: #353535;
         font-size: 10pt; }
       div.canvas div.canvas__controls div.labels input {
         cursor: pointer; }
     div.canvas div.canvas__controls select {
       border-radius: 0 !important; }
       div.canvas div.canvas__controls select option {
-        color: #19191a; }
+        color: #353535; }
     div.canvas div.canvas__controls select:hover {
       cursor: pointer; }
   div.canvas div.canvas__body {
     margin-top: 40px;
-    padding: 40px; }
+    padding: 20px; }
     div.canvas div.canvas__body ul {
       margin-left: 16px; }
     div.canvas div.canvas__body h3 {
@@ -2142,9 +2189,9 @@ div.zoom-selector {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: #19191a !important; }
+  color: #353535 !important; }
   div.zoom-selector p {
-    color: #19191a;
+    color: #353535;
     margin-top: 8px; }
   div.zoom-selector input {
     cursor: pointer;
@@ -2167,14 +2214,14 @@ div#Viewer img.role__utility-image:hover, div#Viewer img.role__gadget-image:hove
   cursor: default; }
 
 div#Viewer a.objectives__video, div#SharedViewer a.objectives__video {
-  padding: 16px;
-  background: linear-gradient(to right, #0031A4, #0098A6);
+  padding: 8px;
+  background: linear-gradient(to right, #212da9, #1c31ef);
   margin-top: 40px !important;
   display: block;
   width: 100%;
   max-width: 128px;
   color: white;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer; }
 
 @media screen and (max-width: 1400px) {
@@ -2193,12 +2240,12 @@ div#Viewer a.objectives__video, div#SharedViewer a.objectives__video {
       margin: 0;
       height: 48px; }
     div#Editor div.sidebar div.sidebar-body, div#Viewer div.sidebar div.sidebar-body, div#SharedViewer div.sidebar div.sidebar-body {
-      padding: 16px;
+      padding: 8px;
       position: absolute;
       top: 64px;
       left: 0;
       width: 256px;
-      background: #1A1D27;
+      background: #0b0c1b;
       transform: translateX(-100%);
       transition: all 0.3s ease; }
       div#Editor div.sidebar div.sidebar-body div.scene-controls, div#Viewer div.sidebar div.sidebar-body div.scene-controls, div#SharedViewer div.sidebar div.sidebar-body div.scene-controls {
@@ -2232,7 +2279,7 @@ div#Viewer a.objectives__video, div#SharedViewer a.objectives__video {
       top: 64px;
       right: 0;
       width: 324px;
-      background: #1A1D27;
+      background: #0b0c1b;
       transform: translate(324px);
       transition: all 0.3s ease; }
   div.lineup--active > button {
@@ -2250,14 +2297,14 @@ div#Viewer a.objectives__video, div#SharedViewer a.objectives__video {
   div.map-selector {
     grid-template-columns: 1fr;
     padding: 8px;
-    padding-top: 40px; }
+    padding-top: 20px; }
     div.map-selector div.map-overlay {
-      font-size: 16pt;
+      font-size: 14pt;
       background: rgba(0, 0, 0, 0.47); }
     div.map-selector button.delete-button {
       filter: none;
-      border: 1px solid #C93434;
-      background: #C93434; }
+      border: 1px solid #a92121;
+      background: #a92121; }
   div#Editor, div#Viewer, div#SharedViewer {
     width: 100%;
     height: 100%; }
@@ -2317,7 +2364,7 @@ div#Viewer a.objectives__video, div#SharedViewer a.objectives__video {
           display: grid;
           grid-template-columns: repeat(5, 1fr);
           padding: 0;
-          margin-bottom: 128px; }
+          margin-bottom: 72px; }
           div#Editor main div.lineup div.lineup-body h3, div#Viewer main div.lineup div.lineup-body h3, div#SharedViewer main div.lineup div.lineup-body h3 {
             grid-column: span 5; }
           div#Editor main div.lineup div.lineup-body div.role, div#Viewer main div.lineup div.lineup-body div.role, div#SharedViewer main div.lineup div.lineup-body div.role {
@@ -2333,7 +2380,7 @@ div#Viewer a.objectives__video, div#SharedViewer a.objectives__video {
             div#Editor main div.lineup div.lineup-body div.role--active div.role__body, div#Viewer main div.lineup div.lineup-body div.role--active div.role__body, div#SharedViewer main div.lineup div.lineup-body div.role--active div.role__body {
               position: absolute;
               top: 100%;
-              background: #1A1D27;
+              background: #0b0c1b;
               width: 100%; } }
 
 @media screen and (max-width: 600px) {
@@ -2444,7 +2491,7 @@ div#Viewer a.objectives__video, div#SharedViewer a.objectives__video {
         display: grid;
         grid-template-columns: repeat(5, 1fr);
         padding: 0;
-        margin-bottom: 128px; }
+        margin-bottom: 72px; }
         div#Editor main div.lineup div.lineup-body h3, div#Viewer main div.lineup div.lineup-body h3, div#SharedViewer main div.lineup div.lineup-body h3 {
           grid-column: span 5; }
         div#Editor main div.lineup div.lineup-body div.role, div#Viewer main div.lineup div.lineup-body div.role, div#SharedViewer main div.lineup div.lineup-body div.role {
@@ -2466,12 +2513,12 @@ div#Viewer a.objectives__video, div#SharedViewer a.objectives__video {
             display: block !important;
             position: absolute;
             top: 100%;
-            background: #1A1D27;
-            width: calc(100VW - (2 * 16px));
+            background: #0b0c1b;
+            width: calc(100VW - (2 * 8px));
             left: 8px; }
           div#Editor main div.lineup div.lineup-body div.role--active div.role__body, div#Viewer main div.lineup div.lineup-body div.role--active div.role__body, div#SharedViewer main div.lineup div.lineup-body div.role--active div.role__body {
             position: absolute;
             top: 170%;
             left: 8px;
-            background: #1A1D27;
-            width: calc(100VW - 16px); } }
+            background: #0b0c1b;
+            width: calc(100VW - 8px); } }
