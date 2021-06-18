@@ -49,7 +49,6 @@ exports.notify = async function(user, message) {
         let endIndex = body.indexOf("}");
         body = body.slice(0, startIndex) + body.slice(endIndex + 1, body.length);
         body = body.replace(`#${i - 1}`, arguments[i]);
-
         startIndex = email_body.indexOf("{");
         endIndex = email_body.indexOf("}");
         email_body = email_body.slice(0, startIndex) + email_body.slice(endIndex + 1, email_body.length);
@@ -59,9 +58,10 @@ exports.notify = async function(user, message) {
         await webpush.sendNotification(JSON.parse(user.subscription), JSON.stringify({ title: message.status, body: body }));
       } catch(error) {
         console.log(error);
+      } finally {
+        email(user.email, message.status, email_body);
       }
     }
-    email(user.email, message.status, email_body);
   }
 }
 

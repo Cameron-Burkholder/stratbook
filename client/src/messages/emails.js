@@ -4,7 +4,7 @@ module.exports = {
   ANNOUNCEMENT: {
     status: "Team Announcement",
     body: '#1{NAME}: "#2{ANNOUNCEMENT}"',
-    email_body: '<div><h2>Team Announcement</h2><br/><p>#1{NAME}: "#{ANNOUNCEMENT}"'
+    email_body: '<div><h2>Team Announcement</h2><br/><p>#1{NAME}: "#2{ANNOUNCEMENT}"'
   },
   EMAIL_UPDATED: {
     status: "Email Updated",

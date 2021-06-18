@@ -15,12 +15,15 @@ class TeamAnnouncementAPI extends React.Component {
 
     this.state = {
       loading: false,
-      message: ""
+      message: "",
+      length: 0,
+      capacity: 250
     }
   }
   onChange(e) {
     this.setState({
-      message: e.target.value
+      message: e.target.value,
+      length: e.target.value.length
     });
   }
   onSubmit(e) {
@@ -67,6 +70,7 @@ class TeamAnnouncementAPI extends React.Component {
           <h3>Make an Announcement</h3>
           <div className="announcement-input">
             <textarea onChange={this.onChange} type="text" value={this.state.message} rows={5}/>
+            <span className="form__description">{(this.state.capacity - this.state.length)} characters remaining</span>
             <button onClick={this.onSubmit}>Send</button>
           </div>
         </div>

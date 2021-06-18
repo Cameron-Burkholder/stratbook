@@ -26,6 +26,10 @@ exports.validateAnnouncement = function(request, response, done) {
     errors.announcement = "Announcement may not be empty."
   }
 
+  if (data.announcement.length >= 250) {
+    errors.announcement = "Announcement may not be more than 250 characters.";
+  }
+
   if (!isEmpty(errors)) {
     packet.errors = errors;
     response.json(packet);
