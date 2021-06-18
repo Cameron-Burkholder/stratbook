@@ -15,33 +15,38 @@ $button-padding: 10px 16px;
 $button-padding-big: 16px 24px;
 
 // COLORS
-$background-primary: #0b0c1b;
+$background-primary: #1c1f45;
 $background-secondary: rgb(61, 63, 70);
 $background-tertiary: rgb(249, 252, 254);
-$background-quaternary: rgb(23, 24, 28);
+$background-quaternary: #171b2a;
+$background-gradient-primary: linear-gradient(45deg, rgb(49, 63, 214), rgb(26, 37, 156));
+$background-gradient-secondary: linear-gradient(45deg, #950e0e, #64001d);
 $text-body: #B1B3BE;
 $text-heading: rgb(252, 252, 252);
 $text-subtle: rgb(135, 137, 143);
 $text-accent: #B1B3BE;
 $text-dark: rgb(53, 53, 53);
 $text-light: #E0E8FF;
-$color-primary: rgb(33, 45, 169);
-$color-secondary: rgb(28, 49, 239);
+//$color-primary: #2a2e61; the normal one
+//$color-primary: #7d1e44; the redish one
+$color-primary: rgb(49, 63, 214); // the newer darker blue one
+$color-secondary: #950e0e;
 $color-tertiary: #4915D6;
 $color-danger: rgb(169, 33, 33);
 $color-warning: #ffbb33;
 $color-success: #00C851;
 
 // BORDERS
-$border-primary: 1px solid rgb(21, 24, 33);
+$border-primary: none;
 $border-secondary: 1px solid #E0E8FF;
 
 // BORDER RADIUS
 $border-radius: 8px;
 
 // BOX SHADOW
-$box-shadow-primary: 0px 8px 30px rgb(0, 0, 0);
+$box-shadow-primary: 0px 8px 30px rgba(0, 0, 0, 0.3);
 $box-shadow-secondary: 0px 4px 8px rgba(0, 0, 0, 0.3);
+$box-shadow-tertiary: 0px 8px 50px rgba(0, 0, 0, 0.3);
 
 // TEXT SHADOW
 $text-shadow-primary: 0px 2px rgba(0, 0, 0, 0.17);

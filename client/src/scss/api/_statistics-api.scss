@@ -1,11 +1,6 @@
 /* client/src/scss/api/_statistics-api.scss */
 
-div.page#dashboard h1 {
-  background: $color-primary;
-  border-radius: $border-radius;
-  padding: $padding-m;
-  box-shadow: $box-shadow-secondary;
-}
+
 
 p.statistics-failure, p.text-error {
   padding: $padding-s;
@@ -22,6 +17,9 @@ div#SeasonalStatisticsAPI {
   box-shadow: $box-shadow-secondary;
   h2.statistics-title {
     color: $text-heading;
+  }
+  h3 {
+    color: $text-subtle;
   }
   div#seasonal-stats-inside {
     padding: $padding-s;
@@ -44,10 +42,11 @@ div#SeasonalStatisticsAPI {
     position: relative;
     z-index: 1;
     transition: all 0.3s ease;
-    background-color: $color-primary;
+    background: $background-gradient-primary;
     overflow: hidden;
     h3 {
       font-size: $font-title;
+      color: $text-heading;
       z-index: 2;
     }
     p {
@@ -75,7 +74,7 @@ div#SeasonalStatisticsAPI {
     background-size: cover;
     background-position: center;
     z-index: 1;
-    opacity: 0.15;
+    opacity: 0.195;
   }
   div.stat {
     display: grid;
@@ -105,7 +104,7 @@ div#OperatorStatisticsAPI {
       button {
         margin: $margin-s;
         padding: $button-padding-big;
-        background: $background-secondary;
+        background: $background-quaternary;
       }
       button:hover {
         box-shadow: $box-shadow-secondary;
@@ -143,7 +142,7 @@ div#OperatorStatisticsAPI {
             font-size: $font-small;
           }
           span {
-            color: $text-heading;
+            color: $text-accent;
           }
         }
       }
@@ -159,7 +158,7 @@ div.statistics-api {
   padding: $padding-m;
 }
 h2.statistics-title, h3.statistics-title {
-  color: $text-dark;
+  color: $text-heading;
   text-align: center;
   font-weight: 500;
 }
@@ -168,7 +167,7 @@ img.user-image {
 }
 h3.stats-grid__heading {
   width: 100%;
-  color: $text-dark;
+  color: $text-heading;
   font-weight: 500;
   margin-bottom: $margin-s;
 }
@@ -184,13 +183,15 @@ div.stats-box {
   display: flex;
   flex-direction: column;
   border-radius: $border-radius;
+  background: $background-quaternary;
+  //box-shadow: $box-shadow-tertiary;
 }
 div.stat {
   display: flex;
   flex-direction: column;
   margin-bottom: $margin-xs;
   p.stat__label {
-    color: $text-dark;
+    color: $text-accent;
     font-weight: 500;
   }
   span.stat__value {
@@ -205,11 +206,11 @@ div.progress-circle {
   align-items: center;
   position: relative;
   border-radius: $border-radius;
-  background: $background-quaternary;
   width: 100%;
-  padding: $padding-s;
+  overflow: hidden;
   z-index: 1;
   transition: all 0.5s ease;
+  box-shadow: $box-shadow-secondary;
   p {
     text-align: center;
     z-index: 2;
@@ -219,6 +220,22 @@ div.progress-circle {
     color: $text-heading;
     z-index: 2;
   }
+  i.progress-icon {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    font-size: 72pt;
+    text-align: right;
+    opacity: 0.2;
+  }
+}
+div.progress-circle__overlay {
+  height: 100%;
+  width: 100%;
+  background: $background-gradient-primary;
+  opacity: 0.7;
+  padding: $padding-s;
+  border-radius: $border-radius;
 }
 h4.stats__heading {
   text-align: center;
@@ -244,7 +261,7 @@ div.statistics-api--rows {
         }
         h3 {
           font-size: $font-small;
-          color: $text-dark;
+          color: $text-accent;
         }
       }
       div.operator-stats {
@@ -257,7 +274,7 @@ div.statistics-api--rows {
             color: $text-subtle;
           }
           span {
-            color: $text-dark !important;
+            color: $text-accent !important;
             font-weight: 500;
           }
         }
@@ -265,6 +282,8 @@ div.statistics-api--rows {
     }
     div.operator-statistics:hover {
       transform: none !important;
+      box-shadow: $box-shadow-primary;
+      background: $background-gradient-primary !important;
     }
   }
 }

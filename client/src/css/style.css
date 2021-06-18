@@ -44,26 +44,21 @@ html {
   height: 100%; }
 
 html, body {
-  background: #0b0c1b;
+  background-image: url("/media/min/Trianglify-11.1s-2000px.png");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
   overflow-x: hidden; }
 
 p {
   color: #B1B3BE;
   font-size: 10pt; }
 
-::-webkit-scrollbar {
-  width: 4px;
-  height: 4px; }
-
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(#212da9, #1c31ef); }
-
 /* scss/components/_navigation.scss */
 nav.nav {
   display: grid;
   grid-template-columns: 300px 1fr;
   height: 68px;
-  background: #0b0c1b;
   z-index: 4; }
 
 ul.nav__head {
@@ -85,14 +80,15 @@ li.nav__item {
   display: flex;
   margin-right: 16px;
   align-items: center;
-  background-color: #17181c;
+  background-color: #171b2a;
   border-radius: 8px; }
   li.nav__item a.nav__link {
     color: #87898f;
     font-size: 12px;
     height: 100%;
     padding: 10px 16px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); }
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+    border-radius: 8px; }
 
 li.nav__item:hover {
   background: #3d3f46;
@@ -101,7 +97,7 @@ li.nav__item:hover {
     color: white;
     transition: all 0.3s ease;
     cursor: pointer;
-    box-shadow: 0px 8px 30px black; }
+    box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.3); }
 
 a.nav__link {
   text-decoration: none;
@@ -109,7 +105,7 @@ a.nav__link {
 
 a.nav__link--active {
   position: relative;
-  background-color: #212da9;
+  background-color: #313fd6;
   border-radius: 8px;
   color: #fcfcfc; }
 
@@ -135,7 +131,7 @@ div.user-dropdown {
     min-width: 200px;
     padding: 20px;
     border-radius: 8px;
-    background: #0b0c1b;
+    background: #171b2a;
     z-index: 1; }
   div.user-dropdown span#user-dropdown-title {
     text-align: center;
@@ -145,7 +141,7 @@ div.user-dropdown {
     text-decoration: none;
     text-align: center;
     padding: 10px 16px;
-    background: #17181c;
+    background: #313fd6;
     border-radius: 8px;
     transition: all 0.3s ease; }
   div.user-dropdown a#logout-link {
@@ -185,7 +181,7 @@ div.user-dropdown--active div.user-dropdown__body {
     position: absolute;
     right: 16px;
     font-size: 20pt;
-    border: 1px solid #151821;
+    border: none;
     height: 64px; }
   ul.nav__body {
     position: fixed;
@@ -193,7 +189,7 @@ div.user-dropdown--active div.user-dropdown__body {
     left: -100VW;
     width: 80VW;
     height: 100VH;
-    background: linear-gradient(#212da9, #1c31ef);
+    background: linear-gradient(#313fd6, #950e0e);
     flex-direction: column;
     justify-content: center; }
     ul.nav__body li.nav__item {
@@ -262,7 +258,6 @@ div.page-wrapper {
   height: 100%; }
 
 div.page {
-  background: #0b0c1b;
   padding: 20px;
   z-index: 0; }
   div.page h1 {
@@ -282,16 +277,11 @@ div.page#manage-team {
   div.page#manage-team h1 {
     grid-column: span 3; }
 
-div.page#team, div.page#manage-team {
-  background: #f9fcfe; }
-  div.page#team h1, div.page#manage-team h1 {
-    color: #353535; }
+div.page#team h1, div.page#manage-team h1 {
+  color: #fcfcfc; }
 
 div.page#strategies {
   padding: 0; }
-
-div.page#dashboard {
-  background: #f9fcfe; }
 
 @media screen and (max-width: 850px) {
   div.page {
@@ -307,7 +297,7 @@ input, select, textarea {
   font-size: 10pt;
   transition: all 0.3s ease;
   border-radius: 8px;
-  background-color: #3d3f46; }
+  background-color: #171b2a; }
 
 input:hover, textarea:hover {
   cursor: text; }
@@ -316,7 +306,7 @@ input:focus, textarea:focus {
   border: none;
   outline: none;
   transition: all 0.3s ease;
-  box-shadow: 0px 8px 30px black; }
+  box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.3); }
 
 .form__heading {
   font-size: 20pt;
@@ -343,7 +333,7 @@ fieldset {
   padding: 8px; }
 
 fieldset a {
-  color: #212da9;
+  color: #313fd6;
   margin-top: 4px; }
 
 fieldset a:hover {
@@ -361,7 +351,7 @@ form button {
   width: 128px;
   padding: 16px 24px;
   margin-top: 40px;
-  background: linear-gradient(#212da9, #1c31ef);
+  background: linear-gradient(#313fd6, #950e0e);
   border: none;
   transition: all 0.3s ease; }
 
@@ -384,8 +374,8 @@ div.alert {
   position: relative;
   padding: 20px;
   padding-right: 56px;
-  background: #0b0c1b;
-  box-shadow: 0px 8px 30px black;
+  background: #171b2a;
+  box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.3);
   border-radius: 8px;
   right: calc(-100% - 8px);
   margin-top: 16px;
@@ -409,10 +399,11 @@ button.alert__button {
   border-radius: 0;
   border-top-right-radius: 8px;
   border-bottom-right-radius: 8px;
+  background: #171b2a;
   width: 32px; }
 
 button.alert__button:hover {
-  background: #212da9;
+  background: #313fd6;
   box-shadow: none; }
 
 div.alert--error {
@@ -451,8 +442,8 @@ div.pagination {
     color: #353535;
     border: none;
     border-radius: 0;
-    border-left: 1px solid #151821;
-    border-right: 1px solid #151821;
+    border-left: none;
+    border-right: none;
     padding: 8px 20px; }
   div.pagination p.pagination__title {
     color: #353535;
@@ -516,9 +507,9 @@ div.toggle, div.viewer-toggle {
     -webkit-transition: .4s;
     transition: .4s; }
   div.toggle input:checked + .slider, div.toggle .slider--active, div.viewer-toggle input:checked + .slider, div.viewer-toggle .slider--active {
-    background: linear-gradient(to right, #212da9, #1c31ef); }
+    background: linear-gradient(to right, #313fd6, #950e0e); }
   div.toggle input:focus + .slider, div.toggle .slider--active, div.viewer-toggle input:focus + .slider, div.viewer-toggle .slider--active {
-    box-shadow: 0 0 1px #212da9; }
+    box-shadow: 0 0 1px #313fd6; }
   div.toggle input:checked + .slider:before, div.toggle .slider--active:before, div.viewer-toggle input:checked + .slider:before, div.viewer-toggle .slider--active:before {
     -webkit-transform: translateX(35px);
     -ms-transform: translateX(35px);
@@ -531,7 +522,7 @@ div.toggle, div.viewer-toggle {
     display: block;
     padding: 2px 4px; }
   div.toggle button.toggle__button:hover, div.viewer-toggle button.toggle__button:hover {
-    background: #0b0c1b; }
+    background: #1c1f45; }
 
 /* client/src/scss/comopnents/_loading.scss */
 .loader {
@@ -579,9 +570,9 @@ div.toggle, div.viewer-toggle {
 @keyframes color {
   100%,
   0% {
-    stroke: #212da9; }
+    stroke: #313fd6; }
   50% {
-    stroke: #1c31ef; } }
+    stroke: #950e0e; } }
 
 div.loading-modal {
   position: fixed;
@@ -597,8 +588,8 @@ div.loading-modal {
 
 /* client/src/scss/components/_button.scss */
 button {
-  background: linear-gradient(to right, #0b0c1b, #0b0c1b);
-  border: 1px solid #151821;
+  background: linear-gradient(to right, #1c1f45, #1c1f45);
+  border: none;
   outline: none;
   padding: 8px;
   color: rgba(255, 255, 255, 0.95);
@@ -608,7 +599,7 @@ button {
 
 button:hover {
   cursor: pointer;
-  box-shadow: 0px 8px 30px black;
+  box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.3);
   filter: opacity(1);
   transition: all 0.3s ease; }
 
@@ -617,7 +608,7 @@ button.button--danger {
 
 /* client/src/scss/components/_header.scss */
 header div.header__overlay {
-  background: linear-gradient(to right, #212da9, #4915D6);
+  background: linear-gradient(to right, #313fd6, #4915D6);
   padding: 20px;
   filter: opacity(0.85); }
 
@@ -633,19 +624,13 @@ footer.footer {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  border-top: 1px solid #151821; }
+  border-top: none; }
 
 @media screen and (max-width: 600px) {
   footer.footer {
     margin-top: 156px; } }
 
 /* client/src/scss/api/_statistics-api.scss */
-div.page#dashboard h1 {
-  background: #212da9;
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); }
-
 p.statistics-failure, p.text-error {
   padding: 8px;
   margin-top: 40px;
@@ -655,12 +640,14 @@ div#GeneralStatisticsAPI {
   grid-column: span 2; }
 
 div#SeasonalStatisticsAPI {
-  background-color: #17181c;
+  background-color: #171b2a;
   filter: blur(1);
   border-radius: 8px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); }
   div#SeasonalStatisticsAPI h2.statistics-title {
     color: #fcfcfc; }
+  div#SeasonalStatisticsAPI h3 {
+    color: #87898f; }
   div#SeasonalStatisticsAPI div#seasonal-stats-inside {
     padding: 8px;
     padding-top: 20px;
@@ -680,10 +667,11 @@ div#SeasonalStatisticsAPI {
     position: relative;
     z-index: 1;
     transition: all 0.3s ease;
-    background-color: #212da9;
+    background: linear-gradient(45deg, #313fd6, #1a259c);
     overflow: hidden; }
     div#SeasonalStatisticsAPI div.stat--main h3 {
       font-size: 30pt;
+      color: #fcfcfc;
       z-index: 2; }
     div#SeasonalStatisticsAPI div.stat--main p {
       font-size: 20pt;
@@ -707,7 +695,7 @@ div#SeasonalStatisticsAPI {
     background-size: cover;
     background-position: center;
     z-index: 1;
-    opacity: 0.15; }
+    opacity: 0.195; }
   div#SeasonalStatisticsAPI div.stat {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -733,7 +721,7 @@ div#OperatorStatisticsAPI {
       div#OperatorStatisticsAPI div.statistics div.controls button {
         margin: 16px;
         padding: 16px 24px;
-        background: #3d3f46; }
+        background: #171b2a; }
       div#OperatorStatisticsAPI div.statistics div.controls button:hover {
         box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); }
       div#OperatorStatisticsAPI div.statistics div.controls input {
@@ -761,7 +749,7 @@ div#OperatorStatisticsAPI {
         div#OperatorStatisticsAPI div.statistics div.operator-statistics div.operator-stats div.operator-stats__stat p {
           font-size: 10pt; }
         div#OperatorStatisticsAPI div.statistics div.operator-statistics div.operator-stats div.operator-stats__stat span {
-          color: #fcfcfc; }
+          color: #B1B3BE; }
     div#OperatorStatisticsAPI div.statistics div.operator-statistics:hover {
       box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
       transition: all 0.3s ease; }
@@ -770,7 +758,7 @@ div.statistics-api {
   padding: 20px; }
 
 h2.statistics-title, h3.statistics-title {
-  color: #353535;
+  color: #fcfcfc;
   text-align: center;
   font-weight: 500; }
 
@@ -779,7 +767,7 @@ img.user-image {
 
 h3.stats-grid__heading {
   width: 100%;
-  color: #353535;
+  color: #fcfcfc;
   font-weight: 500;
   margin-bottom: 16px; }
 
@@ -794,14 +782,15 @@ div.stats-box {
   transition: all 0.3s ease;
   display: flex;
   flex-direction: column;
-  border-radius: 8px; }
+  border-radius: 8px;
+  background: #171b2a; }
 
 div.stat {
   display: flex;
   flex-direction: column;
   margin-bottom: 4px; }
   div.stat p.stat__label {
-    color: #353535;
+    color: #B1B3BE;
     font-weight: 500; }
   div.stat span.stat__value {
     color: #87898f; }
@@ -814,11 +803,11 @@ div.progress-circle {
   align-items: center;
   position: relative;
   border-radius: 8px;
-  background: #17181c;
   width: 100%;
-  padding: 8px;
+  overflow: hidden;
   z-index: 1;
-  transition: all 0.5s ease; }
+  transition: all 0.5s ease;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); }
   div.progress-circle p {
     text-align: center;
     z-index: 2; }
@@ -826,6 +815,21 @@ div.progress-circle {
     font-size: 20pt;
     color: #fcfcfc;
     z-index: 2; }
+  div.progress-circle i.progress-icon {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    font-size: 72pt;
+    text-align: right;
+    opacity: 0.2; }
+
+div.progress-circle__overlay {
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(45deg, #313fd6, #1a259c);
+  opacity: 0.7;
+  padding: 8px;
+  border-radius: 8px; }
 
 h4.stats__heading {
   text-align: center;
@@ -847,7 +851,7 @@ div.statistics-api--rows div.statistics {
       margin: auto; }
     div.statistics-api--rows div.statistics div.operator-statistics div.operator-info h3 {
       font-size: 10pt;
-      color: #353535; }
+      color: #B1B3BE; }
     div.statistics-api--rows div.statistics div.operator-statistics div.operator-stats {
       grid-template-columns: repeat(8, 1fr) !important; }
       div.statistics-api--rows div.statistics div.operator-statistics div.operator-stats div.operator-stats__stat {
@@ -857,10 +861,12 @@ div.statistics-api--rows div.statistics {
         div.statistics-api--rows div.statistics div.operator-statistics div.operator-stats div.operator-stats__stat p {
           color: #87898f; }
         div.statistics-api--rows div.statistics div.operator-statistics div.operator-stats div.operator-stats__stat span {
-          color: #353535 !important;
+          color: #B1B3BE !important;
           font-weight: 500; }
   div.statistics-api--rows div.statistics div.operator-statistics:hover {
-    transform: none !important; }
+    transform: none !important;
+    box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(45deg, #313fd6, #1a259c) !important; }
 
 @media screen and (max-width: 1300px) {
   div#GeneralStatisticsAPI {
@@ -961,8 +967,8 @@ div.statistics-api--rows div.statistics {
         background: transparent;
         margin: 0;
         padding: 2px 8px;
-        border-top: 1px solid #151821;
-        border-bottom: 1px solid #151821;
+        border-top: none;
+        border-bottom: none;
         grid-template-columns: 40px 1fr;
         overflow-x: auto; }
         div#OperatorStatisticsAPI div.statistics div.operator-statistics div.operator-info {
@@ -991,7 +997,7 @@ div.statistics-api--rows div.statistics {
 div#LoginAPI, div#RegisterAPI, div#ForgotPasswordAPI, div#ResetPasswordAPI {
   width: 100%;
   max-width: 600px;
-  background: #17181c;
+  background: #171b2a;
   padding: 20px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
   margin: auto;
@@ -1009,10 +1015,10 @@ div.account-section {
   padding: 20px;
   border-radius: 8px;
   margin-bottom: 72px;
-  border-bottom: 1px solid #151821;
+  border-bottom: none;
   padding-bottom: 72px; }
   div.account-section button {
-    background: #212da9;
+    background: #313fd6;
     padding: 16px 24px; }
   div.account-section h3 {
     text-align: center;
@@ -1135,7 +1141,7 @@ a.button {
   outline: none;
   padding: 8px;
   color: #fcfcfc;
-  background: #212da9;
+  background: #313fd6;
   padding: 16px 24px;
   border-radius: 8px;
   filter: opacity(0.95);
@@ -1160,15 +1166,15 @@ div.hasNoTeam div.team-grid {
   grid-gap: 40px; }
   div.hasNoTeam div.team-grid div {
     padding: 20px;
-    box-shadow: 0px 8px 30px black;
-    background: #17181c;
+    box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.3);
+    background: #171b2a;
     border-radius: 8px; }
     div.hasNoTeam div.team-grid div label {
       color: #fcfcfc; }
   div.hasNoTeam div.team-grid div#CreateTeamAPI button {
-    background: #212da9; }
+    background: #313fd6; }
   div.hasNoTeam div.team-grid div#JoinTeamAPI button {
-    background: #1c31ef; }
+    background: #950e0e; }
 
 div#ViewTeamAPI div.team {
   padding: 20px;
@@ -1177,16 +1183,16 @@ div#ViewTeamAPI div.team {
   div#ViewTeamAPI div.team h2, div#ViewTeamAPI div.team h3.team-description {
     text-align: center;
     margin-top: 16px;
-    color: #353535; }
+    color: #fcfcfc; }
     div#ViewTeamAPI div.team h2 button.toggle__button, div#ViewTeamAPI div.team h3.team-description button.toggle__button {
       margin-left: 8px;
       padding: 4px;
-      background: #212da9;
+      background: #313fd6;
       color: #fcfcfc; }
     div#ViewTeamAPI div.team h2 button.toggle__button:hover, div#ViewTeamAPI div.team h3.team-description button.toggle__button:hover {
       box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); }
   div#ViewTeamAPI div.team h3 {
-    color: #353535; }
+    color: #fcfcfc; }
   div#ViewTeamAPI div.team div.overview {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -1197,7 +1203,7 @@ div#ViewTeamAPI div.team {
     div#ViewTeamAPI div.team div.roster div.team-member {
       padding: 20px;
       display: grid;
-      background: #17181c;
+      background: #171b2a;
       border-radius: 8px;
       grid-template-columns: repeat(9, 1fr);
       margin-top: 16px; }
@@ -1258,7 +1264,7 @@ div#LeaveTeamAPI {
 div#UpdateTeamNameAPI {
   padding: 20px; }
   div#UpdateTeamNameAPI h3 {
-    color: #353535;
+    color: #fcfcfc;
     margin-bottom: 4px; }
   div#UpdateTeamNameAPI input {
     width: 100%; }
@@ -1269,7 +1275,7 @@ div#UpdateTeamNameAPI {
     display: block;
     margin-top: 40px;
     padding: 10px 16px;
-    background: #212da9; }
+    background: #313fd6; }
   div#UpdateTeamNameAPI button:hover {
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); }
 
@@ -1277,7 +1283,7 @@ div#TeamAnnouncementAPI {
   padding: 20px;
   margin-top: 16px; }
   div#TeamAnnouncementAPI h3 {
-    color: #353535;
+    color: #fcfcfc;
     margin-bottom: 4px; }
   div#TeamAnnouncementAPI textarea {
     width: 100%; }
@@ -1289,14 +1295,14 @@ div#TeamAnnouncementAPI {
     display: block;
     margin-top: 40px;
     padding: 10px 16px;
-    background: #212da9; }
+    background: #313fd6; }
   div#TeamAnnouncementAPI button:hover {
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); }
 
 div#ManageTeamAPI {
   grid-column: span 2;
   padding: 20px;
-  border-left: 3px solid 1px solid #151821; }
+  border-left: 3px solid none; }
   div#ManageTeamAPI h3 {
     text-align: center; }
   div#ManageTeamAPI div.manage-team-member {
@@ -1304,7 +1310,7 @@ div#ManageTeamAPI {
     grid-template-columns: repeat(3, 1fr);
     padding: 20px;
     border-radius: 8px;
-    background: #17181c;
+    background: #171b2a;
     margin-bottom: 16px;
     align-items: center;
     justify-content: center;
@@ -1330,17 +1336,19 @@ div#ManageTeamAPI {
     display: grid;
     grid-template-columns: repeat(3, 1fr); }
   div#ManageTeamAPI div.team-status, div#ManageTeamAPI div.team-platform, div#ManageTeamAPI div.team-mmr {
-    margin-top: 4px; }
+    margin-top: 4px;
+    width: 100%; }
     div#ManageTeamAPI div.team-status p, div#ManageTeamAPI div.team-platform p, div#ManageTeamAPI div.team-mmr p {
-      color: #353535; }
+      color: #B1B3BE; }
     div#ManageTeamAPI div.team-status select, div#ManageTeamAPI div.team-platform select, div#ManageTeamAPI div.team-mmr select {
       width: 100%;
-      max-width: 256px; }
+      max-width: 256px;
+      width: 100%; }
 
 div#BlockedUsersAPI {
   padding: 20px; }
   div#BlockedUsersAPI h3 {
-    color: #353535; }
+    color: #fcfcfc; }
   div#BlockedUsersAPI div.blocked-user {
     display: flex;
     justify-content: space-between;
@@ -1516,7 +1524,7 @@ div#EditStrategiesAPI div.edit-buttons {
     margin: 0;
     width: 100%;
     margin-left: 16px;
-    background: linear-gradient(to right, #4915D6, #212da9); }
+    background: linear-gradient(to right, #4915D6, #313fd6); }
 
 div#ViewStrategiesAPI div.view-container {
   padding: 20px !important; }
@@ -1573,20 +1581,20 @@ div.map-selector {
     transition: all 0.3s ease; }
   div.map-selector button.delete-button {
     border-radius: 0px !important;
-    background: #0b0c1b;
+    background: #1c1f45;
     position: absolute;
     top: 0;
     right: 0;
     height: 100%;
     border: none;
-    border-left: 1px solid #151821;
+    border-left: none;
     filter: opacity(0);
     transition: all 0.3s ease; }
   div.map-selector button.delete-button:hover {
     box-shadow: none;
     background: #a92121; }
   div.map-selector div.map-option:hover, div.map-selector a.map-option:hover {
-    box-shadow: 0px 8px 30px black;
+    box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.3);
     cursor: pointer;
     transition: all 0.3s ease; }
     div.map-selector div.map-option:hover div.map-overlay, div.map-selector a.map-option:hover div.map-overlay {
@@ -1639,13 +1647,13 @@ div.toolbar--scroll {
   top: 0; }
 
 div.toolbar {
-  border-bottom: 1px solid #151821;
+  border-bottom: none;
   display: flex;
   align-items: center;
   padding: 4px 0px;
   z-index: 4;
   width: 100%;
-  background-color: #0b0c1b;
+  background-color: #1c1f45;
   position: relative; }
   div.toolbar * {
     margin: 0 16px; }
@@ -1656,7 +1664,7 @@ div.toolbar {
     width: 100%;
     border: 1px solid #E0E8FF;
     transition: all 0.3s ease;
-    background: linear-gradient(to right, #4915D6, #212da9); }
+    background: linear-gradient(to right, #4915D6, #313fd6); }
   div.toolbar button.toolbar__button:hover {
     transition: all 0.3s ease; }
   div.toolbar p {
@@ -1697,7 +1705,7 @@ div.toolbar {
         margin: 0;
         color: #353535; }
     div.toolbar div.action-container div.action:hover {
-      border-bottom: 3px solid #212da9;
+      border-bottom: 3px solid #313fd6;
       transition: all 0.3s ease;
       cursor: pointer; }
       div.toolbar div.action-container div.action:hover * {
@@ -1772,7 +1780,7 @@ div.toolbar__navigation {
     transition: all 0.3s ease;
     cursor: pointer; }
   div.toolbar__navigation a#showMaps:hover {
-    box-shadow: 0px 8px 30px black;
+    box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.3);
     transition: all 0.3s ease; }
   div.toolbar__navigation div.strategy-selector, div.toolbar__navigation div.site-container {
     margin: 0;
@@ -1787,7 +1795,7 @@ div.toolbar__navigation {
       border: 1px solid #E0E8FF; }
     div.toolbar__navigation div.strategy-selector button.type--active, div.toolbar__navigation div.strategy-selector button.strategy--active, div.toolbar__navigation div.strategy-selector button.site--active, div.toolbar__navigation div.site-container button.type--active, div.toolbar__navigation div.site-container button.strategy--active, div.toolbar__navigation div.site-container button.site--active {
       color: white;
-      background: linear-gradient(to right, #212da9, #1c31ef); }
+      background: linear-gradient(to right, #313fd6, #950e0e); }
   div.toolbar__navigation div.strategy-selector {
     padding-bottom: 42px; }
   div.toolbar__navigation div.site-container select, div.toolbar__navigation select.type-selector, div.toolbar__navigation div.strategy-selector select {
@@ -1821,13 +1829,13 @@ div.toolbar__navigation {
       filter: opacity(1); }
     div.toolbar__navigation div.strategy-control button:hover {
       box-shadow: none;
-      background: linear-gradient(to right, #212da9, #4915D6);
+      background: linear-gradient(to right, #313fd6, #4915D6);
       color: white;
       cursor: pointer; }
 
 div.toolbar__navigation--active {
   transform: translateX(0);
-  box-shadow: 0px 8px 30px black;
+  box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.3);
   z-index: 4;
   transition: all 0.3s ease; }
 
@@ -1846,21 +1854,21 @@ button.toolbar__navigation-button--active {
 
 div.sidebar--scroll div.sidebar-body {
   height: 100%;
-  background: #0b0c1b;
+  background: #1c1f45;
   position: fixed;
   top: 48px;
   width: 256px;
   max-height: calc(100VH - 64px); }
 
 div.sidebar {
-  border-right: 1px solid #151821;
-  background: #0b0c1b;
+  border-right: none;
+  background: #1c1f45;
   height: 100VH;
   max-height: calc(100VH - 128px);
   overflow-y: hidden; }
   div.sidebar div.sidebar-body {
     padding: 8px;
-    border-right: 1px solid #151821;
+    border-right: none;
     height: 100%;
     display: flex;
     flex-direction: column; }
@@ -1888,9 +1896,9 @@ div.sidebar {
     div.sidebar div.strategy-container select.select-container {
       width: 100%;
       display: block;
-      background: #0b0c1b;
+      background: #1c1f45;
       border-bottom: none;
-      border: 1px solid #151821;
+      border: none;
       border-radius: 8px;
       color: #fcfcfc; }
       div.sidebar div.strategy-container select.select-container option.strategy {
@@ -1945,21 +1953,21 @@ div.sidebar {
     cursor: pointer; }
   div.sidebar div.scene:hover {
     cursor: pointer;
-    box-shadow: 0px 8px 30px black;
+    box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.3);
     transition: all 0.3s ease; }
   div.sidebar div.scene--active {
-    border-left: 3px solid #212da9; }
+    border-left: 3px solid #313fd6; }
   div.sidebar div.scene-controls {
     position: absolute;
     bottom: 0;
     left: 0;
     width: 256px;
     height: 50px;
-    border: 1px solid #151821;
+    border: none;
     display: grid;
     grid-template-columns: repeat(2, 1fr); }
     div.sidebar div.scene-controls button {
-      background: #0b0c1b;
+      background: #1c1f45;
       border: none;
       width: 100%;
       height: 100%;
@@ -1974,10 +1982,10 @@ div.sidebar {
       font-size: 10pt; }
     div.sidebar div.scene-controls button:hover {
       box-shadow: none;
-      background: linear-gradient(to right, #212da9, #4915D6);
+      background: linear-gradient(to right, #313fd6, #4915D6);
       cursor: pointer; }
     div.sidebar div.scene-controls button:nth-child(1) {
-      border-right: 1px solid #151821; }
+      border-right: none; }
 
 div.lineup--scroll div.lineup-body {
   position: fixed;
@@ -2047,7 +2055,7 @@ div.canvas {
   width: 100%;
   height: 100%;
   position: relative;
-  border-right: 1px solid #151821;
+  border-right: none;
   z-index: 3; }
   div.canvas div.blueprint-form {
     width: 100%;
@@ -2073,7 +2081,7 @@ div.canvas {
       left: 50%;
       transform: translate(-50%);
       color: #fcfcfc;
-      background: #0b0c1b;
+      background: #1c1f45;
       padding: 4px;
       display: flex;
       align-items: center;
@@ -2215,7 +2223,7 @@ div#Viewer img.role__utility-image:hover, div#Viewer img.role__gadget-image:hove
 
 div#Viewer a.objectives__video, div#SharedViewer a.objectives__video {
   padding: 8px;
-  background: linear-gradient(to right, #212da9, #1c31ef);
+  background: linear-gradient(to right, #313fd6, #950e0e);
   margin-top: 40px !important;
   display: block;
   width: 100%;
@@ -2245,7 +2253,7 @@ div#Viewer a.objectives__video, div#SharedViewer a.objectives__video {
       top: 64px;
       left: 0;
       width: 256px;
-      background: #0b0c1b;
+      background: #1c1f45;
       transform: translateX(-100%);
       transition: all 0.3s ease; }
       div#Editor div.sidebar div.sidebar-body div.scene-controls, div#Viewer div.sidebar div.sidebar-body div.scene-controls, div#SharedViewer div.sidebar div.sidebar-body div.scene-controls {
@@ -2279,7 +2287,7 @@ div#Viewer a.objectives__video, div#SharedViewer a.objectives__video {
       top: 64px;
       right: 0;
       width: 324px;
-      background: #0b0c1b;
+      background: #1c1f45;
       transform: translate(324px);
       transition: all 0.3s ease; }
   div.lineup--active > button {
@@ -2380,7 +2388,7 @@ div#Viewer a.objectives__video, div#SharedViewer a.objectives__video {
             div#Editor main div.lineup div.lineup-body div.role--active div.role__body, div#Viewer main div.lineup div.lineup-body div.role--active div.role__body, div#SharedViewer main div.lineup div.lineup-body div.role--active div.role__body {
               position: absolute;
               top: 100%;
-              background: #0b0c1b;
+              background: #1c1f45;
               width: 100%; } }
 
 @media screen and (max-width: 600px) {
@@ -2513,12 +2521,12 @@ div#Viewer a.objectives__video, div#SharedViewer a.objectives__video {
             display: block !important;
             position: absolute;
             top: 100%;
-            background: #0b0c1b;
+            background: #1c1f45;
             width: calc(100VW - (2 * 8px));
             left: 8px; }
           div#Editor main div.lineup div.lineup-body div.role--active div.role__body, div#Viewer main div.lineup div.lineup-body div.role--active div.role__body, div#SharedViewer main div.lineup div.lineup-body div.role--active div.role__body {
             position: absolute;
             top: 170%;
             left: 8px;
-            background: #0b0c1b;
+            background: #1c1f45;
             width: calc(100VW - 8px); } }

@@ -14,7 +14,7 @@ div.alert {
   position: relative;
   padding: $padding-m;
   padding-right: 56px;
-  background: $background-primary;
+  background: $background-quaternary;
   box-shadow: $box-shadow-primary;
   border-radius: $border-radius;
   right: calc(-100% - #{$padding-s});
@@ -39,6 +39,7 @@ button.alert__button {
   border-radius: 0;
   border-top-right-radius: $border-radius;
   border-bottom-right-radius: $border-radius;
+  background: $background-quaternary;
   width: 32px;
 }
 button.alert__button:hover {

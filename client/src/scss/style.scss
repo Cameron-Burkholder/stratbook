@@ -52,19 +52,15 @@ html {
 }
 
 html, body {
-  background: $background-primary;
+  background-image: url("/media/min/Trianglify-11.1s-2000px.png");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
   overflow-x: hidden;
 }
 p {
   color: $text-body;
   font-size: $font-body;
-}
-::-webkit-scrollbar {
-  width: 4px;
-  height: 4px;
-}
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(#{$color-primary}, #{$color-secondary});
 }
 
 // Import components

@@ -80,7 +80,7 @@ class GeneralStatisticsAPI extends React.Component {
               <div className="stats-grid">
                 <div className="stats-box">
                   <div className="stat stat--main">
-                    <ProgressCircle label="Level" value={this.state.stats.progression.level}/>
+                    <ProgressCircle label="Level" icon={"fa-layer-group"} value={this.state.stats.progression.level}/>
                   </div>
                   <div className="stat">
                     <p className="stat__label">Playtime</p>
@@ -93,7 +93,7 @@ class GeneralStatisticsAPI extends React.Component {
                 </div>
                 <div className="stats-box">
                   <div className="stat stat--main">
-                    <ProgressCircle label="K/D" value={this.state.stats.stats.general.kd}/>
+                    <ProgressCircle label="K/D" icon={"fa-skull-crossbones"} value={this.state.stats.stats.general.kd}/>
                   </div>
                   <div className="stat">
                     <p className="stat__label">Kills</p>
@@ -110,7 +110,7 @@ class GeneralStatisticsAPI extends React.Component {
                 </div>
                 <div className="stats-box">
                   <div className="stat stat--main">
-                    <ProgressCircle label="W/L" value={this.state.stats.stats.general.wl}/>
+                    <ProgressCircle label="W/L" icon={"fa-trophy"} value={this.state.stats.stats.general.wl}/>
                   </div>
                   <div className="stat">
                     <p className="stat__label">Wins</p>
@@ -126,15 +126,15 @@ class GeneralStatisticsAPI extends React.Component {
               <div className="stats-grid">
               <div className="stats-box">
                 <div className="stat stat--main">
-                  <ProgressCircle label="Playtime" value={Math.floor(this.state.stats.stats.queue.ranked.playtime / 3600)}/>
+                  <ProgressCircle label="Playtime" icon={"fa-stopwatch"} value={Math.floor(this.state.stats.stats.queue.ranked.playtime / 3600)}/>
                 </div>
                 <div className="stat stat--main">
-                  <ProgressCircle label="Games Played" value={this.state.stats.stats.queue.ranked.games_played}/>
+                  <ProgressCircle label="Games Played" icon={"fa-gamepad"} value={this.state.stats.stats.queue.ranked.games_played}/>
                 </div>
               </div>
                 <div className="stats-box">
                   <div className="stat stat--main">
-                    <ProgressCircle label="K/D" value={this.state.stats.stats.queue.ranked.kd}/>
+                    <ProgressCircle label="K/D" icon={"fa-skull-crossbones"} value={this.state.stats.stats.queue.ranked.kd}/>
                   </div>
                   <div className="stat">
                     <p className="stat__label">Kills</p>
@@ -147,7 +147,7 @@ class GeneralStatisticsAPI extends React.Component {
                 </div>
                 <div className="stats-box">
                   <div className="stat stat--main">
-                    <ProgressCircle label="W/L" value={this.state.stats.stats.queue.ranked.wl}/>
+                    <ProgressCircle label="W/L" icon={"fa-trophy"} value={this.state.stats.stats.queue.ranked.wl}/>
                   </div>
                   <div className="stat">
                     <p className="stat__label">Wins</p>

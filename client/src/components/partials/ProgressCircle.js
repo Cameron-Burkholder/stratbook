@@ -30,10 +30,18 @@ class ProgressCircle extends React.Component {
     }
   }
   render() {
+    console.log(this.props.background);
     return (
-      <div className="progress-circle">
-        <p>{this.props.label}</p>
-        <p className="progress-circle__value">{Math.floor(this.state.value * 100) / 100}</p>
+      <div className="progress-circle" style={{
+        background: `url("${this.props.background}")`,
+        backgroundSize: "cover",
+        backgroundPosition: "center"
+      }}>
+        <i className={"fa " + this.props.icon + " progress-icon"}></i>
+        <div className="progress-circle__overlay">
+          <p>{this.props.label}</p>
+          <p className="progress-circle__value">{Math.floor(this.state.value * 100) / 100}</p>
+        </div>
       </div>
     )
   }

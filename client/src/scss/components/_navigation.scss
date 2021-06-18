@@ -4,7 +4,6 @@ nav.nav {
   display: grid;
   grid-template-columns: 300px 1fr;
   height: 68px;
-  background: $background-primary;
   z-index: 4;
 }
 
@@ -37,6 +36,7 @@ li.nav__item {
     height: 100%;
     padding: $button-padding;
     box-shadow: $box-shadow-secondary;
+    border-radius: $border-radius;
   }
 }
 li.nav__item:hover {
@@ -85,7 +85,7 @@ div.user-dropdown {
     min-width: 200px;
     padding: $padding-m;
     border-radius: $border-radius;
-    background: $background-primary;
+    background: $background-quaternary;
     z-index: 1;
   }
   span#user-dropdown-title {
@@ -97,7 +97,7 @@ div.user-dropdown {
     text-decoration: none;
     text-align: center;
     padding: $button-padding;
-    background: $background-quaternary;
+    background: $color-primary;
     border-radius: $border-radius;
     transition: all 0.3s ease;
   }

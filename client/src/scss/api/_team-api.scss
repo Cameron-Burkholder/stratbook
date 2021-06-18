@@ -53,7 +53,7 @@ div#ViewTeamAPI {
     h2, h3.team-description {
       text-align: center;
       margin-top: $margin-s;
-      color: $text-dark;
+      color: $text-heading;
       button.toggle__button {
         margin-left: 8px;
         padding: 4px;
@@ -65,7 +65,7 @@ div#ViewTeamAPI {
       }
     }
     h3 {
-      color: $text-dark;
+      color: $text-heading;
     }
     div.overview {
       display: grid;
@@ -155,7 +155,7 @@ div#LeaveTeamAPI {
 div#UpdateTeamNameAPI {
   padding: $padding-m;
   h3 {
-    color: $text-dark;
+    color: $text-heading;
     margin-bottom: $margin-xs;
   }
   input {
@@ -179,7 +179,7 @@ div#TeamAnnouncementAPI {
   padding: $padding-m;
   margin-top: $margin-s;
   h3 {
-    color: $text-dark;
+    color: $text-heading;
     margin-bottom: $margin-xs;
   }
   textarea {
@@ -246,19 +246,21 @@ div#ManageTeamAPI {
   }
   div.team-status, div.team-platform, div.team-mmr {
     margin-top: $margin-xs;
+    width: 100%;
     p {
-      color: $text-dark;
+      color: $text-accent;
     }
     select {
       width: 100%;
       max-width: 256px;
+      width: 100%;
     }
   }
 }
 div#BlockedUsersAPI {
   padding: $padding-m;
   h3 {
-    color: $text-dark;
+    color: $text-heading;
   }
   div.blocked-user {
     display: flex;

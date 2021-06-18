@@ -39,7 +39,8 @@ class ViewTeamAPI extends React.Component {
   fetchTeamData() {
     const component = this;
     this.setState({
-      loading: true
+      loading: true,
+      stats_loaded: false
     });
     axios.defaults.headers.common["Authorization"] = this.props.getAuthToken();
     axios.get("/api/teams/view-team")
@@ -83,7 +84,8 @@ class ViewTeamAPI extends React.Component {
               mmr: response.data.mmr,
               mmrchange: response.data.mmrchange,
               level: response.data.level
-            }
+            },
+            stats_loaded: true
           });
           break;
         default:
@@ -121,27 +123,29 @@ class ViewTeamAPI extends React.Component {
       } else {
         let teamMembers = [];
         let index = 0;
-        let stats = {
-          level: "Loading",
-          kd: "Loading",
-          wl: "Loading",
-          mmr: "Loading",
-          mmrchange: "Loading"
-        };
+        let stats = (this.state.stats_loaded ? (
+          {
+            level: "Not found",
+            kd: "Not found",
+            wl: "Not found",
+            mmr: "Not found",
+            mmrchange: "Not found"
+          }
+        ) : (
+          {
+            level: "Loading",
+            kd: "Loading",
+            wl: "Loading",
+            mmr: "Loading",
+            mmrchange: "Loading"
+          }
+        ));
         if (this.state.team) {
           this.state.team.admins.map((admin, index) => {
             if (this.state.stats) {
               this.state.stats.individual_stats.map((stat) => {
                 if (stat && stat.username === admin.username) {
                   return stats = stat;
-                } else {
-                  stats = {
-                    level: "Not found",
-                    kd: "Not found",
-                    wl: "Not found",
-                    mmr: "Not found",
-                    mmrchange: "Not found"
-                  }
                 }
               })
             }
@@ -152,14 +156,6 @@ class ViewTeamAPI extends React.Component {
               this.state.stats.individual_stats.map((stat) => {
                 if (stat && stat.username === editor.username) {
                   return stats = stat;
-                } else {
-                  stats = {
-                    level: "Not found",
-                    kd: "Not found",
-                    wl: "Not found",
-                    mmr: "Not found",
-                    mmrchange: "Not found"
-                  }
                 }
               })
             }
@@ -170,14 +166,6 @@ class ViewTeamAPI extends React.Component {
               this.state.stats.individual_stats.map((stat) => {
                 if (stat && stat.username === member.username) {
                   return stats = stat;
-                } else {
-                  stats = {
-                    level: "Not found",
-                    kd: "Not found",
-                    wl: "Not found",
-                    mmr: "Not found",
-                    mmrchange: "Not found"
-                  }
                 }
               })
             }
@@ -200,9 +188,9 @@ class ViewTeamAPI extends React.Component {
               </h3>
               { this.state.stats ? (
                 <div className="overview">
-                  <ProgressCircle value={this.state.stats.kd} label="K/D"/>
-                  <ProgressCircle value={this.state.stats.wl} label="W/L"/>
-                  <ProgressCircle value={this.state.stats.mmr} label="MMR"/>
+                  <ProgressCircle value={this.state.stats.kd} icon={"fa-user-ninja"} label="K/D"/>
+                  <ProgressCircle value={this.state.stats.wl} icon={"fa-crown"} label="W/L"/>
+                  <ProgressCircle value={this.state.stats.mmr} icon={"fa-signal"} label="MMR"/>
                 </div>
               ) : ""}
               <div className="roster">
