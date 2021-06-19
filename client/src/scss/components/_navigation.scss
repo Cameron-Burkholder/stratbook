@@ -189,58 +189,59 @@ div.user-dropdown--active {
     position: absolute;
     right: 16px;
     font-size: $font-heading1;
-    border: $border-primary;
+    background: none;
     height: 64px;
+  }
+  button#nav__button:hover {
+    box-shadow: none;
   }
   ul.nav__body {
     position: fixed;
     top: 0px;
     left: -100VW;
-    width: 80VW;
+    width: 100VW;
     height: 100VH;
-    background: linear-gradient(#{$color-primary}, #{$color-secondary});
+    background-image: url("/media/min/Trianglify-11.1s-1915px.svg");
+    background-position: center;
+    background-size: cover;
     flex-direction: column;
-    justify-content: center;
+    padding-top: $padding-l;
+    justify-content: flex-start;
     li.nav__item {
-      height: 32px;
       margin: $margin-s 40px $margin-s auto;
       transition: all 0.3s ease;
       a.nav__link {
-        font-size: $font-heading1;
+        font-size: $font-heading3;
         color: $text-heading;
       }
     }
-    li.nav__item:hover {
-      background: none;
-    }
-    a.nav__link--active {
-      border-bottom: 2px solid white;
-    }
     div.user-dropdown {
       width: 100%;
-      img {
+      img, i {
         display: none;
       }
       div.user-dropdown__body {
-        margin-top: $margin-l;
-        position: relative;
+        margin-top: -#{$margin-s};
         top: 0;
         right: 0;
         background: transparent;
         border: none;
         opacity: 1;
         display: flex;
+        height: auto;
+        box-shadow: none;
+        margin-right: 20px;
         span {
           display: none;
         }
         a.user-dropdown__link {
-          font-size: $font-heading1;
+          font-size: $font-heading3;
           color: $text-heading;
-          text-align: right;
-          margin-right: 40px;
-        }
-        a#logout-link {
-          margin-top: $margin-m;
+          display: block;
+          margin: $margin-s 0px;
+          i {
+            display: inline;
+          }
         }
       }
     }

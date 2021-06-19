@@ -213,50 +213,52 @@ div.user-dropdown--active div.user-dropdown__body {
     position: absolute;
     right: 16px;
     font-size: 20pt;
-    border: none;
+    background: none;
     height: 64px; }
+  button#nav__button:hover {
+    box-shadow: none; }
   ul.nav__body {
     position: fixed;
     top: 0px;
     left: -100VW;
-    width: 80VW;
+    width: 100VW;
     height: 100VH;
-    background: linear-gradient(#313fd6, #1c1f45);
+    background-image: url("/media/min/Trianglify-11.1s-1915px.svg");
+    background-position: center;
+    background-size: cover;
     flex-direction: column;
-    justify-content: center; }
+    padding-top: 72px;
+    justify-content: flex-start; }
     ul.nav__body li.nav__item {
-      height: 32px;
       margin: 16px 40px 16px auto;
       transition: all 0.3s ease; }
       ul.nav__body li.nav__item a.nav__link {
-        font-size: 20pt;
+        font-size: 12pt;
         color: #fcfcfc; }
-    ul.nav__body li.nav__item:hover {
-      background: none; }
-    ul.nav__body a.nav__link--active {
-      border-bottom: 2px solid white; }
     ul.nav__body div.user-dropdown {
       width: 100%; }
-      ul.nav__body div.user-dropdown img {
+      ul.nav__body div.user-dropdown img, ul.nav__body div.user-dropdown i {
         display: none; }
       ul.nav__body div.user-dropdown div.user-dropdown__body {
-        margin-top: 72px;
-        position: relative;
+        margin-top: -16px;
         top: 0;
         right: 0;
         background: transparent;
         border: none;
         opacity: 1;
-        display: flex; }
+        display: flex;
+        height: auto;
+        box-shadow: none;
+        margin-right: 20px; }
         ul.nav__body div.user-dropdown div.user-dropdown__body span {
           display: none; }
         ul.nav__body div.user-dropdown div.user-dropdown__body a.user-dropdown__link {
-          font-size: 20pt;
+          font-size: 12pt;
           color: #fcfcfc;
-          text-align: right;
-          margin-right: 40px; }
-        ul.nav__body div.user-dropdown div.user-dropdown__body a#logout-link {
-          margin-top: 40px; }
+          display: block;
+          margin: 16px 0px; }
+          ul.nav__body div.user-dropdown div.user-dropdown__body a.user-dropdown__link i {
+            display: inline; }
   nav.nav--inactive ul.nav__body {
     animation-name: nav-transform-reverse;
     animation-duration: 0.3s;
@@ -931,12 +933,6 @@ div.statistics-api--rows div.statistics {
       grid-column: span 2; }
   div.stats-grid {
     grid-gap: 16px; }
-  div.progress-circle {
-    width: 116px;
-    height: 116px; }
-  div.progress-circle::after {
-    width: 112px;
-    height: 112px; }
   div.stat p {
     font-size: 10pt; } }
 
@@ -948,12 +944,6 @@ div.statistics-api--rows div.statistics {
       padding-top: 20px; }
   div#SeasonalStatisticsAPI {
     padding: 8px; }
-    div#SeasonalStatisticsAPI div.stat--main {
-      width: 200px;
-      height: 200px; }
-    div#SeasonalStatisticsAPI div.stat--main::after {
-      width: 192px;
-      height: 192px; }
     div#SeasonalStatisticsAPI div.stat {
       padding-left: 8px; }
   div#OperatorStatisticsAPI {
@@ -1427,12 +1417,6 @@ div#DeleteTeamAPI {
         grid-template-columns: repeat(7, 1fr) !important; }
         div.hasTeam div#ViewTeamAPI div.team-member div.attackers p, div.hasTeam div#ViewTeamAPI div.team-member div.defenders p {
           grid-column: span 7 !important; }
-    div.hasTeam div#ViewTeamStatisticsAPI div.overview div.progress-circle {
-      width: 148px;
-      height: 148px; }
-    div.hasTeam div#ViewTeamStatisticsAPI div.overview div.progress-circle::after {
-      width: 144px;
-      height: 144px; }
     div.hasTeam div#ViewTeamStatisticsAPI div.member-statistics {
       display: grid;
       grid-template-columns: repeat(2, 1fr); }
@@ -1457,72 +1441,56 @@ div#DeleteTeamAPI {
       grid-column: span 1 !important; }
     div.hasTeam div#ViewTeamAPI {
       grid-column: span 1 !important; }
-      div.hasTeam div#ViewTeamAPI div.team-member div.attackers, div.hasTeam div#ViewTeamAPI div.team-member div.defenders {
-        grid-column: span 4 !important;
-        grid-template-columns: repeat(8, 1fr) !important; }
-        div.hasTeam div#ViewTeamAPI div.team-member div.attackers p, div.hasTeam div#ViewTeamAPI div.team-member div.defenders p {
-          grid-column: span 8 !important; }
-    div.hasTeam div#ViewTeamStatisticsAPI div.overview div.progress-circle {
-      width: 116px;
-      height: 116px; }
-    div.hasTeam div#ViewTeamStatisticsAPI div.overview div.progress-circle::after {
-      width: 112px;
-      height: 112px; }
+      div.hasTeam div#ViewTeamAPI div.team {
+        padding: 0; }
+      div.hasTeam div#ViewTeamAPI div.team-member {
+        padding: 16px !important;
+        grid-template-columns: repeat(5, 1fr) !important;
+        grid-row-gap: 8px; }
+        div.hasTeam div#ViewTeamAPI div.team-member h4 {
+          grid-row: span 2; }
     div.hasTeam div#ViewTeamStatisticsAPI div.member-statistics {
       display: grid;
       grid-template-columns: repeat(1, 1fr); }
       div.hasTeam div#ViewTeamStatisticsAPI div.member-statistics h3 {
         grid-column: span 1; }
-  div#TeamControls {
-    grid-template-columns: 1fr; }
+  div.team-controls {
+    grid-template-columns: 1fr !important; }
   div.hasNoTeam div.team-grid {
     grid-template-columns: 1fr !important; } }
 
 @media screen and (max-width: 600px) {
+  div#TeamControls {
+    grid-template-columns: 1fr; }
   div.hasTeam {
     grid-template-columns: 1fr !important; }
     div.hasTeam a.button {
       grid-column: span 1 !important;
       margin: auto;
+      margin-top: 16px;
       max-width: 100%;
       width: 100%; }
+    div.hasTeam button.button--danger {
+      margin-top: 16px; }
     div.hasTeam div#ViewTeamAPI {
       grid-column: span 1 !important; }
+      div.hasTeam div#ViewTeamAPI div.overview {
+        padding: 0;
+        grid-gap: 16px; }
       div.hasTeam div#ViewTeamAPI div.team {
         padding: 8px;
         padding-top: 16px; }
       div.hasTeam div#ViewTeamAPI div.team-member {
         grid-template-columns: repeat(2, 1fr) !important; }
-        div.hasTeam div#ViewTeamAPI div.team-member div.attackers, div.hasTeam div#ViewTeamAPI div.team-member div.defenders {
-          grid-column: span 2 !important;
-          grid-template-columns: repeat(5, 1fr) !important; }
-          div.hasTeam div#ViewTeamAPI div.team-member div.attackers p, div.hasTeam div#ViewTeamAPI div.team-member div.defenders p {
-            grid-column: span 5 !important; }
-    div.hasTeam div#ViewTeamStatisticsAPI div.team-statistics {
-      padding: 8px;
-      padding-top: 16px; }
-    div.hasTeam div#ViewTeamStatisticsAPI div.overview div.progress-circle {
-      width: 66px;
-      height: 66px; }
-    div.hasTeam div#ViewTeamStatisticsAPI div.overview div.progress-circle::after {
-      width: 62px;
-      height: 62px; }
-    div.hasTeam div#ViewTeamStatisticsAPI div.member-statistics {
-      display: grid;
-      grid-template-columns: repeat(1, 1fr); }
-      div.hasTeam div#ViewTeamStatisticsAPI div.member-statistics h3 {
-        grid-column: span 1; }
-      div.hasTeam div#ViewTeamStatisticsAPI div.member-statistics div.team-member-stats {
-        grid-template-columns: repeat(2, 1fr); }
-        div.hasTeam div#ViewTeamStatisticsAPI div.member-statistics div.team-member-stats p {
-          text-align: left; }
-        div.hasTeam div#ViewTeamStatisticsAPI div.member-statistics div.team-member-stats p:nth-child(4) {
-          grid-column: 2;
-          grid-row: 1; }
-    div.hasTeam div#LeaveTeamAPI button {
-      display: block;
-      margin: auto;
-      width: 100%; }
+        div.hasTeam div#ViewTeamAPI div.team-member h4 {
+          grid-column: span 2;
+          grid-row: span 1; }
+    div.hasTeam div#LeaveTeamAPI {
+      margin-top: 16px; }
+      div.hasTeam div#LeaveTeamAPI button {
+        display: block;
+        margin: auto;
+        width: 100%; }
   div.hasNoTeam {
     padding-bottom: 256px; }
   a.button {
@@ -1537,8 +1505,12 @@ div#DeleteTeamAPI {
       grid-template-columns: repeat(2, 1fr); }
       div#ManageTeamAPI div.manage-team-member h4 {
         grid-column: span 2; }
-    div#ManageTeamAPI div.team-status select {
+    div#ManageTeamAPI div.team-controls div {
       width: 100%; }
+      div#ManageTeamAPI div.team-controls div select {
+        display: block;
+        width: 100%;
+        max-width: 100%; }
   div#DeleteTeamAPI button {
     width: 100%;
     max-width: 100%; } }

@@ -311,16 +311,6 @@ div#DeleteTeamAPI {
       }
     }
     div#ViewTeamStatisticsAPI {
-      div.overview {
-        div.progress-circle {
-          width: 148px;
-          height: 148px;
-        }
-        div.progress-circle::after {
-          width: 144px;
-          height: 144px;
-        }
-      }
       div.member-statistics {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
@@ -339,20 +329,11 @@ div#DeleteTeamAPI {
     grid-template-columns: repeat(2, 1fr);
     grid-gap: $padding-m;
   }
-  div#UpdateTeamNameAPI {
-
-  }
-  div#TeamAnnouncementAPI {
-
-  }
   div#BlockedUsersAPI {
     grid-column: span 3;
   }
   div#DeleteTeamAPI {
     grid-column: span 3;
-    button {
-
-    }
   }
 }
 @media screen and (max-width: #{$tablet-max-width}) {
@@ -363,27 +344,19 @@ div#DeleteTeamAPI {
     }
     div#ViewTeamAPI {
       grid-column: span 1 !important;
+      div.team {
+        padding: 0;
+      }
       div.team-member {
-        div.attackers, div.defenders {
-          grid-column: span 4 !important;
-          grid-template-columns: repeat(8, 1fr) !important;
-          p {
-            grid-column: span 8 !important;
-          }
+        padding: 16px !important;
+        grid-template-columns: repeat(5, 1fr) !important;
+        grid-row-gap: $padding-s;
+        h4 {
+          grid-row: span 2;
         }
       }
     }
     div#ViewTeamStatisticsAPI {
-      div.overview {
-        div.progress-circle {
-          width: 116px;
-          height: 116px;
-        }
-        div.progress-circle::after {
-          width: 112px;
-          height: 112px;
-        }
-      }
       div.member-statistics {
         display: grid;
         grid-template-columns: repeat(1, 1fr);
@@ -393,73 +366,49 @@ div#DeleteTeamAPI {
       }
     }
   }
-  div#TeamControls {
-    grid-template-columns: 1fr;
+  div.team-controls {
+    grid-template-columns: 1fr !important;
   }
   div.hasNoTeam div.team-grid {
     grid-template-columns: 1fr !important;
   }
 }
 @media screen and (max-width: #{$phone-max-width}) {
+  div#TeamControls {
+    grid-template-columns: 1fr;
+  }
   div.hasTeam {
     grid-template-columns: 1fr !important;
     a.button {
       grid-column: span 1 !important;
       margin: auto;
+      margin-top: $margin-s;
       max-width: 100%;
       width: 100%;
     }
+    button.button--danger {
+      margin-top: $margin-s;
+    }
     div#ViewTeamAPI {
       grid-column: span 1 !important;
+      div.overview {
+        padding: 0;
+        grid-gap: $margin-s;
+      }
       div.team {
         padding: 8px;
         padding-top: 16px;
       }
       div.team-member {
         grid-template-columns: repeat(2, 1fr) !important;
-        div.attackers, div.defenders {
-          grid-column: span 2 !important;
-          grid-template-columns: repeat(5, 1fr) !important;
-          p {
-            grid-column: span 5 !important;
-          }
-        }
-      }
-    }
-    div#ViewTeamStatisticsAPI {
-      div.team-statistics {
-        padding: 8px;
-        padding-top: 16px;
-      }
-      div.overview {
-        div.progress-circle {
-          width: 66px;
-          height: 66px;
-        }
-        div.progress-circle::after {
-          width: 62px;
-          height: 62px;
-        }
-      }
-      div.member-statistics {
-        display: grid;
-        grid-template-columns: repeat(1, 1fr);
-        h3 {
-          grid-column: span 1;
-        }
-        div.team-member-stats {
-          grid-template-columns: repeat(2, 1fr);
-          p {
-            text-align: left;
-          }
-          p:nth-child(4) {
-            grid-column: 2;
-            grid-row: 1;
-          }
+        h4 {
+          grid-column: span 2;
+          grid-row: span 1;
         }
       }
     }
     div#LeaveTeamAPI {
+      margin-top: $margin-s;
       button {
         display: block;
         margin: auto;
@@ -485,9 +434,12 @@ div#DeleteTeamAPI {
         grid-column: span 2;
       }
     }
-    div.team-status {
+    div.team-controls div {
+      width: 100%;
       select {
+        display: block;
         width: 100%;
+        max-width: 100%;
       }
     }
   }

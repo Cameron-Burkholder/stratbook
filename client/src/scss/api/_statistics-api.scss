@@ -318,14 +318,6 @@ div.statistics-api--rows {
   div.stats-grid {
     grid-gap: $margin-s;
   }
-  div.progress-circle {
-    width: 116px;
-    height: 116px;
-  }
-  div.progress-circle::after {
-    width: 112px;
-    height: 112px;
-  }
   div.stat {
     p {
       font-size: $font-small;
@@ -342,17 +334,6 @@ div.statistics-api--rows {
   }
   div#SeasonalStatisticsAPI {
     padding: $padding-s;
-    div.statistics {
-
-    }
-    div.stat--main {
-      width: 200px;
-      height: 200px;
-    }
-    div.stat--main::after {
-      width: 192px;
-      height: 192px;
-    }
     div.stat {
       padding-left: $padding-s;
     }
