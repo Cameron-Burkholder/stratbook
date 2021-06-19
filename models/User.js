@@ -73,6 +73,10 @@ const UserSchema = new Schema({
   premium: {
     type: Boolean,
     required: false
+  },
+  feedback: {
+    type: Number,
+    required: false
   }
 });
 

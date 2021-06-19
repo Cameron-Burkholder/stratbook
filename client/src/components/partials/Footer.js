@@ -9,7 +9,15 @@ import React from "react";
 const Footer = () => {
   return (
     <footer className="footer">
-      This is a footer.
+      <div className="footer__section">
+        <a href="/terms">Terms and Conditions of Use</a>
+      </div>
+      <div className="footer__section">
+        <p>&copy; Cameron Burkholder</p>
+      </div>
+      <div className="footer__section">
+        <a href="/privacy">Privacy Policy</a>
+      </div>
     </footer>
   );
 }

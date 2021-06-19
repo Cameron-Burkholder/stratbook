@@ -11,6 +11,9 @@ import Login from "./components/pages/Login.js";
 import Logout from "./components/pages/Logout.js";
 import Register from "./components/pages/Register.js";
 import User from "./components/pages/User.js";
+import Support from "./components/pages/Support.js";
+import Terms from "./components/pages/Terms.js";
+import Privacy from "./components/pages/Privacy.js";
 import Dashboard from "./components/pages/Dashboard.js";
 import Team from "./components/pages/Team.js";
 import ManageTeam from "./components/pages/ManageTeam.js";
@@ -26,6 +29,9 @@ import Navigation from "./components/partials/Navigation.js";
 import Alert from "./components/partials/Alert.js";
 import Header from "./components/partials/Header.js";
 import Footer from "./components/partials/Footer.js";
+
+// Import release data.
+import release from "./release.js";
 
 import "./css/style.css";
 
@@ -47,11 +53,15 @@ class App extends React.Component {
     this.updateAuthToken = this.updateAuthToken.bind(this);
     this.alert = this.alert.bind(this);
     this.clearAlert = this.clearAlert.bind(this);
+    this.acknowledgeRelease = this.acknowledgeRelease.bind(this);
 
     this.state = {
       loggedIn: Date.now() < new Date(localStorage.getItem("expires")) ? true : false,
       user: JSON.parse(localStorage.getItem("user")),
-      alerts: []
+      alerts: [],
+      release: release,
+      current_release_acknowledged: (JSON.parse(localStorage.getItem(release.version)) ? JSON.parse(localStorage.getItem(release.version)): false),
+      mounted: false
     }
   }
   /*
@@ -79,7 +89,8 @@ class App extends React.Component {
   updateState() {
     this.setState({
       loggedIn: Date.now() < new Date(localStorage.getItem("expires")) ? true : false,
-      user: JSON.parse(localStorage.getItem("user"))
+      user: JSON.parse(localStorage.getItem("user")),
+      current_release_acknowledged: (JSON.parse(localStorage.getItem(release.version)) ? JSON.parse(localStorage.getItem(release.version)): false)
     });
   }
   /*
@@ -163,6 +174,11 @@ class App extends React.Component {
     clearAlert: clear an alert from the screen
     index {Int}: index of alert to clear
   */
+  acknowledgeRelease() {
+    console.log("clicked");
+    localStorage.setItem(this.state.release.version, JSON.stringify(true));
+    this.updateState();
+  }
   clearAlert(index) {
     let newAlerts = [...this.state.alerts];
     newAlerts.splice(index, 1);
@@ -171,7 +187,16 @@ class App extends React.Component {
     });
   }
   componentDidMount() {
-    this.updateAuthToken();
+    if (!this.state.mounted) {
+      this.setState({
+        mounted: true
+      }, () => {
+        this.updateAuthToken();
+        if (!this.state.current_release_acknowledged) {
+          this.alert("Read through the patch notes about the latest release under the support section of your account dropdown.", "New Patch Release!");
+        }
+      })
+    }
   }
   render() {
     const alerts = this.state.alerts.map((alert, index) => {
@@ -209,6 +234,27 @@ class App extends React.Component {
               )
               : ( <Redirect to="/"/> )
               }
+            </Route>
+            <Route exact path="/support">
+              { this.state.loggedIn ? (
+                <div className="page-wrapper">
+                  <Support getAuthToken={this.getAuthToken} alert={this.alert}
+                    release={this.state.release} acknowledge_release={this.acknowledgeRelease}
+                    current_release_acknowledged={this.state.current_release_acknowledged}/>
+                </div>
+              ) : (
+                <Redirect to="/"/>
+              )}
+            </Route>
+            <Route exact path="/terms">
+              <div className="page-wrapper">
+                <Terms getAuthToken={this.getAuthToken} alert={this.alert}/>
+              </div>
+            </Route>
+            <Route exact path="/privacy">
+              <div className="page-wrapper">
+                <Privacy getAuthToken={this.getAuthToken} alert={this.alert}/>
+              </div>
             </Route>
             <Route exact path="/team">
               { this.state.loggedIn ? (
@@ -318,11 +364,14 @@ class App extends React.Component {
             </Route>
             <Route path="/reset-password/:token"
               render={(props) => (<ResetPassword {...props} alert={this.alert}/>)}/>
-            <Route>
+            <Route exact path="/page-not-found">
               <div className="page-wrapper">
                 <Header title="Error: 404"/>
                 <NotFound/>
               </div>
+            </Route>
+            <Route>
+              <Redirect to="/page-not-found"/>
             </Route>
           </Switch>
           <Footer/>

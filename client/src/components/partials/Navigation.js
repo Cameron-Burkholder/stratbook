@@ -61,39 +61,39 @@ class Navigation extends React.Component {
         </ul>
         <ul className="nav__body">
           <li className="nav__item">
-            <NavLink exact activeClassName="nav__link--active" onClick={this.toggleMenu} className="nav__link" to="/">Home</NavLink>
+            <NavLink exact activeClassName="nav__link--active" onClick={this.toggleMenu} className="nav__link" to="/"><i className="fa fa-home"></i>Home</NavLink>
           </li>
           { this.state.loggedIn ? (
             <li className="nav__item">
-              <NavLink exact activeClassName="nav__link--active" onClick={this.toggleMenu} className="nav__link" to="/dashboard">Dashboard</NavLink>
+              <NavLink exact activeClassName="nav__link--active" onClick={this.toggleMenu} className="nav__link" to="/dashboard"><i className="fa fa-tachometer-alt"></i>Dashboard</NavLink>
             </li>
           ) : ( "" )
           }
           {
             this.state.loggedIn ? "" : (
               <li className="nav__item">
-                <NavLink activeClassName="nav__link--active" onClick={this.toggleMenu} className="nav__link" to="/login">Login</NavLink>
+                <NavLink activeClassName="nav__link--active" onClick={this.toggleMenu} className="nav__link" to="/login"><i className="fa fa-sign-in-alt"></i>Login</NavLink>
               </li>
             )
           }
           {
             this.state.loggedIn ? "" : (
               <li className="nav__item">
-                <NavLink activeClassName="nav__link--active" onClick={this.toggleMenu} className="nav__link" to="/register">Register</NavLink>
+                <NavLink activeClassName="nav__link--active" onClick={this.toggleMenu} className="nav__link" to="/register"><i className="fa fa-plus-square"></i>Register</NavLink>
               </li>
             )
           }
           {
             this.state.loggedIn ? (
               <li className="nav__item">
-                <NavLink activeClassName="nav__link--active" onClick={this.toggleMenu} className="nav__link" to="/team">Team</NavLink>
+                <NavLink activeClassName="nav__link--active" onClick={this.toggleMenu} className="nav__link" to="/team"><i className="fa fa-users"></i>Team</NavLink>
               </li>
             ) : ( "" )
           }
           {
             this.state.loggedIn && this.props.team ? (
               <li className="nav__item">
-                <NavLink activeClassName="nav__link--active" onClick={this.toggleMenu} className="nav__link" to="/strategies">Strategies</NavLink>
+                <NavLink activeClassName="nav__link--active" onClick={this.toggleMenu} className="nav__link" to="/strategies"><i className="fa fa-chess-knight"></i>Strategies</NavLink>
               </li>
             ) : ( "" )
           }

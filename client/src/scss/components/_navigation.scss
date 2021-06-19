@@ -47,11 +47,20 @@ li.nav__item:hover {
     transition: all 0.3s ease;
     cursor: pointer;
     box-shadow: $box-shadow-primary;
+    i.fa {
+      color: $text-heading;
+      cursor: pointer;
+    }
   }
 }
 a.nav__link {
   text-decoration: none;
   transition: all 0.3s ease;
+  i.fa {
+    color: $text-subtle;
+    font-size: 12px;
+    margin-right: $margin-xs;
+  }
 }
 a.nav__link--active {
   position: relative;
@@ -68,13 +77,29 @@ button#nav__button {
 div.user-dropdown {
   position: relative;
   z-index: 1;
-  img.user-dropdown__icon {
-    width: 32px;
+  i.user-dropdown__icon {
+    color: $text-accent;
+    background: $background-quaternary;
+    border-radius: $border-radius;
+    font-size: 12pt;
     margin-right: $margin-s;
-    filter: invert(0.7);
+    padding: $button-padding;
+    box-shadow: $box-shadow-secondary;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    span {
+      font-size: 12px;
+      margin-left: $margin-xs;
+      color: $text-subtle;
+    }
   }
-  img.user-dropdown__icon:hover {
+  i.user-dropdown__icon:hover, i.user-dropdown__icon *:hover {
     cursor: pointer;
+    box-shadow: $box-shadow-primary;
+    transition: all 0.3s ease;
+    color: $text-heading;
+    background: $background-secondary;
   }
   div.user-dropdown__body {
     position: absolute;
@@ -87,6 +112,7 @@ div.user-dropdown {
     border-radius: $border-radius;
     background: $background-quaternary;
     z-index: 1;
+    box-shadow: $box-shadow-primary;
   }
   span#user-dropdown-title {
     text-align: center;
@@ -100,16 +126,25 @@ div.user-dropdown {
     background: $color-primary;
     border-radius: $border-radius;
     transition: all 0.3s ease;
+    margin-top: $margin-xs;
+    i.fa {
+      color: $text-subtle;
+      font-size: 12px;
+      margin-right: $margin-xs;
+    }
   }
   a#logout-link {
     background: $color-danger;
-    margin-top: 8px;
   }
   a.user-dropdown__link:hover {
     cursor: pointer;
     text-decoration: none;
     box-shadow: $box-shadow-secondary;
     color: $text-heading;
+    i.fa {
+      color: $text-heading;
+      cursor: pointer;
+    }
     transition: all 0.3s ease;
   }
 }
@@ -117,16 +152,16 @@ div.user-dropdown--inactive {
   div.user-dropdown__body {
     opacity: 0;
     display: none;
+    height: 0px;
   }
 }
 div.user-dropdown--active {
   div.user-dropdown__body {
     opacity: 1;
     display: flex;
+    height: auto;
   }
 }
-
-
 
 @media screen and (max-width: #{$tablet-max-width}) {
   @keyframes nav-transform {

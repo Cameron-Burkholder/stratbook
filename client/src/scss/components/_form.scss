@@ -68,7 +68,7 @@ form button {
   width: 128px;
   padding: $button-padding-big;
   margin-top: $margin-m;
-  background: linear-gradient(#{$color-primary}, #{$color-secondary});
+  background: $background-gradient-primary;
   border: none;
   transition: all 0.3s ease;
 }

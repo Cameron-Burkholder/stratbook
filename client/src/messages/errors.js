@@ -89,6 +89,10 @@ module.exports = {
     status: "ERROR",
     message: "An error occurred while attempting to share strategy."
   },
+  ERROR_SUBMIT_FEEDBACK: {
+    status: "ERROR",
+    message: "An error occurred while attempting to submit feedback."
+  },
   ERROR_TEAM: {
     status: "ERROR",
     message: "An error occurred while attempting to find the requested team."

@@ -253,6 +253,47 @@ module.exports = async (app, passport) => {
     }
   });
 
+  app.post("/api/users/submit-feedback", (request, response, done) => {
+    log("POST request at /api/users/submit-feedback");
+    done();
+  }, passport.authenticate("jwt", { session: false }), async (request, response) => {
+    let user;
+    try {
+      user = await User.findOne({ _id: request.user._id }).exec();
+    } catch(error) {
+      console.log(error);
+      return response.json(errors.ERROR_SUBMIT_FEEDBACK);
+    }
+
+    if (user.feedback !== undefined && user.feedback + 86400 >= Date.parse(Date())) {
+      return response.json(messages.WAIT_BEFORE_MORE_FEEDBACK);
+    }
+
+    user.feedback = Date.parse(Date());
+
+    try {
+      user.save();
+    } catch(error) {
+      console.log(error);
+      return response.json(errors.ERROR_SUBMIT_FEEDBACK);
+    }
+
+    const feedback_email = "" +
+    "<div>" +
+      "<h2>User Feedback</h2>" +
+      "<h4>Username: " + request.user.username + "</h4>" +
+      "<h4>Email: " + request.user.email + "</h4>" +
+      "<h4>Platform: " + request.user.platform + "</h4>" +
+      "<h4>Primary attacking role: " + request.user.attacker_role + "</h4>" +
+      "<h4>Primary defending role: " + request.user.defender_role + "</h4>" +
+      "<br/>" +
+      "<p>" + request.body.feedback + "</p>" +
+    "</div>";
+
+    email(process.env.DEV_EMAIL, "New Feedback", feedback_email);
+    return response.json(messages.FEEDBACK_SUBMITTED);
+  });
+
   /**
   * Update user's platform
   * @name /api/users/update-platform

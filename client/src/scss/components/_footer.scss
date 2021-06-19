@@ -4,10 +4,23 @@ footer.footer {
   width: 100%;
   padding: $padding-s;
   z-index: 1;
-  display: flex;
+  display: grid;
   align-items: center;
-  justify-content: flex-end;
-  border-top: $border-primary;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: $margin-s;
+  padding-bottom: $padding-m;
+  div.footer__section {
+    width: 100%;
+    p, a {
+      text-align: center;
+      width: 100%;
+      display: block;
+      font-size: 10px;
+    }
+    a:hover {
+      cursor: pointer;
+    }
+  }
 }
 
 @media screen and (max-width: #{$phone-max-width}) {

@@ -98,10 +98,17 @@ li.nav__item:hover {
     transition: all 0.3s ease;
     cursor: pointer;
     box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.3); }
+    li.nav__item:hover a.nav__link i.fa {
+      color: #fcfcfc;
+      cursor: pointer; }
 
 a.nav__link {
   text-decoration: none;
   transition: all 0.3s ease; }
+  a.nav__link i.fa {
+    color: #87898f;
+    font-size: 12px;
+    margin-right: 4px; }
 
 a.nav__link--active {
   position: relative;
@@ -116,12 +123,27 @@ button#nav__button {
 div.user-dropdown {
   position: relative;
   z-index: 1; }
-  div.user-dropdown img.user-dropdown__icon {
-    width: 32px;
+  div.user-dropdown i.user-dropdown__icon {
+    color: #B1B3BE;
+    background: #171b2a;
+    border-radius: 8px;
+    font-size: 12pt;
     margin-right: 16px;
-    filter: invert(0.7); }
-  div.user-dropdown img.user-dropdown__icon:hover {
-    cursor: pointer; }
+    padding: 10px 16px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center; }
+    div.user-dropdown i.user-dropdown__icon span {
+      font-size: 12px;
+      margin-left: 4px;
+      color: #87898f; }
+  div.user-dropdown i.user-dropdown__icon:hover, div.user-dropdown i.user-dropdown__icon *:hover {
+    cursor: pointer;
+    box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    color: #fcfcfc;
+    background: #3d3f46; }
   div.user-dropdown div.user-dropdown__body {
     position: absolute;
     display: flex;
@@ -132,7 +154,8 @@ div.user-dropdown {
     padding: 20px;
     border-radius: 8px;
     background: #171b2a;
-    z-index: 1; }
+    z-index: 1;
+    box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.3); }
   div.user-dropdown span#user-dropdown-title {
     text-align: center;
     color: #fcfcfc;
@@ -143,24 +166,33 @@ div.user-dropdown {
     padding: 10px 16px;
     background: #313fd6;
     border-radius: 8px;
-    transition: all 0.3s ease; }
+    transition: all 0.3s ease;
+    margin-top: 4px; }
+    div.user-dropdown a.user-dropdown__link i.fa {
+      color: #87898f;
+      font-size: 12px;
+      margin-right: 4px; }
   div.user-dropdown a#logout-link {
-    background: #a92121;
-    margin-top: 8px; }
+    background: #a92121; }
   div.user-dropdown a.user-dropdown__link:hover {
     cursor: pointer;
     text-decoration: none;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
     color: #fcfcfc;
     transition: all 0.3s ease; }
+    div.user-dropdown a.user-dropdown__link:hover i.fa {
+      color: #fcfcfc;
+      cursor: pointer; }
 
 div.user-dropdown--inactive div.user-dropdown__body {
   opacity: 0;
-  display: none; }
+  display: none;
+  height: 0px; }
 
 div.user-dropdown--active div.user-dropdown__body {
   opacity: 1;
-  display: flex; }
+  display: flex;
+  height: auto; }
 
 @media screen and (max-width: 850px) {
   @keyframes nav-transform {
@@ -189,7 +221,7 @@ div.user-dropdown--active div.user-dropdown__body {
     left: -100VW;
     width: 80VW;
     height: 100VH;
-    background: linear-gradient(#313fd6, #950e0e);
+    background: linear-gradient(#313fd6, #1c1f45);
     flex-direction: column;
     justify-content: center; }
     ul.nav__body li.nav__item {
@@ -255,7 +287,8 @@ div.user-dropdown--active div.user-dropdown__body {
 /* scss/components/_user.scss */
 /* scss/components/_page.scss */
 div.page-wrapper {
-  height: 100%; }
+  height: 100%;
+  min-height: 90VH; }
 
 div.page {
   padding: 20px;
@@ -351,7 +384,7 @@ form button {
   width: 128px;
   padding: 16px 24px;
   margin-top: 40px;
-  background: linear-gradient(#313fd6, #950e0e);
+  background: linear-gradient(45deg, #313fd6, #1a259c);
   border: none;
   transition: all 0.3s ease; }
 
@@ -507,7 +540,7 @@ div.toggle, div.viewer-toggle {
     -webkit-transition: .4s;
     transition: .4s; }
   div.toggle input:checked + .slider, div.toggle .slider--active, div.viewer-toggle input:checked + .slider, div.viewer-toggle .slider--active {
-    background: linear-gradient(to right, #313fd6, #950e0e); }
+    background: linear-gradient(to right, #313fd6, #1c1f45); }
   div.toggle input:focus + .slider, div.toggle .slider--active, div.viewer-toggle input:focus + .slider, div.viewer-toggle .slider--active {
     box-shadow: 0 0 1px #313fd6; }
   div.toggle input:checked + .slider:before, div.toggle .slider--active:before, div.viewer-toggle input:checked + .slider:before, div.viewer-toggle .slider--active:before {
@@ -572,7 +605,7 @@ div.toggle, div.viewer-toggle {
   0% {
     stroke: #313fd6; }
   50% {
-    stroke: #950e0e; } }
+    stroke: #1c1f45; } }
 
 div.loading-modal {
   position: fixed;
@@ -621,10 +654,20 @@ footer.footer {
   width: 100%;
   padding: 8px;
   z-index: 1;
-  display: flex;
+  display: grid;
   align-items: center;
-  justify-content: flex-end;
-  border-top: none; }
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 16px;
+  padding-bottom: 20px; }
+  footer.footer div.footer__section {
+    width: 100%; }
+    footer.footer div.footer__section p, footer.footer div.footer__section a {
+      text-align: center;
+      width: 100%;
+      display: block;
+      font-size: 10px; }
+    footer.footer div.footer__section a:hover {
+      cursor: pointer; }
 
 @media screen and (max-width: 600px) {
   footer.footer {
@@ -1174,7 +1217,7 @@ div.hasNoTeam div.team-grid {
   div.hasNoTeam div.team-grid div#CreateTeamAPI button {
     background: #313fd6; }
   div.hasNoTeam div.team-grid div#JoinTeamAPI button {
-    background: #950e0e; }
+    background: #1c1f45; }
 
 div#ViewTeamAPI div.team {
   padding: 20px;
@@ -1795,7 +1838,7 @@ div.toolbar__navigation {
       border: 1px solid #E0E8FF; }
     div.toolbar__navigation div.strategy-selector button.type--active, div.toolbar__navigation div.strategy-selector button.strategy--active, div.toolbar__navigation div.strategy-selector button.site--active, div.toolbar__navigation div.site-container button.type--active, div.toolbar__navigation div.site-container button.strategy--active, div.toolbar__navigation div.site-container button.site--active {
       color: white;
-      background: linear-gradient(to right, #313fd6, #950e0e); }
+      background: linear-gradient(to right, #313fd6, #1c1f45); }
   div.toolbar__navigation div.strategy-selector {
     padding-bottom: 42px; }
   div.toolbar__navigation div.site-container select, div.toolbar__navigation select.type-selector, div.toolbar__navigation div.strategy-selector select {
@@ -2223,7 +2266,7 @@ div#Viewer img.role__utility-image:hover, div#Viewer img.role__gadget-image:hove
 
 div#Viewer a.objectives__video, div#SharedViewer a.objectives__video {
   padding: 8px;
-  background: linear-gradient(to right, #313fd6, #950e0e);
+  background: linear-gradient(to right, #313fd6, #1c1f45);
   margin-top: 40px !important;
   display: block;
   width: 100%;
@@ -2530,3 +2573,56 @@ div#Viewer a.objectives__video, div#SharedViewer a.objectives__video {
             left: 8px;
             background: #1c1f45;
             width: calc(100VW - 8px); } }
+
+div.page#support h2 {
+  text-align: center; }
+
+div.page#support h3 {
+  margin-top: 16px;
+  margin-bottom: 4px; }
+
+div.page#support ul {
+  margin-left: 40px; }
+
+div.page#support button {
+  padding: 10px 16px;
+  background: linear-gradient(45deg, #313fd6, #1a259c);
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+  color: #87898f;
+  margin: auto;
+  margin-top: 16px;
+  display: block;
+  transition: all 0.3s ease; }
+
+div.page#support button:hover {
+  color: #fcfcfc;
+  box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease; }
+
+div.support {
+  max-width: 600px;
+  display: block;
+  margin: auto;
+  background-image: url("/media/min/Trianglify-11.1s-1915px.svg");
+  background-position: center;
+  background-size: cover;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.3);
+  margin-top: 40px; }
+
+div.feedback {
+  max-width: 600px;
+  display: block;
+  margin: auto;
+  background: #171b2a;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.3);
+  margin-top: 40px; }
+  div.feedback textarea {
+    border: 1px solid #2e2e2e;
+    display: block;
+    margin: auto;
+    width: 100%;
+    margin-top: 16px; }

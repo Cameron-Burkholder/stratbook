@@ -36,6 +36,10 @@ module.exports = {
     status: "Existing User",
     message: "A user with those credentials already exists."
   },
+  FEEDBACK_SUBMITTED: {
+    status: "Feedback Submitted",
+    message: "Thanks for taking the time to make Stratbook better! Your feedback has been submitted. You may be contacted (via email) depending on the nature of your submission."
+  },
   GENERAL_STATS_FOUND: {
     status: "General Statistics Found",
     message: "General statistics have been found."
@@ -282,5 +286,9 @@ module.exports = {
   USER_NOT_VERIFIED: {
     status: "User Not Verified",
     message: "You must verify your account to perform this action."
+  },
+  WAIT_BEFORE_MORE_FEEDBACK: {
+    status: "Must Wait Before Further Feedback",
+    message: "You have submitted feedback within the past 24 hours. You must wait 24 hours from your most recent feedback before submitting more. Please understand this restriction is in place to prevent the sole Stratbook developer from getting spammed, not to limit users from providing feedback."
   }
 }

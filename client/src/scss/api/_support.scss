@@ -1,0 +1,58 @@
+div.page#support {
+  h2 {
+    text-align: center;
+  }
+  h3 {
+    margin-top: $margin-s;
+    margin-bottom: $margin-xs;
+  }
+  ul {
+    margin-left: $margin-m;
+  }
+  button {
+    padding: $button-padding;
+    background: $background-gradient-primary;
+    box-shadow: $box-shadow-secondary;
+    color: $text-subtle;
+    margin: auto;
+    margin-top: $margin-s;
+    display: block;
+    transition: all 0.3s ease;
+  }
+  button:hover {
+    color: $text-heading;
+    box-shadow: $box-shadow-primary;
+    transition: all 0.3s ease;
+  }
+}
+
+div.support {
+  max-width: 600px;
+  display: block;
+  margin: auto;
+  background-image: url("/media/min/Trianglify-11.1s-1915px.svg");
+  background-position: center;
+  background-size: cover;
+  padding: $padding-m;
+  border-radius: $border-radius;
+  box-shadow: $box-shadow-primary;
+  margin-top: $margin-m;
+}
+
+div.feedback {
+  max-width: 600px;
+  display: block;
+  margin: auto;
+  background: $background-quaternary;
+  padding: $padding-m;
+  border-radius: $border-radius;
+  box-shadow: $box-shadow-primary;
+  margin-top: $margin-m;
+  textarea {
+    border: 1px solid #2e2e2e;
+    display: block;
+    margin: auto;
+    width: 100%;
+    margin-top: $margin-s;
+  }
+}
