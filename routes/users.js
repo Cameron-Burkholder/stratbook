@@ -253,6 +253,17 @@ module.exports = async (app, passport) => {
     }
   });
 
+  /**
+  * Submit feedback.
+  * @name /api/users/submit-feedback
+  * @function
+  * @async
+  * @description The user makes a request to submit feedback.
+  *   If the input data is invalid, this returns an invalid feedback submission object.
+  *   If the user has already submitted feedback within the past 24 hours, this returns a must wait object.
+  *   If the user is able to submit feeback, this returns a feedback submitted object.
+  * @param {string} request.body.feedback the feedback to submit.
+  */
   app.post("/api/users/submit-feedback", (request, response, done) => {
     log("POST request at /api/users/submit-feedback");
     done();
@@ -265,11 +276,11 @@ module.exports = async (app, passport) => {
       return response.json(errors.ERROR_SUBMIT_FEEDBACK);
     }
 
-    if (user.feedback !== undefined && user.feedback + 86400 >= Date.parse(Date())) {
+    if (user.feedback >= Date.parse(Date())) {
       return response.json(messages.WAIT_BEFORE_MORE_FEEDBACK);
     }
 
-    user.feedback = Date.parse(Date());
+    user.feedback = Date.parse(Date()) + 86400000;
 
     try {
       user.save();

@@ -41,7 +41,8 @@ class TeamAnnouncementAPI extends React.Component {
         case ANNOUNCEMENT_SENT.status:
           component.setState({
             loading: false,
-            message: ""
+            message: "",
+            length: 0
           });
           component.props.alert(ANNOUNCEMENT_SENT.message, "SUCCESS");
           break;

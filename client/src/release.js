@@ -9,7 +9,8 @@ const release = {
     "Reworked UI using new dark blue theme for better user interface.",
     "Added icons to navigation links for better user experience.",
     "Rearranged team and manage team pages for better user experience.",
-    "Removed card display for operator statistics for better user experience."
+    "Removed card display for operator statistics for better user experience.",
+    "Added feedback form."
   ]
 }
 
