@@ -201,7 +201,7 @@ div.user-dropdown--active {
     left: -100VW;
     width: 100VW;
     height: 100VH;
-    background-image: url("/media/min/Trianglify-11.1s-1915px.svg");
+    background: $background-gradient-primary;
     background-position: center;
     background-size: cover;
     flex-direction: column;
@@ -239,9 +239,13 @@ div.user-dropdown--active {
           color: $text-heading;
           display: block;
           margin: $margin-s 0px;
+          background: $background-quaternary;
           i {
             display: inline;
           }
+        }
+        a#logout-link {
+          background: $background-quaternary;
         }
       }
     }

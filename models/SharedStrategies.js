@@ -22,6 +22,14 @@ const SharedStrategiesSchema = new Schema({
   strategy: {
     type: Object,
     required: true
+  },
+  author: {
+    type: String,
+    required: false
+  },
+  team: {
+    type: String,
+    required: false
   }
 });
 

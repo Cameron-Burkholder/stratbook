@@ -153,6 +153,10 @@ module.exports = {
     status: "ERROR",
     message: "An error occurred while attempting to view the requested shared strategy."
   },
+  ERROR_VIEW_SHARED_STRATEGIES: {
+    status: "ERROR",
+    message: "An error occurred while attempting to view shared strategies."
+  },
   ERROR_VIEW_STRATEGIES: {
     status: "ERROR",
     message: "An error occurred while attempting to view strategies."

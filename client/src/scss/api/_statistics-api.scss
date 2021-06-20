@@ -1,6 +1,51 @@
 /* client/src/scss/api/_statistics-api.scss */
 
+div#community {
+  h2 {
+    margin-bottom: $margin-s;
+  }
+  div.shared-strategy-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: $margin-m;
+  }
+  div.shared_strategy_card {
+    border-radius: $border-radius;
+    box-shadow: $box-shadow-secondary;
+    transition: all 0.3s ease;
+    * {
+      text-decoration: none;
+    }
+  }
 
+  div.shared_strategy_overlay {
+    width: 100%;
+    height: 100%;
+    padding: $padding-m;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: $border-radius;
+    transition: all 0.3s ease;
+    h3 {
+      color: $text-heading;
+      text-align: center;
+    }
+    h4 {
+      color: $text-subtle;
+      text-align: center;
+    }
+  }
+  div.shared_strategy_card:hover {
+    box-shadow: $box-shadow-primary;
+    * {
+      cursor: pointer;
+    }
+    div.shared_strategy_overlay {
+      background: rgba(0, 0, 0, 0.4);
+      transition: all 0.3s ease;
+    }
+    transition: all 0.3s ease;
+  }
+}
 
 p.statistics-failure, p.text-error {
   padding: $padding-s;

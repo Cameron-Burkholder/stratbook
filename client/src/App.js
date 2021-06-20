@@ -19,6 +19,7 @@ import Team from "./components/pages/Team.js";
 import ManageTeam from "./components/pages/ManageTeam.js";
 import Strategies from "./components/pages/Strategies.js";
 import EditStrategies from "./components/pages/EditStrategies.js";
+import Community from "./components/pages/Community.js";
 import SharedStrategies from "./components/pages/SharedStrategies.js";
 import NotFound from "./components/pages/NotFound.js";
 import ForgotPassword from "./components/pages/ForgotPassword.js";
@@ -192,7 +193,7 @@ class App extends React.Component {
         mounted: true
       }, () => {
         this.updateAuthToken();
-        if (!this.state.current_release_acknowledged) {
+        if (this.state.loggedIn && !this.state.current_release_acknowledged) {
           this.alert("Read through the patch notes about the latest release under the support section of your account dropdown.", "New Patch Release!");
         }
       })
@@ -319,6 +320,11 @@ class App extends React.Component {
                   return <Redirect to="/"/>
                 }
               }}/>
+            <Route exact path="/community">
+              <div className="page-wrapper">
+                <Community alert={this.alert}/>
+              </div>
+            </Route>
             <Route exact path="/shared/:shared_key"
               render={(props) => {
                 const shared_key = props.match.params.shared_key;

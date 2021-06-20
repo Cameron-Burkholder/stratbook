@@ -136,6 +136,38 @@ module.exports = async (app, passport) => {
     response.json(packet);
   });
 
+  app.get("/api/strategies/view-shared", (request, response, done) => {
+    log("GET REQUEST AT /api/strategies/view-shared");
+    done();
+  }, async (request, response) => {
+    let shared_strategies;
+    try {
+      shared_strategies = await SharedStrategies.find().exec();
+    } catch(error) {
+      console.log(error);
+      return response.json(errors.ERROR_VIEW_SHARED_STRATEGIES);
+    }
+
+    let index = 0;
+    while (index < shared_strategies.length) {
+      let team;
+      try {
+        team = await Team.findOne({ join_code: shared_strategies[index].team_code }).exec();
+      } catch(error) {
+        console.log(error);
+        return response.json(errors.ERROR_VIEW_SHARED_STRATEGIES);
+      }
+
+      shared_strategies[index].team = team.name;
+
+      index++;
+    }
+
+    let packet = messages.SHARED_STRATEGIES_FOUND;
+    packet.strategies = shared_strategies;
+    return response.json(packet);
+  });
+
   /**
   * Add map to stratbook
   * @name /api/strategies/add/:map
@@ -231,7 +263,8 @@ module.exports = async (app, passport) => {
     const newSharedStrategy = new SharedStrategies({
       team_code: request.team.join_code,
       shared_key: shared_key,
-      strategy: strategy
+      strategy: strategy,
+      author: request.user.username
     });
 
     try {
@@ -348,6 +381,7 @@ module.exports = async (app, passport) => {
           }
 
           shared_strategy.strategy = map.defense[site][index];
+          shared_strategy.author = request.user.username;
 
           try {
             shared_strategy.save();
@@ -370,6 +404,7 @@ module.exports = async (app, passport) => {
           }
 
           shared_strategy.strategy = map.attack[site][index];
+          shared_strategy.author = request.user.username;
 
           try {
             shared_strategy.save();
