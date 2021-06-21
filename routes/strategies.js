@@ -136,7 +136,10 @@ module.exports = async (app, passport) => {
     response.json(packet);
   });
 
-  app.get("/api/strategies/view-shared", (request, response, done) => {
+  /**
+  *
+  */
+  app.post("/api/strategies/view-shared", (request, response, done) => {
     log("GET REQUEST AT /api/strategies/view-shared");
     done();
   }, async (request, response) => {
@@ -146,6 +149,34 @@ module.exports = async (app, passport) => {
     } catch(error) {
       console.log(error);
       return response.json(errors.ERROR_VIEW_SHARED_STRATEGIES);
+    }
+
+    // Filter author names.
+    if (request.body.author !== "") {
+      shared_strategies = shared_strategies.filter((strategy, index) => {
+        if (strategy.author) {
+          return strategy.author.indexOf(request.body.author) !== -1;
+        }
+      });
+    }
+
+    if (request.body.side !== "NONE") {
+      shared_strategies = shared_strategies.filter((strategy, index) => {
+        return strategy.strategy.type === request.body.side;
+      });
+    }
+
+    if (request.body.map !== "NONE") {
+      shared_strategies = shared_strategies.filter((strategy, index) => {
+        return strategy.strategy.map === request.body.map;
+      });
+
+      if (request.body.site !== "NONE") {
+        shared_strategies = shared_strategies.filter((strategy, index) => {
+          const site_index = SITES[request.body.map].indexOf(request.body.site);
+          return strategy.strategy.siteIndex === site_index;
+        });
+      }
     }
 
     let index = 0;
@@ -161,6 +192,13 @@ module.exports = async (app, passport) => {
       shared_strategies[index].team = team.name;
 
       index++;
+    }
+
+    // Filter team names.
+    if (request.body.team !== "") {
+      shared_strategies = shared_strategies.filter((strategy, index) => {
+        return strategy.team.indexOf(request.body.team) !== -1;
+      });
     }
 
     let packet = messages.SHARED_STRATEGIES_FOUND;

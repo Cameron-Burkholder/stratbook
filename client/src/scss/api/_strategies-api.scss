@@ -4,6 +4,66 @@ $canvas-width: 900px;
 $canvas-height: 480px;
 $drag-item-width: 30px;
 
+div#community {
+  h2 {
+    margin-bottom: $margin-s;
+  }
+  div.shared-strategy-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: $margin-m;
+  }
+  div.shared_strategy_card {
+    border-radius: $border-radius;
+    box-shadow: $box-shadow-secondary;
+    transition: all 0.3s ease;
+    * {
+      text-decoration: none;
+    }
+  }
+
+  div.shared-strategy-controls {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    fieldset {
+      margin: $margin-s;
+    }
+    button {
+      padding: $button-padding-big;
+      margin-top: $margin-s;
+    }
+  }
+
+  div.shared_strategy_overlay {
+    width: 100%;
+    height: 100%;
+    padding: $padding-m;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: $border-radius;
+    transition: all 0.3s ease;
+    h3 {
+      color: $text-heading;
+      text-align: center;
+    }
+    h4 {
+      color: $text-subtle;
+      text-align: center;
+    }
+  }
+  div.shared_strategy_card:hover {
+    box-shadow: $box-shadow-primary;
+    * {
+      cursor: pointer;
+    }
+    div.shared_strategy_overlay {
+      background: rgba(0, 0, 0, 0.4);
+      transition: all 0.3s ease;
+    }
+    transition: all 0.3s ease;
+  }
+}
+
 div#edit-strategies {
   height: 100%;
 }
