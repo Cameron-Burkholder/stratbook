@@ -877,64 +877,72 @@ div.canvas {
   }
   div.canvas__controls {
     position: absolute;
-    height: 50px;
-    top: $canvas-height;
+    height: 64px;
+    top: calc(#{$canvas-height} + #{$margin-s});
+    left: 50%;
+    transform: translateX(-50%);
     border-bottom: none;
     border-left: none;
     display: flex;
     z-index: 2;
-    left: 0;
-    background: $background-tertiary;
+    background: $background-quaternary;
+    padding: $button-padding;
+    border-radius: $border-radius;
+    box-shadow: $box-shadow-primary;
+    color: $text-heading;
+    div.zoom-selector {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: $text-accent;
+      p {
+        color: $text-accent;
+        margin-top: 8px;
+      }
+      input {
+        cursor: pointer;
+        margin: 0;
+        transform: scale(0.8);
+      }
+    }
     div.labels {
       display: flex;
       align-items: center;
       justify-content: center;
       flex-direction: column;
-      padding: 8px;
+      height: 100%;
       span {
-        color: $text-dark;
+        color: $text-accent;
         font-size: $font-small;
+        margin-bottom: $margin-xs;
       }
       input {
         cursor: pointer;
       }
     }
+    div.pagination {
+      margin-left: $margin-s;
+      button {
+        background: $background-quaternary;
+        border: $border-primary;
+        border-radius: $border-radius;
+        color: $text-accent;
+      }
+      p {
+        color: $text-accent;
+      }
+    }
     select {
       border-radius: 0 !important;
+      padding: 0;
       option {
-        color: $text-dark;
+        color: $text-heading;
       }
     }
     select:hover {
       cursor: pointer;
     }
-  }
-  div.canvas__body {
-    margin-top: $margin-m;
-    padding: $padding-m;
-    ul {
-      margin-left: $margin-s;
-    }
-    h3 {
-      margin-top: $margin-s;
-    }
-  }
-}
-
-div.zoom-selector {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: $text-dark !important;
-  p {
-    color: $text-dark;
-    margin-top: 8px;
-  }
-  input {
-    cursor: pointer;
-    margin: 0;
-    transform: scale(0.8);
   }
 }
 

@@ -1038,6 +1038,21 @@ class Editor extends React.Component {
       ) : undefined;
       sidebarProps.shared = this.state.strategies[this.state.strategyIndex].shared;
       sidebarProps.shared_key = this.state.strategies[this.state.strategyIndex].shared_key;
+      sidebarProps.objectives = (this.state.type === "ATTACK" ? (
+        this.state.map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].objectives
+      ) : (
+        this.state.map.defense[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].objectives
+      ));
+      sidebarProps.notes = (this.state.type === "ATTACK" ? (
+        this.state.map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].notes
+      ) : (
+        this.state.map.defense[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].notes
+      ));
+      sidebarProps.video = this.state.type === "ATTACK" ? (
+        this.state.map.attack[this.state.site][this.state.strategyIndex].video
+      ) : (
+        this.state.map.defense[this.state.site][this.state.strategyIndex].video
+      );
 
       canvasProps.map = this.state.map.name;
       canvasProps.operators = (this.state.type === "ATTACK" ? (
@@ -1082,21 +1097,6 @@ class Editor extends React.Component {
       canvasProps.breaches = (this.state.type === "ATTACK" ? (
         this.state.map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].breaches
       ) : []);
-      canvasProps.objectives = (this.state.type === "ATTACK" ? (
-        this.state.map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].objectives
-      ) : (
-        this.state.map.defense[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].objectives
-      ));
-      canvasProps.notes = (this.state.type === "ATTACK" ? (
-        this.state.map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].notes
-      ) : (
-        this.state.map.defense[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].notes
-      ));
-      canvasProps.video = this.state.type === "ATTACK" ? (
-        this.state.map.attack[this.state.site][this.state.strategyIndex].video
-      ) : (
-        this.state.map.defense[this.state.site][this.state.strategyIndex].video
-      );
 
     } else {
       toolbarProps.strategy = this.state.strategy.name;

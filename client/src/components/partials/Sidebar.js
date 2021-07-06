@@ -3,6 +3,7 @@
 import React from "react";
 
 import Toggle from "./Toggle.js";
+import Objectives from "./Objectives.js";
 
 class Sidebar extends React.Component {
   constructor(props) {
@@ -84,6 +85,13 @@ class Sidebar extends React.Component {
       )
     });
     let strategies;
+    let objectiveProps = {};
+    if (this.props.function === "Editor") {
+      objectiveProps.addObjective = this.props.addObjective;
+      objectiveProps.removeObjective = this.props.removeObjective;
+      objectiveProps.updateNotes = this.props.updateNotes;
+      objectiveProps.updateVideo = this.props.updateVideo;
+    }
     if (this.props.function !== "SharedViewer") {
       strategies = this.props.strategies.map((strat, index) => {
         return (
@@ -94,6 +102,13 @@ class Sidebar extends React.Component {
     console.log(this.props);
     return (
       <div className={"sidebar" + (this.state.showSidebar ? " sidebar--active" : "")}>
+        <div className="canvas__body">
+          <Objectives objectives={this.props.objectives}
+            notes={this.props.notes} scenes={this.props.scenes} sceneIndex={this.props.sceneIndex}
+            video={this.props.video}
+            function={this.props.function}
+            {...objectiveProps}/>
+        </div>
         <button onClick={this.toggleSidebar}>&#8594;</button>
         <div className="sidebar-body">
           <div className="strategy-container">

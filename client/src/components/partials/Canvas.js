@@ -67,11 +67,6 @@ class Canvas extends React.Component {
       blueprintProps.updateRotatePositions = this.props.updateRotatePositions;
       blueprintProps.updateReinforcementPositions = this.props.updateReinforcementPositions;
       blueprintProps.updateBreachPositions = this.props.updateBreachPositions;
-
-      objectiveProps.addObjective = this.props.addObjective;
-      objectiveProps.removeObjective = this.props.removeObjective;
-      objectiveProps.updateNotes = this.props.updateNotes;
-      objectiveProps.updateVideo = this.props.updateVideo;
     }
     return (
       <div className="canvas">
@@ -103,13 +98,6 @@ class Canvas extends React.Component {
           function={this.props.function}
           blueprintProps={blueprintProps}
           scrollZoom={this.scrollZoom}/>
-        <div className="canvas__body">
-          <Objectives objectives={this.props.objectives}
-            notes={this.props.notes} scenes={this.props.scenes} sceneIndex={this.props.sceneIndex}
-            video={this.props.video}
-            function={this.props.function}
-            {...objectiveProps}/>
-        </div>
       </div>
     )
   }
