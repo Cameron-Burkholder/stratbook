@@ -91,12 +91,13 @@ class Sidebar extends React.Component {
         )
       });
     }
+    console.log(this.props);
     return (
       <div className={"sidebar" + (this.state.showSidebar ? " sidebar--active" : "")}>
         <button onClick={this.toggleSidebar}>&#8594;</button>
         <div className="sidebar-body">
           <div className="strategy-container">
-            <h3 className="strategy-container__heading">{this.props.map}: {this.props.type}</h3>
+            <h3 className="strategy-container__heading">{this.props.map.name}: {this.props.type}</h3>
             <h4 className="strategy-container__subtitle">{this.props.sites[this.props.siteIndex]}</h4>
             { this.props.function !== "Editor" && this.props.shared ? (
               <div className="viewer-toggle">

@@ -930,21 +930,23 @@ class Editor extends React.Component {
   }
   handleScroll(e) {
     const nav = document.querySelector("nav.nav");
-    const toolbar = document.querySelector("div.toolbar");
     const main = document.querySelector("main");
     const sidebar = document.querySelector("div.sidebar");
-    const lineup = document.querySelector("div.lineup");
+    /*
     if (window.scrollY > nav.offsetTop + nav.offsetHeight) {
-      toolbar.classList.add("toolbar--scroll");
       sidebar.classList.add("sidebar--scroll");
-      lineup.classList.add("lineup--scroll");
-      main.style.marginTop = toolbar.offsetHeight + "px";
+      main.style.marginTop = "16px";
+      main.style.top = "16px";
+      main.style.right = "16px";
+      main.style.position = "fixed";
     } else {
-      toolbar.classList.remove("toolbar--scroll");
       sidebar.classList.remove("sidebar--scroll");
-      lineup.classList.remove("lineup--scroll");
       main.style.marginTop = 0;
+      main.style.top = "0";
+      main.style.right = "0";
+      main.style.position = "top";
     }
+    */
   }
   componentWillUnmount() {
     window.removeEventListener("scroll", this.handleScroll);
@@ -957,20 +959,24 @@ class Editor extends React.Component {
     let lineupProps = {};
 
     if (this.props.function === "Editor") {
-      toolbarProps.updateStrategyName = this.updateName;
-      toolbarProps.insertDrone = this.insertDrone;
-      toolbarProps.insertRotate = this.insertRotate;
-      toolbarProps.insertReinforcement = this.insertReinforcement;
-      toolbarProps.insertBreach = this.insertBreach;
-      toolbarProps.addStrategy = this.addStrategy;
-      toolbarProps.removeStrategy = this.removeStrategy;
-      toolbarProps.save = this.save;
-
+      sidebarProps.updateStrategyName = this.updateName;
+      sidebarProps.insertDrone = this.insertDrone;
+      sidebarProps.insertRotate = this.insertRotate;
+      sidebarProps.insertReinforcement = this.insertReinforcement;
+      sidebarProps.insertBreach = this.insertBreach;
+      sidebarProps.addStrategy = this.addStrategy;
+      sidebarProps.removeStrategy = this.removeStrategy;
+      sidebarProps.save = this.save;
       sidebarProps.addScene = this.addScene;
       sidebarProps.removeScene = this.removeScene;
       sidebarProps.updateSceneName = this.updateSceneName;
       sidebarProps.share = this.share;
       sidebarProps.unshare = this.unshare;
+      sidebarProps.updateOperators = this.updateOperators;
+      sidebarProps.insertOperator = this.insertOperator;
+      sidebarProps.updateUtility = this.updateUtility;
+      sidebarProps.insertUtility = this.insertUtility;
+      sidebarProps.insertGadget = this.insertGadget;
 
       canvasProps.removeOperator = this.removeOperator;
       canvasProps.removeGadget = this.removeGadget;
@@ -991,54 +997,49 @@ class Editor extends React.Component {
       canvasProps.updateNotes = this.updateNotes;
       canvasProps.updateVideo = this.updateVideo;
 
-      lineupProps.updateOperators = this.updateOperators;
-      lineupProps.insertOperator = this.insertOperator;
-      lineupProps.updateUtility = this.updateUtility;
-      lineupProps.insertOperator = this.insertOperator;
-      lineupProps.insertUtility = this.insertUtility;
-      lineupProps.insertGadget = this.insertGadget;
-
     }
 
     if (this.props.function === "Editor" || this.props.function === "Viewer") {
-      toolbarProps.strategy = this.state.type === "ATTACK" ? (
+      sidebarProps.strategy = this.state.type === "ATTACK" ? (
         this.state.map.attack[this.state.site][this.state.strategyIndex].name
       ): (
         this.state.map.defense[this.state.site][this.state.strategyIndex].name
       );
-      toolbarProps.showMaps = this.showMaps;
-      toolbarProps.map = this.state.map;
-      toolbarProps.strategies = this.state.strategies;
-      toolbarProps.strategyIndex = this.state.strategyIndex;
-      toolbarProps.selectStrategy = this.selectStrategy;
-      toolbarProps.updateType = this.updateType;
-      toolbarProps.siteIndex = this.state.siteIndex;
-      toolbarProps.sites = this.state.sites;
-      toolbarProps.selectSite = this.selectSite;
-      toolbarProps.drones = this.state.type === "ATTACK" ? (
+      sidebarProps.showMaps = this.showMaps;
+      sidebarProps.map = this.state.map;
+      sidebarProps.strategies = this.state.strategies;
+      sidebarProps.strategyIndex = this.state.strategyIndex;
+      sidebarProps.selectStrategy = this.selectStrategy;
+      sidebarProps.updateType = this.updateType;
+      sidebarProps.siteIndex = this.state.siteIndex;
+      sidebarProps.sites = this.state.sites;
+      sidebarProps.selectSite = this.selectSite;
+      sidebarProps.operators = (this.state.type === "ATTACK" ? (
+        this.state.map.attack[this.state.site][this.state.strategyIndex].operators
+      ) : (
+        this.state.map.defense[this.state.site][this.state.strategyIndex].operators
+      ));
+      sidebarProps.gadgetPositions = canvasProps.gadgetPositions;
+      sidebarProps.drones = this.state.type === "ATTACK" ? (
         this.state.map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].drones
       ) : undefined;
-      toolbarProps.rotates = this.state.type === "ATTACK"? (
+      sidebarProps.rotates = this.state.type === "ATTACK"? (
         undefined
       ) : (
         this.state.map.defense[this.state.site][this.state.strategyIndex].rotates
       );
-      toolbarProps.reinforcements = this.state.type === "ATTACK" ? (
+      sidebarProps.reinforcements = this.state.type === "ATTACK" ? (
         undefined
       ) : (
         this.state.map.defense[this.state.site][this.state.strategyIndex].reinforcements
       );
-      toolbarProps.breaches = this.state.type === "ATTACK" ? (
+      sidebarProps.breaches = this.state.type === "ATTACK" ? (
         this.state.map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].breaches
       ) : undefined;
-
-      sidebarProps.strategies = this.state.strategies;
-      sidebarProps.selectStrategy = this.selectStrategy;
-      sidebarProps.strategyIndex = this.state.strategyIndex;
       sidebarProps.shared = this.state.strategies[this.state.strategyIndex].shared;
       sidebarProps.shared_key = this.state.strategies[this.state.strategyIndex].shared_key;
 
-      canvasProps.map = toolbarProps.map.name;
+      canvasProps.map = this.state.map.name;
       canvasProps.operators = (this.state.type === "ATTACK" ? (
         this.state.map.attack[this.state.site][this.state.strategyIndex].operators
       ) : (
@@ -1096,13 +1097,6 @@ class Editor extends React.Component {
       ) : (
         this.state.map.defense[this.state.site][this.state.strategyIndex].video
       );
-
-      lineupProps.operators = (this.state.type === "ATTACK" ? (
-        this.state.map.attack[this.state.site][this.state.strategyIndex].operators
-      ) : (
-        this.state.map.defense[this.state.site][this.state.strategyIndex].operators
-      ));
-      lineupProps.gadgetPositions = canvasProps.gadgetPositions;
 
     } else {
       toolbarProps.strategy = this.state.strategy.name;
@@ -1165,17 +1159,11 @@ class Editor extends React.Component {
     }
     return (
       <div id={this.props.function}>
-        <Toolbar
-          type={this.state.type}
-          alert={this.props.alert}
-          fetchStrategies={this.props.fetchStrategies}
-          function={this.props.function}
-          {...toolbarProps}
-          />
         <main>
           <Sidebar
-            map={toolbarProps.map.name}
-            strategy={toolbarProps.strategy}
+            map={canvasProps.map.name}
+            selectOperator={this.selectOperator} activeOperator={this.state.activeOperator}
+            strategy={canvasProps.strategy}
             sites={this.state.sites}
             selectSite={this.selectSite}
             siteIndex={this.state.siteIndex}
@@ -1185,6 +1173,12 @@ class Editor extends React.Component {
             type={this.state.type}
             alert={this.props.alert}
             function={this.props.function}
+            operators={canvasProps.operators}
+            gadgets={canvasProps.gadgets}
+            gadgetPositions={canvasProps.gadgetPositions}
+            utility={canvasProps.utility}
+            utilityPositions={canvasProps.utilityPositions}
+            fetchStrategies={this.props.fetchStrategies}
             {...sidebarProps}
             />
           <Canvas
@@ -1198,17 +1192,6 @@ class Editor extends React.Component {
             selectScene={this.selectScene}
             function={this.props.function}
             {...canvasProps}
-            />
-          <Lineup
-            type={this.state.type}
-            selectOperator={this.selectOperator} activeOperator={this.state.activeOperator}
-            operators={canvasProps.operators}
-            gadgets={canvasProps.gadgets}
-            gadgetPositions={canvasProps.gadgetPositions}
-            utility={canvasProps.utility}
-            utilityPositions={canvasProps.utilityPositions}
-            function={this.props.function}
-            {...lineupProps}
             />
         </main>
       </div>

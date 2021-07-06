@@ -3,8 +3,8 @@
 import React from "react";
 import { SNAPS, SNAP_TOLERANCE, CANVAS_WIDTH, CANVAS_HEIGHT, ATTRIBUTES } from "../../data.js";
 
-let width = 30;
-let height = 30;
+let width = 40;
+let height = 40;
 
 class DragItem extends React.Component {
   constructor(props) {

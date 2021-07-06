@@ -1,8 +1,8 @@
 /* client/src/scss/api/_strategies-api.scss */
 
-$canvas-width: 900px;
-$canvas-height: 480px;
-$drag-item-width: 30px;
+$canvas-width: 1500px;
+$canvas-height: 800px;
+$drag-item-width: 40px;
 
 div#community {
   h2 {
@@ -64,10 +64,20 @@ div#community {
   }
 }
 
-div#edit-strategies {
-  height: 100%;
+div#strategies {
+  div.view-container {
+    padding: $padding-m !important;
+    a.button {
+      margin: auto;
+      margin-top: $margin-s;
+    }
+    h1 {
+      text-align: center;
+    }
+  }
 }
-div#EditStrategiesAPI {
+
+div#edit-strategies {
   div.edit-container {
     padding: $padding-m !important;
     height: 100%;
@@ -90,19 +100,8 @@ div#EditStrategiesAPI {
       margin: 0;
       width: 100%;
       margin-left: $margin-s;
+      padding: $button-padding-big;
       background: linear-gradient(to right, #{$color-tertiary}, #{$color-primary});
-    }
-  }
-}
-div#ViewStrategiesAPI {
-  div.view-container {
-    padding: $padding-m !important;
-    a.button {
-      margin: auto;
-      margin-top: $margin-s;
-    }
-    h1 {
-      text-align: center;
     }
   }
 }
@@ -111,6 +110,8 @@ div.add-strategy {
   padding: $padding-m;
   button#cancel {
     border: 2px solid $color-danger;
+    padding: $button-padding;
+    background: $color-danger;
   }
   button#cancel:hover {
     background: $color-danger;
@@ -143,6 +144,8 @@ div.map-selector {
     height: 100px;
     text-decoration: none;
     position: relative;
+    border-radius: $border-radius;
+    box-shadow: $box-shadow-secondary;
   }
   div.map-overlay {
     width: 100%;
@@ -158,18 +161,32 @@ div.map-selector {
     cursor: pointer;
     text-decoration: none !important;
     transition: all 0.3s ease;
+    border-radius: $border-radius;
   }
   button.delete-button {
-    border-radius: 0px !important;
     background: $background-primary;
     position: absolute;
-    top: 0;
     right: 0;
+    top: 50%;
     height: 100%;
+    transform: translateY(-50%);
     border: none;
     border-left: $border-primary;
     filter: opacity(0);
     transition: all 0.3s ease;
+    border-radius: $border-radius;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    font-size: 12pt;
+    * {
+      cursor: pointer;
+      color: $text-heading;
+    }
+    cursor: pointer;
   }
   button.delete-button:hover {
     box-shadow: none;
@@ -191,14 +208,13 @@ div.map-selector {
 }
 
 div#Editor, div#Viewer, div#SharedViewer {
-  max-width: 1600px;
   display: block;
   margin: auto;
   main {
     width: 100%;
     height: 100%;
     display: grid;
-    grid-template-columns: 256px $canvas-width 1fr;
+    grid-template-columns: 1fr calc(#{$canvas-width} + (2 * #{$padding-m}));
   }
 }
 
@@ -254,6 +270,8 @@ div.toolbar {
     margin: 0 $margin-s;
   }
   button.toolbar__button {
+    padding: $button-padding-big;
+    border-radius: $border-radius;
     margin: 0 !important;
     margin-top: $margin-m !important;
     display: block;
@@ -390,7 +408,8 @@ div.toolbar__navigation {
     border: $border-secondary;
     margin: 0;
     margin-top: $margin-s;
-    padding: $padding-s;
+    padding: $button-padding-big;
+    border-radius: $border-radius;
     width: 100%;
     text-decoration: none;
     text-align: center;
@@ -425,10 +444,10 @@ div.toolbar__navigation {
     border: $border-secondary;
     margin: 0;
     width: 100%;
-    padding: $padding-s;
+    padding: $button-padding-big;
     border-radius: $border-radius;
     option {
-      color: $text-dark;
+      color: $text-accent;
     }
   }
   div.strategy-control {
@@ -725,17 +744,22 @@ div.lineup {
 }
 
 div.canvas {
-  width: 100%; // 1024px
+  width: 100%;
   height: 100%;
   position: relative;
   border-right: $border-primary;
   z-index: 3;
+  padding: $padding-m;
+  padding-top: 0;
+  border-radius: $border-radius;
   div.blueprint-form {
-    width: 100%; // 1024px
+    width: 100%;
     height: $canvas-height; // 576px gives 16:9 ratio
     overflow: auto;
     position: relative;
     z-index: 1;
+    border-radius: $border-radius;
+    box-shadow: $box-shadow-primary;
   }
   div.position-overlay {
     width: 100%;
@@ -743,6 +767,7 @@ div.canvas {
     position: relative;
     z-index: 2;
     cursor: move;
+    border-radius: $border-radius;
     div.drag-item {
       position: absolute;
       width: $drag-item-width;

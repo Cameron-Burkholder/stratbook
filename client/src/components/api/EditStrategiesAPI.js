@@ -303,7 +303,9 @@ class EditStrategiesAPI extends React.Component {
               <div className="map-overlay">
                 { map.toUpperCase().replace("_", " ") }
               </div>
-              <button className="delete-button" onClick={(e) => { this.deleteMap(e, map) }}>&#128465;</button>
+              <div className="edit-strategy-button-container">
+                <button className="delete-button" onClick={(e) => { this.deleteMap(e, map) }}><i className="fa fa-trash"></i></button>
+              </div>
             </Link>
           )
         });

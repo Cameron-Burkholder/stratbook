@@ -227,7 +227,7 @@ div.user-dropdown--active div.user-dropdown__body {
     background-position: center;
     background-size: cover;
     flex-direction: column;
-    padding-top: 72px;
+    padding-top: 20px;
     justify-content: flex-start; }
     ul.nav__body li.nav__item {
       margin: 16px 40px 16px auto;
@@ -1567,43 +1567,43 @@ div#community div.shared_strategy_card:hover {
     background: rgba(0, 0, 0, 0.4);
     transition: all 0.3s ease; }
 
-div#edit-strategies {
-  height: 100%; }
-
-div#EditStrategiesAPI div.edit-container {
-  padding: 20px !important;
-  height: 100%; }
-  div#EditStrategiesAPI div.edit-container h1 {
+div#strategies div.view-container {
+  padding: 20px !important; }
+  div#strategies div.view-container a.button {
+    margin: auto;
+    margin-top: 16px; }
+  div#strategies div.view-container h1 {
     text-align: center; }
 
-div#EditStrategiesAPI a.button {
+div#edit-strategies div.edit-container {
+  padding: 20px !important;
+  height: 100%; }
+  div#edit-strategies div.edit-container h1 {
+    text-align: center; }
+
+div#edit-strategies a.button {
   display: block;
   width: 100%;
   margin: 16px auto !important; }
 
-div#EditStrategiesAPI div.edit-buttons {
+div#edit-strategies div.edit-buttons {
   display: flex;
   justify-content: flex-start; }
-  div#EditStrategiesAPI div.edit-buttons button.button {
+  div#edit-strategies div.edit-buttons button.button {
     max-width: 172px;
     display: block;
     margin: 0;
     width: 100%;
     margin-left: 16px;
+    padding: 16px 24px;
     background: linear-gradient(to right, #4915D6, #313fd6); }
-
-div#ViewStrategiesAPI div.view-container {
-  padding: 20px !important; }
-  div#ViewStrategiesAPI div.view-container a.button {
-    margin: auto;
-    margin-top: 16px; }
-  div#ViewStrategiesAPI div.view-container h1 {
-    text-align: center; }
 
 div.add-strategy {
   padding: 20px; }
   div.add-strategy button#cancel {
-    border: 2px solid #a92121; }
+    border: 2px solid #a92121;
+    padding: 10px 16px;
+    background: #a92121; }
   div.add-strategy button#cancel:hover {
     background: #a92121; }
 
@@ -1630,7 +1630,9 @@ div.map-selector {
     padding: 0;
     height: 100px;
     text-decoration: none;
-    position: relative; }
+    position: relative;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); }
   div.map-selector div.map-overlay {
     width: 100%;
     height: 100%;
@@ -1644,18 +1646,31 @@ div.map-selector {
     text-shadow: 2px 2px black;
     cursor: pointer;
     text-decoration: none !important;
-    transition: all 0.3s ease; }
+    transition: all 0.3s ease;
+    border-radius: 8px; }
   div.map-selector button.delete-button {
-    border-radius: 0px !important;
     background: #1c1f45;
     position: absolute;
-    top: 0;
     right: 0;
+    top: 50%;
     height: 100%;
+    transform: translateY(-50%);
     border: none;
     border-left: none;
     filter: opacity(0);
-    transition: all 0.3s ease; }
+    transition: all 0.3s ease;
+    border-radius: 8px;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    font-size: 12pt;
+    cursor: pointer; }
+    div.map-selector button.delete-button * {
+      cursor: pointer;
+      color: #fcfcfc; }
   div.map-selector button.delete-button:hover {
     box-shadow: none;
     background: #a92121; }
@@ -1671,14 +1686,13 @@ div.map-selector {
       transition: all 0.3s ease; }
 
 div#Editor, div#Viewer, div#SharedViewer {
-  max-width: 1600px;
   display: block;
   margin: auto; }
   div#Editor main, div#Viewer main, div#SharedViewer main {
     width: 100%;
     height: 100%;
     display: grid;
-    grid-template-columns: 256px 900px 1fr; }
+    grid-template-columns: 1fr calc(1500px + (2 * 20px)); }
 
 div.objectives h3 {
   margin-top: 40px; }
@@ -1724,6 +1738,8 @@ div.toolbar {
   div.toolbar * {
     margin: 0 16px; }
   div.toolbar button.toolbar__button {
+    padding: 16px 24px;
+    border-radius: 8px;
     margin: 0 !important;
     margin-top: 40px !important;
     display: block;
@@ -1839,7 +1855,8 @@ div.toolbar__navigation {
     border: 1px solid #E0E8FF;
     margin: 0;
     margin-top: 16px;
-    padding: 8px;
+    padding: 16px 24px;
+    border-radius: 8px;
     width: 100%;
     text-decoration: none;
     text-align: center;
@@ -1868,10 +1885,10 @@ div.toolbar__navigation {
     border: 1px solid #E0E8FF;
     margin: 0;
     width: 100%;
-    padding: 8px;
+    padding: 16px 24px;
     border-radius: 8px; }
     div.toolbar__navigation div.site-container select option, div.toolbar__navigation select.type-selector option, div.toolbar__navigation div.strategy-selector select option {
-      color: #353535; }
+      color: #B1B3BE; }
   div.toolbar__navigation div.strategy-control {
     position: absolute;
     margin: 0;
@@ -2122,23 +2139,29 @@ div.canvas {
   height: 100%;
   position: relative;
   border-right: none;
-  z-index: 3; }
+  z-index: 3;
+  padding: 20px;
+  padding-top: 0;
+  border-radius: 8px; }
   div.canvas div.blueprint-form {
     width: 100%;
-    height: 480px;
+    height: 800px;
     overflow: auto;
     position: relative;
-    z-index: 1; }
+    z-index: 1;
+    border-radius: 8px;
+    box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.3); }
   div.canvas div.position-overlay {
     width: 100%;
     height: 100%;
     position: relative;
     z-index: 2;
-    cursor: move; }
+    cursor: move;
+    border-radius: 8px; }
     div.canvas div.position-overlay div.drag-item {
       position: absolute;
-      width: 30px;
-      height: 30px;
+      width: 40px;
+      height: 40px;
       transition: all 0.5s ease;
       z-index: 2; }
     div.canvas div.position-overlay div.drag-item span {
@@ -2226,7 +2249,7 @@ div.canvas {
   div.canvas div.canvas__controls {
     position: absolute;
     height: 50px;
-    top: 480px;
+    top: 800px;
     border-bottom: none;
     border-left: none;
     display: flex;
@@ -2303,7 +2326,7 @@ div#Viewer a.objectives__video, div#SharedViewer a.objectives__video {
     width: 100%;
     height: 100%;
     display: grid;
-    grid-template-columns: 48px 900px 1fr !important; }
+    grid-template-columns: 48px 1500px 1fr !important; }
   div#Editor div.sidebar, div#Viewer div.sidebar, div#SharedViewer div.sidebar {
     padding: 8px;
     position: relative;
@@ -2406,12 +2429,12 @@ div#Viewer a.objectives__video, div#SharedViewer a.objectives__video {
           overflow: hidden;
           touch-action: none; }
           div#Editor main div.canvas div.blueprint-form div.position-overlay, div#Viewer main div.canvas div.blueprint-form div.position-overlay, div#SharedViewer main div.canvas div.blueprint-form div.position-overlay {
-            width: 900px;
+            width: 1500px;
             height: 100%; }
         div#Editor main div.canvas div.canvas__controls, div#Viewer main div.canvas div.canvas__controls, div#SharedViewer main div.canvas div.canvas__controls {
           left: 50%;
           transform: translateX(-50%);
-          top: 480px; }
+          top: 800px; }
       div#Editor main div.sidebar, div#Viewer main div.sidebar, div#SharedViewer main div.sidebar {
         grid-row: 2;
         grid-column: span 1;
@@ -2501,8 +2524,8 @@ div#Viewer a.objectives__video, div#SharedViewer a.objectives__video {
         overflow: hidden;
         touch-action: none; }
         div#Editor main div.canvas div.blueprint-form div.position-overlay, div#Viewer main div.canvas div.blueprint-form div.position-overlay, div#SharedViewer main div.canvas div.blueprint-form div.position-overlay {
-          width: 900px;
-          height: 480px; }
+          width: 1500px;
+          height: 800px; }
       div#Editor main div.canvas div.canvas__controls, div#Viewer main div.canvas div.canvas__controls, div#SharedViewer main div.canvas div.canvas__controls {
         left: 50%;
         transform: translateX(-50%);

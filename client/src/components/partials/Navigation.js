@@ -98,7 +98,7 @@ class Navigation extends React.Component {
             ) : ( "" )
           }
           <li className="nav__item">
-            <NavLink activeClassName="nav__link--active" onClick={this.toggleMenu} className="nav__link" to="/community"><i className="fa fa-satellite-dish"></i>Community</NavLink>
+            <NavLink activeClassName="nav__link--active" onClick={this.toggleMenu} className="nav__link" to="/community"><i className="fa fa-project-diagram"></i>Community</NavLink>
           </li>
           {
             this.state.loggedIn ? (

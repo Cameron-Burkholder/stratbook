@@ -450,8 +450,8 @@ module.exports = {
     4000: "Platinum I",
     4400: "Diamond"
   },
-  CANVAS_WIDTH: 900,
-  CANVAS_HEIGHT: 480,
+  CANVAS_WIDTH: 1500,
+  CANVAS_HEIGHT: 800,
   SNAPS: {
     "BANK": {
       0: [
