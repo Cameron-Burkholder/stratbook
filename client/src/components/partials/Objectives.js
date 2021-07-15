@@ -32,10 +32,11 @@ class Objectives extends React.Component {
     });
     return (
       <div className="objectives">
-        <h3>Objectives: {this.props.scenes[this.props.sceneIndex].name}</h3>
+        <h3>{this.props.function === "EDITOR" ? "Edit" : "View"} Scene: {this.props.scenes[this.props.sceneIndex].name}</h3>
+        <h4>Objectives</h4>
         { this.props.function === "Editor" ? (
-          <div>
-            <input onChange={this.onChange} value={this.state.newObj} placeholder="New Objective"/>
+          <div className="objectives__container">
+            <input className="objectives__input" onChange={this.onChange} value={this.state.newObj} placeholder="New Objective"/>
             <button onClick={() => {
               this.props.addObjective(this.state.newObj);
               this.setState({
@@ -47,23 +48,11 @@ class Objectives extends React.Component {
         <ul>
           { objectives.length > 0 ? objectives : <li>None to show</li> }
         </ul>
-        <h3>Notes: {this.props.scenes[this.props.sceneIndex].name}</h3>
+        <h4>Notes</h4>
         { this.props.function === "Editor" ? (
-          <textarea value={this.props.notes} onChange={this.props.updateNotes} rows={7}></textarea>
+          <textarea value={this.props.notes} onChange={this.props.updateNotes} rows={12}></textarea>
         ) : (
           <p>{this.props.notes ? this.props.notes : "No notes to show."}</p>
-        )}
-        { this.props.function === "Editor" || this.props.video !== "" ? (
-          <h3>Video Link</h3>
-        ) : ""}
-        { this.props.function === "Editor" ? (
-          <input onChange={this.props.updateVideo} value={this.props.video}/>
-        ) : (
-          <div>
-            { this.props.video !== "" ? (
-              <a className="objectives__video" href={this.props.video} rel="noopener noreferrer" target="_blank">Watch Video</a>
-            ) : ""}
-          </div>
         )}
       </div>
     )

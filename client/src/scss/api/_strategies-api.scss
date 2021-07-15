@@ -218,26 +218,49 @@ div#Editor, div#Viewer, div#SharedViewer {
   }
 }
 
-div.objectives {
+div.objectives, div.strategy_controls {
+  padding: $padding-s;
+  div.objectives__container {
+    display: flex;
+    button {
+      padding: $button-padding !important;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+  }
   h3 {
-    margin-top: $margin-m;
+    text-align: center;
+    margin-bottom: $margin-s;
+  }
+  h4 {
+    color: $text-accent;
+    margin-bottom: $margin-xs;
   }
   input {
     width: 100%;
     max-width: $phone-max-width;
+    border: $border-primary;
+    padding: $button-padding;
+  }
+  input.objectives__input {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
   }
   ul {
     padding: $padding-s;
+    padding-left: $padding-m;
   }
   li {
     font-size: $font-heading3;
+    margin: $margin-xs;
     div {
       display: flex;
       align-items: center;
     }
     button {
       margin-left: $margin-m;
-      padding: 4px 8px;
+      padding: 2px 4px;
+      font-size: 8pt;
     }
     button:hover {
       background: $color-danger;
@@ -246,6 +269,8 @@ div.objectives {
   textarea {
     width: 100%;
     max-width: $phone-max-width;
+    padding: $button-padding;
+    border: $border-primary;
   }
 }
 
@@ -508,155 +533,54 @@ div.sidebar--scroll div.sidebar-body {
   max-height: calc(100VH - 64px);
 }
 div.sidebar {
-  border-right: $border-primary;
-  background: $background-primary;
-  height: 100VH;;
-  max-height: calc(100VH - 128px);
-  overflow-y: hidden;
-  div.sidebar-body {
-    padding: $padding-s;
-    border-right: $border-primary;
-    height: 100%;
+  background: $background-quaternary;
+  border-radius: $border-radius;
+  padding: $padding-s;
+  box-shadow: $box-shadow-primary;
+  margin-left: $margin-s;
+  div.strategy__name-input {
     display: flex;
-    flex-direction: column;
-    div.scene-container, div.strategy-container {
-      display: flex;
-      flex-direction: column;
+    input {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
     }
-  }
-  button {
-    display: none;
-  }
-  h3.scene-container__heading, h3.strategy-container__heading {
-    text-align: center;
-    margin-bottom: $margin-s;
-  }
-  h4.site-container__subtitle {
-    font-size: 11pt;
-    text-align: center;
-    margin-bottom: 8px;
-  }
-  div.scene-container {
-    height: 100%;
-    overflow-y: auto;
-    padding-bottom: $padding-m;
-    margin-top: 0;
-  }
-  div.strategy-container {
-    overflow-y: auto;
-    padding-bottom: $padding-s;
-    min-height: 300px;
-    select.select-container {
-      width: 100%;
-      display: block;
-      background: $background-primary;
-      border-bottom: none;
-      border: $border-primary;
-      border-radius: $border-radius;
-      color: $text-heading;
-      option.strategy {
-        color: white;
-      }
-    }
-  }
-  div.scene {
-    display: flex;
-    flex-direction: column;
-    padding: $padding-s;
-    margin-top: 4px;
-    transition: all 0.3s ease;
-    background: $background-secondary;
-    span.scene__number {
-      font-size: $font-small;
-    }
-    span:hover {
-      cursor: pointer;
-    }
-    p.scene__name {
-      color: $text-heading;
-      margin-bottom: 2px;
-      font-size: 14px;
-      display: inline;
-      width: auto;
-    }
-    div.scene__name-input {
-      position: relative;
-      input.scene__input {
-        padding: 4px;
-        padding-top: 8px;
-        width: 100%;
-      }
-      button {
-        margin: 0 !important;
-        position: absolute;
-        top: 50%;
-        right: 0;
-        transform: translateY(-50%);
-        background: none;
-        border: none;
-        height: 100%;
-        border-right: 3px solid transparent;
-        border-radius: 0;
-        color: $color-success;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: right;
-      }
-      button:hover {
-        cursor: pointer;
-        border-right: 3px solid $color-success;
-        box-shadow: none;
-      }
-    }
-  }
-  p {
-    cursor: pointer;
-  }
-  p.scene__name:hover {
-    text-decoration: underline;
-    cursor: pointer;
-  }
-  div.scene:hover {
-    cursor: pointer;
-    box-shadow: $box-shadow-primary;
-    transition: all 0.3s ease;
-  }
-  div.scene--active {
-    border-left: 3px solid $color-primary;
-  }
-  div.scene-controls {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 256px;
-    height: 50px;
-    border: $border-primary;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
     button {
-      background: $background-primary;
-      border: none;
-      width: 100%;
-      height: 100%;
-      margin: 0 !important;
-      padding: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s ease;
-      border-radius: 0;
-      filter: opacity(1);
-      font-size: $font-small;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
     }
-    button:hover {
-      box-shadow: none;
-      background: linear-gradient(to right, #{$color-primary}, #{$color-tertiary});
+  }
+  div.sidebar__controls {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: $margin-s;
+    padding: $padding-s;
+    margin-bottom: $margin-s;
+    i.sidebar__control {
+      text-align: center;
+      font-size: $font-heading2;
       cursor: pointer;
+      width: 100%;
+      color: $text-subtle;
+      padding: $padding-s;
+      border-radius: $border-radius;
+      transition: all 0.3s ease;
     }
-    button:nth-child(1) {
-      border-right: $border-primary;
+    i.sidebar__control:hover {
+      color: $text-accent;
+      background: $background-secondary;
+      box-shadow: $box-shadow-primary;
+      transition: all 0.3s ease;
     }
+    i.sidebar__control--active {
+      background: $background-primary;
+      box-shadow: $box-shadow-primary;
+    }
+  }
+}
+div.strategy_controls {
+  .video_link {
+    margin-top: $margin-s;
   }
 }
 div.lineup--scroll div.lineup-body {
@@ -677,12 +601,15 @@ div.lineup {
   div.role {
     border-radius: 0;
     padding: 8px;
-    background: $background-secondary;
     margin-bottom: $margin-s;
+    border: $border-primary;
+    border-radius: $border-radius;
+    cursor: pointer;
+    transition: all 0.3s ease;
     div.role__head {
       width: 100%;
       display: grid;
-      grid-template-columns: 1fr 96px;
+      grid-template-columns: 96px 1fr;
       grid-gap: 4px;
       select {
         padding: 4px;
@@ -691,7 +618,7 @@ div.lineup {
         margin-bottom: 4px;
         border: none;
         option {
-          color: $text-dark;
+          color: $text-subtle;
         }
       }
     }
@@ -714,20 +641,47 @@ div.lineup {
     div.role__body {
       width: 100%;
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       grid-gap: 4px;
       padding-top: 8px;
+      button {
+        width: 100%;
+        height: 100%;
+        background: $color-primary;
+      }
       div.role__gadget, div.role__utility {
+        position: relative;
+        box-shadow: $box-shadow-primary;
+        border-radius: $border-radius;
+        width: 100%;
+        max-height: 36px;
+        overflow: hidden;
+        height: 100%;
         p {
+          position: absolute;
           text-align: center;
-          font-size: 8pt;
           text-transform: uppercase;
+          font-size: 8pt;
+          color: $text-light;
+          top: 0;
+          left: 0;
+          z-index: 3;
+          background: $color-primary;
+          border-radius: 100%;
+          width: 20px;
+          height: 20px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
         img.role__gadget-image, img.role__utility-image {
-          width: 40%;
-          max-width: 48px;
+          width: 120%;
           display: block;
           margin: auto;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
         }
         img.role__gadget-image:hover, img.role__utility-image:hover {
           cursor: pointer;
@@ -735,10 +689,15 @@ div.lineup {
       }
     }
   }
+  div.role:hover {
+    box-shadow: $box-shadow-primary;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
   div.role--active {
-    border-left: 3px solid $color-tertiary;
+    box-shadow: $box-shadow-primary;
     div.role__image img {
-      width: 80%;
+      width: 40%;
     }
   }
 }

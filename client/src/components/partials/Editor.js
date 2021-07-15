@@ -844,23 +844,25 @@ class Editor extends React.Component {
 
   // Objectives and Notes
   addObjective(msg) {
-    let map = this.state.map;
-    let scenes;
-    let strategies;
-    if (this.state.type === "ATTACK") {
-      map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].objectives.push(msg);
-      scenes = map.attack[this.state.site][this.state.strategyIndex].scenes;
-      strategies = map.attack[this.state.site];
-    } else {
-      map.defense[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].objectives.push(msg);
-      scenes = map.defense[this.state.site][this.state.strategyIndex].scenes;
-      strategies = map.defense[this.state.site];
+    if (msg !== "") {
+      let map = this.state.map;
+      let scenes;
+      let strategies;
+      if (this.state.type === "ATTACK") {
+        map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].objectives.push(msg);
+        scenes = map.attack[this.state.site][this.state.strategyIndex].scenes;
+        strategies = map.attack[this.state.site];
+      } else {
+        map.defense[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].objectives.push(msg);
+        scenes = map.defense[this.state.site][this.state.strategyIndex].scenes;
+        strategies = map.defense[this.state.site];
+      }
+      this.setState({
+        map: map,
+        scenes: scenes,
+        strategies: strategies
+      });
     }
-    this.setState({
-      map: map,
-      scenes: scenes,
-      strategies: strategies
-    });
   }
   removeObjective(index) {
     let map = this.state.map;
@@ -964,6 +966,7 @@ class Editor extends React.Component {
       sidebarProps.insertRotate = this.insertRotate;
       sidebarProps.insertReinforcement = this.insertReinforcement;
       sidebarProps.insertBreach = this.insertBreach;
+      sidebarProps.updateName = this.updateName;
       sidebarProps.addStrategy = this.addStrategy;
       sidebarProps.removeStrategy = this.removeStrategy;
       sidebarProps.save = this.save;
@@ -977,6 +980,10 @@ class Editor extends React.Component {
       sidebarProps.updateUtility = this.updateUtility;
       sidebarProps.insertUtility = this.insertUtility;
       sidebarProps.insertGadget = this.insertGadget;
+      sidebarProps.addObjective = this.addObjective;
+      sidebarProps.removeObjective = this.removeObjective;
+      sidebarProps.updateNotes = this.updateNotes;
+      sidebarProps.updateVideo = this.updateVideo;
 
       canvasProps.removeOperator = this.removeOperator;
       canvasProps.removeGadget = this.removeGadget;
@@ -992,10 +999,6 @@ class Editor extends React.Component {
       canvasProps.updateBreachPositions = this.updateBreachPositions;
       canvasProps.updateRotatePositions = this.updateRotatePositions;
       canvasProps.updateReinforcementPositions = this.updateReinforcementPositions;
-      canvasProps.addObjective = this.addObjective;
-      canvasProps.removeObjective = this.removeObjective;
-      canvasProps.updateNotes = this.updateNotes;
-      canvasProps.updateVideo = this.updateVideo;
 
     }
 
@@ -1019,7 +1022,6 @@ class Editor extends React.Component {
       ) : (
         this.state.map.defense[this.state.site][this.state.strategyIndex].operators
       ));
-      sidebarProps.gadgetPositions = canvasProps.gadgetPositions;
       sidebarProps.drones = this.state.type === "ATTACK" ? (
         this.state.map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].drones
       ) : undefined;
@@ -1097,6 +1099,7 @@ class Editor extends React.Component {
       canvasProps.breaches = (this.state.type === "ATTACK" ? (
         this.state.map.attack[this.state.site][this.state.strategyIndex].scenes[this.state.sceneIndex].breaches
       ) : []);
+      sidebarProps.gadgetPositions = canvasProps.gadgetPositions;
 
     } else {
       toolbarProps.strategy = this.state.strategy.name;
@@ -1175,7 +1178,6 @@ class Editor extends React.Component {
             function={this.props.function}
             operators={canvasProps.operators}
             gadgets={canvasProps.gadgets}
-            gadgetPositions={canvasProps.gadgetPositions}
             utility={canvasProps.utility}
             utilityPositions={canvasProps.utilityPositions}
             fetchStrategies={this.props.fetchStrategies}

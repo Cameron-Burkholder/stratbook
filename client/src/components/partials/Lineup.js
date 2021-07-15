@@ -23,6 +23,7 @@ class Lineup extends React.Component {
     })
   }
   render() {
+    console.log(this.props);
     const operators = (this.props.type === "ATTACK" ? (
       ATTACKERS
     ) : (
@@ -51,18 +52,23 @@ class Lineup extends React.Component {
         })
       ));
       return (
-        <div className={"role" + (this.props.activeOperator === index ? " role--active" : "")} key={index}>
+        <div className={"role" + (this.props.activeOperator === index ? " role--active" : "")}
+          onClick={()=> { this.props.selectOperator(index) }} key={index}>
           <div className="role__head">
-            { this.props.activeOperator === index ? (
-              <div className="role__options">
-                { this.props.function === "Editor" ? (
-                  <select className="form__select" onChange={(e) => { this.props.updateOperators(e, index) }} value={this.props.operators[index]}>
-                    <option>OPERATOR</option>
-                    { operatorOptions }
-                  </select>
-                ) : (
-                  ""
-                )}
+            <div className="role__image" onClick={() => { this.props.selectOperator(index) }}>
+              <p>{this.props.operators[index]}</p>
+              <img className="role__image" src={`../../media/min/operators/${clean(this.props.operators[index].toLowerCase())}.png`}
+                alt="Operator"/>
+            </div>
+            <div className="role__options">
+              { this.props.function === "Editor" ? (
+                <select className="form__select" onChange={(e) => { this.props.updateOperators(e, index) }} value={this.props.operators[index]}>
+                  <option>OPERATOR</option>
+                  { operatorOptions }
+                </select>
+              ) : (
+                ""
+              )}
               <div className="role__utility">
                 { this.props.function === "Editor" ? (
                   <select className="form__select" onChange={(e) => { this.props.updateUtility(e, index) }} value={this.props.utility[index]}>
@@ -70,55 +76,48 @@ class Lineup extends React.Component {
                     { utilityOptions }
                   </select>
                 ) : (
-                  ""
+                  <p>BRING {this.props.utility[index]}</p>
                 )}
               </div>
-            </div>
-            ) : (
-              <div className="role__options">
-
-              </div>
-            )}
-            <div className="role__image" onClick={() => { this.props.selectOperator(index) }}>
-              <p>{this.props.operators[index]}</p>
-              <img className="role__image" src={`../../media/min/operators/${clean(this.props.operators[index].toLowerCase())}.png`}
-                alt="Operator"
-                onClick={() => {
-                  if (this.props.activeOperator === index && this.props.function === "Editor") {
-                    this.props.insertOperator(this.props.activeOperator);
-                  } else {
-                    this.props.selectOperator(index);
-                  }
-                }}/>
-              { this.props.activeOperator === index && this.props.function === "Editor" ? (
-                <p style={{ fontSize: "8pt" }}>Click to insert</p>
-              ) : "" }
             </div>
           </div>
 
           { this.props.activeOperator === index ? (
             <div className="role__body">
               <div>
-                { this.props.gadgets[index].gadget && this.props.gadgets[index].count !== 0 ? (
-                  <div className="role__gadget">
-                    <p>{this.props.gadgets[index].gadget} ({this.props.gadgets[index].count - this.props.gadgetPositions[index].length})</p>
-                    <img className="role__gadget-image" src={`../../media/min/gadgets/${this.props.gadgets[index].gadget.toUpperCase().replace(" ", "_").replace(" ", "_")}.png`}
-                      alt="Operator Gadget"
-                      onClick={() => {
-                        if (this.props.function === "Editor" && this.props.gadgets[index].count - this.props.gadgetPositions[index].length> 0) {
-                          this.props.insertGadget(index)
-                        }
-                      }}/>
-                    { this.props.function === "Editor" ? (
-                      <p style={{ fontSize: "8pt", textTransform: "none" }}>Click to insert</p>
-                    ) : ""}
-                  </div>
+                { this.props.function === "Editor" ? (
+                  <button className="button" onClick={() => { this.props.insertOperator(this.props.activeOperator) }}>Insert Op</button>
                 ) : ""}
               </div>
+              { this.props.function === "Editor" ? (
+                <div>
+                  { this.props.gadgets[index].gadget && this.props.gadgets[index].count !== 0 ? (
+                    <div className="role__gadget">
+                      <p>{this.props.gadgets[index].count - this.props.gadgetPositions[index].length}</p>
+                      <img className="role__gadget-image" src={`../../media/min/gadgets/${this.props.gadgets[index].gadget.toUpperCase().replace(" ", "_").replace(" ", "_")}.png`}
+                        alt="Operator Gadget"
+                        onClick={() => {
+                          if (this.props.function === "Editor" && this.props.gadgets[index].count - this.props.gadgetPositions[index].length> 0) {
+                            this.props.insertGadget(index)
+                          }
+                        }}/>
+                    </div>
+                  ) : ""}
+                </div>
+              ) : (
+                <div>
+                  <div className="role__gadget">
+                    <p>{this.props.gadgets[index].count - this.props.gadgetPositions[index].length}</p>
+                    <img className="role__gadget-image" src={`../../media/min/gadgets/${this.props.gadgets[index].gadget.toUpperCase().replace(" ", "_").replace(" ", "_")}.png`}
+                      alt="Operator Gadget"/>
+                  </div>
+                </div>
+              )}
+
               <div>
                 { this.props.utility[index] && this.props.utility[index] !== "UTILITY" ? (
                   <div className="role__utility">
-                    <p>{this.props.utility[index]} ({UTILITY_GUIDE[this.props.utility[index]] - this.props.utilityPositions[index].length})</p>
+                    <p>{UTILITY_GUIDE[this.props.utility[index]] - this.props.utilityPositions[index].length}</p>
                     <img className="role__utility-image" src={`../../media/min/utility/${this.props.utility[index].toUpperCase().replace(" ", "_").replace(" ", "_")}.png`}
                       alt="Operator Utility"
                       onClick={() => {
@@ -126,9 +125,6 @@ class Lineup extends React.Component {
                           this.props.insertUtility(index);
                         }
                       }}/>
-                    { this.props.function === "Editor" ? (
-                      <p style={{ fontSize: "8pt", textTransform: "none" }}>Click to insert</p>
-                    ) : ""}
                   </div>
                 ) : ""}
               </div>
